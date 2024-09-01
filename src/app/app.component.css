@@ -1,0 +1,9 @@
+h1,
+nav {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav a {
+    margin-right: 10px;
+}
