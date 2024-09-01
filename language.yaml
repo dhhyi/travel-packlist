@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/dhhyi/devcontainer-creator/dist/language_schema.json
+extends: dcc://javascript-pnpm
+devcontainer:
+  build:
+    user:
+      - RUN npm i -g @angular/cli@latest
+  ports:
+    - 4200
+extras:
+  - named-volumes
+namedVolumes:
+  node_modules: travel-packlist-node-modules
+  /home/pnpm: travel-packlist-pnpm-store
+vscode:
+  extensions:
+    - angular.ng-template

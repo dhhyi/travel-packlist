@@ -1,0 +1,26 @@
+{
+  "mounts": [
+    "type=volume,target=${containerWorkspaceFolder}/node_modules,source=travel-packlist-node-modules",
+    "type=volume,target=/home/pnpm,source=travel-packlist-pnpm-store"
+  ],
+  "postStartCommand": "sudo chown vscode node_modules /home/pnpm",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [
+    4200
+  ],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "files.exclude": {
+          ".devcontainer": true,
+          ".update_devcontainer.sh": true
+        }
+      },
+      "extensions": [
+        "angular.ng-template"
+      ]
+    }
+  }
+}
