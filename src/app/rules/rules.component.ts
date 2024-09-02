@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { loadRules, saveRules } from './rules.persistence';
+import { parseRules } from '../../model/parser';
 
 @Component({
   selector: 'app-rules',
@@ -24,6 +25,16 @@ export class RulesComponent {
         },
         next: (value) => {
           saveRules(value);
+
+          if (value) {
+            try {
+              const parsed = parseRules(value);
+              console.log(parsed);
+            } catch (error) {
+              console.error(error);
+            }
+
+          }
         }
       });
   }
