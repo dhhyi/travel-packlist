@@ -1,10 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { parseRules } from '../../model/parser';
 import { Rule, VariableName, VariableType } from '../../model/types';
 import { CommonModule } from '@angular/common';
 import { QuestionComponent } from './question/question.component';
 import { ItemsComponent } from './items/items.component';
+import { PacklistPersistence } from './packlist.persistence';
 
 @Component({
   selector: 'app-packlist',
@@ -14,10 +15,11 @@ import { ItemsComponent } from './items/items.component';
   styleUrl: './packlist.component.css'
 })
 export class PacklistComponent implements OnInit {
-  private persistence = inject(RulesPersistence);
+  private rulesPersistence = inject(RulesPersistence);
+  private packlistPersistence = inject(PacklistPersistence);
 
   private rules = signal<Rule[]>([]);
-  private model = signal<Record<VariableName, VariableType>>({})
+  model = signal<Record<VariableName, VariableType>>(this.packlistPersistence.getAnswers());
 
   private activeRules = computed(() => {
     const model = this.model();
@@ -31,8 +33,15 @@ export class PacklistComponent implements OnInit {
   items = computed(() => this.activeRules()
     .flatMap(rule => rule.effects.items));
 
+  constructor() {
+    effect(() => {
+      const model = this.model();
+      this.packlistPersistence.saveAnswers(model);
+    });
+  }
+
   ngOnInit(): void {
-    const rules = this.persistence.getRules();
+    const rules = this.rulesPersistence.getRules();
     try {
       this.rules.set(parseRules(rules));
     } catch (error) {

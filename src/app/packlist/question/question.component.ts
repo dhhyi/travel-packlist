@@ -12,6 +12,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class QuestionComponent implements OnInit {
   question = input<Question | undefined>(undefined);
+  model = input<Record<VariableName, VariableType>>({});
 
   formControl = new FormControl<boolean>(false);
 
@@ -21,7 +22,10 @@ export class QuestionComponent implements OnInit {
     this.formControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
       if (value !== null && this.question()) {
         const question = this.question()!;
-        this.modelChange.emit([question.variable, value]);
+        const modelValue = this.model()[question.variable];
+        if (modelValue !== value) {
+          this.modelChange.emit([question.variable, value]);
+        }
       }
     });
   }
@@ -29,7 +33,9 @@ export class QuestionComponent implements OnInit {
   ngOnInit(): void {
     if (this.question()) {
       const question = this.question()!;
-      this.formControl.setValue(question.defaultValue);
+      const model = this.model();
+      const value = model[question.variable];
+      this.formControl.setValue(value ?? question.defaultValue);
     }
   }
 
