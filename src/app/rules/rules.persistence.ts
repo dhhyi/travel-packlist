@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
+import { loadLocalStorage, saveLocalStorage } from "../../util/localstorage.persistence";
 
 @Injectable({ providedIn: 'root' })
 export class RulesPersistence {
-    private rules: string = loadRules();
+    private rules: string = loadLocalStorage('rules', ':- [category] Item;');
 
     getRules(): string {
         return this.rules;
@@ -11,22 +12,7 @@ export class RulesPersistence {
     saveRules(rules: string | undefined | null): void {
         if (rules) {
             this.rules = rules;
-            saveRules(rules);
+            saveLocalStorage('rules', rules);
         }
-    }
-}
-
-function loadRules(): string {
-    const loadedRules = localStorage.getItem('rules');
-    if (!!loadedRules) {
-        console.log('Loaded rules from local storage');
-    }
-    return loadedRules || ':- [category] Item;';
-}
-
-function saveRules(rules: string | undefined | null): void {
-    if (!!rules) {
-        console.log('Saved rules to local storage');
-        localStorage.setItem('rules', rules);
     }
 }
