@@ -1,0 +1,8 @@
+@for (group of groupedItems(); track group[0]) {
+<h2>{{ group[0] }}</h2>
+<ul>
+    @for (item of group[1]; track item) {
+    <li>{{ item.name }}</li>
+    }
+</ul>
+}
