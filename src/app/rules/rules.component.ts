@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, tap } from 'rxjs';
-import { loadRules, saveRules } from './rules.persistence';
+import { RulesPersistence } from './rules.persistence';
 import { parseRules } from '../../model/parser';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +14,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './rules.component.css'
 })
 export class RulesComponent {
+  persistence = inject(RulesPersistence);
+
   rules = new FormControl('');
   error = signal<string | undefined>(undefined);
   noOfRules = signal<number>(0);
@@ -29,10 +31,10 @@ export class RulesComponent {
     ).subscribe(
       {
         complete: () => {
-          saveRules(this.rules.value);
+          this.persistence.saveRules(this.rules.value);
         },
         next: (value) => {
-          saveRules(value);
+          this.persistence.saveRules(value);
 
           if (value) {
             try {
@@ -50,6 +52,6 @@ export class RulesComponent {
         }
       });
 
-    this.rules.setValue(loadRules());
+    this.rules.setValue(this.persistence.getRules());
   }
 }
