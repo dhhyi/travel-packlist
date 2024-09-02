@@ -1,24 +1,32 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { debounceTime, tap } from 'rxjs';
 import { loadRules, saveRules } from './rules.persistence';
 import { parseRules } from '../../model/parser';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css'
 })
 export class RulesComponent {
   rules = new FormControl('');
+  error = signal<string | undefined>(undefined);
+  noOfRules = signal<number>(0);
 
   constructor() {
-    this.rules.setValue(loadRules());
-
-    this.rules.valueChanges.pipe(debounceTime(500), takeUntilDestroyed()).subscribe(
+    this.rules.valueChanges.pipe(
+      tap(() => {
+        this.error.set(undefined);
+        this.noOfRules.set(0);
+      }),
+      debounceTime(500),
+      takeUntilDestroyed()
+    ).subscribe(
       {
         complete: () => {
           saveRules(this.rules.value);
@@ -29,13 +37,19 @@ export class RulesComponent {
           if (value) {
             try {
               const parsed = parseRules(value);
-              console.log(parsed);
+              this.error.set(undefined);
+              this.noOfRules.set(parsed.length);
             } catch (error) {
-              console.error(error);
+              if (error instanceof Error) {
+                this.error.set(error.message);
+              } else {
+                console.error(error);
+              }
             }
-
           }
         }
       });
+
+    this.rules.setValue(loadRules());
   }
 }

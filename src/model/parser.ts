@@ -58,7 +58,7 @@ export function parseItem(input: string): Item {
 }
 
 export function parseEffects(input: string): Effects {
-    const lines = input.split(",").map(line => line.trim());
+    const lines = input.split(",").map(line => line.trim()).filter(Boolean);
 
     const questions: Question[] = [];
     const items: Item[] = [];

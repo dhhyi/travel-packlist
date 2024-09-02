@@ -1,1 +1,6 @@
 <textarea name="rules" [formControl]="rules"></textarea>
+@if (error(); as error) {
+<pre class="error">{{ error }}</pre>
+} @else if (noOfRules() > 0) {
+<pre class="success">Parsed {{noOfRules()}} rules successfully!</pre>
+}

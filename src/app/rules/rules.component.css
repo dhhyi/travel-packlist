@@ -2,3 +2,11 @@ textarea {
     min-width: 70vw;
     min-height: 50vh;
 }
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
