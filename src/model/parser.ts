@@ -120,7 +120,12 @@ export function parseRule(input: string): Rule {
 }
 
 export function parseRules(input: string): Rule[] {
-  return input
+  const inputWOComments = input
+    .split('\n')
+    .filter((line) => !line.trim().startsWith('#'))
+    .join('\n');
+
+  return inputWOComments
     .split(';')
     .map((x) => x.trim())
     .filter(Boolean)
