@@ -1,0 +1,15 @@
+{
+  "name": "Travel Packlist",
+  "short_name": "Packlist",
+  "description": "Pack everything for traveling.",
+  "start_url": "/",
+  "background_color": "#000000",
+  "theme_color": "#DDDDDD",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
