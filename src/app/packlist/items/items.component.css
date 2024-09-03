@@ -13,3 +13,9 @@ li.checked {
   color: grey;
   text-decoration: line-through;
 }
+
+.category {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

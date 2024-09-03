@@ -1,6 +1,8 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { Item } from '../../../model/types';
 import { PacklistPersistence } from '../packlist.persistence';
+import { KeyValuePipe } from '@angular/common';
+import { ItemsStatusComponent } from './items-status/items-status.component';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -9,6 +11,7 @@ function serialize(item: Item): string {
 @Component({
   selector: 'app-items',
   standalone: true,
+  imports: [KeyValuePipe, ItemsStatusComponent],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css',
 })
@@ -17,36 +20,42 @@ export class ItemsComponent {
 
   persistence = inject(PacklistPersistence);
 
-  checkedItems: string[] = this.persistence.getCheckedItems();
+  checkedItems = signal(this.persistence.getCheckedItems());
 
-  groupedItems = computed(() =>
-    Object.entries(
-      this.items().reduce(
-        (groups, item) => {
-          if (!groups[item.category]) {
-            groups[item.category] = [];
-          }
-          groups[item.category].push(item);
-          return groups;
-        },
-        {} as Record<string, Item[]>,
-      ),
-    ),
-  );
+  groupedItems = computed(() => {
+    const checkedItems = this.checkedItems();
+    return this.items().reduce(
+      (groups, item) => {
+        if (!groups[item.category]) {
+          groups[item.category] = { items: [], checked: 0 };
+        }
 
-  isChecked(item: Item) {
-    return this.checkedItems.includes(serialize(item));
-  }
+        const checked = checkedItems.includes(serialize(item));
+        groups[item.category].items.push({ ...item, checked });
+        if (checked) {
+          groups[item.category].checked++;
+        }
+        return groups;
+      },
+      {} as Record<
+        string,
+        { items: (Item & { checked: boolean })[]; checked: number }
+      >,
+    );
+  });
 
   toggle(item: Item) {
     const serializedItem = serialize(item);
-    if (this.checkedItems.includes(serializedItem)) {
-      this.checkedItems = this.checkedItems.filter(
-        (checkedItem) => checkedItem !== serializedItem,
+    if (this.checkedItems().includes(serializedItem)) {
+      this.checkedItems.update((checkedItems) =>
+        checkedItems.filter((checkedItem) => checkedItem !== serializedItem),
       );
     } else {
-      this.checkedItems = [...this.checkedItems, serializedItem];
+      this.checkedItems.update((checkedItems) => [
+        ...checkedItems,
+        serializedItem,
+      ]);
     }
-    this.persistence.setCheckedItems(this.checkedItems);
+    this.persistence.setCheckedItems(this.checkedItems());
   }
 }

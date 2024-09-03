@@ -1,9 +1,15 @@
-@for (group of groupedItems(); track group[0]) {
+@for (group of groupedItems() | keyvalue; track group.key) {
   <div class="card">
-    <div class="heading">{{ group[0] }}</div>
+    <div class="category">
+      <span class="heading">{{ group.key }}</span>
+      <app-status
+        [count]="group.value.checked"
+        [total]="group.value.items.length"
+      ></app-status>
+    </div>
     <ul>
-      @for (item of group[1]; track item) {
-        <li (click)="toggle(item)" [class.checked]="isChecked(item)">
+      @for (item of group.value.items; track item) {
+        <li (click)="toggle(item)" [class.checked]="item.checked">
           {{ item.name }}
         </li>
       }
