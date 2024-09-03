@@ -1,4 +1,11 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { parseRules } from '../../model/parser';
 import { Rule, VariableName, VariableType } from '../../model/types';
@@ -11,26 +18,29 @@ import { PacklistPersistence } from './packlist.persistence';
   standalone: true,
   imports: [QuestionComponent, ItemsComponent],
   templateUrl: './packlist.component.html',
-  styleUrl: './packlist.component.css'
+  styleUrl: './packlist.component.css',
 })
 export class PacklistComponent implements OnInit {
   private rulesPersistence = inject(RulesPersistence);
   private packlistPersistence = inject(PacklistPersistence);
 
   private rules = signal<Rule[]>([]);
-  model = signal<Record<VariableName, VariableType>>(this.packlistPersistence.getAnswers());
+  model = signal<Record<VariableName, VariableType>>(
+    this.packlistPersistence.getAnswers(),
+  );
 
   private activeRules = computed(() => {
     const model = this.model();
-    return this.rules()
-      .filter(rule => rule.condition.evaluate(model));
+    return this.rules().filter((rule) => rule.condition.evaluate(model));
   });
 
-  questions = computed(() => this.activeRules()
-    .flatMap(rule => rule.effects.questions));
+  questions = computed(() =>
+    this.activeRules().flatMap((rule) => rule.effects.questions),
+  );
 
-  items = computed(() => this.activeRules()
-    .flatMap(rule => rule.effects.items));
+  items = computed(() =>
+    this.activeRules().flatMap((rule) => rule.effects.items),
+  );
 
   constructor() {
     effect(() => {
@@ -49,6 +59,6 @@ export class PacklistComponent implements OnInit {
   }
 
   modelChange(variable: VariableName, value: VariableType): void {
-    this.model.update(model => ({ ...model, [variable]: value }));
+    this.model.update((model) => ({ ...model, [variable]: value }));
   }
 }

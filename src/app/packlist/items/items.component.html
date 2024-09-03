@@ -1,10 +1,12 @@
 @for (group of groupedItems(); track group[0]) {
-<div class="card">
+  <div class="card">
     <div class="heading">{{ group[0] }}</div>
     <ul>
-        @for (item of group[1]; track item) {
-        <li (click)="toggle(item)" [class.checked]="isChecked(item)">{{ item.name }}</li>
-        }
+      @for (item of group[1]; track item) {
+        <li (click)="toggle(item)" [class.checked]="isChecked(item)">
+          {{ item.name }}
+        </li>
+      }
     </ul>
-</div>
+  </div>
 }

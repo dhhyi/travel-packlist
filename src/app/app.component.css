@@ -1,19 +1,19 @@
 h1,
 nav {
-    display: inline;
-    margin-right: 10px;
+  display: inline;
+  margin-right: 10px;
 }
 
 nav a {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .content {
-    margin-top: 10px;
-    height: 90vh;
-    display: grid;
+  margin-top: 10px;
+  height: 90vh;
+  display: grid;
 }
 
-.content>router-outlet {
-    display: none;
+.content > router-outlet {
+  display: none;
 }

@@ -5,12 +5,12 @@ import { VariableType } from '../../../model/types';
   selector: 'app-question',
   standalone: true,
   templateUrl: './question.component.html',
-  styleUrl: './question.component.css'
+  styleUrl: './question.component.css',
 })
 export class QuestionComponent {
   question = input<string | undefined>(undefined);
   value = input<VariableType | undefined>(undefined);
-  valueChange = output<VariableType>()
+  valueChange = output<VariableType>();
 
   click(): void {
     this.valueChange.emit(!this.value());

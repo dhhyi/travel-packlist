@@ -10,7 +10,7 @@ import { parseRules } from '../../model/parser';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './rules.component.html',
-  styleUrl: './rules.component.css'
+  styleUrl: './rules.component.css',
 })
 export class RulesComponent {
   persistence = inject(RulesPersistence);
@@ -20,15 +20,16 @@ export class RulesComponent {
   noOfRules = signal<number>(0);
 
   constructor() {
-    this.rules.valueChanges.pipe(
-      tap(() => {
-        this.error.set(undefined);
-        this.noOfRules.set(0);
-      }),
-      debounceTime(500),
-      takeUntilDestroyed()
-    ).subscribe(
-      {
+    this.rules.valueChanges
+      .pipe(
+        tap(() => {
+          this.error.set(undefined);
+          this.noOfRules.set(0);
+        }),
+        debounceTime(500),
+        takeUntilDestroyed(),
+      )
+      .subscribe({
         complete: () => {
           this.persistence.saveRules(this.rules.value);
         },
@@ -48,7 +49,7 @@ export class RulesComponent {
               }
             }
           }
-        }
+        },
       });
 
     this.rules.setValue(this.persistence.getRules());

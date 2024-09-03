@@ -1,29 +1,29 @@
 html,
 body {
-    margin: 0;
-    height: 100%;
+  margin: 0;
+  height: 100%;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
+  font-family: Arial, sans-serif;
+  display: flex;
 }
 
 app-root {
-    margin: 10px;
-    flex: 1;
+  margin: 10px;
+  flex: 1;
 }
 
 .card {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    background-color: #f8f9fa;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #f8f9fa;
 }
 
 .heading {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
