@@ -18,10 +18,8 @@ Question = QuestionString, "?", VariableDeclaration
 
 QuwstionString = String
 
-VariableDeclaration = "$", VariableName, "(", BooleanDefaultValue, ")"
+VariableDeclaration = "$", VariableName
 
-BooleanDefaultValue = "true" | "false"
-
-Condition = VariableName | "(", Condition, ")" | "NOT", VariableName | Condition, "AND", Condition | Condition, "OR", Condition
+Condition = VariableName | "NOT", VariableName | Condition, "AND", Condition | Condition, "OR", Condition
 
 ```

@@ -64,15 +64,14 @@ describe('Parser', () => {
 
   describe('parseQuestion', () => {
     it('should parse a question', () => {
-      const question = parseQuestion('Is it sunny? $sunny(true)');
+      const question = parseQuestion('Is it sunny? $sunny');
       expect(question.question).toEqual('Is it sunny?');
       expect(question.variable).toEqual('sunny');
-      expect(question.defaultValue).toEqual(true);
     });
 
     it('should throw an error if the question is invalid', () => {
       expect(() => parseQuestion('Is it sunny? $sunny(true')).toThrow();
-      expect(() => parseQuestion('Is it sunny? $sunny')).toThrow();
+      expect(() => parseQuestion('Is it sunny? $')).toThrow();
     });
   });
 
@@ -93,13 +92,12 @@ describe('Parser', () => {
   describe('parseEffects', () => {
     it('should parse effects', () => {
       const effects = parseEffects(
-        'Is it sunny? $sunny(true), [utility] Scrubber, [utility] Clothesline',
+        'Is it sunny? $sunny, [utility] Scrubber, [utility] Clothesline',
       );
 
       expect(effects.questions?.length).toEqual(1);
       expect(effects.questions[0].question).toEqual('Is it sunny?');
       expect(effects.questions[0].variable).toEqual('sunny');
-      expect(effects.questions[0].defaultValue).toEqual(true);
 
       expect(effects.items?.length).toEqual(2);
       expect(effects.items[0].category).toEqual('utility');
@@ -112,7 +110,7 @@ describe('Parser', () => {
   describe('parseRule', () => {
     it('should parse a rule', () => {
       const rule = parseRule(
-        'a AND b :- Is it sunny? $sunny(true), [utility] Scrubber, [utility] Clothesline',
+        'a AND b :- Is it sunny? $sunny, [utility] Scrubber, [utility] Clothesline',
       );
 
       expect(rule.condition.evaluate({ a: true, b: true })).toBe(true);

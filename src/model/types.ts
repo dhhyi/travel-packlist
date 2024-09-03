@@ -6,7 +6,6 @@ export interface Rule {
 export interface Question {
   question: string;
   variable: VariableName;
-  defaultValue: VariableType;
 }
 
 export interface Item {

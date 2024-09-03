@@ -36,18 +36,8 @@ export function parseCondition(input: string): Condition {
   }
 }
 
-function parseDefaultValue(input: string): VariableType {
-  if (input === 'true') {
-    return true;
-  } else if (input === 'false') {
-    return false;
-  } else {
-    throw new Error("Could not parse default value for '" + input + "'");
-  }
-}
-
 const questionRegex =
-  /^\s*(?<question>.*\?)\s+\$(?<variable>[a-zA-Z0-9_]+)\((?<default>.*?)\)\s*$/;
+  /^\s*(?<question>.*\?)\s+\$(?<variable>[a-zA-Z0-9_]+)\s*$/;
 
 export function parseQuestion(input: string): Question {
   const tokens = input.match(questionRegex);
@@ -58,7 +48,6 @@ export function parseQuestion(input: string): Question {
   return {
     question: tokens.groups['question'],
     variable: tokens.groups['variable'],
-    defaultValue: parseDefaultValue(tokens.groups['default']),
   };
 }
 
