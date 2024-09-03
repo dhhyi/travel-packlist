@@ -7,6 +7,12 @@
   flex: 1;
 }
 
+.feedback {
+  margin-top: 10px;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+}
+
 .error {
   color: red;
 }

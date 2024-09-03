@@ -1,8 +1,10 @@
 <textarea class="rules" [formControl]="rules"></textarea>
-@if (error(); as error) {
-  <pre class="error">{{ error }}</pre>
-} @else if (noOfRules() > 0) {
-  <pre class="success">Parsed {{ noOfRules() }} rules successfully!</pre>
-} @else {
-  <pre class="info">Waiting for input.</pre>
-}
+<div class="feedback">
+  @if (error(); as error) {
+    <div class="error">{{ error }}</div>
+  } @else if (noOfRules() > 0) {
+    <div class="success">Parsed {{ noOfRules() }} rules successfully!</div>
+  } @else {
+    <div class="info">Waiting for input.</div>
+  }
+</div>
