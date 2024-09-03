@@ -15,6 +15,8 @@ explore AND more :-
 
 explore OR more :-
 [Tutorial] Have fun exploring everything.;
+
+:- [Tutorial] Toggle me!;
 `;
 
 @Injectable({ providedIn: 'root' })
