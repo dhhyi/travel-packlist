@@ -1,8 +1,10 @@
 @for (group of groupedItems(); track group[0]) {
-<h2>{{ group[0] }}</h2>
-<ul>
-    @for (item of group[1]; track item) {
-    <li>{{ item.name }}</li>
-    }
-</ul>
+<div class="card">
+    <div class="heading">{{ group[0] }}</div>
+    <ul>
+        @for (item of group[1]; track item) {
+        <li>{{ item.name }}</li>
+        }
+    </ul>
+</div>
 }

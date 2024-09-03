@@ -1,6 +1,6 @@
 @if (question(); as question) {
-<div class="question-card" (click)="click()">
-    <span class="question">{{question.question}}</span>
+<div class="card question-card" (click)="click()">
+    <span class="heading">{{question.question}}</span>
     <input type="checkbox" [formControl]="formControl">
 </div>
 }

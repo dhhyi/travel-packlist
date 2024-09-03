@@ -1,7 +1,7 @@
-import { Component, computed, input, OnInit, output } from '@angular/core';
+import { Component, effect, input, OnInit, output } from '@angular/core';
 import { Question, VariableName, VariableType } from '../../../model/types';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-question',
@@ -19,8 +19,10 @@ export class QuestionComponent implements OnInit {
   modelChange = output<[VariableName, VariableType]>()
 
   constructor() {
-    this.formControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      if (value !== null && this.question()) {
+    const valueChanges = toSignal(this.formControl.valueChanges)
+    effect(() => {
+      const value = valueChanges()
+      if (typeof value === 'boolean' && this.question()) {
         const question = this.question()!;
         const modelValue = this.model()[question.variable];
         if (modelValue !== value) {
