@@ -4,7 +4,3 @@
     align-items: center;
     gap: 10px;
 }
-
-.question-card:hover {
-    background-color: #e9ecef;
-}

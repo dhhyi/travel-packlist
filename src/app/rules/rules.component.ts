@@ -4,12 +4,11 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, tap } from 'rxjs';
 import { RulesPersistence } from './rules.persistence';
 import { parseRules } from '../../model/parser';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css'
 })

@@ -1,11 +1,9 @@
 import { Component, input, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { VariableType } from '../../../model/types';
 
 @Component({
   selector: 'app-question',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css'
 })

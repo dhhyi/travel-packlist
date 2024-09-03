@@ -2,7 +2,6 @@ import { Component, computed, effect, inject, OnInit, signal } from '@angular/co
 import { RulesPersistence } from '../rules/rules.persistence';
 import { parseRules } from '../../model/parser';
 import { Rule, VariableName, VariableType } from '../../model/types';
-import { CommonModule } from '@angular/common';
 import { QuestionComponent } from './question/question.component';
 import { ItemsComponent } from './items/items.component';
 import { PacklistPersistence } from './packlist.persistence';
@@ -10,7 +9,7 @@ import { PacklistPersistence } from './packlist.persistence';
 @Component({
   selector: 'app-packlist',
   standalone: true,
-  imports: [CommonModule, QuestionComponent, ItemsComponent],
+  imports: [QuestionComponent, ItemsComponent],
   templateUrl: './packlist.component.html',
   styleUrl: './packlist.component.css'
 })
