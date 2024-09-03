@@ -11,12 +11,13 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
         "files.exclude": {
           ".devcontainer": true,
           ".update_devcontainer.sh": true
         }
       },
-      "extensions": ["angular.ng-template"]
+      "extensions": ["angular.ng-template", "esbenp.prettier-vscode"]
     }
   }
 }
