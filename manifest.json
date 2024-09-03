@@ -2,7 +2,7 @@
   "name": "Travel Packlist",
   "short_name": "Packlist",
   "description": "Pack everything for traveling.",
-  "start_url": "/",
+  "start_url": "/travel-packlist/",
   "background_color": "#000000",
   "theme_color": "#DDDDDD",
   "display": "standalone",
