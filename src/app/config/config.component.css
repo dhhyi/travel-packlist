@@ -1,0 +1,18 @@
+.group > * {
+  display: block;
+  margin: 10px 0;
+}
+
+.group:not(:last-child) {
+  margin-bottom: 30px; /* Adjust the value as needed */
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dddddd;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+}
