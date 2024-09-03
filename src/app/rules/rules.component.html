@@ -3,4 +3,6 @@
   <pre class="error">{{ error }}</pre>
 } @else if (noOfRules() > 0) {
   <pre class="success">Parsed {{ noOfRules() }} rules successfully!</pre>
+} @else {
+  <pre class="info">Waiting for input.</pre>
 }
