@@ -7,3 +7,13 @@ nav {
 nav a {
     margin-right: 10px;
 }
+
+.content {
+    margin-top: 10px;
+    height: 90vh;
+    display: grid;
+}
+
+.content>router-outlet {
+    display: none;
+}

@@ -1,6 +1,10 @@
-textarea {
-    min-width: 70vw;
-    min-height: 50vh;
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.rules {
+    flex: 1;
 }
 
 .error {
