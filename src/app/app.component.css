@@ -1,11 +1,23 @@
 h1,
 nav {
-  display: inline;
-  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-nav a {
-  margin-right: 10px;
+a.home {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.header {
+  color: black;
+  font-size: 24px;
+}
+
+a.config {
+  margin: 0 10px;
 }
 
 .content {
