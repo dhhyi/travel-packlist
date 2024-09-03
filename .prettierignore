@@ -1,4 +1,5 @@
 *.ico
+*.png
 pnpm-lock.yaml
 .husky/**
 .*ignore
