@@ -19,4 +19,9 @@ export class RulesPersistence {
       saveLocalStorage('rules', rules);
     }
   }
+
+  resetRules(): void {
+    this.rules = rulesTemplate;
+    saveLocalStorage('rules', rulesTemplate);
+  }
 }
