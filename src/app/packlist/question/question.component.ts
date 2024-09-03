@@ -1,47 +1,20 @@
-import { Component, effect, input, OnInit, output } from '@angular/core';
-import { Question, VariableName, VariableType } from '../../../model/types';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, input, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { VariableType } from '../../../model/types';
 
 @Component({
   selector: 'app-question',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './question.component.html',
   styleUrl: './question.component.css'
 })
-export class QuestionComponent implements OnInit {
-  question = input<Question | undefined>(undefined);
-  model = input<Record<VariableName, VariableType>>({});
-
-  formControl = new FormControl<boolean>(false);
-
-  modelChange = output<[VariableName, VariableType]>()
-
-  constructor() {
-    const valueChanges = toSignal(this.formControl.valueChanges)
-    effect(() => {
-      const value = valueChanges()
-      if (typeof value === 'boolean' && this.question()) {
-        const question = this.question()!;
-        const modelValue = this.model()[question.variable];
-        if (modelValue !== value) {
-          this.modelChange.emit([question.variable, value]);
-        }
-      }
-    });
-  }
-
-  ngOnInit(): void {
-    if (this.question()) {
-      const question = this.question()!;
-      const model = this.model();
-      const value = model[question.variable];
-      this.formControl.setValue(value ?? question.defaultValue);
-    }
-  }
+export class QuestionComponent {
+  question = input<string | undefined>(undefined);
+  value = input<VariableType | undefined>(undefined);
+  valueChange = output<VariableType>()
 
   click(): void {
-    this.formControl.setValue(!this.formControl.value);
+    this.valueChange.emit(!this.value());
   }
 }

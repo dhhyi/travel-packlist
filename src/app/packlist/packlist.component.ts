@@ -49,7 +49,7 @@ export class PacklistComponent implements OnInit {
     }
   }
 
-  modelChange([variable, value]: [VariableName, VariableType]): void {
+  modelChange(variable: VariableName, value: VariableType): void {
     this.model.update(model => ({ ...model, [variable]: value }));
   }
 }

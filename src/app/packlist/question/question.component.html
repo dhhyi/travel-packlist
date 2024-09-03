@@ -1,6 +1,12 @@
 @if (question(); as question) {
 <div class="card question-card" (click)="click()">
-    <span class="heading">{{question.question}}</span>
-    <input type="checkbox" [formControl]="formControl">
+    <span class="heading">{{question}}</span>
+    @if (value()) {
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" height="17px" viewBox="300 -1000 500 800" width="17px" fill="#000000">
+            <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z" />
+        </svg>
+    </span>
+    }
 </div>
 }
