@@ -7,7 +7,7 @@ import {
 const template = `:- Do you want to find out how this app works? $explore(false);
 
 explore :-
-[Tutorial] This app creates a conditional checklist for you after you answer questions.,
+[Tutorial] This app creates a conditional checklist of items after you answer some questions.,
 Want to know even more? $more(false);
 
 explore AND more :-
@@ -17,6 +17,7 @@ explore OR more :-
 [Tutorial] Have fun exploring everything.;
 
 :- [Tutorial] Toggle me!;
+NOT more :- [Tutorial] Toggle me too!;
 `;
 
 @Injectable({ providedIn: 'root' })
