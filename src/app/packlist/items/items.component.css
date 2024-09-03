@@ -1,0 +1,14 @@
+ul {
+    list-style-type: none;
+    margin: 10px 0;
+    padding-left: 10px;
+}
+
+li {
+    margin: 5px 0;
+}
+
+li.checked {
+    color: grey;
+    text-decoration: line-through;
+}
