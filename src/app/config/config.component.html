@@ -11,6 +11,18 @@
 </div>
 
 <div class="group">
+  <span class="heading">App Version</span>
+  <span>{{ env.version }}</span>
+  <span
+    ><a
+      class="commit-link"
+      href="https://github.com/dhhyi/travel-packlist/commit/{{ env.git_hash }}"
+      >{{ env.git_hash }}</a
+    ></span
+  >
+</div>
+
+<div class="group">
   <span class="heading">DANGER!</span>
   <button class="danger" (click)="resetEverything()">Reset Application</button>
 </div>

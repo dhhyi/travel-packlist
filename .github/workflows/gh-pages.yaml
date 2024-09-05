@@ -17,8 +17,10 @@ jobs:
         run: |
           npm install -g pnpm
           pnpm i
-          json="$(cat public/manifest.json)"
-          echo "$json" | jq -M '.start_url="/travel-packlist/"' > public/manifest.json
+          environment="$(cat src/environment/env.json)"
+          echo "$environment" | jq -M ".version=$(npm pkg get version)" | jq -M ".git_hash=\"$(git rev-parse HEAD)\"" > src/environment/env.json
+          manifest="$(cat public/manifest.json)"
+          echo "$manifest" | jq -M '.start_url="/travel-packlist/"' > public/manifest.json
           pnpm run build --base-href /travel-packlist/
 
       - name: Deploy 🚀

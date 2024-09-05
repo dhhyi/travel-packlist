@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { parseRules } from '../../model/parser';
+import env from '../../environment/env.json';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -17,6 +18,7 @@ export class ConfigComponent {
   packlist = inject(PacklistPersistence);
   rules = inject(RulesPersistence);
   router = inject(Router);
+  env = env;
 
   private isMobile() {
     const ua = navigator.userAgent;

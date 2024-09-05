@@ -21,3 +21,8 @@ button.danger {
   background-color: #ff0000;
   color: white;
 }
+
+a.commit-link {
+  color: #777;
+  text-decoration: none;
+}
