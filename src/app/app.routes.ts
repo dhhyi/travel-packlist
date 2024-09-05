@@ -3,6 +3,7 @@ import { AboutComponent } from './about/about.component';
 import { RulesComponent } from './rules/rules.component';
 import { PacklistComponent } from './packlist/packlist.component';
 import { ConfigComponent } from './config/config.component';
+import { DocumentationComponent } from './rules/documentation/documentation.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/packlist', pathMatch: 'full' },
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'config', component: ConfigComponent },
   { path: 'rules', component: RulesComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'documentation', component: DocumentationComponent },
   { path: '**', redirectTo: '/packlist' },
 ];

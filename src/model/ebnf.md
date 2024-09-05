@@ -16,7 +16,7 @@ ItemName = StringWithoutSpaces
 
 Question = QuestionString, "?", VariableDeclaration
 
-QuwstionString = String
+QuestionString = String
 
 VariableDeclaration = "$", VariableName
 
