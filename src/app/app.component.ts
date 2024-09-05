@@ -17,7 +17,6 @@ export class AppComponent {
   constructor() {
     this.swUpdate.versionUpdates.subscribe((event) => {
       if (event.type === 'VERSION_READY') {
-        window.alert('Reloading new Version');
         this.swUpdate.activateUpdate().then(() => {
           window.location.reload();
         });
