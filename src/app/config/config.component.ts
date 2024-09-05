@@ -33,7 +33,7 @@ export class ConfigComponent {
       this.router.navigate(['/packlist']);
     }
   }
-  exportRules() {
+  downloadRules() {
     const rules = this.rules.getRules();
     const blob = new Blob([rules], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -41,6 +41,19 @@ export class ConfigComponent {
     a.href = url;
     a.download = 'travl-packlist-rules.txt';
     a.click();
+  }
+
+  shareRules() {
+    const rules = this.rules.getRules();
+    navigator.share({
+      title: 'Travel Packlist Rules',
+      text: 'Share your rules',
+      files: [
+        new File([rules], 'travel-packlist-rules.txt', {
+          type: 'text/plain',
+        }),
+      ],
+    });
   }
 
   importRules() {
