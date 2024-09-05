@@ -17,6 +17,13 @@ export class ConfigComponent {
   rules = inject(RulesPersistence);
   router = inject(Router);
 
+  private isMobile() {
+    const ua = navigator.userAgent;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
+      ua,
+    );
+  }
+
   resetChecklist() {
     if (window.confirm('Are you sure you want to reset the checklist?')) {
       this.packlist.saveAnswers({});
@@ -56,6 +63,14 @@ export class ConfigComponent {
         }),
       ],
     });
+  }
+
+  exportRules() {
+    if (this.isMobile()) {
+      this.shareRules();
+    } else {
+      this.downloadRules();
+    }
   }
 
   importRules() {
