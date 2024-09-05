@@ -33,4 +33,29 @@ export class ConfigComponent {
       this.router.navigate(['/packlist']);
     }
   }
+  exportRules() {
+    const rules = this.rules.getRules();
+    const blob = new Blob([rules], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'travl-packlist-rules.txt';
+    a.click();
+  }
+
+  importRules() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.txt';
+    input.onchange = async () => {
+      const file = input.files?.[0];
+      if (!file) {
+        return;
+      }
+      const text = await file.text();
+      this.rules.saveRules(text);
+      this.router.navigate(['/packlist']);
+    };
+    input.click();
+  }
 }
