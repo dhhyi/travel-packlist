@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
+import { parseRules } from '../../model/parser';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -66,7 +67,7 @@ export class ConfigComponent {
   }
 
   exportRules() {
-    if (this.isMobile()) {
+    if (this.isMobile() && 'share' in navigator) {
       this.shareRules();
     } else {
       this.downloadRules();
@@ -84,7 +85,12 @@ export class ConfigComponent {
       }
       const text = await file.text();
       this.rules.saveRules(text);
-      this.router.navigate(['/packlist']);
+      try {
+        parseRules(text);
+        this.router.navigate(['/packlist']);
+      } catch (e) {
+        this.router.navigate(['/rules']);
+      }
     };
     input.click();
   }
