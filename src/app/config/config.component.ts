@@ -3,6 +3,8 @@ import { Router, RouterModule } from '@angular/router';
 import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
 
+const defaultFileName = 'travel-packlist-rules.txt';
+
 @Component({
   selector: 'app-config',
   standalone: true,
@@ -33,23 +35,23 @@ export class ConfigComponent {
       this.router.navigate(['/packlist']);
     }
   }
+
   downloadRules() {
     const rules = this.rules.getRules();
     const blob = new Blob([rules], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'travl-packlist-rules.txt';
+    a.download = defaultFileName;
     a.click();
   }
 
   shareRules() {
     const rules = this.rules.getRules();
     navigator.share({
-      title: 'Travel Packlist Rules',
-      text: 'Share your rules',
+      title: defaultFileName,
       files: [
-        new File([rules], 'travel-packlist-rules.txt', {
+        new File([rules], defaultFileName, {
           type: 'text/plain',
         }),
       ],
