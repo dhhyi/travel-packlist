@@ -10,8 +10,6 @@ import { SwUpdate } from '@angular/service-worker';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'travel-packlist';
-
   swUpdate = inject(SwUpdate);
 
   constructor() {
