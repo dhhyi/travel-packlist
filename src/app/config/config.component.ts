@@ -90,7 +90,7 @@ export class ConfigComponent {
       try {
         parseRules(text);
         this.router.navigate(['/packlist']);
-      } catch (e) {
+      } catch (_) {
         this.router.navigate(['/rules']);
       }
     };

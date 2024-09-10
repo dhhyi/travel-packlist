@@ -9,7 +9,6 @@ import {
   Rule,
   True,
   Variable,
-  VariableType,
 } from './types';
 
 export function parseCondition(input: string): Condition {
