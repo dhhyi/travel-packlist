@@ -33,7 +33,7 @@ export class True implements Condition {
 }
 
 export class Variable implements Condition {
-  constructor(private variable: VariableName) {}
+  constructor(public readonly variable: VariableName) {}
 
   evaluate(model: Record<VariableName, VariableType>): boolean {
     return model[this.variable];
@@ -41,7 +41,7 @@ export class Variable implements Condition {
 }
 
 export class Not implements Condition {
-  constructor(private not: Condition) {}
+  constructor(public readonly not: Condition) {}
 
   evaluate(model: Record<VariableName, VariableType>): boolean {
     return !this.not.evaluate(model);
@@ -50,8 +50,8 @@ export class Not implements Condition {
 
 export class And implements Condition {
   constructor(
-    private left: Condition,
-    private right: Condition,
+    public readonly left: Condition,
+    public readonly right: Condition,
   ) {}
 
   evaluate(model: Record<VariableName, VariableType>): boolean {
@@ -61,8 +61,8 @@ export class And implements Condition {
 
 export class Or implements Condition {
   constructor(
-    private left: Condition,
-    private right: Condition,
+    public readonly left: Condition,
+    public readonly right: Condition,
   ) {}
 
   evaluate(model: Record<VariableName, VariableType>): boolean {
