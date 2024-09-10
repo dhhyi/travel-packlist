@@ -1,10 +1,14 @@
 <textarea class="rules" [formControl]="rules"></textarea>
 <div class="feedback">
-  @if (error(); as error) {
-    <div class="error">{{ error }}</div>
-  } @else if (noOfRules() > 0) {
-    <div class="success">Parsed {{ noOfRules() }} rules successfully!</div>
-  } @else {
-    <div class="info">Waiting for input.</div>
+  @switch (state()) {
+    @case ("pending") {
+      <div class="info">Waiting for input.</div>
+    }
+    @case ("success") {
+      <div class="success">Parsed {{ noOfRules() }} rules successfully!</div>
+    }
+    @default {
+      <div class="error">{{ state() }}</div>
+    }
   }
 </div>

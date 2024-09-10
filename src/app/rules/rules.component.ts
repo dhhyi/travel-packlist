@@ -1,8 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, tap } from 'rxjs';
 import { RulesPersistence } from './rules.persistence';
+import { Rule } from '../../model/types';
 import { parseRules } from '../../model/parser';
 
 @Component({
@@ -16,15 +17,15 @@ export class RulesComponent {
   persistence = inject(RulesPersistence);
 
   rules = new FormControl('');
-  error = signal<string | undefined>(undefined);
-  noOfRules = signal<number>(0);
+  state = signal<'success' | 'pending' | string>('pending');
+  parsedRules = signal<Rule[]>([]);
+  noOfRules = computed<number>(() => this.parsedRules().length);
 
   constructor() {
     this.rules.valueChanges
       .pipe(
         tap(() => {
-          this.error.set(undefined);
-          this.noOfRules.set(0);
+          this.state.set('pending');
         }),
         debounceTime(500),
         takeUntilDestroyed(),
@@ -39,11 +40,11 @@ export class RulesComponent {
           if (value) {
             try {
               const parsed = parseRules(value);
-              this.error.set(undefined);
-              this.noOfRules.set(parsed.length);
+              this.parsedRules.set(parsed);
+              this.state.set('success');
             } catch (error) {
               if (error instanceof Error) {
-                this.error.set(error.message);
+                this.state.set(error.message);
               } else {
                 console.error(error);
               }
