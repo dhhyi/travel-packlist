@@ -120,3 +120,27 @@ export function parseRules(input: string): Rule[] {
     .filter(Boolean)
     .map(parseRule);
 }
+
+export function extractVariables(rules: Rule[]): string[] {
+  const variables = new Set<string>();
+
+  for (const rule of rules) {
+    for (const question of rule.effects.questions) {
+      variables.add(question.variable);
+    }
+  }
+
+  return Array.from(variables);
+}
+
+export function extractCategories(rules: Rule[]): string[] {
+  const categories = new Set<string>();
+
+  for (const rule of rules) {
+    for (const item of rule.effects.items) {
+      categories.add(item.category);
+    }
+  }
+
+  return Array.from(categories);
+}

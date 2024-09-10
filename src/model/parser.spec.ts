@@ -1,4 +1,6 @@
 import {
+  extractCategories,
+  extractVariables,
   parseCondition,
   parseEffects,
   parseItem,
@@ -127,6 +129,32 @@ describe('Parser', () => {
       `);
 
       expect(rules.length).toEqual(1);
+    });
+  });
+
+  describe('extractVariables', () => {
+    it('should extract variables', () => {
+      const rules = [
+        parseRule('a AND b :- Is it sunny? $sunny, [utility] Scrubber'),
+        parseRule('c OR d :- [utility] Clothesline'),
+        parseRule('e :- Will it be cold? $cold'),
+      ];
+
+      const variables = extractVariables(rules);
+      expect(variables).toEqual(['sunny', 'cold']);
+    });
+  });
+
+  describe('extractCategories', () => {
+    it('should extract categories', () => {
+      const rules = [
+        parseRule('a AND b :- Is it sunny? $sunny, [utility] Scrubber'),
+        parseRule('c OR d :- [washing] Clothesline'),
+        parseRule('e :- Will it be cold? $cold'),
+      ];
+
+      const categories = extractCategories(rules);
+      expect(categories).toEqual(['utility', 'washing']);
     });
   });
 });
