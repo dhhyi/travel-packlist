@@ -4,6 +4,7 @@ import {
   parseItem,
   parseQuestion,
   parseRule,
+  parseRules,
 } from './parser';
 
 describe('Parser', () => {
@@ -114,6 +115,18 @@ describe('Parser', () => {
       );
 
       expect(rule.condition.evaluate({ a: true, b: true })).toBe(true);
+    });
+  });
+
+  describe('parseRules', () => {
+    it('should parse rules and ignore comments', () => {
+      const rules = parseRules(`
+        # Weather rules
+        :- Is it sunny? $sunny, # always ask
+           [utility] Umbrella; # always bring it
+      `);
+
+      expect(rules.length).toEqual(1);
     });
   });
 });

@@ -112,6 +112,7 @@ export function parseRules(input: string): Rule[] {
   const inputWOComments = input
     .split('\n')
     .filter((line) => !line.trim().startsWith('#'))
+    .map((line) => line.replace(/#.*/, ''))
     .join('\n');
 
   return inputWOComments
