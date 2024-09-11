@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="editor-row">
+    <app-editor-condition
+      [variables]="variables()"
+      [condition]="rule().condition"
+      (conditionChanged)="updateCondition($event)"
+    ></app-editor-condition>
+    <button (click)="resetCondition()">X</button>
+  </div>
+
+  @for (question of rule().effects.questions; track $index) {
+    <div class="editor-row">
+      <app-editor-question
+        [question]="question"
+        (questionChanged)="updateQuestion($index, $event)"
+      ></app-editor-question>
+      <button (click)="deleteQuestion($index)">X</button>
+    </div>
+  }
+
+  @for (item of rule().effects.items; track $index) {
+    <div class="editor-row">
+      <app-editor-item
+        [item]="item"
+        [categories]="categories()"
+        (itemChanged)="updateItem($index, $event)"
+      ></app-editor-item>
+      <button (click)="deleteItem($index)">X</button>
+    </div>
+  }
+
+  <div class="button-row">
+    <button (click)="deleteRule()">Delete Rule</button>
+    <button (click)="addQuestion()">+ Question</button>
+    <button (click)="addItem()">+ Item</button>
+  </div>
+
+  @if (errorMessage(); as error) {
+    <pre class="error">{{ error }}</pre>
+    <pre class="code">{{ ruleDebugString() }}</pre>
+  }
+</div>

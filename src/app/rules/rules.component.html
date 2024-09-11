@@ -1,14 +1,11 @@
-<textarea class="rules" [formControl]="rules"></textarea>
-<div class="feedback">
-  @switch (state()) {
-    @case ("pending") {
-      <div class="info">Waiting for input.</div>
-    }
-    @case ("success") {
-      <div class="success">Parsed {{ noOfRules() }} rules successfully!</div>
-    }
-    @default {
-      <div class="error">{{ state() }}</div>
-    }
+<div>
+  @for (rule of parsedRules(); track $index) {
+    <app-editor-rule
+      [rule]="rule"
+      [categories]="categories()"
+      [variables]="variables()"
+      (ruleChanged)="updateRule($index, $event)"
+    ></app-editor-rule>
   }
+  <button (click)="addRule()">+ Rule</button>
 </div>

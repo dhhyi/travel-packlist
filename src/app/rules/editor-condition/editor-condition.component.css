@@ -1,0 +1,21 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.keyword {
+  margin: 0px 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.not-expression {
+  display: grid;
+  grid-template-columns: 50px auto;
+}
+
+.and-expression,
+.or-expression {
+  display: grid;
+  grid-template-columns: auto 50px auto;
+}

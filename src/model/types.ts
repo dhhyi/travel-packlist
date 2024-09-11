@@ -40,6 +40,14 @@ export class Variable implements Condition {
   }
 }
 
+export class PleaseSelect extends Variable {
+  static readonly string = 'please_select';
+
+  constructor() {
+    super(PleaseSelect.string);
+  }
+}
+
 export class Not implements Condition {
   constructor(public readonly not: Condition) {}
 

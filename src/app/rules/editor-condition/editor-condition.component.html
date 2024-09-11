@@ -1,0 +1,94 @@
+@switch (state().type) {
+  @case ("true") {
+    <ng-container *ngTemplateOutlet="select; context: ''"></ng-container>
+  }
+  @case ("variable") {
+    <ng-container *ngTemplateOutlet="select; context: state()"></ng-container>
+  }
+  @case ("not") {
+    <div class="not-expression">
+      <span class="keyword">NOT</span>
+      @if (asNot(state().condition); as not) {
+        <app-editor-condition
+          [condition]="not.not"
+          [variables]="variables()"
+          [forbidden]="['', 'not', 'and', 'or']"
+          (conditionChanged)="bubbleNotChange($event)"
+        ></app-editor-condition>
+      }
+    </div>
+  }
+  @case ("and") {
+    <div class="and-expression">
+      @if (asAnd(state().condition); as and) {
+        <app-editor-condition
+          [condition]="and.left"
+          [variables]="variables()"
+          [forbidden]="['', 'or']"
+          (conditionChanged)="bubbleAndLeftChange($event)"
+        >
+        </app-editor-condition>
+        <span class="keyword">AND</span>
+        <app-editor-condition
+          [condition]="and.right"
+          [variables]="variables()"
+          [forbidden]="['', 'or']"
+          (conditionChanged)="bubbleAndRightChange($event)"
+        ></app-editor-condition>
+      }
+    </div>
+  }
+  @case ("or") {
+    <div class="or-expression">
+      @if (asOr(state().condition); as or) {
+        <app-editor-condition
+          [condition]="or.left"
+          [variables]="variables()"
+          [forbidden]="['']"
+          (conditionChanged)="bubbleOrLeftChange($event)"
+        >
+        </app-editor-condition>
+        <span class="keyword">OR</span>
+        <app-editor-condition
+          [condition]="or.right"
+          [variables]="variables()"
+          [forbidden]="['']"
+          (conditionChanged)="bubbleOrRightChange($event)"
+        ></app-editor-condition>
+      }
+    </div>
+  }
+  @case ("unknown") {
+    <pre>UNKNOWN</pre>
+  }
+}
+
+<ng-template #select let-context="context">
+  <select #select (change)="selection(select.value)">
+    @for (option of options(); track option) {
+      @switch (option) {
+        @case ("") {
+          <option class="special" value="">always active</option>
+        }
+        @case ("not") {
+          <option class="special" value="not">NOT x</option>
+        }
+        @case ("and") {
+          <option class="special" value="and">x AND x</option>
+        }
+        @case ("or") {
+          <option class="special" value="or">x OR x</option>
+        }
+        @default {
+          <option
+            value="{{ option }}"
+            [selected]="context === option"
+            [disabled]="option === please_select"
+          >
+            {{ option }}
+          </option>
+        }
+      }
+    }
+  </select>
+</ng-template>

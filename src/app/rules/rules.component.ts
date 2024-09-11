@@ -1,58 +1,49 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, tap } from 'rxjs';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PleaseSelect, Rule } from '../../model/types';
+import {
+  extractCategories,
+  extractVariables,
+  parseRules,
+} from '../../model/parser';
+import { EditorRuleComponent } from './editor-rule/editor-rule.component';
+import { EditRulesRawComponent } from './edit-rules-raw/edit-rules-raw.component';
 import { RulesPersistence } from './rules.persistence';
-import { Rule } from '../../model/types';
-import { parseRules } from '../../model/parser';
+import { serializeRules } from '../../model/serializer';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, EditorRuleComponent, EditRulesRawComponent],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css',
 })
-export class RulesComponent {
+export class RulesComponent implements OnInit {
+  parsedRules = signal<Rule[]>([]);
+  categories = computed<string[]>(() => extractCategories(this.parsedRules()));
+  variables = computed<string[]>(() => extractVariables(this.parsedRules()));
+
   persistence = inject(RulesPersistence);
 
-  rules = new FormControl('');
-  state = signal<'success' | 'pending' | string>('pending');
-  parsedRules = signal<Rule[]>([]);
-  noOfRules = computed<number>(() => this.parsedRules().length);
+  ngOnInit(): void {
+    this.parsedRules.set(parseRules(this.persistence.getRules()));
+  }
 
-  constructor() {
-    this.rules.valueChanges
-      .pipe(
-        tap(() => {
-          this.state.set('pending');
-        }),
-        debounceTime(500),
-        takeUntilDestroyed(),
-      )
-      .subscribe({
-        complete: () => {
-          this.persistence.saveRules(this.rules.value);
-        },
-        next: (value) => {
-          this.persistence.saveRules(value);
+  updateRule(index: number, rule: Rule | null) {
+    const rules = this.parsedRules();
+    if (rule) {
+      rules[index] = rule;
+    } else {
+      rules.splice(index, 1);
+    }
+    this.parsedRules.set(rules);
+    this.persistence.saveRules(serializeRules(rules));
+  }
 
-          if (value) {
-            try {
-              const parsed = parseRules(value);
-              this.parsedRules.set(parsed);
-              this.state.set('success');
-            } catch (error) {
-              if (error instanceof Error) {
-                this.state.set(error.message);
-              } else {
-                console.error(error);
-              }
-            }
-          }
-        },
-      });
-
-    this.rules.setValue(this.persistence.getRules());
+  addRule() {
+    this.updateRule(this.parsedRules().length, {
+      condition: new PleaseSelect(),
+      effects: { questions: [], items: [] },
+    });
   }
 }
