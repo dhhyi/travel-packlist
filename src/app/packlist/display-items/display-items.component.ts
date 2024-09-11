@@ -9,13 +9,13 @@ function serialize(item: Item): string {
 }
 
 @Component({
-  selector: 'app-items',
+  selector: 'app-display-items',
   standalone: true,
   imports: [KeyValuePipe, ItemsStatusComponent],
-  templateUrl: './items.component.html',
-  styleUrl: './items.component.css',
+  templateUrl: './display-items.component.html',
+  styleUrl: './display-items.component.css',
 })
-export class ItemsComponent {
+export class DisplayItemsComponent {
   items = input<Item[]>([]);
 
   persistence = inject(PacklistPersistence);

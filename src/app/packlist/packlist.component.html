@@ -1,11 +1,11 @@
 @for (question of questions(); track question.question) {
   <div class="question">
-    <app-question
+    <app-display-question
       [question]="question.question"
       [value]="model()[question.variable]"
       (valueChange)="modelChange(question.variable, $event)"
-    ></app-question>
+    ></app-display-question>
   </div>
 }
 
-<app-items [items]="items()"></app-items>
+<app-display-items [items]="items()"></app-display-items>

@@ -17,7 +17,11 @@
           ".update_devcontainer.sh": true
         }
       },
-      "extensions": ["angular.ng-template", "esbenp.prettier-vscode"]
+      "extensions": [
+        "angular.ng-template",
+        "tomwhite007.rename-angular-component",
+        "esbenp.prettier-vscode"
+      ]
     }
   }
 }

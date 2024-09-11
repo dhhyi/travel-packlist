@@ -9,14 +9,14 @@ import {
 import { RulesPersistence } from '../rules/rules.persistence';
 import { parseRules } from '../../model/parser';
 import { Rule, VariableName, VariableType } from '../../model/types';
-import { QuestionComponent } from './question/question.component';
-import { ItemsComponent } from './items/items.component';
+import { DisplayQuestionComponent } from './display-question/display-question.component';
+import { DisplayItemsComponent } from './display-items/display-items.component';
 import { PacklistPersistence } from './packlist.persistence';
 
 @Component({
   selector: 'app-packlist',
   standalone: true,
-  imports: [QuestionComponent, ItemsComponent],
+  imports: [DisplayQuestionComponent, DisplayItemsComponent],
   templateUrl: './packlist.component.html',
   styleUrl: './packlist.component.css',
 })

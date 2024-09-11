@@ -2,12 +2,12 @@ import { Component, input, output } from '@angular/core';
 import { VariableType } from '../../../model/types';
 
 @Component({
-  selector: 'app-question',
+  selector: 'app-display-question',
   standalone: true,
-  templateUrl: './question.component.html',
-  styleUrl: './question.component.css',
+  templateUrl: './display-question.component.html',
+  styleUrl: './display-question.component.css',
 })
-export class QuestionComponent {
+export class DisplayQuestionComponent {
   question = input<string | undefined>(undefined);
   value = input<VariableType | undefined>(undefined);
   valueChange = output<VariableType>();
