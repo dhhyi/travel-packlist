@@ -64,7 +64,7 @@
 }
 
 <ng-template #select let-context="context">
-  <select #select (change)="selection(select.value)">
+  <select class="code-input" #select (change)="selection(select.value)">
     @for (option of options(); track option) {
       @switch (option) {
         @case ("") {

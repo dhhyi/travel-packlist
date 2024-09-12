@@ -32,3 +32,7 @@ app-root {
   font-size: 18px;
   font-weight: bold;
 }
+
+.code-input {
+  font-family: monospace;
+}
