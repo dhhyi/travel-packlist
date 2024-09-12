@@ -21,6 +21,7 @@ export class EditorConditionComponent {
   condition = input.required<Condition>();
   variables = input.required<string[]>();
   forbidden = input<('' | 'not' | 'or' | 'and')[]>([]);
+  depth = input<number>(0);
 
   please_select = PleaseSelect.string;
 

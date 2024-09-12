@@ -3,6 +3,10 @@
   grid-template-columns: 1fr;
 }
 
+.condition {
+  display: flex;
+}
+
 .keyword {
   margin: 0 6px;
   font-weight: bold;
