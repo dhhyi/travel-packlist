@@ -10,7 +10,8 @@
     "prepare": "husky && npm run convert-documentation",
     "convert-documentation": "node convert-documentation.mjs",
     "format": "prettier --write '**/*.*'",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "stylelint": "stylelint '**/*.css'"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +43,8 @@
     "jest-preset-angular": "^14.2.2",
     "prettier": "^3.3.3",
     "showdown": "^2.1.0",
+    "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
     "typescript": "~5.5.2",
     "typescript-eslint": "8.1.0"
   }
