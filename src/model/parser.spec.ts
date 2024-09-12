@@ -72,6 +72,12 @@ describe('Parser', () => {
       expect(question.variable).toEqual('sunny');
     });
 
+    it('should parse a question without question mark', () => {
+      const question = parseQuestion('AirBnB $airbnb');
+      expect(question.question).toEqual('AirBnB');
+      expect(question.variable).toEqual('airbnb');
+    });
+
     it('should throw an error if the question is invalid', () => {
       expect(() => parseQuestion('Is it sunny? $sunny(true')).toThrow();
       expect(() => parseQuestion('Is it sunny? $')).toThrow();

@@ -35,8 +35,7 @@ export function parseCondition(input: string): Condition {
   }
 }
 
-const questionRegex =
-  /^\s*(?<question>.*\?)\s+\$(?<variable>[a-zA-Z0-9_]+)\s*$/;
+const questionRegex = /^\s*(?<question>.*)\s+\$(?<variable>[a-zA-Z0-9_]+)\s*$/;
 
 export function parseQuestion(input: string): Question {
   const tokens = input.match(questionRegex);
