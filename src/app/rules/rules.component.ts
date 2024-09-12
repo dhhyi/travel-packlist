@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PleaseSelect, Rule } from '../../model/types';
 import {
@@ -20,13 +20,21 @@ import { serializeRules } from '../../model/serializer';
 })
 export class RulesComponent implements OnInit {
   parsedRules = signal<Rule[]>([]);
-  categories = computed<string[]>(() => extractCategories(this.parsedRules()));
-  variables = computed<string[]>(() => extractVariables(this.parsedRules()));
+
+  categories = signal<string[]>([]);
+
+  variables = signal<string[]>([]);
 
   persistence = inject(RulesPersistence);
 
   ngOnInit(): void {
-    this.parsedRules.set(parseRules(this.persistence.getRules()));
+    this.calculateFields(parseRules(this.persistence.getRules()));
+  }
+
+  calculateFields(parsedRules: Rule[]) {
+    this.parsedRules.set(parsedRules);
+    this.categories.set(extractCategories(parsedRules));
+    this.variables.set(extractVariables(parsedRules));
   }
 
   updateRule(index: number, rule: Rule | null) {
@@ -36,8 +44,9 @@ export class RulesComponent implements OnInit {
     } else {
       rules.splice(index, 1);
     }
-    this.parsedRules.set(rules);
-    this.persistence.saveRules(serializeRules(rules));
+    const serializedRules = serializeRules(rules);
+    this.persistence.saveRules(serializedRules);
+    this.calculateFields(rules);
   }
 
   addRule() {
