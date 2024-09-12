@@ -12,7 +12,10 @@ import {
 } from './types';
 
 export function serializeRules(rules: Rule[]): string {
-  return rules.map(serialize).join('\n\n');
+  return rules
+    .map(serialize)
+    .map((rule) => rule + ';')
+    .join('\n\n');
 }
 
 function serializeEffects(effects: Effects): string[] {
@@ -44,8 +47,6 @@ export function serialize(input: Rule | Condition | Question | Item): string {
         tokens.push('\n', '   ', effect);
       }
     }
-    tokens.push(';');
-
     return tokens.join('');
   } else if (input instanceof True) {
     return '';
