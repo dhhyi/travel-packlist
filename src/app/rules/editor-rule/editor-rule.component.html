@@ -5,7 +5,7 @@
       [condition]="rule().condition"
       (conditionChanged)="updateCondition($event)"
     ></app-editor-condition>
-    <button (click)="resetCondition()">X</button>
+    <button class="delete-icon" (click)="resetCondition()">X</button>
   </div>
 
   @for (question of rule().effects.questions; track $index) {
@@ -14,7 +14,7 @@
         [question]="question"
         (questionChanged)="updateQuestion($index, $event)"
       ></app-editor-question>
-      <button (click)="deleteQuestion($index)">X</button>
+      <button class="delete-icon" (click)="deleteQuestion($index)">X</button>
     </div>
   }
 
@@ -25,12 +25,12 @@
         [categories]="categories()"
         (itemChanged)="updateItem($index, $event)"
       ></app-editor-item>
-      <button (click)="deleteItem($index)">X</button>
+      <button class="delete-icon" (click)="deleteItem($index)">X</button>
     </div>
   }
 
   <div class="button-row">
-    <button (click)="deleteRule()">Delete Rule</button>
+    <button class="delete" (click)="deleteRule()">Delete Rule</button>
     <button (click)="addQuestion()">+ Question</button>
     <button (click)="addItem()">+ Item</button>
   </div>

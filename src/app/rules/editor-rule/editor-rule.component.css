@@ -6,11 +6,9 @@
 .editor-row {
   display: grid;
   grid-template-columns: auto 25px;
-}
+  gap: 5px;
 
-.button-row {
-  display: flex;
-  justify-content: flex-end;
+  padding: 3px 0px;
 }
 
 .code,
@@ -20,5 +18,30 @@
 }
 
 .error {
-  color: red;
+  color: var(--red);
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+}
+
+.button-row > .delete {
+  order: 1;
+  margin-left: auto;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  padding: 5px;
+  border: 0;
+}
+
+.delete-icon,
+.delete {
+  border: 1px solid var(--gray);
+  background-color: var(--red);
+  border-radius: 6px;
 }

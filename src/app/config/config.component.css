@@ -18,11 +18,11 @@ button {
 }
 
 button.danger {
-  background-color: #ff0000;
+  background-color: var(--red);
   color: white;
 }
 
 a.commit-link {
-  color: #777;
+  color: var(--gray);
   text-decoration: none;
 }

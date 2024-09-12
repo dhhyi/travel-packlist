@@ -1,4 +1,9 @@
+:host {
+  display: flex;
+}
+
 form {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 2fr;
 }
