@@ -1,5 +1,5 @@
 # .husky/pre-commit
 prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
-npm run lint --fix
-npm run stylelint --fix
+npm run lint -- --fix
+npm run stylelint -- --fix
 git update-index --again
