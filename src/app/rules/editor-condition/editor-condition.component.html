@@ -75,7 +75,12 @@
 </div>
 
 <ng-template #select let-context="context">
-  <select class="code-input" #select (change)="selection(select.value)">
+  <select
+    class="code-input"
+    #select
+    (change)="selection(select.value)"
+    [disabled]="!mode.isMode('edit')"
+  >
     @for (option of options(); track option) {
       @switch (option) {
         @case ("") {

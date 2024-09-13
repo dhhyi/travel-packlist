@@ -4,10 +4,15 @@
 }
 
 .editor-row {
-  display: grid;
-  grid-template-columns: auto 25px;
+  display: flex;
+  justify-content: space-between;
   gap: 5px;
   padding: 3px 0;
+  height: 30px;
+}
+
+.editor-row > *:not(button) {
+  flex: 1;
 }
 
 .code,
@@ -26,11 +31,6 @@
   gap: 5px;
 }
 
-.button-row > .delete {
-  order: 1;
-  margin-left: auto;
-}
-
 button {
   background-color: transparent;
   cursor: pointer;
@@ -39,8 +39,20 @@ button {
 }
 
 .delete-icon,
-.delete {
+.delete,
+.cut-icon,
+.paste {
   border: 1px solid var(--gray);
-  background-color: var(--red);
   border-radius: 6px;
+  color: white;
+}
+
+.delete-icon,
+.delete {
+  background-color: var(--red);
+}
+
+.cut-icon,
+.paste {
+  background-color: var(--blue);
 }

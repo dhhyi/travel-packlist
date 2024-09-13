@@ -1,6 +1,7 @@
 :root {
   --red: #e00;
   --gray: #777;
+  --blue: rgb(33 87 224);
 }
 
 html,
@@ -35,4 +36,13 @@ app-root {
 
 .code-input {
   font-family: monospace;
+}
+
+select[disabled],
+input[disabled] {
+  color: black;
+
+  /* make dropdown icon invisible */
+  appearance: none;
+  border: 0;
 }

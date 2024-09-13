@@ -1,8 +1,9 @@
-import { Component, input, OnChanges, output } from '@angular/core';
+import { Component, inject, input, OnChanges, output } from '@angular/core';
 import { Item } from '../../../model/types';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RulesMode } from '../rules.mode';
 
 @Component({
   selector: 'app-editor-item',
@@ -22,6 +23,8 @@ export class EditorItemComponent implements OnChanges {
     name: new FormControl(''),
   });
 
+  mode = inject(RulesMode);
+
   constructor() {
     this.control.valueChanges
       .pipe(debounceTime(500), takeUntilDestroyed())
@@ -31,6 +34,17 @@ export class EditorItemComponent implements OnChanges {
           return;
         }
         this.itemChanged.emit(value as Item);
+      });
+
+    this.mode
+      .asObservable()
+      .pipe(takeUntilDestroyed())
+      .subscribe((mode) => {
+        if (mode === 'edit') {
+          this.control.enable({ emitEvent: false });
+        } else {
+          this.control.disable({ emitEvent: false });
+        }
       });
   }
 

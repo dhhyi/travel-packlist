@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import {
   And,
   Condition,
@@ -9,6 +9,7 @@ import {
   Variable,
 } from '../../../model/types';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
+import { RulesMode } from '../rules.mode';
 
 @Component({
   selector: 'app-editor-condition',
@@ -22,6 +23,8 @@ export class EditorConditionComponent {
   variables = input.required<string[]>();
   forbidden = input<('' | 'not' | 'or' | 'and')[]>([]);
   depth = input<number>(0);
+
+  mode = inject(RulesMode);
 
   please_select = PleaseSelect.string;
 

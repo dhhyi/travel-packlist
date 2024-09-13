@@ -5,7 +5,9 @@
       [condition]="rule().condition"
       (conditionChanged)="updateCondition($event)"
     ></app-editor-condition>
-    <button class="delete-icon" (click)="resetCondition()">X</button>
+    @if (mode.isMode("delete")) {
+      <button class="delete-icon" (click)="resetCondition()">X</button>
+    }
   </div>
 
   @for (question of rule().effects.questions; track $index) {
@@ -14,7 +16,11 @@
         [question]="question"
         (questionChanged)="updateQuestion($index, $event)"
       ></app-editor-question>
-      <button class="delete-icon" (click)="deleteQuestion($index)">X</button>
+      @if (mode.isMode("delete")) {
+        <button class="delete-icon" (click)="deleteQuestion($index)">X</button>
+      } @else if (mode.isMode("cut-paste")) {
+        <button class="cut-icon" (click)="cutQuestion($index)">C</button>
+      }
     </div>
   }
 
@@ -25,14 +31,24 @@
         [categories]="categories()"
         (itemChanged)="updateItem($index, $event)"
       ></app-editor-item>
-      <button class="delete-icon" (click)="deleteItem($index)">X</button>
+      @if (mode.isMode("delete")) {
+        <button class="delete-icon" (click)="deleteItem($index)">X</button>
+      } @else if (mode.isMode("cut-paste")) {
+        <button class="cut-icon" (click)="cutItem($index)">C</button>
+      }
     </div>
   }
 
   <div class="button-row">
-    <button class="delete" (click)="deleteRule()">Delete Rule</button>
-    <button (click)="addQuestion()">+ Question</button>
-    <button (click)="addItem()">+ Item</button>
+    @if (mode.isMode("delete")) {
+      <button class="delete" (click)="deleteRule()">Delete Rule</button>
+    } @else if (mode.isMode("cut-paste")) {
+      <button class="paste" (click)="paste()">Paste</button>
+    }
+    @if (mode.isMode("edit")) {
+      <button (click)="addQuestion()">+ Question</button>
+      <button (click)="addItem()">+ Item</button>
+    }
   </div>
 
   @if (errorMessage(); as error) {

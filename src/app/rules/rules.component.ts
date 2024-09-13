@@ -10,11 +10,17 @@ import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { EditRulesRawComponent } from './edit-rules-raw/edit-rules-raw.component';
 import { RulesPersistence } from './rules.persistence';
 import { serializeRules } from '../../model/serializer';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [ReactiveFormsModule, EditorRuleComponent, EditRulesRawComponent],
+  imports: [
+    ReactiveFormsModule,
+    EditorRuleComponent,
+    EditRulesRawComponent,
+    ToolbarComponent,
+  ],
   templateUrl: './rules.component.html',
   styleUrl: './rules.component.css',
 })

@@ -1,4 +1,11 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import {
   Condition,
   Item,
@@ -11,6 +18,8 @@ import { EditorQuestionComponent } from '../editor-question/editor-question.comp
 import { EditorItemComponent } from '../editor-item/editor-item.component';
 import { serialize } from '../../../model/serializer';
 import { parseRule } from '../../../model/parser';
+import { RulesMode } from '../rules.mode';
+import { RulesClipboard } from '../rules.clipboard';
 
 @Component({
   selector: 'app-editor-rule',
@@ -32,6 +41,9 @@ export class EditorRuleComponent {
 
   ruleDebugString = computed(() => serialize(this.rule()));
   errorMessage = signal<string | null>(null);
+
+  mode = inject(RulesMode);
+  clipboard = inject(RulesClipboard);
 
   private compileRule(rule: Rule): boolean {
     try {
@@ -88,6 +100,12 @@ export class EditorRuleComponent {
     this.emitNewQuestions(questions);
   }
 
+  cutQuestion(index: number) {
+    const question = this.rule().effects.questions[index];
+    this.deleteQuestion(index);
+    this.clipboard.cutQuestion(question);
+  }
+
   private emitNewItems(items: Item[]) {
     const newRule = {
       ...this.rule(),
@@ -113,5 +131,23 @@ export class EditorRuleComponent {
     const items = this.rule().effects.items;
     items.splice(index, 1);
     this.emitNewItems(items);
+  }
+
+  cutItem(index: number) {
+    const item = this.rule().effects.items[index];
+    this.deleteItem(index);
+    this.clipboard.cutItem(item);
+  }
+
+  paste() {
+    const clipboard = this.clipboard.paste();
+    const newRule = {
+      ...this.rule(),
+      effects: {
+        questions: [...this.rule().effects.questions, ...clipboard.questions],
+        items: [...this.rule().effects.items, ...clipboard.items],
+      },
+    };
+    this.ruleChanged.emit(newRule);
   }
 }

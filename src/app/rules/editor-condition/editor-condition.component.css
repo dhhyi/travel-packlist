@@ -25,3 +25,7 @@
   display: grid;
   grid-template-columns: auto 50px auto;
 }
+
+select[disabled] {
+  text-align: center;
+}
