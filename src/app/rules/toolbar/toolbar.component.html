@@ -1,28 +1,35 @@
-<div class="mb-2 bg-white" [ngClass]="{ 'sticky top-0 z-50': sticky() }">
-  <div class="mb-1 grid grid-cols-4">
+<div
+  class="bg-white py-2"
+  [ngClass]="{ 'sticky left-0 top-0 z-50 shadow-md': sticky() }"
+>
+  <div class="mb-1 grid grid-cols-4 gap-2">
     <button
+      class="icon"
       (click)="mode.setMode('view')"
-      [ngClass]="{ 'bg-black text-white': mode.isMode('view') }"
+      [ngClass]="{ 'ring ring-slate-700': mode.isMode('view') }"
     >
-      View
+      <app-icon-view class="my-auto" [size]="24"></app-icon-view>
     </button>
     <button
+      class="icon"
       (click)="mode.setMode('edit')"
-      [ngClass]="{ 'bg-black text-white': mode.isMode('edit') }"
+      [ngClass]="{ 'ring ring-slate-700': mode.isMode('edit') }"
     >
-      Edit
+      <app-icon-edit class="my-auto" [size]="24"></app-icon-edit>
     </button>
     <button
+      class="icon"
       (click)="mode.setMode('delete')"
-      [ngClass]="{ 'bg-black text-white': mode.isMode('delete') }"
+      [ngClass]="{ 'ring ring-slate-700': mode.isMode('delete') }"
     >
-      Delete
+      <app-icon-delete class="my-auto" [size]="24"></app-icon-delete>
     </button>
     <button
+      class="icon"
       (click)="mode.setMode('cut-paste')"
-      [ngClass]="{ 'bg-black text-white': mode.isMode('cut-paste') }"
+      [ngClass]="{ 'ring ring-slate-700': mode.isMode('cut-paste') }"
     >
-      Cut &amp; Paste
+      <app-icon-reorder class="my-auto" [size]="24"></app-icon-reorder>
     </button>
   </div>
   @if (mode.isMode("cut-paste")) {

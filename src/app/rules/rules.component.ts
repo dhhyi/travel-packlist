@@ -9,6 +9,7 @@ import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { RulesPersistence } from './rules.persistence';
 import { serializeRules } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { RulesMode } from './rules.mode';
 
 @Component({
   selector: 'app-rules',
@@ -24,6 +25,8 @@ export class RulesComponent implements OnInit {
   variables = signal<string[]>([]);
 
   persistence = inject(RulesPersistence);
+
+  mode = inject(RulesMode);
 
   ngOnInit(): void {
     this.calculateFields(parseRules(this.persistence.getRules()));

@@ -1,9 +1,10 @@
 import { Component, input } from '@angular/core';
+import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-checkmark.component';
 
 @Component({
   selector: 'app-status',
   standalone: true,
-  imports: [],
+  imports: [IconCheckmarkComponent],
   templateUrl: './items-status.component.html',
 })
 export class ItemsStatusComponent {

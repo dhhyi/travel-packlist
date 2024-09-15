@@ -20,6 +20,9 @@ import { serialize } from '../../../model/serializer';
 import { parseRule } from '../../../model/parser';
 import { RulesMode } from '../rules.mode';
 import { RulesClipboard } from '../rules.clipboard';
+import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
+import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
+import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component';
 
 @Component({
   selector: 'app-editor-rule',
@@ -28,6 +31,9 @@ import { RulesClipboard } from '../rules.clipboard';
     EditorConditionComponent,
     EditorQuestionComponent,
     EditorItemComponent,
+    IconDeleteComponent,
+    IconCutComponent,
+    IconPasteComponent,
   ],
   templateUrl: './editor-rule.component.html',
 })

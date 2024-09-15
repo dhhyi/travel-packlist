@@ -6,7 +6,9 @@
     (conditionChanged)="updateCondition($event)"
   ></app-editor-condition>
   @if (mode.isMode("edit")) {
-    <button class="icon" (click)="resetCondition()">X</button>
+    <button class="icon" (click)="resetCondition()">
+      <app-icon-delete></app-icon-delete>
+    </button>
   }
 </div>
 
@@ -18,9 +20,13 @@
       (questionChanged)="updateQuestion($index, $event)"
     ></app-editor-question>
     @if (mode.isMode("delete")) {
-      <button class="icon" (click)="deleteQuestion($index)">X</button>
+      <button class="icon" (click)="deleteQuestion($index)">
+        <app-icon-delete></app-icon-delete>
+      </button>
     } @else if (mode.isMode("cut-paste")) {
-      <button class="icon" (click)="cutQuestion($index)">C</button>
+      <button class="icon" (click)="cutQuestion($index)">
+        <app-icon-cut></app-icon-cut>
+      </button>
     }
   </div>
 }
@@ -34,24 +40,36 @@
       (itemChanged)="updateItem($index, $event)"
     ></app-editor-item>
     @if (mode.isMode("delete")) {
-      <button class="icon" (click)="deleteItem($index)">X</button>
+      <button class="icon" (click)="deleteItem($index)">
+        <app-icon-delete></app-icon-delete>
+      </button>
     } @else if (mode.isMode("cut-paste")) {
-      <button class="icon" (click)="cutItem($index)">C</button>
+      <button class="icon" (click)="cutItem($index)">
+        <app-icon-cut></app-icon-cut>
+      </button>
     }
   </div>
 }
 
-<div class="flex justify-end gap-2">
-  @if (mode.isMode("delete")) {
-    <button (click)="deleteRule()">Delete Rule</button>
-  } @else if (mode.isMode("cut-paste")) {
-    <button (click)="paste()">Paste</button>
-  }
-  @if (mode.isMode("edit")) {
+@if (mode.isMode("edit")) {
+  <div class="flex justify-end gap-2">
     <button (click)="addQuestion()">+ Question</button>
     <button (click)="addItem()">+ Item</button>
-  }
-</div>
+  </div>
+} @else {
+  <div class="flex justify-center">
+    @if (mode.isMode("delete")) {
+      <button class="icon" (click)="deleteRule()">
+        <app-icon-delete></app-icon-delete>
+      </button>
+    }
+    @if (mode.isMode("cut-paste")) {
+      <button class="icon" (click)="paste()">
+        <app-icon-paste></app-icon-paste>
+      </button>
+    }
+  </div>
+}
 
 @if (errorMessage(); as error) {
   <pre>{{ error }}</pre>

@@ -38,7 +38,7 @@ button.red {
 }
 
 button.icon {
-  @apply m-0 border-none bg-transparent p-1;
+  @apply m-0 flex justify-center border-none bg-transparent p-1 align-middle;
 }
 
 input,

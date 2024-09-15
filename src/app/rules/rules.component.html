@@ -9,4 +9,6 @@
     ></app-editor-rule>
   </div>
 }
-<button class="sticky bottom-0" (click)="addRule()">+ Rule</button>
+@if (mode.isMode("edit")) {
+  <button class="sticky bottom-0" (click)="addRule()">+ Rule</button>
+}

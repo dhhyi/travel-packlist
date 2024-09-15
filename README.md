@@ -8,7 +8,7 @@ As it is a PWA, you can also install it on your home screen.
 
 ## Technology
 
-This app is developed using Angular 18 with the new experimental zoneless change detection strategy. Wherever possible, I used signals do model data flow. This application doesn't use external libraries and just relies on browser API where needed.
+This app is developed using Angular 18 with the new experimental zoneless change detection strategy. Wherever possible, I used signals do model data flow. This application doesn't use external libraries and just relies on browser API where needed. For styling, I used TailwindCSS (https://tailwindcss.com/). The icons are Google Material Icons (https://fonts.google.com/icons).
 
 ## Development
 

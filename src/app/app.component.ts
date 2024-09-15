@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
+import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, IconCogComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
