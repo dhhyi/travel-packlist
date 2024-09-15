@@ -1,5 +1,5 @@
 @for (question of questions(); track question.question) {
-  <div>
+  <div class="card mb-1">
     <app-display-question
       [question]="question.question"
       [value]="model()[question.variable]"

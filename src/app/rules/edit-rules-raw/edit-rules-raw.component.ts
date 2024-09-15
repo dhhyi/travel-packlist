@@ -11,6 +11,13 @@ import { RulesPersistence } from '../rules.persistence';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './edit-rules-raw.component.html',
+  styles: [
+    `
+      :host {
+        @apply flex flex-col;
+      }
+    `,
+  ],
 })
 export class EditRulesRawComponent {
   rules = new FormControl('');

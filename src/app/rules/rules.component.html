@@ -1,12 +1,12 @@
 <app-toolbar></app-toolbar>
-<div>
-  @for (rule of parsedRules(); track $index) {
+@for (rule of parsedRules(); track $index) {
+  <div class="card mb-1">
     <app-editor-rule
       [rule]="rule"
       [categories]="categories()"
       [variables]="variables()"
       (ruleChanged)="updateRule($index, $event)"
     ></app-editor-rule>
-  }
-  <button (click)="addRule()">+ Rule</button>
-</div>
+  </div>
+}
+<button class="sticky bottom-0" (click)="addRule()">+ Rule</button>

@@ -1,4 +1,17 @@
-<form [formGroup]="control">
-  <input type="text" placeholder="question" formControlName="question" />
-  <input type="text" placeholder="variable" formControlName="variable" />
+<form class="flex flex-col" [formGroup]="control">
+  <input
+    class="grow"
+    type="text"
+    placeholder="question"
+    formControlName="question"
+  />
+  <div class="flex items-center gap-2">
+    <span class="ml-3 font-mono">-></span>
+    <input
+      class="grow font-mono"
+      type="text"
+      placeholder="variable"
+      formControlName="variable"
+    />
+  </div>
 </form>

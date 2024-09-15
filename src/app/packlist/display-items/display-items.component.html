@@ -1,7 +1,7 @@
 @for (group of groupedItems() | keyvalue; track group.key) {
-  <div>
-    <div>
-      <span>{{ group.key }}</span>
+  <div class="card mb-1">
+    <div class="flex flex-row justify-between">
+      <span class="pb-1 font-bold italic">{{ group.key }}</span>
       <app-status
         [count]="group.value.checked"
         [total]="group.value.items.length"
@@ -9,7 +9,10 @@
     </div>
     <ul>
       @for (item of group.value.items; track item) {
-        <li (click)="toggle(item)" [class.checked]="item.checked">
+        <li
+          (click)="toggle(item)"
+          [ngClass]="{ 'text-slate-500 line-through': item.checked }"
+        >
           {{ item.name }}
         </li>
       }

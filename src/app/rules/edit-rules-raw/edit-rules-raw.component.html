@@ -1,14 +1,19 @@
-<textarea [formControl]="rules"></textarea>
-<div>
+<textarea
+  class="mb-8 w-full grow resize-none rounded border border-gray-300 bg-gray-100 px-1 py-0 pb-10 font-mono leading-tight text-gray-700 focus:bg-white focus:outline-none"
+  [formControl]="rules"
+></textarea>
+<div class="absolute bottom-0 left-0 w-full bg-white p-2 font-mono">
   @switch (state()) {
     @case ("pending") {
-      <div>Waiting for input.</div>
+      <div class="text-yellow-600">Waiting for input.</div>
     }
     @case ("success") {
-      <div>Parsed {{ noOfRules() }} rules successfully!</div>
+      <div class="text-green-700">
+        Parsed {{ noOfRules() }} rules successfully!
+      </div>
     }
     @default {
-      <div>{{ state() }}</div>
+      <div class="text-red-700">{{ state() }}</div>
     }
   }
 </div>

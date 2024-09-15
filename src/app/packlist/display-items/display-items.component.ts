@@ -1,7 +1,7 @@
 import { Component, computed, inject, input, signal } from '@angular/core';
 import { Item } from '../../../model/types';
 import { PacklistPersistence } from '../packlist.persistence';
-import { KeyValuePipe } from '@angular/common';
+import { KeyValuePipe, NgClass } from '@angular/common';
 import { ItemsStatusComponent } from './items-status/items-status.component';
 
 function serialize(item: Item): string {
@@ -11,7 +11,7 @@ function serialize(item: Item): string {
 @Component({
   selector: 'app-display-items',
   standalone: true,
-  imports: [KeyValuePipe, ItemsStatusComponent],
+  imports: [KeyValuePipe, ItemsStatusComponent, NgClass],
   templateUrl: './display-items.component.html',
 })
 export class DisplayItemsComponent {

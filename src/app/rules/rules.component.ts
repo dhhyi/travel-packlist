@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PleaseSelect, Rule } from '../../model/types';
 import {
   extractCategories,
@@ -7,7 +6,6 @@ import {
   parseRules,
 } from '../../model/parser';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
-import { EditRulesRawComponent } from './edit-rules-raw/edit-rules-raw.component';
 import { RulesPersistence } from './rules.persistence';
 import { serializeRules } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -15,12 +13,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    EditorRuleComponent,
-    EditRulesRawComponent,
-    ToolbarComponent,
-  ],
+  imports: [EditorRuleComponent, ToolbarComponent],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent implements OnInit {
@@ -59,5 +52,12 @@ export class RulesComponent implements OnInit {
       condition: new PleaseSelect(),
       effects: { questions: [], items: [] },
     });
+    // scroll to smooth to bottom with a delay of 500ms
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 100);
   }
 }

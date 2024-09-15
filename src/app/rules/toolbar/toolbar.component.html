@@ -1,33 +1,43 @@
-<button (click)="mode.setMode('view')" [class.active]="mode.isMode('view')">
-  View
-</button>
-<button (click)="mode.setMode('edit')" [class.active]="mode.isMode('edit')">
-  Edit
-</button>
-<button (click)="mode.setMode('delete')" [class.active]="mode.isMode('delete')">
-  Delete
-</button>
-<button
-  (click)="mode.setMode('cut-paste')"
-  [class.active]="mode.isMode('cut-paste')"
->
-  Cut &amp; Paste
-</button>
-
-@if (mode.isMode("cut-paste")) {
-  <div>
-    <div>Clipboard:</div>
-    @if (clipboard.itemsCount === 0 && clipboard.questionsCount === 0) {
-      <span>empty</span>
-    } @else {
-      <div>
+<div class="mb-2 bg-white" [ngClass]="{ 'sticky top-0 z-50': sticky() }">
+  <div class="mb-1 grid grid-cols-4">
+    <button
+      (click)="mode.setMode('view')"
+      [ngClass]="{ 'bg-black text-white': mode.isMode('view') }"
+    >
+      View
+    </button>
+    <button
+      (click)="mode.setMode('edit')"
+      [ngClass]="{ 'bg-black text-white': mode.isMode('edit') }"
+    >
+      Edit
+    </button>
+    <button
+      (click)="mode.setMode('delete')"
+      [ngClass]="{ 'bg-black text-white': mode.isMode('delete') }"
+    >
+      Delete
+    </button>
+    <button
+      (click)="mode.setMode('cut-paste')"
+      [ngClass]="{ 'bg-black text-white': mode.isMode('cut-paste') }"
+    >
+      Cut &amp; Paste
+    </button>
+  </div>
+  @if (mode.isMode("cut-paste")) {
+    <div class="flex justify-center gap-5">
+      <span>Clipboard:</span>
+      @if (clipboard.itemsCount === 0 && clipboard.questionsCount === 0) {
+        <span>empty</span>
+      } @else {
         @if (clipboard.itemsCount) {
           <span>{{ clipboard.itemsCount }} Items</span>
         }
         @if (clipboard.questionsCount) {
           <span>{{ clipboard.questionsCount }} Questions</span>
         }
-      </div>
-    }
-  </div>
-}
+      }
+    </div>
+  }
+</div>

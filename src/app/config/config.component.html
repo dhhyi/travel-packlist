@@ -1,10 +1,10 @@
-<div>
-  <span>Answers</span>
+<div class="flex flex-col gap-2 pb-2">
+  <span class="font-bold">Answers</span>
   <button (click)="resetChecklist()">Reset Checklist</button>
 </div>
 
-<div>
-  <span>Rules</span>
+<div class="flex flex-col gap-2 pb-2">
+  <span class="font-bold">Rules</span>
   <button routerLink="/documentation">Documentation</button>
   <button routerLink="/rules">Edit Rules</button>
   <button routerLink="/rules-raw">Edit Rules with Code</button>
@@ -12,10 +12,10 @@
   <button (click)="importRules()">Import Rules</button>
 </div>
 
-<div>
-  <span>App Version</span>
+<div class="flex flex-col gap-2 pb-2">
+  <span class="font-bold">App Version</span>
   <span>{{ env.version }}</span>
-  <span
+  <span class="font-mono text-sm text-slate-500"
     ><a
       href="https://github.com/dhhyi/travel-packlist/commit/{{ env.git_hash }}"
       >{{ env.git_hash }}</a
@@ -23,7 +23,7 @@
   >
 </div>
 
-<div>
-  <span>DANGER!</span>
-  <button (click)="resetEverything()">Reset Application</button>
+<div class="flex flex-col gap-2 pb-2">
+  <span class="font-bold">DANGER!</span>
+  <button class="red" (click)="resetEverything()">Reset Application</button>
 </div>

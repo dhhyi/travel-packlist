@@ -1,58 +1,59 @@
-<div>
-  <div>
-    <app-editor-condition
-      [variables]="variables()"
-      [condition]="rule().condition"
-      (conditionChanged)="updateCondition($event)"
-    ></app-editor-condition>
-    @if (mode.isMode("delete")) {
-      <button (click)="resetCondition()">X</button>
-    }
-  </div>
-
-  @for (question of rule().effects.questions; track $index) {
-    <div>
-      <app-editor-question
-        [question]="question"
-        (questionChanged)="updateQuestion($index, $event)"
-      ></app-editor-question>
-      @if (mode.isMode("delete")) {
-        <button (click)="deleteQuestion($index)">X</button>
-      } @else if (mode.isMode("cut-paste")) {
-        <button (click)="cutQuestion($index)">C</button>
-      }
-    </div>
-  }
-
-  @for (item of rule().effects.items; track $index) {
-    <div>
-      <app-editor-item
-        [item]="item"
-        [categories]="categories()"
-        (itemChanged)="updateItem($index, $event)"
-      ></app-editor-item>
-      @if (mode.isMode("delete")) {
-        <button (click)="deleteItem($index)">X</button>
-      } @else if (mode.isMode("cut-paste")) {
-        <button (click)="cutItem($index)">C</button>
-      }
-    </div>
-  }
-
-  <div>
-    @if (mode.isMode("delete")) {
-      <button (click)="deleteRule()">Delete Rule</button>
-    } @else if (mode.isMode("cut-paste")) {
-      <button (click)="paste()">Paste</button>
-    }
-    @if (mode.isMode("edit")) {
-      <button (click)="addQuestion()">+ Question</button>
-      <button (click)="addItem()">+ Item</button>
-    }
-  </div>
-
-  @if (errorMessage(); as error) {
-    <pre>{{ error }}</pre>
-    <pre>{{ ruleDebugString() }}</pre>
+<div class="mb-1 flex h-8 items-center">
+  <app-editor-condition
+    class="grow"
+    [variables]="variables()"
+    [condition]="rule().condition"
+    (conditionChanged)="updateCondition($event)"
+  ></app-editor-condition>
+  @if (mode.isMode("edit")) {
+    <button class="icon" (click)="resetCondition()">X</button>
   }
 </div>
+
+@for (question of rule().effects.questions; track $index) {
+  <div class="mb-1 flex h-16 items-center">
+    <app-editor-question
+      class="grow"
+      [question]="question"
+      (questionChanged)="updateQuestion($index, $event)"
+    ></app-editor-question>
+    @if (mode.isMode("delete")) {
+      <button class="icon" (click)="deleteQuestion($index)">X</button>
+    } @else if (mode.isMode("cut-paste")) {
+      <button class="icon" (click)="cutQuestion($index)">C</button>
+    }
+  </div>
+}
+
+@for (item of rule().effects.items; track $index) {
+  <div class="mb-1 flex h-8 items-center">
+    <app-editor-item
+      class="grow"
+      [item]="item"
+      [categories]="categories()"
+      (itemChanged)="updateItem($index, $event)"
+    ></app-editor-item>
+    @if (mode.isMode("delete")) {
+      <button class="icon" (click)="deleteItem($index)">X</button>
+    } @else if (mode.isMode("cut-paste")) {
+      <button class="icon" (click)="cutItem($index)">C</button>
+    }
+  </div>
+}
+
+<div class="flex justify-end gap-2">
+  @if (mode.isMode("delete")) {
+    <button (click)="deleteRule()">Delete Rule</button>
+  } @else if (mode.isMode("cut-paste")) {
+    <button (click)="paste()">Paste</button>
+  }
+  @if (mode.isMode("edit")) {
+    <button (click)="addQuestion()">+ Question</button>
+    <button (click)="addItem()">+ Item</button>
+  }
+</div>
+
+@if (errorMessage(); as error) {
+  <pre>{{ error }}</pre>
+  <pre>{{ ruleDebugString() }}</pre>
+}

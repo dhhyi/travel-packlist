@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  height: 100%;
+}
+
+app-root {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+}
+
+router-outlet {
+  display: none;
+}
+
+.grow-children > * {
+  flex-grow: 1;
+}
+
+.card {
+  @apply rounded-md border-2 border-slate-300 p-2 shadow-inner;
+}
+
+button {
+  @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 sm:max-w-72;
+}
+
+button.red {
+  @apply bg-red-700 text-white hover:bg-red-500;
+}
+
+button.icon {
+  @apply m-0 border-none bg-transparent p-1;
+}
+
+input,
+select {
+  @apply h-8 rounded-md border border-slate-300 bg-transparent p-1;
+}
+
+select {
+  @apply pl-0;
+}
+
+input[disabled],
+select[disabled] {
+  @apply border border-transparent bg-transparent opacity-80;
+}
+
+select[disabled] {
+  @apply appearance-none pl-1 pr-5;
+}

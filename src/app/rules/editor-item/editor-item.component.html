@@ -1,9 +1,9 @@
-<form [formGroup]="control">
-  <select name="categories" formControlName="category">
+<form class="flex" [formGroup]="control">
+  <select class="max-w-24" name="categories" formControlName="category">
     @for (category of categories(); track category) {
       <option value="{{ category }}">{{ category }}</option>
     }
     <option value="">+</option>
   </select>
-  <input type="text" formControlName="name" />
+  <input class="grow" type="text" formControlName="name" />
 </form>
