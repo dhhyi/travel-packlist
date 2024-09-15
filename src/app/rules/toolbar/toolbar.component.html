@@ -1,26 +1,13 @@
-<button
-  class="floating-button"
-  (click)="mode.setMode('view')"
-  [class.active]="mode.isMode('view')"
->
+<button (click)="mode.setMode('view')" [class.active]="mode.isMode('view')">
   View
 </button>
-<button
-  class="floating-button"
-  (click)="mode.setMode('edit')"
-  [class.active]="mode.isMode('edit')"
->
+<button (click)="mode.setMode('edit')" [class.active]="mode.isMode('edit')">
   Edit
 </button>
-<button
-  class="floating-button"
-  (click)="mode.setMode('delete')"
-  [class.active]="mode.isMode('delete')"
->
+<button (click)="mode.setMode('delete')" [class.active]="mode.isMode('delete')">
   Delete
 </button>
 <button
-  class="floating-button"
   (click)="mode.setMode('cut-paste')"
   [class.active]="mode.isMode('cut-paste')"
 >
@@ -28,12 +15,12 @@
 </button>
 
 @if (mode.isMode("cut-paste")) {
-  <div class="clipboard-status">
+  <div>
     <div>Clipboard:</div>
     @if (clipboard.itemsCount === 0 && clipboard.questionsCount === 0) {
       <span>empty</span>
     } @else {
-      <div class="clipboard-content">
+      <div>
         @if (clipboard.itemsCount) {
           <span>{{ clipboard.itemsCount }} Items</span>
         }

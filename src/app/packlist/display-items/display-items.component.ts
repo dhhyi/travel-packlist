@@ -13,7 +13,6 @@ function serialize(item: Item): string {
   standalone: true,
   imports: [KeyValuePipe, ItemsStatusComponent],
   templateUrl: './display-items.component.html',
-  styleUrl: './display-items.component.css',
 })
 export class DisplayItemsComponent {
   items = input<Item[]>([]);

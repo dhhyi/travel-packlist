@@ -1,10 +1,10 @@
-<div class="group">
-  <span class="heading">Answers</span>
+<div>
+  <span>Answers</span>
   <button (click)="resetChecklist()">Reset Checklist</button>
 </div>
 
-<div class="group">
-  <span class="heading">Rules</span>
+<div>
+  <span>Rules</span>
   <button routerLink="/documentation">Documentation</button>
   <button routerLink="/rules">Edit Rules</button>
   <button routerLink="/rules-raw">Edit Rules with Code</button>
@@ -12,19 +12,18 @@
   <button (click)="importRules()">Import Rules</button>
 </div>
 
-<div class="group">
-  <span class="heading">App Version</span>
+<div>
+  <span>App Version</span>
   <span>{{ env.version }}</span>
   <span
     ><a
-      class="commit-link"
       href="https://github.com/dhhyi/travel-packlist/commit/{{ env.git_hash }}"
       >{{ env.git_hash }}</a
     ></span
   >
 </div>
 
-<div class="group">
-  <span class="heading">DANGER!</span>
-  <button class="danger" (click)="resetEverything()">Reset Application</button>
+<div>
+  <span>DANGER!</span>
+  <button (click)="resetEverything()">Reset Application</button>
 </div>

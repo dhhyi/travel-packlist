@@ -11,7 +11,6 @@ import { RulesPersistence } from '../rules.persistence';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './edit-rules-raw.component.html',
-  styleUrl: './edit-rules-raw.component.css',
 })
 export class EditRulesRawComponent {
   rules = new FormControl('');

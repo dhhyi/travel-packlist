@@ -22,7 +22,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     ToolbarComponent,
   ],
   templateUrl: './rules.component.html',
-  styleUrl: './rules.component.css',
 })
 export class RulesComponent implements OnInit {
   parsedRules = signal<Rule[]>([]);

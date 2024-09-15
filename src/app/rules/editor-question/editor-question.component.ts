@@ -10,7 +10,6 @@ import { RulesMode } from '../rules.mode';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './editor-question.component.html',
-  styleUrl: './editor-question.component.css',
 })
 export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();

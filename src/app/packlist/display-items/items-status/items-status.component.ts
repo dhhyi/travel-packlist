@@ -5,7 +5,6 @@ import { Component, input } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './items-status.component.html',
-  styleUrl: './items-status.component.css',
 })
 export class ItemsStatusComponent {
   count = input<number>(0);

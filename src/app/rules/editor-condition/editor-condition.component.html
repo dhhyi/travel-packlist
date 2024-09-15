@@ -1,6 +1,6 @@
-<div class="condition">
+<div>
   @if (depth() === 0) {
-    <span class="keyword">IF</span>
+    <span>IF</span>
   }
 
   @switch (state().type) {
@@ -11,8 +11,8 @@
       <ng-container *ngTemplateOutlet="select; context: state()"></ng-container>
     }
     @case ("not") {
-      <div class="not-expression">
-        <span class="keyword">NOT</span>
+      <div>
+        <span>NOT</span>
         @if (asNot(state().condition); as not) {
           <app-editor-condition
             [depth]="depth() + 1"
@@ -25,7 +25,7 @@
       </div>
     }
     @case ("and") {
-      <div class="and-expression">
+      <div>
         @if (asAnd(state().condition); as and) {
           <app-editor-condition
             [depth]="depth() + 1"
@@ -35,7 +35,7 @@
             (conditionChanged)="bubbleAndLeftChange($event)"
           >
           </app-editor-condition>
-          <span class="keyword">AND</span>
+          <span>AND</span>
           <app-editor-condition
             [depth]="depth() + 1"
             [condition]="and.right"
@@ -47,7 +47,7 @@
       </div>
     }
     @case ("or") {
-      <div class="or-expression">
+      <div>
         @if (asOr(state().condition); as or) {
           <app-editor-condition
             [depth]="depth() + 1"
@@ -57,7 +57,7 @@
             (conditionChanged)="bubbleOrLeftChange($event)"
           >
           </app-editor-condition>
-          <span class="keyword">OR</span>
+          <span>OR</span>
           <app-editor-condition
             [depth]="depth() + 1"
             [condition]="or.right"
@@ -76,7 +76,6 @@
 
 <ng-template #select let-context="context">
   <select
-    class="code-input"
     #select
     (change)="selection(select.value)"
     [disabled]="!mode.isMode('edit')"
@@ -84,16 +83,16 @@
     @for (option of options(); track option) {
       @switch (option) {
         @case ("") {
-          <option class="special" value="">always active</option>
+          <option value="">always active</option>
         }
         @case ("not") {
-          <option class="special" value="not">NOT x</option>
+          <option value="not">NOT x</option>
         }
         @case ("and") {
-          <option class="special" value="and">x AND x</option>
+          <option value="and">x AND x</option>
         }
         @case ("or") {
-          <option class="special" value="or">x OR x</option>
+          <option value="or">x OR x</option>
         }
         @default {
           <option

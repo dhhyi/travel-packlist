@@ -12,7 +12,6 @@ const defaultFileName = 'travel-packlist-rules.txt';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './config.component.html',
-  styleUrl: './config.component.css',
 })
 export class ConfigComponent {
   packlist = inject(PacklistPersistence);

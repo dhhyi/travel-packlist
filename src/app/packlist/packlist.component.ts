@@ -18,7 +18,6 @@ import { PacklistPersistence } from './packlist.persistence';
   standalone: true,
   imports: [DisplayQuestionComponent, DisplayItemsComponent],
   templateUrl: './packlist.component.html',
-  styleUrl: './packlist.component.css',
 })
 export class PacklistComponent implements OnInit {
   private rulesPersistence = inject(RulesPersistence);

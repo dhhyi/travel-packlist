@@ -5,7 +5,6 @@ import { VariableType } from '../../../model/types';
   selector: 'app-display-question',
   standalone: true,
   templateUrl: './display-question.component.html',
-  styleUrl: './display-question.component.css',
 })
 export class DisplayQuestionComponent {
   question = input<string | undefined>(undefined);

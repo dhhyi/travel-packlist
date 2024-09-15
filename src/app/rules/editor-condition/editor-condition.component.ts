@@ -16,7 +16,6 @@ import { RulesMode } from '../rules.mode';
   standalone: true,
   imports: [JsonPipe, NgTemplateOutlet],
   templateUrl: './editor-condition.component.html',
-  styleUrl: './editor-condition.component.css',
 })
 export class EditorConditionComponent {
   condition = input.required<Condition>();

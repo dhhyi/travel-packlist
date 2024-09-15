@@ -30,7 +30,6 @@ import { RulesClipboard } from '../rules.clipboard';
     EditorItemComponent,
   ],
   templateUrl: './editor-rule.component.html',
-  styleUrl: './editor-rule.component.css',
 })
 export class EditorRuleComponent {
   rule = input.required<Rule>();

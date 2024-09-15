@@ -7,7 +7,6 @@ import { SwUpdate } from '@angular/service-worker';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent {
   swUpdate = inject(SwUpdate);
