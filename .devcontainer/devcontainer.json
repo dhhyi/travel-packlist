@@ -20,7 +20,8 @@
       "extensions": [
         "angular.ng-template",
         "tomwhite007.rename-angular-component",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
       ]
     }
   }

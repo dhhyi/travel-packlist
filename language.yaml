@@ -16,5 +16,6 @@ vscode:
     - angular.ng-template
     - tomwhite007.rename-angular-component
     - esbenp.prettier-vscode
+    - bradlc.vscode-tailwindcss
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
