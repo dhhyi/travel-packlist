@@ -13,6 +13,17 @@ function serialize(item: Item): string {
   standalone: true,
   imports: [KeyValuePipe, ItemsStatusComponent, NgClass],
   templateUrl: './display-items.component.html',
+  styles: [
+    `
+      progress::-webkit-progress-bar {
+        background-color: transparent;
+      }
+      progress::-webkit-progress-value {
+        background-color: #999;
+        border-radius: 2px;
+      }
+    `,
+  ],
 })
 export class DisplayItemsComponent {
   items = input<Item[]>([]);
@@ -41,6 +52,20 @@ export class DisplayItemsComponent {
         { items: (Item & { checked: boolean })[]; checked: number }
       >,
     );
+  });
+
+  percentage = computed(() => {
+    const groupedItems = this.groupedItems();
+    const [checked, total] = Object.values(groupedItems).reduce(
+      ([c, t], group) => [c + group.checked, t + group.items.length],
+      [0, 0],
+    );
+
+    if (total === 0) {
+      return 0;
+    }
+
+    return (checked * 100) / total;
   });
 
   toggle(item: Item) {
