@@ -14,6 +14,15 @@
 
 @for (question of rule().effects.questions; track $index) {
   <div class="mb-1 flex h-16 items-center">
+    @if (mode.isMode("swap")) {
+      @if ($index < rule().effects.questions.length - 1) {
+        <button class="icon" (click)="swapQuestions($index, $index + 1)">
+          <app-icon-down></app-icon-down>
+        </button>
+      } @else {
+        <span class="ml-6"></span>
+      }
+    }
     <app-editor-question
       class="grow"
       [question]="question"
@@ -27,12 +36,25 @@
       <button class="icon" (click)="cutQuestion($index)">
         <app-icon-cut></app-icon-cut>
       </button>
+    } @else if (mode.isMode("swap") && $index > 0) {
+      <button class="icon" (click)="swapQuestions($index - 1, $index)">
+        <app-icon-up></app-icon-up>
+      </button>
     }
   </div>
 }
 
 @for (item of rule().effects.items; track $index) {
   <div class="mb-1 flex h-8 items-center">
+    @if (mode.isMode("swap")) {
+      @if ($index < rule().effects.items.length - 1) {
+        <button class="icon" (click)="swapItems($index, $index + 1)">
+          <app-icon-down></app-icon-down>
+        </button>
+      } @else {
+        <span class="ml-6"></span>
+      }
+    }
     <app-editor-item
       class="grow"
       [item]="item"
@@ -46,6 +68,10 @@
     } @else if (mode.isMode("cut-paste")) {
       <button class="icon" (click)="cutItem($index)">
         <app-icon-cut></app-icon-cut>
+      </button>
+    } @else if (mode.isMode("swap") && $index > 0) {
+      <button class="icon" (click)="swapItems($index - 1, $index)">
+        <app-icon-up></app-icon-up>
       </button>
     }
   </div>

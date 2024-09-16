@@ -23,6 +23,8 @@ import { RulesClipboard } from '../rules.clipboard';
 import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
 import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
 import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component';
+import { IconDownComponent } from '../../icons/icon-down/icon-down.component';
+import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
 
 @Component({
   selector: 'app-editor-rule',
@@ -34,6 +36,8 @@ import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component'
     IconDeleteComponent,
     IconCutComponent,
     IconPasteComponent,
+    IconDownComponent,
+    IconUpComponent,
   ],
   templateUrl: './editor-rule.component.html',
 })
@@ -111,6 +115,14 @@ export class EditorRuleComponent {
     this.clipboard.cutQuestion(question);
   }
 
+  swapQuestions(index1: number, index2: number) {
+    const questions = this.rule().effects.questions;
+    const temp = questions[index1];
+    questions[index1] = questions[index2];
+    questions[index2] = temp;
+    this.emitNewQuestions(questions);
+  }
+
   private emitNewItems(items: Item[]) {
     const newRule = {
       ...this.rule(),
@@ -142,6 +154,14 @@ export class EditorRuleComponent {
     const item = this.rule().effects.items[index];
     this.deleteItem(index);
     this.clipboard.cutItem(item);
+  }
+
+  swapItems(index1: number, index2: number) {
+    const items = this.rule().effects.items;
+    const temp = items[index1];
+    items[index1] = items[index2];
+    items[index2] = temp;
+    this.emitNewItems(items);
   }
 
   paste() {
