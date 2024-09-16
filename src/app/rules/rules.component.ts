@@ -10,11 +10,12 @@ import { RulesPersistence } from './rules.persistence';
 import { serializeRules } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RulesMode } from './rules.mode';
+import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [EditorRuleComponent, ToolbarComponent],
+  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent implements OnInit {
@@ -62,5 +63,15 @@ export class RulesComponent implements OnInit {
         behavior: 'smooth',
       });
     }, 100);
+  }
+
+  swapRules(index1: number, index2: number) {
+    const rules = this.parsedRules();
+    const temp = rules[index1];
+    rules[index1] = rules[index2];
+    rules[index2] = temp;
+    const serializedRules = serializeRules(rules);
+    this.persistence.saveRules(serializedRules);
+    this.calculateFields(rules);
   }
 }

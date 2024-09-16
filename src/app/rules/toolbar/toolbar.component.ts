@@ -12,6 +12,7 @@ import { IconViewComponent } from '../../icons/icon-view/icon-view.component';
 import { IconEditComponent } from '../../icons/icon-edit/icon-edit.component';
 import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
 import { IconReorderComponent } from '../../icons/icon-reorder/icon-reorder.component';
+import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,6 +23,7 @@ import { IconReorderComponent } from '../../icons/icon-reorder/icon-reorder.comp
     IconEditComponent,
     IconDeleteComponent,
     IconReorderComponent,
+    IconSwapComponent,
   ],
   templateUrl: './toolbar.component.html',
 })

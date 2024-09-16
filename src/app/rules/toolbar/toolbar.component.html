@@ -2,7 +2,7 @@
   class="bg-white py-2"
   [ngClass]="{ 'sticky left-0 top-0 z-50 shadow-md': sticky() }"
 >
-  <div class="mb-1 grid grid-cols-4 gap-2">
+  <div class="mb-1 grid grid-cols-5 gap-2">
     <button
       class="icon"
       (click)="mode.setMode('view')"
@@ -30,6 +30,13 @@
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('cut-paste') }"
     >
       <app-icon-reorder class="my-auto" [size]="24"></app-icon-reorder>
+    </button>
+    <button
+      class="icon"
+      (click)="mode.setMode('swap')"
+      [ngClass]="{ 'ring ring-slate-700': mode.isMode('swap') }"
+    >
+      <app-icon-swap class="my-auto" [size]="24"></app-icon-swap>
     </button>
   </div>
   @if (mode.isMode("cut-paste")) {

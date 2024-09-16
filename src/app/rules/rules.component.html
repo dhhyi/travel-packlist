@@ -1,5 +1,12 @@
 <app-toolbar></app-toolbar>
 @for (rule of parsedRules(); track $index) {
+  @if ($index > 0 && mode.isMode("swap")) {
+    <div class="flex justify-center">
+      <button class="icon" (click)="swapRules($index - 1, $index)">
+        <app-icon-swap></app-icon-swap>
+      </button>
+    </div>
+  }
   <div class="card mb-1">
     <app-editor-rule
       [rule]="rule"

@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 
-type Modes = 'view' | 'delete' | 'edit' | 'cut-paste';
+type Modes = 'view' | 'delete' | 'edit' | 'cut-paste' | 'swap';
 
 const initial: Modes = 'view';
 
