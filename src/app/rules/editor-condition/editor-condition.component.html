@@ -1,104 +1,101 @@
-<div class="flex items-center gap-1">
-  @if (depth() === 0) {
-    <span class="font-bold">IF</span>
-  }
+@if (depth() === 0 && (mode.isMode("edit") || !isAlwaysActive())) {
+  <span class="font-bold">IF</span>
+}
 
-  @switch (state().type) {
-    @case ("true") {
-      <ng-container *ngTemplateOutlet="select; context: ''"></ng-container>
-    }
-    @case ("variable") {
-      <ng-container *ngTemplateOutlet="select; context: state()"></ng-container>
-    }
-    @case ("not") {
-      <span class="font-bold">NOT</span>
-      @if (asNot(state().condition); as not) {
-        <app-editor-condition
-          [depth]="depth() + 1"
-          [condition]="not.not"
-          [variables]="variables()"
-          [forbidden]="['', 'not', 'and', 'or']"
-          (conditionChanged)="bubbleNotChange($event)"
-        ></app-editor-condition>
-      }
-    }
-    @case ("and") {
-      @if (asAnd(state().condition); as and) {
-        <app-editor-condition
-          [depth]="depth() + 1"
-          [condition]="and.left"
-          [variables]="variables()"
-          [forbidden]="['', 'or']"
-          (conditionChanged)="bubbleAndLeftChange($event)"
-        >
-        </app-editor-condition>
-        <span class="font-bold">AND</span>
-        <app-editor-condition
-          [depth]="depth() + 1"
-          [condition]="and.right"
-          [variables]="variables()"
-          [forbidden]="['', 'or']"
-          (conditionChanged)="bubbleAndRightChange($event)"
-        ></app-editor-condition>
-      }
-    }
-    @case ("or") {
-      @if (asOr(state().condition); as or) {
-        <app-editor-condition
-          [depth]="depth() + 1"
-          [condition]="or.left"
-          [variables]="variables()"
-          [forbidden]="['']"
-          (conditionChanged)="bubbleOrLeftChange($event)"
-        >
-        </app-editor-condition>
-        <span class="font-bold">OR</span>
-        <app-editor-condition
-          [depth]="depth() + 1"
-          [condition]="or.right"
-          [variables]="variables()"
-          [forbidden]="['']"
-          (conditionChanged)="bubbleOrRightChange($event)"
-        ></app-editor-condition>
-      }
-    }
-    @case ("unknown") {
-      <pre>UNKNOWN</pre>
+@switch (state().type) {
+  @case ("true") {
+    <ng-container *ngTemplateOutlet="select; context: ''"></ng-container>
+  }
+  @case ("variable") {
+    <ng-container *ngTemplateOutlet="select; context: state()"></ng-container>
+  }
+  @case ("not") {
+    <span class="font-bold">NOT</span>
+    @if (asNot(state().condition); as not) {
+      <app-editor-condition
+        [depth]="depth() + 1"
+        [condition]="not.not"
+        [variables]="variables()"
+        [forbidden]="['', 'not', 'and', 'or']"
+        (conditionChanged)="bubbleNotChange($event)"
+      ></app-editor-condition>
     }
   }
-</div>
+  @case ("and") {
+    @if (asAnd(state().condition); as and) {
+      <app-editor-condition
+        [depth]="depth() + 1"
+        [condition]="and.left"
+        [variables]="variables()"
+        [forbidden]="['', 'or']"
+        (conditionChanged)="bubbleAndLeftChange($event)"
+      >
+      </app-editor-condition>
+      <span class="font-bold">AND</span>
+      <app-editor-condition
+        [depth]="depth() + 1"
+        [condition]="and.right"
+        [variables]="variables()"
+        [forbidden]="['', 'or']"
+        (conditionChanged)="bubbleAndRightChange($event)"
+      ></app-editor-condition>
+    }
+  }
+  @case ("or") {
+    @if (asOr(state().condition); as or) {
+      <app-editor-condition
+        [depth]="depth() + 1"
+        [condition]="or.left"
+        [variables]="variables()"
+        [forbidden]="['']"
+        (conditionChanged)="bubbleOrLeftChange($event)"
+      >
+      </app-editor-condition>
+      <span class="font-bold">OR</span>
+      <app-editor-condition
+        [depth]="depth() + 1"
+        [condition]="or.right"
+        [variables]="variables()"
+        [forbidden]="['']"
+        (conditionChanged)="bubbleOrRightChange($event)"
+      ></app-editor-condition>
+    }
+  }
+  @case ("unknown") {
+    <pre>UNKNOWN</pre>
+  }
+}
 
 <ng-template #select let-context="context">
-  <select
-    class="font-mono"
-    #select
-    (change)="selection(select.value)"
-    [disabled]="!mode.isMode('edit')"
-  >
-    @for (option of options(); track option) {
-      @switch (option) {
-        @case ("") {
-          <option value="">always active</option>
-        }
-        @case ("not") {
-          <option value="not">NOT x</option>
-        }
-        @case ("and") {
-          <option value="and">x AND x</option>
-        }
-        @case ("or") {
-          <option value="or">x OR x</option>
-        }
-        @default {
-          <option
-            value="{{ option }}"
-            [selected]="context === option"
-            [disabled]="option === please_select"
-          >
-            {{ option }}
-          </option>
+  @if (mode.isMode("edit")) {
+    <select class="font-mono" #select (change)="selection(select.value)">
+      @for (option of options(); track option) {
+        @switch (option) {
+          @case ("") {
+            <option value="">always active</option>
+          }
+          @case ("not") {
+            <option value="not">NOT x</option>
+          }
+          @case ("and") {
+            <option value="and">x AND x</option>
+          }
+          @case ("or") {
+            <option value="or">x OR x</option>
+          }
+          @default {
+            <option
+              value="{{ option }}"
+              [selected]="context === option"
+              [disabled]="option === please_select"
+            >
+              {{ option }}
+            </option>
+          }
         }
       }
-    }
-  </select>
+    </select>
+  } @else if (context) {
+    <span class="font-mono">{{ context }}</span>
+  }
 </ng-template>

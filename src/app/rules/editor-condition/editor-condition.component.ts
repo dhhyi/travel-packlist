@@ -16,6 +16,16 @@ import { RulesMode } from '../rules.mode';
   standalone: true,
   imports: [JsonPipe, NgTemplateOutlet],
   templateUrl: './editor-condition.component.html',
+  styles: [
+    `
+      :host {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+    `,
+  ],
 })
 export class EditorConditionComponent {
   condition = input.required<Condition>();
@@ -61,6 +71,10 @@ export class EditorConditionComponent {
       return { type: 'unknown' };
     }
   });
+
+  isAlwaysActive() {
+    return this.condition() instanceof True;
+  }
 
   asNot(object: Condition | undefined): Not {
     if (object instanceof Not) {
