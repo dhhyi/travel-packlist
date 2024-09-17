@@ -1,9 +1,9 @@
-<div class="flex flex-col gap-2 pb-2">
+<div class="section">
   <span class="font-bold">Answers</span>
   <button (click)="resetChecklist()">Reset Checklist</button>
 </div>
 
-<div class="flex flex-col gap-2 pb-2">
+<div class="section">
   <span class="font-bold">Rules</span>
   <button routerLink="/rules">Edit Rules</button>
   <div class="flex items-center gap-3">
@@ -22,7 +22,7 @@
   <button (click)="importRules()">Import Rules</button>
 </div>
 
-<div class="flex flex-col gap-2 pb-2">
+<div class="section">
   <span class="font-bold">App Version</span>
   <span>{{ env.version }}</span>
   <span class="font-mono text-sm text-slate-500"
@@ -33,7 +33,45 @@
   >
 </div>
 
-<div class="flex flex-col gap-2 pb-2">
+<div class="section">
+  <span class="font-bold">Support</span>
+  <div class="flex flex-col gap-4">
+    <p>
+      If you find any bugs or have any suggestions, please open an issue on
+      GitHub:
+      <a href="https://github.com/dhhyi/travel-packlist/issues" target="_blank">
+        <img
+          class="inline"
+          src="https://img.shields.io/github/issues/dhhyi/travel-packlist"
+          alt="GitHub issues"
+        />
+      </a>
+    </p>
+    <p>
+      Alternatively, you can reach out to me by
+      <a href="mailto:dhhyi@aol.com" target="_blank">
+        <img
+          class="inline"
+          src="https://img.shields.io/badge/email-dhhyi%40aol.com-blue"
+          alt="Email"
+        />
+      </a>
+    </p>
+    <p>
+      If you like this app, please consider to
+
+      <a href="https://ko-fi.com/danilohoffmann" target="_blank">
+        <img
+          class="inline max-w-40"
+          src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
+          alt="Buy Me a Coffee at ko-fi.com"
+        />
+      </a>
+    </p>
+  </div>
+</div>
+
+<div class="section">
   <span class="font-bold">DANGER!</span>
   <button class="red" (click)="resetEverything()">Reset Application</button>
 </div>

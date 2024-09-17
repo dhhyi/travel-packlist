@@ -15,6 +15,13 @@ const defaultFileName = 'travel-packlist-rules.txt';
   standalone: true,
   imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './config.component.html',
+  styles: [
+    `
+      .section {
+        @apply mb-3 flex flex-col gap-2 border-b pb-2;
+      }
+    `,
+  ],
 })
 export class ConfigComponent {
   packlist = inject(PacklistPersistence);
