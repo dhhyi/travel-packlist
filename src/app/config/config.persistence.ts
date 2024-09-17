@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { saveLocalStorage } from '../../util/localstorage.persistence';
 
+const defaultConfig = {
+  fadeOutDisabledRules: false,
+  trackWeight: false,
+};
+
 @Injectable({ providedIn: 'root' })
 export class ConfigPersistence {
-  private config = {
-    fadeOutDisabledRules: false,
-    trackWeight: false,
-  };
+  private config: typeof defaultConfig = defaultConfig;
 
   constructor() {
     const loaded = localStorage.getItem('config');
@@ -17,6 +19,11 @@ export class ConfigPersistence {
 
   private persist() {
     saveLocalStorage('config', JSON.stringify(this.config));
+  }
+
+  resetConfig() {
+    this.config = defaultConfig;
+    this.persist();
   }
 
   setFadeOutDisabledRules(value: boolean) {

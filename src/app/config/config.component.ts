@@ -29,23 +29,23 @@ export class ConfigComponent {
   router = inject(Router);
   env = env;
 
-  configPersistence = inject(ConfigPersistence);
+  config = inject(ConfigPersistence);
 
   fadeOutDisabledRulesControl = new FormControl(
-    this.configPersistence.isFadeOutDisabledRules(),
+    this.config.isFadeOutDisabledRules(),
   );
-  trackWeightControl = new FormControl(this.configPersistence.isTrackWeight());
+  trackWeightControl = new FormControl(this.config.isTrackWeight());
   constructor() {
     this.fadeOutDisabledRulesControl.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
-        this.configPersistence.setFadeOutDisabledRules(!!value);
+        this.config.setFadeOutDisabledRules(!!value);
       });
 
     this.trackWeightControl.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
-        this.configPersistence.setTrackWeight(!!value);
+        this.config.setTrackWeight(!!value);
       });
   }
 
@@ -71,6 +71,7 @@ export class ConfigComponent {
       this.packlist.saveAnswers({});
       this.packlist.setCheckedItems([]);
       this.rules.resetRules();
+      this.config.resetConfig();
       this.router.navigate(['/packlist']);
     }
   }
