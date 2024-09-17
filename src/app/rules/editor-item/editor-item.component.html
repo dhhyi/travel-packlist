@@ -5,5 +5,11 @@
     }
     <option value="">+</option>
   </select>
-  <input class="grow" type="text" formControlName="name" />
+  <input
+    (focus)="focus($event)"
+    (blur)="blur()"
+    class="grow"
+    type="text"
+    formControlName="name"
+  />
 </form>

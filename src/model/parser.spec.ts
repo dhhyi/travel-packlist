@@ -91,6 +91,13 @@ describe('Parser', () => {
       expect(item.name).toEqual('Scrubber');
     });
 
+    it('should parse an item with weight', () => {
+      const item = parseItem('[utility] Scrubber 100g');
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('Scrubber');
+      expect(item.weight).toEqual(100);
+    });
+
     it('should throw an error if the item is invalid', () => {
       expect(() => parseItem('[utility]')).toThrow();
       expect(() => parseItem('[] Scrubber')).toThrow();

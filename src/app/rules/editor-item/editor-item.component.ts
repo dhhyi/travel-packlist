@@ -4,6 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
+import { extractItemNameAndWeight } from '../../../model/parser';
+import { serializeWeight } from '../../../model/serializer';
 
 @Component({
   selector: 'app-editor-item',
@@ -32,7 +34,14 @@ export class EditorItemComponent implements OnChanges {
           this.addNewCategory();
           return;
         }
-        this.itemChanged.emit(value as Item);
+
+        const [name, weight] = extractItemNameAndWeight(value.name);
+
+        this.itemChanged.emit({
+          category: value.category,
+          name,
+          weight,
+        } as Item);
       });
 
     this.mode
@@ -47,8 +56,32 @@ export class EditorItemComponent implements OnChanges {
       });
   }
 
+  blockPatch = false;
+
   ngOnChanges() {
-    this.control.patchValue(this.item(), { emitEvent: false });
+    if (!this.blockPatch) {
+      let name = this.item().name;
+      if (this.item().weight) {
+        name += ` ${serializeWeight(this.item().weight)}`;
+      }
+
+      this.control.patchValue(
+        {
+          category: this.item().category,
+          name,
+        },
+        { emitEvent: false },
+      );
+    }
+  }
+
+  focus(event: FocusEvent) {
+    this.blockPatch = document.activeElement === event.target;
+  }
+
+  blur() {
+    this.blockPatch = false;
+    this.ngOnChanges();
   }
 
   private addNewCategory() {

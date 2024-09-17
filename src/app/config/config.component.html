@@ -1,6 +1,17 @@
 <div class="section">
   <span class="font-bold">Answers</span>
   <button (click)="resetChecklist()">Reset Checklist</button>
+  <div class="flex items-center gap-3">
+    <input
+      type="checkbox"
+      id="track-weight"
+      [formControl]="trackWeightControl"
+    />
+    <label for="track-weight" class="grow">Track item weight</label>
+    <p class="w-1/2 text-sm italic">
+      You can enter the item weight appended to the item name in the editor.
+    </p>
+  </div>
 </div>
 
 <div class="section">

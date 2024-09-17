@@ -22,6 +22,25 @@ function serializeEffects(effects: Effects): string[] {
   return effects.questions.map(serialize).concat(effects.items.map(serialize));
 }
 
+export function serializeWeight(
+  weight: number | undefined,
+  prefer?: 'g' | 'kg',
+): string {
+  if (!weight) {
+    return '';
+  }
+  const weightInKilos = weight / 1000.0 + 'kg';
+  const weightInGrams = weight * 1.0 + 'g';
+
+  if (!prefer) {
+    return weightInKilos.length <= weightInGrams.length
+      ? weightInKilos
+      : weightInGrams;
+  } else {
+    return prefer === 'kg' ? weightInKilos : weightInGrams;
+  }
+}
+
 export function serialize(rule: Rule): string;
 export function serialize(condition: Condition): string;
 export function serialize(question: Question): string;
@@ -63,7 +82,7 @@ export function serialize(input: Rule | Condition | Question | Item): string {
   } else if ('question' in input) {
     return input.question + ' $' + input.variable;
   } else if ('category' in input && 'name' in input) {
-    return '[' + input.category + '] ' + input.name;
+    return `[${input.category}] ${input.name} ${serializeWeight(input.weight)}`.trim();
   } else {
     throw new Error('Cannot serialize unknown input');
   }

@@ -47,6 +47,8 @@ export class RulesComponent implements OnInit {
   }
 
   updateRule(index: number, rule: Rule | null) {
+    console.log('updateRule', index, rule);
+
     const rules = this.parsedRules();
     if (rule) {
       rules[index] = rule;

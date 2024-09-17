@@ -3,6 +3,8 @@ import { Item } from '../../../model/types';
 import { PacklistPersistence } from '../packlist.persistence';
 import { KeyValuePipe, NgClass } from '@angular/common';
 import { ItemsStatusComponent } from './items-status/items-status.component';
+import { ConfigPersistence } from '../../config/config.persistence';
+import { serializeWeight } from '../../../model/serializer';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -67,6 +69,29 @@ export class DisplayItemsComponent {
 
     return (checked * 100) / total;
   });
+
+  trackWeight = inject(ConfigPersistence).isTrackWeight();
+
+  weightTotal = computed(() =>
+    Math.round(
+      this.items().reduce((total, item) => total + (item.weight ?? 0), 0),
+    ),
+  );
+
+  weightChecked = computed(() =>
+    Math.round(
+      this.items().reduce(
+        (total, item) =>
+          total +
+          (this.checkedItems().includes(serialize(item))
+            ? (item.weight ?? 0)
+            : 0),
+        0,
+      ),
+    ),
+  );
+
+  serializeWeight = serializeWeight;
 
   toggle(item: Item) {
     const serializedItem = serialize(item);

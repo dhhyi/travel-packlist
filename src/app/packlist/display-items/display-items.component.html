@@ -1,6 +1,21 @@
-<div class="mb-1 flex">
-  <progress class="grow" [value]="percentage()" [max]="100"></progress>
-</div>
+@if (trackWeight) {
+  <div class="mb-1 flex">
+    <progress
+      class="grow"
+      [value]="weightChecked()"
+      [max]="weightTotal()"
+    ></progress>
+  </div>
+  <div class="flex justify-center">
+    {{ serializeWeight(weightChecked(), "kg") || "0kg" }} /
+    {{ serializeWeight(weightTotal(), "kg") }}
+  </div>
+} @else {
+  <div class="mb-1 flex">
+    <progress class="grow" [value]="percentage()" [max]="100"></progress>
+  </div>
+}
+
 @for (group of groupedItems() | keyvalue; track group.key) {
   <div class="card mb-1">
     <div class="flex flex-row justify-between">
@@ -14,9 +29,13 @@
       @for (item of group.value.items; track $index) {
         <li
           (click)="toggle(item)"
+          class="flex justify-between"
           [ngClass]="{ 'text-slate-500 line-through': item.checked }"
         >
           {{ item.name }}
+          @if (item.weight && trackWeight) {
+            <span class="italic">{{ serializeWeight(item.weight) }}</span>
+          }
         </li>
       }
     </ul>

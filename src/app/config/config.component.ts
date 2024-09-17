@@ -34,12 +34,18 @@ export class ConfigComponent {
   fadeOutDisabledRulesControl = new FormControl(
     this.configPersistence.isFadeOutDisabledRules(),
   );
-
+  trackWeightControl = new FormControl(this.configPersistence.isTrackWeight());
   constructor() {
     this.fadeOutDisabledRulesControl.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
         this.configPersistence.setFadeOutDisabledRules(!!value);
+      });
+
+    this.trackWeightControl.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        this.configPersistence.setTrackWeight(!!value);
       });
   }
 

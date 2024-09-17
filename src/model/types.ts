@@ -11,6 +11,7 @@ export interface Question {
 export interface Item {
   category: string;
   name: string;
+  weight?: number;
 }
 
 export interface Effects {

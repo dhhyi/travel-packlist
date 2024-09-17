@@ -51,15 +51,35 @@ export function parseQuestion(input: string): Question {
 
 const itemRegex = /^\s*\[(?<category>.+)\]\s*(?<name>.+)\s*$/;
 
+export function extractItemNameAndWeight(
+  input: string | undefined | null,
+): [string, number] {
+  if (!input) {
+    return ['', 0];
+  }
+
+  const tokens = input.trim().match(/^(.+)\s+(\d+(\.\d+)?)(k?g)?$/);
+  if (tokens) {
+    const name = tokens[1].trim();
+    const weight = parseFloat(tokens[2]) * (tokens[4] === 'kg' ? 1000 : 1);
+    return [name, weight];
+  } else {
+    return [input.trim(), 0];
+  }
+}
+
 export function parseItem(input: string): Item {
   const tokens = input.match(itemRegex);
   if (!tokens || !tokens.groups) {
     throw new Error("Could not parse item from '" + input + "'");
   }
 
+  const [name, weight] = extractItemNameAndWeight(tokens.groups['name']);
+
   return {
     category: tokens.groups['category'],
-    name: tokens.groups['name'],
+    name,
+    weight,
   };
 }
 

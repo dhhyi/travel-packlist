@@ -5,6 +5,7 @@ import { saveLocalStorage } from '../../util/localstorage.persistence';
 export class ConfigPersistence {
   private config = {
     fadeOutDisabledRules: false,
+    trackWeight: false,
   };
 
   constructor() {
@@ -25,5 +26,14 @@ export class ConfigPersistence {
 
   isFadeOutDisabledRules() {
     return this.config.fadeOutDisabledRules;
+  }
+
+  setTrackWeight(value: boolean) {
+    this.config.trackWeight = value;
+    this.persist();
+  }
+
+  isTrackWeight() {
+    return this.config.trackWeight;
   }
 }
