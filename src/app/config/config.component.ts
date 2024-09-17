@@ -4,13 +4,16 @@ import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { parseRules } from '../../model/parser';
 import env from '../../environment/env.json';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ConfigPersistence } from './config.persistence';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
 @Component({
   selector: 'app-config',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './config.component.html',
 })
 export class ConfigComponent {
@@ -18,6 +21,20 @@ export class ConfigComponent {
   rules = inject(RulesPersistence);
   router = inject(Router);
   env = env;
+
+  configPersistence = inject(ConfigPersistence);
+
+  fadeOutDisabledRulesControl = new FormControl(
+    this.configPersistence.isFadeOutDisabledRules(),
+  );
+
+  constructor() {
+    this.fadeOutDisabledRulesControl.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        this.configPersistence.setFadeOutDisabledRules(!!value);
+      });
+  }
 
   private isMobile() {
     const ua = navigator.userAgent;

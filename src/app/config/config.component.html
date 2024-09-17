@@ -5,9 +5,19 @@
 
 <div class="flex flex-col gap-2 pb-2">
   <span class="font-bold">Rules</span>
-  <button routerLink="/documentation">Documentation</button>
   <button routerLink="/rules">Edit Rules</button>
+  <div class="flex items-center gap-3">
+    <input
+      type="checkbox"
+      id="rules-debug-mode"
+      [formControl]="fadeOutDisabledRulesControl"
+    />
+    <label for="rules-debug-mode">Fade out disabled rules in editor</label>
+  </div>
+  <hr />
+  <button routerLink="/documentation">Documentation</button>
   <button routerLink="/rules-raw">Edit Rules with Code</button>
+  <hr />
   <button (click)="exportRules()">Export Rules</button>
   <button (click)="importRules()">Import Rules</button>
 </div>

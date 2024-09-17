@@ -58,3 +58,7 @@ select[disabled] {
 select[disabled] {
   @apply appearance-none pl-1 pr-5;
 }
+
+input[type="checkbox"] {
+  @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400;
+}

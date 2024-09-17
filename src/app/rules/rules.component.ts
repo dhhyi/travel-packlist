@@ -11,11 +11,14 @@ import { serializeRules } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RulesMode } from './rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
+import { PacklistPersistence } from '../packlist/packlist.persistence';
+import { NgClass } from '@angular/common';
+import { ConfigPersistence } from '../config/config.persistence';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent],
+  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent implements OnInit {
@@ -28,6 +31,10 @@ export class RulesComponent implements OnInit {
   persistence = inject(RulesPersistence);
 
   mode = inject(RulesMode);
+
+  private answers = inject(PacklistPersistence).getAnswers();
+
+  private config = inject(ConfigPersistence);
 
   ngOnInit(): void {
     this.calculateFields(parseRules(this.persistence.getRules()));
@@ -73,5 +80,12 @@ export class RulesComponent implements OnInit {
     const serializedRules = serializeRules(rules);
     this.persistence.saveRules(serializedRules);
     this.calculateFields(rules);
+  }
+
+  showAsDisabled(rule: Rule): boolean {
+    return (
+      this.config.isFadeOutDisabledRules() &&
+      !rule.condition.evaluate(this.answers)
+    );
   }
 }

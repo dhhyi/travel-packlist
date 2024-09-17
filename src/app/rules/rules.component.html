@@ -7,7 +7,7 @@
       </button>
     </div>
   }
-  <div class="card mb-1">
+  <div class="card mb-1" [ngClass]="{ 'opacity-50': showAsDisabled(rule) }">
     <app-editor-rule
       [rule]="rule"
       [categories]="categories()"
