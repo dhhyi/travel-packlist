@@ -14,11 +14,18 @@ import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
 import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { NgClass } from '@angular/common';
 import { ConfigPersistence } from '../config/config.persistence';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-rules',
   standalone: true,
-  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
+  imports: [
+    EditorRuleComponent,
+    ToolbarComponent,
+    IconSwapComponent,
+    NgClass,
+    ErrorComponent,
+  ],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent implements OnInit {
@@ -32,12 +39,24 @@ export class RulesComponent implements OnInit {
 
   mode = inject(RulesMode);
 
+  error = signal<string | undefined>(undefined);
+
   private answers = inject(PacklistPersistence).getAnswers();
 
   private config = inject(ConfigPersistence);
 
   ngOnInit(): void {
-    this.calculateFields(parseRules(this.persistence.getRules()));
+    try {
+      this.calculateFields(parseRules(this.persistence.getRules()));
+      this.error.set(undefined);
+    } catch (error) {
+      if (error instanceof Error) {
+        this.error.set(error.message);
+      } else {
+        this.error.set('Unknown error');
+      }
+      console.error(error);
+    }
   }
 
   calculateFields(parsedRules: Rule[]) {

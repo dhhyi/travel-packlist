@@ -1,11 +1,15 @@
-@for (question of questions(); track question.question) {
-  <div class="card mb-1">
-    <app-display-question
-      [question]="question.question"
-      [value]="model()[question.variable]"
-      (valueChange)="modelChange(question.variable, $event)"
-    ></app-display-question>
-  </div>
-}
+@if (error(); as error) {
+  <app-error [error]="error"></app-error>
+} @else {
+  @for (question of questions(); track question.question) {
+    <div class="card mb-1">
+      <app-display-question
+        [question]="question.question"
+        [value]="model()[question.variable]"
+        (valueChange)="modelChange(question.variable, $event)"
+      ></app-display-question>
+    </div>
+  }
 
-<app-display-items [items]="items()"></app-display-items>
+  <app-display-items [items]="items()"></app-display-items>
+}

@@ -12,11 +12,12 @@ import { Rule, VariableName, VariableType } from '../../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
 import { DisplayItemsComponent } from './display-items/display-items.component';
 import { PacklistPersistence } from './packlist.persistence';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-packlist',
   standalone: true,
-  imports: [DisplayQuestionComponent, DisplayItemsComponent],
+  imports: [DisplayQuestionComponent, DisplayItemsComponent, ErrorComponent],
   templateUrl: './packlist.component.html',
 })
 export class PacklistComponent implements OnInit {
@@ -41,6 +42,8 @@ export class PacklistComponent implements OnInit {
     this.activeRules().flatMap((rule) => rule.effects.items),
   );
 
+  error = signal<string | undefined>(undefined);
+
   constructor() {
     effect(() => {
       const model = this.model();
@@ -52,7 +55,13 @@ export class PacklistComponent implements OnInit {
     const rules = this.rulesPersistence.getRules();
     try {
       this.rules.set(parseRules(rules));
+      this.error.set(undefined);
     } catch (error) {
+      if (error instanceof Error) {
+        this.error.set(error.message);
+      } else {
+        this.error.set('An unknown error occurred');
+      }
       console.error(error);
     }
   }

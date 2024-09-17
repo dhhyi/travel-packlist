@@ -1,21 +1,25 @@
-<app-toolbar></app-toolbar>
-@for (rule of parsedRules(); track $index) {
-  @if ($index > 0 && mode.isMode("swap")) {
-    <div class="flex justify-center">
-      <button class="icon" (click)="swapRules($index - 1, $index)">
-        <app-icon-swap></app-icon-swap>
-      </button>
+@if (error(); as error) {
+  <app-error [error]="error"></app-error>
+} @else {
+  <app-toolbar></app-toolbar>
+  @for (rule of parsedRules(); track $index) {
+    @if ($index > 0 && mode.isMode("swap")) {
+      <div class="flex justify-center">
+        <button class="icon" (click)="swapRules($index - 1, $index)">
+          <app-icon-swap></app-icon-swap>
+        </button>
+      </div>
+    }
+    <div class="card mb-1" [ngClass]="{ 'opacity-50': showAsDisabled(rule) }">
+      <app-editor-rule
+        [rule]="rule"
+        [categories]="categories()"
+        [variables]="variables()"
+        (ruleChanged)="updateRule($index, $event)"
+      ></app-editor-rule>
     </div>
   }
-  <div class="card mb-1" [ngClass]="{ 'opacity-50': showAsDisabled(rule) }">
-    <app-editor-rule
-      [rule]="rule"
-      [categories]="categories()"
-      [variables]="variables()"
-      (ruleChanged)="updateRule($index, $event)"
-    ></app-editor-rule>
-  </div>
-}
-@if (mode.isMode("edit")) {
-  <button class="sticky bottom-0" (click)="addRule()">+ Rule</button>
+  @if (mode.isMode("edit")) {
+    <button class="sticky bottom-0" (click)="addRule()">+ Rule</button>
+  }
 }
