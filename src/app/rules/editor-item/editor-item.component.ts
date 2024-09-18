@@ -4,8 +4,8 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
-import { extractItemNameAndWeight } from '../../../model/parser';
-import { serializeWeight } from '../../../model/serializer';
+import { Parser } from '../../../model/parser';
+import { Serializer } from '../../../model/serializer';
 
 @Component({
   selector: 'app-editor-item',
@@ -26,6 +26,10 @@ export class EditorItemComponent implements OnChanges {
 
   mode = inject(RulesMode);
 
+  private parser = inject(Parser);
+
+  private serializer = inject(Serializer);
+
   constructor() {
     this.control.valueChanges
       .pipe(debounceTime(500), takeUntilDestroyed())
@@ -35,7 +39,7 @@ export class EditorItemComponent implements OnChanges {
           return;
         }
 
-        const [name, weight] = extractItemNameAndWeight(value.name);
+        const [name, weight] = this.parser.extractItemNameAndWeight(value.name);
 
         this.itemChanged.emit({
           category: value.category,
@@ -62,7 +66,7 @@ export class EditorItemComponent implements OnChanges {
     if (!this.blockPatch) {
       let name = this.item().name;
       if (this.item().weight) {
-        name += ` ${serializeWeight(this.item().weight)}`;
+        name += ` ${this.serializer.serializeWeight(this.item().weight)}`;
       }
 
       this.control.patchValue(

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
-import { parseRules } from '../../model/parser';
+import { Parser } from '../../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ConfigPersistence } from './config.persistence';
@@ -26,10 +26,11 @@ const defaultFileName = 'travel-packlist-rules.txt';
 export class ConfigComponent {
   packlist = inject(PacklistPersistence);
   rules = inject(RulesPersistence);
-  router = inject(Router);
   env = env;
 
-  config = inject(ConfigPersistence);
+  private router = inject(Router);
+  private config = inject(ConfigPersistence);
+  private parser = inject(Parser);
 
   fadeOutDisabledRulesControl = new FormControl(
     this.config.isFadeOutDisabledRules(),
@@ -118,7 +119,7 @@ export class ConfigComponent {
       const text = await file.text();
       this.rules.saveRules(text);
       try {
-        parseRules(text);
+        this.parser.parseRules(text);
         this.router.navigate(['/packlist']);
       } catch (_) {
         this.router.navigate(['/rules']);

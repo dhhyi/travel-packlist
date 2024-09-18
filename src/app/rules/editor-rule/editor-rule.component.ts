@@ -16,8 +16,8 @@ import {
 import { EditorConditionComponent } from '../editor-condition/editor-condition.component';
 import { EditorQuestionComponent } from '../editor-question/editor-question.component';
 import { EditorItemComponent } from '../editor-item/editor-item.component';
-import { serialize } from '../../../model/serializer';
-import { parseRule } from '../../../model/parser';
+import { Serializer } from '../../../model/serializer';
+import { Parser } from '../../../model/parser';
 import { RulesMode } from '../rules.mode';
 import { RulesClipboard } from '../rules.clipboard';
 import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
@@ -48,15 +48,18 @@ export class EditorRuleComponent {
 
   ruleChanged = output<Rule | null>();
 
-  ruleDebugString = computed(() => serialize(this.rule()));
+  ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
   errorMessage = signal<string | null>(null);
 
   mode = inject(RulesMode);
   clipboard = inject(RulesClipboard);
 
+  private parser = inject(Parser);
+  private serializer = inject(Serializer);
+
   private compileRule(rule: Rule): boolean {
     try {
-      parseRule(serialize(rule));
+      this.parser.parseRule(this.serializer.serialize(rule));
       this.errorMessage.set(null);
       return true;
     } catch (error) {

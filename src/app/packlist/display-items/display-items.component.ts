@@ -4,7 +4,7 @@ import { PacklistPersistence } from '../packlist.persistence';
 import { KeyValuePipe, NgClass } from '@angular/common';
 import { ItemsStatusComponent } from './items-status/items-status.component';
 import { ConfigPersistence } from '../../config/config.persistence';
-import { serializeWeight } from '../../../model/serializer';
+import { Serializer } from '../../../model/serializer';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -86,7 +86,8 @@ export class DisplayItemsComponent {
     ),
   );
 
-  serializeWeight = serializeWeight;
+  private serializer = inject(Serializer);
+  serializeWeight = this.serializer.serializeWeight.bind(this.serializer);
 
   toggle(item: Item) {
     const serializedItem = serialize(item);

@@ -1,13 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { PleaseSelect, Rule } from '../../model/types';
-import {
-  extractCategories,
-  extractVariables,
-  parseRules,
-} from '../../model/parser';
+import { Parser } from '../../model/parser';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { RulesPersistence } from './rules.persistence';
-import { serializeRules } from '../../model/serializer';
+import { Serializer } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RulesMode } from './rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
@@ -45,9 +41,12 @@ export class RulesComponent implements OnInit {
 
   private config = inject(ConfigPersistence);
 
+  private parser = inject(Parser);
+  private serializer = inject(Serializer);
+
   ngOnInit(): void {
     try {
-      this.calculateFields(parseRules(this.persistence.getRules()));
+      this.calculateFields(this.parser.parseRules(this.persistence.getRules()));
       this.error.set(undefined);
     } catch (error) {
       if (error instanceof Error) {
@@ -61,8 +60,8 @@ export class RulesComponent implements OnInit {
 
   calculateFields(parsedRules: Rule[]) {
     this.parsedRules.set(parsedRules);
-    this.categories.set(extractCategories(parsedRules));
-    this.variables.set(extractVariables(parsedRules));
+    this.categories.set(this.parser.extractCategories(parsedRules));
+    this.variables.set(this.parser.extractVariables(parsedRules));
   }
 
   updateRule(index: number, rule: Rule | null) {
@@ -74,7 +73,7 @@ export class RulesComponent implements OnInit {
     } else {
       rules.splice(index, 1);
     }
-    const serializedRules = serializeRules(rules);
+    const serializedRules = this.serializer.serializeRules(rules);
     this.persistence.saveRules(serializedRules);
     this.calculateFields(rules);
   }
@@ -98,7 +97,7 @@ export class RulesComponent implements OnInit {
     const temp = rules[index1];
     rules[index1] = rules[index2];
     rules[index2] = temp;
-    const serializedRules = serializeRules(rules);
+    const serializedRules = this.serializer.serializeRules(rules);
     this.persistence.saveRules(serializedRules);
     this.calculateFields(rules);
   }

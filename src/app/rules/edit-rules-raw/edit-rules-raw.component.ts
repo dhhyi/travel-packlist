@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { tap, debounceTime } from 'rxjs';
-import { parseRules } from '../../../model/parser';
+import { Parser } from '../../../model/parser';
 import { Rule } from '../../../model/types';
 import { RulesPersistence } from '../rules.persistence';
 
@@ -26,7 +26,8 @@ export class EditRulesRawComponent {
   parsedRules = signal<Rule[]>([]);
   noOfRules = computed<number>(() => this.parsedRules().length);
 
-  persistence = inject(RulesPersistence);
+  private persistence = inject(RulesPersistence);
+  private parser = inject(Parser);
 
   constructor() {
     this.rules.valueChanges
@@ -45,7 +46,7 @@ export class EditRulesRawComponent {
           this.persistence.saveRules(value);
           if (value) {
             try {
-              const parsed = parseRules(value);
+              const parsed = this.parser.parseRules(value);
               this.parsedRules.set(parsed);
               this.state.set('success');
             } catch (error) {

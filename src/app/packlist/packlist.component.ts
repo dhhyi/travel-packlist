@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { RulesPersistence } from '../rules/rules.persistence';
-import { parseRules } from '../../model/parser';
+import { Parser } from '../../model/parser';
 import { Rule, VariableName, VariableType } from '../../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
 import { DisplayItemsComponent } from './display-items/display-items.component';
@@ -25,6 +25,7 @@ export class PacklistComponent implements OnInit {
   private packlistPersistence = inject(PacklistPersistence);
 
   private rules = signal<Rule[]>([]);
+
   model = signal<Record<VariableName, VariableType>>(
     this.packlistPersistence.getAnswers(),
   );
@@ -44,6 +45,8 @@ export class PacklistComponent implements OnInit {
 
   error = signal<string | undefined>(undefined);
 
+  private parser = inject(Parser);
+
   constructor() {
     effect(() => {
       const model = this.model();
@@ -54,7 +57,7 @@ export class PacklistComponent implements OnInit {
   ngOnInit(): void {
     const rules = this.rulesPersistence.getRules();
     try {
-      this.rules.set(parseRules(rules));
+      this.rules.set(this.parser.parseRules(rules));
       this.error.set(undefined);
     } catch (error) {
       if (error instanceof Error) {
