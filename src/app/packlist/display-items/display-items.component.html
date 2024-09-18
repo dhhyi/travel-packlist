@@ -1,20 +1,29 @@
-@if (trackWeight) {
-  <div class="mb-1 flex">
-    <progress
-      class="grow"
-      [value]="weightChecked()"
-      [max]="weightTotal()"
-    ></progress>
-  </div>
-  <div class="flex justify-center">
-    {{ serializeWeight(weightChecked(), "kg") || "0kg" }} /
-    {{ serializeWeight(weightTotal(), "kg") || "0kg" }}
-  </div>
-} @else {
-  <div class="mb-1 flex">
-    <progress class="grow" [value]="percentage()" [max]="100"></progress>
-  </div>
-}
+<div class="card mb-1">
+  @if (trackWeight) {
+    <div class="mb-1 flex">
+      <progress
+        class="grow"
+        [value]="weightChecked()"
+        [max]="weightTotal()"
+      ></progress>
+    </div>
+    <div class="flex justify-center">
+      {{ serializeWeight(weightChecked(), "kg") || "0kg" }} /
+      {{ serializeWeight(weightTotal(), "kg") || "0kg" }}
+    </div>
+  } @else {
+    <div class="mb-1 flex">
+      <progress
+        class="grow"
+        [value]="currentlyCheckedItems()"
+        [max]="items().length"
+      ></progress>
+    </div>
+    <div class="flex justify-center">
+      {{ currentlyCheckedItems() }} / {{ items().length }}
+    </div>
+  }
+</div>
 
 @for (group of groupedItems() | keyvalue; track group.key) {
   <div class="card mb-1">
