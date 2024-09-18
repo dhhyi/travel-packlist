@@ -79,17 +79,37 @@ export class RulesComponent implements OnInit {
   }
 
   addRule() {
-    this.updateRule(this.parsedRules().length, {
+    let insertAt = this.parsedRules().length;
+    const candidates: number[] = [];
+    for (let i = 0; i < this.parsedRules().length; i++) {
+      const ruleElement = document.querySelector(`#rule-${i}`);
+      if (ruleElement) {
+        const rect = ruleElement.getBoundingClientRect();
+        const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;
+
+        if (isInViewport) {
+          candidates.push(i);
+        }
+      }
+    }
+
+    console.log({ candidates, insertAt });
+
+    if (!candidates.includes(insertAt - 1)) {
+      insertAt = candidates[0] + 1;
+    }
+
+    const newRule = {
       condition: new PleaseSelect(),
       effects: { questions: [], items: [] },
-    });
-    // scroll to smooth to bottom with a delay of 500ms
-    setTimeout(() => {
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: 'smooth',
-      });
-    }, 100);
+    };
+
+    const rules = this.parsedRules();
+    rules.splice(insertAt, 0, newRule);
+
+    const serializedRules = this.serializer.serializeRules(rules);
+    this.persistence.saveRules(serializedRules);
+    this.calculateFields(rules);
   }
 
   swapRules(index1: number, index2: number) {

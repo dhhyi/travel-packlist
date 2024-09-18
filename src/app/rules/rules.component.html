@@ -10,7 +10,11 @@
         </button>
       </div>
     }
-    <div class="card mb-1" [ngClass]="{ 'opacity-50': showAsDisabled(rule) }">
+    <div
+      id="rule-{{ $index }}"
+      class="card mb-1"
+      [ngClass]="{ 'opacity-50': showAsDisabled(rule) }"
+    >
       <app-editor-rule
         [rule]="rule"
         [categories]="categories()"
@@ -20,6 +24,6 @@
     </div>
   }
   @if (mode.isMode("edit")) {
-    <button class="sticky bottom-0" (click)="addRule()">+ Rule</button>
+    <button class="sticky bottom-0 z-50" (click)="addRule()">+ Rule</button>
   }
 }
