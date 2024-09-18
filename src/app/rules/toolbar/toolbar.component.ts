@@ -41,6 +41,6 @@ export class ToolbarComponent implements OnDestroy {
 
   @HostListener('window:scroll')
   scroll() {
-    this.sticky.set(this.scroller.getScrollPosition()?.[1] > 100);
+    this.sticky.set(this.scroller.getScrollPosition()?.[1] > 48);
   }
 }
