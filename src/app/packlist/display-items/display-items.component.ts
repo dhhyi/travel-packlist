@@ -18,12 +18,13 @@ function serialize(item: Item): string {
   styles: [
     `
       progress::-webkit-progress-bar {
-        border: 1px solid #999;
+        border: 2px solid #ccc;
         border-radius: 5px;
         background-color: transparent;
       }
       progress::-webkit-progress-value {
         background-color: #999;
+        border-radius: 3px;
       }
     `,
   ],
