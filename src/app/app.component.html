@@ -10,4 +10,15 @@
 
 <div class="grow-children flex grow flex-col px-2 pb-2">
   <router-outlet></router-outlet>
+
+  @if (scrollTopVisible) {
+    <div class="sticky bottom-2 flex justify-center">
+      <button
+        class="rounded-3xl border border-slate-300 bg-white shadow-xl"
+        (click)="scrollTop()"
+      >
+        <app-icon-up [size]="32"></app-icon-up>
+      </button>
+    </div>
+  }
 </div>
