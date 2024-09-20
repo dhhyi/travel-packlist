@@ -11,6 +11,7 @@ import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { NgClass } from '@angular/common';
 import { ConfigPersistence } from '../config/config.persistence';
 import { ErrorComponent } from '../error/error.component';
+import { Refactor } from '../../model/refactor';
 
 @Component({
   selector: 'app-rules',
@@ -43,6 +44,7 @@ export class RulesComponent implements OnInit {
 
   private parser = inject(Parser);
   private serializer = inject(Serializer);
+  private refactor = inject(Refactor);
 
   ngOnInit(): void {
     try {
@@ -117,6 +119,7 @@ export class RulesComponent implements OnInit {
     const temp = rules[index1];
     rules[index1] = rules[index2];
     rules[index2] = temp;
+
     const serializedRules = this.serializer.serializeRules(rules);
     this.persistence.saveRules(serializedRules);
     this.calculateFields(rules);
@@ -127,5 +130,17 @@ export class RulesComponent implements OnInit {
       this.config.isFadeOutDisabledRules() &&
       !rule.condition.evaluate(this.answers)
     );
+  }
+
+  renameVariable([oldVariable, newVariable]: [string, string]) {
+    const rules = this.refactor.renameVariable(
+      oldVariable,
+      newVariable,
+      this.parsedRules(),
+    );
+
+    const serializedRules = this.serializer.serializeRules(rules);
+    this.persistence.saveRules(serializedRules);
+    this.calculateFields(rules);
   }
 }

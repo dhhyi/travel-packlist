@@ -15,6 +15,7 @@ export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();
 
   questionChanged = output<Question>();
+  variableChanged = output<[string, string]>();
 
   control = new FormGroup<{
     [K in keyof Question]: FormControl<string | null>;
@@ -28,8 +29,15 @@ export class EditorQuestionComponent implements OnChanges {
   constructor() {
     this.control.valueChanges
       .pipe(debounceTime(500), takeUntilDestroyed())
-      .subscribe((question) => {
-        this.questionChanged.emit(question as Question);
+      .subscribe((value) => {
+        if (value.question !== this.question().question) {
+          this.questionChanged.emit(value as Question);
+        } else if (
+          !!value.variable &&
+          value.variable !== this.question().variable
+        ) {
+          this.variableChanged.emit([this.question().variable, value.variable]);
+        }
       });
 
     this.mode

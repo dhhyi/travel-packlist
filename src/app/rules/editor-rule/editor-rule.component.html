@@ -27,6 +27,7 @@
       class="grow"
       [question]="question"
       (questionChanged)="updateQuestion($index, $event)"
+      (variableChanged)="variableChanged($event)"
     ></app-editor-question>
     @if (mode.isMode("delete")) {
       <button class="icon" (click)="deleteQuestion($index)">

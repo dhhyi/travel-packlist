@@ -47,6 +47,7 @@ export class EditorRuleComponent {
   variables = input.required<string[]>();
 
   ruleChanged = output<Rule | null>();
+  renameVariable = output<[string, string]>();
 
   ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
   errorMessage = signal<string | null>(null);
@@ -179,5 +180,9 @@ export class EditorRuleComponent {
       },
     };
     this.ruleChanged.emit(newRule);
+  }
+
+  variableChanged([oldVariable, newVariable]: [string, string]) {
+    this.renameVariable.emit([oldVariable, newVariable]);
   }
 }
