@@ -13,7 +13,7 @@
     <div
       id="rule-{{ $index }}"
       class="card mb-1"
-      [ngClass]="{ 'opacity-50': showAsDisabled(rule) }"
+      [ngClass]="{ disabled: showAsDisabled(rule) }"
     >
       <app-editor-rule
         [rule]="rule"

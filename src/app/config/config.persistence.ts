@@ -4,6 +4,7 @@ import { saveLocalStorage } from '../../util/localstorage.persistence';
 const defaultConfig = {
   fadeOutDisabledRules: false,
   trackWeight: false,
+  answersLocked: false,
 };
 
 @Injectable({ providedIn: 'root' })
@@ -42,5 +43,14 @@ export class ConfigPersistence {
 
   isTrackWeight() {
     return this.config.trackWeight;
+  }
+
+  isAnswersLocked() {
+    return this.config.answersLocked;
+  }
+
+  setAnswersLocked(value: boolean) {
+    this.config.answersLocked = value;
+    this.persist();
   }
 }

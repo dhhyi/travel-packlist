@@ -13,11 +13,22 @@ import { DisplayQuestionComponent } from './display-question/display-question.co
 import { DisplayItemsComponent } from './display-items/display-items.component';
 import { PacklistPersistence } from './packlist.persistence';
 import { ErrorComponent } from '../error/error.component';
+import { IconLockOpenComponent } from '../icons/icon-lock-open/icon-lock-open.component';
+import { ConfigPersistence } from '../config/config.persistence';
+import { IconLockComponent } from '../icons/icon-lock/icon-lock.component';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-packlist',
   standalone: true,
-  imports: [DisplayQuestionComponent, DisplayItemsComponent, ErrorComponent],
+  imports: [
+    DisplayQuestionComponent,
+    DisplayItemsComponent,
+    ErrorComponent,
+    IconLockOpenComponent,
+    IconLockComponent,
+    NgClass,
+  ],
   templateUrl: './packlist.component.html',
 })
 export class PacklistComponent implements OnInit {
@@ -47,6 +58,8 @@ export class PacklistComponent implements OnInit {
 
   private parser = inject(Parser);
 
+  private config = inject(ConfigPersistence);
+
   constructor() {
     effect(() => {
       const model = this.model();
@@ -71,5 +84,13 @@ export class PacklistComponent implements OnInit {
 
   modelChange(variable: VariableName, value: VariableType): void {
     this.model.update((model) => ({ ...model, [variable]: value }));
+  }
+
+  isLockActive() {
+    return this.config.isAnswersLocked();
+  }
+
+  toggleLock() {
+    this.config.setAnswersLocked(!this.config.isAnswersLocked());
   }
 }

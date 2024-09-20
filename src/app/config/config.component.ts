@@ -61,6 +61,7 @@ export class ConfigComponent {
     if (window.confirm('Are you sure you want to reset the checklist?')) {
       this.packlist.saveAnswers({});
       this.packlist.setCheckedItems([]);
+      this.config.setAnswersLocked(false);
       this.router.navigate(['/packlist']);
     }
   }

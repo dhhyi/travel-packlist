@@ -2,7 +2,7 @@
   <app-error [error]="error"></app-error>
 } @else {
   @for (question of questions(); track question.question) {
-    <div class="card mb-1">
+    <div class="card mb-1" [ngClass]="{ disabled: isLockActive() }">
       <app-display-question
         [question]="question.question"
         [value]="model()[question.variable]"
@@ -10,6 +10,16 @@
       ></app-display-question>
     </div>
   }
+
+  <div class="flex justify-center">
+    <button class="icon" (click)="toggleLock()">
+      @if (isLockActive()) {
+        <app-icon-lock [size]="24"></app-icon-lock>
+      } @else {
+        <app-icon-lock-open [size]="24"></app-icon-lock-open>
+      }
+    </button>
+  </div>
 
   <app-display-items [items]="items()"></app-display-items>
 }
