@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { PleaseSelect, Rule } from '../../model/types';
 import { Parser } from '../../model/parser';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
@@ -14,6 +20,7 @@ import { ErrorComponent } from '../error/error.component';
 import { Refactor } from '../../model/refactor';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
   standalone: true,
   imports: [
@@ -86,7 +93,7 @@ export class RulesComponent implements OnInit {
     let insertAt = this.parsedRules().length;
     const candidates: number[] = [];
     for (let i = 0; i < this.parsedRules().length; i++) {
-      const ruleElement = document.querySelector(`#rule-${i}`);
+      const ruleElement = document.querySelector(`#rule-${i.toString()}`);
       if (ruleElement) {
         const rect = ruleElement.getBoundingClientRect();
         const isInViewport = rect.top >= 0 && rect.bottom <= window.innerHeight;

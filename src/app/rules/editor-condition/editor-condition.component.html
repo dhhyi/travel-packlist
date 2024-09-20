@@ -4,10 +4,10 @@
 
 @switch (state().type) {
   @case ("true") {
-    <ng-container *ngTemplateOutlet="select; context: ''"></ng-container>
+    <ng-container *ngTemplateOutlet="select; context: ''" />
   }
   @case ("variable") {
-    <ng-container *ngTemplateOutlet="select; context: state()"></ng-container>
+    <ng-container *ngTemplateOutlet="select; context: state()" />
   }
   @case ("not") {
     <span class="font-bold">NOT</span>
@@ -18,7 +18,7 @@
         [variables]="variables()"
         [forbidden]="['', 'not', 'and', 'or']"
         (conditionChanged)="bubbleNotChange($event)"
-      ></app-editor-condition>
+      />
     }
   }
   @case ("and") {
@@ -29,8 +29,7 @@
         [variables]="variables()"
         [forbidden]="['', 'or']"
         (conditionChanged)="bubbleAndLeftChange($event)"
-      >
-      </app-editor-condition>
+      />
       <span class="font-bold">AND</span>
       <app-editor-condition
         [depth]="depth() + 1"
@@ -38,7 +37,7 @@
         [variables]="variables()"
         [forbidden]="['', 'or']"
         (conditionChanged)="bubbleAndRightChange($event)"
-      ></app-editor-condition>
+      />
     }
   }
   @case ("or") {
@@ -49,8 +48,7 @@
         [variables]="variables()"
         [forbidden]="['']"
         (conditionChanged)="bubbleOrLeftChange($event)"
-      >
-      </app-editor-condition>
+      />
       <span class="font-bold">OR</span>
       <app-editor-condition
         [depth]="depth() + 1"
@@ -58,7 +56,7 @@
         [variables]="variables()"
         [forbidden]="['']"
         (conditionChanged)="bubbleOrRightChange($event)"
-      ></app-editor-condition>
+      />
     }
   }
   @case ("unknown") {
@@ -68,7 +66,7 @@
 
 <ng-template #select let-context="context">
   @if (mode.isMode("edit")) {
-    <select class="font-mono" #select (change)="selection(select.value)">
+    <select #select class="font-mono" (change)="selection(select.value)">
       @for (option of options(); track $index) {
         @switch (option) {
           @case ("") {
@@ -85,7 +83,7 @@
           }
           @default {
             <option
-              value="{{ option }}"
+              [value]="option"
               [selected]="context === option"
               [disabled]="option === please_select"
             >

@@ -9,11 +9,13 @@ export class PacklistPersistence {
   constructor() {
     const answers = localStorage.getItem('answers');
     if (answers) {
-      this.answers = JSON.parse(answers);
+      this.answers = JSON.parse(answers) as PacklistPersistence['answers'];
     }
     const checkedItems = localStorage.getItem('checkedItems');
     if (checkedItems) {
-      this.checkedItems = JSON.parse(checkedItems);
+      this.checkedItems = JSON.parse(
+        checkedItems,
+      ) as PacklistPersistence['checkedItems'];
     }
   }
 

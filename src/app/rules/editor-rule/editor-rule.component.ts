@@ -5,6 +5,7 @@ import {
   input,
   output,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   Condition,
@@ -27,6 +28,7 @@ import { IconDownComponent } from '../../icons/icon-down/icon-down.component';
 import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-rule',
   standalone: true,
   imports: [
@@ -51,8 +53,8 @@ export class EditorRuleComponent {
   categories = input.required<string[]>();
   variables = input.required<string[]>();
 
-  ruleChanged = output<Rule | null>();
-  renameVariable = output<[string, string]>();
+  readonly ruleChanged = output<Rule | null>();
+  readonly renameVariable = output<[string, string]>();
 
   ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
   errorMessage = signal<string | null>(null);
@@ -113,7 +115,7 @@ export class EditorRuleComponent {
   }
 
   addQuestion() {
-    const newQuestion: Question = new Question(
+    const newQuestion = new Question(
       EditorRuleComponent.NEW_QUESTION_NAME,
       EditorRuleComponent.NEW_VARIABLE_NAME,
     );

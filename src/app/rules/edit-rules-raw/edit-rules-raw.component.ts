@@ -1,4 +1,10 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { tap, debounceTime } from 'rxjs';
@@ -7,21 +13,20 @@ import { Rule } from '../../../model/types';
 import { RulesPersistence } from '../rules.persistence';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-edit-rules-raw',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './edit-rules-raw.component.html',
-  styles: [
-    `
-      :host {
-        @apply flex flex-col;
-      }
-    `,
-  ],
+  styles: `
+    :host {
+      @apply flex flex-col;
+    }
+  `,
 })
 export class EditRulesRawComponent {
   rules = new FormControl('');
-  state = signal<'success' | 'pending' | string>('pending');
+  state = signal<string>('pending');
 
   parsedRules = signal<Rule[]>([]);
   noOfRules = computed<number>(() => this.parsedRules().length);

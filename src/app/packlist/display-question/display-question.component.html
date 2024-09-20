@@ -1,9 +1,9 @@
 @if (question(); as question) {
-  <div (click)="click()" class="flex flex-row justify-between">
+  <div class="flex flex-row justify-between" (click)="click()">
     <span class="font-bold">{{ question }}</span>
     @if (value()) {
       <span>
-        <app-icon-checkmark></app-icon-checkmark>
+        <app-icon-checkmark />
       </span>
     }
   </div>

@@ -14,11 +14,16 @@ module.exports = tseslint.config(
   },
   {
     files: ["**/*.ts"],
+    languageOptions: {
+      parserOptions: {
+        project: "./tsconfig.json",
+      },
+    },
     extends: [
       eslint.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...tseslint.configs.stylistic,
-      ...angular.configs.tsRecommended,
+      ...tseslint.configs.stylisticTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+      ...angular.configs.tsAll,
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -28,6 +33,12 @@ module.exports = tseslint.config(
           type: "attribute",
           prefix: "app",
           style: "camelCase",
+        },
+      ],
+      "@angular-eslint/component-max-inline-declarations": [
+        "error",
+        {
+          styles: 10,
         },
       ],
       "@angular-eslint/component-selector": [
@@ -50,17 +61,22 @@ module.exports = tseslint.config(
           ignoreRestSiblings: true,
         },
       ],
+      "@typescript-eslint/no-unnecessary-parameter-property-assignment":
+        "error",
+      "@typescript-eslint/no-unnecessary-qualifier": "error",
     },
   },
   {
     files: ["**/*.html"],
     extends: [
-      ...angular.configs.templateRecommended,
+      ...angular.configs.templateAll,
       ...angular.configs.templateAccessibility,
     ],
     rules: {
       "@angular-eslint/template/click-events-have-key-events": "off",
       "@angular-eslint/template/interactive-supports-focus": "off",
+      "@angular-eslint/template/i18n": "off",
+      "@angular-eslint/template/no-call-expression": "off",
     },
   },
 );

@@ -30,8 +30,8 @@ export class Serializer {
     if (!weight) {
       return '';
     }
-    const weightInKilos = weight / 1000.0 + 'kg';
-    const weightInGrams = weight * 1.0 + 'g';
+    const weightInKilos = (weight / 1000.0).toString() + 'kg';
+    const weightInGrams = (weight * 1.0).toString() + 'g';
 
     if (!prefer) {
       return weightInKilos.length <= weightInGrams.length
@@ -42,10 +42,6 @@ export class Serializer {
     }
   }
 
-  serialize(rule: Rule): string;
-  serialize(condition: Condition): string;
-  serialize(question: Question): string;
-  serialize(item: Item): string;
   serialize(input: Rule | Condition | Question | Item): string {
     if (input instanceof Rule) {
       const tokens = [];

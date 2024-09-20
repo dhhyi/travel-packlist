@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
@@ -11,17 +11,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 const defaultFileName = 'travel-packlist-rules.txt';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config',
   standalone: true,
   imports: [RouterModule, ReactiveFormsModule],
   templateUrl: './config.component.html',
-  styles: [
-    `
-      .section {
-        @apply mb-3 flex flex-col gap-2 border-b pb-2;
-      }
-    `,
-  ],
+  styles: `
+    .section {
+      @apply mb-3 flex flex-col gap-2 border-b pb-2;
+    }
+  `,
 })
 export class ConfigComponent {
   packlist = inject(PacklistPersistence);
@@ -57,16 +56,16 @@ export class ConfigComponent {
     );
   }
 
-  resetChecklist() {
+  async resetChecklist() {
     if (window.confirm('Are you sure you want to reset the checklist?')) {
       this.packlist.saveAnswers({});
       this.packlist.setCheckedItems([]);
       this.config.setAnswersLocked(false);
-      this.router.navigate(['/packlist']);
+      await this.router.navigate(['/packlist']);
     }
   }
 
-  resetEverything() {
+  async resetEverything() {
     if (
       window.confirm('Are you sure you want to reset the whole application?')
     ) {
@@ -74,7 +73,7 @@ export class ConfigComponent {
       this.packlist.setCheckedItems([]);
       this.rules.resetRules();
       this.config.resetConfig();
-      this.router.navigate(['/packlist']);
+      await this.router.navigate(['/packlist']);
     }
   }
 
@@ -88,9 +87,9 @@ export class ConfigComponent {
     a.click();
   }
 
-  shareRules() {
+  async shareRules() {
     const rules = this.rules.getRules();
-    navigator.share({
+    await navigator.share({
       title: defaultFileName,
       files: [
         new File([rules], defaultFileName, {
@@ -100,9 +99,9 @@ export class ConfigComponent {
     });
   }
 
-  exportRules() {
+  async exportRules() {
     if (this.isMobile() && 'share' in navigator) {
-      this.shareRules();
+      await this.shareRules();
     } else {
       this.downloadRules();
     }
@@ -121,9 +120,9 @@ export class ConfigComponent {
       this.rules.saveRules(text);
       try {
         this.parser.parseRules(text);
-        this.router.navigate(['/packlist']);
+        await this.router.navigate(['/packlist']);
       } catch (_) {
-        this.router.navigate(['/rules']);
+        await this.router.navigate(['/rules']);
       }
     };
     input.click();

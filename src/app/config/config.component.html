@@ -1,6 +1,7 @@
+<!-- eslint-disable @angular-eslint/template/prefer-ngsrc -->
 <div class="section">
   <span class="font-bold">Answers</span>
-  <button (click)="resetChecklist()">Reset Checklist</button>
+  <button type="button" (click)="resetChecklist()">Reset Checklist</button>
   <div class="flex items-center gap-3">
     <input
       type="checkbox"
@@ -16,7 +17,7 @@
 
 <div class="section">
   <span class="font-bold">Rules</span>
-  <button routerLink="/rules">Edit Rules</button>
+  <button type="button" routerLink="/rules">Edit Rules</button>
   <div class="flex items-center gap-3">
     <input
       type="checkbox"
@@ -26,11 +27,11 @@
     <label for="rules-debug-mode">Fade out disabled rules in editor</label>
   </div>
   <hr />
-  <button routerLink="/documentation">Documentation</button>
-  <button routerLink="/rules-raw">Edit Rules with Code</button>
+  <button type="button" routerLink="/documentation">Documentation</button>
+  <button type="button" routerLink="/rules-raw">Edit Rules with Code</button>
   <hr />
-  <button (click)="exportRules()">Export Rules</button>
-  <button (click)="importRules()">Import Rules</button>
+  <button type="button" (click)="exportRules()">Export Rules</button>
+  <button type="button" (click)="importRules()">Import Rules</button>
 </div>
 
 <div class="section">
@@ -38,7 +39,7 @@
   <span>{{ env.version }}</span>
   <span class="font-mono text-sm text-slate-500"
     ><a
-      href="https://github.com/dhhyi/travel-packlist/commit/{{ env.git_hash }}"
+      [href]="'https://github.com/dhhyi/travel-packlist/commit/' + env.git_hash"
       >{{ env.git_hash }}</a
     ></span
   >
@@ -84,5 +85,7 @@
 
 <div class="section">
   <span class="font-bold">DANGER!</span>
-  <button class="red" (click)="resetEverything()">Reset Application</button>
+  <button type="button" class="red" (click)="resetEverything()">
+    Reset Application
+  </button>
 </div>

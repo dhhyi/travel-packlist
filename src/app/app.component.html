@@ -1,23 +1,24 @@
 <nav class="flex h-12 flex-row items-center p-2">
   <a class="flex grow" routerLink="/">
-    <img src="icon.png" alt="icon" width="32px" height="32px" />
+    <img alt="icon" width="32" height="32" [ngSrc]="'icon.png'" />
     <span class="text-2xl font-bold">Travel Packlist</span>
   </a>
   <a class="pr-2" routerLink="/config">
-    <app-icon-cog [size]="24"></app-icon-cog>
+    <app-icon-cog [size]="24" />
   </a>
 </nav>
 
 <div class="grow-children flex grow flex-col px-2 pb-2">
-  <router-outlet></router-outlet>
+  <router-outlet />
 
   @if (scrollTopVisible) {
     <div class="sticky bottom-2 flex justify-center">
       <button
+        type="button"
         class="rounded-3xl border border-slate-300 bg-white shadow-xl"
         (click)="scrollTop()"
       >
-        <app-icon-up [size]="32"></app-icon-up>
+        <app-icon-up [size]="32" />
       </button>
     </div>
   }

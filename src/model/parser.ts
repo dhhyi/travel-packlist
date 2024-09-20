@@ -45,8 +45,8 @@ export class Parser {
   }
 
   parseQuestion(input: string): Question {
-    const tokens = input.match(questionRegex);
-    if (!tokens || !tokens.groups) {
+    const tokens = questionRegex.exec(input);
+    if (!tokens?.groups) {
       throw new Error("Could not parse question from '" + input + "'");
     }
 
@@ -62,7 +62,7 @@ export class Parser {
       return [input.trim(), 0];
     }
 
-    const tokens = input.trim().match(/^(.+)\s+(\d+(\.\d+)?)(k?g)?$/);
+    const tokens = /^(.+)\s+(\d+(\.\d+)?)(k?g)?$/.exec(input.trim());
     if (tokens) {
       const name = tokens[1].trim();
       const weight = parseFloat(tokens[2]) * (tokens[4] === 'kg' ? 1000 : 1);
@@ -73,8 +73,8 @@ export class Parser {
   }
 
   parseItem(input: string): Item {
-    const tokens = input.match(itemRegex);
-    if (!tokens || !tokens.groups) {
+    const tokens = itemRegex.exec(input);
+    if (!tokens?.groups) {
       throw new Error("Could not parse item from '" + input + "'");
     }
 

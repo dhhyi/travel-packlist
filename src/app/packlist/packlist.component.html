@@ -1,5 +1,5 @@
 @if (error(); as error) {
-  <app-error [error]="error"></app-error>
+  <app-error [error]="error" />
 } @else {
   @for (question of questions(); track question.question) {
     <div class="card mb-1" [ngClass]="{ disabled: isLockActive() }">
@@ -7,19 +7,19 @@
         [question]="question.question"
         [value]="model()[question.variable]"
         (valueChange)="modelChange(question.variable, $event)"
-      ></app-display-question>
+      />
     </div>
   }
 
   <div class="flex justify-center">
-    <button class="icon" (click)="toggleLock()">
+    <button type="button" class="icon" (click)="toggleLock()">
       @if (isLockActive()) {
-        <app-icon-lock [size]="24"></app-icon-lock>
+        <app-icon-lock [size]="24" />
       } @else {
-        <app-icon-lock-open [size]="24"></app-icon-lock-open>
+        <app-icon-lock-open [size]="24" />
       }
     </button>
   </div>
 
-  <app-display-items [items]="items()"></app-display-items>
+  <app-display-items [items]="items()" />
 }

@@ -4,6 +4,7 @@ import {
   inject,
   OnDestroy,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { RulesMode } from '../rules.mode';
 import { RulesClipboard } from '../rules.clipboard';
@@ -15,6 +16,7 @@ import { IconReorderComponent } from '../../icons/icon-reorder/icon-reorder.comp
 import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-toolbar',
   standalone: true,
   imports: [
@@ -41,6 +43,6 @@ export class ToolbarComponent implements OnDestroy {
 
   @HostListener('window:scroll')
   scroll() {
-    this.sticky.set(this.scroller.getScrollPosition()?.[1] > 48);
+    this.sticky.set(this.scroller.getScrollPosition()[1] > 48);
   }
 }

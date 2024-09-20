@@ -1,4 +1,11 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {
   And,
   Condition,
@@ -12,20 +19,19 @@ import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 import { RulesMode } from '../rules.mode';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
   standalone: true,
   imports: [JsonPipe, NgTemplateOutlet],
   templateUrl: './editor-condition.component.html',
-  styles: [
-    `
-      :host {
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-    `,
-  ],
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+  `,
 })
 export class EditorConditionComponent {
   condition = input.required<Condition>();
@@ -78,7 +84,7 @@ export class EditorConditionComponent {
 
   asNot(object: Condition | undefined): Not {
     if (object instanceof Not) {
-      return object as Not;
+      return object;
     } else {
       throw new Error('Expected Not');
     }
@@ -86,7 +92,7 @@ export class EditorConditionComponent {
 
   asAnd(object: Condition | undefined): And {
     if (object instanceof And) {
-      return object as And;
+      return object;
     } else {
       throw new Error('Expected And');
     }
@@ -94,15 +100,15 @@ export class EditorConditionComponent {
 
   asOr(object: Condition | undefined): Or {
     if (object instanceof Or) {
-      return object as Or;
+      return object;
     } else {
       throw new Error('Expected Or');
     }
   }
 
-  conditionChanged = output<Condition>();
+  readonly conditionChanged = output<Condition>();
 
-  selection(value: '' | 'not' | 'and' | 'or' | string) {
+  selection(value: string) {
     if (value === '') {
       this.conditionChanged.emit(new True());
     } else if (value === 'not') {

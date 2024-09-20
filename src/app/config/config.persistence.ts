@@ -14,7 +14,7 @@ export class ConfigPersistence {
   constructor() {
     const loaded = localStorage.getItem('config');
     if (loaded) {
-      this.config = JSON.parse(loaded);
+      this.config = JSON.parse(loaded) as typeof defaultConfig;
     }
   }
 

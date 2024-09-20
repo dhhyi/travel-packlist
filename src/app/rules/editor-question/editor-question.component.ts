@@ -1,4 +1,11 @@
-import { Component, inject, input, OnChanges, output } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnChanges,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Question } from '../../../model/types';
 import {
   FormControl,
@@ -12,6 +19,7 @@ import { RulesMode } from '../rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-question',
   standalone: true,
   imports: [ReactiveFormsModule],
@@ -20,18 +28,20 @@ import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();
 
-  questionChanged = output<Question>();
-  variableChanged = output<[string, string]>();
+  readonly questionChanged = output<Question>();
+  readonly variableChanged = output<[string, string]>();
 
   control = new FormGroup<{
     [K in keyof Question]: FormControl<string | null>;
   }>({
     question: new FormControl('', [
       Validators.pattern('[^,;#]+'),
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
     ]),
     variable: new FormControl('', [
       Validators.pattern(' *[^ ,;#]+ *'),
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
     ]),
   });
@@ -53,9 +63,13 @@ export class EditorQuestionComponent implements OnChanges {
         takeUntilDestroyed(),
       )
       .subscribe((value) => {
-        if (value.question && value.question !== this.question().question) {
+        if (
+          value.question &&
+          value.question !== this.question().question &&
+          value.variable
+        ) {
           this.questionChanged.emit(
-            new Question(value.question, value.variable!),
+            new Question(value.question, value.variable),
           );
         } else if (
           value.variable &&
@@ -77,12 +91,16 @@ export class EditorQuestionComponent implements OnChanges {
         } else {
           this.control.disable({ emitEvent: false });
         }
-        this.ngOnChanges();
+        this.reset();
       });
   }
 
-  ngOnChanges() {
+  private reset() {
     this.control.patchValue(this.question(), { emitEvent: false });
+  }
+
+  ngOnChanges() {
+    this.reset();
   }
 
   focusQuestion() {

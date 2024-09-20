@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { ConfigPersistence } from '../app/config/config.persistence';
@@ -149,11 +150,11 @@ describe('Parser', () => {
         'Is it sunny? $sunny, [utility] Scrubber, [utility] Clothesline',
       );
 
-      expect(effects.questions?.length).toEqual(1);
+      expect(effects.questions.length).toEqual(1);
       expect(effects.questions[0].question).toEqual('Is it sunny?');
       expect(effects.questions[0].variable).toEqual('sunny');
 
-      expect(effects.items?.length).toEqual(2);
+      expect(effects.items.length).toEqual(2);
       expect(effects.items[0].category).toEqual('utility');
       expect(effects.items[0].name).toEqual('Scrubber');
       expect(effects.items[1].category).toEqual('utility');

@@ -5,6 +5,7 @@ import {
   inject,
   OnInit,
   signal,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
@@ -19,6 +20,7 @@ import { IconLockComponent } from '../icons/icon-lock/icon-lock.component';
 import { NgClass } from '@angular/common';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist',
   standalone: true,
   imports: [

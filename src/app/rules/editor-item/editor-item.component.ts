@@ -1,4 +1,11 @@
-import { Component, inject, input, OnChanges, output } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  OnChanges,
+  output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Item } from '../../../model/types';
 import {
   FormControl,
@@ -14,6 +21,7 @@ import { Serializer } from '../../../model/serializer';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-item',
   standalone: true,
   imports: [ReactiveFormsModule],
@@ -23,12 +31,13 @@ export class EditorItemComponent implements OnChanges {
   item = input.required<Item>();
   categories = input.required<string[]>();
 
-  itemChanged = output<Item>();
+  readonly itemChanged = output<Item>();
 
   control = new FormGroup<{ [K in keyof Item]: FormControl<string | null> }>({
     category: new FormControl(''),
     name: new FormControl('', [
       Validators.pattern('[^,;#]+'),
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
     ]),
   });
@@ -73,13 +82,17 @@ export class EditorItemComponent implements OnChanges {
         } else {
           this.control.disable({ emitEvent: false });
         }
-        this.ngOnChanges();
+        this.reset();
       });
   }
 
   blockPatch = false;
 
   ngOnChanges() {
+    this.reset();
+  }
+
+  reset() {
     if (!this.blockPatch) {
       let name = this.item().name;
       if (this.item().weight) {
@@ -105,7 +118,7 @@ export class EditorItemComponent implements OnChanges {
 
   blur() {
     this.blockPatch = false;
-    this.ngOnChanges();
+    this.reset();
   }
 
   private addNewCategory() {

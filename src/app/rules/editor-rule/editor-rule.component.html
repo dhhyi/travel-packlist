@@ -4,10 +4,10 @@
     [variables]="variables()"
     [condition]="rule().condition"
     (conditionChanged)="updateCondition($event)"
-  ></app-editor-condition>
+  />
   @if (mode.isMode("edit")) {
-    <button class="icon" (click)="resetCondition()">
-      <app-icon-delete></app-icon-delete>
+    <button class="icon" type="button" (click)="resetCondition()">
+      <app-icon-delete />
     </button>
   }
 </div>
@@ -16,8 +16,12 @@
   <div class="mb-1 flex items-center">
     @if (mode.isMode("swap")) {
       @if ($index < rule().questions.length - 1) {
-        <button class="icon" (click)="swapQuestions($index, $index + 1)">
-          <app-icon-down></app-icon-down>
+        <button
+          class="icon"
+          type="button"
+          (click)="swapQuestions($index, $index + 1)"
+        >
+          <app-icon-down />
         </button>
       } @else {
         <span class="ml-6"></span>
@@ -28,18 +32,22 @@
       [question]="question"
       (questionChanged)="updateQuestion($index, $event)"
       (variableChanged)="variableChanged($event)"
-    ></app-editor-question>
+    />
     @if (mode.isMode("delete")) {
-      <button class="icon" (click)="deleteQuestion($index)">
-        <app-icon-delete></app-icon-delete>
+      <button class="icon" type="button" (click)="deleteQuestion($index)">
+        <app-icon-delete />
       </button>
     } @else if (mode.isMode("cut-paste")) {
-      <button class="icon" (click)="cutQuestion($index)">
-        <app-icon-cut></app-icon-cut>
+      <button class="icon" type="button" (click)="cutQuestion($index)">
+        <app-icon-cut />
       </button>
     } @else if (mode.isMode("swap") && $index > 0) {
-      <button class="icon" (click)="swapQuestions($index - 1, $index)">
-        <app-icon-up></app-icon-up>
+      <button
+        class="icon"
+        type="button"
+        (click)="swapQuestions($index - 1, $index)"
+      >
+        <app-icon-up />
       </button>
     }
   </div>
@@ -49,8 +57,12 @@
   <div class="mb-1 flex items-center">
     @if (mode.isMode("swap")) {
       @if ($index < rule().items.length - 1) {
-        <button class="icon" (click)="swapItems($index, $index + 1)">
-          <app-icon-down></app-icon-down>
+        <button
+          class="icon"
+          type="button"
+          (click)="swapItems($index, $index + 1)"
+        >
+          <app-icon-down />
         </button>
       } @else {
         <span class="ml-6"></span>
@@ -61,18 +73,22 @@
       [item]="item"
       [categories]="categories()"
       (itemChanged)="updateItem($index, $event)"
-    ></app-editor-item>
+    />
     @if (mode.isMode("delete")) {
-      <button class="icon" (click)="deleteItem($index)">
-        <app-icon-delete></app-icon-delete>
+      <button class="icon" type="button" (click)="deleteItem($index)">
+        <app-icon-delete />
       </button>
     } @else if (mode.isMode("cut-paste")) {
-      <button class="icon" (click)="cutItem($index)">
-        <app-icon-cut></app-icon-cut>
+      <button class="icon" type="button" (click)="cutItem($index)">
+        <app-icon-cut />
       </button>
     } @else if (mode.isMode("swap") && $index > 0) {
-      <button class="icon" (click)="swapItems($index - 1, $index)">
-        <app-icon-up></app-icon-up>
+      <button
+        type="button"
+        class="icon"
+        (click)="swapItems($index - 1, $index)"
+      >
+        <app-icon-up />
       </button>
     }
   </div>
@@ -80,19 +96,19 @@
 
 @if (mode.isMode("edit")) {
   <div class="flex justify-end gap-2">
-    <button (click)="addQuestion()">+ Question</button>
-    <button (click)="addItem()">+ Item</button>
+    <button type="button" (click)="addQuestion()">+ Question</button>
+    <button type="button" (click)="addItem()">+ Item</button>
   </div>
 } @else {
   <div class="flex justify-center">
     @if (mode.isMode("delete")) {
-      <button class="icon" (click)="deleteRule()">
-        <app-icon-delete></app-icon-delete>
+      <button type="button" class="icon" (click)="deleteRule()">
+        <app-icon-delete />
       </button>
     }
     @if (mode.isMode("cut-paste")) {
-      <button class="icon" (click)="paste()">
-        <app-icon-paste></app-icon-paste>
+      <button type="button" class="icon" (click)="paste()">
+        <app-icon-paste />
       </button>
     }
   </div>

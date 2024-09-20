@@ -1,7 +1,8 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-checkmark.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-status',
   standalone: true,
   imports: [IconCheckmarkComponent],

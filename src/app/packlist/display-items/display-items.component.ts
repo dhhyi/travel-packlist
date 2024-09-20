@@ -1,4 +1,11 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Item } from '../../../model/types';
 import { PacklistPersistence } from '../packlist.persistence';
 import { KeyValuePipe, NgClass } from '@angular/common';
@@ -11,23 +18,22 @@ function serialize(item: Item): string {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-items',
   standalone: true,
   imports: [KeyValuePipe, ItemsStatusComponent, NgClass],
   templateUrl: './display-items.component.html',
-  styles: [
-    `
-      progress::-webkit-progress-bar {
-        border: 2px solid #ccc;
-        border-radius: 5px;
-        background-color: transparent;
-      }
-      progress::-webkit-progress-value {
-        background-color: #999;
-        border-radius: 3px;
-      }
-    `,
-  ],
+  styles: `
+    progress::-webkit-progress-bar {
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      background-color: transparent;
+    }
+    progress::-webkit-progress-value {
+      background-color: #999;
+      border-radius: 3px;
+    }
+  `,
 })
 export class DisplayItemsComponent {
   items = input<Item[]>([]);
@@ -38,24 +44,24 @@ export class DisplayItemsComponent {
 
   groupedItems = computed(() => {
     const checkedItems = this.checkedItems();
-    return this.items().reduce(
-      (groups, item) => {
-        if (!groups[item.category]) {
-          groups[item.category] = { items: [], checked: 0 };
-        }
-
-        const checked = checkedItems.includes(serialize(item));
-        groups[item.category].items.push({ ...item, checked });
-        if (checked) {
-          groups[item.category].checked++;
-        }
-        return groups;
-      },
-      {} as Record<
+    return this.items().reduce<
+      Record<
         string,
         { items: (Item & { checked: boolean })[]; checked: number }
-      >,
-    );
+      >
+    >((groups, item) => {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!groups[item.category]) {
+        groups[item.category] = { items: [], checked: 0 };
+      }
+
+      const checked = checkedItems.includes(serialize(item));
+      groups[item.category].items.push({ ...item, checked });
+      if (checked) {
+        groups[item.category].checked++;
+      }
+      return groups;
+    }, {});
   });
 
   currentlyCheckedItems = computed(() =>

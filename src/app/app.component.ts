@@ -1,13 +1,20 @@
-import { Component, HostListener, inject } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 import { IconUpComponent } from './icons/icon-up/icon-up.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, IconCogComponent, IconUpComponent],
+  imports: [RouterModule, IconCogComponent, IconUpComponent, NgOptimizedImage],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
@@ -16,7 +23,7 @@ export class AppComponent {
   constructor() {
     this.swUpdate.versionUpdates.subscribe((event) => {
       if (event.type === 'VERSION_READY') {
-        this.swUpdate.activateUpdate().then(() => {
+        void this.swUpdate.activateUpdate().then(() => {
           window.location.reload();
         });
       }

@@ -32,14 +32,14 @@
       <app-status
         [count]="group.value.checked"
         [total]="group.value.items.length"
-      ></app-status>
+      />
     </div>
     <ul>
       @for (item of group.value.items; track $index) {
         <li
-          (click)="toggle(item)"
           class="flex justify-between"
           [ngClass]="{ 'text-slate-500 line-through': item.checked }"
+          (click)="toggle(item)"
         >
           {{ item.name }}
           @if (item.weight && trackWeight) {

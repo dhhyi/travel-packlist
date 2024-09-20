@@ -1,18 +1,22 @@
 @if (error(); as error) {
-  <app-error [error]="error"></app-error>
+  <app-error [error]="error" />
 } @else {
-  <app-toolbar></app-toolbar>
+  <app-toolbar />
   @for (rule of parsedRules(); track $index) {
     @if ($index > 0 && mode.isMode("swap")) {
       <div class="flex justify-center">
-        <button class="icon" (click)="swapRules($index - 1, $index)">
-          <app-icon-swap></app-icon-swap>
+        <button
+          type="button"
+          class="icon"
+          (click)="swapRules($index - 1, $index)"
+        >
+          <app-icon-swap />
         </button>
       </div>
     }
     <div
-      id="rule-{{ $index }}"
       class="card mb-1"
+      [id]="'rule-' + $index"
       [ngClass]="{ disabled: showAsDisabled(rule) }"
     >
       <app-editor-rule
@@ -21,10 +25,12 @@
         [variables]="variables()"
         (ruleChanged)="updateRule($index, $event)"
         (renameVariable)="renameVariable($event)"
-      ></app-editor-rule>
+      />
     </div>
   }
   @if (mode.isMode("edit")) {
-    <button class="sticky bottom-0 z-50" (click)="addRule()">+ Rule</button>
+    <button type="button" class="sticky bottom-0 z-50" (click)="addRule()">
+      + Rule
+    </button>
   }
 }

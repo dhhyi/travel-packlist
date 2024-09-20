@@ -4,39 +4,44 @@
 >
   <div class="mb-1 grid grid-cols-5 gap-2">
     <button
+      type="button"
       class="icon"
-      (click)="mode.setMode('view')"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('view') }"
+      (click)="mode.setMode('view')"
     >
-      <app-icon-view class="my-auto" [size]="24"></app-icon-view>
+      <app-icon-view class="my-auto" [size]="24" />
     </button>
     <button
+      type="button"
       class="icon"
-      (click)="mode.setMode('edit')"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('edit') }"
+      (click)="mode.setMode('edit')"
     >
-      <app-icon-edit class="my-auto" [size]="24"></app-icon-edit>
+      <app-icon-edit class="my-auto" [size]="24" />
     </button>
     <button
+      type="button"
       class="icon"
-      (click)="mode.setMode('delete')"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('delete') }"
+      (click)="mode.setMode('delete')"
     >
-      <app-icon-delete class="my-auto" [size]="24"></app-icon-delete>
+      <app-icon-delete class="my-auto" [size]="24" />
     </button>
     <button
+      type="button"
       class="icon"
-      (click)="mode.setMode('cut-paste')"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('cut-paste') }"
+      (click)="mode.setMode('cut-paste')"
     >
-      <app-icon-reorder class="my-auto" [size]="24"></app-icon-reorder>
+      <app-icon-reorder class="my-auto" [size]="24" />
     </button>
     <button
+      type="button"
       class="icon"
-      (click)="mode.setMode('swap')"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('swap') }"
+      (click)="mode.setMode('swap')"
     >
-      <app-icon-swap class="my-auto" [size]="24"></app-icon-swap>
+      <app-icon-swap class="my-auto" [size]="24" />
     </button>
   </div>
   @if (mode.isMode("cut-paste")) {

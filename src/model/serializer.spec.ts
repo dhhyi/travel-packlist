@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { Serializer } from './serializer';

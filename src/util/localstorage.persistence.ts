@@ -3,7 +3,7 @@ export function loadLocalStorage(item: string, defaultValue: string): string {
   if (loaded) {
     console.log('Loaded ' + item + ' from local storage');
   }
-  return loaded || defaultValue;
+  return loaded ?? defaultValue;
 }
 
 export function saveLocalStorage(
