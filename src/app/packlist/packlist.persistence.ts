@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { VariableName, VariableType } from '../../model/types';
+import { VariableType } from '../../model/types';
 
 @Injectable({ providedIn: 'root' })
 export class PacklistPersistence {
-  private answers: Record<VariableName, VariableType> = {};
+  private answers: Record<string, VariableType> = {};
   private checkedItems: string[] = [];
 
   constructor() {
@@ -17,13 +17,11 @@ export class PacklistPersistence {
     }
   }
 
-  getAnswers(): Record<VariableName, VariableType> {
+  getAnswers(): Record<string, VariableType> {
     return this.answers;
   }
 
-  saveAnswers(
-    answers: Record<VariableName, VariableType> | undefined | null,
-  ): void {
+  saveAnswers(answers: Record<string, VariableType> | undefined | null): void {
     if (answers) {
       this.answers = answers;
       localStorage.setItem('answers', JSON.stringify(answers));

@@ -1,42 +1,40 @@
-export interface Rule {
-  condition: Condition;
-  effects: Effects;
+export class Rule {
+  constructor(
+    public readonly condition: Condition,
+    public readonly questions: Question[] = [],
+    public readonly items: Item[] = [],
+  ) {}
 }
 
-export interface Question {
-  question: string;
-  variable: VariableName;
+export class Question {
+  constructor(
+    public readonly question: string,
+    public readonly variable: string,
+  ) {}
 }
 
-export interface Item {
-  category: string;
-  name: string;
-  weight?: number;
+export class Item {
+  constructor(
+    public readonly category: string,
+    public readonly name: string,
+    public readonly weight?: number,
+  ) {}
 }
-
-export interface Effects {
-  questions: Question[];
-  items: Item[];
-}
-
-export type VariableName = string;
 
 export type VariableType = boolean;
 
-export interface Condition {
-  evaluate(model: Record<VariableName, VariableType>): boolean;
-}
+export type Condition = True | Variable | Not | And | Or;
 
-export class True implements Condition {
-  evaluate(_: Record<VariableName, VariableType>): boolean {
+export class True {
+  evaluate(): boolean {
     return true;
   }
 }
 
-export class Variable implements Condition {
-  constructor(public readonly variable: VariableName) {}
+export class Variable {
+  constructor(public readonly variable: string) {}
 
-  evaluate(model: Record<VariableName, VariableType>): boolean {
+  evaluate(model: Record<string, VariableType>): boolean {
     return model[this.variable];
   }
 }
@@ -49,32 +47,32 @@ export class PleaseSelect extends Variable {
   }
 }
 
-export class Not implements Condition {
+export class Not {
   constructor(public readonly not: Condition) {}
 
-  evaluate(model: Record<VariableName, VariableType>): boolean {
+  evaluate(model: Record<string, VariableType>): boolean {
     return !this.not.evaluate(model);
   }
 }
 
-export class And implements Condition {
+export class And {
   constructor(
     public readonly left: Condition,
     public readonly right: Condition,
   ) {}
 
-  evaluate(model: Record<VariableName, VariableType>): boolean {
+  evaluate(model: Record<string, VariableType>): boolean {
     return this.left.evaluate(model) && this.right.evaluate(model);
   }
 }
 
-export class Or implements Condition {
+export class Or {
   constructor(
     public readonly left: Condition,
     public readonly right: Condition,
   ) {}
 
-  evaluate(model: Record<VariableName, VariableType>): boolean {
+  evaluate(model: Record<string, VariableType>): boolean {
     return this.left.evaluate(model) || this.right.evaluate(model);
   }
 }

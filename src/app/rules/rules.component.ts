@@ -103,10 +103,7 @@ export class RulesComponent implements OnInit {
       insertAt = candidates[0] + 1;
     }
 
-    const newRule = {
-      condition: new PleaseSelect(),
-      effects: { questions: [], items: [] },
-    };
+    const newRule = new Rule(new PleaseSelect());
 
     const rules = this.parsedRules();
     rules.splice(insertAt, 0, newRule);

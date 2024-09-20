@@ -53,8 +53,10 @@ export class EditorQuestionComponent implements OnChanges {
         takeUntilDestroyed(),
       )
       .subscribe((value) => {
-        if (value.question !== this.question().question) {
-          this.questionChanged.emit(value as Question);
+        if (value.question && value.question !== this.question().question) {
+          this.questionChanged.emit(
+            new Question(value.question, value.variable!),
+          );
         } else if (
           value.variable &&
           value.variable.trim() !== this.question().variable

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   And,
   Condition,
-  Effects,
   Item,
   Not,
   Or,
@@ -21,7 +20,7 @@ export class Serializer {
       .join('\n\n');
   }
 
-  serializeEffects(effects: Effects): string[] {
+  serializeEffects(effects: Rule): string[] {
     return effects.questions
       .map(this.serialize.bind(this))
       .concat(effects.items.map(this.serialize.bind(this)));
@@ -48,7 +47,7 @@ export class Serializer {
   serialize(question: Question): string;
   serialize(item: Item): string;
   serialize(input: Rule | Condition | Question | Item): string {
-    if ('condition' in input) {
+    if (input instanceof Rule) {
       const tokens = [];
       const condition = this.serialize(input.condition);
       if (condition) {
@@ -56,7 +55,7 @@ export class Serializer {
       }
       tokens.push(':-');
 
-      const effects = this.serializeEffects(input.effects);
+      const effects = this.serializeEffects(input);
       if (effects.length === 1 && !condition) {
         tokens.push(' ', effects[0]);
       } else {
@@ -69,6 +68,10 @@ export class Serializer {
         }
       }
       return tokens.join('');
+    } else if (input instanceof Question) {
+      return input.question + ' $' + input.variable;
+    } else if (input instanceof Item) {
+      return `[${input.category}] ${input.name} ${this.serializeWeight(input.weight)}`.trim();
     } else if (input instanceof True) {
       return '';
     } else if (input instanceof Variable) {
@@ -79,14 +82,10 @@ export class Serializer {
       return this.serialize(input.left) + ' AND ' + this.serialize(input.right);
     } else if (input instanceof Or) {
       return this.serialize(input.left) + ' OR ' + this.serialize(input.right);
-    } else if ('evaluate' in input) {
-      throw new Error('Cannot serialize unknown condition');
-    } else if ('question' in input) {
-      return input.question + ' $' + input.variable;
-    } else if ('category' in input && 'name' in input) {
-      return `[${input.category}] ${input.name} ${this.serializeWeight(input.weight)}`.trim();
-    } else {
-      throw new Error('Cannot serialize unknown input');
     }
+
+    const type: never = input;
+
+    throw new Error('Cannot serialize unknown input', type);
   }
 }

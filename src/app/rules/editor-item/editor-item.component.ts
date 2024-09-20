@@ -54,18 +54,14 @@ export class EditorItemComponent implements OnChanges {
         takeUntilDestroyed(),
       )
       .subscribe((value) => {
-        if (value.category === '') {
+        if (!value.category) {
           this.addNewCategory();
           return;
         }
 
         const [name, weight] = this.parser.extractItemNameAndWeight(value.name);
 
-        this.itemChanged.emit({
-          category: value.category,
-          name,
-          weight,
-        } as Item);
+        this.itemChanged.emit(new Item(value.category, name, weight));
       });
 
     this.mode

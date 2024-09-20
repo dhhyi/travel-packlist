@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import {
   And,
   Condition,
-  Effects,
   Item,
   Not,
   Or,
@@ -51,10 +50,7 @@ export class Parser {
       throw new Error("Could not parse question from '" + input + "'");
     }
 
-    return {
-      question: tokens.groups['question'],
-      variable: tokens.groups['variable'],
-    };
+    return new Question(tokens.groups['question'], tokens.groups['variable']);
   }
 
   extractItemNameAndWeight(input: string | undefined | null): [string, number] {
@@ -84,14 +80,10 @@ export class Parser {
 
     const [name, weight] = this.extractItemNameAndWeight(tokens.groups['name']);
 
-    return {
-      category: tokens.groups['category'],
-      name,
-      weight,
-    };
+    return new Item(tokens.groups['category'], name, weight);
   }
 
-  parseEffects(input: string): Effects {
+  parseEffects(input: string) {
     const lines = input
       .split(',')
       .map((line) => line.trim())
@@ -128,10 +120,9 @@ export class Parser {
       condition = this.parseCondition(tokens[0]);
     }
 
-    return {
-      condition,
-      effects: this.parseEffects(tokens[1]),
-    };
+    const { questions, items } = this.parseEffects(tokens[1]);
+
+    return new Rule(condition, questions, items);
   }
 
   parseRules(input: string): Rule[] {
@@ -152,7 +143,7 @@ export class Parser {
     const variables = new Set<string>();
 
     for (const rule of rules) {
-      for (const question of rule.effects.questions) {
+      for (const question of rule.questions) {
         variables.add(question.variable);
       }
     }
@@ -164,7 +155,7 @@ export class Parser {
     const categories = new Set<string>();
 
     for (const rule of rules) {
-      for (const item of rule.effects.items) {
+      for (const item of rule.items) {
         categories.add(item.category);
       }
     }

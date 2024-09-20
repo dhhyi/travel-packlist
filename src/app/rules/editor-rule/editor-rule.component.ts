@@ -85,50 +85,55 @@ export class EditorRuleComponent {
   }
 
   updateCondition(condition: Condition) {
-    const newRule = { ...this.rule(), condition };
+    const newRule = new Rule(
+      condition,
+      this.rule().questions,
+      this.rule().items,
+    );
     if (this.compileRule(newRule)) {
       this.ruleChanged.emit(newRule);
     }
   }
 
   private emitNewQuestions(questions: Question[]) {
-    const newRule = {
-      ...this.rule(),
-      effects: { ...this.rule().effects, questions },
-    };
+    const newRule = new Rule(
+      this.rule().condition,
+      questions,
+      this.rule().items,
+    );
     if (this.compileRule(newRule)) {
       this.ruleChanged.emit(newRule);
     }
   }
 
   updateQuestion(index: number, question: Question) {
-    const questions = this.rule().effects.questions;
+    const questions = this.rule().questions;
     questions[index] = question;
     this.emitNewQuestions(questions);
   }
 
   addQuestion() {
-    const newQuestion: Question = {
-      variable: EditorRuleComponent.NEW_VARIABLE_NAME,
-      question: EditorRuleComponent.NEW_QUESTION_NAME,
-    };
-    this.updateQuestion(this.rule().effects.questions.length, newQuestion);
+    const newQuestion: Question = new Question(
+      EditorRuleComponent.NEW_QUESTION_NAME,
+      EditorRuleComponent.NEW_VARIABLE_NAME,
+    );
+    this.updateQuestion(this.rule().questions.length, newQuestion);
   }
 
   deleteQuestion(index: number) {
-    const questions = this.rule().effects.questions;
+    const questions = this.rule().questions;
     questions.splice(index, 1);
     this.emitNewQuestions(questions);
   }
 
   cutQuestion(index: number) {
-    const question = this.rule().effects.questions[index];
+    const question = this.rule().questions[index];
     this.deleteQuestion(index);
     this.clipboard.cutQuestion(question);
   }
 
   swapQuestions(index1: number, index2: number) {
-    const questions = this.rule().effects.questions;
+    const questions = this.rule().questions;
     const temp = questions[index1];
     questions[index1] = questions[index2];
     questions[index2] = temp;
@@ -136,10 +141,11 @@ export class EditorRuleComponent {
   }
 
   private emitNewItems(items: Item[]) {
-    const newRule = {
-      ...this.rule(),
-      effects: { ...this.rule().effects, items },
-    };
+    const newRule = new Rule(
+      this.rule().condition,
+      this.rule().questions,
+      items,
+    );
     if (this.compileRule(newRule)) {
       this.ruleChanged.emit(newRule);
     }
@@ -148,33 +154,33 @@ export class EditorRuleComponent {
   updateItem(index: number, item: Item) {
     console.log('updateItem', index, item);
 
-    const items = this.rule().effects.items;
+    const items = this.rule().items;
     items[index] = item;
     this.emitNewItems(items);
   }
 
   addItem() {
-    const newItem: Item = {
-      category: EditorRuleComponent.NEW_CATEGORY_NAME,
-      name: EditorRuleComponent.NEW_ITEM_NAME,
-    };
-    this.updateItem(this.rule().effects.items.length, newItem);
+    const newItem: Item = new Item(
+      EditorRuleComponent.NEW_CATEGORY_NAME,
+      EditorRuleComponent.NEW_ITEM_NAME,
+    );
+    this.updateItem(this.rule().items.length, newItem);
   }
 
   deleteItem(index: number) {
-    const items = this.rule().effects.items;
+    const items = this.rule().items;
     items.splice(index, 1);
     this.emitNewItems(items);
   }
 
   cutItem(index: number) {
-    const item = this.rule().effects.items[index];
+    const item = this.rule().items[index];
     this.deleteItem(index);
     this.clipboard.cutItem(item);
   }
 
   swapItems(index1: number, index2: number) {
-    const items = this.rule().effects.items;
+    const items = this.rule().items;
     const temp = items[index1];
     items[index1] = items[index2];
     items[index2] = temp;
@@ -182,14 +188,12 @@ export class EditorRuleComponent {
   }
 
   paste() {
-    const clipboard = this.clipboard.paste();
-    const newRule = {
-      ...this.rule(),
-      effects: {
-        questions: [...this.rule().effects.questions, ...clipboard.questions],
-        items: [...this.rule().effects.items, ...clipboard.items],
-      },
-    };
+    const { questions: cbQuestions, items: cbItems } = this.clipboard.paste();
+    const newRule = new Rule(
+      this.rule().condition,
+      [...this.rule().questions, ...cbQuestions],
+      [...this.rule().items, ...cbItems],
+    );
     this.ruleChanged.emit(newRule);
   }
 

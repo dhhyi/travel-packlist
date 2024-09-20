@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { ConfigPersistence } from '../app/config/config.persistence';
+import { And, Item, Question } from './types';
 
 describe('Parser', () => {
   let parser: Parser;
@@ -167,6 +168,11 @@ describe('Parser', () => {
       );
 
       expect(rule.condition.evaluate({ a: true, b: true })).toBe(true);
+      expect(rule.condition instanceof And).toBe(true);
+      expect(rule.questions.length).toEqual(1);
+      expect(rule.questions[0] instanceof Question).toBe(true);
+      expect(rule.items.length).toEqual(2);
+      expect(rule.items[0] instanceof Item).toBe(true);
     });
   });
 

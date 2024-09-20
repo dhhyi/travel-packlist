@@ -35,48 +35,41 @@ export class Refactor {
   ): Rule[] | Rule | Question | Condition {
     if (item instanceof Array) {
       return item.map((rule) => this.renameVariable(oldName, newName, rule));
-    } else if ('variable' in item && 'question' in item) {
-      const question = item as Question;
-      if (question.variable === oldName) {
-        return { ...question, variable: newName };
+    } else if (item instanceof Question) {
+      if (item.variable === oldName) {
+        return new Question(item.question, newName);
       }
-      return question;
-    } else if ('condition' in item && 'effects' in item) {
-      const rule = item as Rule;
-      return {
-        condition: this.renameVariable(oldName, newName, rule.condition),
-        effects: {
-          questions: rule.effects.questions.map((question) =>
-            this.renameVariable(oldName, newName, question),
-          ),
-          items: rule.effects.items,
-        },
-      };
-    } else {
-      const condition = item as Condition;
-      if (condition instanceof True) {
-        return condition;
-      } else if (condition instanceof Variable) {
-        if (condition.variable === oldName) {
-          return new Variable(newName);
-        }
-        return condition;
-      } else if (condition instanceof Not) {
-        return new Not(this.renameVariable(oldName, newName, condition.not));
-      } else if (condition instanceof And) {
-        return new And(
-          this.renameVariable(oldName, newName, condition.left),
-          this.renameVariable(oldName, newName, condition.right),
-        );
-      } else if (condition instanceof Or) {
-        return new Or(
-          this.renameVariable(oldName, newName, condition.left),
-          this.renameVariable(oldName, newName, condition.right),
-        );
+      return item;
+    } else if (item instanceof Rule) {
+      return new Rule(
+        this.renameVariable(oldName, newName, item.condition),
+        item.questions.map((question) =>
+          this.renameVariable(oldName, newName, question),
+        ),
+        item.items,
+      );
+    } else if (item instanceof True) {
+      return item;
+    } else if (item instanceof Variable) {
+      if (item.variable === oldName) {
+        return new Variable(newName);
       }
+      return item;
+    } else if (item instanceof Not) {
+      return new Not(this.renameVariable(oldName, newName, item.not));
+    } else if (item instanceof And) {
+      return new And(
+        this.renameVariable(oldName, newName, item.left),
+        this.renameVariable(oldName, newName, item.right),
+      );
+    } else if (item instanceof Or) {
+      return new Or(
+        this.renameVariable(oldName, newName, item.left),
+        this.renameVariable(oldName, newName, item.right),
+      );
     }
-    console.log('this part is unreachable', item);
+    const type: never = item;
 
-    throw new Error('this part is unreachable');
+    throw new Error('Unknown item type', type);
   }
 }

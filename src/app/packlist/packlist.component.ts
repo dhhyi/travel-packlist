@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
-import { Rule, VariableName, VariableType } from '../../model/types';
+import { Rule, VariableType } from '../../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
 import { DisplayItemsComponent } from './display-items/display-items.component';
 import { PacklistPersistence } from './packlist.persistence';
@@ -37,7 +37,7 @@ export class PacklistComponent implements OnInit {
 
   private rules = signal<Rule[]>([]);
 
-  model = signal<Record<VariableName, VariableType>>(
+  model = signal<Record<string, VariableType>>(
     this.packlistPersistence.getAnswers(),
   );
 
@@ -47,12 +47,10 @@ export class PacklistComponent implements OnInit {
   });
 
   questions = computed(() =>
-    this.activeRules().flatMap((rule) => rule.effects.questions),
+    this.activeRules().flatMap((rule) => rule.questions),
   );
 
-  items = computed(() =>
-    this.activeRules().flatMap((rule) => rule.effects.items),
-  );
+  items = computed(() => this.activeRules().flatMap((rule) => rule.items));
 
   error = signal<string | undefined>(undefined);
 
@@ -82,7 +80,7 @@ export class PacklistComponent implements OnInit {
     }
   }
 
-  modelChange(variable: VariableName, value: VariableType): void {
+  modelChange(variable: string, value: VariableType): void {
     this.model.update((model) => ({ ...model, [variable]: value }));
   }
 
