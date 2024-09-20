@@ -69,7 +69,7 @@
 <ng-template #select let-context="context">
   @if (mode.isMode("edit")) {
     <select class="font-mono" #select (change)="selection(select.value)">
-      @for (option of options(); track option) {
+      @for (option of options(); track $index) {
         @switch (option) {
           @case ("") {
             <option value="">always active</option>
