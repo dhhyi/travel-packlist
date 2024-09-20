@@ -13,7 +13,7 @@
 </div>
 
 @for (question of rule().effects.questions; track $index) {
-  <div class="mb-1 flex h-16 items-center">
+  <div class="mb-1 flex items-center">
     @if (mode.isMode("swap")) {
       @if ($index < rule().effects.questions.length - 1) {
         <button class="icon" (click)="swapQuestions($index, $index + 1)">
@@ -46,7 +46,7 @@
 }
 
 @for (item of rule().effects.items; track $index) {
-  <div class="mb-1 flex h-8 items-center">
+  <div class="mb-1 flex items-center">
     @if (mode.isMode("swap")) {
       @if ($index < rule().effects.items.length - 1) {
         <button class="icon" (click)="swapItems($index, $index + 1)">

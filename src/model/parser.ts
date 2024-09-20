@@ -13,9 +13,9 @@ import {
 } from './types';
 import { ConfigPersistence } from '../app/config/config.persistence';
 
-const itemRegex = /^\s*\[(?<category>.+)\]\s*(?<name>.+)\s*$/;
+const itemRegex = /^\s*\[(?<category>.+?)\]\s*(?<name>.+)\s*$/;
 
-const questionRegex = /^\s*(?<question>.*)\s+\$(?<variable>[a-zA-Z0-9_]+)\s*$/;
+const questionRegex = /^\s*(?<question>.*)\s+\$(?<variable>[^ ]+)\s*$/;
 
 @Injectable({ providedIn: 'root' })
 export class Parser {
@@ -38,8 +38,8 @@ export class Parser {
       );
     } else if (tokens[0] === 'NOT') {
       return new Not(this.parseCondition(tokens.slice(1).join(' ')));
-    } else if (tokens.length === 1 && /^[a-zA-Z0-9_]+$/.test(tokens[0])) {
-      return new Variable(tokens[0]);
+    } else if (tokens.length === 1 && !!tokens[0].trim()) {
+      return new Variable(tokens[0].trim());
     } else {
       throw new Error("Could not parse condition from '" + input + "'");
     }

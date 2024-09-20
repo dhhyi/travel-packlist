@@ -1,7 +1,12 @@
 import { Component, inject, input, OnChanges, output } from '@angular/core';
 import { Item } from '../../../model/types';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { debounceTime, filter, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
 import { Parser } from '../../../model/parser';
@@ -21,8 +26,15 @@ export class EditorItemComponent implements OnChanges {
 
   control = new FormGroup<{ [K in keyof Item]: FormControl<string | null> }>({
     category: new FormControl(''),
-    name: new FormControl(''),
+    name: new FormControl('', [
+      Validators.pattern('[^,;#]+'),
+      Validators.required,
+    ]),
   });
+
+  getControl(name: keyof Item) {
+    return this.control.get(name) as FormControl<string>;
+  }
 
   mode = inject(RulesMode);
 
@@ -32,7 +44,14 @@ export class EditorItemComponent implements OnChanges {
 
   constructor() {
     this.control.valueChanges
-      .pipe(debounceTime(500), takeUntilDestroyed())
+      .pipe(
+        tap(() => {
+          this.control.markAllAsTouched();
+        }),
+        debounceTime(500),
+        filter(() => this.control.valid),
+        takeUntilDestroyed(),
+      )
       .subscribe((value) => {
         if (value.category === '') {
           this.addNewCategory();
@@ -57,6 +76,7 @@ export class EditorItemComponent implements OnChanges {
         } else {
           this.control.disable({ emitEvent: false });
         }
+        this.ngOnChanges();
       });
   }
 
@@ -93,6 +113,12 @@ export class EditorItemComponent implements OnChanges {
 
     const newCategory = window.prompt('Enter new category name');
     if (newCategory) {
+      if (/[,;#]/.test(newCategory)) {
+        alert('Category name cannot contain , ; #');
+        this.control.patchValue({ category: '' });
+        return;
+      }
+
       this.control.patchValue({ category: newCategory });
     }
   }

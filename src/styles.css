@@ -62,3 +62,8 @@ select[disabled] {
 input[type="checkbox"] {
   @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400;
 }
+
+input.ng-invalid.ng-touched,
+input:focus-visible.ng-invalid.ng-touched {
+  @apply border-red-700 bg-red-300 outline-red-700;
+}

@@ -93,8 +93,13 @@ describe('Parser', () => {
       expect(question.variable).toEqual('airbnb');
     });
 
+    it('should parse a question with cryptic variable name', () => {
+      const question = parser.parseQuestion('Is it sunny? $a1-[b2](c3)');
+      expect(question.question).toEqual('Is it sunny?');
+      expect(question.variable).toEqual('a1-[b2](c3)');
+    });
+
     it('should throw an error if the question is invalid', () => {
-      expect(() => parser.parseQuestion('Is it sunny? $sunny(true')).toThrow();
       expect(() => parser.parseQuestion('Is it sunny? $')).toThrow();
     });
   });
@@ -113,6 +118,21 @@ describe('Parser', () => {
       expect(item.category).toEqual('utility');
       expect(item.name).toEqual('Scrubber');
       expect(item.weight).toEqual(100);
+    });
+
+    it('should parse an item with weight in kilos', () => {
+      trackWeight = true;
+
+      const item = parser.parseItem('[utility] Scrubber 0.5kg');
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('Scrubber');
+      expect(item.weight).toEqual(500);
+    });
+
+    it('should parse an item with brackets in name', () => {
+      const item = parser.parseItem('[utility] [Scrubber] bag');
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('[Scrubber] bag');
     });
 
     it('should throw an error if the item is invalid', () => {
