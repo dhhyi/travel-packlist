@@ -187,30 +187,4 @@ describe('Parser', () => {
       expect(rules.length).toEqual(1);
     });
   });
-
-  describe('extractVariables', () => {
-    it('should extract variables', () => {
-      const rules = [
-        parser.parseRule('a AND b :- Is it sunny? $sunny, [utility] Scrubber'),
-        parser.parseRule('c OR d :- [utility] Clothesline'),
-        parser.parseRule('e :- Will it be cold? $cold'),
-      ];
-
-      const variables = parser.extractVariables(rules);
-      expect(variables).toEqual(['sunny', 'cold']);
-    });
-  });
-
-  describe('extractCategories', () => {
-    it('should extract categories', () => {
-      const rules = [
-        parser.parseRule('a AND b :- Is it sunny? $sunny, [utility] Scrubber'),
-        parser.parseRule('c OR d :- [washing] Clothesline'),
-        parser.parseRule('e :- Will it be cold? $cold'),
-      ];
-
-      const categories = parser.extractCategories(rules);
-      expect(categories).toEqual(['utility', 'washing']);
-    });
-  });
 });

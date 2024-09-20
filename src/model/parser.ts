@@ -138,28 +138,4 @@ export class Parser {
       .filter(Boolean)
       .map(this.parseRule.bind(this));
   }
-
-  extractVariables(rules: Rule[]): string[] {
-    const variables = new Set<string>();
-
-    for (const rule of rules) {
-      for (const question of rule.questions) {
-        variables.add(question.variable);
-      }
-    }
-
-    return Array.from(variables);
-  }
-
-  extractCategories(rules: Rule[]): string[] {
-    const categories = new Set<string>();
-
-    for (const rule of rules) {
-      for (const item of rule.items) {
-        categories.add(item.category);
-      }
-    }
-
-    return Array.from(categories);
-  }
 }

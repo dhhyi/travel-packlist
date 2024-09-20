@@ -62,8 +62,8 @@ export class RulesComponent implements OnInit {
 
   calculateFields(parsedRules: Rule[]) {
     this.parsedRules.set(parsedRules);
-    this.categories.set(this.parser.extractCategories(parsedRules));
-    this.variables.set(this.parser.extractVariables(parsedRules));
+    this.categories.set(this.refactor.extractCategories(parsedRules));
+    this.variables.set(this.refactor.extractVariables(parsedRules));
   }
 
   applyNewRules(rules: Rule[]) {
