@@ -9,6 +9,7 @@ import {
 import { debounceTime, filter, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
+import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 
 @Component({
   selector: 'app-editor-question',
@@ -80,5 +81,23 @@ export class EditorQuestionComponent implements OnChanges {
 
   ngOnChanges() {
     this.control.patchValue(this.question(), { emitEvent: false });
+  }
+
+  focusQuestion() {
+    if (
+      this.getControl('question').value ===
+      EditorRuleComponent.NEW_QUESTION_NAME
+    ) {
+      this.getControl('question').setValue('', { emitEvent: false });
+    }
+  }
+
+  focusVariable() {
+    if (
+      this.getControl('variable').value ===
+      EditorRuleComponent.NEW_VARIABLE_NAME
+    ) {
+      this.getControl('variable').setValue('', { emitEvent: false });
+    }
   }
 }

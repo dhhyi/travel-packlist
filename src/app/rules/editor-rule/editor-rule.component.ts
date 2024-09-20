@@ -42,6 +42,11 @@ import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
   templateUrl: './editor-rule.component.html',
 })
 export class EditorRuleComponent {
+  static NEW_ITEM_NAME = 'New Item';
+  static NEW_CATEGORY_NAME = 'New';
+  static NEW_QUESTION_NAME = 'New Question';
+  static NEW_VARIABLE_NAME = 'new_variable';
+
   rule = input.required<Rule>();
   categories = input.required<string[]>();
   variables = input.required<string[]>();
@@ -103,7 +108,10 @@ export class EditorRuleComponent {
   }
 
   addQuestion() {
-    const newQuestion: Question = { variable: '', question: '' };
+    const newQuestion: Question = {
+      variable: EditorRuleComponent.NEW_VARIABLE_NAME,
+      question: EditorRuleComponent.NEW_QUESTION_NAME,
+    };
     this.updateQuestion(this.rule().effects.questions.length, newQuestion);
   }
 
@@ -146,7 +154,10 @@ export class EditorRuleComponent {
   }
 
   addItem() {
-    const newItem: Item = { category: 'New', name: 'Item' };
+    const newItem: Item = {
+      category: EditorRuleComponent.NEW_CATEGORY_NAME,
+      name: EditorRuleComponent.NEW_ITEM_NAME,
+    };
     this.updateItem(this.rule().effects.items.length, newItem);
   }
 

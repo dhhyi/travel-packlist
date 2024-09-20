@@ -11,6 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
+import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 
 @Component({
   selector: 'app-editor-item',
@@ -101,6 +102,9 @@ export class EditorItemComponent implements OnChanges {
 
   focus(event: FocusEvent) {
     this.blockPatch = document.activeElement === event.target;
+    if (this.getControl('name').value === EditorRuleComponent.NEW_ITEM_NAME) {
+      this.getControl('name').setValue('', { emitEvent: false });
+    }
   }
 
   blur() {

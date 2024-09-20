@@ -4,6 +4,7 @@
     type="text"
     placeholder="question"
     formControlName="question"
+    (focus)="focusQuestion()"
   />
   <div class="flex items-center gap-2">
     <span class="ml-3 font-mono">-></span>
@@ -12,6 +13,7 @@
       type="text"
       placeholder="variable"
       formControlName="variable"
+      (focus)="focusVariable()"
     />
   </div>
   @if (mode.isMode("edit") && control.valid === false && control.touched) {
