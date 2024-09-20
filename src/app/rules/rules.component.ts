@@ -66,6 +66,12 @@ export class RulesComponent implements OnInit {
     this.variables.set(this.parser.extractVariables(parsedRules));
   }
 
+  applyNewRules(rules: Rule[]) {
+    const serializedRules = this.serializer.serializeRules(rules);
+    this.persistence.saveRules(serializedRules);
+    this.calculateFields(rules);
+  }
+
   updateRule(index: number, rule: Rule | null) {
     console.log('updateRule', index, rule);
 
@@ -75,9 +81,7 @@ export class RulesComponent implements OnInit {
     } else {
       rules.splice(index, 1);
     }
-    const serializedRules = this.serializer.serializeRules(rules);
-    this.persistence.saveRules(serializedRules);
-    this.calculateFields(rules);
+    this.applyNewRules(rules);
   }
 
   addRule() {
@@ -109,9 +113,7 @@ export class RulesComponent implements OnInit {
     const rules = this.parsedRules();
     rules.splice(insertAt, 0, newRule);
 
-    const serializedRules = this.serializer.serializeRules(rules);
-    this.persistence.saveRules(serializedRules);
-    this.calculateFields(rules);
+    this.applyNewRules(rules);
   }
 
   swapRules(index1: number, index2: number) {
@@ -120,9 +122,7 @@ export class RulesComponent implements OnInit {
     rules[index1] = rules[index2];
     rules[index2] = temp;
 
-    const serializedRules = this.serializer.serializeRules(rules);
-    this.persistence.saveRules(serializedRules);
-    this.calculateFields(rules);
+    this.applyNewRules(rules);
   }
 
   showAsDisabled(rule: Rule): boolean {
@@ -139,8 +139,6 @@ export class RulesComponent implements OnInit {
       this.parsedRules(),
     );
 
-    const serializedRules = this.serializer.serializeRules(rules);
-    this.persistence.saveRules(serializedRules);
-    this.calculateFields(rules);
+    this.applyNewRules(rules);
   }
 }
