@@ -127,7 +127,9 @@ export class RulesComponent {
   showAsDisabled(rule: Rule): boolean {
     return (
       this.config.isFadeOutDisabledRules() &&
-      !rule.condition.evaluate(this.answers)
+      !this.refactor
+        .filterActiveRules(this.answers, this.parsedRules())
+        .includes(rule)
     );
   }
 
