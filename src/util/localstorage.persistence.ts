@@ -1,20 +1,22 @@
-export function loadLocalStorage(item: string, defaultValue: string): string {
-  const loaded = localStorage.getItem(item);
+export function loadLocalStorage(key: string, defaultValue: string): string {
+  const loaded = localStorage.getItem(key);
   if (loaded) {
-    console.log('Loaded ' + item + ' from local storage');
+    console.log('Loaded ' + key + ' from local storage');
   }
   return loaded ?? defaultValue;
 }
 
 export function saveLocalStorage(
-  item: string,
-  rules: string | undefined | null,
+  key: string,
+  value: string | undefined | null,
 ): void {
-  if (rules) {
-    console.log('Saved ' + item + ' to local storage');
-    localStorage.setItem(item, rules);
+  if (value) {
+    if (value !== localStorage.getItem(key)) {
+      console.log('Saved ' + key + ' to local storage');
+      localStorage.setItem(key, value);
+    }
   } else {
-    console.log('Deleted ' + item + ' from local storage');
-    localStorage.removeItem(item);
+    console.log('Deleted ' + key + ' from local storage');
+    localStorage.removeItem(key);
   }
 }
