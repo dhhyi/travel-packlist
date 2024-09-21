@@ -154,8 +154,6 @@ export class EditorRuleComponent {
   }
 
   updateItem(index: number, item: Item) {
-    console.log('updateItem', index, item);
-
     const items = this.rule().items;
     items[index] = item;
     this.emitNewItems(items);

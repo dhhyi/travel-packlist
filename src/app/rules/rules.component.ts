@@ -103,8 +103,6 @@ export class RulesComponent {
       }
     }
 
-    console.log({ candidates, insertAt });
-
     if (!candidates.includes(insertAt - 1)) {
       insertAt = candidates[0] + 1;
     }

@@ -122,8 +122,6 @@ export class EditorItemComponent implements OnChanges {
   }
 
   private addNewCategory() {
-    console.log('add new category');
-
     const newCategory = window.prompt('Enter new category name');
     if (newCategory) {
       if (/[,;#]/.test(newCategory)) {
