@@ -47,14 +47,14 @@
   @if (mode.isMode("cut-paste")) {
     <div class="flex justify-center gap-5">
       <span>Clipboard:</span>
-      @if (clipboard.itemsCount === 0 && clipboard.questionsCount === 0) {
+      @if (clipboard.itemsCount() === 0 && clipboard.questionsCount() === 0) {
         <span>empty</span>
       } @else {
-        @if (clipboard.itemsCount) {
-          <span>{{ clipboard.itemsCount }} Items</span>
+        @if (clipboard.itemsCount()) {
+          <span>{{ clipboard.itemsCount() }} Items</span>
         }
-        @if (clipboard.questionsCount) {
-          <span>{{ clipboard.questionsCount }} Questions</span>
+        @if (clipboard.questionsCount()) {
+          <span>{{ clipboard.questionsCount() }} Questions</span>
         }
       }
     </div>
