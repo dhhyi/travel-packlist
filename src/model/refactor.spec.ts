@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { Refactor } from './refactor';
 import { Serializer } from './serializer';
+import { Rule } from './types';
 
 describe('Refactor', () => {
   let refactor: Refactor;
@@ -91,6 +92,39 @@ describe('Refactor', () => {
 rain AND clouds :-
    Is it windy? $wind,
    [weather] jacket;`);
+    });
+  });
+
+  describe('filterActiveRules', () => {
+    let rules: Rule[];
+
+    beforeEach(() => {
+      rules = [
+        parser.parseRule(':- Will it be sunny? $sunny'),
+        parser.parseRule('sunny :- Do you expect a high UV index? $uv'),
+        parser.parseRule('NOT sunny :- [Clothes] Beanie'),
+        parser.parseRule('uv :- [Utility] Sunscreen'),
+      ];
+    });
+
+    it('should filter active rules for empty model', () => {
+      const result = refactor.filterActiveRules({}, rules);
+      expect(result).toEqual([rules[0], rules[2]]);
+    });
+
+    it('should filter active rules for active model', () => {
+      const result = refactor.filterActiveRules(
+        { sunny: true, uv: true },
+        rules,
+      );
+      expect(result).toEqual([rules[0], rules[1], rules[3]]);
+    });
+    it('should filter active rules and remove transitive disabled fields', () => {
+      const result = refactor.filterActiveRules(
+        { sunny: false, uv: true },
+        rules,
+      );
+      expect(result).toEqual([rules[0], rules[2]]);
     });
   });
 });

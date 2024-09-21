@@ -8,6 +8,7 @@ import {
   Rule,
   True,
   Variable,
+  VariableType,
 } from './types';
 
 @Injectable({ providedIn: 'root' })
@@ -91,5 +92,22 @@ export class Refactor {
     const type: never = item;
 
     throw new Error('Unknown item type', type);
+  }
+
+  filterActiveRules(
+    model: Record<string, VariableType>,
+    rules: Rule[],
+  ): Rule[] {
+    const activeRules = rules.filter((rule) => rule.condition.evaluate(model));
+    const activeModel = this.extractVariables(activeRules).reduce(
+      (acc, variable) => ({ ...acc, [variable]: model[variable] }),
+      {},
+    );
+
+    if (activeRules.length === rules.length) {
+      return rules;
+    } else {
+      return this.filterActiveRules(activeModel, activeRules);
+    }
   }
 }

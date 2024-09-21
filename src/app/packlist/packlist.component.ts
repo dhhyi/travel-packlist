@@ -18,6 +18,7 @@ import { IconLockOpenComponent } from '../icons/icon-lock-open/icon-lock-open.co
 import { ConfigPersistence } from '../config/config.persistence';
 import { IconLockComponent } from '../icons/icon-lock/icon-lock.component';
 import { NgClass } from '@angular/common';
+import { Refactor } from '../../model/refactor';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,6 +37,7 @@ import { NgClass } from '@angular/common';
 export class PacklistComponent implements OnInit {
   private rulesPersistence = inject(RulesPersistence);
   private packlistPersistence = inject(PacklistPersistence);
+  private refactor = inject(Refactor);
 
   private rules = signal<Rule[]>([]);
 
@@ -44,8 +46,7 @@ export class PacklistComponent implements OnInit {
   );
 
   private activeRules = computed(() => {
-    const model = this.model();
-    return this.rules().filter((rule) => rule.condition.evaluate(model));
+    return this.refactor.filterActiveRules(this.model(), this.rules());
   });
 
   questions = computed(() =>
