@@ -1,9 +1,10 @@
 import {
   Component,
   inject,
-  OnInit,
   signal,
   ChangeDetectionStrategy,
+  computed,
+  effect,
 } from '@angular/core';
 import { PleaseSelect, Rule } from '../../model/types';
 import { Parser } from '../../model/parser';
@@ -32,12 +33,8 @@ import { Refactor } from '../../model/refactor';
   ],
   templateUrl: './rules.component.html',
 })
-export class RulesComponent implements OnInit {
+export class RulesComponent {
   parsedRules = signal<Rule[]>([]);
-
-  categories = signal<string[]>([]);
-
-  variables = signal<string[]>([]);
 
   persistence = inject(RulesPersistence);
 
@@ -53,10 +50,24 @@ export class RulesComponent implements OnInit {
   private serializer = inject(Serializer);
   private refactor = inject(Refactor);
 
-  ngOnInit(): void {
+  categories = computed(() =>
+    this.refactor.extractCategories(this.parsedRules()),
+  );
+
+  variables = computed(() =>
+    this.refactor.extractVariables(this.parsedRules()),
+  );
+
+  constructor() {
     try {
-      this.calculateFields(this.parser.parseRules(this.persistence.getRules()));
+      this.parsedRules.set(this.parser.parseRules(this.persistence.getRules()));
       this.error.set(undefined);
+
+      effect(() => {
+        const rules = this.parsedRules();
+        const serializedRules = this.serializer.serializeRules(rules);
+        this.persistence.saveRules(serializedRules);
+      });
     } catch (error) {
       if (error instanceof Error) {
         this.error.set(error.message);
@@ -67,18 +78,6 @@ export class RulesComponent implements OnInit {
     }
   }
 
-  calculateFields(parsedRules: Rule[]) {
-    this.parsedRules.set(parsedRules);
-    this.categories.set(this.refactor.extractCategories(parsedRules));
-    this.variables.set(this.refactor.extractVariables(parsedRules));
-  }
-
-  applyNewRules(rules: Rule[]) {
-    const serializedRules = this.serializer.serializeRules(rules);
-    this.persistence.saveRules(serializedRules);
-    this.calculateFields(rules);
-  }
-
   updateRule(index: number, rule: Rule | null) {
     const rules = this.parsedRules();
     if (rule) {
@@ -86,7 +85,7 @@ export class RulesComponent implements OnInit {
     } else {
       rules.splice(index, 1);
     }
-    this.applyNewRules(rules);
+    this.parsedRules.set([...rules]);
   }
 
   addRule() {
@@ -115,7 +114,7 @@ export class RulesComponent implements OnInit {
     const rules = this.parsedRules();
     rules.splice(insertAt, 0, newRule);
 
-    this.applyNewRules(rules);
+    this.parsedRules.set([...rules]);
   }
 
   swapRules(index1: number, index2: number) {
@@ -124,7 +123,7 @@ export class RulesComponent implements OnInit {
     rules[index1] = rules[index2];
     rules[index2] = temp;
 
-    this.applyNewRules(rules);
+    this.parsedRules.set([...rules]);
   }
 
   showAsDisabled(rule: Rule): boolean {
@@ -141,6 +140,6 @@ export class RulesComponent implements OnInit {
       this.parsedRules(),
     );
 
-    this.applyNewRules(rules);
+    this.parsedRules.set(rules);
   }
 }
