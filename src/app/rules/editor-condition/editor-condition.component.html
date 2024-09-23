@@ -1,99 +1,53 @@
-@if (depth() === 0 && (mode.isMode("edit") || !isAlwaysActive())) {
-  <span class="font-bold">IF</span>
-}
+<!-- eslint-disable @angular-eslint/template/no-inline-styles -->
+<ng-container #content />
 
-@switch (state().type) {
-  @case ("true") {
-    <ng-container *ngTemplateOutlet="select; context: ''" />
-  }
-  @case ("variable") {
-    <ng-container *ngTemplateOutlet="select; context: state()" />
-  }
-  @case ("not") {
-    <span class="font-bold">NOT</span>
-    @if (asNot(state().condition); as not) {
-      <app-editor-condition
-        [depth]="depth() + 1"
-        [condition]="not.not"
-        [variables]="variables()"
-        [forbidden]="['', 'not', 'and', 'or']"
-        (conditionChanged)="bubbleNotChange($event)"
-      />
-    }
-  }
-  @case ("and") {
-    @if (asAnd(state().condition); as and) {
-      <app-editor-condition
-        [depth]="depth() + 1"
-        [condition]="and.left"
-        [variables]="variables()"
-        [forbidden]="['', 'or']"
-        (conditionChanged)="bubbleAndLeftChange($event)"
-      />
-      <span class="font-bold">AND</span>
-      <app-editor-condition
-        [depth]="depth() + 1"
-        [condition]="and.right"
-        [variables]="variables()"
-        [forbidden]="['', 'or']"
-        (conditionChanged)="bubbleAndRightChange($event)"
-      />
-    }
-  }
-  @case ("or") {
-    @if (asOr(state().condition); as or) {
-      <app-editor-condition
-        [depth]="depth() + 1"
-        [condition]="or.left"
-        [variables]="variables()"
-        [forbidden]="['']"
-        (conditionChanged)="bubbleOrLeftChange($event)"
-      />
-      <span class="font-bold">OR</span>
-      <app-editor-condition
-        [depth]="depth() + 1"
-        [condition]="or.right"
-        [variables]="variables()"
-        [forbidden]="['']"
-        (conditionChanged)="bubbleOrRightChange($event)"
-      />
-    }
-  }
-  @case ("unknown") {
-    <pre>UNKNOWN</pre>
-  }
-}
+<ng-template #keyword let-text>
+  <span class="font-bold">{{ text }}</span>
+</ng-template>
 
-<ng-template #select let-context="context">
-  @if (mode.isMode("edit")) {
-    <select #select class="font-mono" (change)="selection(select.value)">
-      @for (option of options(); track $index) {
-        @switch (option) {
-          @case ("") {
-            <option value="">always active</option>
-          }
-          @case ("not") {
-            <option value="not">NOT x</option>
-          }
-          @case ("and") {
-            <option value="and">x AND x</option>
-          }
-          @case ("or") {
-            <option value="or">x OR x</option>
-          }
-          @default {
-            <option
-              [value]="option"
-              [selected]="context === option"
-              [disabled]="option === please_select"
-            >
-              {{ option }}
-            </option>
-          }
+<ng-template #variable let-variable>
+  <span class="font-mono">{{ variable }}</span>
+</ng-template>
+
+<ng-template
+  #select
+  let-value
+  let-options="options"
+  let-selection="selection"
+  let-width="width"
+>
+  <select
+    #selectbox
+    class="font-mono"
+    [style]="{ width: width }"
+    (change)="selection(selectbox.value)"
+  >
+    @for (option of options; track $index) {
+      @switch (option) {
+        @case (always) {
+          <option [value]="always" [selected]="value === always">
+            always active
+          </option>
+        }
+        @case ("not") {
+          <option value="not">NOT x</option>
+        }
+        @case ("and") {
+          <option value="and">x AND x</option>
+        }
+        @case ("or") {
+          <option value="or">x OR x</option>
+        }
+        @default {
+          <option
+            [value]="option"
+            [selected]="value === option"
+            [disabled]="option === please_select"
+          >
+            {{ option }}
+          </option>
         }
       }
-    </select>
-  } @else if (context) {
-    <span class="font-mono">{{ context }}</span>
-  }
+    }
+  </select>
 </ng-template>

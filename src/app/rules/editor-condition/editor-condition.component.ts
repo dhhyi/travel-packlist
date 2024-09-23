@@ -5,6 +5,11 @@ import {
   input,
   output,
   ChangeDetectionStrategy,
+  ViewChild,
+  TemplateRef,
+  AfterViewInit,
+  ViewContainerRef,
+  OnChanges,
 } from '@angular/core';
 import {
   And,
@@ -17,6 +22,8 @@ import {
 } from '../../../model/types';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
 import { RulesMode } from '../rules.mode';
+import { Serializer } from '../../../model/serializer';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,127 +37,180 @@ import { RulesMode } from '../rules.mode';
       flex-direction: row;
       gap: 8px;
       flex-wrap: wrap;
+      align-items: center;
     }
   `,
 })
-export class EditorConditionComponent {
+export class EditorConditionComponent implements AfterViewInit, OnChanges {
   condition = input.required<Condition>();
   variables = input.required<string[]>();
-  forbidden = input<('' | 'not' | 'or' | 'and')[]>([]);
-  depth = input<number>(0);
 
-  mode = inject(RulesMode);
+  @ViewChild('content', { read: ViewContainerRef }) content!: ViewContainerRef;
+
+  @ViewChild('keyword') keywordTemplate!: TemplateRef<unknown>;
+  @ViewChild('variable') variableTemplate!: TemplateRef<unknown>;
+  @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
+
+  private mode = inject(RulesMode);
+
+  private serializer = inject(Serializer);
+  serializedCondition = computed(() =>
+    this.serializer.serialize(this.condition()),
+  );
 
   please_select = PleaseSelect.string;
-
-  options = computed(() => {
-    const options: string[] = [];
-    if (this.condition() instanceof PleaseSelect) {
-      options.push(PleaseSelect.string);
-    }
-    if (!this.forbidden().includes('')) {
-      options.push('');
-    }
-    options.push(...this.variables());
-    for (const op of ['not', 'or', 'and'] as const) {
-      if (!this.forbidden().includes(op)) {
-        options.push(op);
-      }
-    }
-
-    return options;
-  });
-
-  state = computed(() => {
-    const c = this.condition();
-    if (c instanceof True) {
-      return { type: 'true' };
-    } else if (c instanceof Variable) {
-      return { type: 'variable', context: c.variable };
-    } else if (c instanceof Not) {
-      return { type: 'not', condition: c };
-    } else if (c instanceof And) {
-      return { type: 'and', condition: c };
-    } else if (c instanceof Or) {
-      return { type: 'or', condition: c };
-    } else {
-      return { type: 'unknown' };
-    }
-  });
-
-  isAlwaysActive() {
-    return this.condition() instanceof True;
-  }
-
-  asNot(object: Condition | undefined): Not {
-    if (object instanceof Not) {
-      return object;
-    } else {
-      throw new Error('Expected Not');
-    }
-  }
-
-  asAnd(object: Condition | undefined): And {
-    if (object instanceof And) {
-      return object;
-    } else {
-      throw new Error('Expected And');
-    }
-  }
-
-  asOr(object: Condition | undefined): Or {
-    if (object instanceof Or) {
-      return object;
-    } else {
-      throw new Error('Expected Or');
-    }
-  }
+  always = '_';
 
   readonly conditionChanged = output<Condition>();
 
-  selection(value: string) {
-    if (value === '') {
-      this.conditionChanged.emit(new True());
-    } else if (value === 'not') {
-      this.conditionChanged.emit(new Not(new PleaseSelect()));
+  constructor() {
+    this.mode
+      .asObservable()
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => {
+        this.repaint();
+      });
+  }
+
+  private repaint() {
+    this.content.clear();
+
+    if (!this.mode.isMode('edit') && this.condition() instanceof True) {
+      return;
+    }
+
+    this.paintKeyword('IF');
+    this.paintCondition(this.condition(), (newCondition) => {
+      this.conditionChanged.emit(newCondition);
+    });
+  }
+
+  private calculateOptions(forbidden: string[]) {
+    return [
+      this.please_select,
+      this.always,
+      ...this.variables(),
+      'not',
+      'and',
+      'or',
+    ].filter((variable) => !forbidden.includes(variable));
+  }
+
+  private selection(value: string): Condition {
+    if (value === 'not') {
+      return new Not(new PleaseSelect());
     } else if (value === 'and') {
-      this.conditionChanged.emit(
-        new And(new PleaseSelect(), new PleaseSelect()),
-      );
+      return new And(new PleaseSelect(), new PleaseSelect());
     } else if (value === 'or') {
-      this.conditionChanged.emit(
-        new Or(new PleaseSelect(), new PleaseSelect()),
-      );
+      return new Or(new PleaseSelect(), new PleaseSelect());
+    } else if (value === this.always) {
+      return new True();
     } else {
-      this.conditionChanged.emit(new Variable(value));
+      return new Variable(value);
     }
   }
 
-  bubbleNotChange(newNot: Condition) {
-    this.conditionChanged.emit(new Not(newNot));
+  private paintKeyword(keyword: string) {
+    this.content.createEmbeddedView(this.keywordTemplate, {
+      $implicit: keyword,
+    });
   }
 
-  bubbleAndLeftChange(newLeft: Condition) {
-    this.conditionChanged.emit(
-      new And(newLeft, this.asAnd(this.state().condition).right),
-    );
+  private paintSelect(
+    variable: string,
+    changeCallback: (newCondition: Condition) => void,
+    forbidden: string[],
+  ) {
+    this.content.createEmbeddedView(this.selectTemplate, {
+      $implicit: variable,
+      options: this.calculateOptions(forbidden),
+      selection: (value: string) => {
+        changeCallback(this.selection(value));
+      },
+      width:
+        (
+          (variable === this.always ? 13 : variable.length) * 9 +
+          30
+        ).toString() + 'px',
+    });
   }
 
-  bubbleAndRightChange(newRight: Condition) {
-    this.conditionChanged.emit(
-      new And(this.asAnd(this.state().condition).left, newRight),
-    );
+  private paintVariable(variable: string) {
+    this.content.createEmbeddedView(this.variableTemplate, {
+      $implicit: variable,
+    });
   }
 
-  bubbleOrLeftChange(newLeft: Condition) {
-    this.conditionChanged.emit(
-      new Or(newLeft, this.asOr(this.state().condition).right),
-    );
+  private paintCondition(
+    condition: Condition,
+    changeCallback: (newCondition: Condition) => void,
+    forbidden: string[] = [],
+  ) {
+    if (condition instanceof Not) {
+      const forbiddenNot = [...forbidden, this.always, 'not', 'and', 'or'];
+      this.paintKeyword('NOT');
+      this.paintCondition(
+        condition.not,
+        (newCondition: Condition) => {
+          changeCallback(new Not(newCondition));
+        },
+        forbiddenNot,
+      );
+    } else if (condition instanceof And) {
+      const forbiddenAnd = [...forbidden, this.always, 'or'];
+      this.paintCondition(
+        condition.left,
+        (newCondition: Condition) => {
+          changeCallback(new And(newCondition, condition.right));
+        },
+        forbiddenAnd,
+      );
+      this.paintKeyword('AND');
+      this.paintCondition(
+        condition.right,
+        (newCondition: Condition) => {
+          changeCallback(new And(condition.left, newCondition));
+        },
+        forbiddenAnd,
+      );
+    } else if (condition instanceof Or) {
+      const forbiddenOr = [...forbidden, this.always];
+      this.paintCondition(
+        condition.left,
+        (newCondition: Condition) => {
+          changeCallback(new Or(newCondition, condition.right));
+        },
+        forbiddenOr,
+      );
+      this.paintKeyword('OR');
+      this.paintCondition(
+        condition.right,
+        (newCondition: Condition) => {
+          changeCallback(new Or(condition.left, newCondition));
+        },
+        forbiddenOr,
+      );
+    } else if (condition instanceof Variable) {
+      if (this.mode.isMode('edit')) {
+        this.paintSelect(condition.variable, changeCallback, forbidden);
+      } else {
+        this.paintVariable(condition.variable);
+      }
+    } else if (condition instanceof True) {
+      if (this.mode.isMode('edit')) {
+        this.paintSelect(this.always, changeCallback, forbidden);
+      } else {
+        this.paintVariable('always');
+      }
+    }
   }
 
-  bubbleOrRightChange(newRight: Condition) {
-    this.conditionChanged.emit(
-      new Or(this.asOr(this.state().condition).left, newRight),
-    );
+  ngOnChanges(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (this.content) this.repaint();
+  }
+
+  ngAfterViewInit(): void {
+    this.repaint();
   }
 }
