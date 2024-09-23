@@ -34,7 +34,7 @@ import { Refactor } from '../../model/refactor';
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
-  parsedRules = signal<Rule[]>([]);
+  private parsedRules = signal<Rule[]>([]);
 
   persistence = inject(RulesPersistence);
 
@@ -57,6 +57,18 @@ export class RulesComponent {
   variables = computed(() =>
     this.refactor.extractVariables(this.parsedRules()),
   );
+
+  filter = signal('');
+
+  visibleRules = computed(() => {
+    const filter = this.filter();
+    if (filter === '') {
+      return this.parsedRules().map((rule, index) => ({ rule, index }));
+    }
+    return this.parsedRules()
+      .map((rule, index) => ({ rule, index }))
+      .filter((item) => this.refactor.contains(item.rule, this.filter()));
+  });
 
   constructor() {
     try {
@@ -141,5 +153,9 @@ export class RulesComponent {
     );
 
     this.parsedRules.set(rules);
+  }
+
+  filterRules(term: string) {
+    if (term !== this.filter()) this.filter.set(term);
   }
 }

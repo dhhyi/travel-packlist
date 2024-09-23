@@ -2,7 +2,7 @@
   class="bg-white py-2"
   [ngClass]="{ 'sticky left-0 top-0 z-50 shadow-md': sticky() }"
 >
-  <div class="mb-1 grid grid-cols-5 gap-2">
+  <div class="mb-1 grid grid-cols-6 gap-2">
     <button
       type="button"
       class="icon"
@@ -15,37 +15,63 @@
       type="button"
       class="icon"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('edit') }"
+      [disabled]="!noOfVisibleRules() && !!searchControl.value"
       (click)="mode.setMode('edit')"
     >
-      <app-icon-edit class="my-auto h-6 w-6" />
+      <app-icon-edit
+        class="my-auto h-6 w-6"
+        [ngClass]="{
+          'fill-slate-400': !noOfVisibleRules() && !!searchControl.value,
+        }"
+      />
     </button>
     <button
       type="button"
       class="icon"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('delete') }"
+      [disabled]="!noOfVisibleRules()"
       (click)="mode.setMode('delete')"
     >
-      <app-icon-delete class="my-auto h-6 w-6" />
+      <app-icon-delete
+        class="my-auto h-6 w-6"
+        [ngClass]="{ 'fill-slate-400': !noOfVisibleRules() }"
+      />
     </button>
     <button
       type="button"
       class="icon"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('cut-paste') }"
+      [disabled]="noOfVisibleRules() < 2"
       (click)="mode.setMode('cut-paste')"
     >
-      <app-icon-reorder class="my-auto h-6 w-6" />
+      <app-icon-reorder
+        class="my-auto h-6 w-6"
+        [ngClass]="{ 'fill-slate-400': noOfVisibleRules() < 2 }"
+      />
     </button>
     <button
       type="button"
       class="icon"
       [ngClass]="{ 'ring ring-slate-700': mode.isMode('swap') }"
+      [disabled]="!noOfVisibleRules()"
       (click)="mode.setMode('swap')"
     >
-      <app-icon-swap class="my-auto h-6 w-6" />
+      <app-icon-swap
+        class="my-auto h-6 w-6"
+        [ngClass]="{ 'fill-slate-400': !noOfVisibleRules() }"
+      />
+    </button>
+    <button
+      type="button"
+      class="icon"
+      [ngClass]="{ 'ring ring-slate-700': mode.isMode('search') }"
+      (click)="mode.setMode('search'); focusSearch()"
+    >
+      <app-icon-search class="my-auto h-6 w-6" />
     </button>
   </div>
   @if (mode.isMode("cut-paste")) {
-    <div class="flex justify-center gap-5">
+    <div class="mt-2 flex justify-center gap-5">
       <span>Clipboard:</span>
       @if (clipboard.itemsCount() === 0 && clipboard.questionsCount() === 0) {
         <span>empty</span>
@@ -57,6 +83,18 @@
           <span>{{ clipboard.questionsCount() }} Questions</span>
         }
       }
+    </div>
+  } @else if (mode.isMode("search") || searchControl.value) {
+    <div class="mt-2 flex items-center">
+      <input
+        #searchInput
+        type="text"
+        class="grow"
+        [formControl]="searchControl"
+      />
+      <button type="button" class="icon m-3">
+        <app-icon-clear (click)="searchControl.setValue(''); focusSearch()" />
+      </button>
     </div>
   }
 </div>

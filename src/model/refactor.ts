@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   And,
   Condition,
+  Item,
   Not,
   Or,
   Question,
@@ -109,5 +110,44 @@ export class Refactor {
     } else {
       return this.filterActiveRules(activeModel, activeRules);
     }
+  }
+
+  contains(item: Rule | Question | Item | Condition, filter: string): boolean {
+    const filterLower = filter.toLowerCase();
+    if (item instanceof Rule) {
+      return (
+        this.contains(item.condition, filter) ||
+        item.questions.some((question) => this.contains(question, filter)) ||
+        item.items.some((item) => this.contains(item, filter))
+      );
+    } else if (item instanceof Question) {
+      return (
+        item.question.toLowerCase().includes(filterLower) ||
+        item.variable.toLowerCase().includes(filterLower)
+      );
+    } else if (item instanceof Item) {
+      return (
+        item.category.toLowerCase().includes(filterLower) ||
+        item.name.toLowerCase().includes(filterLower)
+      );
+    }
+    if (item instanceof Variable) {
+      return item.variable.toLowerCase().includes(filterLower);
+    } else if (item instanceof Not) {
+      return this.contains(item.not, filter);
+    } else if (item instanceof And) {
+      return (
+        this.contains(item.left, filter) || this.contains(item.right, filter)
+      );
+    } else if (item instanceof Or) {
+      return (
+        this.contains(item.left, filter) || this.contains(item.right, filter)
+      );
+    } else if (item instanceof True) {
+      return false;
+    }
+    const type: never = item;
+
+    throw new Error('Unknown item type', type);
   }
 }
