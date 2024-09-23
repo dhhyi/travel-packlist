@@ -26,6 +26,7 @@ import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
 import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component';
 import { IconDownComponent } from '../../icons/icon-down/icon-down.component';
 import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
+import { IconClearComponent } from '../../icons/icon-clear/icon-clear.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,6 +41,7 @@ import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
     IconPasteComponent,
     IconDownComponent,
     IconUpComponent,
+    IconClearComponent,
   ],
   templateUrl: './editor-rule.component.html',
 })
