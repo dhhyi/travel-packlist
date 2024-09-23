@@ -37,6 +37,7 @@
 <div class="section">
   <span class="font-bold">App Version</span>
   <span>{{ env.version }}</span>
+  <span class="italic">built {{ env.build_time * 1000 | date: "long" }}</span>
   <span class="font-mono text-sm text-slate-500"
     ><a
       [href]="'https://github.com/dhhyi/travel-packlist/commit/' + env.git_hash"

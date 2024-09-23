@@ -7,6 +7,7 @@ import env from '../../environment/env.json';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ConfigPersistence } from './config.persistence';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DatePipe } from '@angular/common';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -14,7 +15,7 @@ const defaultFileName = 'travel-packlist-rules.txt';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule],
+  imports: [RouterModule, ReactiveFormsModule, DatePipe],
   templateUrl: './config.component.html',
   styles: `
     .section {
