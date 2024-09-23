@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { ConfigPersistence } from '../app/config/config.persistence';
