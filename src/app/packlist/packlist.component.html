@@ -14,9 +14,9 @@
   <div class="flex justify-center">
     <button type="button" class="icon" (click)="toggleLock()">
       @if (isLockActive()) {
-        <app-icon-lock [size]="24" />
+        <app-icon-lock class="h-6 w-6" />
       } @else {
-        <app-icon-lock-open [size]="24" />
+        <app-icon-lock-open class="h-6 w-6" />
       }
     </button>
   </div>

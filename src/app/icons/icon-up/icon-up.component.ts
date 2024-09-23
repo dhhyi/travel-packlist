@@ -4,9 +4,8 @@ import { Component, input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-icon-up',
   standalone: true,
-  imports: [],
   templateUrl: './icon-up.component.html',
 })
 export class IconUpComponent {
-  size = input<number>(18);
+  class = input<string>('h-4 w-4');
 }

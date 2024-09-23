@@ -4,9 +4,8 @@ import { Component, input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-icon-down',
   standalone: true,
-  imports: [],
   templateUrl: './icon-down.component.html',
 })
 export class IconDownComponent {
-  size = input<number>(18);
+  class = input<string>('h-4 w-4');
 }

@@ -4,9 +4,8 @@ import { Component, input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-icon-checkmark',
   standalone: true,
-  imports: [],
   templateUrl: './icon-checkmark.component.html',
 })
 export class IconCheckmarkComponent {
-  size = input<number>(18);
+  class = input<string>('h-4 w-4');
 }

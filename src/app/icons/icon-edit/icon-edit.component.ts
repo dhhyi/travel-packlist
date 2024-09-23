@@ -4,9 +4,8 @@ import { Component, input, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-icon-edit',
   standalone: true,
-  imports: [],
   templateUrl: './icon-edit.component.html',
 })
 export class IconEditComponent {
-  size = input<number>(18);
+  class = input<string>('h-4 w-4');
 }
