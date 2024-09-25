@@ -15,7 +15,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { debounceTime, filter, tap } from 'rxjs';
+import { debounceTime, filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
@@ -58,9 +58,6 @@ export class EditorQuestionComponent implements OnChanges {
   constructor() {
     this.control.valueChanges
       .pipe(
-        tap(() => {
-          this.control.markAllAsTouched();
-        }),
         debounceTime(500),
         filter(() => this.control.valid),
         takeUntilDestroyed(),

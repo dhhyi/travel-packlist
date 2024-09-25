@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { debounceTime, filter, tap } from 'rxjs';
+import { debounceTime, filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
 import { Parser } from '../../../model/parser';
@@ -55,9 +55,6 @@ export class EditorItemComponent implements OnChanges {
   constructor() {
     this.control.valueChanges
       .pipe(
-        tap(() => {
-          this.control.markAllAsTouched();
-        }),
         debounceTime(500),
         filter(() => this.control.valid),
         takeUntilDestroyed(),
