@@ -12,12 +12,12 @@ import {
   OnChanges,
 } from '@angular/core';
 import {
+  Always,
   And,
   Condition,
   Not,
   Or,
   PleaseSelect,
-  True,
   Variable,
 } from '../../../model/types';
 import { JsonPipe, NgTemplateOutlet } from '@angular/common';
@@ -59,7 +59,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   );
 
   please_select = PleaseSelect.string;
-  always = '_';
+  always = Always.string;
 
   readonly conditionChanged = output<Condition>();
 
@@ -75,7 +75,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   private repaint() {
     this.content.clear();
 
-    if (!this.mode.isMode('edit') && this.condition() instanceof True) {
+    if (!this.mode.isMode('edit') && this.condition() instanceof Always) {
       return;
     }
 
@@ -104,7 +104,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
     } else if (value === 'or') {
       return new Or(new PleaseSelect(), new PleaseSelect());
     } else if (value === this.always) {
-      return new True();
+      return new Always();
     } else {
       return new Variable(value);
     }
@@ -127,11 +127,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
       selection: (value: string) => {
         changeCallback(this.selection(value));
       },
-      width:
-        (
-          (variable === this.always ? 13 : variable.length) * 9 +
-          30
-        ).toString() + 'px',
+      width: (variable.length * 9 + 30).toString() + 'px',
     });
   }
 
@@ -190,17 +186,17 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
         },
         forbiddenOr,
       );
+    } else if (condition instanceof Always) {
+      if (this.mode.isMode('edit')) {
+        this.paintSelect(this.always, changeCallback, forbidden);
+      } else {
+        this.paintVariable(this.always);
+      }
     } else if (condition instanceof Variable) {
       if (this.mode.isMode('edit')) {
         this.paintSelect(condition.variable, changeCallback, forbidden);
       } else {
         this.paintVariable(condition.variable);
-      }
-    } else if (condition instanceof True) {
-      if (this.mode.isMode('edit')) {
-        this.paintSelect(this.always, changeCallback, forbidden);
-      } else {
-        this.paintVariable('always');
       }
     }
   }

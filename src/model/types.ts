@@ -23,13 +23,7 @@ export class Item {
 
 export type VariableType = boolean;
 
-export type Condition = True | Variable | Not | And | Or;
-
-export class True {
-  evaluate(): boolean {
-    return true;
-  }
-}
+export type Condition = Variable | Not | And | Or;
 
 export class Variable {
   constructor(public readonly variable: string) {}
@@ -44,6 +38,17 @@ export class PleaseSelect extends Variable {
 
   constructor() {
     super(PleaseSelect.string);
+  }
+}
+export class Always extends Variable {
+  static readonly string = 'always';
+
+  constructor() {
+    super(Always.string);
+  }
+
+  override evaluate(): boolean {
+    return true;
   }
 }
 

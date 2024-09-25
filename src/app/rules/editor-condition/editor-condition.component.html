@@ -24,11 +24,6 @@
   >
     @for (option of options; track $index) {
       @switch (option) {
-        @case (always) {
-          <option [value]="always" [selected]="value === always">
-            always active
-          </option>
-        }
         @case ("not") {
           <option value="not">NOT x</option>
         }

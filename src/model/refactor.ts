@@ -7,7 +7,6 @@ import {
   Or,
   Question,
   Rule,
-  True,
   Variable,
   VariableType,
 } from './types';
@@ -70,8 +69,6 @@ export class Refactor {
         ),
         item.items,
       );
-    } else if (item instanceof True) {
-      return item;
     } else if (item instanceof Variable) {
       if (item.variable === oldName) {
         return new Variable(newName);
@@ -143,8 +140,6 @@ export class Refactor {
       return (
         this.contains(item.left, filter) || this.contains(item.right, filter)
       );
-    } else if (item instanceof True) {
-      return false;
     }
     const type: never = item;
 

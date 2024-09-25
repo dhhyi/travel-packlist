@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  Always,
   And,
   Condition,
   Item,
@@ -7,7 +8,6 @@ import {
   Or,
   Question,
   Rule,
-  True,
   Variable,
 } from './types';
 
@@ -45,14 +45,16 @@ export class Serializer {
   serialize(input: Rule | Condition | Question | Item): string {
     if (input instanceof Rule) {
       const tokens = [];
-      const condition = this.serialize(input.condition);
-      if (condition) {
-        tokens.push(condition, ' ');
+      if (!(input.condition instanceof Always)) {
+        const condition = this.serialize(input.condition);
+        if (condition) {
+          tokens.push(condition, ' ');
+        }
       }
       tokens.push(':-');
 
       const effects = this.serializeEffects(input);
-      if (effects.length === 1 && !condition) {
+      if (effects.length === 1 && tokens.length === 1) {
         tokens.push(' ', effects[0]);
       } else {
         for (let index = 0; index < effects.length; index++) {
@@ -68,8 +70,6 @@ export class Serializer {
       return input.question + ' $' + input.variable;
     } else if (input instanceof Item) {
       return `[${input.category}] ${input.name} ${this.serializeWeight(input.weight)}`.trim();
-    } else if (input instanceof True) {
-      return '';
     } else if (input instanceof Variable) {
       return input.variable;
     } else if (input instanceof Not) {

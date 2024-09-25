@@ -1,13 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  Always,
   And,
   Condition,
   Item,
   Not,
   Or,
+  PleaseSelect,
   Question,
   Rule,
-  True,
   Variable,
 } from './types';
 import { ConfigPersistence } from '../app/config/config.persistence';
@@ -38,7 +39,14 @@ export class Parser {
     } else if (tokens[0] === 'NOT') {
       return new Not(this.parseCondition(tokens.slice(1).join(' ')));
     } else if (tokens.length === 1 && !!tokens[0].trim()) {
-      return new Variable(tokens[0].trim());
+      const variable = tokens[0].trim();
+      if (variable === Always.string) {
+        return new Always();
+      } else if (variable === PleaseSelect.string) {
+        return new PleaseSelect();
+      } else {
+        return new Variable(variable);
+      }
     } else {
       throw new Error("Could not parse condition from '" + input + "'");
     }
@@ -115,7 +123,7 @@ export class Parser {
     let condition: Condition;
 
     if (!tokens[0].trim()) {
-      condition = new True();
+      condition = new Always();
     } else {
       condition = this.parseCondition(tokens[0]);
     }

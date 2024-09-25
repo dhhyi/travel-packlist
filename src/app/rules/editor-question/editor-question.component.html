@@ -33,6 +33,9 @@
         @if (getControl("variable").errors?.["required"]) {
           <span>Variable name is required</span>
         }
+        @if (getControl("variable").errors?.["reserved"]) {
+          <span>This variable name is reserved</span>
+        }
       }
     </div>
   }

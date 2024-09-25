@@ -6,11 +6,13 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Question } from '../../../model/types';
+import { Always, Question } from '../../../model/types';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { debounceTime, filter, tap } from 'rxjs';
@@ -41,6 +43,7 @@ export class EditorQuestionComponent implements OnChanges {
     ]),
     variable: new FormControl('', [
       Validators.pattern(' *[^ ,;#]+ *'),
+      validateReservedString(),
       // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
     ]),
@@ -120,4 +123,13 @@ export class EditorQuestionComponent implements OnChanges {
       this.getControl('variable').setValue('', { emitEvent: false });
     }
   }
+}
+
+function validateReservedString(): ValidatorFn {
+  return (control: AbstractControl<string | null>) => {
+    if ([Always.string].some((v) => v === control.value?.trim())) {
+      return { reserved: true };
+    }
+    return null;
+  };
 }
