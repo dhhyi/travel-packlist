@@ -5,7 +5,10 @@ const defaultConfig = {
   fadeOutDisabledRules: false,
   trackWeight: false,
   answersLocked: false,
+  theme: 'system' as 'system' | 'light' | 'dark',
 };
+
+export type Themes = (typeof defaultConfig)['theme'];
 
 @Injectable({ providedIn: 'root' })
 export class ConfigPersistence {
@@ -15,11 +18,22 @@ export class ConfigPersistence {
     const loaded = localStorage.getItem('config');
     if (loaded) {
       this.config = JSON.parse(loaded) as typeof defaultConfig;
+      this.applyTheme();
     }
   }
 
   private persist() {
     saveLocalStorage('config', JSON.stringify(this.config));
+  }
+
+  applyTheme() {
+    const theme = this.config.theme;
+    const userDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if ((theme === 'system' && userDark) || theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }
 
   resetConfig() {
@@ -52,5 +66,16 @@ export class ConfigPersistence {
   setAnswersLocked(value: boolean) {
     this.config.answersLocked = value;
     this.persist();
+  }
+
+  setTheme(value: Themes) {
+    this.config.theme = value;
+    this.persist();
+
+    this.applyTheme();
+  }
+
+  getTheme() {
+    return this.config.theme;
   }
 }

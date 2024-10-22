@@ -5,9 +5,9 @@ import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ConfigPersistence } from './config.persistence';
+import { ConfigPersistence, Themes } from './config.persistence';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -15,7 +15,7 @@ const defaultFileName = 'travel-packlist-rules.txt';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, DatePipe],
+  imports: [RouterModule, ReactiveFormsModule, DatePipe, NgClass],
   templateUrl: './config.component.html',
   styles: `
     .section {
@@ -35,7 +35,9 @@ export class ConfigComponent {
   fadeOutDisabledRulesControl = new FormControl(
     this.config.isFadeOutDisabledRules(),
   );
+
   trackWeightControl = new FormControl(this.config.isTrackWeight());
+
   constructor() {
     this.fadeOutDisabledRulesControl.valueChanges
       .pipe(takeUntilDestroyed())
@@ -129,5 +131,13 @@ export class ConfigComponent {
       }
     };
     input.click();
+  }
+
+  setTheme(theme: Themes) {
+    this.config.setTheme(theme);
+  }
+
+  getTheme() {
+    return this.config.getTheme();
   }
 }

@@ -35,6 +35,39 @@
 </div>
 
 <div class="section">
+  <span class="font-bold">Theme</span>
+  <div class="grid grid-cols-3 gap-3">
+    <button
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'dark',
+      }"
+      (click)="setTheme('dark')"
+    >
+      Dark
+    </button>
+    <button
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'light',
+      }"
+      (click)="setTheme('light')"
+    >
+      Light
+    </button>
+    <button
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'system',
+      }"
+      (click)="setTheme('system')"
+    >
+      System
+    </button>
+  </div>
+</div>
+
+<div class="section">
   <span class="font-bold">App Version</span>
   <span>{{ env.version }}</span>
   <span class="italic">built {{ env.build_time * 1000 | date: "long" }}</span>
