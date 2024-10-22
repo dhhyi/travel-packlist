@@ -7,9 +7,12 @@
         [max]="weightTotal()"
       ></progress>
     </div>
-    <div class="flex justify-center">
-      {{ serializeWeight(weightChecked(), "kg") || "0kg" }} /
-      {{ serializeWeight(weightTotal(), "kg") || "0kg" }}
+    <div class="flex flex-col items-center">
+      <span>{{ currentlyCheckedItems() }} / {{ items().length }}</span>
+      <span>
+        {{ serializeWeight(weightChecked(), "kg", 1) || "0kg" }} /
+        {{ serializeWeight(weightTotal(), "kg", 1) || "0kg" }}
+      </span>
     </div>
   } @else {
     <div class="mb-1 flex">
@@ -20,7 +23,7 @@
       ></progress>
     </div>
     <div class="flex justify-center">
-      {{ currentlyCheckedItems() }} / {{ items().length }}
+      <span>{{ currentlyCheckedItems() }} / {{ items().length }}</span>
     </div>
   }
 </div>

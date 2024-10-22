@@ -26,12 +26,24 @@ export class Serializer {
       .concat(effects.items.map(this.serialize.bind(this)));
   }
 
-  serializeWeight(weight: number | undefined, prefer?: 'g' | 'kg'): string {
+  serializeWeight(
+    weight: number | undefined,
+    prefer?: 'g' | 'kg',
+    roundDigits = -1,
+  ): string {
     if (!weight) {
       return '';
     }
-    const weightInKilos = (weight / 1000.0).toString() + 'kg';
-    const weightInGrams = (weight * 1.0).toString() + 'g';
+    const weightInKilos =
+      (roundDigits < 0
+        ? weight / 1000.0
+        : (weight / 1000.0).toFixed(roundDigits)
+      ).toString() + 'kg';
+    const weightInGrams =
+      (roundDigits < 0
+        ? weight * 1.0
+        : (weight * 1.0).toFixed(roundDigits)
+      ).toString() + 'g';
 
     if (!prefer) {
       return weightInKilos.length <= weightInGrams.length
