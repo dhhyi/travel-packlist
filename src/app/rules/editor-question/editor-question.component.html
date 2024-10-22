@@ -16,26 +16,25 @@
       (focus)="focusVariable()"
     />
   </div>
-  @if (mode.isMode("edit") && control.valid === false && control.touched) {
+  @if (mode.isMode("edit") && control.valid === false) {
     <div class="m-1 flex flex-col text-sm text-red-500">
-      @if (getControl("question").touched) {
-        @if (getControl("question").errors?.["pattern"]) {
-          <span>Questions cannot contain the characters , ; #</span>
-        }
-        @if (getControl("question").errors?.["required"]) {
-          <span>Question is required</span>
-        }
+      @if (getControl("question").errors?.["pattern"]) {
+        <span>Questions cannot contain the characters , ; #</span>
       }
-      @if (getControl("variable").touched) {
-        @if (getControl("variable").errors?.["pattern"]) {
-          <span>Variables cannot contain spaces, or the characters , ; #</span>
-        }
-        @if (getControl("variable").errors?.["required"]) {
-          <span>Variable name is required</span>
-        }
-        @if (getControl("variable").errors?.["reserved"]) {
-          <span>This variable name is reserved</span>
-        }
+      @if (getControl("question").errors?.["required"]) {
+        <span>Question is required</span>
+      }
+      @if (getControl("variable").errors?.["pattern"]) {
+        <span>Variables cannot contain spaces, or the characters , ; #</span>
+      }
+      @if (getControl("variable").errors?.["required"]) {
+        <span>Variable name is required</span>
+      }
+      @if (getControl("variable").errors?.["reserved"]) {
+        <span>This variable name is reserved</span>
+      }
+      @if (getControl("variable").errors?.["used"]) {
+        <span>This variable name is already used</span>
       }
     </div>
   }

@@ -9,14 +9,22 @@ import {
 import { Always, Question } from '../../../model/types';
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  debounceTime,
+  filter,
+  map,
+  Observable,
+  of,
+  withLatestFrom,
+} from 'rxjs';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 
@@ -29,6 +37,7 @@ import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 })
 export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();
+  variables = input.required<string[]>();
 
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
@@ -41,12 +50,21 @@ export class EditorQuestionComponent implements OnChanges {
       // eslint-disable-next-line @typescript-eslint/unbound-method
       Validators.required,
     ]),
-    variable: new FormControl('', [
-      Validators.pattern(' *[^ ,;#]+ *'),
-      validateReservedString(),
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      Validators.required,
-    ]),
+    variable: new FormControl(
+      '',
+      [
+        Validators.pattern(' *[^ ,;#]+ *'),
+        validateReservedString(),
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        Validators.required,
+      ],
+      [
+        validateUnusedVariable(
+          toObservable(this.variables),
+          toObservable(this.question),
+        ),
+      ],
+    ),
   });
 
   getControl(name: keyof Question) {
@@ -129,4 +147,21 @@ function validateReservedString(): ValidatorFn {
     }
     return null;
   };
+}
+
+function validateUnusedVariable(
+  variables: Observable<string[]>,
+  question: Observable<Question>,
+): AsyncValidatorFn {
+  return (control: AbstractControl<string | null>) =>
+    of(control.value).pipe(
+      withLatestFrom(variables, question),
+      map(([value, variables, question]) =>
+        variables
+          .filter((v) => v !== question.variable)
+          .includes(value?.trim() || '')
+          ? { used: true }
+          : null,
+      ),
+    );
 }
