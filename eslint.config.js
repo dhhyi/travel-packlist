@@ -13,7 +13,23 @@ module.exports = tseslint.config(
     extends: [eslint.configs.recommended],
   },
   {
-    files: ["**/*.ts"],
+    files: ["**/*.spec.ts"],
+    languageOptions: {
+      parserOptions: {
+        project: "./tsconfig.json",
+      },
+    },
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.stylisticTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+    ],
+    rules: {
+      "@typescript-eslint/no-unsafe-call": "off",
+    },
+  },
+  {
+    files: ["**/!(*.spec).ts"],
     languageOptions: {
       parserOptions: {
         project: "./tsconfig.json",
@@ -73,7 +89,13 @@ module.exports = tseslint.config(
       ...angular.configs.templateAccessibility,
     ],
     rules: {
-      "@angular-eslint/template/i18n": "off",
+      "@angular-eslint/template/i18n": [
+        "warn",
+        {
+          ignoreTags: ["meta", "link", "noscript"],
+          ignoreAttributes: ["d"],
+        },
+      ],
       "@angular-eslint/template/no-call-expression": "off",
     },
   },

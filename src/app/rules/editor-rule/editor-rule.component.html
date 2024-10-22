@@ -97,8 +97,16 @@
 
 @if (mode.isMode("edit")) {
   <div class="flex justify-end gap-2">
-    <button type="button" (click)="addQuestion()">+ Question</button>
-    <button type="button" (click)="addItem()">+ Item</button>
+    <button
+      i18n="@@edit.rules.add-question"
+      type="button"
+      (click)="addQuestion()"
+    >
+      + Question
+    </button>
+    <button i18n="@@edit.rules.add-item" type="button" (click)="addItem()">
+      + Item
+    </button>
   </div>
 } @else {
   <div class="flex justify-center">

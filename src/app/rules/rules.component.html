@@ -32,7 +32,12 @@
     </div>
   }
   @if (mode.isMode("edit") && !filter()) {
-    <button type="button" class="sticky bottom-0 z-50" (click)="addRule()">
+    <button
+      i18n="@@edit.rules.add-rule"
+      type="button"
+      class="sticky bottom-0 z-50"
+      (click)="addRule()"
+    >
       + Rule
     </button>
   }

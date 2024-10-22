@@ -1,7 +1,13 @@
 <nav class="flex h-12 flex-row items-center p-2">
   <a class="flex grow" routerLink="/">
-    <img alt="icon" width="32" height="32" [ngSrc]="'icon.png'" />
-    <span class="text-2xl font-bold">Travel Packlist</span>
+    <img
+      alt="application icon"
+      i18n-alt="@@app.icon"
+      width="32"
+      height="32"
+      [ngSrc]="'icon.png'"
+    />
+    <span i18n="@@app.title" class="text-2xl font-bold">Travel Packlist</span>
   </a>
   <a class="pr-2" routerLink="/config">
     <app-icon-cog class="h-6 w-6" />

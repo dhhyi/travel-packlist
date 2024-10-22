@@ -1,43 +1,74 @@
 <!-- eslint-disable @angular-eslint/template/prefer-ngsrc -->
 <div class="section">
-  <span class="font-bold">Checklist</span>
-  <button type="button" (click)="resetChecklist()">Reset Checklist</button>
+  <span i18n="@@config.checklist" class="font-bold">Checklist</span>
+  <button
+    i18n="@@config.checklist.reset"
+    type="button"
+    (click)="resetChecklist()"
+  >
+    Reset Checklist
+  </button>
   <div class="flex items-center gap-3">
     <input
       type="checkbox"
       id="track-weight"
       [formControl]="trackWeightControl"
     />
-    <label for="track-weight" class="grow">Track item weight</label>
-    <p class="w-1/2 text-sm italic">
+    <label
+      i18n="@@config.checklist.track-weight"
+      for="track-weight"
+      class="grow"
+      >Track item weight</label
+    >
+    <p
+      i18n="@@config.checklist.track-weight.description"
+      class="w-1/2 text-sm italic"
+    >
       You can enter the item weight appended to the item name in the editor.
     </p>
   </div>
 </div>
 
 <div class="section">
-  <span class="font-bold">Rules</span>
-  <button type="button" routerLink="/rules">Edit Rules</button>
+  <span i18n="@@config.rules" class="font-bold">Rules</span>
+  <button i18n="@@config.rules.edit" type="button" routerLink="/rules">
+    Edit Rules
+  </button>
   <div class="flex items-center gap-3">
     <input
       type="checkbox"
       id="rules-debug-mode"
       [formControl]="fadeOutDisabledRulesControl"
     />
-    <label for="rules-debug-mode">Fade out disabled rules in editor</label>
+    <label i18n="@@config.rules.fadeout-disabled" for="rules-debug-mode"
+      >Fade out disabled rules in editor</label
+    >
   </div>
   <hr />
-  <button type="button" routerLink="/documentation">Documentation</button>
-  <button type="button" routerLink="/rules-raw">Edit Rules with Code</button>
+  <button
+    i18n="@@config.rules.documentation"
+    type="button"
+    routerLink="/documentation"
+  >
+    Documentation
+  </button>
+  <button i18n="@@config.rules.edit-raw" type="button" routerLink="/rules-raw">
+    Edit Rules with Code
+  </button>
   <hr />
-  <button type="button" (click)="exportRules()">Export Rules</button>
-  <button type="button" (click)="importRules()">Import Rules</button>
+  <button i18n="@@config.rules.export" type="button" (click)="exportRules()">
+    Export Rules
+  </button>
+  <button i18n="@@config.rules.import" type="button" (click)="importRules()">
+    Import Rules
+  </button>
 </div>
 
 <div class="section">
-  <span class="font-bold">Theme</span>
+  <span i18n="@@config.rules.theme" class="font-bold">Theme</span>
   <div class="grid grid-cols-3 gap-3">
     <button
+      i18n="@@config.rules.theme.dark"
       type="button"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'dark',
@@ -47,6 +78,7 @@
       Dark
     </button>
     <button
+      i18n="@@config.rules.theme.light"
       type="button"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'light',
@@ -56,6 +88,7 @@
       Light
     </button>
     <button
+      i18n="@@config.rules.theme.system"
       type="button"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'system',
@@ -68,58 +101,99 @@
 </div>
 
 <div class="section">
-  <span class="font-bold">App Version</span>
-  <span>{{ env.version }}</span>
-  <span class="italic">built {{ env.build_time * 1000 | date: "long" }}</span>
-  <span class="font-mono text-sm text-slate-500"
-    ><a
-      [href]="'https://github.com/dhhyi/travel-packlist/commit/' + env.git_hash"
-      >{{ env.git_hash }}</a
-    ></span
-  >
-</div>
-
-<div class="section">
-  <span class="font-bold">Support</span>
-  <div class="flex flex-col gap-4">
-    <p>
-      If you find any bugs or have any suggestions, please open an issue on
-      GitHub:
-      <a href="https://github.com/dhhyi/travel-packlist/issues" target="_blank">
-        <img
-          class="inline"
-          src="https://img.shields.io/github/issues/dhhyi/travel-packlist"
-          alt="GitHub issues"
-        />
-      </a>
-    </p>
-    <p>
-      Alternatively, you can reach out to me by
-      <a href="mailto:dhhyi@aol.com" target="_blank">
-        <img
-          class="inline"
-          src="https://img.shields.io/badge/email-dhhyi%40aol.com-blue"
-          alt="Email"
-        />
-      </a>
-    </p>
-    <p>
-      If you like this app, please consider to
-
-      <a href="https://ko-fi.com/danilohoffmann" target="_blank">
-        <img
-          class="inline max-w-40"
-          src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
-          alt="Buy Me a Coffee at ko-fi.com"
-        />
-      </a>
-    </p>
+  <span i18n="@@config.language" class="font-bold">Language</span>
+  <div class="grid grid-cols-2 gap-3">
+    <button
+      class="flex items-center justify-center bg-transparent"
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': getLanguage() === 'en',
+      }"
+      (click)="setLanguage('en')"
+    >
+      <app-icon-flag-uk class="h-6 w-7" />
+    </button>
+    <button
+      type="button"
+      class="flex items-center justify-center bg-transparent"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': getLanguage() === 'de',
+      }"
+      (click)="setLanguage('de')"
+    >
+      <app-icon-flag-germany class="h-6 w-7" />
+    </button>
   </div>
-</div>
 
-<div class="section">
-  <span class="font-bold">DANGER!</span>
-  <button type="button" class="red" (click)="resetEverything()">
-    Reset Application
-  </button>
+  <div class="section">
+    <span i18n="@@config.appversion" class="font-bold">App Version</span>
+    <span>{{ env.version }}</span>
+    <span i18n="@@config.appversion.built" class="italic"
+      >built on
+      {{ env.build_time * 1000 | date: "long" // i18n(ph="LONG_DATE") }}</span
+    >
+    <span class="font-mono text-sm text-slate-500"
+      ><a
+        [href]="
+          'https://github.com/dhhyi/travel-packlist/commit/' + env.git_hash
+        "
+        >{{ env.git_hash }}</a
+      ></span
+    >
+  </div>
+
+  <div class="section">
+    <span i18n="@@config.support" class="font-bold">Support</span>
+    <div class="flex flex-col gap-4">
+      <p i18n="@@config.support.issues">
+        If you find any bugs or have any suggestions, please open an issue on
+        GitHub:
+        <a
+          href="https://github.com/dhhyi/travel-packlist/issues"
+          target="_blank"
+        >
+          <img
+            class="inline"
+            src="https://img.shields.io/github/issues/dhhyi/travel-packlist"
+            alt="GitHub issues"
+            i18n-alt="@@config.support.issues.github"
+          />
+        </a>
+      </p>
+      <p i18n="@@config.support.email">
+        Alternatively, you can reach out to me by
+        <a href="mailto:dhhyi@aol.com" target="_blank">
+          <img
+            class="inline"
+            src="https://img.shields.io/badge/email-dhhyi%40aol.com-blue"
+            alt="Email"
+            i18n-alt="@@config.support.email.label"
+          />
+        </a>
+      </p>
+      <p i18n="@@config.support.ko-fi">
+        If you like this app, please consider to
+        <a href="https://ko-fi.com/danilohoffmann" target="_blank">
+          <img
+            class="inline max-w-40"
+            src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
+            alt="Buy Me a Coffee at ko-fi.com"
+            i18n-alt="@@config.support.ko-fi.label"
+          />
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="section">
+    <span i18n="@@config.dangerzone" class="font-bold">DANGER!</span>
+    <button
+      i18n="@@config.dangerzone.reset"
+      type="button"
+      class="red"
+      (click)="resetEverything()"
+    >
+      Reset Application
+    </button>
+  </div>
 </div>

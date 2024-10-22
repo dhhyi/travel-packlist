@@ -72,15 +72,24 @@
   </div>
   @if (mode.isMode("cut-paste")) {
     <div class="mt-2 flex justify-center gap-5">
-      <span>Clipboard:</span>
+      <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
       @if (clipboard.itemsCount() === 0 && clipboard.questionsCount() === 0) {
-        <span>empty</span>
+        <span i18n="@@edit.toolbar.clipboard.empty">empty</span>
       } @else {
-        @if (clipboard.itemsCount()) {
-          <span>{{ clipboard.itemsCount() }} Items</span>
+        @if (clipboard.itemsCount(); as itemsCount) {
+          <span i18n="@@edit.toolbar.clipboard.items">{itemsCount, plural,
+            one {1 Item}
+            other {{{itemsCount}} Items}
+          }</span>
         }
-        @if (clipboard.questionsCount()) {
-          <span>{{ clipboard.questionsCount() }} Questions</span>
+        @if (clipboard.questionsCount(); as questionsCount) {
+          <span
+            i18n="@@edit.toolbar.clipboard.questions"
+            >{questionsCount, plural,
+              one {1 Question}
+              other {{{questionsCount}} Questions}
+
+          }</span>
         }
       }
     </div>

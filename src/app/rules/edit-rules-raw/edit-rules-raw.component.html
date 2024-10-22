@@ -5,11 +5,14 @@
 <div class="bg-active absolute bottom-0 left-0 w-full p-2 font-mono">
   @switch (state()) {
     @case ("pending") {
-      <div class="text-yellow-600">Waiting for input.</div>
+      <div i18n="@@edit-raw.waiting" class="text-yellow-600">
+        Waiting for input.
+      </div>
     }
     @case ("success") {
-      <div class="text-green-700">
-        Parsed {{ noOfRules() }} rules successfully!
+      <!-- prettier-ignore -->
+      <div i18n="@@edit-raw.parsed-success" class="text-green-700">
+        Parsed {{ noOfRules() // i18n(ph="NUMBER_OF_RULES") }} rules successfully!
       </div>
     }
     @default {

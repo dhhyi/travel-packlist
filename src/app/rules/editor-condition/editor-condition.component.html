@@ -22,6 +22,7 @@
     [style]="{ width: width }"
     (change)="selection(selectbox.value)"
   >
+    <!-- eslint-disable @angular-eslint/template/i18n -->
     @for (option of options; track $index) {
       @switch (option) {
         @case ("not") {
@@ -44,5 +45,6 @@
         }
       }
     }
+    <!-- eslint-enable @angular-eslint/template/i18n -->
   </select>
 </ng-template>

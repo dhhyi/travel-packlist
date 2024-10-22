@@ -48,14 +48,18 @@ export class Parser {
         return new Variable(variable);
       }
     } else {
-      throw new Error("Could not parse condition from '" + input + "'");
+      throw new Error(
+        $localize`:@@parser.error.condition:Could not parse condition from '${input}:INPUT:'` as string,
+      );
     }
   }
 
   parseQuestion(input: string): Question {
     const tokens = questionRegex.exec(input);
     if (!tokens?.groups) {
-      throw new Error("Could not parse question from '" + input + "'");
+      throw new Error(
+        $localize`:@@parser.error.question:Could not parse question from '${input}:INPUT:'` as string,
+      );
     }
 
     return new Question(tokens.groups['question'], tokens.groups['variable']);
@@ -83,7 +87,9 @@ export class Parser {
   parseItem(input: string): Item {
     const tokens = itemRegex.exec(input);
     if (!tokens?.groups) {
-      throw new Error("Could not parse item from '" + input + "'");
+      throw new Error(
+        $localize`:@@parser.error.item:Could not parse item from '${input}:INPUT:'` as string,
+      );
     }
 
     const [name, weight] = this.extractItemNameAndWeight(tokens.groups['name']);
@@ -106,7 +112,9 @@ export class Parser {
       } else if (itemRegex.test(line)) {
         items.push(this.parseItem(line));
       } else {
-        throw new Error("Could not parse effect from '" + line + "'");
+        throw new Error(
+          $localize`:@@parser.error.effect:Could not parse effect from '${line}:INPUT:'` as string,
+        );
       }
     }
 
@@ -117,7 +125,9 @@ export class Parser {
     const tokens = input.split(':-');
 
     if (tokens.length !== 2) {
-      throw new Error("Could not parse rule from '" + input + "'");
+      throw new Error(
+        $localize`:@@parser.error.rule:Could not parse rule from '${input}:INPUT:'` as string,
+      );
     }
 
     let condition: Condition;

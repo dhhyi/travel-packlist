@@ -17,10 +17,12 @@
   <div class="m-1 text-sm text-red-500">
     @if (getControl("name").touched) {
       @if (getControl("name").errors?.["pattern"]) {
-        <span>Item name cannot contain the characters , ; #</span>
+        <span i18n="@@edit.item.name.invalid-characters"
+          >Item name cannot contain the characters , ; #</span
+        >
       }
       @if (getControl("name").errors?.["required"]) {
-        <span>Item name is required</span>
+        <span i18n="@@edit.item.name.required">Item name is required</span>
       }
     }
   </div>

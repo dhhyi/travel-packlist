@@ -5,9 +5,11 @@ import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ConfigPersistence, Themes } from './config.persistence';
+import { ConfigPersistence, Languages, Themes } from './config.persistence';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
+import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
+import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -15,7 +17,14 @@ const defaultFileName = 'travel-packlist-rules.txt';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config',
   standalone: true,
-  imports: [RouterModule, ReactiveFormsModule, DatePipe, NgClass],
+  imports: [
+    RouterModule,
+    ReactiveFormsModule,
+    DatePipe,
+    NgClass,
+    IconFlagGermanyComponent,
+    IconFlagUkComponent,
+  ],
   templateUrl: './config.component.html',
   styles: `
     .section {
@@ -60,7 +69,11 @@ export class ConfigComponent {
   }
 
   async resetChecklist() {
-    if (window.confirm('Are you sure you want to reset the checklist?')) {
+    if (
+      window.confirm(
+        $localize`:@@config.checklist.reset.question:Are you sure you want to reset the checklist?` as string,
+      )
+    ) {
       this.packlist.saveAnswers({});
       this.packlist.setCheckedItems([]);
       this.packlist.setCollapsedCategories([]);
@@ -71,7 +84,9 @@ export class ConfigComponent {
 
   async resetEverything() {
     if (
-      window.confirm('Are you sure you want to reset the whole application?')
+      window.confirm(
+        $localize`:@@config.dangerzone.reset.question:Are you sure you want to reset the whole application?` as string,
+      )
     ) {
       this.packlist.saveAnswers({});
       this.packlist.setCheckedItems([]);
@@ -139,5 +154,13 @@ export class ConfigComponent {
 
   getTheme() {
     return this.config.getTheme();
+  }
+
+  getLanguage(): string {
+    return this.config.getLanguage();
+  }
+
+  setLanguage(lang: Languages) {
+    this.config.setLanguage(lang);
   }
 }
