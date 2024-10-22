@@ -38,6 +38,7 @@ export class PacklistComponent implements OnInit {
   private rulesPersistence = inject(RulesPersistence);
   private packlistPersistence = inject(PacklistPersistence);
   private refactor = inject(Refactor);
+  private config = inject(ConfigPersistence);
 
   private rules = signal<Rule[]>([]);
 
@@ -49,8 +50,12 @@ export class PacklistComponent implements OnInit {
     return this.refactor.filterActiveRules(this.model(), this.rules());
   });
 
+  isLockActive = signal(this.config.isAnswersLocked());
+
   questions = computed(() =>
-    this.activeRules().flatMap((rule) => rule.questions),
+    this.activeRules()
+      .flatMap((rule) => rule.questions)
+      .filter((q) => !this.isLockActive() || this.model()[q.variable]),
   );
 
   items = computed(() => this.activeRules().flatMap((rule) => rule.items));
@@ -58,8 +63,6 @@ export class PacklistComponent implements OnInit {
   error = signal<string | undefined>(undefined);
 
   private parser = inject(Parser);
-
-  private config = inject(ConfigPersistence);
 
   constructor() {
     effect(() => {
@@ -87,11 +90,9 @@ export class PacklistComponent implements OnInit {
     this.model.update((model) => ({ ...model, [variable]: value }));
   }
 
-  isLockActive() {
-    return this.config.isAnswersLocked();
-  }
-
   toggleLock() {
-    this.config.setAnswersLocked(!this.config.isAnswersLocked());
+    const newValue = !this.config.isAnswersLocked();
+    this.config.setAnswersLocked(newValue);
+    this.isLockActive.set(newValue);
   }
 }
