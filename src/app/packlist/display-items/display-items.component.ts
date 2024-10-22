@@ -12,6 +12,8 @@ import { KeyValuePipe, NgClass } from '@angular/common';
 import { ItemsStatusComponent } from './items-status/items-status.component';
 import { ConfigPersistence } from '../../config/config.persistence';
 import { Serializer } from '../../../model/serializer';
+import { IconKeyDownComponent } from '../../icons/icon-key-down/icon-key-down.component';
+import { IconKeyRightComponent } from '../../icons/icon-key-right/icon-key-right.component';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -21,7 +23,13 @@ function serialize(item: Item): string {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-items',
   standalone: true,
-  imports: [KeyValuePipe, ItemsStatusComponent, NgClass],
+  imports: [
+    KeyValuePipe,
+    ItemsStatusComponent,
+    NgClass,
+    IconKeyDownComponent,
+    IconKeyRightComponent,
+  ],
   templateUrl: './display-items.component.html',
   styles: `
     progress::-webkit-progress-bar {
@@ -41,18 +49,28 @@ export class DisplayItemsComponent {
   private persistence = inject(PacklistPersistence);
 
   private checkedItems = signal(this.persistence.getCheckedItems());
+  private collapsedGroups = signal(this.persistence.getCollapsedCategories());
 
   groupedItems = computed(() => {
     const checkedItems = this.checkedItems();
+    const collapsedGroups = this.collapsedGroups();
     return this.items().reduce<
       Record<
         string,
-        { items: (Item & { checked: boolean })[]; checked: number }
+        {
+          items: (Item & { checked: boolean })[];
+          checked: number;
+          collapsed: boolean;
+        }
       >
     >((groups, item) => {
       // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!groups[item.category]) {
-        groups[item.category] = { items: [], checked: 0 };
+        groups[item.category] = {
+          items: [],
+          checked: 0,
+          collapsed: collapsedGroups.includes(item.category),
+        };
       }
 
       const checked = checkedItems.includes(serialize(item));
@@ -109,5 +127,16 @@ export class DisplayItemsComponent {
       ]);
     }
     this.persistence.setCheckedItems(this.checkedItems());
+  }
+
+  toggleGroup(group: string) {
+    if (this.collapsedGroups().includes(group)) {
+      this.collapsedGroups.update((old) => old.filter((g) => g !== group));
+    } else {
+      this.collapsedGroups.update((old) => [...old, group]);
+    }
+    this.persistence.setCollapsedCategories(
+      this.collapsedGroups().length ? this.collapsedGroups() : null,
+    );
   }
 }

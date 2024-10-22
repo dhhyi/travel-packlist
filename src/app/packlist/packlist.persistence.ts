@@ -44,4 +44,24 @@ export class PacklistPersistence {
       localStorage.removeItem('checkedItems');
     }
   }
+
+  getCollapsedCategories(): string[] {
+    const collapsedCategories = localStorage.getItem('collapsedCategories');
+    return collapsedCategories
+      ? (JSON.parse(collapsedCategories) as string[])
+      : [];
+  }
+
+  setCollapsedCategories(
+    collapsedCategories: string[] | undefined | null,
+  ): void {
+    if (collapsedCategories) {
+      localStorage.setItem(
+        'collapsedCategories',
+        JSON.stringify(collapsedCategories),
+      );
+    } else {
+      localStorage.removeItem('collapsedCategories');
+    }
+  }
 }
