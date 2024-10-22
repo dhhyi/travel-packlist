@@ -1,5 +1,11 @@
 @if (question(); as question) {
-  <div class="flex flex-row justify-between" (click)="click()">
+  <div
+    role="button"
+    tabindex="0"
+    class="flex flex-row justify-between"
+    (click)="click()"
+    (keypress)="click()"
+  >
     <span class="font-bold">{{ question }}</span>
     @if (value()) {
       <span>

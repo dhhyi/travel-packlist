@@ -30,7 +30,13 @@
 
 @for (group of groupedItems() | keyvalue; track group.key) {
   <div class="card mb-1">
-    <div class="flex justify-between" (click)="toggleGroup(group.key)">
+    <div
+      role="button"
+      tabindex="0"
+      class="flex justify-between"
+      (click)="toggleGroup(group.key)"
+      (keypress)="toggleGroup(group.key)"
+    >
       <div class="flex">
         @if (group.value.collapsed) {
           <app-icon-key-right class="h-5 w-5" />
@@ -48,9 +54,12 @@
       <ul class="pt-2">
         @for (item of group.value.items; track $index) {
           <li
+            role="button"
+            tabindex="0"
             class="flex justify-between"
             [ngClass]="{ 'text-slate-500 line-through': item.checked }"
             (click)="toggle(item)"
+            (keypress)="toggle(item)"
           >
             {{ item.name }}
             @if (item.weight && trackWeight) {
