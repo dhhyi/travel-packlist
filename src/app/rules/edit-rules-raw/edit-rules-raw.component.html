@@ -1,8 +1,8 @@
 <textarea
-  class="mb-8 w-full grow resize-none rounded border border-gray-300 bg-gray-100 px-1 py-0 pb-10 font-mono leading-tight text-gray-700 focus:bg-white focus:outline-none"
+  class="mb-8 w-full grow resize-none rounded border border-gray-300 bg-gray-100 px-1 py-0 pb-10 font-mono leading-tight text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-300"
   [formControl]="rules"
 ></textarea>
-<div class="absolute bottom-0 left-0 w-full bg-white p-2 font-mono">
+<div class="bg-active absolute bottom-0 left-0 w-full p-2 font-mono">
   @switch (state()) {
     @case ("pending") {
       <div class="text-yellow-600">Waiting for input.</div>

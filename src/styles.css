@@ -6,9 +6,19 @@ html {
   height: 100%;
 }
 
+.bg-active {
+  @apply bg-white dark:bg-slate-900;
+}
+
+.bg-disabled {
+  @apply bg-slate-100 dark:bg-slate-800;
+}
+
 body {
   font-family: Arial, sans-serif;
   height: 100%;
+
+  @apply bg-active text-black dark:text-slate-300;
 }
 
 app-root {
@@ -30,11 +40,11 @@ router-outlet {
 }
 
 .card.disabled {
-  @apply bg-slate-100 opacity-50;
+  @apply bg-disabled opacity-50;
 }
 
 button {
-  @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 sm:max-w-72;
+  @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 sm:max-w-72 dark:bg-slate-700 dark:text-slate-300;
 }
 
 button.red {
@@ -64,10 +74,14 @@ select[disabled] {
 }
 
 input[type="checkbox"] {
-  @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400;
+  @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
 }
 
 input.ng-invalid.ng-touched,
 input:focus-visible.ng-invalid.ng-touched {
   @apply border-red-700 bg-red-300 outline-red-700;
+}
+
+svg {
+  @apply fill-black dark:fill-slate-300;
 }
