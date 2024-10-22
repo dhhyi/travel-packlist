@@ -20,7 +20,7 @@ import {
   PleaseSelect,
   Variable,
 } from '../../../model/types';
-import { JsonPipe, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { RulesMode } from '../rules.mode';
 import { Serializer } from '../../../model/serializer';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -29,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
   standalone: true,
-  imports: [JsonPipe, NgTemplateOutlet],
+  imports: [NgTemplateOutlet],
   templateUrl: './editor-condition.component.html',
   styles: `
     :host {
