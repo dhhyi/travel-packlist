@@ -87,8 +87,9 @@ export class Refactor {
         this.renameVariable(oldName, newName, item.right),
       );
     }
-    const type: never = item;
 
+    // this will never happen
+    const type: never = item;
     throw new Error('Unknown item type', type);
   }
 
@@ -141,8 +142,9 @@ export class Refactor {
         this.contains(item.left, filter) || this.contains(item.right, filter)
       );
     }
-    const type: never = item;
 
+    // this will never happen
+    const type: never = item;
     throw new Error('Unknown item type', type);
   }
 }

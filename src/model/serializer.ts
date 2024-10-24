@@ -92,8 +92,8 @@ export class Serializer {
       return this.serialize(input.left) + ' OR ' + this.serialize(input.right);
     }
 
+    // this will never happen
     const type: never = input;
-
     throw new Error('Cannot serialize unknown input', type);
   }
 }
