@@ -1,0 +1,64 @@
+{
+  "configVersion": 1,
+  "timestamp": 1729764393131,
+  "index": "/travel-packlist/de/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/travel-packlist/de/icon.png",
+        "/travel-packlist/de/icon_256.png",
+        "/travel-packlist/de/index.html",
+        "/travel-packlist/de/main-TZEDSFDY.js",
+        "/travel-packlist/de/manifest.json",
+        "/travel-packlist/de/polyfills-D3QPI5QJ.js",
+        "/travel-packlist/de/styles-4VDDY2SA.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/travel-packlist/de/icon.png": "d2fc36abc0e608ed0975bbe9a61a1f7cbee144ad",
+    "/travel-packlist/de/icon_256.png": "abe925b08e3f4e4fcf1cdfcfad83eed5b3ce0b17",
+    "/travel-packlist/de/index.html": "5d0ffe98dbeb41d24094acb34ed77aa760cb1606",
+    "/travel-packlist/de/main-TZEDSFDY.js": "138d082164589baf9ae89aeea4acf04bf4629393",
+    "/travel-packlist/de/manifest.json": "6ad5c796e3c7af60dfa82230f6bc3597dbfb16a2",
+    "/travel-packlist/de/polyfills-D3QPI5QJ.js": "dc067a3756d8bae8fa95ba782a86f3510f40c96e",
+    "/travel-packlist/de/styles-4VDDY2SA.css": "8cefbf15a5104fdf5626b2010fce4a26d6ea0fe5"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
