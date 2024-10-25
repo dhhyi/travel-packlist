@@ -36,7 +36,7 @@ export class AppInit {
       const newUrl = hrefWithoutHash + index + window.location.hash;
       setTimeout(() => {
         window.location.href = newUrl;
-      }, 100);
+      }, 0);
     }
   }
 }
