@@ -1,5 +1,6 @@
-import { Injectable, isDevMode } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { saveLocalStorage } from '../../util/localstorage.persistence';
+import { AppInit } from '../app.init';
 
 const defaultConfig = {
   fadeOutDisabledRules: false,
@@ -16,46 +17,17 @@ export type Languages = (typeof defaultConfig)['language'];
 @Injectable({ providedIn: 'root' })
 export class ConfigPersistence {
   private config: typeof defaultConfig = defaultConfig;
+  private injector = inject(Injector);
 
   constructor() {
     const loaded = localStorage.getItem('config');
     if (loaded) {
       this.config = JSON.parse(loaded) as typeof defaultConfig;
-      this.applyLanguage();
-      this.applyTheme();
     }
   }
 
   private persist() {
     saveLocalStorage('config', JSON.stringify(this.config));
-  }
-
-  private applyTheme() {
-    const theme = this.config.theme;
-    const userDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    if ((theme === 'system' && userDark) || theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }
-
-  private applyLanguage() {
-    const lang = this.config.language as Languages | undefined;
-    if (lang && document.documentElement.lang !== lang) {
-      if (isDevMode()) {
-        console.warn('Language switching is disabled in dev mode');
-        return;
-      }
-      const href = window.location.href;
-      const hash = window.location.hash;
-      const index = `index${lang === 'en' ? '' : `.${lang}`}.html`;
-      const hrefWithoutHash = href.substring(0, href.indexOf(hash));
-      const newUrl = hrefWithoutHash + index + window.location.hash;
-      setTimeout(() => {
-        window.location.href = newUrl;
-      }, 100);
-    }
   }
 
   resetConfig() {
@@ -94,7 +66,7 @@ export class ConfigPersistence {
     this.config.theme = value;
     this.persist();
 
-    this.applyTheme();
+    this.injector.get(AppInit).applyTheme();
   }
 
   getTheme() {
@@ -107,7 +79,7 @@ export class ConfigPersistence {
     this.config.language = lang;
     this.persist();
 
-    this.applyLanguage();
+    this.injector.get(AppInit).applyLanguage();
   }
 
   getLanguage() {
