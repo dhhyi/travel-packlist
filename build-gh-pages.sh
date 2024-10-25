@@ -14,26 +14,27 @@ pnpm run build --base-href $base_href
 manifest="$(cat $target/manifest.json)"
 echo "$manifest" | jq -M ".start_url=\"$base_href\"" > $target/manifest.json
 
-pnpm run build --base-href $base_href --configuration=de --delete-output-path=false
+for lang in de
+do
+   pnpm run build --base-href $base_href --configuration=$lang --delete-output-path=false
 
-cat $target/de/index.html \
-   | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
-   > $target/index.de.html
+   cat $target/$lang/index.html \
+      | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
+      > $target/index.$lang.html
 
-mainJs="$(basename $(ls $target/de/main*.js))"
-cat $target/de/$mainJs \
-   | sed "s|ngsw-worker\.js|ngsw-worker.de.js|g" \
-   > $target/$mainJs
+   cat $target/$lang/ngsw.json \
+      | sed "s|/$lang/|/|g" \
+      | sed "s|index.html|index.$lang.html|g" \
+      > $target/ngsw.$lang.json
 
-cat $target/de/ngsw-worker.js \
-   | sed "s|ngsw.json|ngsw.de.json|g" \
-   > $target/ngsw-worker.de.js
+   cp $target/$lang/polyfills*.js $target/$lang/main*.js $target
 
-cat $target/de/ngsw.json \
-   | sed "s|/de/|/|g" \
-   | sed 's|index.html|index.de.html|g' \
-   > $target/ngsw.de.json
+   rm -rf $target/$lang
 
-cp $target/de/polyfills*.js $target
+done
 
-rm -rf $target/de
+mv $target/ngsw.json $target/ngsw.default.json
+
+jq -s '.[0].assetGroups[0].urls=([.[].assetGroups[0].urls]|flatten|unique) | .[0].hashTable=([.[].hashTable]|add) | .[0]' $target/ngsw.default.json $target/ngsw.*.json > $target/ngsw.json
+
+rm $target/ngsw.*.json
