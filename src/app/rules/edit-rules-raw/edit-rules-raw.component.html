@@ -1,22 +1,24 @@
 <textarea
   class="mb-8 w-full grow resize-none rounded border border-gray-300 bg-gray-100 px-1 py-0 pb-10 font-mono leading-tight text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-300"
-  [formControl]="rules"
+  [formControl]="rulesControl"
 ></textarea>
 <div class="bg-active absolute bottom-0 left-0 w-full p-2 font-mono">
-  @switch (state()) {
-    @case ("pending") {
-      <div i18n="@@edit-raw.waiting" class="text-yellow-600">
-        Waiting for input.
-      </div>
-    }
-    @case ("success") {
-      <!-- prettier-ignore -->
-      <div i18n="@@edit-raw.parsed-success" class="text-green-700">
-        Parsed {{ noOfRules() // i18n(ph="NUMBER_OF_RULES") }} rules successfully!
-      </div>
-    }
-    @default {
-      <div class="text-red-700">{{ state() }}</div>
+  @if (parserState(); as state) {
+    @switch (state.type) {
+      @case ("pending") {
+        <div i18n="@@edit-raw.waiting" class="text-yellow-600">
+          Waiting for input.
+        </div>
+      }
+      @case ("success") {
+        <!-- prettier-ignore -->
+        <div i18n="@@edit-raw.parsed-success" class="text-green-700">
+          Parsed {{ state.rules // i18n(ph="NUMBER_OF_RULES") }} rules successfully!
+        </div>
+      }
+      @default {
+        <div class="text-red-700">{{ state.error }}</div>
+      }
     }
   }
 </div>

@@ -1,6 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +31,6 @@ const defaultFileName = 'travel-packlist-rules.txt';
   `,
 })
 export class ConfigComponent {
-  rules = inject(RulesPersistence);
   env = env;
 
   private router = inject(Router);
@@ -83,14 +81,13 @@ export class ConfigComponent {
         $localize`:@@config.dangerzone.reset.question:Are you sure you want to reset the whole application?` as string,
       )
     ) {
-      this.rules.resetRules();
       this.state.reset();
       await this.router.navigate(['/packlist']);
     }
   }
 
   downloadRules() {
-    const rules = this.rules.getRules();
+    const rules = this.state.get('rules');
     const blob = new Blob([rules], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -100,7 +97,7 @@ export class ConfigComponent {
   }
 
   async shareRules() {
-    const rules = this.rules.getRules();
+    const rules = this.state.get('rules');
     await navigator.share({
       title: defaultFileName,
       files: [
@@ -129,7 +126,7 @@ export class ConfigComponent {
         return;
       }
       const text = await file.text();
-      this.rules.saveRules(text);
+      this.state.set('rules', text);
       try {
         this.parser.parseRules(text);
         await this.router.navigate(['/packlist']);

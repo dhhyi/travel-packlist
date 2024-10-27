@@ -4,12 +4,10 @@ import {
   signal,
   ChangeDetectionStrategy,
   computed,
-  effect,
 } from '@angular/core';
 import { PleaseSelect, Rule } from '../../model/types';
 import { Parser } from '../../model/parser';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
-import { RulesPersistence } from './rules.persistence';
 import { Serializer } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RulesMode } from './rules.mode';
@@ -26,10 +24,6 @@ import { AppState } from '../app.state';
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
-  private parsedRules = signal<Rule[]>([]);
-
-  persistence = inject(RulesPersistence);
-
   mode = inject(RulesMode);
 
   private state = inject(AppState);
@@ -37,6 +31,10 @@ export class RulesComponent {
   private parser = inject(Parser);
   private serializer = inject(Serializer);
   private refactor = inject(Refactor);
+
+  private parsedRules = computed<Rule[]>(() =>
+    this.parser.parseRules(this.state.get('rules')),
+  );
 
   categories = computed(() =>
     this.refactor.extractCategories(this.parsedRules()),
@@ -58,14 +56,9 @@ export class RulesComponent {
       .filter((item) => this.refactor.contains(item.rule, this.filter()));
   });
 
-  constructor() {
-    this.parsedRules.set(this.parser.parseRules(this.persistence.getRules()));
-
-    effect(() => {
-      const rules = this.parsedRules();
-      const serializedRules = this.serializer.serializeRules(rules);
-      this.persistence.saveRules(serializedRules);
-    });
+  private updateRules(rules: Rule[]) {
+    const serializedRules = this.serializer.serializeRules(rules);
+    this.state.set('rules', serializedRules);
   }
 
   updateRule(index: number, rule: Rule | null) {
@@ -75,7 +68,7 @@ export class RulesComponent {
     } else {
       rules.splice(index, 1);
     }
-    this.parsedRules.set([...rules]);
+    this.updateRules([...rules]);
   }
 
   addRule() {
@@ -102,7 +95,7 @@ export class RulesComponent {
     const rules = this.parsedRules();
     rules.splice(insertAt, 0, newRule);
 
-    this.parsedRules.set([...rules]);
+    this.updateRules([...rules]);
   }
 
   swapRules(index1: number, index2: number) {
@@ -111,7 +104,7 @@ export class RulesComponent {
     rules[index1] = rules[index2];
     rules[index2] = temp;
 
-    this.parsedRules.set([...rules]);
+    this.updateRules([...rules]);
   }
 
   showAsDisabled(rule: Rule): boolean {
@@ -130,7 +123,7 @@ export class RulesComponent {
       this.parsedRules(),
     );
 
-    this.parsedRules.set(rules);
+    this.updateRules(rules);
   }
 
   filterRules(term: string) {

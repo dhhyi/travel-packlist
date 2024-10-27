@@ -7,12 +7,15 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { VariableType } from '../model/types';
+import { rulesTemplate } from '../model/template';
 
 const initialState = {
   // packlist
   answers: {} as Record<string, VariableType>,
   checkedItems: [] as string[],
   collapsedCategories: [] as string[],
+  // rules
+  rules: rulesTemplate,
   // config
   fadeOutDisabledRules: false,
   trackWeight: false,

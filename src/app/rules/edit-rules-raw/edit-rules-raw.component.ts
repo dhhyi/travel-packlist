@@ -2,15 +2,26 @@ import {
   Component,
   computed,
   inject,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { tap, debounceTime } from 'rxjs';
+import { debounceTime, startWith } from 'rxjs';
 import { Parser } from '../../../model/parser';
-import { Rule } from '../../../model/types';
-import { RulesPersistence } from '../rules.persistence';
+import { AppState } from '../../app.state';
+
+type ParserState =
+  | {
+      type: 'pending';
+    }
+  | {
+      type: 'success';
+      rules: number;
+    }
+  | {
+      type: 'error';
+      error: string;
+    };
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,45 +36,43 @@ import { RulesPersistence } from '../rules.persistence';
   `,
 })
 export class EditRulesRawComponent {
-  rules = new FormControl('');
-  state = signal<string>('pending');
+  private state = inject(AppState);
+  private rulesFromState = this.state.signal('rules');
 
-  parsedRules = signal<Rule[]>([]);
-  noOfRules = computed<number>(() => this.parsedRules().length);
-
-  private persistence = inject(RulesPersistence);
   private parser = inject(Parser);
 
+  rulesControl = new FormControl(this.state.get('rules'));
+  private rulesText = toSignal(
+    this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
+  );
+  private rulesPending = computed(() => {
+    return this.rulesText() !== this.rulesFromState();
+  });
+
+  parserState = computed<ParserState>(() => {
+    if (this.rulesPending()) {
+      return { type: 'pending' };
+    } else {
+      try {
+        const parsed = this.parser.parseRules(this.rulesFromState());
+        return { type: 'success', rules: parsed.length };
+      } catch (error) {
+        if (error instanceof Error) {
+          return { type: 'error', error: error.message };
+        } else {
+          console.error(error);
+          return { type: 'error', error: 'Unknown error' };
+        }
+      }
+    }
+  });
+
   constructor() {
-    this.rules.valueChanges
-      .pipe(
-        tap(() => {
-          this.state.set('pending');
-        }),
-        debounceTime(500),
-        takeUntilDestroyed(),
-      )
-      .subscribe({
-        complete: () => {
-          this.persistence.saveRules(this.rules.value);
-        },
-        next: (value) => {
-          this.persistence.saveRules(value);
-          if (value) {
-            try {
-              const parsed = this.parser.parseRules(value);
-              this.parsedRules.set(parsed);
-              this.state.set('success');
-            } catch (error) {
-              if (error instanceof Error) {
-                this.state.set(error.message);
-              } else {
-                console.error(error);
-              }
-            }
-          }
-        },
+    this.rulesControl.valueChanges
+      .pipe(debounceTime(500), takeUntilDestroyed())
+      .subscribe((value) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.state.set('rules', value!);
       });
-    this.rules.setValue(this.persistence.getRules());
   }
 }

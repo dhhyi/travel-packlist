@@ -2,11 +2,8 @@ import {
   Component,
   computed,
   inject,
-  OnInit,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
 import { Rule, VariableType } from '../../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
@@ -30,14 +27,16 @@ import { AppState } from '../app.state';
   ],
   templateUrl: './packlist.component.html',
 })
-export class PacklistComponent implements OnInit {
-  private rulesPersistence = inject(RulesPersistence);
+export class PacklistComponent {
   private refactor = inject(Refactor);
   private state = inject(AppState);
-
-  private rules = signal<Rule[]>([]);
+  private parser = inject(Parser);
 
   model = this.state.signal('answers');
+
+  private rules = computed<Rule[]>(() => {
+    return this.parser.parseRules(this.state.get('rules'));
+  });
 
   private activeRules = computed(() => {
     return this.refactor.filterActiveRules(this.model(), this.rules());
@@ -52,13 +51,6 @@ export class PacklistComponent implements OnInit {
   );
 
   items = computed(() => this.activeRules().flatMap((rule) => rule.items));
-
-  private parser = inject(Parser);
-
-  ngOnInit(): void {
-    const rules = this.rulesPersistence.getRules();
-    this.rules.set(this.parser.parseRules(rules));
-  }
 
   modelChange(variable: string, value: VariableType): void {
     this.model.update((model) => ({ ...model, [variable]: value }));
