@@ -36,9 +36,13 @@ export class AppState {
   private signalMap = new Map<Keys, WritableSignal<State[Keys]>>();
 
   constructor() {
-    const loaded = localStorage.getItem('state') ?? '{}';
-    this.state = JSON.parse(loaded) as State;
-    this.state = { ...initialState, ...this.state };
+    const loaded = localStorage.getItem('state');
+    if (loaded) {
+      this.state = JSON.parse(loaded) as State;
+      this.state = { ...initialState, ...this.state };
+    } else {
+      this.state = { ...initialState };
+    }
     this.loadLegacyState();
     // initialize signals
     for (const key of Object.keys(initialState) as Keys[]) {
@@ -120,7 +124,7 @@ export class AppState {
   }
 
   reset() {
-    this.state = initialState;
+    this.state = { ...initialState };
     this.persist();
     this.signalMap.forEach((signal, key) => {
       signal.set(initialState[key]);
