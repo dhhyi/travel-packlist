@@ -26,6 +26,14 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     pre {
       @apply mx-2 rounded bg-gray-500 p-2 font-mono;
     }
+
+    code {
+      @apply bg-gray-500 px-1 font-bold;
+    }
+
+    blockquote {
+      @apply mx-2 mb-2 border-l-4 border-gray-500 p-2;
+    }
   `,
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
