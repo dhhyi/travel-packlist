@@ -1,5 +1,5 @@
 <div class="card mb-1">
-  @if (trackWeight) {
+  @if (trackWeight()) {
     <div class="mb-1 flex">
       <progress
         class="grow"
@@ -62,7 +62,7 @@
             (keypress)="toggle(item)"
           >
             {{ item.name }}
-            @if (item.weight && trackWeight) {
+            @if (item.weight && trackWeight()) {
               <span class="italic">{{ serializeWeight(item.weight) }}</span>
             }
           </li>

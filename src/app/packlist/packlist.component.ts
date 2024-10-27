@@ -1,7 +1,6 @@
 import {
   Component,
   computed,
-  effect,
   inject,
   OnInit,
   signal,
@@ -12,13 +11,12 @@ import { Parser } from '../../model/parser';
 import { Rule, VariableType } from '../../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
 import { DisplayItemsComponent } from './display-items/display-items.component';
-import { PacklistPersistence } from './packlist.persistence';
 import { ErrorComponent } from '../error/error.component';
 import { IconLockOpenComponent } from '../icons/icon-lock-open/icon-lock-open.component';
-import { ConfigPersistence } from '../config/config.persistence';
 import { IconLockComponent } from '../icons/icon-lock/icon-lock.component';
 import { NgClass } from '@angular/common';
 import { Refactor } from '../../model/refactor';
+import { AppState } from '../app.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,21 +34,18 @@ import { Refactor } from '../../model/refactor';
 })
 export class PacklistComponent implements OnInit {
   private rulesPersistence = inject(RulesPersistence);
-  private packlistPersistence = inject(PacklistPersistence);
   private refactor = inject(Refactor);
-  private config = inject(ConfigPersistence);
+  private state = inject(AppState);
 
   private rules = signal<Rule[]>([]);
 
-  model = signal<Record<string, VariableType>>(
-    this.packlistPersistence.getAnswers(),
-  );
+  model = this.state.signal('answers');
 
   private activeRules = computed(() => {
     return this.refactor.filterActiveRules(this.model(), this.rules());
   });
 
-  isLockActive = signal(this.config.isAnswersLocked());
+  isLockActive = this.state.signal('answersLocked');
 
   questions = computed(() =>
     this.activeRules()
@@ -63,13 +58,6 @@ export class PacklistComponent implements OnInit {
   error = signal<string | undefined>(undefined);
 
   private parser = inject(Parser);
-
-  constructor() {
-    effect(() => {
-      const model = this.model();
-      this.packlistPersistence.saveAnswers(model);
-    });
-  }
 
   ngOnInit(): void {
     const rules = this.rulesPersistence.getRules();
@@ -91,8 +79,8 @@ export class PacklistComponent implements OnInit {
   }
 
   toggleLock() {
-    const newValue = !this.config.isAnswersLocked();
-    this.config.setAnswersLocked(newValue);
+    const newValue = !this.state.get('answersLocked');
+    this.state.set('answersLocked', newValue);
     this.isLockActive.set(newValue);
   }
 }

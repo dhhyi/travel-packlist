@@ -3,17 +3,15 @@ import {
   computed,
   inject,
   input,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Item } from '../../../model/types';
-import { PacklistPersistence } from '../packlist.persistence';
 import { KeyValuePipe, NgClass } from '@angular/common';
 import { ItemsStatusComponent } from './items-status/items-status.component';
-import { ConfigPersistence } from '../../config/config.persistence';
 import { Serializer } from '../../../model/serializer';
 import { IconKeyDownComponent } from '../../icons/icon-key-down/icon-key-down.component';
 import { IconKeyRightComponent } from '../../icons/icon-key-right/icon-key-right.component';
+import { AppState } from '../../app.state';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -46,10 +44,10 @@ function serialize(item: Item): string {
 export class DisplayItemsComponent {
   items = input<Item[]>([]);
 
-  private persistence = inject(PacklistPersistence);
+  private state = inject(AppState);
 
-  private checkedItems = signal(this.persistence.getCheckedItems());
-  private collapsedGroups = signal(this.persistence.getCollapsedCategories());
+  private checkedItems = this.state.signal('checkedItems');
+  private collapsedGroups = this.state.signal('collapsedCategories');
 
   groupedItems = computed(() => {
     const checkedItems = this.checkedItems();
@@ -90,7 +88,7 @@ export class DisplayItemsComponent {
     ),
   );
 
-  trackWeight = inject(ConfigPersistence).isTrackWeight();
+  trackWeight = this.state.signal('trackWeight');
 
   weightTotal = computed(() =>
     Math.round(
@@ -126,7 +124,6 @@ export class DisplayItemsComponent {
         serializedItem,
       ]);
     }
-    this.persistence.setCheckedItems(this.checkedItems());
   }
 
   toggleGroup(group: string) {
@@ -135,8 +132,5 @@ export class DisplayItemsComponent {
     } else {
       this.collapsedGroups.update((old) => [...old, group]);
     }
-    this.persistence.setCollapsedCategories(
-      this.collapsedGroups().length ? this.collapsedGroups() : null,
-    );
   }
 }

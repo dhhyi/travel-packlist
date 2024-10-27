@@ -1,19 +1,29 @@
-import { inject, Injectable, isDevMode } from '@angular/core';
-import { ConfigPersistence, Languages } from './config/config.persistence';
+import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { AppState, State } from './app.state';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
-  private config = inject(ConfigPersistence);
+  private state = inject(AppState);
+  private injector = inject(Injector);
   private document = inject(DOCUMENT);
 
   init() {
-    this.applyLanguage();
-    this.applyTheme();
+    toObservable(this.state.signal('theme'), {
+      injector: this.injector,
+    }).subscribe(() => {
+      this.applyTheme();
+    });
+    toObservable(this.state.signal('language'), {
+      injector: this.injector,
+    }).subscribe(() => {
+      this.applyLanguage();
+    });
   }
 
-  applyTheme() {
-    const theme = this.config.getTheme();
+  private applyTheme() {
+    const theme = this.state.get('theme') as State['theme'] | undefined;
     const userDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if ((theme === 'system' && userDark) || theme === 'dark') {
       this.document.documentElement.classList.add('dark');
@@ -22,8 +32,8 @@ export class AppInit {
     }
   }
 
-  applyLanguage() {
-    const lang = this.config.getLanguage() as Languages | undefined;
+  private applyLanguage() {
+    const lang = this.state.get('language') as State['language'] | undefined;
     if (lang && this.document.documentElement.lang !== lang) {
       if (isDevMode()) {
         console.warn('Language switching is disabled in dev mode');

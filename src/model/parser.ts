@@ -11,7 +11,7 @@ import {
   Rule,
   Variable,
 } from './types';
-import { ConfigPersistence } from '../app/config/config.persistence';
+import { AppState } from '../app/app.state';
 
 const itemRegex = /^\s*\[(?<category>.+?)\]\s*(?<name>.+)\s*$/;
 
@@ -19,7 +19,7 @@ const questionRegex = /^\s*(?<question>.*)\s+\$(?<variable>[^ ]+)\s*$/;
 
 @Injectable({ providedIn: 'root' })
 export class Parser {
-  private config = inject(ConfigPersistence);
+  private state = inject(AppState);
 
   parseCondition(input: string): Condition {
     const tokens = input.trim().split(' ');
@@ -70,7 +70,7 @@ export class Parser {
       return ['', 0];
     }
 
-    if (!this.config.isTrackWeight()) {
+    if (!this.state.get('trackWeight')) {
       return [input.trim(), 0];
     }
 

@@ -1,15 +1,14 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { RulesPersistence } from '../rules/rules.persistence';
 import { Parser } from '../../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ConfigPersistence, Languages, Themes } from './config.persistence';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
+import { AppState, State } from '../app.state';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -33,31 +32,30 @@ const defaultFileName = 'travel-packlist-rules.txt';
   `,
 })
 export class ConfigComponent {
-  packlist = inject(PacklistPersistence);
   rules = inject(RulesPersistence);
   env = env;
 
   private router = inject(Router);
-  private config = inject(ConfigPersistence);
+  private state = inject(AppState);
   private parser = inject(Parser);
 
-  fadeOutDisabledRulesControl = new FormControl(
-    this.config.isFadeOutDisabledRules(),
-  );
+  private fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
+  fadeOutDisabledRulesControl = new FormControl(this.fadeOutDisabledRules());
 
-  trackWeightControl = new FormControl(this.config.isTrackWeight());
+  private trackWeight = this.state.signal('trackWeight');
+  trackWeightControl = new FormControl(this.trackWeight());
 
   constructor() {
     this.fadeOutDisabledRulesControl.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
-        this.config.setFadeOutDisabledRules(!!value);
+        this.fadeOutDisabledRules.set(!!value);
       });
 
     this.trackWeightControl.valueChanges
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
-        this.config.setTrackWeight(!!value);
+        this.trackWeight.set(!!value);
       });
   }
 
@@ -74,10 +72,7 @@ export class ConfigComponent {
         $localize`:@@config.checklist.reset.question:Are you sure you want to reset the checklist?` as string,
       )
     ) {
-      this.packlist.saveAnswers({});
-      this.packlist.setCheckedItems([]);
-      this.packlist.setCollapsedCategories([]);
-      this.config.setAnswersLocked(false);
+      this.state.resetChecklist();
       await this.router.navigate(['/packlist']);
     }
   }
@@ -88,11 +83,8 @@ export class ConfigComponent {
         $localize`:@@config.dangerzone.reset.question:Are you sure you want to reset the whole application?` as string,
       )
     ) {
-      this.packlist.saveAnswers({});
-      this.packlist.setCheckedItems([]);
-      this.packlist.setCollapsedCategories([]);
       this.rules.resetRules();
-      this.config.resetConfig();
+      this.state.reset();
       await this.router.navigate(['/packlist']);
     }
   }
@@ -148,19 +140,19 @@ export class ConfigComponent {
     input.click();
   }
 
-  setTheme(theme: Themes) {
-    this.config.setTheme(theme);
+  getTheme() {
+    return this.state.get('theme');
   }
 
-  getTheme() {
-    return this.config.getTheme();
+  setTheme(theme: State['theme']) {
+    this.state.set('theme', theme);
   }
 
   getLanguage(): string {
-    return this.config.getLanguage();
+    return this.state.get('language');
   }
 
-  setLanguage(lang: Languages) {
-    this.config.setLanguage(lang);
+  setLanguage(lang: State['language']) {
+    this.state.set('language', lang);
   }
 }

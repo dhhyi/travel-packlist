@@ -14,11 +14,10 @@ import { Serializer } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RulesMode } from './rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
-import { PacklistPersistence } from '../packlist/packlist.persistence';
 import { NgClass } from '@angular/common';
-import { ConfigPersistence } from '../config/config.persistence';
 import { ErrorComponent } from '../error/error.component';
 import { Refactor } from '../../model/refactor';
+import { AppState } from '../app.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,9 +41,7 @@ export class RulesComponent {
 
   error = signal<string | undefined>(undefined);
 
-  private answers = inject(PacklistPersistence).getAnswers();
-
-  private config = inject(ConfigPersistence);
+  private state = inject(AppState);
 
   private parser = inject(Parser);
   private serializer = inject(Serializer);
@@ -138,9 +135,9 @@ export class RulesComponent {
 
   showAsDisabled(rule: Rule): boolean {
     return (
-      this.config.isFadeOutDisabledRules() &&
+      this.state.get('fadeOutDisabledRules') &&
       !this.refactor
-        .filterActiveRules(this.answers, this.parsedRules())
+        .filterActiveRules(this.state.get('answers'), this.parsedRules())
         .includes(rule)
     );
   }

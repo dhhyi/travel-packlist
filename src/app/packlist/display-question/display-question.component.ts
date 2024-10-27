@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { VariableType } from '../../../model/types';
 import { IconCheckmarkComponent } from '../../icons/icon-checkmark/icon-checkmark.component';
-import { ConfigPersistence } from '../../config/config.persistence';
+import { AppState } from '../../app.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,14 +21,10 @@ export class DisplayQuestionComponent {
   value = input<VariableType | undefined>(undefined);
   readonly valueChange = output<VariableType>();
 
-  private config = inject(ConfigPersistence);
-
-  isLocked(): boolean {
-    return this.config.isAnswersLocked();
-  }
+  private state = inject(AppState);
 
   click(): void {
-    if (!this.isLocked()) {
+    if (!this.state.get('answersLocked')) {
       this.valueChange.emit(!this.value());
     }
   }
