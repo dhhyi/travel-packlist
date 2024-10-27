@@ -1,44 +1,40 @@
-@if (error(); as error) {
-  <app-error [error]="error" />
-} @else {
-  <app-toolbar
-    [noOfVisibleRules]="visibleRules().length"
-    (searchTerm)="filterRules($event)"
-  />
-  @for (item of visibleRules(); track item.index) {
-    @if (item.index > 0 && mode.isMode("swap") && !filter()) {
-      <div class="flex justify-center">
-        <button
-          type="button"
-          class="icon"
-          (click)="swapRules(item.index - 1, item.index)"
-        >
-          <app-icon-swap />
-        </button>
-      </div>
-    }
-    <div
-      class="card mb-1"
-      [id]="'rule-' + item.index"
-      [ngClass]="{ disabled: showAsDisabled(item.rule) }"
-    >
-      <app-editor-rule
-        [rule]="item.rule"
-        [categories]="categories()"
-        [variables]="variables()"
-        (ruleChanged)="updateRule(item.index, $event)"
-        (renameVariable)="renameVariable($event)"
-      />
+<app-toolbar
+  [noOfVisibleRules]="visibleRules().length"
+  (searchTerm)="filterRules($event)"
+/>
+@for (item of visibleRules(); track item.index) {
+  @if (item.index > 0 && mode.isMode("swap") && !filter()) {
+    <div class="flex justify-center">
+      <button
+        type="button"
+        class="icon"
+        (click)="swapRules(item.index - 1, item.index)"
+      >
+        <app-icon-swap />
+      </button>
     </div>
   }
-  @if (mode.isMode("edit") && !filter()) {
-    <button
-      i18n="@@edit.rules.add-rule"
-      type="button"
-      class="sticky bottom-0 z-50"
-      (click)="addRule()"
-    >
-      + Rule
-    </button>
-  }
+  <div
+    class="card mb-1"
+    [id]="'rule-' + item.index"
+    [ngClass]="{ disabled: showAsDisabled(item.rule) }"
+  >
+    <app-editor-rule
+      [rule]="item.rule"
+      [categories]="categories()"
+      [variables]="variables()"
+      (ruleChanged)="updateRule(item.index, $event)"
+      (renameVariable)="renameVariable($event)"
+    />
+  </div>
+}
+@if (mode.isMode("edit") && !filter()) {
+  <button
+    i18n="@@edit.rules.add-rule"
+    type="button"
+    class="sticky bottom-0 z-50"
+    (click)="addRule()"
+  >
+    + Rule
+  </button>
 }

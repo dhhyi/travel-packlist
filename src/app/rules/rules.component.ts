@@ -15,7 +15,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { RulesMode } from './rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
 import { NgClass } from '@angular/common';
-import { ErrorComponent } from '../error/error.component';
 import { Refactor } from '../../model/refactor';
 import { AppState } from '../app.state';
 
@@ -23,13 +22,7 @@ import { AppState } from '../app.state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
   standalone: true,
-  imports: [
-    EditorRuleComponent,
-    ToolbarComponent,
-    IconSwapComponent,
-    NgClass,
-    ErrorComponent,
-  ],
+  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
@@ -38,8 +31,6 @@ export class RulesComponent {
   persistence = inject(RulesPersistence);
 
   mode = inject(RulesMode);
-
-  error = signal<string | undefined>(undefined);
 
   private state = inject(AppState);
 
@@ -68,23 +59,13 @@ export class RulesComponent {
   });
 
   constructor() {
-    try {
-      this.parsedRules.set(this.parser.parseRules(this.persistence.getRules()));
-      this.error.set(undefined);
+    this.parsedRules.set(this.parser.parseRules(this.persistence.getRules()));
 
-      effect(() => {
-        const rules = this.parsedRules();
-        const serializedRules = this.serializer.serializeRules(rules);
-        this.persistence.saveRules(serializedRules);
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        this.error.set(error.message);
-      } else {
-        this.error.set('Unknown error');
-      }
-      console.error(error);
-    }
+    effect(() => {
+      const rules = this.parsedRules();
+      const serializedRules = this.serializer.serializeRules(rules);
+      this.persistence.saveRules(serializedRules);
+    });
   }
 
   updateRule(index: number, rule: Rule | null) {

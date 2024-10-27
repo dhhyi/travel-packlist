@@ -11,7 +11,6 @@ import { Parser } from '../../model/parser';
 import { Rule, VariableType } from '../../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
 import { DisplayItemsComponent } from './display-items/display-items.component';
-import { ErrorComponent } from '../error/error.component';
 import { IconLockOpenComponent } from '../icons/icon-lock-open/icon-lock-open.component';
 import { IconLockComponent } from '../icons/icon-lock/icon-lock.component';
 import { NgClass } from '@angular/common';
@@ -25,7 +24,6 @@ import { AppState } from '../app.state';
   imports: [
     DisplayQuestionComponent,
     DisplayItemsComponent,
-    ErrorComponent,
     IconLockOpenComponent,
     IconLockComponent,
     NgClass,
@@ -55,23 +53,11 @@ export class PacklistComponent implements OnInit {
 
   items = computed(() => this.activeRules().flatMap((rule) => rule.items));
 
-  error = signal<string | undefined>(undefined);
-
   private parser = inject(Parser);
 
   ngOnInit(): void {
     const rules = this.rulesPersistence.getRules();
-    try {
-      this.rules.set(this.parser.parseRules(rules));
-      this.error.set(undefined);
-    } catch (error) {
-      if (error instanceof Error) {
-        this.error.set(error.message);
-      } else {
-        this.error.set('An unknown error occurred');
-      }
-      console.error(error);
-    }
+    this.rules.set(this.parser.parseRules(rules));
   }
 
   modelChange(variable: string, value: VariableType): void {
