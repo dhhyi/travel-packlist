@@ -24,7 +24,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
     }
 
     pre {
-      @apply mx-2 rounded bg-gray-200 p-2 font-mono dark:bg-gray-800;
+      @apply mx-2 rounded bg-gray-500 p-2 font-mono;
     }
   `,
 })
