@@ -9,6 +9,7 @@ import { SwUpdate } from '@angular/service-worker';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 import { IconUpComponent } from './icons/icon-up/icon-up.component';
 import { NgOptimizedImage } from '@angular/common';
+import { filter, interval, switchMap, tap } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,13 +22,30 @@ export class AppComponent {
   swUpdate = inject(SwUpdate);
 
   constructor() {
-    this.swUpdate.versionUpdates.subscribe((event) => {
-      if (event.type === 'VERSION_READY') {
-        void this.swUpdate.activateUpdate().then(() => {
+    this.swUpdate.versionUpdates
+      .pipe(
+        tap((event) => {
+          if (event.type === 'VERSION_INSTALLATION_FAILED') {
+            console.error('Version installation failed\n', event.error);
+          }
+        }),
+        filter((event) => event.type === 'VERSION_READY'),
+      )
+      .subscribe(() => {
+        if (
+          window.confirm(
+            $localize`:@@app.update.apply.question:A new version of the app is available. Do you want to reload?` as string,
+          )
+        ) {
           window.location.reload();
-        });
-      }
-    });
+        }
+      });
+
+    interval(60000)
+      .pipe(switchMap(() => this.swUpdate.checkForUpdate()))
+      .subscribe((updateAvailable) => {
+        if (updateAvailable) console.log('Update available');
+      });
   }
 
   scrollTop() {

@@ -22,19 +22,10 @@ do
       | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
       > $target/index.$lang.html
 
-   cat $target/$lang/ngsw.json \
-      | sed "s|/$lang/|/|g" \
-      | sed "s|index.html|index.$lang.html|g" \
-      > $target/ngsw.$lang.json
-
    cp $target/$lang/polyfills*.js $target/$lang/main*.js $target
 
    rm -rf $target/$lang
 
 done
 
-mv $target/ngsw.json $target/ngsw.default.json
-
-jq -s '.[0].assetGroups[0].urls=([.[].assetGroups[0].urls]|flatten|unique) | .[0].hashTable=([.[].hashTable]|add) | .[0]' $target/ngsw.default.json $target/ngsw.*.json > $target/ngsw.json
-
-rm $target/ngsw.*.json
+npx ngsw-config dist/browser ngsw-config.json
