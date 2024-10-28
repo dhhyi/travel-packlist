@@ -55,6 +55,14 @@ button.icon {
   @apply m-0 flex justify-center border-none bg-transparent p-1 align-middle;
 }
 
+fieldset {
+  @apply rounded-md border border-slate-300 p-2;
+}
+
+fieldset > legend {
+  @apply px-1 italic;
+}
+
 input,
 select {
   @apply h-8 rounded-md border border-slate-300 bg-transparent p-1;
@@ -74,6 +82,10 @@ select[disabled] {
 }
 
 input[type="checkbox"] {
+  @apply my-2 h-6 w-6 appearance-none rounded-sm border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+}
+
+input[type="radio"] {
   @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
 }
 

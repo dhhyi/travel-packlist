@@ -2,7 +2,7 @@ import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Parser } from '../../model/parser';
 import env from '../../environment/env.json';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
@@ -43,6 +43,10 @@ export class ConfigComponent {
   private trackWeight = this.state.signal('trackWeight');
   trackWeightControl = new FormControl(this.trackWeight());
 
+  categorySortingControl = new FormGroup({
+    categorySorting: new FormControl(this.state.get('categorySorting')),
+  });
+
   constructor() {
     this.fadeOutDisabledRulesControl.valueChanges
       .pipe(takeUntilDestroyed())
@@ -54,6 +58,13 @@ export class ConfigComponent {
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
         this.trackWeight.set(!!value);
+      });
+
+    this.categorySortingControl.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.state.set('categorySorting', value.categorySorting!);
       });
   }
 

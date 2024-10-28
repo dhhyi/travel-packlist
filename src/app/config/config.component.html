@@ -27,6 +27,37 @@
       You can enter the item weight appended to the item name in the editor.
     </p>
   </div>
+  <div>
+    <fieldset class="grid grid-cols-2" [formGroup]="categorySortingControl">
+      <legend i18n="@@config.checklist.category-sorting">
+        Sort categories
+      </legend>
+      <div class="flex items-center gap-3">
+        <input
+          type="radio"
+          formControlName="categorySorting"
+          value="alphabetically"
+        />
+        <label
+          i18n="@@config.checklist.category-sorting.alphabetically"
+          for="alphabetically"
+          >alphabetically</label
+        >
+      </div>
+      <div class="flex items-center gap-3">
+        <input
+          type="radio"
+          formControlName="categorySorting"
+          value="definition"
+        />
+        <label
+          i18n="@@config.checklist.category-sorting.definition"
+          for="definition"
+          >order of definition</label
+        >
+      </div>
+    </fieldset>
+  </div>
 </div>
 
 <div class="section">

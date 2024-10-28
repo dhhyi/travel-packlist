@@ -46,6 +46,11 @@ export class DisplayItemsComponent {
 
   private state = inject(AppState);
 
+  orderBy = computed(() => {
+    const sorting = this.state.signal('categorySorting')();
+    return sorting === 'definition' ? () => 0 : undefined;
+  });
+
   private checkedItems = this.state.signal('checkedItems');
   private collapsedGroups = this.state.signal('collapsedCategories');
 

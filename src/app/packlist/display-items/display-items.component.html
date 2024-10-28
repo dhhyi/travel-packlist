@@ -28,7 +28,7 @@
   }
 </div>
 
-@for (group of groupedItems() | keyvalue; track group.key) {
+@for (group of groupedItems() | keyvalue: orderBy(); track group.key) {
   <div class="card mb-1">
     <div
       role="button"
