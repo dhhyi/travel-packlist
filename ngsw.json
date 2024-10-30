@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1730312785364,
+  "timestamp": 1730312922377,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,8 +15,8 @@
         "/icon_256.png",
         "/index.de.html",
         "/index.html",
-        "/main-AF35EG3R.js",
-        "/main-PYOEOPVQ.js",
+        "/main-BAWGTP4W.js",
+        "/main-BF264OGO.js",
         "/manifest.json",
         "/polyfills-62TICESK.js",
         "/polyfills-RU23LESK.js",
@@ -29,10 +29,10 @@
   "hashTable": {
     "/icon.png": "d2fc36abc0e608ed0975bbe9a61a1f7cbee144ad",
     "/icon_256.png": "abe925b08e3f4e4fcf1cdfcfad83eed5b3ce0b17",
-    "/index.de.html": "c8e36db747caf7af957189838a51d975b68091f8",
-    "/index.html": "f242dd7d206078ff050f5a27dc7deaa6e95a6f37",
-    "/main-AF35EG3R.js": "590d938172e41fb0a58b9fbde3105be558f60dec",
-    "/main-PYOEOPVQ.js": "dbc96f40f4f9e9cae31fc91519a34be842c9d00c",
+    "/index.de.html": "936d48ad657c3ec0459ae54198a900d3657cce35",
+    "/index.html": "d05402cd4712876b1178931b430b4c9db8c0004a",
+    "/main-BAWGTP4W.js": "30e8745779b19f15e2e0dc2c4ec250d4aad87a1f",
+    "/main-BF264OGO.js": "a9179c3cca91da4bad920def6c77cb057f8f4f73",
     "/manifest.json": "414a250c1f4b449f2c59f67a3f88a937bbab440a",
     "/polyfills-62TICESK.js": "11390f872fe4253658c9407cdc4afe8ba0acebec",
     "/polyfills-RU23LESK.js": "b9847567551e50e8a8d317f7d31708b8ee400c86",
