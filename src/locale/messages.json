@@ -28,6 +28,7 @@
     "config.rules.edit-raw": " Edit Rules with Code ",
     "config.rules.export": " Export Rules ",
     "config.rules.fadeout-disabled": "Fade out disabled rules in editor",
+    "config.rules.highlight-variables": "Highlight variable status in editor",
     "config.rules.import": " Import Rules ",
     "config.rules.theme": "Theme",
     "config.rules.theme.dark": " Dark ",

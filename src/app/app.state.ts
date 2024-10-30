@@ -18,6 +18,7 @@ const initialState = {
   rules: rulesTemplate,
   // config
   fadeOutDisabledRules: false,
+  highlightVariableStatus: false,
   categorySorting: 'alphabetically' as 'alphabetically' | 'definition',
   trackWeight: false,
   answersLocked: false,

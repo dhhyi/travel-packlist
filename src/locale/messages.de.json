@@ -28,6 +28,7 @@
     "config.rules.edit-raw": "Regeln als Code bearbeiten",
     "config.rules.export": "Regeln exportieren",
     "config.rules.fadeout-disabled": "Inaktive Regeln im Editor ausgrauen",
+    "config.rules.highlight-variables": "Variablenstatus im Editor anzeigen",
     "config.rules.import": "Regeln importieren",
     "config.rules.theme": "Theme",
     "config.rules.theme.dark": "Dark",

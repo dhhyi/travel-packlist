@@ -13,8 +13,12 @@
       class="grow font-mono"
       type="text"
       placeholder="variable"
-      i18n-placeholder="@@edit.question.variable.placeholder"
       formControlName="variable"
+      i18n-placeholder="@@edit.question.variable.placeholder"
+      [ngClass]="{
+        'font-bold text-green-500': highlighVariable() && variableActive(),
+        'font-bold text-red-500': highlighVariable() && !variableActive(),
+      }"
       (focus)="focusVariable()"
     />
   </div>

@@ -20,16 +20,17 @@ import {
   PleaseSelect,
   Variable,
 } from '../../../model/types';
-import { NgTemplateOutlet } from '@angular/common';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { RulesMode } from '../rules.mode';
 import { Serializer } from '../../../model/serializer';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AppState } from '../../app.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
   standalone: true,
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, NgClass],
   templateUrl: './editor-condition.component.html',
   styles: `
     :host {
@@ -51,6 +52,13 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   @ViewChild('variable') variableTemplate!: TemplateRef<unknown>;
   @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
 
+  private state = inject(AppState);
+  highlighVariable = computed(
+    () =>
+      !this.mode.isMode('edit') &&
+      this.state.signal('highlightVariableStatus')(),
+  );
+  private answers = this.state.signal('answers');
   private mode = inject(RulesMode);
 
   private serializer = inject(Serializer);
@@ -208,5 +216,9 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.repaint();
+  }
+
+  variableActive(variable: string) {
+    return variable === Always.string || this.answers()[variable];
   }
 }

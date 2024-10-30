@@ -40,6 +40,13 @@ export class ConfigComponent {
   private fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
   fadeOutDisabledRulesControl = new FormControl(this.fadeOutDisabledRules());
 
+  private highlightVariableStatus = this.state.signal(
+    'highlightVariableStatus',
+  );
+  highlightVariableStatusControl = new FormControl(
+    this.highlightVariableStatus(),
+  );
+
   private trackWeight = this.state.signal('trackWeight');
   trackWeightControl = new FormControl(this.trackWeight());
 
@@ -52,6 +59,12 @@ export class ConfigComponent {
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
         this.fadeOutDisabledRules.set(!!value);
+      });
+
+    this.highlightVariableStatusControl.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe((value) => {
+        this.highlightVariableStatus.set(!!value);
       });
 
     this.trackWeightControl.valueChanges

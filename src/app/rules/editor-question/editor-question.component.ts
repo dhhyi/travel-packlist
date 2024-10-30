@@ -5,6 +5,7 @@ import {
   OnChanges,
   output,
   ChangeDetectionStrategy,
+  computed,
 } from '@angular/core';
 import { Always, Question } from '../../../model/types';
 import {
@@ -27,17 +28,30 @@ import {
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
+import { AppState } from '../../app.state';
+import { NgClass } from '@angular/common';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-question',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './editor-question.component.html',
 })
 export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();
   variables = input.required<string[]>();
+
+  mode = inject(RulesMode);
+  private state = inject(AppState);
+  highlighVariable = computed(
+    () =>
+      !this.mode.isMode('edit') &&
+      this.state.signal('highlightVariableStatus')(),
+  );
+  variableActive = computed(
+    () => this.state.signal('answers')()[this.question().variable],
+  );
 
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
@@ -70,8 +84,6 @@ export class EditorQuestionComponent implements OnChanges {
   getControl(name: keyof Question) {
     return this.control.get(name) as FormControl<string>;
   }
-
-  mode = inject(RulesMode);
 
   constructor() {
     this.control.valueChanges
