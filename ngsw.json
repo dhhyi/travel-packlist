@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1730312922377,
+  "timestamp": 1730314130527,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,8 +15,8 @@
         "/icon_256.png",
         "/index.de.html",
         "/index.html",
-        "/main-BAWGTP4W.js",
-        "/main-BF264OGO.js",
+        "/main-4NVXVNBQ.js",
+        "/main-XT2L3IQZ.js",
         "/manifest.json",
         "/polyfills-62TICESK.js",
         "/polyfills-RU23LESK.js",
@@ -29,10 +29,10 @@
   "hashTable": {
     "/icon.png": "d2fc36abc0e608ed0975bbe9a61a1f7cbee144ad",
     "/icon_256.png": "abe925b08e3f4e4fcf1cdfcfad83eed5b3ce0b17",
-    "/index.de.html": "936d48ad657c3ec0459ae54198a900d3657cce35",
-    "/index.html": "d05402cd4712876b1178931b430b4c9db8c0004a",
-    "/main-BAWGTP4W.js": "30e8745779b19f15e2e0dc2c4ec250d4aad87a1f",
-    "/main-BF264OGO.js": "a9179c3cca91da4bad920def6c77cb057f8f4f73",
+    "/index.de.html": "7b2d796d519b8e495aacc9ea15c2fddd8c34f7df",
+    "/index.html": "63f7d8a4004011b71a7758a46101751d647df9b3",
+    "/main-4NVXVNBQ.js": "36996e47c920788481921af3471ae9a23b8d3905",
+    "/main-XT2L3IQZ.js": "df62a4681e17d58b7b6cac30693eca18971f3d6e",
     "/manifest.json": "414a250c1f4b449f2c59f67a3f88a937bbab440a",
     "/polyfills-62TICESK.js": "11390f872fe4253658c9407cdc4afe8ba0acebec",
     "/polyfills-RU23LESK.js": "b9847567551e50e8a8d317f7d31708b8ee400c86",
