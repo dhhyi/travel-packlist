@@ -98,5 +98,5 @@ module.exports = tseslint.config(
       ],
       "@angular-eslint/template/no-call-expression": "off",
     },
-  },
+  }
 );

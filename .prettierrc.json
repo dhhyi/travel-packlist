@@ -1,3 +1,18 @@
 {
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-sh"],
+  "overrides": [
+    {
+      "files": ["*.sh", ".git*", ".*ignore"],
+      "options": {
+        "parser": "sh",
+        "indent": 4
+      }
+    },
+    {
+      "files": ["*.js"],
+      "options": {
+        "trailingComma": "es5"
+      }
+    }
+  ]
 }

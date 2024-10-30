@@ -48,6 +48,7 @@
     "jest-preset-angular": "^14.2.2",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
+    "prettier-plugin-sh": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "showdown": "^2.1.0",
     "sort-json": "^2.0.1",

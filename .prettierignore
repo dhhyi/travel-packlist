@@ -2,6 +2,5 @@
 *.png
 pnpm-lock.yaml
 .husky/**
-.*ignore
 .editorconfig
 .update_devcontainer.sh

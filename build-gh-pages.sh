@@ -14,17 +14,16 @@ pnpm run build --base-href $base_href
 manifest="$(cat $target/manifest.json)"
 echo "$manifest" | jq -M ".start_url=\"$base_href\"" > $target/manifest.json
 
-for lang in de
-do
-   pnpm run build --base-href $base_href --configuration=$lang --delete-output-path=false
+for lang in de; do
+    pnpm run build --base-href $base_href --configuration=$lang --delete-output-path=false
 
-   cat $target/$lang/index.html \
-      | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
-      > $target/index.$lang.html
+    cat $target/$lang/index.html \
+        | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
+            > $target/index.$lang.html
 
-   cp $target/$lang/polyfills*.js $target/$lang/main*.js $target
+    cp $target/$lang/polyfills*.js $target/$lang/main*.js $target
 
-   rm -rf $target/$lang
+    rm -rf $target/$lang
 
 done
 
