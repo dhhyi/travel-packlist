@@ -3,6 +3,7 @@ import {
   HostListener,
   inject,
   ChangeDetectionStrategy,
+  isDevMode,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
@@ -41,11 +42,12 @@ export class AppComponent {
         }
       });
 
-    interval(60000)
-      .pipe(switchMap(() => this.swUpdate.checkForUpdate()))
-      .subscribe((updateAvailable) => {
-        if (updateAvailable) console.log('Update available');
-      });
+    if (!isDevMode())
+      interval(60000)
+        .pipe(switchMap(() => this.swUpdate.checkForUpdate()))
+        .subscribe((updateAvailable) => {
+          if (updateAvailable) console.log('Update available');
+        });
   }
 
   scrollTop() {
