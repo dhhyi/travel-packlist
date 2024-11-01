@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1730314130527,
+  "timestamp": 1730475115694,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,8 +15,8 @@
         "/icon_256.png",
         "/index.de.html",
         "/index.html",
-        "/main-4NVXVNBQ.js",
-        "/main-XT2L3IQZ.js",
+        "/main-GXUZUWZA.js",
+        "/main-JGASPPEF.js",
         "/manifest.json",
         "/polyfills-62TICESK.js",
         "/polyfills-RU23LESK.js",
@@ -29,10 +29,10 @@
   "hashTable": {
     "/icon.png": "d2fc36abc0e608ed0975bbe9a61a1f7cbee144ad",
     "/icon_256.png": "abe925b08e3f4e4fcf1cdfcfad83eed5b3ce0b17",
-    "/index.de.html": "7b2d796d519b8e495aacc9ea15c2fddd8c34f7df",
-    "/index.html": "63f7d8a4004011b71a7758a46101751d647df9b3",
-    "/main-4NVXVNBQ.js": "36996e47c920788481921af3471ae9a23b8d3905",
-    "/main-XT2L3IQZ.js": "df62a4681e17d58b7b6cac30693eca18971f3d6e",
+    "/index.de.html": "50d9810a882b46de746d593e2b5516369c6d0d34",
+    "/index.html": "7100361b7f4e0d1d98ec889a7bcd5f8d699020b7",
+    "/main-GXUZUWZA.js": "0a33e8c0c0ba844cf2954c4fbe7af9ae881f275c",
+    "/main-JGASPPEF.js": "5fb0d3c7eee6c465e55186b49054e4e7e0dd16ce",
     "/manifest.json": "414a250c1f4b449f2c59f67a3f88a937bbab440a",
     "/polyfills-62TICESK.js": "11390f872fe4253658c9407cdc4afe8ba0acebec",
     "/polyfills-RU23LESK.js": "b9847567551e50e8a8d317f7d31708b8ee400c86",
