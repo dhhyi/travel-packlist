@@ -6,7 +6,6 @@ import {
   computed,
 } from '@angular/core';
 import { PleaseSelect, Rule } from '../model/types';
-import { Parser } from '../model/parser';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { Serializer } from '../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -14,7 +13,7 @@ import { RulesMode } from '../state/rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
 import { NgClass } from '@angular/common';
 import { Refactor } from '../model/refactor';
-import { PersistentState } from '../state/persistent-state';
+import { GlobalState } from '../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,23 +25,12 @@ import { PersistentState } from '../state/persistent-state';
 export class RulesComponent {
   mode = inject(RulesMode);
 
-  private state = inject(PersistentState);
-
-  private parser = inject(Parser);
   private serializer = inject(Serializer);
   private refactor = inject(Refactor);
 
-  private parsedRules = computed<Rule[]>(() =>
-    this.parser.parseRules(this.state.get('rules')),
-  );
-
-  categories = computed(() =>
-    this.refactor.extractCategories(this.parsedRules()),
-  );
-
-  variables = computed(() =>
-    this.refactor.extractVariables(this.parsedRules()),
-  );
+  private state = inject(GlobalState);
+  private parsedRules = this.state.signal('parsedRules');
+  private activeRules = this.state.signal('activeRules');
 
   filter = signal('');
 
@@ -110,9 +98,7 @@ export class RulesComponent {
   showAsDisabled(rule: Rule): boolean {
     return (
       this.state.get('fadeOutDisabledRules') &&
-      !this.refactor
-        .filterActiveRules(this.state.get('answers'), this.parsedRules())
-        .includes(rule)
+      !this.activeRules().includes(rule)
     );
   }
 

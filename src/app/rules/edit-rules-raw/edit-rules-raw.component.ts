@@ -7,8 +7,7 @@ import {
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith } from 'rxjs';
-import { Parser } from '../../model/parser';
-import { PersistentState } from '../../state/persistent-state';
+import { GlobalState } from '../../state/global-state';
 
 type ParserState =
   | {
@@ -36,33 +35,28 @@ type ParserState =
   `,
 })
 export class EditRulesRawComponent {
-  private state = inject(PersistentState);
-  private rulesFromState = this.state.signal('rules');
-
-  private parser = inject(Parser);
+  private state = inject(GlobalState);
 
   rulesControl = new FormControl(this.state.get('rules'));
   private rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
   private rulesPending = computed(() => {
-    return this.rulesText() !== this.rulesFromState();
+    return this.rulesText() !== this.state.signal('rules')();
   });
 
   parserState = computed<ParserState>(() => {
     if (this.rulesPending()) {
       return { type: 'pending' };
     } else {
-      try {
-        const parsed = this.parser.parseRules(this.rulesFromState());
-        return { type: 'success', rules: parsed.length };
-      } catch (error) {
-        if (error instanceof Error) {
-          return { type: 'error', error: error.message };
-        } else {
-          console.error(error);
-          return { type: 'error', error: 'Unknown error' };
-        }
+      const parserError = this.state.signal('ruleParserError');
+      if (parserError()) {
+        return { type: 'error', error: parserError() };
+      } else {
+        return {
+          type: 'success',
+          rules: this.state.signal('parsedRules')().length,
+        };
       }
     }
   });

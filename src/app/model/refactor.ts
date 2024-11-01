@@ -11,6 +11,11 @@ import {
   VariableType,
 } from './types';
 
+interface FilterFunctionType {
+  model: Record<string, VariableType>;
+  rules: Rule[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class Refactor {
   extractVariables(rules: Rule[]): string[] {
@@ -93,20 +98,18 @@ export class Refactor {
     throw new Error('Unknown item type', type);
   }
 
-  filterActiveRules(
-    model: Record<string, VariableType>,
-    rules: Rule[],
-  ): Rule[] {
-    const activeRules = rules.filter((rule) => rule.condition.evaluate(model));
-    const activeModel = this.extractVariables(activeRules).reduce(
-      (acc, variable) => ({ ...acc, [variable]: model[variable] }),
-      {},
+  filterActive(data: FilterFunctionType): FilterFunctionType {
+    const activeRules = data.rules.filter((rule) =>
+      rule.condition.evaluate(data.model),
     );
+    const activeModel = this.extractVariables(activeRules).reduce<
+      Record<string, VariableType>
+    >((acc, variable) => ({ ...acc, [variable]: data.model[variable] }), {});
 
-    if (activeRules.length === rules.length) {
-      return rules;
+    if (activeRules.length === data.rules.length) {
+      return { model: activeModel, rules: activeRules };
     } else {
-      return this.filterActiveRules(activeModel, activeRules);
+      return this.filterActive({ model: activeModel, rules: activeRules });
     }
   }
 

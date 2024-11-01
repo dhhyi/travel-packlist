@@ -28,8 +28,8 @@ import {
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { RulesMode } from '../../state/rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
-import { PersistentState } from '../../state/persistent-state';
 import { NgClass } from '@angular/common';
+import { GlobalState } from '../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,10 +40,12 @@ import { NgClass } from '@angular/common';
 })
 export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();
-  variables = input.required<string[]>();
 
   mode = inject(RulesMode);
-  private state = inject(PersistentState);
+
+  private state = inject(GlobalState);
+  private variables = this.state.signal('variables');
+
   highlighVariable = computed(
     () =>
       !this.mode.isMode('edit') &&

@@ -21,8 +21,6 @@
   >
     <app-editor-rule
       [rule]="item.rule"
-      [categories]="categories()"
-      [variables]="variables()"
       (ruleChanged)="updateRule(item.index, $event)"
       (renameVariable)="renameVariable($event)"
     />

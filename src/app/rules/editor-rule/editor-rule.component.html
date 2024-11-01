@@ -1,7 +1,6 @@
 <div class="mb-1 flex items-center">
   <app-editor-condition
     class="grow"
-    [variables]="variables()"
     [condition]="rule().condition"
     (conditionChanged)="updateCondition($event)"
   />
@@ -30,7 +29,6 @@
     <app-editor-question
       class="grow"
       [question]="question"
-      [variables]="variables()"
       (questionChanged)="updateQuestion($index, $event)"
       (variableChanged)="variableChanged($event)"
     />
@@ -72,7 +70,6 @@
     <app-editor-item
       class="grow"
       [item]="item"
-      [categories]="categories()"
       (itemChanged)="updateItem($index, $event)"
     />
     @if (mode.isMode("delete")) {

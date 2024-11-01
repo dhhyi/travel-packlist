@@ -94,7 +94,7 @@ rain AND clouds :-
     });
   });
 
-  describe('filterActiveRules', () => {
+  describe('filterActive', () => {
     let rules: Rule[];
 
     beforeEach(() => {
@@ -107,23 +107,26 @@ rain AND clouds :-
     });
 
     it('should filter active rules for empty model', () => {
-      const result = refactor.filterActiveRules({}, rules);
-      expect(result).toEqual([rules[0], rules[2]]);
+      const result = refactor.filterActive({ model: {}, rules });
+      expect(result.rules).toEqual([rules[0], rules[2]]);
+      expect(result.model).toEqual({});
     });
 
     it('should filter active rules for active model', () => {
-      const result = refactor.filterActiveRules(
-        { sunny: true, uv: true },
+      const result = refactor.filterActive({
+        model: { sunny: true, uv: true },
         rules,
-      );
-      expect(result).toEqual([rules[0], rules[1], rules[3]]);
+      });
+      expect(result.rules).toEqual([rules[0], rules[1], rules[3]]);
+      expect(result.model).toEqual({ sunny: true, uv: true });
     });
     it('should filter active rules and remove transitive disabled fields', () => {
-      const result = refactor.filterActiveRules(
-        { sunny: false, uv: true },
+      const result = refactor.filterActive({
+        model: { sunny: false, uv: true },
         rules,
-      );
-      expect(result).toEqual([rules[0], rules[2]]);
+      });
+      expect(result.rules).toEqual([rules[0], rules[2]]);
+      expect(result.model).toEqual({ sunny: false });
     });
   });
 });

@@ -24,7 +24,7 @@ import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { RulesMode } from '../../state/rules.mode';
 import { Serializer } from '../../model/serializer';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { PersistentState } from '../../state/persistent-state';
+import { GlobalState } from '../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,7 +44,6 @@ import { PersistentState } from '../../state/persistent-state';
 })
 export class EditorConditionComponent implements AfterViewInit, OnChanges {
   condition = input.required<Condition>();
-  variables = input.required<string[]>();
 
   @ViewChild('content', { read: ViewContainerRef }) content!: ViewContainerRef;
 
@@ -52,14 +51,16 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   @ViewChild('variable') variableTemplate!: TemplateRef<unknown>;
   @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
 
-  private state = inject(PersistentState);
+  private mode = inject(RulesMode);
+  private state = inject(GlobalState);
+  private variables = this.state.signal('variables');
+  private answers = this.state.signal('answers');
+
   highlighVariable = computed(
     () =>
       !this.mode.isMode('edit') &&
       this.state.signal('highlightVariableStatus')(),
   );
-  private answers = this.state.signal('answers');
-  private mode = inject(RulesMode);
 
   private serializer = inject(Serializer);
   serializedCondition = computed(() =>

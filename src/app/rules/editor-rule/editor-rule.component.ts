@@ -52,8 +52,6 @@ export class EditorRuleComponent {
   static NEW_VARIABLE_NAME = 'new_variable';
 
   rule = input.required<Rule>();
-  categories = input.required<string[]>();
-  variables = input.required<string[]>();
 
   readonly ruleChanged = output<Rule | null>();
   readonly renameVariable = output<[string, string]>();
@@ -62,7 +60,7 @@ export class EditorRuleComponent {
   errorMessage = signal<string | null>(null);
 
   mode = inject(RulesMode);
-  clipboard = inject(RulesClipboard);
+  private clipboard = inject(RulesClipboard);
 
   private parser = inject(Parser);
   private serializer = inject(Serializer);

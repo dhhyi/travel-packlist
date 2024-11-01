@@ -19,6 +19,7 @@ import { RulesMode } from '../../state/rules.mode';
 import { Parser } from '../../model/parser';
 import { Serializer } from '../../model/serializer';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
+import { GlobalState } from '../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +30,10 @@ import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 })
 export class EditorItemComponent implements OnChanges {
   item = input.required<Item>();
-  categories = input.required<string[]>();
+
+  mode = inject(RulesMode);
+  private state = inject(GlobalState);
+  categories = this.state.signal('categories');
 
   readonly itemChanged = output<Item>();
 
@@ -46,10 +50,7 @@ export class EditorItemComponent implements OnChanges {
     return this.control.get(name) as FormControl<string>;
   }
 
-  mode = inject(RulesMode);
-
   private parser = inject(Parser);
-
   private serializer = inject(Serializer);
 
   constructor() {

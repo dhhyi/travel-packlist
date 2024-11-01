@@ -11,7 +11,7 @@ import { ItemsStatusComponent } from './items-status/items-status.component';
 import { Serializer } from '../../model/serializer';
 import { IconKeyDownComponent } from '../../icons/icon-key-down/icon-key-down.component';
 import { IconKeyRightComponent } from '../../icons/icon-key-right/icon-key-right.component';
-import { PersistentState } from '../../state/persistent-state';
+import { GlobalState } from '../../state/global-state';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -44,15 +44,14 @@ function serialize(item: Item): string {
 export class DisplayItemsComponent {
   items = input<Item[]>([]);
 
-  private state = inject(PersistentState);
+  private state = inject(GlobalState);
+  private checkedItems = this.state.signal('checkedItems');
+  private collapsedGroups = this.state.signal('collapsedCategories');
 
   orderBy = computed(() => {
     const sorting = this.state.signal('categorySorting')();
     return sorting === 'definition' ? () => 0 : undefined;
   });
-
-  private checkedItems = this.state.signal('checkedItems');
-  private collapsedGroups = this.state.signal('collapsedCategories');
 
   groupedItems = computed(() => {
     const checkedItems = this.checkedItems();

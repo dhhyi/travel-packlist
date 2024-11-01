@@ -1,22 +1,17 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { Parser } from './model/parser';
-import { PersistentState } from './state/persistent-state';
+import { GlobalState } from './state/global-state';
 
 export const rulesValid: CanActivateFn = () => {
-  const parser = inject(Parser);
-  const rules = inject(PersistentState).get('rules');
+  const state = inject(GlobalState);
+  const router = inject(Router);
 
-  try {
-    parser.parseRules(rules);
-    return true;
-  } catch (error) {
-    console.error(error);
-    const router = inject(Router);
-    const errorText =
-      error instanceof Error ? error.message : 'An unknown error occurred';
+  const error = state.get('ruleParserError');
+  if (error) {
     return router.createUrlTree(['/rules-error'], {
-      queryParams: { error: errorText },
+      queryParams: { error },
     });
+  } else {
+    return true;
   }
 };

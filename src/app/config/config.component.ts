@@ -1,16 +1,12 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Parser } from '../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
-import {
-  PersistentState,
-  PersistentStateType,
-} from '../state/persistent-state';
+import { GlobalState, Languages, Themes } from '../state/global-state';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -37,8 +33,7 @@ export class ConfigComponent {
   env = env;
 
   private router = inject(Router);
-  private state = inject(PersistentState);
-  private parser = inject(Parser);
+  private state = inject(GlobalState);
 
   private fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
   fadeOutDisabledRulesControl = new FormControl(this.fadeOutDisabledRules());
@@ -53,8 +48,9 @@ export class ConfigComponent {
   private trackWeight = this.state.signal('trackWeight');
   trackWeightControl = new FormControl(this.trackWeight());
 
+  private categorySorting = this.state.signal('categorySorting');
   categorySortingControl = new FormGroup({
-    categorySorting: new FormControl(this.state.get('categorySorting')),
+    categorySorting: new FormControl(this.categorySorting()),
   });
 
   constructor() {
@@ -80,7 +76,7 @@ export class ConfigComponent {
       .pipe(takeUntilDestroyed())
       .subscribe((value) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.state.set('categorySorting', value.categorySorting!);
+        this.categorySorting.set(value.categorySorting!);
       });
   }
 
@@ -154,12 +150,7 @@ export class ConfigComponent {
       }
       const text = await file.text();
       this.state.set('rules', text);
-      try {
-        this.parser.parseRules(text);
-        await this.router.navigate(['/packlist']);
-      } catch (_) {
-        await this.router.navigate(['/rules']);
-      }
+      await this.router.navigate(['/packlist']);
     };
     input.click();
   }
@@ -168,7 +159,7 @@ export class ConfigComponent {
     return this.state.get('theme');
   }
 
-  setTheme(theme: PersistentStateType['theme']) {
+  setTheme(theme: Themes) {
     this.state.set('theme', theme);
   }
 
@@ -176,7 +167,7 @@ export class ConfigComponent {
     return this.state.get('language');
   }
 
-  setLanguage(lang: PersistentStateType['language']) {
+  setLanguage(lang: Languages) {
     this.state.set('language', lang);
   }
 }

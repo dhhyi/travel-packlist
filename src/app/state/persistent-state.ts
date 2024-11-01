@@ -27,8 +27,8 @@ const initialState = {
 };
 
 export type PersistentStateType = typeof initialState;
-
 type Keys = keyof PersistentStateType;
+export const persistentStateKeys = Object.keys(initialState) as Keys[];
 
 @Injectable({ providedIn: 'root' })
 export class PersistentState {
@@ -49,9 +49,23 @@ export class PersistentState {
       this.state = { ...initialState };
     }
     this.loadLegacyState();
-    // initialize signals
-    for (const key of Object.keys(initialState) as Keys[]) {
-      this.signal(key);
+    this.initializeSignals();
+  }
+
+  private initializeSignals() {
+    for (const key of persistentStateKeys) {
+      const newSignal = signal(this.state[key]);
+      effect(
+        () => {
+          const newValue = newSignal();
+          if (newValue !== this.state[key]) {
+            (this.state[key] as unknown) = newValue;
+            this.persist();
+          }
+        },
+        { manualCleanup: true, injector: this.injector },
+      );
+      this.signalMap.set(key, newSignal);
     }
   }
 
@@ -105,20 +119,6 @@ export class PersistentState {
   }
 
   signal<K extends Keys>(key: K): WritableSignal<PersistentStateType[K]> {
-    if (!this.signalMap.has(key)) {
-      const newSignal = signal(this.state[key]);
-      effect(
-        () => {
-          const newValue = newSignal();
-          if (newValue !== this.state[key]) {
-            this.state[key] = newValue;
-            this.persist();
-          }
-        },
-        { manualCleanup: true, injector: this.injector },
-      );
-      this.signalMap.set(key, newSignal);
-    }
     return this.signalMap.get(key) as WritableSignal<PersistentStateType[K]>;
   }
 
@@ -133,8 +133,8 @@ export class PersistentState {
   reset() {
     this.state = { ...initialState };
     this.persist();
-    this.signalMap.forEach((signal, key) => {
-      signal.set(initialState[key]);
+    persistentStateKeys.forEach((key) => {
+      this.signal(key).set(initialState[key]);
     });
   }
 
