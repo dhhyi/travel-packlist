@@ -43,8 +43,6 @@ export class PacklistComponent {
   }
 
   toggleLock() {
-    const newValue = !this.state.get('answersLocked');
-    this.state.set('answersLocked', newValue);
-    this.isLockActive.set(newValue);
+    this.isLockActive.update((lock) => !lock);
   }
 }
