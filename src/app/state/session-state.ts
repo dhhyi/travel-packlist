@@ -6,6 +6,8 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
+import { loadState } from './persistent-state';
+import { ReadWriteState } from './types';
 
 const initialState = {
   clipboardItems: [] as string[],
@@ -17,20 +19,13 @@ type Keys = keyof SessionStateType;
 export const sessionStateKeys = Object.keys(initialState) as Keys[];
 
 @Injectable({ providedIn: 'root' })
-export class SessionState {
-  private state: SessionStateType = initialState;
+export class SessionState implements ReadWriteState<SessionStateType> {
+  private state = loadState(sessionStorage, initialState);
   private injector = inject(Injector);
 
   private signalMap = new Map<Keys, WritableSignal<SessionStateType[Keys]>>();
 
   constructor() {
-    const loaded = sessionStorage.getItem('state');
-    if (loaded) {
-      this.state = JSON.parse(loaded) as SessionStateType;
-      this.state = { ...initialState, ...this.state };
-    } else {
-      this.state = { ...initialState };
-    }
     this.initializeSignals();
   }
 
@@ -53,6 +48,10 @@ export class SessionState {
 
   private persist() {
     sessionStorage.setItem('state', JSON.stringify(this.state));
+  }
+
+  handles(key: string): key is Keys {
+    return sessionStateKeys.includes(key as Keys);
   }
 
   signal<K extends Keys>(key: K): WritableSignal<SessionStateType[K]> {

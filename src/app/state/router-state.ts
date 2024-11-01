@@ -1,9 +1,15 @@
-import { inject, Injectable, Signal, WritableSignal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
+import {
+  inject,
+  Injectable,
+  WritableSignal,
+  signal,
+  effect,
+} from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs';
+import { ReadWriteState } from './types';
 
-const defaultState = {
+const initialState = {
   rulesMode: 'view' as
     | 'view'
     | 'delete'
@@ -11,15 +17,15 @@ const defaultState = {
     | 'cut-paste'
     | 'swap'
     | 'search',
-  filterRulesQuery: '',
+  filterRulesQuery: undefined as string | undefined,
 };
 
-export type RouterStateType = Partial<typeof defaultState>;
+export type RouterStateType = Partial<typeof initialState>;
 type Keys = keyof RouterStateType;
-export const routerStateKeys = Object.keys(defaultState) as Keys[];
+export const routerStateKeys = Object.keys(initialState) as Keys[];
 
 @Injectable({ providedIn: 'root' })
-export class RouterState {
+export class RouterState implements ReadWriteState<RouterStateType> {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -34,27 +40,38 @@ export class RouterState {
   private createSignal<K extends Keys>(
     key: K,
   ): WritableSignal<RouterStateType[K]> {
-    const routerState = toSignal(
-      this.route.queryParamMap.pipe(
-        map((queryParamMap) => queryParamMap.get(key) ?? defaultState[key]),
-      ),
-    ) as Signal<RouterStateType[K]>;
-    const set = (value: RouterStateType[K]) => {
-      void this.router.navigate([], {
-        queryParams: { [key]: value },
-        queryParamsHandling: 'merge',
-        relativeTo: this.route,
-        replaceUrl: true,
+    const manualState = signal(undefined as RouterStateType[K]);
+    this.router.events
+      .pipe(
+        filter((e) => e instanceof NavigationEnd),
+        map(
+          () =>
+            (this.route.snapshot.queryParams[key] as RouterStateType[K]) ??
+            initialState[key],
+        ),
+      )
+      .subscribe((v) => {
+        if (v !== '') manualState.set(v);
       });
-    };
-    const update = (fn: (value: RouterStateType[K]) => RouterStateType[K]) => {
-      set(fn(routerState()));
-    };
-    return Object.assign(() => routerState(), {
-      set,
-      update,
-      asReadonly: routerState,
-    }) as unknown as WritableSignal<RouterStateType[K]>;
+    effect(() => {
+      let manualValue = manualState() || undefined;
+      if (manualValue === initialState[key]) {
+        manualValue = undefined;
+      }
+      if (this.route.snapshot.queryParams[key] !== manualValue) {
+        void this.router.navigate([], {
+          queryParams: { [key]: manualValue },
+          queryParamsHandling: 'merge',
+          relativeTo: this.route,
+          replaceUrl: true,
+        });
+      }
+    });
+    return manualState;
+  }
+
+  handles(key: string): key is Keys {
+    return routerStateKeys.includes(key as Keys);
   }
 
   signal<K extends Keys>(key: K): WritableSignal<RouterStateType[K]> {
@@ -67,5 +84,11 @@ export class RouterState {
 
   set<K extends Keys>(key: K, value: RouterStateType[K]) {
     this.signal(key).set(value);
+  }
+
+  reset(): void {
+    for (const key of routerStateKeys) {
+      this.signal(key).set(undefined);
+    }
   }
 }

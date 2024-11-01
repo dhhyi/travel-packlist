@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { VariableType } from '../model/types';
 import { rulesTemplate } from '../model/template';
+import { ReadWriteState } from './types';
 
 const initialState = {
   // packlist
@@ -28,11 +29,23 @@ const initialState = {
 
 export type PersistentStateType = typeof initialState;
 type Keys = keyof PersistentStateType;
-export const persistentStateKeys = Object.keys(initialState) as Keys[];
+const persistentStateKeys = Object.keys(initialState) as Keys[];
+
+export function loadState<T extends object>(storage: Storage, initial: T): T {
+  const loaded = storage.getItem('state');
+  let state: T;
+  if (loaded) {
+    const loadedState = JSON.parse(loaded) as T;
+    state = { ...initial, ...loadedState };
+  } else {
+    state = { ...initial };
+  }
+  return state;
+}
 
 @Injectable({ providedIn: 'root' })
-export class PersistentState {
-  private state: PersistentStateType = initialState;
+export class PersistentState implements ReadWriteState<PersistentStateType> {
+  private state = loadState(localStorage, initialState);
   private injector = inject(Injector);
 
   private signalMap = new Map<
@@ -41,13 +54,6 @@ export class PersistentState {
   >();
 
   constructor() {
-    const loaded = localStorage.getItem('state');
-    if (loaded) {
-      this.state = JSON.parse(loaded) as PersistentStateType;
-      this.state = { ...initialState, ...this.state };
-    } else {
-      this.state = { ...initialState };
-    }
     this.loadLegacyState();
     this.initializeSignals();
   }
@@ -116,6 +122,10 @@ export class PersistentState {
 
   private persist() {
     localStorage.setItem('state', JSON.stringify(this.state));
+  }
+
+  handles(key: string): key is Keys {
+    return persistentStateKeys.includes(key as Keys);
   }
 
   signal<K extends Keys>(key: K): WritableSignal<PersistentStateType[K]> {

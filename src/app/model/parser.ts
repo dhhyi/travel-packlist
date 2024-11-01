@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, InjectionToken, Injector } from '@angular/core';
 import {
   Always,
   And,
@@ -11,8 +11,16 @@ import {
   Rule,
   Variable,
 } from './types';
-// eslint-disable-next-line no-restricted-imports
-import { PersistentState } from '../state/persistent-state';
+
+export const defaultConfig = {
+  isTrackWeight: () => false,
+};
+
+export type ParserConfig = typeof defaultConfig;
+
+export const PARSER_CONFIG_PROVIDER = new InjectionToken<ParserConfig>(
+  'PARSER_CONFIG_PROVIDER',
+);
 
 const itemRegex = /^\s*\[(?<category>.+?)\]\s*(?<name>.+)\s*$/;
 
@@ -20,7 +28,7 @@ const questionRegex = /^\s*(?<question>.*)\s+\$(?<variable>[^ ]+)\s*$/;
 
 @Injectable({ providedIn: 'root' })
 export class Parser {
-  private state = inject(PersistentState);
+  private injector = inject(Injector);
 
   parseCondition(input: string): Condition {
     const tokens = input.trim().split(' ');
@@ -71,7 +79,8 @@ export class Parser {
       return ['', 0];
     }
 
-    if (!this.state.get('trackWeight')) {
+    const state = this.injector.get(PARSER_CONFIG_PROVIDER, defaultConfig);
+    if (!state.isTrackWeight()) {
       return [input.trim(), 0];
     }
 

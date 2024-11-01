@@ -1,31 +1,28 @@
 import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Languages, Themes } from './state/global-state';
-// eslint-disable-next-line no-restricted-imports
-import { PersistentState } from './state/persistent-state';
+import { GlobalState, Languages, Themes } from './state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
-  private state = inject(PersistentState);
   private injector = inject(Injector);
   private document = inject(DOCUMENT);
 
   init() {
-    toObservable(this.state.signal('theme'), {
+    const state = this.injector.get(GlobalState);
+    toObservable(state.signal('theme'), {
       injector: this.injector,
-    }).subscribe(() => {
-      this.applyTheme();
+    }).subscribe((theme) => {
+      this.applyTheme(theme);
     });
-    toObservable(this.state.signal('language'), {
+    toObservable(state.signal('language'), {
       injector: this.injector,
-    }).subscribe(() => {
-      this.applyLanguage();
+    }).subscribe((lang) => {
+      this.applyLanguage(lang);
     });
   }
 
-  private applyTheme() {
-    const theme = this.state.get('theme') as Themes | undefined;
+  private applyTheme(theme: Themes | undefined) {
     const userDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if ((theme === 'system' && userDark) || theme === 'dark') {
       this.document.documentElement.classList.add('dark');
@@ -34,8 +31,7 @@ export class AppInit {
     }
   }
 
-  private applyLanguage() {
-    const lang = this.state.get('language') as Languages | undefined;
+  private applyLanguage(lang: Languages | undefined) {
     if (lang && this.document.documentElement.lang !== lang) {
       if (isDevMode()) {
         console.warn('Language switching is disabled in dev mode');

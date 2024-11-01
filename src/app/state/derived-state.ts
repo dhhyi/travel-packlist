@@ -97,6 +97,10 @@ export class DerivedState {
     );
   }
 
+  handles(key: string): key is Keys {
+    return this.signalMap.has(key as Keys);
+  }
+
   signal<K extends Keys>(key: K): Signal<DerivedStateType[K]> {
     return this.signalMap.get(key) as Signal<DerivedStateType[K]>;
   }
