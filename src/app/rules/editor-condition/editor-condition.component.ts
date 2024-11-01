@@ -21,9 +21,8 @@ import {
   Variable,
 } from '../../model/types';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { RulesMode } from '../../state/rules.mode';
 import { Serializer } from '../../model/serializer';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { GlobalState } from '../../state/global-state';
 
 @Component({
@@ -51,15 +50,14 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   @ViewChild('variable') variableTemplate!: TemplateRef<unknown>;
   @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
 
-  private mode = inject(RulesMode);
   private state = inject(GlobalState);
   private variables = this.state.signal('variables');
   private activeAnswers = this.state.signal('activeAnswers');
+  private mode = this.state.signal('rulesMode');
 
   highlighVariable = computed(
     () =>
-      !this.mode.isMode('edit') &&
-      this.state.signal('highlightVariableStatus')(),
+      this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
   );
 
   private serializer = inject(Serializer);
@@ -73,8 +71,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   readonly conditionChanged = output<Condition>();
 
   constructor() {
-    this.mode
-      .asObservable()
+    toObservable(this.mode)
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
         this.repaint();
@@ -84,7 +81,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   private repaint() {
     this.content.clear();
 
-    if (!this.mode.isMode('edit') && this.condition() instanceof Always) {
+    if (this.mode() !== 'edit' && this.condition() instanceof Always) {
       return;
     }
 
@@ -196,13 +193,13 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
         forbiddenOr,
       );
     } else if (condition instanceof Always) {
-      if (this.mode.isMode('edit')) {
+      if (this.mode() === 'edit') {
         this.paintSelect(this.always, changeCallback, forbidden);
       } else {
         this.paintVariable(this.always);
       }
     } else if (condition instanceof Variable) {
-      if (this.mode.isMode('edit')) {
+      if (this.mode() === 'edit') {
         this.paintSelect(condition.variable, changeCallback, forbidden);
       } else {
         this.paintVariable(condition.variable);

@@ -2,15 +2,12 @@ import {
   Component,
   HostListener,
   inject,
-  OnDestroy,
   signal,
   ChangeDetectionStrategy,
   ViewChild,
   ElementRef,
-  output,
   input,
 } from '@angular/core';
-import { RulesMode } from '../../state/rules.mode';
 import { RulesClipboard } from '../../state/rules.clipboard';
 import { NgClass, ViewportScroller } from '@angular/common';
 import { IconViewComponent } from '../../icons/icon-view/icon-view.component';
@@ -23,6 +20,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime } from 'rxjs';
 import { IconClearComponent } from '../../icons/icon-clear/icon-clear.component';
+import { GlobalState } from '../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,10 +39,12 @@ import { IconClearComponent } from '../../icons/icon-clear/icon-clear.component'
   ],
   templateUrl: './toolbar.component.html',
 })
-export class ToolbarComponent implements OnDestroy {
+export class ToolbarComponent {
   noOfVisibleRules = input.required<number>();
 
-  mode = inject(RulesMode);
+  private state = inject(GlobalState);
+  mode = this.state.signal('rulesMode');
+  private searchTerm = this.state.signal('filterRulesQuery');
   clipboard = inject(RulesClipboard);
 
   sticky = signal(false);
@@ -52,15 +52,13 @@ export class ToolbarComponent implements OnDestroy {
   private scroller = inject(ViewportScroller);
 
   @ViewChild('searchInput', { read: ElementRef }) searchInput!: ElementRef;
-  searchControl = new FormControl('');
-
-  readonly searchTerm = output<string>();
+  searchControl = new FormControl(this.searchTerm());
 
   constructor() {
     this.searchControl.valueChanges
       .pipe(debounceTime(500), takeUntilDestroyed())
       .subscribe((value) => {
-        this.searchTerm.emit(value ?? '');
+        this.searchTerm.set(value ?? undefined);
       });
   }
 
@@ -68,10 +66,6 @@ export class ToolbarComponent implements OnDestroy {
     setTimeout(() => {
       (this.searchInput.nativeElement as HTMLInputElement).focus();
     }, 50);
-  }
-
-  ngOnDestroy(): void {
-    this.mode.reset();
   }
 
   @HostListener('window:scroll')

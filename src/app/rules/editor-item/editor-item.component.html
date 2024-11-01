@@ -13,7 +13,7 @@
     (blur)="blur()"
   />
 </form>
-@if (mode.isMode("edit") && control.valid === false && control.touched) {
+@if (mode() === "edit" && control.valid === false && control.touched) {
   <div class="m-1 text-sm text-red-500">
     @if (getControl("name").touched) {
       @if (getControl("name").errors?.["pattern"]) {

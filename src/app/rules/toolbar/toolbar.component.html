@@ -6,17 +6,17 @@
     <button
       type="button"
       class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode.isMode('view') }"
-      (click)="mode.setMode('view')"
+      [ngClass]="{ 'ring ring-slate-700': mode() === 'view' }"
+      (click)="mode.set('view')"
     >
       <app-icon-view class="my-auto h-6 w-6" />
     </button>
     <button
       type="button"
       class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode.isMode('edit') }"
+      [ngClass]="{ 'ring ring-slate-700': mode() === 'edit' }"
       [disabled]="!noOfVisibleRules() && !!searchControl.value"
-      (click)="mode.setMode('edit')"
+      (click)="mode.set('edit')"
     >
       <app-icon-edit
         class="my-auto h-6 w-6"
@@ -28,9 +28,9 @@
     <button
       type="button"
       class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode.isMode('delete') }"
+      [ngClass]="{ 'ring ring-slate-700': mode() === 'delete' }"
       [disabled]="!noOfVisibleRules()"
-      (click)="mode.setMode('delete')"
+      (click)="mode.set('delete')"
     >
       <app-icon-delete
         class="my-auto h-6 w-6"
@@ -40,9 +40,9 @@
     <button
       type="button"
       class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode.isMode('cut-paste') }"
+      [ngClass]="{ 'ring ring-slate-700': mode() === 'cut-paste' }"
       [disabled]="noOfVisibleRules() < 2"
-      (click)="mode.setMode('cut-paste')"
+      (click)="mode.set('cut-paste')"
     >
       <app-icon-reorder
         class="my-auto h-6 w-6"
@@ -52,9 +52,9 @@
     <button
       type="button"
       class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode.isMode('swap') }"
+      [ngClass]="{ 'ring ring-slate-700': mode() === 'swap' }"
       [disabled]="!noOfVisibleRules()"
-      (click)="mode.setMode('swap')"
+      (click)="mode.set('swap')"
     >
       <app-icon-swap
         class="my-auto h-6 w-6"
@@ -64,13 +64,13 @@
     <button
       type="button"
       class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode.isMode('search') }"
-      (click)="mode.setMode('search'); focusSearch()"
+      [ngClass]="{ 'ring ring-slate-700': mode() === 'search' }"
+      (click)="mode.set('search'); focusSearch()"
     >
       <app-icon-search class="my-auto h-6 w-6" />
     </button>
   </div>
-  @if (mode.isMode("cut-paste")) {
+  @if (mode() === "cut-paste") {
     <div class="mt-2 flex justify-center gap-5">
       <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
       @if (clipboard.itemsCount() === 0 && clipboard.questionsCount() === 0) {
@@ -93,7 +93,7 @@
         }
       }
     </div>
-  } @else if (mode.isMode("search") || searchControl.value) {
+  } @else if (mode() === "search" || searchControl.value) {
     <div class="mt-2 flex items-center">
       <input
         #searchInput
@@ -102,7 +102,7 @@
         [formControl]="searchControl"
       />
       <button type="button" class="icon m-3">
-        <app-icon-clear (click)="searchControl.setValue(''); focusSearch()" />
+        <app-icon-clear (click)="searchControl.setValue(null); focusSearch()" />
       </button>
     </div>
   }

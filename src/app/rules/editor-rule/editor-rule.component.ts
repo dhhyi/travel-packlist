@@ -19,7 +19,6 @@ import { EditorQuestionComponent } from '../editor-question/editor-question.comp
 import { EditorItemComponent } from '../editor-item/editor-item.component';
 import { Serializer } from '../../model/serializer';
 import { Parser } from '../../model/parser';
-import { RulesMode } from '../../state/rules.mode';
 import { RulesClipboard } from '../../state/rules.clipboard';
 import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
 import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
@@ -27,6 +26,7 @@ import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component'
 import { IconDownComponent } from '../../icons/icon-down/icon-down.component';
 import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
 import { IconClearComponent } from '../../icons/icon-clear/icon-clear.component';
+import { GlobalState } from '../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,7 +59,8 @@ export class EditorRuleComponent {
   ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
   errorMessage = signal<string | null>(null);
 
-  mode = inject(RulesMode);
+  private state = inject(GlobalState);
+  mode = this.state.signal('rulesMode');
   private clipboard = inject(RulesClipboard);
 
   private parser = inject(Parser);

@@ -14,8 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RulesMode } from '../../state/rules.mode';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Parser } from '../../model/parser';
 import { Serializer } from '../../model/serializer';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
@@ -31,8 +30,8 @@ import { GlobalState } from '../../state/global-state';
 export class EditorItemComponent implements OnChanges {
   item = input.required<Item>();
 
-  mode = inject(RulesMode);
   private state = inject(GlobalState);
+  mode = this.state.signal('rulesMode');
   categories = this.state.signal('categories');
 
   readonly itemChanged = output<Item>();
@@ -71,8 +70,7 @@ export class EditorItemComponent implements OnChanges {
         this.itemChanged.emit(new Item(value.category, name, weight));
       });
 
-    this.mode
-      .asObservable()
+    toObservable(this.mode)
       .pipe(takeUntilDestroyed())
       .subscribe((mode) => {
         if (mode === 'edit') {

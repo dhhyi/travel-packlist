@@ -1,7 +1,6 @@
 import {
   Component,
   inject,
-  signal,
   ChangeDetectionStrategy,
   computed,
 } from '@angular/core';
@@ -9,7 +8,6 @@ import { PleaseSelect, Rule } from '../model/types';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { Serializer } from '../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { RulesMode } from '../state/rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
 import { NgClass } from '@angular/common';
 import { Refactor } from '../model/refactor';
@@ -23,16 +21,14 @@ import { GlobalState } from '../state/global-state';
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
-  mode = inject(RulesMode);
-
   private serializer = inject(Serializer);
   private refactor = inject(Refactor);
 
   private state = inject(GlobalState);
   private parsedRules = this.state.signal('parsedRules');
   private activeRules = this.state.signal('activeRules');
-
-  filter = signal('');
+  mode = this.state.signal('rulesMode');
+  filter = this.state.signal('filterRulesQuery');
 
   visibleRules = computed(() => {
     const filter = this.filter();
@@ -41,7 +37,10 @@ export class RulesComponent {
     }
     return this.parsedRules()
       .map((rule, index) => ({ rule, index }))
-      .filter((item) => this.refactor.contains(item.rule, this.filter()));
+      .filter((item) => {
+        const filter = this.filter();
+        return !filter || this.refactor.contains(item.rule, filter);
+      });
   });
 
   private updateRules(rules: Rule[]) {
@@ -110,9 +109,5 @@ export class RulesComponent {
     );
 
     this.updateRules(rules);
-  }
-
-  filterRules(term: string) {
-    if (term !== this.filter()) this.filter.set(term);
   }
 }

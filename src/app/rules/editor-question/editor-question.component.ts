@@ -26,7 +26,6 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { RulesMode } from '../../state/rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 import { NgClass } from '@angular/common';
 import { GlobalState } from '../../state/global-state';
@@ -41,15 +40,13 @@ import { GlobalState } from '../../state/global-state';
 export class EditorQuestionComponent implements OnChanges {
   question = input.required<Question>();
 
-  mode = inject(RulesMode);
-
   private state = inject(GlobalState);
   private variables = this.state.signal('variables');
+  mode = this.state.signal('rulesMode');
 
   highlighVariable = computed(
     () =>
-      !this.mode.isMode('edit') &&
-      this.state.signal('highlightVariableStatus')(),
+      this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
   );
   variableActive = computed(
     () => this.state.signal('activeAnswers')()[this.question().variable],
@@ -114,8 +111,7 @@ export class EditorQuestionComponent implements OnChanges {
         }
       });
 
-    this.mode
-      .asObservable()
+    toObservable(this.mode)
       .pipe(takeUntilDestroyed())
       .subscribe((mode) => {
         if (mode === 'edit') {

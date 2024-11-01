@@ -1,9 +1,6 @@
-<app-toolbar
-  [noOfVisibleRules]="visibleRules().length"
-  (searchTerm)="filterRules($event)"
-/>
+<app-toolbar [noOfVisibleRules]="visibleRules().length" />
 @for (item of visibleRules(); track item.index) {
-  @if (item.index > 0 && mode.isMode("swap") && !filter()) {
+  @if (item.index > 0 && mode() === "swap" && !filter()) {
     <div class="flex justify-center">
       <button
         type="button"
@@ -26,7 +23,7 @@
     />
   </div>
 }
-@if (mode.isMode("edit") && !filter()) {
+@if (mode() === "edit" && !filter()) {
   <button
     i18n="@@edit.rules.add-rule"
     type="button"
