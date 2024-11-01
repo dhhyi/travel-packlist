@@ -5,9 +5,9 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { VariableType } from '../../../model/types';
+import { VariableType } from '../../model/types';
 import { IconCheckmarkComponent } from '../../icons/icon-checkmark/icon-checkmark.component';
-import { AppState } from '../../app.state';
+import { PersistentState } from '../../state/persistent-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +21,7 @@ export class DisplayQuestionComponent {
   value = input<VariableType | undefined>(undefined);
   readonly valueChange = output<VariableType>();
 
-  private state = inject(AppState);
+  private state = inject(PersistentState);
 
   click(): void {
     if (!this.state.get('answersLocked')) {

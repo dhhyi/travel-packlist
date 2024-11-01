@@ -26,21 +26,24 @@ const initialState = {
   language: 'en' as 'en' | 'de',
 };
 
-export type State = typeof initialState;
+export type PersistentStateType = typeof initialState;
 
-type Keys = keyof State;
+type Keys = keyof PersistentStateType;
 
 @Injectable({ providedIn: 'root' })
-export class AppState {
-  private state: State = initialState;
+export class PersistentState {
+  private state: PersistentStateType = initialState;
   private injector = inject(Injector);
 
-  private signalMap = new Map<Keys, WritableSignal<State[Keys]>>();
+  private signalMap = new Map<
+    Keys,
+    WritableSignal<PersistentStateType[Keys]>
+  >();
 
   constructor() {
     const loaded = localStorage.getItem('state');
     if (loaded) {
-      this.state = JSON.parse(loaded) as State;
+      this.state = JSON.parse(loaded) as PersistentStateType;
       this.state = { ...initialState, ...this.state };
     } else {
       this.state = { ...initialState };
@@ -63,19 +66,19 @@ export class AppState {
     if (localStorage.getItem('answers')) {
       this.state.answers = JSON.parse(
         localStorage.getItem('answers')!,
-      ) as State['answers'];
+      ) as PersistentStateType['answers'];
       localStorage.removeItem('answers');
     }
     if (localStorage.getItem('checkedItems')) {
       this.state.checkedItems = JSON.parse(
         localStorage.getItem('checkedItems')!,
-      ) as State['checkedItems'];
+      ) as PersistentStateType['checkedItems'];
       localStorage.removeItem('checkedItems');
     }
     if (localStorage.getItem('collapsedCategories')) {
       this.state.collapsedCategories = JSON.parse(
         localStorage.getItem('collapsedCategories')!,
-      ) as State['collapsedCategories'];
+      ) as PersistentStateType['collapsedCategories'];
       localStorage.removeItem('collapsedCategories');
     }
     if (localStorage.getItem('rules')) {
@@ -83,7 +86,9 @@ export class AppState {
       localStorage.removeItem('rules');
     }
     if (localStorage.getItem('config')) {
-      const config = JSON.parse(localStorage.getItem('config')!) as State;
+      const config = JSON.parse(
+        localStorage.getItem('config')!,
+      ) as PersistentStateType;
       this.state.fadeOutDisabledRules = config.fadeOutDisabledRules;
       this.state.trackWeight = config.trackWeight;
       this.state.answersLocked = config.answersLocked;
@@ -99,7 +104,7 @@ export class AppState {
     localStorage.setItem('state', JSON.stringify(this.state));
   }
 
-  signal<K extends Keys>(key: K): WritableSignal<State[K]> {
+  signal<K extends Keys>(key: K): WritableSignal<PersistentStateType[K]> {
     if (!this.signalMap.has(key)) {
       const newSignal = signal(this.state[key]);
       effect(
@@ -114,14 +119,14 @@ export class AppState {
       );
       this.signalMap.set(key, newSignal);
     }
-    return this.signalMap.get(key) as WritableSignal<State[K]>;
+    return this.signalMap.get(key) as WritableSignal<PersistentStateType[K]>;
   }
 
-  set<K extends Keys>(key: K, value: State[K]) {
+  set<K extends Keys>(key: K, value: PersistentStateType[K]) {
     this.signal(key).set(value);
   }
 
-  get<K extends Keys>(key: K): State[K] {
+  get<K extends Keys>(key: K): PersistentStateType[K] {
     return this.signal(key)();
   }
 

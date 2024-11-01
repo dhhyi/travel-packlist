@@ -13,14 +13,14 @@ import {
   PleaseSelect,
   Question,
   Rule,
-} from '../../../model/types';
+} from '../../model/types';
 import { EditorConditionComponent } from '../editor-condition/editor-condition.component';
 import { EditorQuestionComponent } from '../editor-question/editor-question.component';
 import { EditorItemComponent } from '../editor-item/editor-item.component';
-import { Serializer } from '../../../model/serializer';
-import { Parser } from '../../../model/parser';
-import { RulesMode } from '../rules.mode';
-import { RulesClipboard } from '../rules.clipboard';
+import { Serializer } from '../../model/serializer';
+import { Parser } from '../../model/parser';
+import { RulesMode } from '../../state/rules.mode';
+import { RulesClipboard } from '../../state/rules.clipboard';
 import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
 import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
 import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component';

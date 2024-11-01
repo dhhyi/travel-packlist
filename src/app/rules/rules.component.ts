@@ -5,16 +5,16 @@ import {
   ChangeDetectionStrategy,
   computed,
 } from '@angular/core';
-import { PleaseSelect, Rule } from '../../model/types';
-import { Parser } from '../../model/parser';
+import { PleaseSelect, Rule } from '../model/types';
+import { Parser } from '../model/parser';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
-import { Serializer } from '../../model/serializer';
+import { Serializer } from '../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { RulesMode } from './rules.mode';
+import { RulesMode } from '../state/rules.mode';
 import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
 import { NgClass } from '@angular/common';
-import { Refactor } from '../../model/refactor';
-import { AppState } from '../app.state';
+import { Refactor } from '../model/refactor';
+import { PersistentState } from '../state/persistent-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -26,7 +26,7 @@ import { AppState } from '../app.state';
 export class RulesComponent {
   mode = inject(RulesMode);
 
-  private state = inject(AppState);
+  private state = inject(PersistentState);
 
   private parser = inject(Parser);
   private serializer = inject(Serializer);

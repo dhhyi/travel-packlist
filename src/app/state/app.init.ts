@@ -1,11 +1,11 @@
 import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { AppState, State } from './app.state';
+import { PersistentState, PersistentStateType } from './persistent-state';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
-  private state = inject(AppState);
+  private state = inject(PersistentState);
   private injector = inject(Injector);
   private document = inject(DOCUMENT);
 
@@ -23,7 +23,9 @@ export class AppInit {
   }
 
   private applyTheme() {
-    const theme = this.state.get('theme') as State['theme'] | undefined;
+    const theme = this.state.get('theme') as
+      | PersistentStateType['theme']
+      | undefined;
     const userDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if ((theme === 'system' && userDark) || theme === 'dark') {
       this.document.documentElement.classList.add('dark');
@@ -33,7 +35,9 @@ export class AppInit {
   }
 
   private applyLanguage() {
-    const lang = this.state.get('language') as State['language'] | undefined;
+    const lang = this.state.get('language') as
+      | PersistentStateType['language']
+      | undefined;
     if (lang && this.document.documentElement.lang !== lang) {
       if (isDevMode()) {
         console.warn('Language switching is disabled in dev mode');

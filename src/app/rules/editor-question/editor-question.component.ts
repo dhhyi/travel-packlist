@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy,
   computed,
 } from '@angular/core';
-import { Always, Question } from '../../../model/types';
+import { Always, Question } from '../../model/types';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -26,9 +26,9 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { RulesMode } from '../rules.mode';
+import { RulesMode } from '../../state/rules.mode';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
-import { AppState } from '../../app.state';
+import { PersistentState } from '../../state/persistent-state';
 import { NgClass } from '@angular/common';
 
 @Component({
@@ -43,7 +43,7 @@ export class EditorQuestionComponent implements OnChanges {
   variables = input.required<string[]>();
 
   mode = inject(RulesMode);
-  private state = inject(AppState);
+  private state = inject(PersistentState);
   highlighVariable = computed(
     () =>
       !this.mode.isMode('edit') &&

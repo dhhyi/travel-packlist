@@ -4,15 +4,15 @@ import {
   inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Parser } from '../../model/parser';
-import { Rule, VariableType } from '../../model/types';
+import { Parser } from '../model/parser';
+import { Rule, VariableType } from '../model/types';
 import { DisplayQuestionComponent } from './display-question/display-question.component';
 import { DisplayItemsComponent } from './display-items/display-items.component';
 import { IconLockOpenComponent } from '../icons/icon-lock-open/icon-lock-open.component';
 import { IconLockComponent } from '../icons/icon-lock/icon-lock.component';
 import { NgClass } from '@angular/common';
-import { Refactor } from '../../model/refactor';
-import { AppState } from '../app.state';
+import { Refactor } from '../model/refactor';
+import { PersistentState } from '../state/persistent-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +29,7 @@ import { AppState } from '../app.state';
 })
 export class PacklistComponent {
   private refactor = inject(Refactor);
-  private state = inject(AppState);
+  private state = inject(PersistentState);
   private parser = inject(Parser);
 
   model = this.state.signal('answers');

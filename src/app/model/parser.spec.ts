@@ -1,7 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { And, Item, Question } from './types';
-import { AppState, State } from '../app/app.state';
+import {
+  PersistentState,
+  PersistentStateType,
+} from '../state/persistent-state';
 
 describe('Parser', () => {
   let parser: Parser;
@@ -13,13 +16,13 @@ describe('Parser', () => {
     TestBed.configureTestingModule({
       providers: [
         {
-          provide: AppState,
+          provide: PersistentState,
           useValue: {
-            get(property: keyof State) {
+            get(property: keyof PersistentStateType) {
               if (property === 'trackWeight') return trackWeight;
               return null;
             },
-          } as Partial<AppState>,
+          } as Partial<PersistentState>,
         },
       ],
     });

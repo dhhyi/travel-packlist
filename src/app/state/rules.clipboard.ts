@@ -1,5 +1,5 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { Item, Question } from '../../model/types';
+import { Item, Question } from '../model/types';
 
 @Injectable({ providedIn: 'root' })
 export class RulesClipboard {

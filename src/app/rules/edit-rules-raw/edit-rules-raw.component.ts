@@ -7,8 +7,8 @@ import {
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith } from 'rxjs';
-import { Parser } from '../../../model/parser';
-import { AppState } from '../../app.state';
+import { Parser } from '../../model/parser';
+import { PersistentState } from '../../state/persistent-state';
 
 type ParserState =
   | {
@@ -36,7 +36,7 @@ type ParserState =
   `,
 })
 export class EditRulesRawComponent {
-  private state = inject(AppState);
+  private state = inject(PersistentState);
   private rulesFromState = this.state.signal('rules');
 
   private parser = inject(Parser);

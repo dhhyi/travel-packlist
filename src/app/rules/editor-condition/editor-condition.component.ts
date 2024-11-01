@@ -19,12 +19,12 @@ import {
   Or,
   PleaseSelect,
   Variable,
-} from '../../../model/types';
+} from '../../model/types';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { RulesMode } from '../rules.mode';
-import { Serializer } from '../../../model/serializer';
+import { RulesMode } from '../../state/rules.mode';
+import { Serializer } from '../../model/serializer';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AppState } from '../../app.state';
+import { PersistentState } from '../../state/persistent-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -52,7 +52,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   @ViewChild('variable') variableTemplate!: TemplateRef<unknown>;
   @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
 
-  private state = inject(AppState);
+  private state = inject(PersistentState);
   highlighVariable = computed(
     () =>
       !this.mode.isMode('edit') &&

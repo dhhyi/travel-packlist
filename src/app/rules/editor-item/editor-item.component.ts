@@ -6,7 +6,7 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Item } from '../../../model/types';
+import { Item } from '../../model/types';
 import {
   FormControl,
   FormGroup,
@@ -15,9 +15,9 @@ import {
 } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RulesMode } from '../rules.mode';
-import { Parser } from '../../../model/parser';
-import { Serializer } from '../../../model/serializer';
+import { RulesMode } from '../../state/rules.mode';
+import { Parser } from '../../model/parser';
+import { Serializer } from '../../model/serializer';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 
 @Component({

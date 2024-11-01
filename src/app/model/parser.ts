@@ -11,7 +11,7 @@ import {
   Rule,
   Variable,
 } from './types';
-import { AppState } from '../app/app.state';
+import { PersistentState } from '../state/persistent-state';
 
 const itemRegex = /^\s*\[(?<category>.+?)\]\s*(?<name>.+)\s*$/;
 
@@ -19,7 +19,7 @@ const questionRegex = /^\s*(?<question>.*)\s+\$(?<variable>[^ ]+)\s*$/;
 
 @Injectable({ providedIn: 'root' })
 export class Parser {
-  private state = inject(AppState);
+  private state = inject(PersistentState);
 
   parseCondition(input: string): Condition {
     const tokens = input.trim().split(' ');

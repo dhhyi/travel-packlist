@@ -1,11 +1,11 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { Parser } from '../model/parser';
-import { AppState } from './app.state';
+import { Parser } from './model/parser';
+import { PersistentState } from './state/persistent-state';
 
 export const rulesValid: CanActivateFn = () => {
   const parser = inject(Parser);
-  const rules = inject(AppState).get('rules');
+  const rules = inject(PersistentState).get('rules');
 
   try {
     parser.parseRules(rules);

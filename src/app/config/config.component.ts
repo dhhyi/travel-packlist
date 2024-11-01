@@ -1,13 +1,16 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Parser } from '../../model/parser';
+import { Parser } from '../model/parser';
 import env from '../../environment/env.json';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
-import { AppState, State } from '../app.state';
+import {
+  PersistentState,
+  PersistentStateType,
+} from '../state/persistent-state';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -34,7 +37,7 @@ export class ConfigComponent {
   env = env;
 
   private router = inject(Router);
-  private state = inject(AppState);
+  private state = inject(PersistentState);
   private parser = inject(Parser);
 
   private fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
@@ -165,7 +168,7 @@ export class ConfigComponent {
     return this.state.get('theme');
   }
 
-  setTheme(theme: State['theme']) {
+  setTheme(theme: PersistentStateType['theme']) {
     this.state.set('theme', theme);
   }
 
@@ -173,7 +176,7 @@ export class ConfigComponent {
     return this.state.get('language');
   }
 
-  setLanguage(lang: State['language']) {
+  setLanguage(lang: PersistentStateType['language']) {
     this.state.set('language', lang);
   }
 }

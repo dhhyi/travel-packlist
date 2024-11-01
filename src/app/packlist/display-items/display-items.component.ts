@@ -5,13 +5,13 @@ import {
   input,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Item } from '../../../model/types';
+import { Item } from '../../model/types';
 import { KeyValuePipe, NgClass } from '@angular/common';
 import { ItemsStatusComponent } from './items-status/items-status.component';
-import { Serializer } from '../../../model/serializer';
+import { Serializer } from '../../model/serializer';
 import { IconKeyDownComponent } from '../../icons/icon-key-down/icon-key-down.component';
 import { IconKeyRightComponent } from '../../icons/icon-key-right/icon-key-right.component';
-import { AppState } from '../../app.state';
+import { PersistentState } from '../../state/persistent-state';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -44,7 +44,7 @@ function serialize(item: Item): string {
 export class DisplayItemsComponent {
   items = input<Item[]>([]);
 
-  private state = inject(AppState);
+  private state = inject(PersistentState);
 
   orderBy = computed(() => {
     const sorting = this.state.signal('categorySorting')();
