@@ -8,7 +8,7 @@ import {
   ElementRef,
   input,
 } from '@angular/core';
-import { RulesClipboard } from '../../state/rules.clipboard';
+import { RulesClipboard } from '../rules.clipboard';
 import { NgClass, ViewportScroller } from '@angular/common';
 import { IconViewComponent } from '../../icons/icon-view/icon-view.component';
 import { IconEditComponent } from '../../icons/icon-edit/icon-edit.component';

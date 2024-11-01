@@ -80,6 +80,17 @@ module.exports = tseslint.config(
       "@typescript-eslint/no-unnecessary-parameter-property-assignment":
         "error",
       "@typescript-eslint/no-unnecessary-qualifier": "error",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              regex: "state/(?!global-state).*",
+              message: "Use GlobalState instead",
+            },
+          ],
+        },
+      ],
     },
   },
   {

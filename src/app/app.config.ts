@@ -12,7 +12,7 @@ import {
 
 import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
-import { AppInit } from './state/app.init';
+import { AppInit } from './app.init';
 
 function initializeApp(appInit: AppInit): () => void {
   return () => {

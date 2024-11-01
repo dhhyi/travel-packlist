@@ -1,6 +1,6 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { Item, Question } from '../model/types';
-import { GlobalState } from './global-state';
+import { GlobalState } from '../state/global-state';
 import { Serializer } from '../model/serializer';
 import { Parser } from '../model/parser';
 

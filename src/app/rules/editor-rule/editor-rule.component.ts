@@ -19,7 +19,7 @@ import { EditorQuestionComponent } from '../editor-question/editor-question.comp
 import { EditorItemComponent } from '../editor-item/editor-item.component';
 import { Serializer } from '../../model/serializer';
 import { Parser } from '../../model/parser';
-import { RulesClipboard } from '../../state/rules.clipboard';
+import { RulesClipboard } from '../rules.clipboard';
 import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
 import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
 import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component';

@@ -11,6 +11,7 @@ import {
   Rule,
   Variable,
 } from './types';
+// eslint-disable-next-line no-restricted-imports
 import { PersistentState } from '../state/persistent-state';
 
 const itemRegex = /^\s*\[(?<category>.+?)\]\s*(?<name>.+)\s*$/;

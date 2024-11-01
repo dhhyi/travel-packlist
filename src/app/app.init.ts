@@ -1,8 +1,9 @@
 import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { PersistentState } from './persistent-state';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { Languages, Themes } from './global-state';
+import { Languages, Themes } from './state/global-state';
+// eslint-disable-next-line no-restricted-imports
+import { PersistentState } from './state/persistent-state';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
