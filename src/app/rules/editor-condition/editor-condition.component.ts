@@ -54,7 +54,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   private mode = inject(RulesMode);
   private state = inject(GlobalState);
   private variables = this.state.signal('variables');
-  private answers = this.state.signal('answers');
+  private activeAnswers = this.state.signal('activeAnswers');
 
   highlighVariable = computed(
     () =>
@@ -220,6 +220,6 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   }
 
   variableActive(variable: string) {
-    return variable === Always.string || this.answers()[variable];
+    return variable === Always.string || this.activeAnswers()[variable];
   }
 }

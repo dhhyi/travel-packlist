@@ -52,7 +52,7 @@ export class EditorQuestionComponent implements OnChanges {
       this.state.signal('highlightVariableStatus')(),
   );
   variableActive = computed(
-    () => this.state.signal('answers')()[this.question().variable],
+    () => this.state.signal('activeAnswers')()[this.question().variable],
   );
 
   readonly questionChanged = output<Question>();
