@@ -1,8 +1,7 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import env from '../../environment/env.json';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
@@ -16,7 +15,7 @@ const defaultFileName = 'travel-packlist-rules.txt';
   standalone: true,
   imports: [
     RouterModule,
-    ReactiveFormsModule,
+    FormsModule,
     DatePipe,
     NgClass,
     IconFlagGermanyComponent,
@@ -33,52 +32,12 @@ export class ConfigComponent {
   env = env;
 
   private router = inject(Router);
+
   private state = inject(GlobalState);
-
-  private fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
-  fadeOutDisabledRulesControl = new FormControl(this.fadeOutDisabledRules());
-
-  private highlightVariableStatus = this.state.signal(
-    'highlightVariableStatus',
-  );
-  highlightVariableStatusControl = new FormControl(
-    this.highlightVariableStatus(),
-  );
-
-  private trackWeight = this.state.signal('trackWeight');
-  trackWeightControl = new FormControl(this.trackWeight());
-
-  private categorySorting = this.state.signal('categorySorting');
-  categorySortingControl = new FormGroup({
-    categorySorting: new FormControl(this.categorySorting()),
-  });
-
-  constructor() {
-    this.fadeOutDisabledRulesControl.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe((value) => {
-        this.fadeOutDisabledRules.set(!!value);
-      });
-
-    this.highlightVariableStatusControl.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe((value) => {
-        this.highlightVariableStatus.set(!!value);
-      });
-
-    this.trackWeightControl.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe((value) => {
-        this.trackWeight.set(!!value);
-      });
-
-    this.categorySortingControl.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe((value) => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.categorySorting.set(value.categorySorting!);
-      });
-  }
+  fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
+  highlightVariableStatus = this.state.signal('highlightVariableStatus');
+  trackWeight = this.state.signal('trackWeight');
+  categorySorting = this.state.signal('categorySorting');
 
   private isMobile() {
     const ua = navigator.userAgent;

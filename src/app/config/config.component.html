@@ -9,11 +9,7 @@
     Reset Checklist
   </button>
   <div class="flex items-center gap-3">
-    <input
-      type="checkbox"
-      id="track-weight"
-      [formControl]="trackWeightControl"
-    />
+    <input type="checkbox" id="track-weight" [(ngModel)]="trackWeight" />
     <label
       i18n="@@config.checklist.track-weight"
       for="track-weight"
@@ -28,16 +24,16 @@
     </p>
   </div>
   <div>
-    <fieldset class="grid grid-cols-2" [formGroup]="categorySortingControl">
+    <fieldset class="grid grid-cols-2">
       <legend i18n="@@config.checklist.category-sorting">
         Sort categories
       </legend>
       <div class="flex items-center gap-3">
         <input
           type="radio"
-          formControlName="categorySorting"
           id="sort-alphabetically"
           value="alphabetically"
+          [(ngModel)]="categorySorting"
         />
         <label
           i18n="@@config.checklist.category-sorting.alphabetically"
@@ -48,9 +44,9 @@
       <div class="flex items-center gap-3">
         <input
           type="radio"
-          formControlName="categorySorting"
           id="sort-definition"
           value="definition"
+          [(ngModel)]="categorySorting"
         />
         <label
           i18n="@@config.checklist.category-sorting.definition"
@@ -71,7 +67,7 @@
     <input
       type="checkbox"
       id="rules-debug-mode"
-      [formControl]="fadeOutDisabledRulesControl"
+      [(ngModel)]="fadeOutDisabledRules"
     />
     <label i18n="@@config.rules.fadeout-disabled" for="rules-debug-mode"
       >Fade out disabled rules in editor</label
@@ -81,7 +77,7 @@
     <input
       type="checkbox"
       id="variables-debug-mode"
-      [formControl]="highlightVariableStatusControl"
+      [(ngModel)]="highlightVariableStatus"
     />
     <label i18n="@@config.rules.highlight-variables" for="variables-debug-mode"
       >Highlight variable status in editor</label

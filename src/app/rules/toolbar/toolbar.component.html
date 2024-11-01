@@ -15,13 +15,13 @@
       type="button"
       class="icon"
       [ngClass]="{ 'ring ring-slate-700': mode() === 'edit' }"
-      [disabled]="!noOfVisibleRules() && !!searchControl.value"
+      [disabled]="!noOfVisibleRules() && !!searchTerm()"
       (click)="mode.set('edit')"
     >
       <app-icon-edit
         class="my-auto h-6 w-6"
         [ngClass]="{
-          'fill-slate-400': !noOfVisibleRules() && !!searchControl.value,
+          'fill-slate-400': !noOfVisibleRules() && !!searchTerm(),
         }"
       />
     </button>
@@ -93,16 +93,11 @@
         }
       }
     </div>
-  } @else if (mode() === "search" || searchControl.value) {
+  } @else if (mode() === "search" || searchTerm()) {
     <div class="mt-2 flex items-center">
-      <input
-        #searchInput
-        type="text"
-        class="grow"
-        [formControl]="searchControl"
-      />
+      <input #searchInput type="text" class="grow" [(ngModel)]="searchTerm" />
       <button type="button" class="icon m-3">
-        <app-icon-clear (click)="searchControl.setValue(null); focusSearch()" />
+        <app-icon-clear (click)="clearSearch()" />
       </button>
     </div>
   }
