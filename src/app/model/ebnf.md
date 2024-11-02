@@ -1,7 +1,6 @@
 # Model EBNF
 
 ```ebnf
-
 Rules = Rule, {(";", Rule)}, [";"]
 
 Rule = [Condition] :- Effect, {(",", Effect)}
@@ -21,5 +20,4 @@ QuestionString = String
 VariableDeclaration = "$", VariableName
 
 Condition = VariableName | "NOT", VariableName | Condition, "AND", Condition | Condition, "OR", Condition
-
 ```
