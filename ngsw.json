@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1730539388584,
+  "timestamp": 1730545618005,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -15,8 +15,8 @@
         "/icon_256.png",
         "/index.de.html",
         "/index.html",
-        "/main-KIDZAJ42.js",
-        "/main-MPMLWQHS.js",
+        "/main-A6JEDCVQ.js",
+        "/main-LGWQP2FJ.js",
         "/manifest.json",
         "/polyfills-62TICESK.js",
         "/polyfills-RU23LESK.js",
@@ -29,10 +29,10 @@
   "hashTable": {
     "/icon.png": "d2fc36abc0e608ed0975bbe9a61a1f7cbee144ad",
     "/icon_256.png": "abe925b08e3f4e4fcf1cdfcfad83eed5b3ce0b17",
-    "/index.de.html": "334e48805d3ec24f34fb35b7cc4a2e998d0c0bc6",
-    "/index.html": "9024341db887384130bd89e2b41f9504824926c2",
-    "/main-KIDZAJ42.js": "880f13c10303efb7aa43761ddbf1ae85f28a6043",
-    "/main-MPMLWQHS.js": "0ee5533c958e2336aff476b1b19ad4a99b90d434",
+    "/index.de.html": "8f5ac013c5383719932b0286ec232cf9e17767e7",
+    "/index.html": "a9694775a2b404c906be33181e4398c3a1dc91e8",
+    "/main-A6JEDCVQ.js": "fc2d97fb1a16f03fd2198f90e1880290d36a12f4",
+    "/main-LGWQP2FJ.js": "134206f3cab0612cbd8729c88e444e318c1ef846",
     "/manifest.json": "414a250c1f4b449f2c59f67a3f88a937bbab440a",
     "/polyfills-62TICESK.js": "11390f872fe4253658c9407cdc4afe8ba0acebec",
     "/polyfills-RU23LESK.js": "b9847567551e50e8a8d317f7d31708b8ee400c86",
