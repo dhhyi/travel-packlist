@@ -1,6 +1,6 @@
 # TravelPacklist
 
-This app is a tool for creating conditional checklists. I use it for creating a packlist for my travels, depending on the duration, the activities, the expected weather, etc. It should be flexible enough to be used for other purposes as well.
+This app is a tool for creating conditional checklists. I use it for creating a pack list for my travels, depending on the duration, the activities, the expected weather, etc. It should be flexible enough to be used for other purposes as well.
 
 The Rules can be defined in a custom format with either free test or a graphical editor.
 

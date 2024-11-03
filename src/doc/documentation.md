@@ -30,7 +30,7 @@ are defined with the following syntax:
 Question? $variable
 ```
 
-A question will be displayed on top of the packlist UI.
+A question will be displayed on top of the pack list UI.
 You can toggle the answer by clicking on it.
 
 ### Items
@@ -51,7 +51,7 @@ You can use variables for defining logic with `AND`, `OR`, and `NOT`.
 > The highest precedence is `NOT`, then `AND`, and finally `OR`. This means all groups of `NOT variable` are evaluated first, then `left AND right` and finally `left OR right` until the whole condition is evaluated.
 
 Variables are defined in questions.
-Conditions trigger the effects of the rule if they are true. So if the condition is not met, then you will neither see any additional questons nor items of that specific rule.
+Conditions trigger the effects of the rule if they are true. So if the condition is not met, then you will neither see any additional questions nor items of that specific rule.
 
 Some examples for conditions:
 

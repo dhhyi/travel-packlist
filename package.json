@@ -14,7 +14,8 @@
     "stylelint": "stylelint '**/*.css'",
     "sort-localizations": "sort-json src/locale/*.json",
     "extract-i18n": "ng extract-i18n --output-path src/locale --format json",
-    "postextract-i18n": "npm run sort-localizations"
+    "postextract-i18n": "npm run sort-localizations",
+    "spellcheck": "cspell '**/*.md'"
   },
   "private": true,
   "dependencies": {
@@ -36,11 +37,14 @@
     "@angular/cli": "^18.2.2",
     "@angular/compiler-cli": "^18.2.0",
     "@angular/localize": "18.2.2",
+    "@cspell/cspell-types": "^8.15.7",
+    "@cspell/dict-de-de": "^4.0.3",
     "@jest/globals": "^29.7.0",
     "@types/jasmine": "~5.1.0",
     "@types/jest": "^29.5.12",
     "angular-eslint": "18.3.0",
     "autoprefixer": "^10.4.20",
+    "cspell": "^8.15.7",
     "eslint": "^9.9.0",
     "husky": "^9.1.5",
     "jasmine-core": "~5.2.0",

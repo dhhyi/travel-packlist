@@ -12,7 +12,7 @@ Regeln müssen durch ein Semikolon getrennt werden.
 
 ```
 kaltes_wetter :- [Kleidung] Mantel,
-  Erwartest du Schnee? $schnee ;
+  Erwartest du Schnee? $snow ;
 ```
 
 > Diese Regel kann so etwas bedeuten wie "Wenn das Wetter kalt ist, solltest du einen Mantel mitbringen. Außerdem solltest du die Frage beantworten, ob du Schnee erwartest."
@@ -55,11 +55,15 @@ Bedingungen lösen die Effekte der Regel aus, wenn sie wahr sind. Wenn die Bedin
 
 Einige Beispiele für Bedingungen:
 
+<!-- cspell:words cold_weather -->
+
 ```
 cold_weather AND NOT snow
 ```
 
 > Kann so etwas bedeuten wie "Das Wetter ist kalt und es schneit nicht".
+
+<!-- cspell:words washer, laundromat -->
 
 ```
 washer OR laundromat

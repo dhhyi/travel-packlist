@@ -1,6 +1,6 @@
 # State Management
 
-The State Management in this application is a self-brewn solution providing a flat state object whose properties can be accessed and modified either by using signals or by accessor functions.
+The State Management in this application is a self-brew solution providing a flat state object whose properties can be accessed and modified either by using signals or by accessor functions.
 
 # State Slices
 

@@ -18,5 +18,6 @@ vscode:
     - tomwhite007.rename-angular-component
     - esbenp.prettier-vscode
     - bradlc.vscode-tailwindcss
+    - streetsidesoftware.code-spell-checker
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode

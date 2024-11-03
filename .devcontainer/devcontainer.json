@@ -21,7 +21,8 @@
         "angular.ng-template",
         "tomwhite007.rename-angular-component",
         "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "streetsidesoftware.code-spell-checker"
       ]
     }
   }
