@@ -10,7 +10,8 @@ export class ImportExportRulesEffects {
       .toISOString()
       .replace(/\..*$/, '')
       .replace(/[T:]/g, '-');
-    return `travel-packlist-rules-${dateTime}.txt`;
+    const hash = this.state.get('rulesHash');
+    return `travel-packlist-rules-${dateTime}-${hash}.txt`;
   }
 
   private downloadRules() {
