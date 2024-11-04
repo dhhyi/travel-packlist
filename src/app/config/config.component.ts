@@ -1,4 +1,9 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+  signal,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import env from '../../environment/env.json';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +13,7 @@ import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.componen
 import { GlobalState, Languages, Themes } from '../state/global-state';
 import { ResetEffects } from '../effects/reset.effects';
 import { ImportExportRulesEffects } from '../effects/import-export-rules.effects';
+import { IconDownloadComponent } from '../icons/icon-download/icon-download.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,6 +26,7 @@ import { ImportExportRulesEffects } from '../effects/import-export-rules.effects
     NgClass,
     IconFlagGermanyComponent,
     IconFlagUkComponent,
+    IconDownloadComponent,
   ],
   templateUrl: './config.component.html',
   styles: `
@@ -30,6 +37,7 @@ import { ImportExportRulesEffects } from '../effects/import-export-rules.effects
 })
 export class ConfigComponent {
   env = env;
+  loading = signal(false);
 
   private router = inject(Router);
 
@@ -66,9 +74,11 @@ export class ConfigComponent {
   }
 
   async importRules() {
+    this.loading.set(true);
     if (await this.impExp.importRules()) {
       await this.router.navigate(['/packlist']);
     }
+    this.loading.set(false);
   }
 
   async exportRules() {
