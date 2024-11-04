@@ -1,11 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { GlobalState } from '../state/global-state';
 
-const defaultFileName = 'travel-packlist-rules.txt';
-
 @Injectable({ providedIn: 'root' })
 export class ImportExportRulesEffects {
   private state = inject(GlobalState);
+
+  private generateFilename(): string {
+    const dateTime = new Date()
+      .toISOString()
+      .replace(/\..*$/, '')
+      .replace(/[T:]/g, '-');
+    return `travel-packlist-rules-${dateTime}.txt`;
+  }
 
   private downloadRules() {
     const rules = this.state.get('rules');
@@ -13,16 +19,17 @@ export class ImportExportRulesEffects {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = defaultFileName;
+    a.download = this.generateFilename();
     a.click();
   }
 
   private async shareRules() {
     const rules = this.state.get('rules');
+    const fileName = this.generateFilename();
     await navigator.share({
-      title: defaultFileName,
+      title: fileName,
       files: [
-        new File([rules], defaultFileName, {
+        new File([rules], fileName, {
           type: 'text/plain',
         }),
       ],
