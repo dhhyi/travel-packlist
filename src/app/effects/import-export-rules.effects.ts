@@ -37,12 +37,18 @@ export class ImportExportRulesEffects {
     });
   }
 
+  private resetHash() {
+    this.state.set('lastExportHash', this.state.get('rulesHash'));
+    this.state.set('lastExportDate', new Date().getTime());
+  }
+
   async exportRules() {
     if (this.state.get('isMobile') && 'share' in navigator) {
       await this.shareRules();
     } else {
       this.downloadRules();
     }
+    this.resetHash();
   }
 
   async importRules() {
@@ -61,6 +67,7 @@ export class ImportExportRulesEffects {
         }
         const text = await file.text();
         this.state.set('rules', text);
+        this.resetHash();
         resolve(true);
       };
       input.click();

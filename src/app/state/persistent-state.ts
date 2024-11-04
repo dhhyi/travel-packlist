@@ -25,6 +25,9 @@ const initialState = {
   answersLocked: false,
   theme: 'system' as 'system' | 'light' | 'dark',
   language: 'en' as 'en' | 'de',
+  exportReminder: false,
+  lastExportHash: '',
+  lastExportDate: 0,
 };
 
 export type PersistentStateType = typeof initialState;

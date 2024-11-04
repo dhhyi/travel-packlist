@@ -1,4 +1,11 @@
-import { computed, inject, Injectable, Signal } from '@angular/core';
+import {
+  computed,
+  effect,
+  inject,
+  Injectable,
+  signal,
+  Signal,
+} from '@angular/core';
 import { Item, Question, Rule, VariableType } from '../model/types';
 import { PersistentState } from './persistent-state';
 import { Parser } from '../model/parser';
@@ -15,6 +22,8 @@ export interface DerivedStateType {
   activeAnswers: Record<string, VariableType>;
   activeQuestions: Question[];
   activeItems: Item[];
+  lastRulesAction: number;
+  exportNeeded: boolean;
 }
 
 type Keys = keyof DerivedStateType;
@@ -113,6 +122,26 @@ export class DerivedState {
       computed(() => {
         const rules = this.state.signal('rules')();
         return cyrb53(rules).toString(16);
+      }),
+    );
+
+    const lastRulesAction = signal(new Date().getTime());
+    this.signalMap.set('lastRulesAction', lastRulesAction.asReadonly());
+
+    effect(
+      () => {
+        this.state.signal('rules')();
+        lastRulesAction.set(new Date().getTime());
+      },
+      { allowSignalWrites: true },
+    );
+
+    this.signalMap.set(
+      'exportNeeded',
+      computed(() => {
+        const rulesHash = this.signal('rulesHash')();
+        const lastExportHash = this.state.signal('lastExportHash')();
+        return rulesHash !== lastExportHash;
       }),
     );
   }

@@ -16,6 +16,7 @@ import { AppInit } from './app.init';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from './model/parser';
 import { GlobalState } from './state/global-state';
 import { AppUpdate } from './app.update';
+import { RulesExportReminder } from './rules/rules.export-reminder';
 
 function initializeApp(appInit: AppInit): () => void {
   return () => {
@@ -26,6 +27,14 @@ function initializeApp(appInit: AppInit): () => void {
 function initializeAppUpdate(appUpdate: AppUpdate): () => void {
   return () => {
     appUpdate.init();
+  };
+}
+
+function initializeRulesExportReminder(
+  rulesExportReminder: RulesExportReminder,
+): () => void {
+  return () => {
+    rulesExportReminder.init();
   };
 }
 
@@ -53,6 +62,12 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeAppUpdate,
       deps: [AppUpdate],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeRulesExportReminder,
+      deps: [RulesExportReminder],
       multi: true,
     },
     {

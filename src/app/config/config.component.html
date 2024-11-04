@@ -98,9 +98,23 @@
   <button i18n="@@config.rules.export" type="button" (click)="exportRules()">
     Export Rules
   </button>
+  @if (exportNeeded()) {
+    <div
+      i18n="@@config.rules.export-needed"
+      class="text-center italic text-red-500"
+    >
+      Current rules are not backed up!
+    </div>
+  }
   <button i18n="@@config.rules.import" type="button" (click)="importRules()">
     Import Rules
   </button>
+  <div class="flex items-center gap-3">
+    <input type="checkbox" id="export-reminder" [(ngModel)]="exportReminder" />
+    <label i18n="@@config.rules.export-reminder" for="export-reminder"
+      >Remind me to regularly export rules</label
+    >
+  </div>
 </div>
 
 <div class="section">

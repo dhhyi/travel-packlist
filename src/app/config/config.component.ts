@@ -38,6 +38,8 @@ export class ConfigComponent {
   highlightVariableStatus = this.state.signal('highlightVariableStatus');
   trackWeight = this.state.signal('trackWeight');
   categorySorting = this.state.signal('categorySorting');
+  exportReminder = this.state.signal('exportReminder');
+  exportNeeded = this.state.signal('exportNeeded');
   private reset = inject(ResetEffects);
   private impExp = inject(ImportExportRulesEffects);
 
