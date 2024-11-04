@@ -15,10 +15,17 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { AppInit } from './app.init';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from './model/parser';
 import { GlobalState } from './state/global-state';
+import { AppUpdate } from './app.update';
 
 function initializeApp(appInit: AppInit): () => void {
   return () => {
     appInit.init();
+  };
+}
+
+function initializeAppUpdate(appUpdate: AppUpdate): () => void {
+  return () => {
+    appUpdate.init();
   };
 }
 
@@ -40,6 +47,12 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,
       deps: [AppInit],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeAppUpdate,
+      deps: [AppUpdate],
       multi: true,
     },
     {
