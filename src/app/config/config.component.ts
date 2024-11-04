@@ -7,8 +7,7 @@ import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-g
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
 import { GlobalState, Languages, Themes } from '../state/global-state';
 import { ResetEffects } from '../effects/reset.effects';
-
-const defaultFileName = 'travel-packlist-rules.txt';
+import { ImportExportRulesEffects } from '../effects/import-export-rules.effects';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,6 +39,7 @@ export class ConfigComponent {
   trackWeight = this.state.signal('trackWeight');
   categorySorting = this.state.signal('categorySorting');
   private reset = inject(ResetEffects);
+  private impExp = inject(ImportExportRulesEffects);
 
   async resetChecklist() {
     if (
@@ -63,50 +63,14 @@ export class ConfigComponent {
     }
   }
 
-  downloadRules() {
-    const rules = this.state.get('rules');
-    const blob = new Blob([rules], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = defaultFileName;
-    a.click();
-  }
-
-  async shareRules() {
-    const rules = this.state.get('rules');
-    await navigator.share({
-      title: defaultFileName,
-      files: [
-        new File([rules], defaultFileName, {
-          type: 'text/plain',
-        }),
-      ],
-    });
-  }
-
-  async exportRules() {
-    if (this.state.get('isMobile') && 'share' in navigator) {
-      await this.shareRules();
-    } else {
-      this.downloadRules();
+  async importRules() {
+    if (await this.impExp.importRules()) {
+      await this.router.navigate(['/packlist']);
     }
   }
 
-  importRules() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.txt';
-    input.onchange = async () => {
-      const file = input.files?.[0];
-      if (!file) {
-        return;
-      }
-      const text = await file.text();
-      this.state.set('rules', text);
-      await this.router.navigate(['/packlist']);
-    };
-    input.click();
+  async exportRules() {
+    await this.impExp.exportRules();
   }
 
   getTheme() {
