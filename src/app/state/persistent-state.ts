@@ -147,11 +147,4 @@ export class PersistentState implements ReadWriteState<PersistentStateType> {
       this.signal(key).set(initialState[key]);
     });
   }
-
-  resetChecklist() {
-    this.set('answers', {});
-    this.set('checkedItems', []);
-    this.set('collapsedCategories', []);
-    this.set('answersLocked', false);
-  }
 }

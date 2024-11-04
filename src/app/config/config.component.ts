@@ -6,6 +6,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
 import { GlobalState, Languages, Themes } from '../state/global-state';
+import { ResetEffects } from '../effects/reset.effects';
 
 const defaultFileName = 'travel-packlist-rules.txt';
 
@@ -38,6 +39,7 @@ export class ConfigComponent {
   highlightVariableStatus = this.state.signal('highlightVariableStatus');
   trackWeight = this.state.signal('trackWeight');
   categorySorting = this.state.signal('categorySorting');
+  private reset = inject(ResetEffects);
 
   private isMobile() {
     const ua = navigator.userAgent;
@@ -52,7 +54,7 @@ export class ConfigComponent {
         $localize`:@@config.checklist.reset.question:Are you sure you want to reset the checklist?` as string,
       )
     ) {
-      this.state.resetChecklist();
+      this.reset.resetChecklist();
       await this.router.navigate(['/packlist']);
     }
   }

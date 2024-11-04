@@ -83,10 +83,6 @@ export class GlobalState {
     }
   }
 
-  resetChecklist() {
-    this.persistent.resetChecklist();
-  }
-
   reset() {
     this.persistent.reset();
     this.session.reset();
