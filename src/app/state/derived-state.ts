@@ -5,6 +5,7 @@ import { Parser } from '../model/parser';
 import { Refactor } from '../model/refactor';
 
 export interface DerivedStateType {
+  isMobile: boolean;
   parsedRules: Rule[];
   ruleParserError: string;
   categories: string[];
@@ -30,6 +31,16 @@ export class DerivedState {
   }
 
   private initializeSignals() {
+    this.signalMap.set(
+      'isMobile',
+      computed(() => {
+        const ua = navigator.userAgent;
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
+          ua,
+        );
+      }),
+    );
+
     const ruleParsing = computed(() => {
       try {
         const parsedRules = this.parser.parseRules(

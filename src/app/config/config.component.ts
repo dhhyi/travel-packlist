@@ -41,13 +41,6 @@ export class ConfigComponent {
   categorySorting = this.state.signal('categorySorting');
   private reset = inject(ResetEffects);
 
-  private isMobile() {
-    const ua = navigator.userAgent;
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
-      ua,
-    );
-  }
-
   async resetChecklist() {
     if (
       window.confirm(
@@ -93,7 +86,7 @@ export class ConfigComponent {
   }
 
   async exportRules() {
-    if (this.isMobile() && 'share' in navigator) {
+    if (this.state.get('isMobile') && 'share' in navigator) {
       await this.shareRules();
     } else {
       this.downloadRules();
