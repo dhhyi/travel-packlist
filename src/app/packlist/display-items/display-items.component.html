@@ -37,13 +37,18 @@
       (click)="toggleGroup(group.key)"
       (keypress)="toggleGroup(group.key)"
     >
-      <div class="flex">
+      <div class="flex items-center gap-1">
         @if (group.value.collapsed) {
           <app-icon-key-right class="h-5 w-5" />
         } @else {
           <app-icon-key-down class="h-5 w-5" />
         }
         <span class="font-bold italic">{{ group.key }}</span>
+        @if (trackWeight() && group.value.weight) {
+          <span class="text-sm"
+            >({{ serializeWeight(group.value.weight, undefined, 1) }})</span
+          >
+        }
       </div>
       <app-status
         [count]="group.value.checked"

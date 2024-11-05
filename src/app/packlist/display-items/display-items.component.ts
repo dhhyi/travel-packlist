@@ -63,6 +63,7 @@ export class DisplayItemsComponent {
           items: (Item & { checked: boolean })[];
           checked: number;
           collapsed: boolean;
+          weight: number;
         }
       >
     >((groups, item) => {
@@ -72,6 +73,7 @@ export class DisplayItemsComponent {
           items: [],
           checked: 0,
           collapsed: collapsedGroups.includes(item.category),
+          weight: 0,
         };
       }
 
@@ -80,6 +82,7 @@ export class DisplayItemsComponent {
       if (checked) {
         groups[item.category].checked++;
       }
+      groups[item.category].weight += item.weight ?? 0;
       return groups;
     }, {});
   });
