@@ -1,4 +1,12 @@
 # .husky/pre-commit
+
+if ! git diff --exit-code >/dev/null
+then
+  echo "Unstaged changes detected, saving diff to .git/unstaged.diff"
+  git diff >.git/unstaged.diff
+  git apply -R .git/unstaged.diff
+fi
+
 prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
 npm run spellcheck
 npm run lint -- --fix

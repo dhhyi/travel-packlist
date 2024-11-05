@@ -1,0 +1,8 @@
+# .husky/post-commit
+
+if test -f .git/unstaged.diff
+then
+  echo "Found pre-commit stash file, applying"
+  git apply .git/unstaged.diff
+  rm .git/unstaged.diff
+fi
