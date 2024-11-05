@@ -10,6 +10,7 @@ import { Item, Question, Rule, VariableType } from '../model/types';
 import { PersistentState } from './persistent-state';
 import { Parser } from '../model/parser';
 import { Refactor } from '../model/refactor';
+import { rulesTemplate } from '../model/template';
 
 export interface DerivedStateType {
   isMobile: boolean;
@@ -141,7 +142,10 @@ export class DerivedState {
       computed(() => {
         const rulesHash = this.signal('rulesHash')();
         const lastExportHash = this.state.signal('lastExportHash')();
-        return rulesHash !== lastExportHash;
+        const hashesDiffer = rulesHash !== lastExportHash;
+        const rules = this.state.signal('rules')();
+        const rulesAreTemplate = rules === rulesTemplate;
+        return !rulesAreTemplate && hashesDiffer;
       }),
     );
   }
