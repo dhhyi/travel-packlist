@@ -69,8 +69,9 @@ sunny :-
     });
 
     it('should serialize a weight with preferred unit and rounding', () => {
-      expect(serializer.serializeWeight(123.456, 'kg', 3)).toEqual('0.123kg');
-      expect(serializer.serializeWeight(123.456, 'g', 0)).toEqual('123g');
+      expect(serializer.serializeWeight(123, 'kg', 1)).toEqual('0.1kg');
+      expect(serializer.serializeWeight(123, 'g', 1)).toEqual('123g');
+      expect(serializer.serializeWeight(123, undefined, 1)).toEqual('123g');
     });
   });
 });

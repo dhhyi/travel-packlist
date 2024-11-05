@@ -39,11 +39,7 @@ export class Serializer {
         ? weight / 1000.0
         : (weight / 1000.0).toFixed(roundDigits)
       ).toString() + 'kg';
-    const weightInGrams =
-      (roundDigits < 0
-        ? weight * 1.0
-        : (weight * 1.0).toFixed(roundDigits)
-      ).toString() + 'g';
+    const weightInGrams = (weight * 1.0).toString() + 'g';
 
     if (!prefer) {
       return weightInKilos.length <= weightInGrams.length
