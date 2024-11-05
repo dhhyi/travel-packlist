@@ -3,8 +3,14 @@ import {
   inject,
   ChangeDetectionStrategy,
   signal,
+  effect,
+  Injector,
+  Signal,
+  computed,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import env from '../../environment/env.json';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
@@ -14,6 +20,7 @@ import { GlobalState, Languages, Themes } from '../state/global-state';
 import { ResetEffects } from '../effects/reset.effects';
 import { ImportExportRulesEffects } from '../effects/import-export-rules.effects';
 import { IconDownloadComponent } from '../icons/icon-download/icon-download.component';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,7 +46,9 @@ export class ConfigComponent {
   env = env;
   loading = signal(false);
 
+  private injector = inject(Injector);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   private state = inject(GlobalState);
   fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
@@ -47,9 +56,34 @@ export class ConfigComponent {
   trackWeight = this.state.signal('trackWeight');
   categorySorting = this.state.signal('categorySorting');
   exportReminder = this.state.signal('exportReminder');
-  exportNeeded = this.state.signal('exportNeeded');
+
   private reset = inject(ResetEffects);
+
+  exportNeeded = this.state.signal('exportNeeded');
   private impExp = inject(ImportExportRulesEffects);
+  highlightExport: Signal<boolean>;
+  @ViewChild('exportButton', { read: ElementRef })
+  private exportButton!: ElementRef;
+
+  constructor() {
+    const fragment = toSignal(this.route.fragment, { injector: this.injector });
+    this.highlightExport = computed(() => fragment() === 'export-now');
+    effect(
+      () => {
+        const fragmentValue = fragment();
+        if (fragmentValue === 'export-now') {
+          setTimeout(() => {
+            (
+              this.exportButton.nativeElement as HTMLButtonElement
+            ).scrollIntoView({
+              behavior: 'smooth',
+            });
+          }, 2000);
+        }
+      },
+      { injector: this.injector },
+    );
+  }
 
   async resetChecklist() {
     if (

@@ -1,18 +1,20 @@
 import { inject, Injectable } from '@angular/core';
 import { GlobalState } from '../state/global-state';
 import { interval } from 'rxjs';
-import { ImportExportRulesEffects } from '../effects/import-export-rules.effects';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class RulesExportReminder {
+  private router = inject(Router);
   private state = inject(GlobalState);
   private exportNeeded = this.state.signal('exportNeeded');
-  private impExp = inject(ImportExportRulesEffects);
+  private reminderActive = this.state.signal('exportReminder');
   private lastAskedHash: string[] = [];
 
   init() {
     interval(30000).subscribe(() => {
       if (
+        this.reminderActive() &&
         this.exportNeeded() &&
         this.exportOverdue() &&
         this.enoughTimeSinceLastEditPassed()
@@ -27,7 +29,7 @@ export class RulesExportReminder {
             $localize`:@@config.rules.export-reminder.question:The current rules haven't been exported for some time now. Do you want to export them now?` as string,
           )
         ) {
-          void this.impExp.exportRules();
+          void this.router.navigate(['/config'], { fragment: 'export-now' });
         }
       }
     });

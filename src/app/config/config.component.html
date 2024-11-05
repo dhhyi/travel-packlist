@@ -102,7 +102,15 @@
     Edit Rules with Code
   </button>
   <hr />
-  <button i18n="@@config.rules.export" type="button" (click)="exportRules()">
+  <button
+    #exportButton
+    i18n="@@config.rules.export"
+    type="button"
+    [ngClass]="{
+      'animate-pulse bg-green-500': highlightExport() && exportNeeded(),
+    }"
+    (click)="exportRules()"
+  >
     Export Rules
   </button>
   @if (exportNeeded()) {
