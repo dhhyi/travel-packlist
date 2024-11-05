@@ -15,6 +15,13 @@
         "files.exclude": {
           ".devcontainer": true,
           ".update_devcontainer.sh": true
+        },
+        "terminal.integrated.defaultProfile.linux": "tmux",
+        "terminal.integrated.profiles.linux": {
+          "tmux": {
+            "args": ["new-session", "-A", "-s", "session"],
+            "path": "tmux"
+          }
         }
       },
       "extensions": [

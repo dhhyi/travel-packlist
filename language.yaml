@@ -2,6 +2,8 @@
 extends: dcc://javascript-pnpm
 devcontainer:
   build:
+    packages:
+      - tmux
     user:
       - RUN npm i -g @angular/cli@latest
       - RUN echo "source <(ng completion script)" | tee -a $HOME/.bashrc $HOME/.zshrc
@@ -21,3 +23,12 @@ vscode:
     - streetsidesoftware.code-spell-checker
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
+    terminal.integrated.profiles.linux:
+      tmux:
+        path: tmux
+        args:
+          - new-session
+          - "-A"
+          - "-s"
+          - tmux
+    terminal.integrated.defaultProfile.linux: tmux
