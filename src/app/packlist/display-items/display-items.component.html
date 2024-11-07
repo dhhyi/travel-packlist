@@ -9,10 +9,9 @@
     </div>
     <div class="flex flex-col items-center">
       <span>{{ currentlyCheckedItems() }} / {{ items().length }}</span>
-      <span>
-        {{ serializeWeight(weightChecked(), undefined, 1) || "0g" }} /
-        {{ serializeWeight(weightTotal(), "kg", 1) || "0kg" }}
-      </span>
+      <span>{{
+        serializeWeightPartition(weightChecked(), weightTotal())
+      }}</span>
     </div>
   } @else {
     <div class="mb-1 flex">
@@ -46,10 +45,19 @@
           <app-icon-key-down class="h-5 w-5" />
         }
         <span class="font-bold italic">{{ categoryName }}</span>
-        @if (trackWeight() && category.weight) {
-          <span class="text-sm"
-            >({{ serializeWeight(category.weight, undefined, 1) }})</span
-          >
+        @if (trackWeight() && category.totalWeight) {
+          <span class="text-sm">
+            @if (category.checkedWeight === category.totalWeight) {
+              ({{ serializeWeight(category.checkedWeight, undefined, 1) }})
+            } @else {
+              ({{
+                serializeWeightPartition(
+                  category.checkedWeight,
+                  category.totalWeight
+                )
+              }})
+            }
+          </span>
         }
       </div>
       <app-status [count]="category.checked" [total]="category.items.length" />

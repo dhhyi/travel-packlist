@@ -63,7 +63,8 @@ export class DisplayItemsComponent {
           items: (Item & { checked: boolean })[];
           checked: number;
           collapsed: boolean;
-          weight: number;
+          totalWeight: number;
+          checkedWeight: number;
         }
       >
     >((groups, item) => {
@@ -73,7 +74,8 @@ export class DisplayItemsComponent {
           items: [],
           checked: 0,
           collapsed: collapsedGroups.includes(item.category),
-          weight: 0,
+          totalWeight: 0,
+          checkedWeight: 0,
         };
       }
 
@@ -81,8 +83,9 @@ export class DisplayItemsComponent {
       groups[item.category].items.push({ ...item, checked });
       if (checked) {
         groups[item.category].checked++;
+        groups[item.category].checkedWeight += item.weight ?? 0;
       }
-      groups[item.category].weight += item.weight ?? 0;
+      groups[item.category].totalWeight += item.weight ?? 0;
       return groups;
     }, {});
   });
@@ -118,6 +121,14 @@ export class DisplayItemsComponent {
 
   private serializer = inject(Serializer);
   serializeWeight = this.serializer.serializeWeight.bind(this.serializer);
+
+  serializeWeightPartition(checked: number, total: number): string {
+    return (
+      this.serializer.serializeWeight(checked, undefined, 1) +
+      ' / ' +
+      this.serializer.serializeWeight(total, undefined, 1)
+    );
+  }
 
   toggle(item: Item) {
     const serializedItem = serialize(item);

@@ -32,7 +32,7 @@ export class Serializer {
     roundDigits = -1,
   ): string {
     if (!weight) {
-      return '';
+      return '0g';
     }
     const weightInKilos =
       (roundDigits < 0
@@ -77,7 +77,11 @@ export class Serializer {
     } else if (input instanceof Question) {
       return input.question + ' $' + input.variable;
     } else if (input instanceof Item) {
-      return `[${input.category}] ${input.name} ${this.serializeWeight(input.weight)}`.trim();
+      let item = `[${input.category}] ${input.name}`.trim();
+      if (input.weight) {
+        item += ' ' + this.serializeWeight(input.weight);
+      }
+      return item;
     } else if (input instanceof Variable) {
       return input.variable;
     } else if (input instanceof Not) {
