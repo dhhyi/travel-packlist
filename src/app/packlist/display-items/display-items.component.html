@@ -29,35 +29,34 @@
 </div>
 
 @for (group of groupedItems() | keyvalue: orderBy(); track group.key) {
+  @let categoryName = group.key;
+  @let category = group.value;
   <div class="card mb-1">
     <div
       role="button"
       tabindex="0"
       class="flex justify-between"
-      (click)="toggleGroup(group.key)"
-      (keypress)="toggleGroup(group.key)"
+      (click)="toggleGroup(categoryName)"
+      (keypress)="toggleGroup(categoryName)"
     >
       <div class="flex items-center gap-1">
-        @if (group.value.collapsed) {
+        @if (category.collapsed) {
           <app-icon-key-right class="h-5 w-5" />
         } @else {
           <app-icon-key-down class="h-5 w-5" />
         }
-        <span class="font-bold italic">{{ group.key }}</span>
-        @if (trackWeight() && group.value.weight) {
+        <span class="font-bold italic">{{ categoryName }}</span>
+        @if (trackWeight() && category.weight) {
           <span class="text-sm"
-            >({{ serializeWeight(group.value.weight, undefined, 1) }})</span
+            >({{ serializeWeight(category.weight, undefined, 1) }})</span
           >
         }
       </div>
-      <app-status
-        [count]="group.value.checked"
-        [total]="group.value.items.length"
-      />
+      <app-status [count]="category.checked" [total]="category.items.length" />
     </div>
-    @if (!group.value.collapsed) {
+    @if (!category.collapsed) {
       <ul class="pt-2">
-        @for (item of group.value.items; track $index) {
+        @for (item of category.items; track $index) {
           <li
             role="button"
             tabindex="0"
