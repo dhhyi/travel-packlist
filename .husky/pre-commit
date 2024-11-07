@@ -1,5 +1,14 @@
 # .husky/pre-commit
 
+cleanup() {
+  if test -f .git/unstaged.diff
+  then
+    git apply .git/unstaged.diff
+    rm -f .git/unstaged.diff
+  fi
+  exit 1
+}
+
 if ! git diff --exit-code >/dev/null
 then
   echo "Unstaged changes detected, saving diff to .git/unstaged.diff"
@@ -7,11 +16,11 @@ then
   git apply -R .git/unstaged.diff
 fi
 
-prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
-npm run spellcheck
-npm run lint -- --fix
-npm run stylelint -- --fix
-npm test
-npm run build
-npm run sort-localizations
+npm run sort-localizations || cleanup
+npm test || cleanup
+npm run spellcheck || cleanup
+npm run format || cleanup
+npm run lint -- --fix || cleanup
+npm run stylelint -- --fix || cleanup
+npm run build || cleanup
 git update-index --again
