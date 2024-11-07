@@ -2,7 +2,6 @@ import {
   Component,
   computed,
   inject,
-  input,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Item } from '../../model/types';
@@ -12,10 +11,7 @@ import { Serializer } from '../../model/serializer';
 import { IconKeyDownComponent } from '../../icons/icon-key-down/icon-key-down.component';
 import { IconKeyRightComponent } from '../../icons/icon-key-right/icon-key-right.component';
 import { GlobalState } from '../../state/global-state';
-
-function serialize(item: Item): string {
-  return `${item.category}-${item.name}`;
-}
+import { PacklistEffects } from '../../effects/packlist.effects';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,82 +38,17 @@ function serialize(item: Item): string {
   `,
 })
 export class DisplayItemsComponent {
-  items = input<Item[]>([]);
-
   private state = inject(GlobalState);
-  private checkedItems = this.state.signal('checkedItems');
-  private collapsedGroups = this.state.signal('collapsedCategories');
+
+  private packlist = inject(PacklistEffects);
+  view = this.packlist.packlist;
 
   orderBy = computed(() => {
     const sorting = this.state.signal('categorySorting')();
     return sorting === 'definition' ? () => 0 : undefined;
   });
 
-  groupedItems = computed(() => {
-    const checkedItems = this.checkedItems();
-    const collapsedGroups = this.collapsedGroups();
-    return this.items().reduce<
-      Record<
-        string,
-        {
-          items: (Item & { checked: boolean })[];
-          checked: number;
-          collapsed: boolean;
-          totalWeight: number;
-          checkedWeight: number;
-        }
-      >
-    >((groups, item) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!groups[item.category]) {
-        groups[item.category] = {
-          items: [],
-          checked: 0,
-          collapsed: collapsedGroups.includes(item.category),
-          totalWeight: 0,
-          checkedWeight: 0,
-        };
-      }
-
-      const checked = checkedItems.includes(serialize(item));
-      groups[item.category].items.push({ ...item, checked });
-      if (checked) {
-        groups[item.category].checked++;
-        groups[item.category].checkedWeight += item.weight ?? 0;
-      }
-      groups[item.category].totalWeight += item.weight ?? 0;
-      return groups;
-    }, {});
-  });
-
-  currentlyCheckedItems = computed(() =>
-    Object.values(this.groupedItems()).reduce(
-      (checkedItems, group) =>
-        checkedItems + group.items.filter((item) => item.checked).length,
-      0,
-    ),
-  );
-
   trackWeight = this.state.signal('trackWeight');
-
-  weightTotal = computed(() =>
-    Math.round(
-      this.items().reduce((total, item) => total + (item.weight ?? 0), 0),
-    ),
-  );
-
-  weightChecked = computed(() =>
-    Math.round(
-      this.items().reduce(
-        (total, item) =>
-          total +
-          (this.checkedItems().includes(serialize(item))
-            ? (item.weight ?? 0)
-            : 0),
-        0,
-      ),
-    ),
-  );
 
   private serializer = inject(Serializer);
   serializeWeight = this.serializer.serializeWeight.bind(this.serializer);
@@ -130,25 +61,11 @@ export class DisplayItemsComponent {
     );
   }
 
-  toggle(item: Item) {
-    const serializedItem = serialize(item);
-    if (this.checkedItems().includes(serializedItem)) {
-      this.checkedItems.update((checkedItems) =>
-        checkedItems.filter((checkedItem) => checkedItem !== serializedItem),
-      );
-    } else {
-      this.checkedItems.update((checkedItems) => [
-        ...checkedItems,
-        serializedItem,
-      ]);
-    }
+  toggleCheckedItem(item: Item) {
+    this.packlist.toggleCheckedItem(item);
   }
 
-  toggleGroup(group: string) {
-    if (this.collapsedGroups().includes(group)) {
-      this.collapsedGroups.update((old) => old.filter((g) => g !== group));
-    } else {
-      this.collapsedGroups.update((old) => [...old, group]);
-    }
+  toggleCategoryCollapse(category: string) {
+    this.packlist.toggleCategoryCollapse(category);
   }
 }

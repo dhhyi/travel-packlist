@@ -1,33 +1,35 @@
 <div class="card mb-1">
+  @let checkedItems = view().checked;
+  @let totalItems = view().numberOfItems;
+  @let checkedWeight = view().checkedWeight;
+  @let totalWeight = view().totalWeight;
   @if (trackWeight()) {
     <div class="mb-1 flex">
       <progress
         class="grow"
-        [value]="weightChecked()"
-        [max]="weightTotal()"
+        [value]="checkedWeight"
+        [max]="totalWeight"
       ></progress>
     </div>
     <div class="flex flex-col items-center">
-      <span>{{ currentlyCheckedItems() }} / {{ items().length }}</span>
-      <span>{{
-        serializeWeightPartition(weightChecked(), weightTotal())
-      }}</span>
+      <span>{{ checkedItems }} / {{ totalItems }}</span>
+      <span>{{ serializeWeightPartition(checkedWeight, totalWeight) }}</span>
     </div>
   } @else {
     <div class="mb-1 flex">
       <progress
         class="grow"
-        [value]="currentlyCheckedItems()"
-        [max]="items().length"
+        [value]="checkedItems"
+        [max]="totalItems"
       ></progress>
     </div>
     <div class="flex justify-center">
-      <span>{{ currentlyCheckedItems() }} / {{ items().length }}</span>
+      <span>{{ checkedItems }} / {{ totalItems }}</span>
     </div>
   }
 </div>
 
-@for (group of groupedItems() | keyvalue: orderBy(); track group.key) {
+@for (group of view().categories | keyvalue: orderBy(); track group.key) {
   @let categoryName = group.key;
   @let category = group.value;
   <div class="card mb-1">
@@ -35,8 +37,8 @@
       role="button"
       tabindex="0"
       class="flex justify-between"
-      (click)="toggleGroup(categoryName)"
-      (keypress)="toggleGroup(categoryName)"
+      (click)="toggleCategoryCollapse(categoryName)"
+      (keypress)="toggleCategoryCollapse(categoryName)"
     >
       <div class="flex items-center gap-1">
         @if (category.collapsed) {
@@ -70,8 +72,8 @@
             tabindex="0"
             class="flex justify-between"
             [ngClass]="{ 'text-slate-500 line-through': item.checked }"
-            (click)="toggle(item)"
-            (keypress)="toggle(item)"
+            (click)="toggleCheckedItem(item)"
+            (keypress)="toggleCheckedItem(item)"
           >
             {{ item.name }}
             @if (item.weight && trackWeight()) {

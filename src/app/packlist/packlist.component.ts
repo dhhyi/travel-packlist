@@ -28,7 +28,6 @@ import { GlobalState } from '../state/global-state';
 export class PacklistComponent {
   private state = inject(GlobalState);
   private activeQuestions = this.state.signal('activeQuestions');
-  items = this.state.signal('activeItems');
   isLockActive = this.state.signal('answersLocked');
   model = this.state.signal('answers');
 
