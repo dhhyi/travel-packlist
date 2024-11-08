@@ -16,11 +16,21 @@ then
   git apply -R .git/unstaged.diff
 fi
 
-npm run sort-localizations || cleanup
+files=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+
+localizations=$(echo "$files" | grep -E 'src/locale/messages.*\.json' | tr '\n' ' ')
+if [ -n "$localizations" ]
+then
+  npx sort-json $localizations || cleanup
+fi
+
+prettierFiles=$(echo "$files" | tr '\n' ' ')
+npx prettier $prettierFiles --write --ignore-unknown || cleanup
+
 npm test || cleanup
 npm run spellcheck || cleanup
-npm run format || cleanup
 npm run lint -- --fix || cleanup
 npm run stylelint -- --fix || cleanup
 npm run build || cleanup
+
 git update-index --again

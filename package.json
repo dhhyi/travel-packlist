@@ -9,13 +9,11 @@
     "test": "jest --ci",
     "prepare": "husky && npm run convert-documentation",
     "convert-documentation": "node convert-documentation.mjs",
-    "format": "prettier --write '**/*.*'",
+    "format": "prettier --write \"**/*.*\"",
     "lint": "ng lint",
-    "stylelint": "stylelint '**/*.css'",
-    "sort-localizations": "sort-json src/locale/*.json",
+    "stylelint": "stylelint \"**/*.css\"",
     "extract-i18n": "ng extract-i18n --output-path src/locale --format json",
-    "postextract-i18n": "npm run sort-localizations",
-    "spellcheck": "cspell '**/*.md'"
+    "spellcheck": "cspell \"**/*.md\""
   },
   "private": true,
   "dependencies": {
