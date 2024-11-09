@@ -33,7 +33,11 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "icons"
+              },
+              {
+                "glob": "**/*",
+                "input": "www"
               }
             ],
             "styles": ["src/styles.css"],

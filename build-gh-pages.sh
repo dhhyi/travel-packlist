@@ -15,7 +15,7 @@ manifest="$(cat $target/manifest.json)"
 echo "$manifest" | jq -M ".start_url=\"$base_href\"" > $target/manifest.json
 
 for lang in de; do
-    pnpm run build --base-href $base_href --configuration=$lang --delete-output-path=false
+    pnpm ng build --base-href $base_href --configuration=$lang --delete-output-path=false
 
     cat $target/$lang/index.html \
         | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
