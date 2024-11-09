@@ -45,7 +45,10 @@
               }
             ],
             "styles": ["src/styles.css"],
-            "scripts": []
+            "scripts": [],
+            "define": {
+              "ANDROID": "false"
+            }
           },
           "configurations": {
             "production": {
@@ -64,21 +67,25 @@
               "outputHashing": "all",
               "serviceWorker": "ngsw-config.json"
             },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "android": {
+              "define": {
+                "ANDROID": "true"
+              },
+              "serviceWorker": false
+            },
             "de": {
               "localize": ["de"],
-              "outputHashing": "all",
-              "serviceWorker": "ngsw-config.json",
               "fileReplacements": [
                 {
                   "replace": "src/app/rules/documentation/documentation.component.ts",
                   "with": "src/app/rules/documentation/documentation.component.de.ts"
                 }
               ]
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"

@@ -46,6 +46,8 @@ export class ConfigComponent {
   env = env;
   loading = signal(false);
 
+  displayKoFi = !ANDROID;
+
   private injector = inject(Injector);
   private router = inject(Router);
   private route = inject(ActivatedRoute);

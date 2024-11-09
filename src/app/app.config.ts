@@ -49,7 +49,7 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalZonelessChangeDetection(),
     provideRouter(routes, withHashLocation(), withComponentInputBinding()),
     provideServiceWorker('ngsw-worker.js', {
-      enabled: !isDevMode(),
+      enabled: !isDevMode() && !ANDROID,
       registrationStrategy: 'registerWhenStable:30000',
     }),
     {

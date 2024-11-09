@@ -4,3 +4,4 @@ pnpm-lock.yaml
 .husky/**
 .editorconfig
 .update_devcontainer.sh
+/android/**

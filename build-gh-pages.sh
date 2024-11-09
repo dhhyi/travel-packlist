@@ -4,7 +4,7 @@ set -e
 # prevent mingw path conversion
 export MSYS_NO_PATHCONV=1
 
-while [[ $# -gt 0 ]]; do
+while [ $# -gt 0 ]; do
     case $1 in
         --base-href)
             base_href="$2"

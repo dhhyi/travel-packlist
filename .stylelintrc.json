@@ -1,5 +1,7 @@
 {
+  "$schema": "https://json.schemastore.org/stylelintrc",
   "extends": ["stylelint-config-standard"],
+  "ignoreFiles": ["dist/**", "android/**"],
   "rules": {
     "no-empty-source": null,
     "at-rule-no-unknown": [

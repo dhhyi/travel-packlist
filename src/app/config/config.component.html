@@ -235,17 +235,19 @@
         />
       </a>
     </p>
-    <p i18n="@@config.support.ko-fi">
-      If you like this app, please consider to
-      <a href="https://ko-fi.com/danilohoffmann" target="_blank">
-        <img
-          class="inline max-w-40"
-          src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
-          alt="Buy Me a Coffee at ko-fi.com"
-          i18n-alt="@@config.support.ko-fi.label"
-        />
-      </a>
-    </p>
+    @if (displayKoFi) {
+      <p i18n="@@config.support.ko-fi">
+        If you like this app, please consider to
+        <a href="https://ko-fi.com/danilohoffmann" target="_blank">
+          <img
+            class="inline max-w-40"
+            src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
+            alt="Buy Me a Coffee at ko-fi.com"
+            i18n-alt="@@config.support.ko-fi.label"
+          />
+        </a>
+      </p>
+    }
   </div>
 </div>
 

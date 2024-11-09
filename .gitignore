@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 /icons
+/android
 
 # Node
 /node_modules
@@ -41,3 +42,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Secrets
+release.jks
