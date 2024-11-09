@@ -33,6 +33,10 @@
             "assets": [
               {
                 "glob": "**/*",
+                "input": "assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "icons"
               },
               {
