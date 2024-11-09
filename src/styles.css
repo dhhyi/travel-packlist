@@ -44,7 +44,7 @@ router-outlet {
 }
 
 button {
-  @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 sm:max-w-72 dark:bg-slate-700 dark:text-slate-300;
+  @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
 }
 
 button.red {

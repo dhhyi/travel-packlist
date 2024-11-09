@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "selector",
   theme: {
     extend: {},
+    screens: {
+      sm: "500px",
+    },
   },
   plugins: [],
 };
