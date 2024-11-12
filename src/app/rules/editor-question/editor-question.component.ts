@@ -169,7 +169,7 @@ function validateUnusedVariable(
       map(([value, variables, question]) =>
         variables
           .filter((v) => v !== question.variable)
-          .includes(value?.trim() || '')
+          .includes(value?.trim() ?? '')
           ? { used: true }
           : null,
       ),
