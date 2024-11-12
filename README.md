@@ -43,11 +43,11 @@ For users with complex logic, be aware that you can use the transitive disabling
 Imagine the following rule snippet:
 
 ```
-:- A? $a;
-a :- B? $b, C? $c;
+:- Will it be cold? $cold;
+cold :- Bring gloves? $gloves, Bring warm drink in thermos? $thermos;
 ```
 
-With this structure, it is implicitly defined that `b` and `c` can only yield true values if `a` is also true. In other words, if `a` is false, `b` and `c` are also false. This is a simple way to structure your logic without the need for brackets.
+With this structure, it is implicitly defined that `gloves` and `thermos` can only yield true values if `cold` is also true. In other words, if `cold` is false, `gloves` and `thermos` are also false because the user will not see the questions associated with those variables. This is a simple way to structure your complex logic without the need for brackets.
 
 If that doesn't work for you I recommend converting the condition to [disjunctive normal form (DNF)](https://en.wikipedia.org/wiki/Disjunctive_normal_form) to make it flat. This in turn makes the expression bigger and harder to read, but still implementable with the current restrictions.
 
