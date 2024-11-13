@@ -6,7 +6,7 @@ const cspell = {
   overrides: [
     {
       language: "de-de",
-      filename: "**/*.de.{md,json}",
+      filename: "**/*.de.{md,json,ts}",
     },
   ],
   words: ["TravelPacklist", "EBNF"],
