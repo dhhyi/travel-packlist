@@ -149,7 +149,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
     forbidden: string[] = [],
   ) {
     if (condition instanceof Not) {
-      const forbiddenNot = [...forbidden, this.always, 'not', 'and', 'or'];
+      const forbiddenNot = [...forbidden, this.always];
       this.paintKeyword('NOT');
       this.paintCondition(
         condition.not,
@@ -159,7 +159,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
         forbiddenNot,
       );
     } else if (condition instanceof And) {
-      const forbiddenAnd = [...forbidden, this.always, 'or'];
+      const forbiddenAnd = [...forbidden, this.always];
       this.paintCondition(
         condition.left,
         (newCondition: Condition) => {
