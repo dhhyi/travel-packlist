@@ -149,7 +149,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
     forbidden: string[] = [],
   ) {
     if (condition instanceof Not) {
-      const forbiddenNot = [...forbidden, this.always];
+      const forbiddenNot = forbidden.filter((v) => v !== this.always);
       this.paintKeyword('NOT');
       this.paintCondition(
         condition.not,
