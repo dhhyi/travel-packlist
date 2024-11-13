@@ -6,7 +6,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { loadState } from './persistent-state';
+import { saveState, loadState } from './storage-util';
 import { ReadWriteState } from './types';
 
 const initialState = {
@@ -47,7 +47,7 @@ export class SessionState implements ReadWriteState<SessionStateType> {
   }
 
   private persist() {
-    sessionStorage.setItem('state', JSON.stringify(this.state));
+    saveState(sessionStorage, this.state, initialState);
   }
 
   handles(key: string): key is Keys {

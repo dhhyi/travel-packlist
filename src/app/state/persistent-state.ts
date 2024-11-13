@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { VariableType } from '../model/types';
 import { ReadWriteState } from './types';
+import { loadState, saveState } from './storage-util';
 
 const initialState = {
   // packlist
@@ -32,18 +33,6 @@ const initialState = {
 export type PersistentStateType = typeof initialState;
 type Keys = keyof PersistentStateType;
 const persistentStateKeys = Object.keys(initialState) as Keys[];
-
-export function loadState<T extends object>(storage: Storage, initial: T): T {
-  const loaded = storage.getItem('state');
-  let state: T;
-  if (loaded) {
-    const loadedState = JSON.parse(loaded) as T;
-    state = { ...initial, ...loadedState };
-  } else {
-    state = { ...initial };
-  }
-  return state;
-}
 
 @Injectable({ providedIn: 'root' })
 export class PersistentState implements ReadWriteState<PersistentStateType> {
@@ -123,7 +112,7 @@ export class PersistentState implements ReadWriteState<PersistentStateType> {
   }
 
   private persist() {
-    localStorage.setItem('state', JSON.stringify(this.state));
+    saveState(localStorage, this.state, initialState);
   }
 
   handles(key: string): key is Keys {
