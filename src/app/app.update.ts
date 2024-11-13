@@ -27,7 +27,7 @@ export class AppUpdate {
       });
 
     if (this.swUpdate.isEnabled) {
-      interval(6000)
+      interval(60000)
         .pipe(switchMap(() => this.swUpdate.checkForUpdate()))
         .subscribe((updateAvailable) => {
           if (updateAvailable) console.log('Update available');
