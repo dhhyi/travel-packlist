@@ -43,6 +43,7 @@ import { GlobalState } from '../../../state/global-state';
 })
 export class EditorConditionComponent implements AfterViewInit, OnChanges {
   condition = input.required<Condition>();
+  selectVariables = input.required<string[]>();
 
   @ViewChild('content', { read: ViewContainerRef }) content!: ViewContainerRef;
 
@@ -51,7 +52,6 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
 
   private state = inject(GlobalState);
-  private variables = this.state.signal('variables');
   private activeAnswers = this.state.signal('activeAnswers');
   private mode = this.state.signal('rulesMode');
 
@@ -95,7 +95,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
     return [
       this.please_select,
       this.always,
-      ...this.variables(),
+      ...this.selectVariables(),
       'not',
       'and',
       'or',

@@ -61,6 +61,12 @@ export class EditorRuleComponent {
 
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');
+  selectVariables = computed(() => {
+    const ruleVariables = this.rule().questions.map((q) => q.variable);
+    const allVariables = this.state.get('variables');
+    return allVariables.filter((v) => !ruleVariables.includes(v));
+  });
+
   private clipboard = inject(RulesClipboard);
 
   private parser = inject(Parser);

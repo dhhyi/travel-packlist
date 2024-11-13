@@ -2,6 +2,7 @@
   <app-editor-condition
     class="grow"
     [condition]="rule().condition"
+    [selectVariables]="selectVariables()"
     (conditionChanged)="updateCondition($event)"
   />
   @if (mode() === "edit") {
