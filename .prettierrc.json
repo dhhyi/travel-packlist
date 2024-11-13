@@ -13,6 +13,12 @@
       "options": {
         "trailingComma": "es5"
       }
+    },
+    {
+      "files": ["*.svg"],
+      "options": {
+        "parser": "html"
+      }
     }
   ]
 }
