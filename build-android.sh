@@ -5,11 +5,13 @@ cd $script_dir
 
 git clean -fdx android dist
 
-pnpm cap add android
-
 sh build-gh-pages.sh --configuration production,android
 
+pnpm cap add android
+
 pnpm cap sync
+
+pnpm generate-assets --android
 
 if [ ! -f "release.jks" ]; then
     if [ -n "$RELEASE_KEYSTORE" ]; then
