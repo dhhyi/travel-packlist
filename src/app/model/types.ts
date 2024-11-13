@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/runtime-localize */
 export class Rule {
   constructor(
     public readonly condition: Condition,
@@ -7,6 +8,9 @@ export class Rule {
 }
 
 export class Question {
+  static NEW_QUESTION_NAME =
+    $localize`:@@model.new.question:New Question` as string;
+  static NEW_VARIABLE_NAME = 'new_variable';
   constructor(
     public readonly question: string,
     public readonly variable: string,
@@ -14,6 +18,8 @@ export class Question {
 }
 
 export class Item {
+  static NEW_ITEM_NAME = $localize`:@@model.new.item:New Item` as string;
+  static NEW_CATEGORY_NAME = $localize`:@@model.new.category:New` as string;
   constructor(
     public readonly category: string,
     public readonly name: string,

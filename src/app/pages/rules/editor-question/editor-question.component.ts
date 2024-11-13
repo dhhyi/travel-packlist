@@ -26,7 +26,6 @@ import {
   withLatestFrom,
 } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 import { NgClass } from '@angular/common';
 import { GlobalState } from '../../../state/global-state';
 
@@ -132,19 +131,13 @@ export class EditorQuestionComponent implements OnChanges {
   }
 
   focusQuestion() {
-    if (
-      this.getControl('question').value ===
-      EditorRuleComponent.NEW_QUESTION_NAME
-    ) {
+    if (this.getControl('question').value === Question.NEW_QUESTION_NAME) {
       this.getControl('question').setValue('', { emitEvent: false });
     }
   }
 
   focusVariable() {
-    if (
-      this.getControl('variable').value ===
-      EditorRuleComponent.NEW_VARIABLE_NAME
-    ) {
+    if (this.getControl('variable').value === Question.NEW_VARIABLE_NAME) {
       this.getControl('variable').setValue('', { emitEvent: false });
     }
   }

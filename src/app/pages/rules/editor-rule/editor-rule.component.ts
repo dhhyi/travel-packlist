@@ -46,11 +46,6 @@ import { GlobalState } from '../../../state/global-state';
   templateUrl: './editor-rule.component.html',
 })
 export class EditorRuleComponent {
-  static NEW_ITEM_NAME = 'New Item';
-  static NEW_CATEGORY_NAME = 'New';
-  static NEW_QUESTION_NAME = 'New Question';
-  static NEW_VARIABLE_NAME = 'new_variable';
-
   rule = input.required<Rule>();
 
   readonly ruleChanged = output<Rule | null>();
@@ -123,8 +118,8 @@ export class EditorRuleComponent {
 
   addQuestion() {
     const newQuestion = new Question(
-      EditorRuleComponent.NEW_QUESTION_NAME,
-      EditorRuleComponent.NEW_VARIABLE_NAME,
+      Question.NEW_QUESTION_NAME,
+      Question.NEW_VARIABLE_NAME,
     );
     this.updateQuestion(this.rule().questions.length, newQuestion);
   }
@@ -167,10 +162,7 @@ export class EditorRuleComponent {
   }
 
   addItem() {
-    const newItem: Item = new Item(
-      EditorRuleComponent.NEW_CATEGORY_NAME,
-      EditorRuleComponent.NEW_ITEM_NAME,
-    );
+    const newItem: Item = new Item(Item.NEW_CATEGORY_NAME, Item.NEW_ITEM_NAME);
     this.updateItem(this.rule().items.length, newItem);
   }
 

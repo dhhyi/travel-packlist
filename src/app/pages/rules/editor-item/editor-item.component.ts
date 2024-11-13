@@ -17,7 +17,6 @@ import { debounceTime, filter } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
-import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
 import { GlobalState } from '../../../state/global-state';
 
 @Component({
@@ -107,7 +106,7 @@ export class EditorItemComponent implements OnChanges {
 
   focus(event: FocusEvent) {
     this.blockPatch = document.activeElement === event.target;
-    if (this.getControl('name').value === EditorRuleComponent.NEW_ITEM_NAME) {
+    if (this.getControl('name').value === Item.NEW_ITEM_NAME) {
       this.getControl('name').setValue('', { emitEvent: false });
     }
   }
