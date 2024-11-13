@@ -103,10 +103,16 @@ export class EditorQuestionComponent implements OnChanges {
           value.variable &&
           value.variable.trim() !== this.question().variable
         ) {
-          this.variableChanged.emit([
-            this.question().variable,
-            value.variable.trim(),
-          ]);
+          if (this.question().variable === Question.NEW_VARIABLE_NAME) {
+            this.questionChanged.emit(
+              new Question(this.question().question, value.variable.trim()),
+            );
+          } else {
+            this.variableChanged.emit([
+              this.question().variable,
+              value.variable.trim(),
+            ]);
+          }
         }
       });
 
