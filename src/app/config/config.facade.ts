@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { GlobalState } from '../state/global-state';
 
 @Injectable({ providedIn: 'root' })
-export class ImportExportRulesEffects {
+export class ConfigFacade {
   private state = inject(GlobalState);
 
   private generateFilename(): string {
@@ -84,5 +84,12 @@ export class ImportExportRulesEffects {
       };
       input.click();
     });
+  }
+
+  resetChecklist() {
+    this.state.set('answers', {});
+    this.state.set('checkedItems', []);
+    this.state.set('collapsedCategories', []);
+    this.state.set('answersLocked', false);
   }
 }

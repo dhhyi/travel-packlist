@@ -22,7 +22,7 @@ interface CategoryView {
   items: (Item & { checked: boolean })[];
 }
 @Injectable({ providedIn: 'root' })
-export class PacklistEffects {
+export class PacklistFacade {
   private state = inject(GlobalState);
 
   private checkedItems = this.state.signal('checkedItems');

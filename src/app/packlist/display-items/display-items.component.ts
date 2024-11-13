@@ -11,7 +11,7 @@ import { Serializer } from '../../model/serializer';
 import { IconKeyDownComponent } from '../../icons/icon-key-down/icon-key-down.component';
 import { IconKeyRightComponent } from '../../icons/icon-key-right/icon-key-right.component';
 import { GlobalState } from '../../state/global-state';
-import { PacklistEffects } from '../../effects/packlist.effects';
+import { PacklistFacade } from '../packlist.facade';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,8 +40,8 @@ import { PacklistEffects } from '../../effects/packlist.effects';
 export class DisplayItemsComponent {
   private state = inject(GlobalState);
 
-  private packlist = inject(PacklistEffects);
-  view = this.packlist.packlist;
+  private facade = inject(PacklistFacade);
+  view = this.facade.packlist;
 
   orderBy = computed(() => {
     const sorting = this.state.signal('categorySorting')();
@@ -62,10 +62,10 @@ export class DisplayItemsComponent {
   }
 
   toggleCheckedItem(item: Item) {
-    this.packlist.toggleCheckedItem(item);
+    this.facade.toggleCheckedItem(item);
   }
 
   toggleCategoryCollapse(category: string) {
-    this.packlist.toggleCategoryCollapse(category);
+    this.facade.toggleCategoryCollapse(category);
   }
 }

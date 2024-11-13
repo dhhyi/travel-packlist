@@ -17,8 +17,7 @@ import { DatePipe, NgClass } from '@angular/common';
 import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
 import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
 import { GlobalState, Languages, Themes } from '../state/global-state';
-import { ResetEffects } from '../effects/reset.effects';
-import { ImportExportRulesEffects } from '../effects/import-export-rules.effects';
+import { ConfigFacade } from './config.facade';
 import { IconDownloadComponent } from '../icons/icon-download/icon-download.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -59,14 +58,12 @@ export class ConfigComponent {
   categorySorting = this.state.signal('categorySorting');
   exportReminder = this.state.signal('exportReminder');
 
-  private reset = inject(ResetEffects);
-
   exportNeeded = this.state.signal('exportNeeded');
-  private impExp = inject(ImportExportRulesEffects);
+  private facade = inject(ConfigFacade);
   highlightExport: Signal<boolean>;
   @ViewChild('exportButton', { read: ElementRef })
   private exportButton!: ElementRef;
-  isExportAvailable = this.impExp.isExportAvailable.bind(this.impExp);
+  isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
 
   constructor() {
     const fragment = toSignal(this.route.fragment, { injector: this.injector });
@@ -94,7 +91,7 @@ export class ConfigComponent {
         $localize`:@@config.checklist.reset.question:Are you sure you want to reset the checklist?` as string,
       )
     ) {
-      this.reset.resetChecklist();
+      this.facade.resetChecklist();
       await this.router.navigate(['/packlist']);
     }
   }
@@ -112,14 +109,14 @@ export class ConfigComponent {
 
   async importRules() {
     this.loading.set(true);
-    if (await this.impExp.importRules()) {
+    if (await this.facade.importRules()) {
       await this.router.navigate(['/packlist']);
     }
     this.loading.set(false);
   }
 
   async exportRules() {
-    await this.impExp.exportRules();
+    await this.facade.exportRules();
   }
 
   getTheme() {
