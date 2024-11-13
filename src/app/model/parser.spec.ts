@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Parser, PARSER_CONFIG_PROVIDER, ParserConfig } from './parser';
-import { And, Item, Question } from './types';
+import { And, Item, Not, Question, Variable } from './types';
 
 describe('Parser', () => {
   let parser: Parser;
@@ -70,6 +70,19 @@ describe('Parser', () => {
       expect(condition.evaluate({ a: false, b: true, c: false })).toBe(false);
       expect(condition.evaluate({ a: true, b: false, c: false })).toBe(true);
       expect(condition.evaluate({ a: false, b: false, c: false })).toBe(false);
+    });
+
+    it('should simplify "NOT NOT NOT a" to " NOT a"', () => {
+      const condition = parser.parseCondition('NOT NOT NOT a');
+      expect(condition instanceof Not).toBe(true);
+      expect((condition as Not).not instanceof Variable).toBe(true);
+      expect(((condition as Not).not as Variable).variable).toEqual('a');
+    });
+
+    it('should simplify "NOT NOT NOT NOT a" to "a"', () => {
+      const condition = parser.parseCondition('NOT NOT NOT NOT a');
+      expect(condition instanceof Variable).toBe(true);
+      expect((condition as Variable).variable).toEqual('a');
     });
 
     it('should throw an error if the condition is invalid', () => {

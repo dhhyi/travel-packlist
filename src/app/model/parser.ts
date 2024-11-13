@@ -31,7 +31,10 @@ export class Parser {
   private injector = inject(Injector);
 
   parseCondition(input: string): Condition {
-    const tokens = input.trim().split(' ');
+    const tokens = input
+      .replaceAll(/NOT\s+NOT/g, '')
+      .trim()
+      .split(' ');
 
     if (tokens.includes('OR')) {
       const orIndex = tokens.indexOf('OR');
