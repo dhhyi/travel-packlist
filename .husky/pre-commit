@@ -1,5 +1,11 @@
 # .husky/pre-commit
 
+if test -f .git/unstaged.diff
+then
+  echo "Found .git/unstaged.diff, please check if this is a result of a previous failed commit and remove it before trying again."
+  exit 2
+fi
+
 cleanup() {
   if test -f .git/unstaged.diff
   then
