@@ -16,6 +16,10 @@ export class ImportExportRulesEffects {
 
   private downloadRules() {
     const rules = this.state.get('rules');
+    if (!rules) {
+      console.error('No rules available');
+      return;
+    }
     const blob = new Blob([rules], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -26,6 +30,10 @@ export class ImportExportRulesEffects {
 
   private async shareRules() {
     const rules = this.state.get('rules');
+    if (!rules) {
+      console.error('No rules available');
+      return;
+    }
     const fileName = this.generateFilename();
     await navigator.share({
       title: fileName,
@@ -40,6 +48,10 @@ export class ImportExportRulesEffects {
   private resetHash() {
     this.state.set('lastExportHash', this.state.get('rulesHash'));
     this.state.set('lastExportDate', new Date().getTime());
+  }
+
+  isExportAvailable(): boolean {
+    return !!this.state.get('rules');
   }
 
   async exportRules() {

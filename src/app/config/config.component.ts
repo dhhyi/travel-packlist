@@ -66,6 +66,7 @@ export class ConfigComponent {
   highlightExport: Signal<boolean>;
   @ViewChild('exportButton', { read: ElementRef })
   private exportButton!: ElementRef;
+  isExportAvailable = this.impExp.isExportAvailable.bind(this.impExp);
 
   constructor() {
     const fragment = toSignal(this.route.fragment, { injector: this.injector });

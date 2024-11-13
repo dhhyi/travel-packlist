@@ -55,6 +55,10 @@ button.icon {
   @apply m-0 flex justify-center border-none bg-transparent p-1 align-middle;
 }
 
+button[disabled] {
+  @apply bg-disabled cursor-not-allowed text-gray-500;
+}
+
 fieldset {
   @apply rounded-md border border-slate-300 p-2;
 }

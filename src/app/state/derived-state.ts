@@ -52,11 +52,17 @@ export class DerivedState {
       }),
     );
 
+    const rulesOrTemplate = computed(() => {
+      const raw = this.state.signal('rules')();
+      if (!raw) {
+        return rulesTemplate;
+      }
+      return raw;
+    });
+
     const ruleParsing = computed(() => {
       try {
-        const parsedRules = this.parser.parseRules(
-          this.state.signal('rules')(),
-        );
+        const parsedRules = this.parser.parseRules(rulesOrTemplate());
         return { parsedRules, ruleParserError: '' };
       } catch (error) {
         if (error instanceof Error) {
@@ -120,10 +126,7 @@ export class DerivedState {
 
     this.signalMap.set(
       'rulesHash',
-      computed(() => {
-        const rules = this.state.signal('rules')();
-        return cyrb53(rules).toString(16);
-      }),
+      computed(() => cyrb53(rulesOrTemplate()).toString(16)),
     );
 
     const lastRulesAction = signal(new Date().getTime());
@@ -131,7 +134,7 @@ export class DerivedState {
 
     effect(
       () => {
-        this.state.signal('rules')();
+        rulesOrTemplate();
         lastRulesAction.set(new Date().getTime());
       },
       { allowSignalWrites: true },
@@ -143,9 +146,8 @@ export class DerivedState {
         const rulesHash = this.signal('rulesHash')();
         const lastExportHash = this.state.signal('lastExportHash')();
         const hashesDiffer = rulesHash !== lastExportHash;
-        const rules = this.state.signal('rules')();
-        const rulesAreTemplate = rules === rulesTemplate;
-        return !rulesAreTemplate && hashesDiffer;
+        const rawRules = this.state.signal('rules')();
+        return !!rawRules && hashesDiffer;
       }),
     );
   }

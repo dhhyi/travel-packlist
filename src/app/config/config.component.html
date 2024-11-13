@@ -109,6 +109,7 @@
     [ngClass]="{
       'animate-pulse bg-green-500': highlightExport() && exportNeeded(),
     }"
+    [disabled]="!isExportAvailable()"
     (click)="exportRules()"
   >
     Export Rules

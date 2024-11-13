@@ -7,7 +7,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { VariableType } from '../model/types';
-import { rulesTemplate } from '../model/template';
 import { ReadWriteState } from './types';
 
 const initialState = {
@@ -16,7 +15,7 @@ const initialState = {
   checkedItems: [] as string[],
   collapsedCategories: [] as string[],
   // rules
-  rules: rulesTemplate,
+  rules: undefined as string | undefined,
   // config
   fadeOutDisabledRules: false,
   highlightVariableStatus: false,
