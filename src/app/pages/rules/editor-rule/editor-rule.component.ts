@@ -13,20 +13,20 @@ import {
   PleaseSelect,
   Question,
   Rule,
-} from '../../model/types';
+} from '../../../model/types';
 import { EditorConditionComponent } from '../editor-condition/editor-condition.component';
 import { EditorQuestionComponent } from '../editor-question/editor-question.component';
 import { EditorItemComponent } from '../editor-item/editor-item.component';
-import { Serializer } from '../../model/serializer';
-import { Parser } from '../../model/parser';
+import { Serializer } from '../../../model/serializer';
+import { Parser } from '../../../model/parser';
 import { RulesClipboard } from '../rules.clipboard';
-import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
-import { IconCutComponent } from '../../icons/icon-cut/icon-cut.component';
-import { IconPasteComponent } from '../../icons/icon-paste/icon-paste.component';
-import { IconDownComponent } from '../../icons/icon-down/icon-down.component';
-import { IconUpComponent } from '../../icons/icon-up/icon-up.component';
-import { IconClearComponent } from '../../icons/icon-clear/icon-clear.component';
-import { GlobalState } from '../../state/global-state';
+import { IconDeleteComponent } from '../../../icons/icon-delete/icon-delete.component';
+import { IconCutComponent } from '../../../icons/icon-cut/icon-cut.component';
+import { IconPasteComponent } from '../../../icons/icon-paste/icon-paste.component';
+import { IconDownComponent } from '../../../icons/icon-down/icon-down.component';
+import { IconUpComponent } from '../../../icons/icon-up/icon-up.component';
+import { IconClearComponent } from '../../../icons/icon-clear/icon-clear.component';
+import { GlobalState } from '../../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

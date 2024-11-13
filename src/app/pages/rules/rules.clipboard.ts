@@ -1,8 +1,8 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { Item, Question } from '../model/types';
-import { GlobalState } from '../state/global-state';
-import { Serializer } from '../model/serializer';
-import { Parser } from '../model/parser';
+import { Item, Question } from '../../model/types';
+import { GlobalState } from '../../state/global-state';
+import { Serializer } from '../../model/serializer';
+import { Parser } from '../../model/parser';
 
 @Injectable({ providedIn: 'root' })
 export class RulesClipboard {

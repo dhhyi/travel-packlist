@@ -10,15 +10,15 @@ import {
 } from '@angular/core';
 import { RulesClipboard } from '../rules.clipboard';
 import { NgClass, ViewportScroller } from '@angular/common';
-import { IconViewComponent } from '../../icons/icon-view/icon-view.component';
-import { IconEditComponent } from '../../icons/icon-edit/icon-edit.component';
-import { IconDeleteComponent } from '../../icons/icon-delete/icon-delete.component';
-import { IconReorderComponent } from '../../icons/icon-reorder/icon-reorder.component';
-import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
-import { IconSearchComponent } from '../../icons/icon-search/icon-search.component';
+import { IconViewComponent } from '../../../icons/icon-view/icon-view.component';
+import { IconEditComponent } from '../../../icons/icon-edit/icon-edit.component';
+import { IconDeleteComponent } from '../../../icons/icon-delete/icon-delete.component';
+import { IconReorderComponent } from '../../../icons/icon-reorder/icon-reorder.component';
+import { IconSwapComponent } from '../../../icons/icon-swap/icon-swap.component';
+import { IconSearchComponent } from '../../../icons/icon-search/icon-search.component';
 import { FormsModule } from '@angular/forms';
-import { IconClearComponent } from '../../icons/icon-clear/icon-clear.component';
-import { GlobalState } from '../../state/global-state';
+import { IconClearComponent } from '../../../icons/icon-clear/icon-clear.component';
+import { GlobalState } from '../../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

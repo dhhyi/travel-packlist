@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { GlobalState } from '../state/global-state';
+import { GlobalState } from '../../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigFacade {

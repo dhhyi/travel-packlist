@@ -27,7 +27,7 @@ type ParserState =
   selector: 'app-edit-rules-raw',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './edit-rules-raw.component.html',
+  templateUrl: './rules-raw.component.html',
   styles: `
     :host {
       @apply flex flex-col;

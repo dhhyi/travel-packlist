@@ -4,14 +4,14 @@ import {
   ChangeDetectionStrategy,
   computed,
 } from '@angular/core';
-import { PleaseSelect, Rule } from '../model/types';
+import { PleaseSelect, Rule } from '../../model/types';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
-import { Serializer } from '../model/serializer';
+import { Serializer } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
-import { IconSwapComponent } from '../icons/icon-swap/icon-swap.component';
+import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
 import { NgClass } from '@angular/common';
-import { Refactor } from '../model/refactor';
-import { GlobalState } from '../state/global-state';
+import { Refactor } from '../../model/refactor';
+import { GlobalState } from '../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

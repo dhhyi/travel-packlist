@@ -9,9 +9,9 @@ import fs from "fs";
  */
 const documents = {
   "src/doc/documentation.md":
-    "src/app/rules/documentation/documentation.component.html",
+    "src/app/pages/documentation/documentation.component.html",
   "src/doc/documentation.de.md":
-    "src/app/rules/documentation/documentation.component.de.html",
+    "src/app/pages/documentation/documentation.component.de.html",
 };
 
 /**
@@ -28,7 +28,7 @@ const languages = ["de"];
  * @type {Record<string, { languages: string[]; replacers: Replacer[]  }>}
  */
 const components = {
-  "src/app/rules/documentation/documentation.component.ts": {
+  "src/app/pages/documentation/documentation.component.ts": {
     languages,
     replacers: [
       (content, lang) =>
@@ -54,6 +54,7 @@ function convertMarkdown(input, output) {
 
   const header = "<!-- eslint-disable @angular-eslint/template/i18n -->";
 
+  console.log("generating", output);
   fs.writeFileSync(output, header + "\n\n" + html);
 }
 
@@ -77,6 +78,7 @@ function copyLocalizedComponent(file, languages, replacers) {
       `.${fileExtension}`,
       `.${lang}.${fileExtension}`,
     );
+    console.log("generating", localizedFile);
     fs.writeFileSync(localizedFile, output, { encoding: "utf-8" });
   }
 }

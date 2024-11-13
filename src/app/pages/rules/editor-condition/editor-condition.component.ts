@@ -19,17 +19,17 @@ import {
   Or,
   PleaseSelect,
   Variable,
-} from '../../model/types';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Serializer } from '../../model/serializer';
+} from '../../../model/types';
+import { NgClass } from '@angular/common';
+import { Serializer } from '../../../model/serializer';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { GlobalState } from '../../state/global-state';
+import { GlobalState } from '../../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
   standalone: true,
-  imports: [NgTemplateOutlet, NgClass],
+  imports: [NgClass],
   templateUrl: './editor-condition.component.html',
   styles: `
     :host {

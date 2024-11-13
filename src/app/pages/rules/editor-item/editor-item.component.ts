@@ -6,7 +6,7 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Item } from '../../model/types';
+import { Item } from '../../../model/types';
 import {
   FormControl,
   FormGroup,
@@ -15,10 +15,10 @@ import {
 } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { Parser } from '../../model/parser';
-import { Serializer } from '../../model/serializer';
+import { Parser } from '../../../model/parser';
+import { Serializer } from '../../../model/serializer';
 import { EditorRuleComponent } from '../editor-rule/editor-rule.component';
-import { GlobalState } from '../../state/global-state';
+import { GlobalState } from '../../../state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

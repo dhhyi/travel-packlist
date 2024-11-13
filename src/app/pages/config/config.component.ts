@@ -11,14 +11,14 @@ import {
   ElementRef,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import env from '../../environment/env.json';
+import env from '../../../environment/env.json';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
-import { IconFlagGermanyComponent } from '../icons/icon-flag-germany/icon-flag-germany.component';
-import { IconFlagUkComponent } from '../icons/icon-flag-uk/icon-flag-uk.component';
-import { GlobalState, Languages, Themes } from '../state/global-state';
+import { IconFlagGermanyComponent } from '../../icons/icon-flag-germany/icon-flag-germany.component';
+import { IconFlagUkComponent } from '../../icons/icon-flag-uk/icon-flag-uk.component';
+import { GlobalState, Languages, Themes } from '../../state/global-state';
 import { ConfigFacade } from './config.facade';
-import { IconDownloadComponent } from '../icons/icon-download/icon-download.component';
+import { IconDownloadComponent } from '../../icons/icon-download/icon-download.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({

@@ -10,13 +10,13 @@ import {
   withHashLocation,
 } from '@angular/router';
 
-import { routes } from './app.routes';
+import { routes } from './pages/app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
-import { AppInit } from './app.init';
+import { AppInit } from './services/app.init';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from './model/parser';
 import { GlobalState } from './state/global-state';
-import { AppUpdate } from './app.update';
-import { RulesExportReminder } from './rules/rules.export-reminder';
+import { AppUpdate } from './services/app.update';
+import { RulesExportReminder } from './services/rules.export-reminder';
 
 function initializeApp(appInit: AppInit): () => void {
   return () => {

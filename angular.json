@@ -82,8 +82,8 @@
               "localize": ["de"],
               "fileReplacements": [
                 {
-                  "replace": "src/app/rules/documentation/documentation.component.ts",
-                  "with": "src/app/rules/documentation/documentation.component.de.ts"
+                  "replace": "src/app/pages/documentation/documentation.component.ts",
+                  "with": "src/app/pages/documentation/documentation.component.de.ts"
                 },
                 {
                   "replace": "src/app/model/template.ts",

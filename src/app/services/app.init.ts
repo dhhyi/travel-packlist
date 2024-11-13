@@ -1,7 +1,7 @@
 import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { GlobalState, Languages, Themes } from './state/global-state';
+import { GlobalState, Languages, Themes } from '../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
