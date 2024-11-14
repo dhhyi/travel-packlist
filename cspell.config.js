@@ -9,7 +9,7 @@ const cspell = {
       filename: "**/*.de.{md,json,ts}",
     },
   ],
-  words: ["TravelPacklist", "EBNF"],
+  words: ["TravelPacklist", "EBNF", "packlist"],
 };
 
 module.exports = cspell;
