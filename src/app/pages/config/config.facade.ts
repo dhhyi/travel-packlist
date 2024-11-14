@@ -65,6 +65,15 @@ export class ConfigFacade {
 
   async importRules() {
     return new Promise<boolean>((resolve) => {
+      if (
+        this.state.get('exportNeeded') &&
+        !window.confirm(
+          $localize`:@@config.rules.import.export-first:You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?` as string,
+        )
+      ) {
+        resolve(false);
+        return;
+      }
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.txt';
