@@ -77,13 +77,21 @@ export class Parser {
     return new Question(tokens.groups['question'], tokens.groups['variable']);
   }
 
-  extractItemNameAndWeight(input: string | undefined | null): [string, number] {
+  isTrackWeight(): boolean {
+    return this.injector
+      .get(PARSER_CONFIG_PROVIDER, defaultConfig)
+      .isTrackWeight();
+  }
+
+  extractItemNameAndWeight(
+    input: string | undefined | null,
+    force = false,
+  ): [string, number] {
     if (!input) {
       return ['', 0];
     }
 
-    const state = this.injector.get(PARSER_CONFIG_PROVIDER, defaultConfig);
-    if (!state.isTrackWeight()) {
+    if (!force && !this.isTrackWeight()) {
       return [input.trim(), 0];
     }
 

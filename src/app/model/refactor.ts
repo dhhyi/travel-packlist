@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   And,
   Condition,
@@ -10,6 +10,8 @@ import {
   Variable,
   VariableType,
 } from './types';
+import { Serializer } from './serializer';
+import { Parser } from './parser';
 
 interface FilterFunctionType {
   model: Record<string, VariableType>;
@@ -18,6 +20,9 @@ interface FilterFunctionType {
 
 @Injectable({ providedIn: 'root' })
 export class Refactor {
+  private serializer = inject(Serializer);
+  private parser = inject(Parser);
+
   extractVariables(rules: Rule[]): string[] {
     return rules.reduce<string[]>(
       (acc, rule) => [
@@ -149,5 +154,29 @@ export class Refactor {
     // this will never happen
     const type: never = item;
     throw new Error('Unknown item type', type);
+  }
+
+  countItemsAndWeights(rules: Rule[]): { items: number; weights: number } {
+    return rules.reduce(
+      (old, rule) => {
+        return rule.items.reduce((acc, item) => {
+          let itemHasWeight: number;
+          if (this.parser.isTrackWeight()) {
+            itemHasWeight = item.weight ? 1 : 0;
+          } else {
+            const [, weight] = this.parser.extractItemNameAndWeight(
+              this.serializer.serialize(item),
+              true,
+            );
+            itemHasWeight = weight ? 1 : 0;
+          }
+          return {
+            items: acc.items + 1,
+            weights: acc.weights + itemHasWeight,
+          };
+        }, old);
+      },
+      { items: 0, weights: 0 },
+    );
   }
 }

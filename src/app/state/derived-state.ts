@@ -18,6 +18,7 @@ export interface DerivedStateType {
   rulesOrTemplate: string;
   parsedRules: Rule[];
   ruleParserError: string;
+  percentageOfItemsWithWeights: number;
   categories: string[];
   variables: string[];
   activeRules: Rule[];
@@ -81,6 +82,21 @@ export class DerivedState {
         };
       }
     });
+
+    const percentageOfItemsWithWeights = computed(() => {
+      const { ruleParserError, parsedRules } = ruleParsing();
+      if (!ruleParserError) {
+        const { items, weights } =
+          this.refactor.countItemsAndWeights(parsedRules);
+        return weights / items;
+      }
+      return 0;
+    });
+
+    this.signalMap.set(
+      'percentageOfItemsWithWeights',
+      percentageOfItemsWithWeights,
+    );
 
     const parsedRules = computed(() => ruleParsing().parsedRules);
 

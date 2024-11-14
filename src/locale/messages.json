@@ -33,6 +33,7 @@
     "config.rules.fadeout-disabled": "Fade out disabled rules in editor",
     "config.rules.highlight-variables": "Highlight variable status in editor",
     "config.rules.import": " Import Rules ",
+    "config.rules.import.suggest-track-weight": "It seems that the imported rules contain items with weights. Shall we enable the weight tracking?",
     "config.rules.refactor-variables": "Rename all occurrences when renaming variables",
     "config.rules.theme": "Theme",
     "config.rules.theme.dark": " Dark ",

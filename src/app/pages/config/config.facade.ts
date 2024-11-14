@@ -80,10 +80,30 @@ export class ConfigFacade {
         const text = await file.text();
         this.state.set('rules', text);
         this.resetHash();
+
+        setTimeout(() => {
+          this.promptEnableWeightTracking();
+        }, 2000);
+
         resolve(true);
       };
       input.click();
     });
+  }
+
+  private promptEnableWeightTracking() {
+    if (
+      this.state.get('percentageOfItemsWithWeights') > 0.1 &&
+      !this.state.get('trackWeight')
+    ) {
+      if (
+        window.confirm(
+          $localize`:@@config.rules.import.suggest-track-weight:It seems that the imported rules contain items with weights. Shall we enable the weight tracking?` as string,
+        )
+      ) {
+        this.state.set('trackWeight', true);
+      }
+    }
   }
 
   resetChecklist() {

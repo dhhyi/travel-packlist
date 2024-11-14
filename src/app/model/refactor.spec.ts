@@ -129,4 +129,18 @@ rain AND clouds :-
       expect(result.model).toEqual({ sunny: false });
     });
   });
+
+  describe('countItemsAndWeights', () => {
+    it('should count items and weights', () => {
+      const rules = [
+        parser.parseRule(
+          ':- [utility] Scrubber 130g, [clothes] Down Jacket 835g, [clothes] Beanie 70g',
+        ),
+        parser.parseRule('wash :- [utility] Clothesline 70g, [utility] clamps'),
+      ];
+
+      const result = refactor.countItemsAndWeights(rules);
+      expect(result).toEqual({ items: 5, weights: 4 });
+    });
+  });
 });
