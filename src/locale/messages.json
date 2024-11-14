@@ -26,6 +26,7 @@
     "config.rules.documentation": " Documentation ",
     "config.rules.edit": " Edit Rules ",
     "config.rules.edit-raw": " Edit Rules with Code ",
+    "config.rules.edit.discard-comments": "The current rules contain comments. Editing them with the graphical editor will discard these comments. Do you want to proceed?",
     "config.rules.export": " Export Rules ",
     "config.rules.export-needed": " Current rules are not backed up! ",
     "config.rules.export-reminder": "Remind me to regularly export rules",

@@ -16,6 +16,7 @@ export interface DerivedStateType {
   isMobile: boolean;
   rulesHash: string;
   rulesOrTemplate: string;
+  rulesContainComments: boolean;
   parsedRules: Rule[];
   ruleParserError: string;
   percentageOfItemsWithWeights: number;
@@ -51,6 +52,14 @@ export class DerivedState {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
           ua,
         );
+      }),
+    );
+
+    this.signalMap.set(
+      'rulesContainComments',
+      computed(() => {
+        const raw = this.state.signal('rules')();
+        return !!raw && raw.includes('#');
       }),
     );
 

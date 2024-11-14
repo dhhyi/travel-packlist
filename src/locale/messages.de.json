@@ -26,6 +26,7 @@
     "config.rules.documentation": "Dokumentation",
     "config.rules.edit": "Regeln bearbeiten",
     "config.rules.edit-raw": "Regeln als Code bearbeiten",
+    "config.rules.edit.discard-comments": "Die aktuellen Regeln enthalten Kommentare. Wenn du sie im grafischen Editor bearbeitest, werden diese Kommentare verworfen. Möchtest du trotzdem fortfahren?",
     "config.rules.export": "Regeln exportieren",
     "config.rules.export-needed": "Die aktuellen Regeln sind nicht gesichert!",
     "config.rules.export-reminder": "Erinnere mich daran, die Regeln regelmäßig zu exportieren",
