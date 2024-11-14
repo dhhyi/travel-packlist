@@ -37,6 +37,6 @@ npm test || cleanup
 npm run spellcheck || cleanup
 npm run lint -- --fix || cleanup
 npm run stylelint -- --fix || cleanup
-npm run build || cleanup
+npm run build -- --localize --i18n-duplicate-translation=error --i18n-missing-translation=error --output-path node_modules/.build || cleanup
 
 git update-index --again
