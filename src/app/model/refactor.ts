@@ -19,13 +19,13 @@ interface FilterFunctionType {
 @Injectable({ providedIn: 'root' })
 export class Refactor {
   extractVariables(rules: Rule[]): string[] {
-    const variables = new Set<string>();
-    for (const rule of rules) {
-      for (const question of rule.questions) {
-        variables.add(question.variable);
-      }
-    }
-    return Array.from(variables);
+    return rules.reduce<string[]>(
+      (acc, rule) => [
+        ...acc,
+        ...rule.questions.map((question) => question.variable),
+      ],
+      [],
+    );
   }
 
   extractCategories(rules: Rule[]): string[] {

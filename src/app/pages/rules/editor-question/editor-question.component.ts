@@ -20,9 +20,11 @@ import {
 import {
   debounceTime,
   filter,
+  iif,
   map,
   Observable,
   of,
+  switchMap,
   withLatestFrom,
 } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
@@ -168,13 +170,21 @@ function validateUnusedVariable(
 ): AsyncValidatorFn {
   return (control: AbstractControl<string | null>) =>
     of(control.value).pipe(
-      withLatestFrom(variables, question),
-      map(([value, variables, question]) =>
-        variables
-          .filter((v) => v !== question.variable)
-          .includes(value?.trim() ?? '')
-          ? { used: true }
-          : null,
+      withLatestFrom(variables.pipe(map((arr) => [...arr])), question),
+      switchMap(([value, variables, question]) =>
+        iif(
+          () => !variables.find((v) => v === question.variable),
+          of(null),
+          of([value, variables, question] as const).pipe(
+            map(([value, variables, question]) => {
+              const used = variables.findIndex((v) => v === question.variable);
+              variables.splice(used, 1);
+              return variables.includes(value?.trim() ?? '')
+                ? { used: true }
+                : null;
+            }),
+          ),
+        ),
       ),
     );
 }

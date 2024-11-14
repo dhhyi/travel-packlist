@@ -22,7 +22,7 @@
       (focus)="focusVariable()"
     />
   </div>
-  @if (mode() === "edit" && control.valid === false) {
+  @if (mode() === "edit" && control.valid === false && control.touched) {
     <div class="m-1 flex flex-col text-sm text-red-500">
       @if (getControl("question").errors?.["pattern"]) {
         <span i18n="@@edit.question.question.invalid-characters"
