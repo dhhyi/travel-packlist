@@ -80,6 +80,10 @@ module.exports = tseslint.config(
       "@typescript-eslint/no-unnecessary-parameter-property-assignment":
         "error",
       "@typescript-eslint/no-unnecessary-qualifier": "error",
+      "@typescript-eslint/no-unnecessary-type-assertion": [
+        "error",
+        { typesToIgnore: ["string"] },
+      ],
       "no-restricted-imports": [
         "error",
         {
