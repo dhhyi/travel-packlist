@@ -4,7 +4,6 @@ import {
   ChangeDetectionStrategy,
   signal,
   effect,
-  Injector,
   Signal,
   computed,
   ViewChild,
@@ -47,7 +46,6 @@ export class ConfigComponent {
 
   displayKoFi = !ANDROID;
 
-  private injector = inject(Injector);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -66,23 +64,20 @@ export class ConfigComponent {
   isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
 
   constructor() {
-    const fragment = toSignal(this.route.fragment, { injector: this.injector });
+    const fragment = toSignal(this.route.fragment);
     this.highlightExport = computed(() => fragment() === 'export-now');
-    effect(
-      () => {
-        const fragmentValue = fragment();
-        if (fragmentValue === 'export-now') {
-          setTimeout(() => {
-            (
-              this.exportButton.nativeElement as HTMLButtonElement
-            ).scrollIntoView({
+    effect(() => {
+      const fragmentValue = fragment();
+      if (fragmentValue === 'export-now') {
+        setTimeout(() => {
+          (this.exportButton.nativeElement as HTMLButtonElement).scrollIntoView(
+            {
               behavior: 'smooth',
-            });
-          }, 2000);
-        }
-      },
-      { injector: this.injector },
-    );
+            },
+          );
+        }, 2000);
+      }
+    });
   }
 
   async resetChecklist() {
