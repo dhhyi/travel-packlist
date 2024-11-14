@@ -50,6 +50,7 @@ export class EditorQuestionComponent implements OnChanges {
   variableActive = computed(
     () => this.state.signal('activeAnswers')()[this.question().variable],
   );
+  private refactorVariables = this.state.signal('refactorVariables');
 
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
@@ -103,7 +104,10 @@ export class EditorQuestionComponent implements OnChanges {
           value.variable &&
           value.variable.trim() !== this.question().variable
         ) {
-          if (this.question().variable === Question.NEW_VARIABLE_NAME) {
+          if (
+            this.question().variable === Question.NEW_VARIABLE_NAME ||
+            !this.refactorVariables()
+          ) {
             this.questionChanged.emit(
               new Question(this.question().question, value.variable.trim()),
             );

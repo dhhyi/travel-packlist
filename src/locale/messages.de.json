@@ -33,6 +33,7 @@
     "config.rules.fadeout-disabled": "Inaktive Regeln im Editor ausgrauen",
     "config.rules.highlight-variables": "Variablenstatus im Editor anzeigen",
     "config.rules.import": "Regeln importieren",
+    "config.rules.refactor-variables": "Benenne alle Vorkommen um, wenn Variablen umbenannt werden",
     "config.rules.theme": "Theme",
     "config.rules.theme.dark": "Dark",
     "config.rules.theme.light": "Light",

@@ -20,6 +20,7 @@ const initialState = {
   // config
   fadeOutDisabledRules: false,
   highlightVariableStatus: false,
+  refactorVariables: true,
   categorySorting: 'alphabetically' as 'alphabetically' | 'definition',
   trackWeight: false,
   answersLocked: false,

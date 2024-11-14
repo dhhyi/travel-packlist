@@ -52,6 +52,7 @@ export class ConfigComponent {
   private state = inject(GlobalState);
   fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
   highlightVariableStatus = this.state.signal('highlightVariableStatus');
+  refactorVariables = this.state.signal('refactorVariables');
   trackWeight = this.state.signal('trackWeight');
   categorySorting = this.state.signal('categorySorting');
   exportReminder = this.state.signal('exportReminder');

@@ -90,6 +90,16 @@
       >Highlight variable status in editor</label
     >
   </div>
+  <div class="flex items-center gap-3">
+    <input
+      type="checkbox"
+      id="variables-refactor"
+      [(ngModel)]="refactorVariables"
+    />
+    <label i18n="@@config.rules.refactor-variables" for="variables-refactor"
+      >Rename all occurrences when renaming variables</label
+    >
+  </div>
   <hr />
   <button
     i18n="@@config.rules.documentation"
