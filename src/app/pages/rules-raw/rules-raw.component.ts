@@ -37,12 +37,12 @@ type ParserState =
 export class EditRulesRawComponent {
   private state = inject(GlobalState);
 
-  rulesControl = new FormControl(this.state.get('rules'));
+  rulesControl = new FormControl(this.state.get('rulesOrTemplate'));
   private rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
   private rulesPending = computed(() => {
-    return this.rulesText() !== this.state.signal('rules')();
+    return this.rulesText() !== this.state.signal('rulesOrTemplate')();
   });
 
   parserState = computed<ParserState>(() => {

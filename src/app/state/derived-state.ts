@@ -15,6 +15,7 @@ import { rulesTemplate } from '../model/template';
 export interface DerivedStateType {
   isMobile: boolean;
   rulesHash: string;
+  rulesOrTemplate: string;
   parsedRules: Rule[];
   ruleParserError: string;
   categories: string[];
@@ -59,6 +60,8 @@ export class DerivedState {
       }
       return raw;
     });
+
+    this.signalMap.set('rulesOrTemplate', rulesOrTemplate);
 
     const ruleParsing = computed(() => {
       try {
