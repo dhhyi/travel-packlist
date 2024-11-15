@@ -7,13 +7,18 @@ import {
   Signal,
 } from '@angular/core';
 import { Item, Question, Rule, VariableType } from '../model/types';
-import { PersistentState } from './persistent-state';
+import {
+  PersistentState,
+  SupportedLanguage,
+  supportedLanguages,
+} from './persistent-state';
 import { Parser } from '../model/parser';
 import { Refactor } from '../model/refactor';
 import { rulesTemplate } from '../model/template';
 
 export interface DerivedStateType {
   isMobile: boolean;
+  preferredLanguage: SupportedLanguage;
   rulesHash: string;
   rulesOrTemplate: string;
   rulesContainComments: boolean;
@@ -52,6 +57,21 @@ export class DerivedState {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
           ua,
         );
+      }),
+    );
+
+    this.signalMap.set(
+      'preferredLanguage',
+      computed(() => {
+        const raw = this.state.signal('language')();
+        if (raw === 'auto') {
+          const languages = navigator.languages.map((l) => l.split('-')[0]);
+          const match = languages.find((l) =>
+            (supportedLanguages as unknown as string[]).includes(l),
+          ) as SupportedLanguage | undefined;
+          return match ?? 'en';
+        }
+        return raw;
       }),
     );
 

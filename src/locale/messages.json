@@ -22,6 +22,7 @@
     "config.dangerzone.reset": " Reset Application ",
     "config.dangerzone.reset.question": "Are you sure you want to reset the whole application?",
     "config.language": "Language",
+    "config.language.detect": " detect ",
     "config.rules": "Rules",
     "config.rules.documentation": " Documentation ",
     "config.rules.edit": " Edit Rules ",

@@ -22,6 +22,7 @@
     "config.dangerzone.reset": "Anwendung zurücksetzen",
     "config.dangerzone.reset.question": "Bist du sicher, dass du die Anwendung zurücksetzen möchtest?",
     "config.language": "Sprache",
+    "config.language.detect": "auto",
     "config.rules": "Regeln",
     "config.rules.documentation": "Dokumentation",
     "config.rules.edit": "Regeln bearbeiten",

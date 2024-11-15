@@ -181,7 +181,18 @@
 
 <div class="section">
   <span i18n="@@config.language" class="font-bold">Language</span>
-  <div class="grid grid-cols-2 gap-3">
+  <div class="grid grid-cols-3 gap-3">
+    <button
+      i18n="@@config.language.detect"
+      class="flex items-center justify-center bg-transparent"
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': getLanguage() === 'auto',
+      }"
+      (click)="setLanguage('auto')"
+    >
+      detect
+    </button>
     <button
       class="flex items-center justify-center bg-transparent"
       type="button"

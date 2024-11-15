@@ -1,7 +1,7 @@
 import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { GlobalState, Languages, Themes } from '../state/global-state';
+import { GlobalState, SupportedLanguage, Themes } from '../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
@@ -15,7 +15,7 @@ export class AppInit {
     }).subscribe((theme) => {
       this.applyTheme(theme);
     });
-    toObservable(state.signal('language'), {
+    toObservable(state.signal('preferredLanguage'), {
       injector: this.injector,
     }).subscribe((lang) => {
       this.applyLanguage(lang);
@@ -31,7 +31,7 @@ export class AppInit {
     }
   }
 
-  private applyLanguage(lang: Languages | undefined) {
+  private applyLanguage(lang: SupportedLanguage | undefined) {
     if (lang && this.document.documentElement.lang !== lang) {
       if (isDevMode()) {
         console.warn('Language switching is disabled in dev mode');

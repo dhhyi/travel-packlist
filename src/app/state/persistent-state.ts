@@ -10,6 +10,9 @@ import { VariableType } from '../model/types';
 import { ReadWriteState } from './types';
 import { loadState, saveState } from './storage-util';
 
+export const supportedLanguages = ['en', 'de'] as const;
+export type SupportedLanguage = (typeof supportedLanguages)[number];
+
 const initialState = {
   // packlist
   answers: {} as Record<string, VariableType>,
@@ -25,7 +28,7 @@ const initialState = {
   trackWeight: false,
   answersLocked: false,
   theme: 'system' as 'system' | 'light' | 'dark',
-  language: 'en' as 'en' | 'de',
+  language: 'auto' as 'auto' | SupportedLanguage,
   exportReminder: false,
   lastExportHash: '',
   lastExportDate: 0,

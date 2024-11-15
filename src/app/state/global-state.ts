@@ -10,6 +10,7 @@ type State = ROState & RWState;
 
 export type Themes = State['theme'];
 export type Languages = State['language'];
+export { type SupportedLanguage } from './persistent-state';
 
 @Injectable({ providedIn: 'root' })
 export class GlobalState {
