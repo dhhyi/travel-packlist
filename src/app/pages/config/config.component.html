@@ -1,11 +1,4 @@
 <!-- eslint-disable @angular-eslint/template/prefer-ngsrc -->
-@if (loading()) {
-  <div
-    class="loading fixed left-0 top-0 z-50 flex h-svh w-full items-center justify-center bg-white opacity-30"
-  >
-    <app-icon-download class="h-48 w-48" />
-  </div>
-}
 <div class="section">
   <span i18n="@@config.checklist" class="font-bold">Checklist</span>
   <button
@@ -284,3 +277,11 @@
     Reset Application
   </button>
 </div>
+
+@if (loading()) {
+  <div
+    class="loading fixed left-0 top-0 flex h-svh w-full items-center justify-center bg-white opacity-30"
+  >
+    <app-icon-download class="h-48 w-48" />
+  </div>
+}

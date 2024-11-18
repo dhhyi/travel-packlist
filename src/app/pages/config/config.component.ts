@@ -19,6 +19,7 @@ import { IconDownloadComponent } from '../../icons/icon-download/icon-download.c
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FlagGermanyComponent } from '../../icons/flag-germany/flag-germany.component';
 import { FlagUkComponent } from '../../icons/flag-uk/flag-uk.component';
+import { confirm } from '../../dialog';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -83,7 +84,7 @@ export class ConfigComponent {
 
   async resetChecklist() {
     if (
-      window.confirm(
+      await confirm(
         $localize`:@@config.checklist.reset.question:Are you sure you want to reset the checklist?` as string,
       )
     ) {
@@ -94,7 +95,7 @@ export class ConfigComponent {
 
   async resetEverything() {
     if (
-      window.confirm(
+      await confirm(
         $localize`:@@config.dangerzone.reset.question:Are you sure you want to reset the whole application?` as string,
       )
     ) {

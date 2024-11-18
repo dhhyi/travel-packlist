@@ -1,0 +1,36 @@
+@if (self.dialogVisible()) {
+  <div
+    class="bg-disabled fixed left-0 top-0 z-40 h-full w-full opacity-50"
+  ></div>
+  <div class="fixed left-0 top-0 z-50 flex h-full w-full">
+    <div class="card bg-disabled m-auto w-[300px]">
+      <div class="m-2 flex flex-col gap-3">
+        <div>{{ self.dialogMessage() }}</div>
+        <input
+          #prompt
+          id="prompt"
+          type="text"
+          [ngClass]="{ hidden: !self.dialogPromptVisible() }"
+          (keydown.enter)="self.dialogOk()(prompt.value)"
+        />
+        <div class="mt-3 grid grid-cols-2 gap-3">
+          <button
+            i18n="@@dialog.cancel"
+            type="button"
+            class="secondary"
+            (click)="self.dialogCancel()()"
+          >
+            Cancel
+          </button>
+          <button
+            i18n="@@dialog.ok"
+            type="button"
+            (click)="self.dialogOk()(prompt.value)"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

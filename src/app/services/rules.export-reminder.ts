@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { GlobalState } from '../state/global-state';
-import { interval } from 'rxjs';
+import { filter, identity, interval, map, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { confirm } from '../dialog';
 
 @Injectable({ providedIn: 'root' })
 export class RulesExportReminder {
@@ -12,27 +13,30 @@ export class RulesExportReminder {
   private lastAskedHash: string[] = [];
 
   init() {
-    interval(30000).subscribe(() => {
-      if (
-        this.reminderActive() &&
-        this.exportNeeded() &&
-        this.exportOverdue() &&
-        this.enoughTimeSinceLastEditPassed()
-      ) {
-        const currentHash = this.state.get('rulesHash');
-        if (this.lastAskedHash.includes(currentHash)) {
-          return;
-        }
-        this.lastAskedHash.push(currentHash);
-        if (
-          window.confirm(
+    interval(30000)
+      .pipe(
+        filter(
+          () =>
+            this.reminderActive() &&
+            this.exportNeeded() &&
+            this.exportOverdue() &&
+            this.enoughTimeSinceLastEditPassed(),
+        ),
+        map(() => this.state.get('rulesHash')),
+        filter((currentHash) => !this.lastAskedHash.includes(currentHash)),
+        tap((currentHash) => {
+          this.lastAskedHash.push(currentHash);
+        }),
+        switchMap(() =>
+          confirm(
             $localize`:@@config.rules.export-reminder.question:The current rules haven't been exported for some time now. Do you want to export them now?` as string,
-          )
-        ) {
-          void this.router.navigate(['/config'], { fragment: 'export-now' });
-        }
-      }
-    });
+          ),
+        ),
+        filter(identity),
+      )
+      .subscribe(() => {
+        void this.router.navigate(['/config'], { fragment: 'export-now' });
+      });
   }
 
   private exportOverdue() {

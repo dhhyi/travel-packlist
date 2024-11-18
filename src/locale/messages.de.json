@@ -49,6 +49,8 @@
     "config.support.issues.github": "GitHub issues",
     "config.support.ko-fi": "Falls dir die App gefällt und du mich unterstützen möchtest, kannst du mir gerne einen Kaffee spendieren: {$START_LINK}{$TAG_IMG}{$CLOSE_LINK}",
     "config.support.ko-fi.label": "Kauf mir einen Kaffee auf ko-fi.com",
+    "dialog.cancel": "Abbrechen",
+    "dialog.ok": "OK",
     "edit-raw.parsed-success": "{$NUMBER_OF_RULES} Regeln erfolgreich geparst!",
     "edit-raw.waiting": "Warte auf Eingabe.",
     "edit.item.name.invalid-characters": "Der Artikelname darf die Zeichen , ; # nicht enthalten",

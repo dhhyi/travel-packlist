@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { tap, filter, interval, switchMap } from 'rxjs';
+import { tap, filter, interval, switchMap, identity } from 'rxjs';
+import { confirm } from '../dialog';
 
 @Injectable({ providedIn: 'root' })
 export class AppUpdate {
@@ -15,15 +16,15 @@ export class AppUpdate {
           }
         }),
         filter((event) => event.type === 'VERSION_READY'),
+        switchMap(() =>
+          confirm(
+            $localize`:@@app.update.apply.question:A new version of the app is available. Do you want to reload?` as string,
+          ),
+        ),
+        filter(identity),
       )
       .subscribe(() => {
-        if (
-          window.confirm(
-            $localize`:@@app.update.apply.question:A new version of the app is available. Do you want to reload?` as string,
-          )
-        ) {
-          window.location.reload();
-        }
+        window.location.reload();
       });
 
     if (this.swUpdate.isEnabled) {

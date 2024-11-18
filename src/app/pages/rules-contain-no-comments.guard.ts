@@ -1,13 +1,14 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
 import { GlobalState } from '../state/global-state';
+import { confirm } from '../dialog';
 
 let guardAlreadyPassed = false;
 
-export const rulesContainNoComments: CanActivateFn = () => {
+export const rulesContainNoComments: CanActivateFn = async () => {
   const rulesContainComments = inject(GlobalState).get('rulesContainComments');
   if (rulesContainComments && !guardAlreadyPassed) {
-    const confirmed = window.confirm(
+    const confirmed = await confirm(
       $localize`:@@config.rules.edit.discard-comments:The current rules contain comments. Editing them with the graphical editor will discard these comments. Do you want to proceed?` as string,
     );
     if (confirmed) {

@@ -49,6 +49,8 @@
     "config.support.issues.github": "GitHub issues",
     "config.support.ko-fi": " If you like this app, please consider to {$START_LINK}{$TAG_IMG}{$CLOSE_LINK}",
     "config.support.ko-fi.label": "Buy Me a Coffee at ko-fi.com",
+    "dialog.cancel": " Cancel ",
+    "dialog.ok": "OK",
     "edit-raw.parsed-success": " Parsed {$NUMBER_OF_RULES} rules successfully! ",
     "edit-raw.waiting": " Waiting for input. ",
     "edit.item.name.invalid-characters": "Item name cannot contain the characters , ; #",

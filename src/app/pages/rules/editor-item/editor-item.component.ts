@@ -13,6 +13,7 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
 import { GlobalState } from '../../../state/global-state';
+import { prompt } from '../../../dialog';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,7 +55,7 @@ export class EditorItemComponent implements OnChanges {
       )
       .subscribe((value) => {
         if (!value.category) {
-          this.addNewCategory();
+          void this.addNewCategory();
           return;
         }
 
@@ -110,8 +111,8 @@ export class EditorItemComponent implements OnChanges {
     this.reset();
   }
 
-  private addNewCategory() {
-    const newCategory = window.prompt('Enter new category name');
+  private async addNewCategory() {
+    const newCategory = await prompt('Enter new category name');
     if (newCategory) {
       if (/[,;#]/.test(newCategory)) {
         alert('Category name cannot contain , ; #');

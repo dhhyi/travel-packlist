@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { GlobalState } from '../../state/global-state';
 import { RulesShare } from '../../services/rules-share/rules-share.interface';
+import { confirm } from '../../dialog';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigFacade {
@@ -22,16 +23,16 @@ export class ConfigFacade {
   }
 
   async importRules() {
+    if (
+      this.state.get('exportNeeded') &&
+      !(await confirm(
+        $localize`:@@config.rules.import.export-first:You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?` as string,
+      ))
+    ) {
+      return Promise.resolve(false);
+    }
+
     return new Promise<boolean>((resolve) => {
-      if (
-        this.state.get('exportNeeded') &&
-        !window.confirm(
-          $localize`:@@config.rules.import.export-first:You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?` as string,
-        )
-      ) {
-        resolve(false);
-        return;
-      }
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.txt';
@@ -49,7 +50,7 @@ export class ConfigFacade {
         this.resetHash();
 
         setTimeout(() => {
-          this.promptEnableWeightTracking();
+          void this.promptEnableWeightTracking();
         }, 2000);
 
         this.resetChecklist();
@@ -59,13 +60,13 @@ export class ConfigFacade {
     });
   }
 
-  private promptEnableWeightTracking() {
+  private async promptEnableWeightTracking() {
     if (
       this.state.get('percentageOfItemsWithWeights') > 0.1 &&
       !this.state.get('trackWeight')
     ) {
       if (
-        window.confirm(
+        await confirm(
           $localize`:@@config.rules.import.suggest-track-weight:It seems that the imported rules contain items with weights. Shall we enable the weight tracking?` as string,
         )
       ) {

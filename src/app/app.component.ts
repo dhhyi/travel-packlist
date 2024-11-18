@@ -7,12 +7,19 @@ import { RouterModule } from '@angular/router';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 import { IconUpComponent } from './icons/icon-up/icon-up.component';
 import { NgOptimizedImage } from '@angular/common';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, IconCogComponent, IconUpComponent, NgOptimizedImage],
+  imports: [
+    RouterModule,
+    IconCogComponent,
+    IconUpComponent,
+    NgOptimizedImage,
+    DialogComponent,
+  ],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
