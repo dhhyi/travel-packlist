@@ -32,6 +32,7 @@ export interface DerivedStateType {
   activeQuestions: Question[];
   activeItems: Item[];
   lastRulesAction: number;
+  exportFileName: string;
   exportNeeded: boolean;
 }
 
@@ -172,10 +173,8 @@ export class DerivedState {
       computed(() => activeRules().flatMap((rule) => rule.items)),
     );
 
-    this.signalMap.set(
-      'rulesHash',
-      computed(() => cyrb53(rulesOrTemplate()).toString(16)),
-    );
+    const rulesHash = computed(() => cyrb53(rulesOrTemplate()).toString(16));
+    this.signalMap.set('rulesHash', rulesHash);
 
     const lastRulesAction = signal(new Date().getTime());
     this.signalMap.set('lastRulesAction', lastRulesAction.asReadonly());
@@ -186,6 +185,18 @@ export class DerivedState {
         lastRulesAction.set(new Date().getTime());
       },
       { allowSignalWrites: true },
+    );
+
+    this.signalMap.set(
+      'exportFileName',
+      computed(() => {
+        const dateTime = new Date(lastRulesAction())
+          .toISOString()
+          .replace(/\..*$/, '')
+          .replace(/[T:]/g, '-');
+        const hash = rulesHash();
+        return `travel-packlist-rules-${dateTime}-${hash}.txt`;
+      }),
     );
 
     this.signalMap.set(

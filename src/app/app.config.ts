@@ -17,6 +17,9 @@ import { PARSER_CONFIG_PROVIDER, ParserConfig } from './model/parser';
 import { GlobalState } from './state/global-state';
 import { AppUpdate } from './services/app.update';
 import { RulesExportReminder } from './services/rules.export-reminder';
+import { AndroidRulesShare } from './services/rules-share/android-rules-share';
+import { WebRulesShare } from './services/rules-share/web-rules-share';
+import { RulesShare } from './services/rules-share/rules-share.interface';
 
 function initializeApp(appInit: AppInit): () => void {
   return () => {
@@ -74,6 +77,10 @@ export const appConfig: ApplicationConfig = {
       provide: PARSER_CONFIG_PROVIDER,
       useFactory: initParserConfig,
       deps: [GlobalState],
+    },
+    {
+      provide: RulesShare,
+      useClass: ANDROID ? AndroidRulesShare : WebRulesShare,
     },
   ],
 };

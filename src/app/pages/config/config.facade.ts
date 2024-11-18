@@ -1,49 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { GlobalState } from '../../state/global-state';
+import { RulesShare } from '../../services/rules-share/rules-share.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigFacade {
   private state = inject(GlobalState);
-
-  private generateFilename(): string {
-    const dateTime = new Date()
-      .toISOString()
-      .replace(/\..*$/, '')
-      .replace(/[T:]/g, '-');
-    const hash = this.state.get('rulesHash');
-    return `travel-packlist-rules-${dateTime}-${hash}.txt`;
-  }
-
-  private downloadRules() {
-    const rules = this.state.get('rules');
-    if (!rules) {
-      console.error('No rules available');
-      return;
-    }
-    const blob = new Blob([rules], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = this.generateFilename();
-    a.click();
-  }
-
-  private async shareRules() {
-    const rules = this.state.get('rules');
-    if (!rules) {
-      console.error('No rules available');
-      return;
-    }
-    const fileName = this.generateFilename();
-    await navigator.share({
-      title: fileName,
-      files: [
-        new File([rules], fileName, {
-          type: 'text/plain',
-        }),
-      ],
-    });
-  }
+  private rulesShare = inject(RulesShare);
 
   private resetHash() {
     this.state.set('lastExportHash', this.state.get('rulesHash'));
@@ -55,11 +17,7 @@ export class ConfigFacade {
   }
 
   async exportRules() {
-    if (this.state.get('isMobile') && 'share' in navigator) {
-      await this.shareRules();
-    } else {
-      this.downloadRules();
-    }
+    await this.rulesShare.exportRules();
     this.resetHash();
   }
 

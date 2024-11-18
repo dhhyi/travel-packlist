@@ -46,7 +46,11 @@ for lang in de; do
         | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
             > $target/index.$lang.html
 
-    cp $target/$lang/polyfills*.js $target/$lang/main*.js $target
+    cp $target/$lang/polyfills*.js \
+        $target/$lang/main*.js \
+        $target/$lang/chunk*.js \
+        $target/$lang/styles*.css \
+        $target
 
     rm -rf $target/$lang
 
