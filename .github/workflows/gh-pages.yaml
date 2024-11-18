@@ -16,7 +16,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm install -g pnpm
-          pnpm i
+          pnpm i --frozen-lockfile --prod
           sh build-gh-pages.sh --base-href "/travel-packlist/"
 
       - name: Deploy 🚀

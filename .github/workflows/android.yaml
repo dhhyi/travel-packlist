@@ -20,7 +20,7 @@ jobs:
       - name: Install and Build 🔧
         run: |
           npm install -g pnpm
-          pnpm i
+          pnpm i --frozen-lockfile --prod
           sh build-android.sh
         env:
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
