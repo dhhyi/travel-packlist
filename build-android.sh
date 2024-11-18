@@ -13,6 +13,13 @@ pnpm cap sync
 
 pnpm generate-assets --android
 
+sed -i "s/versionName.*/versionName $(npm pkg get version)/" android/app/build.gradle
+
+mkdir -p dist/android
+
+(cd android && ./gradlew assemble)
+mv android/app/build/outputs/apk/debug/app-debug.apk dist/android/travel-packlist-debug.apk
+
 if [ ! -f "release.jks" ]; then
     if [ -n "$RELEASE_KEYSTORE" ]; then
         echo "$RELEASE_KEYSTORE" | base64 -d > release.jks
@@ -40,13 +47,6 @@ fi
 if [ -n "$error" ]; then
     exit 1
 fi
-
-sed -i "s/versionName.*/versionName $(npm pkg get version)/" android/app/build.gradle
-
-mkdir -p dist/android
-
-(cd android && ./gradlew assemble)
-mv android/app/build/outputs/apk/debug/app-debug.apk dist/android/travel-packlist-debug.apk
 
 pnpm cap build android --keystorepath "$script_dir/release.jks" --keystorepass $RELEASE_KEYSTORE_PASSWORD --keystorealias $RELEASE_KEYSTORE_ALIAS --keystorealiaspass $RELEASE_KEYSTORE_ALIAS_PASSWORD --androidreleasetype AAB
 mv android/app/build/outputs/bundle/release/app-release-signed.aab dist/android/travel-packlist.aab
