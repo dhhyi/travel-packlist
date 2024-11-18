@@ -17,7 +17,7 @@ sed -i "s/versionName.*/versionName $(npm pkg get version)/" android/app/build.g
 
 mkdir -p dist/android
 
-(cd android && ./gradlew assemble)
+(cd android && ./gradlew --no-daemon assemble)
 mv android/app/build/outputs/apk/debug/app-debug.apk dist/android/travel-packlist-debug.apk
 
 if [ ! -f "release.jks" ]; then
