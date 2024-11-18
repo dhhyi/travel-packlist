@@ -52,6 +52,7 @@ export class ConfigFacade {
           this.promptEnableWeightTracking();
         }, 2000);
 
+        this.resetChecklist();
         resolve(true);
       };
       input.click();
