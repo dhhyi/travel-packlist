@@ -1,4 +1,4 @@
-<form class="flex" [formGroup]="control">
+<form class="flex" [formGroup]="form">
   <select class="max-w-24" name="categories" formControlName="category">
     @for (category of categories(); track category) {
       <option [value]="category">{{ category }}</option>
@@ -13,15 +13,15 @@
     (blur)="blur()"
   />
 </form>
-@if (mode() === "edit" && control.valid === false && control.touched) {
+@if (mode() === "edit" && form.valid === false && form.touched) {
   <div class="m-1 text-sm text-red-500">
-    @if (getControl("name").touched) {
-      @if (getControl("name").errors?.["pattern"]) {
+    @if (form.controls.name.touched) {
+      @if (form.controls.name.errors?.["pattern"]) {
         <span i18n="@@edit.item.name.invalid-characters"
           >Item name cannot contain the characters , ; #</span
         >
       }
-      @if (getControl("name").errors?.["required"]) {
+      @if (form.controls.name.errors?.["required"]) {
         <span i18n="@@edit.item.name.required">Item name is required</span>
       }
     }

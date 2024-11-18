@@ -11,8 +11,7 @@ import { Always, Question } from '../../../model/types';
 import {
   AbstractControl,
   AsyncValidatorFn,
-  FormControl,
-  FormGroup,
+  FormBuilder,
   ReactiveFormsModule,
   ValidatorFn,
   Validators,
@@ -57,40 +56,36 @@ export class EditorQuestionComponent implements OnChanges {
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
 
-  control = new FormGroup<{
-    [K in keyof Question]: FormControl<string | null>;
-  }>({
-    question: new FormControl('', [
-      Validators.pattern('[^,;#]+'),
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      Validators.required,
-    ]),
-    variable: new FormControl(
-      '',
-      [
+  private fb = inject(FormBuilder).nonNullable;
+  form = this.fb.group({
+    question: this.fb.control('', {
+      validators: [
+        Validators.pattern('[^,;#]+'),
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        Validators.required,
+      ],
+    }),
+    variable: this.fb.control('', {
+      validators: [
         Validators.pattern(' *[^ ,;#]+ *'),
         validateReservedString(),
         // eslint-disable-next-line @typescript-eslint/unbound-method
         Validators.required,
       ],
-      [
+      asyncValidators: [
         validateUnusedVariable(
           toObservable(this.variables),
           toObservable(this.question),
         ),
       ],
-    ),
+    }),
   });
 
-  getControl(name: keyof Question) {
-    return this.control.get(name) as FormControl<string>;
-  }
-
   constructor() {
-    this.control.valueChanges
+    this.form.valueChanges
       .pipe(
         debounceTime(500),
-        filter(() => this.control.valid),
+        filter(() => this.form.valid),
         takeUntilDestroyed(),
       )
       .subscribe((value) => {
@@ -126,16 +121,16 @@ export class EditorQuestionComponent implements OnChanges {
       .pipe(takeUntilDestroyed())
       .subscribe((mode) => {
         if (mode === 'edit') {
-          this.control.enable({ emitEvent: false });
+          this.form.enable({ emitEvent: false });
         } else {
-          this.control.disable({ emitEvent: false });
+          this.form.disable({ emitEvent: false });
         }
         this.reset();
       });
   }
 
   private reset() {
-    this.control.patchValue(this.question(), { emitEvent: false });
+    this.form.patchValue(this.question(), { emitEvent: false });
   }
 
   ngOnChanges() {
@@ -143,14 +138,14 @@ export class EditorQuestionComponent implements OnChanges {
   }
 
   focusQuestion() {
-    if (this.getControl('question').value === Question.NEW_QUESTION_NAME) {
-      this.getControl('question').setValue('', { emitEvent: false });
+    if (this.form.controls.question.value === Question.NEW_QUESTION_NAME) {
+      this.form.controls.question.setValue('', { emitEvent: false });
     }
   }
 
   focusVariable() {
-    if (this.getControl('variable').value === Question.NEW_VARIABLE_NAME) {
-      this.getControl('variable').setValue('', { emitEvent: false });
+    if (this.form.controls.variable.value === Question.NEW_VARIABLE_NAME) {
+      this.form.controls.variable.setValue('', { emitEvent: false });
     }
   }
 }

@@ -5,7 +5,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith } from 'rxjs';
 import { GlobalState } from '../../state/global-state';
 
@@ -37,7 +37,8 @@ type ParserState =
 export class EditRulesRawComponent {
   private state = inject(GlobalState);
 
-  rulesControl = new FormControl(this.state.get('rulesOrTemplate'));
+  private fb = inject(FormBuilder).nonNullable;
+  rulesControl = this.fb.control(this.state.get('rulesOrTemplate'));
   private rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
@@ -65,8 +66,7 @@ export class EditRulesRawComponent {
     this.rulesControl.valueChanges
       .pipe(debounceTime(500), takeUntilDestroyed())
       .subscribe((value) => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        this.state.set('rules', value!);
+        this.state.set('rules', value);
       });
   }
 }

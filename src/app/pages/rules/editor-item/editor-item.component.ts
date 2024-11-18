@@ -7,12 +7,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Item } from '../../../model/types';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Parser } from '../../../model/parser';
@@ -35,27 +30,26 @@ export class EditorItemComponent implements OnChanges {
 
   readonly itemChanged = output<Item>();
 
-  control = new FormGroup<{ [K in keyof Item]: FormControl<string | null> }>({
-    category: new FormControl(''),
-    name: new FormControl('', [
-      Validators.pattern('[^,;#]+'),
-      // eslint-disable-next-line @typescript-eslint/unbound-method
-      Validators.required,
-    ]),
+  private fb = inject(FormBuilder).nonNullable;
+  form = this.fb.group({
+    category: this.fb.control(''),
+    name: this.fb.control('', {
+      validators: [
+        Validators.pattern('[^,;#]+'),
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        Validators.required,
+      ],
+    }),
   });
-
-  getControl(name: keyof Item) {
-    return this.control.get(name) as FormControl<string>;
-  }
 
   private parser = inject(Parser);
   private serializer = inject(Serializer);
 
   constructor() {
-    this.control.valueChanges
+    this.form.valueChanges
       .pipe(
         debounceTime(500),
-        filter(() => this.control.valid),
+        filter(() => this.form.valid),
         takeUntilDestroyed(),
       )
       .subscribe((value) => {
@@ -73,9 +67,9 @@ export class EditorItemComponent implements OnChanges {
       .pipe(takeUntilDestroyed())
       .subscribe((mode) => {
         if (mode === 'edit') {
-          this.control.enable({ emitEvent: false });
+          this.form.enable({ emitEvent: false });
         } else {
-          this.control.disable({ emitEvent: false });
+          this.form.disable({ emitEvent: false });
         }
         this.reset();
       });
@@ -94,7 +88,7 @@ export class EditorItemComponent implements OnChanges {
         name += ` ${this.serializer.serializeWeight(this.item().weight)}`;
       }
 
-      this.control.patchValue(
+      this.form.patchValue(
         {
           category: this.item().category,
           name,
@@ -106,8 +100,8 @@ export class EditorItemComponent implements OnChanges {
 
   focus(event: FocusEvent) {
     this.blockPatch = document.activeElement === event.target;
-    if (this.getControl('name').value === Item.NEW_ITEM_NAME) {
-      this.getControl('name').setValue('', { emitEvent: false });
+    if (this.form.controls.name.value === Item.NEW_ITEM_NAME) {
+      this.form.controls.name.setValue('', { emitEvent: false });
     }
   }
 
@@ -121,11 +115,11 @@ export class EditorItemComponent implements OnChanges {
     if (newCategory) {
       if (/[,;#]/.test(newCategory)) {
         alert('Category name cannot contain , ; #');
-        this.control.patchValue({ category: '' });
+        this.form.patchValue({ category: '' });
         return;
       }
 
-      this.control.patchValue({ category: newCategory });
+      this.form.patchValue({ category: newCategory });
     }
   }
 }
