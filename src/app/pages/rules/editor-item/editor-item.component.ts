@@ -120,6 +120,8 @@ export class EditorItemComponent implements OnChanges {
       }
 
       this.form.patchValue({ category: newCategory });
+    } else {
+      this.reset();
     }
   }
 }
