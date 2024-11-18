@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1731955536566,
+  "timestamp": 1731956904879,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -21,8 +21,8 @@
         "/icon.svg",
         "/index.de.html",
         "/index.html",
-        "/main-4PXW7LH7.js",
-        "/main-5JEE2RUV.js",
+        "/main-CEWGJOA4.js",
+        "/main-SRGOTH7W.js",
         "/manifest.json",
         "/polyfills-ESIDYNS3.js",
         "/polyfills-PAOVOU5V.js",
@@ -41,10 +41,10 @@
     "/icon-72.webp": "562f312b9640379edb50a0b7baca254c15c82f61",
     "/icon-96.webp": "dfcb6479dfe2c75a058c31162564dc54d48a967e",
     "/icon.svg": "6c75cc6eb0528465b0ada5f14b28987492d46e9b",
-    "/index.de.html": "a8819850a5ab06e935e072014e26e998d966dbba",
-    "/index.html": "c4647eba1a5026194bf172c3f1a8ce4347b60dcc",
-    "/main-4PXW7LH7.js": "8eb8f13779fea0ad0247f50a54fa76cf22960e6d",
-    "/main-5JEE2RUV.js": "ea72f634612bd55255ad8d50d3a621eb3115a1ff",
+    "/index.de.html": "c386c389e0f0293a04863ee179e912d12d4c7498",
+    "/index.html": "0da8af26f57c71c47cb9ef8a674cb939d735c942",
+    "/main-CEWGJOA4.js": "a481b1db5be13dbcfdfd56253ca0e0eafc95f535",
+    "/main-SRGOTH7W.js": "2edf3812e2dc69be3b2f16ec585e6bc4a2d6d642",
     "/manifest.json": "6647251ec23b25027c8c72a55ebded2870ae6119",
     "/polyfills-ESIDYNS3.js": "b9847567551e50e8a8d317f7d31708b8ee400c86",
     "/polyfills-PAOVOU5V.js": "d032e3fbd3e942f230b95fd61acbc74ec223f1dd",
