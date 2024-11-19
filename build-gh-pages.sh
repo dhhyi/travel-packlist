@@ -57,5 +57,5 @@ for lang in de; do
 done
 
 if [ -f $target/ngsw.json ]; then
-    npx ngsw-config dist/browser ngsw-config.json
+    npx ngsw-config dist/browser ngsw-config.json "$base_href"
 fi
