@@ -2,18 +2,18 @@ import {
   Component,
   inject,
   input,
-  OnChanges,
   output,
   ChangeDetectionStrategy,
+  effect,
 } from '@angular/core';
 import { Item } from '../../../model/types';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
 import { GlobalState } from '../../../state/global-state';
 import { prompt } from '../../../dialog';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +22,7 @@ import { prompt } from '../../../dialog';
   imports: [ReactiveFormsModule],
   templateUrl: './editor-item.component.html',
 })
-export class EditorItemComponent implements OnChanges {
+export class EditorItemComponent {
   item = input.required<Item>();
 
   private state = inject(GlobalState);
@@ -47,40 +47,44 @@ export class EditorItemComponent implements OnChanges {
   private serializer = inject(Serializer);
 
   constructor() {
-    this.form.valueChanges
-      .pipe(
+    effect(() => {
+      this.item();
+      this.reset();
+    });
+
+    const validFormUpdates = toSignal(
+      this.form.valueChanges.pipe(
         debounceTime(500),
         filter(() => this.form.valid),
-        takeUntilDestroyed(),
-      )
-      .subscribe((value) => {
-        if (!value.category) {
-          void this.addNewCategory();
-          return;
-        }
+      ),
+    );
 
-        const [name, weight] = this.parser.extractItemNameAndWeight(value.name);
+    effect(() => {
+      const value = validFormUpdates();
+      if (!value) {
+        return;
+      }
+      if (!value.category) {
+        void this.addNewCategory();
+        return;
+      }
 
-        this.itemChanged.emit(new Item(value.category, name, weight));
-      });
+      const [name, weight] = this.parser.extractItemNameAndWeight(value.name);
 
-    toObservable(this.mode)
-      .pipe(takeUntilDestroyed())
-      .subscribe((mode) => {
-        if (mode === 'edit') {
-          this.form.enable({ emitEvent: false });
-        } else {
-          this.form.disable({ emitEvent: false });
-        }
-        this.reset();
-      });
+      this.itemChanged.emit(new Item(value.category, name, weight));
+    });
+
+    effect(() => {
+      if (this.mode() === 'edit') {
+        this.form.enable({ emitEvent: false });
+      } else {
+        this.form.disable({ emitEvent: false });
+      }
+      this.reset();
+    });
   }
 
   blockPatch = false;
-
-  ngOnChanges() {
-    this.reset();
-  }
 
   reset() {
     if (!this.blockPatch) {

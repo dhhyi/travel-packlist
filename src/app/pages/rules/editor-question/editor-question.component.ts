@@ -2,10 +2,10 @@ import {
   Component,
   inject,
   input,
-  OnChanges,
   output,
   ChangeDetectionStrategy,
   computed,
+  effect,
 } from '@angular/core';
 import { Always, Question } from '../../../model/types';
 import {
@@ -26,7 +26,7 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 import { GlobalState } from '../../../state/global-state';
 
@@ -37,7 +37,7 @@ import { GlobalState } from '../../../state/global-state';
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './editor-question.component.html',
 })
-export class EditorQuestionComponent implements OnChanges {
+export class EditorQuestionComponent {
   question = input.required<Question>();
 
   private state = inject(GlobalState);
@@ -82,59 +82,57 @@ export class EditorQuestionComponent implements OnChanges {
   });
 
   constructor() {
-    this.form.valueChanges
-      .pipe(
+    effect(() => {
+      this.question();
+      this.reset();
+    });
+
+    const validFormUpdates = toSignal(
+      this.form.valueChanges.pipe(
         debounceTime(500),
         filter(() => this.form.valid),
-        takeUntilDestroyed(),
-      )
-      .subscribe((value) => {
+      ),
+    );
+    effect(() => {
+      const value = validFormUpdates();
+      if (
+        value?.question &&
+        value.question !== this.question().question &&
+        value.variable
+      ) {
+        this.questionChanged.emit(new Question(value.question, value.variable));
+      } else if (
+        value?.variable &&
+        value.variable.trim() !== this.question().variable
+      ) {
         if (
-          value.question &&
-          value.question !== this.question().question &&
-          value.variable
+          this.question().variable === Question.NEW_VARIABLE_NAME ||
+          !this.refactorVariables()
         ) {
           this.questionChanged.emit(
-            new Question(value.question, value.variable),
+            new Question(this.question().question, value.variable.trim()),
           );
-        } else if (
-          value.variable &&
-          value.variable.trim() !== this.question().variable
-        ) {
-          if (
-            this.question().variable === Question.NEW_VARIABLE_NAME ||
-            !this.refactorVariables()
-          ) {
-            this.questionChanged.emit(
-              new Question(this.question().question, value.variable.trim()),
-            );
-          } else {
-            this.variableChanged.emit([
-              this.question().variable,
-              value.variable.trim(),
-            ]);
-          }
-        }
-      });
-
-    toObservable(this.mode)
-      .pipe(takeUntilDestroyed())
-      .subscribe((mode) => {
-        if (mode === 'edit') {
-          this.form.enable({ emitEvent: false });
         } else {
-          this.form.disable({ emitEvent: false });
+          this.variableChanged.emit([
+            this.question().variable,
+            value.variable.trim(),
+          ]);
         }
-        this.reset();
-      });
+      }
+    });
+
+    effect(() => {
+      if (this.mode() === 'edit') {
+        this.form.enable({ emitEvent: false });
+      } else {
+        this.form.disable({ emitEvent: false });
+      }
+      this.reset();
+    });
   }
 
   private reset() {
     this.form.patchValue(this.question(), { emitEvent: false });
-  }
-
-  ngOnChanges() {
-    this.reset();
   }
 
   focusQuestion() {

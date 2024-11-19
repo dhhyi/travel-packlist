@@ -93,6 +93,52 @@ module.exports = tseslint.config(
               message: "Use GlobalState instead",
             },
           ],
+          paths: [
+            {
+              name: "@angular/core",
+              importNames: [
+                "OnInit",
+                "OnDestroy",
+                "OnChanges",
+                "DoCheck",
+                "AfterContentInit",
+                "AfterContentChecked",
+                "AfterViewInit",
+                "AfterViewChecked",
+              ],
+              message: "Do not use lifecycle hooks, use effects instead.",
+            },
+            {
+              name: "@angular/core",
+              importNames: [
+                "ViewChild",
+                "ViewChildren",
+                "ContentChild",
+                "ContentChildren",
+                "Input",
+                "Output",
+                "HostBinding",
+              ],
+              message: "Do not use decorators, use signals instead.",
+            },
+            {
+              name: "@angular/core",
+              importNames: ["HostListener"],
+              message:
+                "Do not use HostListener, use toSignal(fromEvent) instead.",
+            },
+            {
+              name: "@angular/core",
+              importNames: ["HostBinding"],
+              message:
+                "Do not use HostBinding, use Component 'host' property instead.",
+            },
+            {
+              name: "@angular/core/rxjs-interop",
+              importNames: ["takeUntilDestroyed"],
+              message: "Do not use takeUntilDestroyed, use signals instead.",
+            },
+          ],
         },
       ],
     },

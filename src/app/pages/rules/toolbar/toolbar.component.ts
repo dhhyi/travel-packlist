@@ -1,15 +1,14 @@
 import {
   Component,
-  HostListener,
   inject,
-  signal,
   ChangeDetectionStrategy,
-  ViewChild,
   ElementRef,
   input,
+  viewChild,
+  computed,
 } from '@angular/core';
 import { RulesClipboard } from '../rules.clipboard';
-import { NgClass, ViewportScroller } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { IconViewComponent } from '../../../icons/icon-view/icon-view.component';
 import { IconEditComponent } from '../../../icons/icon-edit/icon-edit.component';
 import { IconDeleteComponent } from '../../../icons/icon-delete/icon-delete.component';
@@ -45,25 +44,18 @@ export class ToolbarComponent {
   searchTerm = this.state.signal('filterRulesQuery');
   clipboard = inject(RulesClipboard);
 
-  sticky = signal(false);
+  sticky = computed(() => this.state.signal('scrollY')() > 48);
 
-  private scroller = inject(ViewportScroller);
-
-  @ViewChild('searchInput', { read: ElementRef }) searchInput!: ElementRef;
+  searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 
   focusSearch() {
     setTimeout(() => {
-      (this.searchInput.nativeElement as HTMLInputElement).focus();
+      this.searchInput().nativeElement.focus();
     }, 50);
   }
 
   clearSearch() {
     this.searchTerm.set('');
     this.focusSearch();
-  }
-
-  @HostListener('window:scroll')
-  scroll() {
-    this.sticky.set(this.scroller.getScrollPosition()[1] > 48);
   }
 }

@@ -3,8 +3,9 @@ import {
   computed,
   inject,
   ChangeDetectionStrategy,
+  effect,
 } from '@angular/core';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, startWith } from 'rxjs';
 import { GlobalState } from '../../state/global-state';
@@ -63,10 +64,15 @@ export class EditRulesRawComponent {
   });
 
   constructor() {
-    this.rulesControl.valueChanges
-      .pipe(debounceTime(500), takeUntilDestroyed())
-      .subscribe((value) => {
-        this.state.set('rules', value);
-      });
+    const ruleUpdates = toSignal(
+      this.rulesControl.valueChanges.pipe(debounceTime(500)),
+    );
+    effect(
+      () => {
+        const value = ruleUpdates();
+        if (value) this.state.set('rules', value);
+      },
+      { allowSignalWrites: true },
+    );
   }
 }

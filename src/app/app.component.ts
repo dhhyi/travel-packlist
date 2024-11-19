@@ -1,13 +1,15 @@
 import {
   Component,
-  HostListener,
   ChangeDetectionStrategy,
+  inject,
+  computed,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 import { IconUpComponent } from './icons/icon-up/icon-up.component';
 import { NgOptimizedImage } from '@angular/common';
 import { DialogComponent } from './dialog/dialog.component';
+import { GlobalState } from './state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,14 +25,11 @@ import { DialogComponent } from './dialog/dialog.component';
   templateUrl: './app.component.html',
 })
 export class AppComponent {
+  private state = inject(GlobalState);
+
+  scrollTopVisible = computed(() => this.state.signal('scrollY')() > 100);
+
   scrollTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  @HostListener('window:scroll')
-  onScroll() {
-    this.scrollTopVisible = window.scrollY > 100;
-  }
-
-  scrollTopVisible = false;
 }

@@ -6,8 +6,8 @@ import {
   effect,
   Signal,
   computed,
-  ViewChild,
   ElementRef,
+  viewChild,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import env from '../../../environment/env.json';
@@ -62,8 +62,8 @@ export class ConfigComponent {
   exportNeeded = this.state.signal('exportNeeded');
   private facade = inject(ConfigFacade);
   highlightExport: Signal<boolean>;
-  @ViewChild('exportButton', { read: ElementRef })
-  private exportButton!: ElementRef;
+  private exportButton =
+    viewChild.required<ElementRef<HTMLButtonElement>>('exportButton');
   isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
 
   serviceWorkerStatus = computed((): string => {
@@ -90,11 +90,9 @@ export class ConfigComponent {
       const fragmentValue = fragment();
       if (fragmentValue === 'export-now') {
         setTimeout(() => {
-          (this.exportButton.nativeElement as HTMLButtonElement).scrollIntoView(
-            {
-              behavior: 'smooth',
-            },
-          );
+          this.exportButton().nativeElement.scrollIntoView({
+            behavior: 'smooth',
+          });
         }, 2000);
       }
     });

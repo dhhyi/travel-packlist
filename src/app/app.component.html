@@ -17,7 +17,7 @@
 <div class="grow-children flex grow flex-col">
   <router-outlet />
 
-  @if (scrollTopVisible) {
+  @if (scrollTopVisible()) {
     <div class="sticky bottom-2 flex justify-center">
       <button
         type="button"

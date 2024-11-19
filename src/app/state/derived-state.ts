@@ -18,6 +18,7 @@ import { rulesTemplate } from '../model/template';
 
 export interface DerivedStateType {
   isMobile: boolean;
+  scrollY: number;
   preferredLanguage: SupportedLanguage;
   rulesHash: string;
   rulesOrTemplate: string;
@@ -60,6 +61,12 @@ export class DerivedState {
         );
       }),
     );
+
+    const scrollY = signal(window.scrollY);
+    window.addEventListener('scroll', () => {
+      scrollY.set(window.scrollY);
+    });
+    this.signalMap.set('scrollY', scrollY.asReadonly());
 
     this.signalMap.set(
       'preferredLanguage',

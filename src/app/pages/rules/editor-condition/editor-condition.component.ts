@@ -5,11 +5,10 @@ import {
   input,
   output,
   ChangeDetectionStrategy,
-  ViewChild,
   TemplateRef,
-  AfterViewInit,
+  viewChild,
   ViewContainerRef,
-  OnChanges,
+  effect,
 } from '@angular/core';
 import {
   Always,
@@ -22,7 +21,6 @@ import {
 } from '../../../model/types';
 import { NgClass } from '@angular/common';
 import { Serializer } from '../../../model/serializer';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { GlobalState } from '../../../state/global-state';
 
 @Component({
@@ -41,15 +39,15 @@ import { GlobalState } from '../../../state/global-state';
     }
   `,
 })
-export class EditorConditionComponent implements AfterViewInit, OnChanges {
+export class EditorConditionComponent {
   condition = input.required<Condition>();
   selectVariables = input.required<string[]>();
 
-  @ViewChild('content', { read: ViewContainerRef }) content!: ViewContainerRef;
+  content = viewChild.required('content', { read: ViewContainerRef });
 
-  @ViewChild('keyword') keywordTemplate!: TemplateRef<unknown>;
-  @ViewChild('variable') variableTemplate!: TemplateRef<unknown>;
-  @ViewChild('select') selectTemplate!: TemplateRef<unknown>;
+  keywordTemplate = viewChild.required('keyword', { read: TemplateRef });
+  variableTemplate = viewChild.required('variable', { read: TemplateRef });
+  selectTemplate = viewChild.required('select', { read: TemplateRef });
 
   private state = inject(GlobalState);
   private activeAnswers = this.state.signal('activeAnswers');
@@ -71,15 +69,19 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   readonly conditionChanged = output<Condition>();
 
   constructor() {
-    toObservable(this.mode)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => {
+    effect(
+      () => {
+        this.mode();
+        this.condition();
+        this.selectVariables();
         this.repaint();
-      });
+      },
+      { allowSignalWrites: true },
+    );
   }
 
   private repaint() {
-    this.content.clear();
+    this.content().clear();
 
     if (this.mode() !== 'edit' && this.condition() instanceof Always) {
       return;
@@ -117,7 +119,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   }
 
   private paintKeyword(keyword: string) {
-    this.content.createEmbeddedView(this.keywordTemplate, {
+    this.content().createEmbeddedView(this.keywordTemplate(), {
       $implicit: keyword,
     });
   }
@@ -127,7 +129,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
     changeCallback: (newCondition: Condition) => void,
     forbidden: string[],
   ) {
-    this.content.createEmbeddedView(this.selectTemplate, {
+    this.content().createEmbeddedView(this.selectTemplate(), {
       $implicit: variable,
       options: this.calculateOptions(forbidden),
       selection: (value: string) => {
@@ -138,7 +140,7 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
   }
 
   private paintVariable(variable: string) {
-    this.content.createEmbeddedView(this.variableTemplate, {
+    this.content().createEmbeddedView(this.variableTemplate(), {
       $implicit: variable,
     });
   }
@@ -205,15 +207,6 @@ export class EditorConditionComponent implements AfterViewInit, OnChanges {
         this.paintVariable(condition.variable);
       }
     }
-  }
-
-  ngOnChanges(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.content) this.repaint();
-  }
-
-  ngAfterViewInit(): void {
-    this.repaint();
   }
 
   variableActive(variable: string) {
