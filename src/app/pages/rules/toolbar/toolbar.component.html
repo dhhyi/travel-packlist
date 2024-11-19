@@ -96,8 +96,8 @@
   } @else if (mode() === "search" || searchTerm()) {
     <div class="mt-2 flex items-center">
       <input #searchInput type="text" class="grow" [(ngModel)]="searchTerm" />
-      <button type="button" class="icon m-3">
-        <app-icon-clear (click)="clearSearch()" />
+      <button type="button" class="icon m-3" (click)="clearSearch()">
+        <app-icon-clear />
       </button>
     </div>
   }
