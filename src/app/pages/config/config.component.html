@@ -222,6 +222,11 @@
       >{{ env.git_hash }}</a
     ></span
   >
+  @if (displayServiceWorkerStatus) {
+    <span i18n="@@config.service-worker" class="font-mono text-sm"
+      >Service Worker: {{ serviceWorkerStatus() }}</span
+    >
+  }
 </div>
 
 <div class="section">

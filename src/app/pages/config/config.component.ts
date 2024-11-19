@@ -46,6 +46,7 @@ export class ConfigComponent {
   loading = signal(false);
 
   displayKoFi = !ANDROID;
+  displayServiceWorkerStatus = !ANDROID;
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -64,6 +65,23 @@ export class ConfigComponent {
   @ViewChild('exportButton', { read: ElementRef })
   private exportButton!: ElementRef;
   isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
+
+  serviceWorkerStatus = computed((): string => {
+    switch (this.state.signal('serviceWorkerStatus')()) {
+      case 'disabled':
+        return $localize`:@@config.service-worker.disabled:disabled` as string;
+      case 'error':
+        return $localize`:@@config.service-worker.error:error` as string;
+      case 'unrecoverable':
+        return $localize`:@@config.service-worker.unrecoverable:unrecoverable - please refresh` as string;
+      case 'init':
+        return $localize`:@@config.service-worker.init:initializing` as string;
+      case 'ok':
+        return $localize`:@@config.service-worker.ok:ok` as string;
+      case 'update-available':
+        return $localize`:@@config.service-worker.update-available:update available` as string;
+    }
+  });
 
   constructor() {
     const fragment = toSignal(this.route.fragment);

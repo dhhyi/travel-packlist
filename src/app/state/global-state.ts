@@ -3,6 +3,7 @@ import { PersistentState, PersistentStateType } from './persistent-state';
 import { DerivedState, DerivedStateType } from './derived-state';
 import { RouterState, RouterStateType } from './router-state';
 import { SessionState, SessionStateType } from './session-state';
+import { TransientState, TransientStateType } from './transient-state';
 
 type RWState = PersistentStateType & RouterStateType & SessionStateType;
 type ROState = DerivedStateType;
@@ -17,12 +18,14 @@ export class GlobalState {
   private persistent = inject(PersistentState);
   private router = inject(RouterState);
   private session = inject(SessionState);
+  private transient = inject(TransientState);
   private derived = inject(DerivedState);
 
   get<K extends keyof PersistentStateType>(key: K): PersistentStateType[K];
   get<K extends keyof RouterStateType>(key: K): RouterStateType[K];
   get<K extends keyof SessionStateType>(key: K): SessionStateType[K];
   get<K extends keyof DerivedStateType>(key: K): DerivedStateType[K];
+  get<K extends keyof TransientStateType>(key: K): TransientStateType[K];
   get(key: string) {
     if (this.persistent.handles(key)) {
       return this.persistent.get(key);
@@ -30,6 +33,8 @@ export class GlobalState {
       return this.router.get(key);
     } else if (this.session.handles(key)) {
       return this.session.get(key);
+    } else if (this.transient.handles(key)) {
+      return this.transient.get(key);
     } else if (this.derived.handles(key)) {
       return this.derived.get(key);
     }
@@ -45,6 +50,9 @@ export class GlobalState {
   signal<K extends keyof SessionStateType>(
     key: K,
   ): WritableSignal<SessionStateType[K]>;
+  signal<K extends keyof TransientStateType>(
+    key: K,
+  ): WritableSignal<TransientStateType[K]>;
   signal<K extends keyof DerivedStateType>(key: K): Signal<DerivedStateType[K]>;
   signal(key: string) {
     if (this.persistent.handles(key)) {
@@ -53,6 +61,8 @@ export class GlobalState {
       return this.router.signal(key);
     } else if (this.session.handles(key)) {
       return this.session.signal(key);
+    } else if (this.transient.handles(key)) {
+      return this.transient.signal(key);
     } else if (this.derived.handles(key)) {
       return this.derived.signal(key);
     }
@@ -68,6 +78,10 @@ export class GlobalState {
     key: K,
     value: SessionStateType[K],
   ): void;
+  set<K extends keyof TransientStateType>(
+    key: K,
+    value: TransientStateType[K],
+  ): void;
   set<K extends keyof RouterStateType>(key: K, value: RouterStateType[K]): void;
   /* eslint-enable @typescript-eslint/unified-signatures */
   set(key: string, value: unknown) {
@@ -77,6 +91,8 @@ export class GlobalState {
       this.router.set(key, value as RouterStateType[typeof key]);
     } else if (this.session.handles(key)) {
       this.session.set(key, value as SessionStateType[typeof key]);
+    } else if (this.transient.handles(key)) {
+      this.transient.set(key, value as TransientStateType[typeof key]);
     } else if (this.derived.handles(key)) {
       throw new Error(`Key is derived and cannot be set`);
     } else {

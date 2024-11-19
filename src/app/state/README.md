@@ -9,6 +9,7 @@ The State Management in this application is a self-brew solution providing a fla
 | PersistentState | localStorage     | On every state change                 |
 | SessionState    | sessionStorage   | On every state change                 |
 | RouterState     | URL query params | Synchronized with URL                 |
+| TransientState  | None             | On every state change                 |
 | DerivedState    | None             | On every change of dependent property |
 | GlobalState     | None             |                                       |
 
@@ -19,6 +20,7 @@ The State Management in this application is a self-brew solution providing a fla
 | PersistentState | yes | yes         | WritableSignal |
 | SessionState    | yes | yes         | WritableSignal |
 | RouterState     | yes | yes         | WritableSignal |
+| TransientState  | yes | yes         | WritableSignal |
 | DerivedState    | yes | no          | Signal         |
 | GlobalState     | yes | (forwarded) | (forwarded)    |
 
@@ -35,6 +37,10 @@ The `SessionState` class is a singleton class that holds the session state of th
 ## [`RouterState`](./router-state.ts)
 
 The `RouterState` class is a singleton class that holds a slice of the state as routing query parameters. The state is synchronized with the current URL query parameters.
+
+## [`TransientState`](./transient-state.ts)
+
+The `TransientState` class is a singleton class that holds transient state that is not persisted but exists only in memory.
 
 ## [`DerivedState`](./derived-state.ts)
 

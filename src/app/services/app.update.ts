@@ -1,18 +1,32 @@
 import { inject, Injectable } from '@angular/core';
-import { SwUpdate } from '@angular/service-worker';
-import { tap, filter, interval, switchMap, identity } from 'rxjs';
+import { SwUpdate, UnrecoverableStateEvent } from '@angular/service-worker';
+import { tap, filter, interval, switchMap, identity, merge } from 'rxjs';
 import { confirm } from '../dialog';
+import { GlobalState } from '../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class AppUpdate {
   private swUpdate = inject(SwUpdate);
+  private status = inject(GlobalState).signal('serviceWorkerStatus');
 
   init() {
-    this.swUpdate.versionUpdates
+    merge(this.swUpdate.versionUpdates, this.swUpdate.unrecoverable)
       .pipe(
         tap((event) => {
           if (event.type === 'VERSION_INSTALLATION_FAILED') {
+            this.status.set('error');
             console.error('Version installation failed\n', event.error);
+          } else if (event.type === 'NO_NEW_VERSION_DETECTED') {
+            this.status.set('ok');
+          } else if (
+            event.type === 'VERSION_READY' ||
+            event.type === 'VERSION_DETECTED'
+          ) {
+            this.status.set('update-available');
+          } else {
+            const unrecoverable: UnrecoverableStateEvent = event;
+            this.status.set('unrecoverable');
+            console.error('Unrecoverable state\n', unrecoverable.reason);
           }
         }),
         filter((event) => event.type === 'VERSION_READY'),
@@ -34,6 +48,7 @@ export class AppUpdate {
           if (updateAvailable) console.log('Update available');
         });
     } else {
+      this.status.set('disabled');
       console.warn('Service worker updates are disabled/unavailable');
     }
   }
