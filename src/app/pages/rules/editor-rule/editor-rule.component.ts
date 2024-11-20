@@ -2,12 +2,15 @@ import {
   Component,
   computed,
   inject,
-  input,
   output,
   signal,
   ChangeDetectionStrategy,
+  model,
 } from '@angular/core';
 import {
+  asCondition,
+  asItem,
+  asQuestion,
   Condition,
   Item,
   PleaseSelect,
@@ -45,10 +48,14 @@ import { GlobalState } from '../../../state/global-state';
   templateUrl: './editor-rule.component.html',
 })
 export class EditorRuleComponent {
-  rule = input.required<Rule>();
+  rule = model.required<Rule>();
 
-  readonly ruleChanged = output<Rule | null>();
   readonly renameVariable = output<[string, string]>();
+  readonly deleteRule = output();
+
+  asCondition = asCondition;
+  asItem = asItem;
+  asQuestion = asQuestion;
 
   ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
   errorMessage = signal<string | null>(null);
@@ -79,10 +86,6 @@ export class EditorRuleComponent {
     }
   }
 
-  deleteRule() {
-    this.ruleChanged.emit(null);
-  }
-
   resetCondition() {
     this.updateCondition(new PleaseSelect());
   }
@@ -94,7 +97,7 @@ export class EditorRuleComponent {
       this.rule().items,
     );
     if (this.compileRule(newRule)) {
-      this.ruleChanged.emit(newRule);
+      this.rule.set(newRule);
     }
   }
 
@@ -105,7 +108,7 @@ export class EditorRuleComponent {
       this.rule().items,
     );
     if (this.compileRule(newRule)) {
-      this.ruleChanged.emit(newRule);
+      this.rule.set(newRule);
     }
   }
 
@@ -150,7 +153,7 @@ export class EditorRuleComponent {
       items,
     );
     if (this.compileRule(newRule)) {
-      this.ruleChanged.emit(newRule);
+      this.rule.set(newRule);
     }
   }
 
@@ -192,7 +195,7 @@ export class EditorRuleComponent {
       [...this.rule().questions, ...cbQuestions],
       [...this.rule().items, ...cbItems],
     );
-    this.ruleChanged.emit(newRule);
+    this.rule.set(newRule);
   }
 
   variableChanged([oldVariable, newVariable]: [string, string]) {

@@ -2,8 +2,8 @@ import {
   Component,
   inject,
   input,
-  output,
   ChangeDetectionStrategy,
+  model,
 } from '@angular/core';
 import { VariableType } from '../../../model/types';
 import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-checkmark.component';
@@ -16,15 +16,14 @@ import { GlobalState } from '../../../state/global-state';
   imports: [IconCheckmarkComponent],
 })
 export class DisplayQuestionComponent {
-  question = input<string | undefined>(undefined);
-  value = input<VariableType | undefined>(undefined);
-  readonly valueChange = output<VariableType>();
+  question = input.required<string>();
+  value = model.required<VariableType>();
 
   private state = inject(GlobalState);
 
   click(): void {
     if (!this.state.get('answersLocked')) {
-      this.valueChange.emit(!this.value());
+      this.value.update((v) => !v);
     }
   }
 }
