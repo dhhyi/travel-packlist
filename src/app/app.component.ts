@@ -14,7 +14,6 @@ import { GlobalState } from './state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  standalone: true,
   imports: [
     RouterModule,
     IconCogComponent,

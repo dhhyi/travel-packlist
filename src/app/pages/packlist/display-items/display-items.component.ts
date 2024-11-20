@@ -16,7 +16,6 @@ import { PacklistFacade } from '../packlist.facade';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-items',
-  standalone: true,
   imports: [
     KeyValuePipe,
     ItemsStatusComponent,

@@ -16,7 +16,6 @@ import { GlobalState } from '../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
-  standalone: true,
   imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
   templateUrl: './rules.component.html',
 })

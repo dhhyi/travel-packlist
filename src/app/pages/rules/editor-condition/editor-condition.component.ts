@@ -26,7 +26,6 @@ import { GlobalState } from '../../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
-  standalone: true,
   imports: [NgClass],
   templateUrl: './editor-condition.component.html',
   styles: `
@@ -69,15 +68,12 @@ export class EditorConditionComponent {
   readonly conditionChanged = output<Condition>();
 
   constructor() {
-    effect(
-      () => {
-        this.mode();
-        this.condition();
-        this.selectVariables();
-        this.repaint();
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      this.mode();
+      this.condition();
+      this.selectVariables();
+      this.repaint();
+    });
   }
 
   private repaint() {

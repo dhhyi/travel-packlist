@@ -186,13 +186,10 @@ export class DerivedState {
     const lastRulesAction = signal(new Date().getTime());
     this.signalMap.set('lastRulesAction', lastRulesAction.asReadonly());
 
-    effect(
-      () => {
-        rulesOrTemplate();
-        lastRulesAction.set(new Date().getTime());
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      rulesOrTemplate();
+      lastRulesAction.set(new Date().getTime());
+    });
 
     this.signalMap.set(
       'exportFileName',

@@ -22,7 +22,6 @@ import { GlobalState } from '../../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-toolbar',
-  standalone: true,
   imports: [
     FormsModule,
     NgClass,

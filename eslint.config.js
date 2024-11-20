@@ -65,6 +65,8 @@ module.exports = tseslint.config(
           style: "kebab-case",
         },
       ],
+      "@angular-eslint/prefer-standalone-component": "off",
+      "@angular-eslint/prefer-standalone": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

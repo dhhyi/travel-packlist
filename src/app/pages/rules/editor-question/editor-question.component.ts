@@ -33,7 +33,6 @@ import { GlobalState } from '../../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-question',
-  standalone: true,
   imports: [ReactiveFormsModule, NgClass],
   templateUrl: './editor-question.component.html',
 })

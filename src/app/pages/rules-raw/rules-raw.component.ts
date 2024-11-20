@@ -26,7 +26,6 @@ type ParserState =
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-edit-rules-raw',
-  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './rules-raw.component.html',
   styles: `
@@ -67,12 +66,9 @@ export class EditRulesRawComponent {
     const ruleUpdates = toSignal(
       this.rulesControl.valueChanges.pipe(debounceTime(500)),
     );
-    effect(
-      () => {
-        const value = ruleUpdates();
-        if (value) this.state.set('rules', value);
-      },
-      { allowSignalWrites: true },
-    );
+    effect(() => {
+      const value = ruleUpdates();
+      if (value) this.state.set('rules', value);
+    });
   }
 }

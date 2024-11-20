@@ -24,7 +24,6 @@ import { confirm } from '../../dialog';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config',
-  standalone: true,
   imports: [
     RouterModule,
     FormsModule,

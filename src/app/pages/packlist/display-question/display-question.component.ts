@@ -12,7 +12,6 @@ import { GlobalState } from '../../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-question',
-  standalone: true,
   templateUrl: './display-question.component.html',
   imports: [IconCheckmarkComponent],
 })

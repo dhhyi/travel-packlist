@@ -31,7 +31,6 @@ import { GlobalState } from '../../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-rule',
-  standalone: true,
   imports: [
     EditorConditionComponent,
     EditorQuestionComponent,

@@ -4,7 +4,6 @@ import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-check
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-status',
-  standalone: true,
   imports: [IconCheckmarkComponent],
   templateUrl: './items-status.component.html',
 })

@@ -18,7 +18,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-item',
-  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './editor-item.component.html',
 })

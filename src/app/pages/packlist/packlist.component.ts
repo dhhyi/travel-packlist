@@ -15,7 +15,6 @@ import { GlobalState } from '../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist',
-  standalone: true,
   imports: [
     DisplayQuestionComponent,
     DisplayItemsComponent,
