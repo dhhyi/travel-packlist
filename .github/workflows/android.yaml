@@ -3,13 +3,24 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
+      # https://manski.net/articles/github/actions/dump-context
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Checkout 🛎️
         uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+          fetch-depth: 0
 
       - name: Set up JDK 📦
         uses: actions/setup-java@v4
@@ -35,3 +46,27 @@ jobs:
           path: dist/android
           name: android-bundles
           retention-days: 3
+
+      - name: check release
+        id: check_release
+        run: |
+          version=$(npm pkg get version | sed 's/"//g')
+          echo "version=$version" >> $GITHUB_OUTPUT
+          if [ "$(git rev-parse "v$version^0")" = "${{ github.sha }}" ]; then
+            echo "do_release=true" >> $GITHUB_OUTPUT
+          fi
+          echo "datetime=$(date +'%Y-%m-%d-%H_%M_%S%z')" >> "$GITHUB_OUTPUT"
+          cat $GITHUB_OUTPUT
+
+      - name: build release
+        if: steps.check_release.outputs.do_release == 'true'
+        env:
+          VERSION: ${{ steps.check_release.outputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create \
+            "v$VERSION" \
+            dist/android/travel-packlist-debug.apk \
+            dist/android/travel-packlist.aab \
+            -t "Release $VERSION" \
+            -n "${{ steps.check_release.outputs.datetime }}" \

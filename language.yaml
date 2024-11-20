@@ -21,6 +21,8 @@ vscode:
     - esbenp.prettier-vscode
     - bradlc.vscode-tailwindcss
     - streetsidesoftware.code-spell-checker
+    - bierner.markdown-preview-github-styles
+    - github.vscode-github-actions
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
     terminal.integrated.profiles.linux:
