@@ -14,6 +14,7 @@ pnpm cap sync
 pnpm generate-assets --android
 
 sed -i "s/versionName.*/versionName $(npm pkg get version)/" android/app/build.gradle
+sed -i "s/versionCode.*/versionCode $(git tag -l | wc -l)/" android/app/build.gradle
 
 mkdir -p dist/android
 
