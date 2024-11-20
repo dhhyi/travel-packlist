@@ -1,6 +1,6 @@
 {
   "name": "travel-packlist",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "generate-assets": "node generate-assets.mjs",
