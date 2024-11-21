@@ -6,9 +6,9 @@ export const rulesTemplate = `:-
 
 longer :-
    Do you have a washer or laundry service available? $laundry,
+   Do you want to work? $work,
    [Electronics] Phone Charger,
-   [Electronics] Tablet,
-   Do you want to work? $work;
+   [Electronics] Tablet;
 
 longer AND NOT laundry :-
    [Clothes] enough Shirts,
@@ -24,6 +24,7 @@ work :-
 
 :-
    Will it be sunny? $sunny,
+   Will it be rainy? $rainy,
    Are you traveling abroad? $abroad;
 
 sunny :-
@@ -31,8 +32,13 @@ sunny :-
    [Utility] Sunglasses,
    [Clothes] Short Pants;
 
+rainy :-
+   [Clothes] Rain Jacket;
+
+NOT rainy :-
+   [Clothes] Jacket;
+
 NOT sunny :-
-   [Clothes] Jacket,
    [Clothes] Long Pants;
 
 uv :-
