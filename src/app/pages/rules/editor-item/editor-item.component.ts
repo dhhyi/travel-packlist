@@ -1,9 +1,10 @@
 import {
   Component,
   inject,
+  input,
+  output,
   ChangeDetectionStrategy,
   effect,
-  model,
 } from '@angular/core';
 import { Item } from '../../../model/types';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -21,11 +22,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './editor-item.component.html',
 })
 export class EditorItemComponent {
-  item = model.required<Item>();
+  item = input.required<Item>();
 
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');
   categories = this.state.signal('categories');
+
+  readonly itemChanged = output<Item>();
 
   private fb = inject(FormBuilder).nonNullable;
   form = this.fb.group({
@@ -67,7 +70,7 @@ export class EditorItemComponent {
 
       const [name, weight] = this.parser.extractItemNameAndWeight(value.name);
 
-      this.item.set(new Item(value.category, name, weight));
+      this.itemChanged.emit(new Item(value.category, name, weight));
     });
 
     effect(() => {

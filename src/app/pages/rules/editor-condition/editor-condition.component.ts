@@ -2,13 +2,13 @@ import {
   Component,
   computed,
   inject,
+  input,
+  output,
   ChangeDetectionStrategy,
   TemplateRef,
   viewChild,
   ViewContainerRef,
   effect,
-  model,
-  input,
 } from '@angular/core';
 import {
   Always,
@@ -39,7 +39,7 @@ import { GlobalState } from '../../../state/global-state';
   `,
 })
 export class EditorConditionComponent {
-  condition = model.required<Condition>();
+  condition = input.required<Condition>();
   selectVariables = input.required<string[]>();
 
   content = viewChild.required('content', { read: ViewContainerRef });
@@ -65,6 +65,8 @@ export class EditorConditionComponent {
   please_select = PleaseSelect.string;
   always = Always.string;
 
+  readonly conditionChanged = output<Condition>();
+
   constructor() {
     effect(() => {
       this.mode();
@@ -83,7 +85,7 @@ export class EditorConditionComponent {
 
     this.paintKeyword('IF');
     this.paintCondition(this.condition(), (newCondition) => {
-      this.condition.set(newCondition);
+      this.conditionChanged.emit(newCondition);
     });
   }
 

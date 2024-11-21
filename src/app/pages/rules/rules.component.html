@@ -18,8 +18,7 @@
   >
     <app-editor-rule
       [rule]="item.rule"
-      (ruleChanged)="updateRule(item.index, asRule($event))"
-      (deleteRule)="deleteRule(item.index)"
+      (ruleChanged)="updateRule(item.index, $event)"
       (renameVariable)="renameVariable($event)"
     />
   </div>

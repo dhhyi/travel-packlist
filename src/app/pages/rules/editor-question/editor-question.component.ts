@@ -1,11 +1,11 @@
 import {
   Component,
   inject,
+  input,
   output,
   ChangeDetectionStrategy,
   computed,
   effect,
-  model,
 } from '@angular/core';
 import { Always, Question } from '../../../model/types';
 import {
@@ -37,7 +37,7 @@ import { GlobalState } from '../../../state/global-state';
   templateUrl: './editor-question.component.html',
 })
 export class EditorQuestionComponent {
-  question = model.required<Question>();
+  question = input.required<Question>();
 
   private state = inject(GlobalState);
   private variables = this.state.signal('variables');
@@ -52,6 +52,7 @@ export class EditorQuestionComponent {
   );
   private refactorVariables = this.state.signal('refactorVariables');
 
+  readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
 
   private fb = inject(FormBuilder).nonNullable;
@@ -98,7 +99,7 @@ export class EditorQuestionComponent {
         value.question !== this.question().question &&
         value.variable
       ) {
-        this.question.set(new Question(value.question, value.variable));
+        this.questionChanged.emit(new Question(value.question, value.variable));
       } else if (
         value?.variable &&
         value.variable.trim() !== this.question().variable
@@ -107,7 +108,7 @@ export class EditorQuestionComponent {
           this.question().variable === Question.NEW_VARIABLE_NAME ||
           !this.refactorVariables()
         ) {
-          this.question.set(
+          this.questionChanged.emit(
             new Question(this.question().question, value.variable.trim()),
           );
         } else {

@@ -7,13 +7,6 @@ export class Rule {
   ) {}
 }
 
-export function asRule(e: unknown): Rule {
-  if (e instanceof Rule) {
-    return e;
-  }
-  throw new Error('Not a Rule');
-}
-
 export class Question {
   static NEW_QUESTION_NAME =
     $localize`:@@model.new.question:New Question` as string;
@@ -22,13 +15,6 @@ export class Question {
     public readonly question: string,
     public readonly variable: string,
   ) {}
-}
-
-export function asQuestion(e: unknown): Question {
-  if (e instanceof Question) {
-    return e;
-  }
-  throw new Error('Not a Question');
 }
 
 export class Item {
@@ -41,28 +27,9 @@ export class Item {
   ) {}
 }
 
-export function asItem(e: unknown): Item {
-  if (e instanceof Item) {
-    return e;
-  }
-  throw new Error('Not an Item');
-}
-
 export type VariableType = boolean;
 
 export type Condition = Variable | Not | And | Or;
-
-export function asCondition(e: unknown): Condition {
-  if (
-    e instanceof Variable ||
-    e instanceof Not ||
-    e instanceof And ||
-    e instanceof Or
-  ) {
-    return e;
-  }
-  throw new Error('Not a Condition');
-}
 
 export class Variable {
   constructor(public readonly variable: string) {}

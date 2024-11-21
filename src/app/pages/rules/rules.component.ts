@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   computed,
 } from '@angular/core';
-import { asRule, PleaseSelect, Rule } from '../../model/types';
+import { PleaseSelect, Rule } from '../../model/types';
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { Serializer } from '../../model/serializer';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -20,8 +20,6 @@ import { GlobalState } from '../../state/global-state';
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
-  asRule = asRule;
-
   private serializer = inject(Serializer);
   private refactor = inject(Refactor);
 
@@ -49,15 +47,13 @@ export class RulesComponent {
     this.state.set('rules', serializedRules);
   }
 
-  updateRule(index: number, rule: Rule) {
+  updateRule(index: number, rule: Rule | null) {
     const rules = this.parsedRules();
-    rules[index] = rule;
-    this.updateRules([...rules]);
-  }
-
-  deleteRule(index: number) {
-    const rules = this.parsedRules();
-    rules.splice(index, 1);
+    if (rule) {
+      rules[index] = rule;
+    } else {
+      rules.splice(index, 1);
+    }
     this.updateRules([...rules]);
   }
 

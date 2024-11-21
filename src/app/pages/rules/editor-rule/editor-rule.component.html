@@ -3,7 +3,7 @@
     class="grow"
     [condition]="rule().condition"
     [selectVariables]="selectVariables()"
-    (conditionChanged)="updateCondition(asCondition($event))"
+    (conditionChanged)="updateCondition($event)"
   />
   @if (mode() === "edit") {
     <button class="icon" type="button" (click)="resetCondition()">
@@ -30,7 +30,7 @@
     <app-editor-question
       class="grow"
       [question]="question"
-      (questionChanged)="updateQuestion($index, asQuestion($event))"
+      (questionChanged)="updateQuestion($index, $event)"
       (variableChanged)="variableChanged($event)"
     />
     @if (mode() === "delete") {
@@ -71,7 +71,7 @@
     <app-editor-item
       class="grow"
       [item]="item"
-      (itemChanged)="updateItem($index, asItem($event))"
+      (itemChanged)="updateItem($index, $event)"
     />
     @if (mode() === "delete") {
       <button class="icon" type="button" (click)="deleteItem($index)">
@@ -109,7 +109,7 @@
 } @else {
   <div class="flex justify-center">
     @if (mode() === "delete") {
-      <button type="button" class="icon" (click)="deleteRule.emit()">
+      <button type="button" class="icon" (click)="deleteRule()">
         <app-icon-delete />
       </button>
     }
