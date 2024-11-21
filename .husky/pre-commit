@@ -33,6 +33,7 @@ fi
 prettierFiles=$(echo "$files" | tr '\n' ' ')
 npx prettier $prettierFiles --write --ignore-unknown || cleanup
 
+npm run check-translations || cleanup
 npm test || cleanup
 npm run spellcheck || cleanup
 npm run lint -- --fix || cleanup

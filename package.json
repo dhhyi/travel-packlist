@@ -16,7 +16,9 @@
     "format": "prettier --write \"**/*.*\"",
     "lint": "ng lint",
     "stylelint": "stylelint \"**/*.css\"",
-    "extract-i18n": "ng extract-i18n && sort-json src/locale/messages.json",
+    "extract-i18n": "ng extract-i18n",
+    "postextract-i18n": "npm run check-translations",
+    "check-translations": "node check-translations.mjs",
     "spellcheck": "cspell \"**/*.md\""
   },
   "private": true,
