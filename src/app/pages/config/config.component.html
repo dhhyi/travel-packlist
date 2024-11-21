@@ -69,7 +69,7 @@
       id="rules-debug-mode"
       [(ngModel)]="fadeOutDisabledRules"
     />
-    <label i18n="@@config.rules.fadeout-disabled" for="rules-debug-mode"
+    <label i18n="@@config.rules.edit.fadeout-disabled" for="rules-debug-mode"
       >Fade out disabled rules in editor</label
     >
   </div>
@@ -79,7 +79,9 @@
       id="variables-debug-mode"
       [(ngModel)]="highlightVariableStatus"
     />
-    <label i18n="@@config.rules.highlight-variables" for="variables-debug-mode"
+    <label
+      i18n="@@config.rules.edit.highlight-variables"
+      for="variables-debug-mode"
       >Highlight variable status in editor</label
     >
   </div>
@@ -137,10 +139,10 @@
 </div>
 
 <div class="section">
-  <span i18n="@@config.rules.theme" class="font-bold">Theme</span>
+  <span i18n="@@config.theme" class="font-bold">Theme</span>
   <div class="grid grid-cols-3 gap-3">
     <button
-      i18n="@@config.rules.theme.dark"
+      i18n="@@config.theme.dark"
       type="button"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': theme() === 'dark',
@@ -150,7 +152,7 @@
       Dark
     </button>
     <button
-      i18n="@@config.rules.theme.light"
+      i18n="@@config.theme.light"
       type="button"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': theme() === 'light',
@@ -160,7 +162,7 @@
       Light
     </button>
     <button
-      i18n="@@config.rules.theme.system"
+      i18n="@@config.theme.system"
       type="button"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': theme() === 'system',
