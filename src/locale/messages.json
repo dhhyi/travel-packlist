@@ -8,6 +8,7 @@
     "app.icon": "application icon",
     "app.title": "Travel Packlist",
     "app.update.apply.question": "A new version of the app is available. Do you want to reload?",
+    "config.appearance": "Appearance",
     "config.appversion": "App Version",
     "config.appversion.built": "built on {$LONG_DATE}",
     "config.checklist": "Checklist",

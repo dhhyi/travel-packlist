@@ -64,7 +64,7 @@ button.secondary {
 }
 
 fieldset {
-  @apply rounded-md border border-slate-300 p-2;
+  @apply rounded-md border border-slate-500 p-2;
 }
 
 fieldset > legend {

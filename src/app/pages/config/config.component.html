@@ -139,8 +139,9 @@
 </div>
 
 <div class="section">
-  <span i18n="@@config.theme" class="font-bold">Theme</span>
-  <div class="grid grid-cols-3 gap-3">
+  <span i18n="@@config.appearance" class="font-bold">Appearance</span>
+  <fieldset class="grid grid-cols-3 gap-3">
+    <legend i18n="@@config.theme">Theme</legend>
     <button
       i18n="@@config.theme.dark"
       type="button"
@@ -171,15 +172,13 @@
     >
       System
     </button>
-  </div>
-</div>
-
-<div class="section">
-  <span i18n="@@config.fontsize" class="font-bold">Font Size</span>
-  <div class="grid grid-cols-3 gap-3">
+  </fieldset>
+  <fieldset class="grid grid-cols-3 gap-3">
+    <legend i18n="@@config.fontsize">Font Size</legend>
     <button
       i18n="@@config.fontsize.small"
       type="button"
+      class="text-[16px]"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'small',
       }"
@@ -190,6 +189,7 @@
     <button
       i18n="@@config.fontsize.normal"
       type="button"
+      class="text-[18px]"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'normal',
       }"
@@ -200,6 +200,7 @@
     <button
       i18n="@@config.fontsize.large"
       type="button"
+      class="text-[20px]"
       [ngClass]="{
         'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'large',
       }"
@@ -207,12 +208,9 @@
     >
       large
     </button>
-  </div>
-</div>
-
-<div class="section">
-  <span i18n="@@config.language" class="font-bold">Language</span>
-  <div class="grid grid-cols-3 gap-3">
+  </fieldset>
+  <fieldset class="grid grid-cols-3 gap-3">
+    <legend i18n="@@config.language">Language</legend>
     <button
       i18n="@@config.language.detect"
       class="flex items-center justify-center bg-transparent"
@@ -244,7 +242,7 @@
     >
       <app-flag-germany class="h-6 w-7" />
     </button>
-  </div>
+  </fieldset>
 </div>
 
 <div class="section">
