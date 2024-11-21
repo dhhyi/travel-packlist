@@ -47,7 +47,8 @@ import { GlobalState } from '../../../state/global-state';
 export class EditorRuleComponent {
   rule = input.required<Rule>();
 
-  readonly ruleChanged = output<Rule | null>();
+  readonly ruleChanged = output<Rule>();
+  readonly deleteRule = output();
   readonly renameVariable = output<[string, string]>();
 
   ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
@@ -77,10 +78,6 @@ export class EditorRuleComponent {
       }
       return false;
     }
-  }
-
-  deleteRule() {
-    this.ruleChanged.emit(null);
   }
 
   resetCondition() {

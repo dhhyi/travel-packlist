@@ -47,13 +47,15 @@ export class RulesComponent {
     this.state.set('rules', serializedRules);
   }
 
-  updateRule(index: number, rule: Rule | null) {
+  updateRule(index: number, rule: Rule) {
     const rules = this.parsedRules();
-    if (rule) {
-      rules[index] = rule;
-    } else {
-      rules.splice(index, 1);
-    }
+    rules[index] = rule;
+    this.updateRules([...rules]);
+  }
+
+  deleteRule(index: number) {
+    const rules = this.parsedRules();
+    rules.splice(index, 1);
     this.updateRules([...rules]);
   }
 

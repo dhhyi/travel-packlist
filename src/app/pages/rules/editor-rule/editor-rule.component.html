@@ -109,7 +109,7 @@
 } @else {
   <div class="flex justify-center">
     @if (mode() === "delete") {
-      <button type="button" class="icon" (click)="deleteRule()">
+      <button type="button" class="icon" (click)="deleteRule.emit()">
         <app-icon-delete />
       </button>
     }
