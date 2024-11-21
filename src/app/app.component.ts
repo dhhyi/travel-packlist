@@ -7,20 +7,13 @@ import {
 import { RouterModule } from '@angular/router';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 import { IconUpComponent } from './icons/icon-up/icon-up.component';
-import { NgOptimizedImage } from '@angular/common';
 import { DialogComponent } from './dialog/dialog.component';
 import { GlobalState } from './state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  imports: [
-    RouterModule,
-    IconCogComponent,
-    IconUpComponent,
-    NgOptimizedImage,
-    DialogComponent,
-  ],
+  imports: [RouterModule, IconCogComponent, IconUpComponent, DialogComponent],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
