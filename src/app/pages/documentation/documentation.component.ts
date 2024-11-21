@@ -29,6 +29,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 
     code {
       @apply bg-gray-500 px-1 font-bold;
+      white-space: pre-wrap;
     }
 
     blockquote {
