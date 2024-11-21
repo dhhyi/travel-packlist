@@ -143,9 +143,9 @@
       i18n="@@config.rules.theme.dark"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'dark',
+        'ring ring-slate-800 dark:ring-slate-200': theme() === 'dark',
       }"
-      (click)="setTheme('dark')"
+      (click)="theme.set('dark')"
     >
       Dark
     </button>
@@ -153,9 +153,9 @@
       i18n="@@config.rules.theme.light"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'light',
+        'ring ring-slate-800 dark:ring-slate-200': theme() === 'light',
       }"
-      (click)="setTheme('light')"
+      (click)="theme.set('light')"
     >
       Light
     </button>
@@ -163,9 +163,9 @@
       i18n="@@config.rules.theme.system"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': getTheme() === 'system',
+        'ring ring-slate-800 dark:ring-slate-200': theme() === 'system',
       }"
-      (click)="setTheme('system')"
+      (click)="theme.set('system')"
     >
       System
     </button>
@@ -180,9 +180,9 @@
       class="flex items-center justify-center bg-transparent"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': getLanguage() === 'auto',
+        'ring ring-slate-800 dark:ring-slate-200': language() === 'auto',
       }"
-      (click)="setLanguage('auto')"
+      (click)="language.set('auto')"
     >
       detect
     </button>
@@ -190,9 +190,9 @@
       class="flex items-center justify-center bg-transparent"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': getLanguage() === 'en',
+        'ring ring-slate-800 dark:ring-slate-200': language() === 'en',
       }"
-      (click)="setLanguage('en')"
+      (click)="language.set('en')"
     >
       <app-flag-uk class="h-6 w-7" />
     </button>
@@ -200,9 +200,9 @@
       type="button"
       class="flex items-center justify-center bg-transparent"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': getLanguage() === 'de',
+        'ring ring-slate-800 dark:ring-slate-200': language() === 'de',
       }"
-      (click)="setLanguage('de')"
+      (click)="language.set('de')"
     >
       <app-flag-germany class="h-6 w-7" />
     </button>

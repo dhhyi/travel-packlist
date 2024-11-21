@@ -13,7 +13,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import env from '../../../environment/env.json';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, NgClass } from '@angular/common';
-import { GlobalState, Languages, Themes } from '../../state/global-state';
+import { GlobalState } from '../../state/global-state';
 import { ConfigFacade } from './config.facade';
 import { IconDownloadComponent } from '../../icons/icon-download/icon-download.component';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -57,6 +57,8 @@ export class ConfigComponent {
   trackWeight = this.state.signal('trackWeight');
   categorySorting = this.state.signal('categorySorting');
   exportReminder = this.state.signal('exportReminder');
+  theme = this.state.signal('theme');
+  language = this.state.signal('language');
 
   exportNeeded = this.state.signal('exportNeeded');
   private facade = inject(ConfigFacade);
@@ -129,21 +131,5 @@ export class ConfigComponent {
 
   async exportRules() {
     await this.facade.exportRules();
-  }
-
-  getTheme() {
-    return this.state.get('theme');
-  }
-
-  setTheme(theme: Themes) {
-    this.state.set('theme', theme);
-  }
-
-  getLanguage(): string {
-    return this.state.get('language');
-  }
-
-  setLanguage(lang: Languages) {
-    this.state.set('language', lang);
   }
 }
