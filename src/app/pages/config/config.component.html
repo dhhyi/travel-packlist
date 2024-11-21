@@ -173,6 +173,42 @@
 </div>
 
 <div class="section">
+  <span i18n="@@config.fontsize" class="font-bold">Font Size</span>
+  <div class="grid grid-cols-3 gap-3">
+    <button
+      i18n="@@config.fontsize.small"
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'small',
+      }"
+      (click)="fontSize.set('small')"
+    >
+      small
+    </button>
+    <button
+      i18n="@@config.fontsize.normal"
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'normal',
+      }"
+      (click)="fontSize.set('normal')"
+    >
+      normal
+    </button>
+    <button
+      i18n="@@config.fontsize.large"
+      type="button"
+      [ngClass]="{
+        'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'large',
+      }"
+      (click)="fontSize.set('large')"
+    >
+      large
+    </button>
+  </div>
+</div>
+
+<div class="section">
   <span i18n="@@config.language" class="font-bold">Language</span>
   <div class="grid grid-cols-3 gap-3">
     <button

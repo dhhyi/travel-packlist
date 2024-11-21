@@ -59,6 +59,7 @@ export class ConfigComponent {
   exportReminder = this.state.signal('exportReminder');
   theme = this.state.signal('theme');
   language = this.state.signal('language');
+  fontSize = this.state.signal('fontSize');
 
   exportNeeded = this.state.signal('exportNeeded');
   private facade = inject(ConfigFacade);

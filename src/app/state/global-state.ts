@@ -11,6 +11,7 @@ type State = ROState & RWState;
 
 export type Themes = State['theme'];
 export type Languages = State['language'];
+export type FontSizes = State['fontSize'];
 export { type SupportedLanguage } from './persistent-state';
 
 @Injectable({ providedIn: 'root' })

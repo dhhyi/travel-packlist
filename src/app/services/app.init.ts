@@ -1,7 +1,12 @@
 import { inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { GlobalState, SupportedLanguage, Themes } from '../state/global-state';
+import {
+  FontSizes,
+  GlobalState,
+  SupportedLanguage,
+  Themes,
+} from '../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
@@ -19,6 +24,11 @@ export class AppInit {
       injector: this.injector,
     }).subscribe((lang) => {
       this.applyLanguage(lang);
+    });
+    toObservable(state.signal('fontSize'), {
+      injector: this.injector,
+    }).subscribe((size) => {
+      this.applyFontSize(size);
     });
   }
 
@@ -46,5 +56,12 @@ export class AppInit {
         window.location.href = newUrl;
       }, 0);
     }
+  }
+
+  private applyFontSize(size: FontSizes | undefined) {
+    document.documentElement.style.setProperty(
+      '--html-font-size',
+      size === 'small' ? '16px' : size === 'normal' ? '18px' : '20px',
+    );
   }
 }

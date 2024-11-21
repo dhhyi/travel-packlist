@@ -28,6 +28,7 @@ const initialState = {
   trackWeight: false,
   answersLocked: false,
   theme: 'system' as 'system' | 'light' | 'dark',
+  fontSize: 'normal' as 'small' | 'normal' | 'large',
   language: 'auto' as 'auto' | SupportedLanguage,
   exportReminder: false,
   lastExportHash: '',
