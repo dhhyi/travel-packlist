@@ -24,7 +24,7 @@ import { GlobalState } from '../../state/global-state';
   ],
   templateUrl: './packlist.component.html',
 })
-export class PacklistComponent {
+export default class PacklistComponent {
   private state = inject(GlobalState);
   private activeQuestions = this.state.signal('activeQuestions');
   isLockActive = this.state.signal('answersLocked');

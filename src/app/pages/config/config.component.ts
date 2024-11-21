@@ -40,7 +40,7 @@ import { confirm } from '../../dialog';
     }
   `,
 })
-export class ConfigComponent {
+export default class ConfigComponent {
   env = env;
   loading = signal(false);
 

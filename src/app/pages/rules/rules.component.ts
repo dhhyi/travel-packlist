@@ -19,7 +19,7 @@ import { GlobalState } from '../../state/global-state';
   imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
   templateUrl: './rules.component.html',
 })
-export class RulesComponent {
+export default class RulesComponent {
   private serializer = inject(Serializer);
   private refactor = inject(Refactor);
 

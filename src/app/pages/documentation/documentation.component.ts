@@ -37,4 +37,4 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   `,
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
-export class DocumentationComponent {}
+export default class DocumentationComponent {}

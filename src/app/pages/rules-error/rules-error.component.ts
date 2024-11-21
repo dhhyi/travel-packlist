@@ -7,6 +7,6 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   templateUrl: './rules-error.component.html',
 })
-export class RulesErrorComponent {
+export default class RulesErrorComponent {
   error = input<string>();
 }

@@ -34,7 +34,7 @@ type ParserState =
     }
   `,
 })
-export class EditRulesRawComponent {
+export default class EditRulesRawComponent {
   private state = inject(GlobalState);
 
   private fb = inject(FormBuilder).nonNullable;
