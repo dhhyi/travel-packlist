@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "scripts": {
     "version": "conventional-changelog -i CHANGELOG.md -n conventionalcommits.mjs -s && git add CHANGELOG.md",
+    "release-notes": "conventional-changelog -r 2 -n conventionalcommits.mjs -o",
     "ng": "ng",
     "generate-assets": "node generate-assets.mjs",
     "prestart": "npm run generate-assets -- --pwa",
