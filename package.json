@@ -2,6 +2,7 @@
   "name": "travel-packlist",
   "version": "0.1.0",
   "scripts": {
+    "version": "conventional-changelog -i CHANGELOG.md -n conventionalcommits.mjs -s && git add CHANGELOG.md",
     "ng": "ng",
     "generate-assets": "node generate-assets.mjs",
     "prestart": "npm run generate-assets -- --pwa",
@@ -56,6 +57,8 @@
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.14",
     "angular-eslint": "18.4.1",
+    "conventional-changelog-cli": "^5.0.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
     "cspell": "^8.16.0",
     "eslint": "^9.15.0",
     "jest": "^29.7.0",
