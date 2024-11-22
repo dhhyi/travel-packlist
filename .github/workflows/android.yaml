@@ -55,7 +55,6 @@ jobs:
           if [ "$(git rev-parse "v$version^0")" = "${{ github.sha }}" ]; then
             echo "do_release=true" >> $GITHUB_OUTPUT
           fi
-          echo "datetime=$(date +'%Y-%m-%d-%H_%M_%S%z')" >> "$GITHUB_OUTPUT"
           cat $GITHUB_OUTPUT
 
       - name: build release
@@ -64,9 +63,11 @@ jobs:
           VERSION: ${{ steps.check_release.outputs.version }}
           GH_TOKEN: ${{ github.token }}
         run: |
+          pnpm i --frozen-lockfile
+          pnpm release-notes RELEASE-NOTES.md
           gh release create \
             "v$VERSION" \
             dist/android/travel-packlist-debug.apk \
             dist/android/travel-packlist.aab \
             -t "Release $VERSION" \
-            -n "${{ steps.check_release.outputs.datetime }}" \
+            -F RELEASE-NOTES.md
