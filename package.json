@@ -1,6 +1,6 @@
 {
   "name": "travel-packlist",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "version": "conventional-changelog -i CHANGELOG.md -n conventionalcommits.mjs -s && git add CHANGELOG.md",
     "release-notes": "conventional-changelog -r 2 -n conventionalcommits.mjs -o",
