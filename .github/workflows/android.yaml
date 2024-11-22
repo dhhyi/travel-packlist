@@ -5,6 +5,7 @@ on:
       - dev
 permissions:
   contents: write
+  pull-requests: write
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
@@ -73,3 +74,8 @@ jobs:
             -t "Release $VERSION" \
             -F RELEASE-NOTES.md \
             -n "${{ steps.check_release.outputs.datetime }}"
+          gh pr create \
+            -t "Release $VERSION" \
+            -F RELEASE-NOTES.md \
+            -l "release" \
+            -B main
