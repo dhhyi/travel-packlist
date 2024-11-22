@@ -2,7 +2,7 @@ name: Build Android Bundles
 on:
   push:
     branches:
-      - main
+      - dev
 permissions:
   contents: write
 jobs:
