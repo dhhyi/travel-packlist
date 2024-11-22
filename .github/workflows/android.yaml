@@ -63,11 +63,13 @@ jobs:
           VERSION: ${{ steps.check_release.outputs.version }}
           GH_TOKEN: ${{ github.token }}
         run: |
+          mv dist/android/travel-packlist-debug.apk dist/android/travel-packlist-$VERSION.apk
+          mv dist/android/travel-packlist.aab dist/android/travel-packlist-$VERSION.aab
           pnpm i --frozen-lockfile
           pnpm release-notes RELEASE-NOTES.md
           gh release create \
             "v$VERSION" \
-            dist/android/travel-packlist-debug.apk \
-            dist/android/travel-packlist.aab \
+            dist/android/travel-packlist-$VERSION.apk \
+            dist/android/travel-packlist-$VERSION.aab \
             -t "Release $VERSION" \
             -F RELEASE-NOTES.md
