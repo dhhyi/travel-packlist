@@ -5,6 +5,7 @@ on:
       - main
 permissions:
   contents: write
+  issues: write
 jobs:
   build-and-deploy:
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
@@ -73,3 +74,4 @@ jobs:
             dist/android/travel-packlist-$VERSION.aab \
             -t "Release $VERSION" \
             -F RELEASE-NOTES.md
+          cat RELEASE-NOTES.md | grep -oE 'closes \[#([0-9]+)\]' | grep -oE '[0-9]+' | xargs -rl gh issue close
