@@ -5,7 +5,14 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   darkMode: "selector",
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        pulse: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.1 },
+        },
+      },
+    },
     screens: {
       sm: "600px",
     },

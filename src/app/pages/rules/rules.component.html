@@ -14,7 +14,10 @@
   <div
     class="card mb-1"
     [id]="'rule-' + item.index"
-    [ngClass]="{ disabled: showAsDisabled(item.rule) }"
+    [ngClass]="{
+      disabled: showAsDisabled(item.rule),
+      'animate-pulse': highlightRule() === item.index,
+    }"
   >
     <app-editor-rule
       [rule]="item.rule"

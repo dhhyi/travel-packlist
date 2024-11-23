@@ -4,6 +4,7 @@ import {
   inject,
   ChangeDetectionStrategy,
   computed,
+  signal,
 } from '@angular/core';
 
 import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
@@ -29,6 +30,7 @@ export default class RulesComponent {
   private activeRules = this.state.signal('activeRules');
   mode = this.state.signal('rulesMode');
   filter = this.state.signal('filterRulesQuery');
+  highlightRule = signal<number | undefined>(undefined);
 
   visibleRules = computed(() => {
     const filter = this.filter();
@@ -85,6 +87,11 @@ export default class RulesComponent {
     rules.splice(insertAt, 0, newRule);
 
     this.updateRules([...rules]);
+
+    this.highlightRule.set(insertAt);
+    setTimeout(() => {
+      this.highlightRule.set(undefined);
+    }, 4000);
   }
 
   swapRules(index1: number, index2: number) {
