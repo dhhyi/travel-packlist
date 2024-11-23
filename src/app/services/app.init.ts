@@ -1,6 +1,5 @@
-import { inject, Injectable, Injector, isDevMode } from '@angular/core';
+import { effect, inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { toObservable } from '@angular/core/rxjs-interop';
 import {
   FontSizes,
   GlobalState,
@@ -15,20 +14,17 @@ export class AppInit {
 
   init() {
     const state = this.injector.get(GlobalState);
-    toObservable(state.signal('theme'), {
-      injector: this.injector,
-    }).subscribe((theme) => {
-      this.applyTheme(theme);
+    const theme = state.signal('theme');
+    effect(() => {
+      this.applyTheme(theme());
     });
-    toObservable(state.signal('preferredLanguage'), {
-      injector: this.injector,
-    }).subscribe((lang) => {
-      this.applyLanguage(lang);
+    const preferredLanguage = state.signal('preferredLanguage');
+    effect(() => {
+      this.applyLanguage(preferredLanguage());
     });
-    toObservable(state.signal('fontSize'), {
-      injector: this.injector,
-    }).subscribe((size) => {
-      this.applyFontSize(size);
+    const fontSize = state.signal('fontSize');
+    effect(() => {
+      this.applyFontSize(fontSize());
     });
   }
 
