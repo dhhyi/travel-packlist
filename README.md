@@ -1,4 +1,4 @@
-# TravelPacklist
+<h1>TravelPacklist</h1>
 
 This app is a tool for creating conditional checklists. I use it for creating a pack list for my travels, depending on the duration, the activities, the expected weather, etc. It should be flexible enough to be used for other purposes as well.
 
@@ -10,9 +10,32 @@ As it is a PWA, you can also install it on your home screen.
 
 Data is stored in your browser's local storage and not shared with any server. The app has an export and import feature to backup and restore your data wherever you like.
 
+- [Technology](#technology)
+  - [Multiple Languages](#multiple-languages)
+- [Resources](#resources)
+- [Development](#development)
+- [More Documentation](#more-documentation)
+- [Feature FAQ](#feature-faq)
+  - [Will there be support for complex logic with brackets in conditions?](#will-there-be-support-for-complex-logic-with-brackets-in-conditions)
+  - [Can I customize the display order of the categories?](#can-i-customize-the-display-order-of-the-categories)
+  - [Will there be a Undo/Redo feature for editing rules?](#will-there-be-a-undoredo-feature-for-editing-rules)
+
 ## Technology
 
-This app is developed using Angular 18 with the new experimental zoneless change detection strategy. Wherever possible, I used signals do model data flow. This application doesn't use external libraries and just relies on browser API where needed. For styling, I used TailwindCSS (https://tailwindcss.com/).
+This app is developed using Angular 19 with the new experimental zoneless change detection strategy. Wherever possible, I used signals to model data flow.
+
+For styling, I use [TailwindCSS](https://tailwindcss.com/).
+
+[Showdown](https://showdownjs.com/) is used in a build step for converting the syntax documentation for the rule format from markdown to HTML.
+
+For packaging the app into an Android bundle, I use [Capacitor](https://capacitorjs.com/).
+
+### Multiple Languages
+
+The app is available in multiple languages (English and German at the moment). The language can be selected in the settings.
+
+The Angular build process is set up to build all languages and deploy them to the same location. The standard build process is customized for localizations, because some files are exchanged depending on the language. The language switching is done by navigating to a different index.html.
+The script [`build-gh-pages.sh`](./build-gh-pages.sh) is used for building and merging the different localized apps into the same folder.
 
 ## Resources
 
@@ -23,7 +46,7 @@ This app is developed using Angular 18 with the new experimental zoneless change
 
 Checkout the repository and install pnpm (npm i -g pnpm). Then run `pnpm install` and `pnpm start` to start the development server. The app will be available at `http://localhost:4200`.
 
-## Documentation
+## More Documentation
 
 - Rules
   - [Rules Format Documentation](./src/doc/documentation.md)
