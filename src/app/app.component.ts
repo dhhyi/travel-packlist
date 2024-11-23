@@ -5,9 +5,10 @@ import {
   computed,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
+import { DialogComponent } from './dialog/dialog.component';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
 import { IconUpComponent } from './icons/icon-up/icon-up.component';
-import { DialogComponent } from './dialog/dialog.component';
 import { GlobalState } from './state/global-state';
 
 @Component({

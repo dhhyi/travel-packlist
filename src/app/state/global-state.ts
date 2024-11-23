@@ -1,6 +1,7 @@
 import { inject, Injectable, Signal, WritableSignal } from '@angular/core';
-import { PersistentState, PersistentStateType } from './persistent-state';
+
 import { DerivedState, DerivedStateType } from './derived-state';
+import { PersistentState, PersistentStateType } from './persistent-state';
 import { RouterState, RouterStateType } from './router-state';
 import { SessionState, SessionStateType } from './session-state';
 import { TransientState, TransientStateType } from './transient-state';

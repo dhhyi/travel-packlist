@@ -6,9 +6,10 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
+
 import { VariableType } from '../model/types';
-import { ReadWriteState } from './types';
 import { loadState, saveState } from './storage-util';
+import { ReadWriteState } from './types';
 
 export const supportedLanguages = ['en', 'de'] as const;
 export type SupportedLanguage = (typeof supportedLanguages)[number];

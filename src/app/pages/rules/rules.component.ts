@@ -1,17 +1,18 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
   ChangeDetectionStrategy,
   computed,
 } from '@angular/core';
-import { PleaseSelect, Rule } from '../../model/types';
-import { EditorRuleComponent } from './editor-rule/editor-rule.component';
-import { Serializer } from '../../model/serializer';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+
 import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
-import { NgClass } from '@angular/common';
 import { Refactor } from '../../model/refactor';
+import { Serializer } from '../../model/serializer';
+import { PleaseSelect, Rule } from '../../model/types';
 import { GlobalState } from '../../state/global-state';
+import { EditorRuleComponent } from './editor-rule/editor-rule.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

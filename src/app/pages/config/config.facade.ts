@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { GlobalState } from '../../state/global-state';
-import { RulesShare } from '../../services/rules-share/rules-share.interface';
+
 import { confirm } from '../../dialog';
+import { RulesShare } from '../../services/rules-share/rules-share.interface';
+import { GlobalState } from '../../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigFacade {

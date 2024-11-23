@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, Signal } from '@angular/core';
-import { GlobalState } from '../../state/global-state';
+
 import { Item } from '../../model/types';
+import { GlobalState } from '../../state/global-state';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;

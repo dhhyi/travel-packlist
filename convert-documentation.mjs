@@ -1,7 +1,7 @@
 // @ts-check
 
-import showdown from "showdown";
 import fs from "fs";
+import showdown from "showdown";
 
 /**
  * Documents to be converted to markdown
@@ -35,7 +35,7 @@ const components = {
         content.replace(
           /templateUrl:\s(["'])(.+?)["'],/,
           (_, quot, url) =>
-            `templateUrl: ${quot}${url.replace(/\.html$/, `.${lang}.html`)}${quot},`,
+            `templateUrl: ${quot}${url.replace(/\.html$/, `.${lang}.html`)}${quot},`
         ),
     ],
   },
@@ -70,13 +70,13 @@ function copyLocalizedComponent(file, languages, replacers) {
   for (const lang of languages) {
     const output = replacers.reduce(
       (content, replacer) => replacer(content, lang),
-      content,
+      content
     );
 
     const fileExtension = file.split(".").pop();
     const localizedFile = file.replace(
       `.${fileExtension}`,
-      `.${lang}.${fileExtension}`,
+      `.${lang}.${fileExtension}`
     );
     console.log("generating", localizedFile);
     fs.writeFileSync(localizedFile, output, { encoding: "utf-8" });

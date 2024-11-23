@@ -1,16 +1,17 @@
+import { KeyValuePipe, NgClass } from '@angular/common';
 import {
   Component,
   computed,
   inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Item } from '../../../model/types';
-import { KeyValuePipe, NgClass } from '@angular/common';
-import { ItemsStatusComponent } from '../items-status/items-status.component';
-import { Serializer } from '../../../model/serializer';
+
 import { IconKeyDownComponent } from '../../../icons/icon-key-down/icon-key-down.component';
 import { IconKeyRightComponent } from '../../../icons/icon-key-right/icon-key-right.component';
+import { Serializer } from '../../../model/serializer';
+import { Item } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
+import { ItemsStatusComponent } from '../items-status/items-status.component';
 import { PacklistFacade } from '../packlist.facade';
 
 @Component({

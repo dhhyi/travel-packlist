@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { Parser } from './parser';
 import { Serializer } from './serializer';
 

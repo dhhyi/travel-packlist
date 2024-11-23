@@ -1,8 +1,8 @@
-import sortJson from "sort-json";
 import { readFileSync, writeFileSync } from "fs";
+import sortJson from "sort-json";
 
 const angularJson = JSON.parse(
-  readFileSync("angular.json", { encoding: "utf-8" }),
+  readFileSync("angular.json", { encoding: "utf-8" })
 );
 
 if (
@@ -19,7 +19,7 @@ const translationsPath =
 
 /** @type {{translations: Record<string, string> ; locale: string}} */
 const translationsJson = JSON.parse(
-  readFileSync(translationsPath, { encoding: "utf-8" }),
+  readFileSync(translationsPath, { encoding: "utf-8" })
 );
 
 let errors = false;
@@ -34,7 +34,7 @@ const trimmed = Object.fromEntries(
   Object.entries(translationsJson.translations).map(([key, value]) => [
     key.trim(),
     value.trim(),
-  ]),
+  ])
 );
 
 const sorted = sortJson(trimmed);
@@ -42,7 +42,7 @@ const sorted = sortJson(trimmed);
 writeFileSync(
   translationsPath,
   JSON.stringify({ ...translationsJson, translations: sorted }, null, 2) + "\n",
-  { encoding: "utf-8" },
+  { encoding: "utf-8" }
 );
 
 if (errors) {

@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -10,6 +11,8 @@ import {
   ViewContainerRef,
   effect,
 } from '@angular/core';
+
+import { Serializer } from '../../../model/serializer';
 import {
   Always,
   And,
@@ -19,8 +22,6 @@ import {
   PleaseSelect,
   Variable,
 } from '../../../model/types';
-import { NgClass } from '@angular/common';
-import { Serializer } from '../../../model/serializer';
 import { GlobalState } from '../../../state/global-state';
 
 @Component({

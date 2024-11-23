@@ -1,16 +1,40 @@
-// @ts-check
 const eslint = require("@eslint/js");
-const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
+const perfectionist = require("eslint-plugin-perfectionist");
+const globals = require("globals");
+const tseslint = require("typescript-eslint");
 
 module.exports = tseslint.config(
   {
     files: ["**/*.js"],
+    ignores: ["dist/**", "android/**", ".angular/**"],
     languageOptions: {
-      ecmaVersion: 2015,
+      ecmaVersion: "latest",
       sourceType: "commonjs",
+      globals: {
+        ...globals.node,
+      },
     },
+    plugins: { perfectionist },
     extends: [eslint.configs.recommended],
+    rules: {
+      "perfectionist/sort-imports": "error",
+    },
+  },
+  {
+    files: ["**/*.mjs"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+      },
+    },
+    plugins: { perfectionist },
+    extends: [eslint.configs.recommended],
+    rules: {
+      "perfectionist/sort-imports": "error",
+    },
   },
   {
     files: ["**/*.spec.ts"],
@@ -19,6 +43,7 @@ module.exports = tseslint.config(
         project: "./tsconfig.json",
       },
     },
+    plugins: { perfectionist },
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.stylisticTypeChecked,
@@ -26,6 +51,7 @@ module.exports = tseslint.config(
     ],
     rules: {
       "@typescript-eslint/no-unsafe-call": "off",
+      "perfectionist/sort-imports": "error",
     },
   },
   {
@@ -35,6 +61,7 @@ module.exports = tseslint.config(
         project: "./tsconfig.json",
       },
     },
+    plugins: { perfectionist },
     extends: [
       eslint.configs.recommended,
       ...tseslint.configs.stylisticTypeChecked,
@@ -144,10 +171,12 @@ module.exports = tseslint.config(
           ],
         },
       ],
+      "perfectionist/sort-imports": "error",
     },
   },
   {
     files: ["**/*.html"],
+    ignores: ["dist/**", "android/**"],
     extends: [
       ...angular.configs.templateAll,
       ...angular.configs.templateAccessibility,

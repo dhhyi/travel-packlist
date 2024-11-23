@@ -1,4 +1,5 @@
 import { Component, input, ChangeDetectionStrategy } from '@angular/core';
+
 import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-checkmark.component';
 
 @Component({

@@ -10,17 +10,17 @@ import {
   withComponentInputBinding,
   withHashLocation,
 } from '@angular/router';
-
-import { routes } from './pages/app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
-import { AppInit } from './services/app.init';
+
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from './model/parser';
-import { GlobalState } from './state/global-state';
+import { routes } from './pages/app.routes';
+import { AppInit } from './services/app.init';
 import { AppUpdate } from './services/app.update';
-import { RulesExportReminder } from './services/rules.export-reminder';
 import { AndroidRulesShare } from './services/rules-share/android-rules-share';
-import { WebRulesShare } from './services/rules-share/web-rules-share';
 import { RulesShare } from './services/rules-share/rules-share.interface';
+import { WebRulesShare } from './services/rules-share/web-rules-share';
+import { RulesExportReminder } from './services/rules.export-reminder';
+import { GlobalState } from './state/global-state';
 
 function initParserConfig(globalState: GlobalState): ParserConfig {
   return {

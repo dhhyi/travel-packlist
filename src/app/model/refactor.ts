@@ -1,4 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+
+import { Parser } from './parser';
+import { Serializer } from './serializer';
 import {
   And,
   Condition,
@@ -10,8 +13,6 @@ import {
   Variable,
   VariableType,
 } from './types';
-import { Serializer } from './serializer';
-import { Parser } from './parser';
 
 interface FilterFunctionType {
   model: Record<string, VariableType>;

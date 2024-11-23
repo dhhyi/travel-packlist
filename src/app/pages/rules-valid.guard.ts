@@ -1,5 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+
 import { GlobalState } from '../state/global-state';
 
 export const rulesValid: CanActivateFn = () => {

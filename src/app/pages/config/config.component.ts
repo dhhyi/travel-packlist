@@ -1,3 +1,4 @@
+import { DatePipe, NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -9,17 +10,17 @@ import {
   ElementRef,
   viewChild,
 } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import env from '../../../environment/env.json';
-import { FormsModule } from '@angular/forms';
-import { DatePipe, NgClass } from '@angular/common';
-import { GlobalState } from '../../state/global-state';
-import { ConfigFacade } from './config.facade';
-import { IconDownloadComponent } from '../../icons/icon-download/icon-download.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+
+import env from '../../../environment/env.json';
+import { confirm } from '../../dialog';
 import { FlagGermanyComponent } from '../../icons/flag-germany/flag-germany.component';
 import { FlagUkComponent } from '../../icons/flag-uk/flag-uk.component';
-import { confirm } from '../../dialog';
+import { IconDownloadComponent } from '../../icons/icon-download/icon-download.component';
+import { GlobalState } from '../../state/global-state';
+import { ConfigFacade } from './config.facade';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
+
 import { GlobalState } from '../../state/global-state';
 import { RulesShare } from './rules-share.interface';
 

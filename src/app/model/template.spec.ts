@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { Parser } from './parser';
 import { rulesTemplate } from './template';
 import { rulesTemplate as rulesTemplateDE } from './template.de';

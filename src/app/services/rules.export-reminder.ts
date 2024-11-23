@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { GlobalState } from '../state/global-state';
-import { filter, identity, interval, map, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { filter, identity, interval, map, switchMap, tap } from 'rxjs';
+
 import { confirm } from '../dialog';
+import { GlobalState } from '../state/global-state';
 
 @Injectable({ providedIn: 'root' })
 export class RulesExportReminder {

@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { Parser, PARSER_CONFIG_PROVIDER, ParserConfig } from './parser';
 import { And, Item, Not, Question, Variable } from './types';
 

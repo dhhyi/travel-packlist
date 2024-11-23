@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SwUpdate, UnrecoverableStateEvent } from '@angular/service-worker';
 import { tap, filter, interval, switchMap, identity, merge } from 'rxjs';
+
 import { confirm } from '../dialog';
 import { GlobalState } from '../state/global-state';
 

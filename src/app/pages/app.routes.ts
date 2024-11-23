@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
-import { rulesValid } from './rules-valid.guard';
+
 import { rulesContainNoComments } from './rules-contain-no-comments.guard';
+import { rulesValid } from './rules-valid.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/packlist', pathMatch: 'full' },

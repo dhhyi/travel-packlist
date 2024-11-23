@@ -1,16 +1,17 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
   inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { VariableType } from '../../model/types';
-import { DisplayQuestionComponent } from './display-question/display-question.component';
-import { DisplayItemsComponent } from './display-items/display-items.component';
+
 import { IconLockOpenComponent } from '../../icons/icon-lock-open/icon-lock-open.component';
 import { IconLockComponent } from '../../icons/icon-lock/icon-lock.component';
-import { NgClass } from '@angular/common';
+import { VariableType } from '../../model/types';
 import { GlobalState } from '../../state/global-state';
+import { DisplayItemsComponent } from './display-items/display-items.component';
+import { DisplayQuestionComponent } from './display-question/display-question.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

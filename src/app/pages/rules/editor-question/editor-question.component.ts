@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -7,7 +8,7 @@ import {
   computed,
   effect,
 } from '@angular/core';
-import { Always, Question } from '../../../model/types';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -26,8 +27,8 @@ import {
   switchMap,
   withLatestFrom,
 } from 'rxjs';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { NgClass } from '@angular/common';
+
+import { Always, Question } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
 
 @Component({

@@ -6,14 +6,15 @@ import {
   ChangeDetectionStrategy,
   effect,
 } from '@angular/core';
-import { Item } from '../../../model/types';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
+
+import { prompt } from '../../../dialog';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
+import { Item } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
-import { prompt } from '../../../dialog';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

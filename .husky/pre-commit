@@ -30,13 +30,18 @@ then
   npx sort-json $localizations || cleanup
 fi
 
+linterFiles=$(echo "$files" | grep -E 'src/.*\.(ts|js|mjs|html)' | tr '\n' ' ')
+if [ -n "$linterFiles" ]
+then
+  npx eslint $linterFiles --fix || cleanup
+fi
+
 prettierFiles=$(echo "$files" | tr '\n' ' ')
 npx prettier $prettierFiles --write --ignore-unknown || cleanup
 
 npm run check-translations || cleanup
 npm test || cleanup
 npm run spellcheck || cleanup
-npm run lint -- --fix || cleanup
 npm run stylelint -- --fix || cleanup
 npm run build -- --localize --i18n-duplicate-translation=error --i18n-missing-translation=error --output-path node_modules/.build || cleanup
 

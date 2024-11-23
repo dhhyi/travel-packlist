@@ -1,4 +1,5 @@
 import { inject } from '@angular/core';
+
 import { GlobalState } from '../../state/global-state';
 import { RulesShare } from './rules-share.interface';
 

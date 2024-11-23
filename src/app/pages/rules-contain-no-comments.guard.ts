@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { GlobalState } from '../state/global-state';
+
 import { confirm } from '../dialog';
+import { GlobalState } from '../state/global-state';
 
 let guardAlreadyPassed = false;
 

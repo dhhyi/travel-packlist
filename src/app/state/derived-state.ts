@@ -6,15 +6,16 @@ import {
   signal,
   Signal,
 } from '@angular/core';
+
+import { Parser } from '../model/parser';
+import { Refactor } from '../model/refactor';
+import { rulesTemplate } from '../model/template';
 import { Item, Question, Rule, VariableType } from '../model/types';
 import {
   PersistentState,
   SupportedLanguage,
   supportedLanguages,
 } from './persistent-state';
-import { Parser } from '../model/parser';
-import { Refactor } from '../model/refactor';
-import { rulesTemplate } from '../model/template';
 
 export interface DerivedStateType {
   isMobile: boolean;

@@ -5,8 +5,9 @@ import {
   output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { VariableType } from '../../../model/types';
+
 import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-checkmark.component';
+import { VariableType } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
 
 @Component({

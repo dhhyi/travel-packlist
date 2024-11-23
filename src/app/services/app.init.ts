@@ -1,5 +1,6 @@
-import { effect, inject, Injectable, Injector, isDevMode } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { effect, inject, Injectable, Injector, isDevMode } from '@angular/core';
+
 import {
   FontSizes,
   GlobalState,
