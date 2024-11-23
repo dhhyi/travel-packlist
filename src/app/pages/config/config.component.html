@@ -246,7 +246,14 @@
 
 <div class="section">
   <span i18n="@@config.appversion" class="font-bold">App Version</span>
-  <span>{{ env.version }}</span>
+  <span
+    ><a
+      [href]="
+        'https://github.com/dhhyi/travel-packlist/releases/tag/v' + env.version
+      "
+      >{{ env.version }}</a
+    ></span
+  >
   <span i18n="@@config.appversion.built" class="italic"
     >built on
     {{ env.build_time * 1000 | date: "long" // i18n(ph="LONG_DATE") }}</span
