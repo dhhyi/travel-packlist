@@ -35,7 +35,7 @@ For packaging the app into an Android bundle, I use [Capacitor](https://capacito
 The app is available in multiple languages (English and German at the moment). The language can be selected in the settings.
 
 The Angular build process is set up to build all languages and deploy them to the same location. The standard build process is customized for localizations, because some files are exchanged depending on the language. The language switching is done by navigating to a different index.html.
-The script [`build-gh-pages.sh`](./build-gh-pages.sh) is used for building and merging the different localized apps into the same folder.
+The script [`build-webapp.sh`](./build-webapp.sh) is used for building and merging the different localized apps into the same folder.
 
 ## Resources
 
@@ -44,7 +44,14 @@ The script [`build-gh-pages.sh`](./build-gh-pages.sh) is used for building and m
 
 ## Development
 
-Checkout the repository and install pnpm (npm i -g pnpm). Then run `pnpm install` and `pnpm start` to start the development server. The app will be available at `http://localhost:4200`.
+Checkout the repository and install pnpm (`npm i -g pnpm`).
+
+Then run `pnpm install` and `pnpm dev` to start the development server.
+The app will be available at `http://localhost:4200`.
+
+To build the app with multiple languages and service worker, run `pnpm build`.
+You can also use `pnpm start` instead to build and start a local server.
+The app will be available at `http://localhost:8080`.
 
 ## More Documentation
 

@@ -43,6 +43,6 @@ npm run check-translations || cleanup
 npm test || cleanup
 npm run spellcheck || cleanup
 npm run stylelint -- --fix || cleanup
-npm run build -- --localize --i18n-duplicate-translation=error --i18n-missing-translation=error --output-path node_modules/.build || cleanup
+npm exec ng build -- --localize --i18n-duplicate-translation=error --i18n-missing-translation=error --output-path node_modules/.build || cleanup
 
 git update-index --again

@@ -18,6 +18,7 @@ while [ $# -gt 0 ]; do
             ;;
         *)
             echo "Unknown option $1"
+            echo "Usage: $0 [--base-href <base-href>] [--configuration <configuration>]"
             exit 1
             ;;
     esac
@@ -32,7 +33,7 @@ echo "$environment" | jq -M ".version=$(npm pkg get version)" | jq -M ".git_hash
 
 trap 'git restore src/environment/env.json' EXIT
 
-pnpm run build --base-href=$base_href --configuration=$build
+pnpm ng build --base-href=$base_href --configuration=$build
 
 if [ "$base_href" != "/" ]; then
     manifest="$(cat $target/manifest.json)"

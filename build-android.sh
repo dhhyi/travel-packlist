@@ -5,7 +5,7 @@ cd $script_dir
 
 git clean -fdx android dist
 
-sh build-gh-pages.sh --configuration production,android
+sh build-webapp.sh --configuration production,android
 
 pnpm cap add android
 
