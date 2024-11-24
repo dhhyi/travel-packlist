@@ -11,7 +11,7 @@
           "/index*.html",
           "/manifest.json",
           "/*.css",
-          "/(main|polyfills)*.js",
+          "/(main|polyfills|chunk)*.js",
           "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
       }
