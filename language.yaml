@@ -5,8 +5,7 @@ devcontainer:
     packages:
       - tmux
     user:
-      - RUN npm i -g @angular/cli@latest
-      - RUN echo "source <(ng completion script)" | tee -a $HOME/.bashrc $HOME/.zshrc
+      - RUN echo "alias ng='pnpm ng'" | tee -a $HOME/.bashrc $HOME/.zshrc
   ports:
     - 4200
 extras:

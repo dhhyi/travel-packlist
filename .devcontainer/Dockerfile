@@ -7,7 +7,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y instal
 USER vscode
 ENV HOME=/home/vscode
 
-RUN npm i -g @angular/cli@latest
-RUN echo "source <(ng completion script)" | tee -a $HOME/.bashrc $HOME/.zshrc
+RUN echo "alias ng='pnpm ng'" | tee -a $HOME/.bashrc $HOME/.zshrc
 
 EXPOSE 4200
