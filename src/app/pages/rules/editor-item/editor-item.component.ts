@@ -61,7 +61,7 @@ export class EditorItemComponent {
 
     effect(() => {
       const value = validFormUpdates();
-      if (!value) {
+      if (!value?.name) {
         return;
       }
       if (!value.category) {
@@ -69,9 +69,10 @@ export class EditorItemComponent {
         return;
       }
 
-      const [name, weight] = this.parser.extractItemNameAndWeight(value.name);
-
-      this.itemChanged.emit(new Item(value.category, name, weight));
+      const serialized = this.serializer.serialize(
+        new Item(value.category, value.name),
+      );
+      this.itemChanged.emit(this.parser.parseItem(serialized));
     });
 
     effect(() => {

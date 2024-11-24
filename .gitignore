@@ -8,6 +8,7 @@
 /icons
 /android
 /RELEASE-NOTES.md
+**/generated
 
 # Node
 /node_modules

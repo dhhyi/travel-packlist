@@ -32,7 +32,8 @@
         "streetsidesoftware.code-spell-checker",
         "bierner.markdown-preview-github-styles",
         "github.vscode-github-actions",
-        "yzhang.markdown-all-in-one"
+        "yzhang.markdown-all-in-one",
+        "peggyjs.peggy-language"
       ]
     }
   }

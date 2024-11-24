@@ -85,10 +85,7 @@
     "model.new.category": "New",
     "model.new.item": "New Item",
     "model.new.question": "New Question",
-    "parser.error.condition": "Could not parse condition from '{$INPUT}'",
-    "parser.error.effect": "Could not parse effect from '{$INPUT}'",
     "parser.error.item": "Could not parse item from '{$INPUT}'",
-    "parser.error.question": "Could not parse question from '{$INPUT}'",
-    "parser.error.rule": "Could not parse rule from '{$INPUT}'"
+    "parser.error.rules": "Error parsing rules"
   }
 }

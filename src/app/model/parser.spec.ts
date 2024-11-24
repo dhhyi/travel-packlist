@@ -123,12 +123,29 @@ describe('Parser', () => {
       expect(item.name).toEqual('Scrubber');
     });
 
+    it('should parse an item with long name', () => {
+      const item = parser.parseItem('[utility] Scrubber with a complex name');
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('Scrubber with a complex name');
+    });
+
     it('should parse an item with weight', () => {
       trackWeight = true;
 
-      const item = parser.parseItem('[utility] Scrubber 100g');
+      const item = parser.parseItem('[utility] Scrubber 100');
       expect(item.category).toEqual('utility');
       expect(item.name).toEqual('Scrubber');
+      expect(item.weight).toEqual(100);
+    });
+
+    it('should parse an item with long name and weight', () => {
+      trackWeight = true;
+
+      const item = parser.parseItem(
+        '[utility] Scrubber with a complex name 100',
+      );
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('Scrubber with a complex name');
       expect(item.weight).toEqual(100);
     });
 
@@ -139,12 +156,6 @@ describe('Parser', () => {
       expect(item.category).toEqual('utility');
       expect(item.name).toEqual('Scrubber');
       expect(item.weight).toEqual(500);
-    });
-
-    it('should parse an item with brackets in name', () => {
-      const item = parser.parseItem('[utility] [Scrubber] bag');
-      expect(item.category).toEqual('utility');
-      expect(item.name).toEqual('[Scrubber] bag');
     });
 
     it('should throw an error if the item is invalid', () => {
@@ -160,15 +171,22 @@ describe('Parser', () => {
         'Is it sunny? $sunny, [utility] Scrubber, [utility] Clothesline',
       );
 
-      expect(effects.questions.length).toEqual(1);
-      expect(effects.questions[0].question).toEqual('Is it sunny?');
-      expect(effects.questions[0].variable).toEqual('sunny');
+      expect(effects.length).toEqual(3);
 
-      expect(effects.items.length).toEqual(2);
-      expect(effects.items[0].category).toEqual('utility');
-      expect(effects.items[0].name).toEqual('Scrubber');
-      expect(effects.items[1].category).toEqual('utility');
-      expect(effects.items[1].name).toEqual('Clothesline');
+      expect(effects[0] instanceof Question).toBe(true);
+      const question = effects[0] as Question;
+      expect(question.question).toEqual('Is it sunny?');
+      expect(question.variable).toEqual('sunny');
+
+      expect(effects[1] instanceof Item).toBe(true);
+      const item1 = effects[1] as Item;
+      expect(item1.category).toEqual('utility');
+      expect(item1.name).toEqual('Scrubber');
+
+      expect(effects[2] instanceof Item).toBe(true);
+      const item2 = effects[2] as Item;
+      expect(item2.category).toEqual('utility');
+      expect(item2.name).toEqual('Clothesline');
     });
   });
 

@@ -23,6 +23,7 @@ vscode:
     - bierner.markdown-preview-github-styles
     - github.vscode-github-actions
     - yzhang.markdown-all-in-one
+    - peggyjs.peggy-language
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
     terminal.integrated.profiles.linux:

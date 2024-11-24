@@ -5,3 +5,4 @@ pnpm-lock.yaml
 .editorconfig
 .update_devcontainer.sh
 /android/**
+*.peggy

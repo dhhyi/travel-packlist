@@ -56,6 +56,7 @@ module.exports = tseslint.config(
   },
   {
     files: ["**/!(*.spec).ts"],
+    ignores: ["**/generated/**"],
     languageOptions: {
       parserOptions: {
         project: "./tsconfig.json",
