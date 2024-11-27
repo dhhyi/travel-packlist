@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 
 import { GlobalState } from '../../state/global-state';
@@ -17,8 +17,9 @@ export class AndroidRulesShare extends RulesShare {
     }
     await Filesystem.writeFile({
       path,
-      data: btoa(rules),
+      data: rules,
       directory: Directory.Cache,
+      encoding: Encoding.UTF8,
     })
       .then(() => {
         return Filesystem.getUri({
