@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 script_dir="$(readlink -f $(dirname "$0"))"
 cd $script_dir
 
