@@ -3,7 +3,8 @@
   "version": "0.1.1",
   "scripts": {
     "ng": "ng",
-    "version": "conventional-changelog -i CHANGELOG.md -n conventionalcommits.mjs -s && git add CHANGELOG.md",
+    "changelog": "conventional-changelog -i CHANGELOG.md -n conventionalcommits.mjs",
+    "version": "npm run changelog -- -s && git add CHANGELOG.md",
     "release-notes": "conventional-changelog -r 2 -n conventionalcommits.mjs -o",
     "prepare": "husky && npm run generate-assets && npm run convert-documentation && npm run generate-icons && npm run generate-parser",
     "generate-assets": "node generate-assets.mjs",
