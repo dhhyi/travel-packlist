@@ -17,10 +17,10 @@
   <router-outlet />
 
   @if (scrollTopVisible()) {
-    <div class="sticky bottom-2 flex justify-center">
+    <div class="sticky bottom-2 left-2/3 w-[60px]">
       <button
         type="button"
-        class="rounded-3xl border border-slate-300 shadow-xl"
+        class="flex w-full items-center justify-center rounded-3xl border border-slate-300 shadow-xl"
         (click)="scrollTop()"
       >
         <app-icon-up class="h-6 w-6" />
