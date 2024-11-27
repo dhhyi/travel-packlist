@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -19,7 +20,7 @@ import { GlobalState } from '../../../state/global-state';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-item',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './editor-item.component.html',
 })
 export class EditorItemComponent {
@@ -28,6 +29,7 @@ export class EditorItemComponent {
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');
   categories = this.state.signal('categories');
+  fontSize = this.state.signal('fontSize');
 
   readonly itemChanged = output<Item>();
 
