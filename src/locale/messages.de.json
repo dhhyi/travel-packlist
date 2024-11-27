@@ -85,11 +85,7 @@
     "model.new.category": "Neu",
     "model.new.item": "Neuer Gegenstand",
     "model.new.question": "Neue Frage",
-    "parser.error.condition": "Konnte keine Bedingung in '{$INPUT}' parsen",
-    "parser.error.effect": "Konnte keinen Effekt in '{$INPUT}' parsen",
     "parser.error.item": "Konnte keinen Gegenstand in '{$INPUT}' parsen",
-    "parser.error.question": "Konnte keine Frage in '{$INPUT}' parsen",
-    "parser.error.rule": "Konnte keine Regel in '{$INPUT}' parsen",
     "parser.error.rules": "Fehler beim Parsen der Regeln"
   }
 }
