@@ -1,3 +1,16 @@
+## [0.2.0](https://github.com/dhhyi/travel-packlist/compare/v0.1.1...v0.2.0) (2024-11-27)
+
+### Features
+
+- highlight added rule in editor ([f85d1fe](https://github.com/dhhyi/travel-packlist/commit/f85d1fe757e35e417e1b0fbfc3304a2e15110dc8))
+- version on config page links to release ([2aabcba](https://github.com/dhhyi/travel-packlist/commit/2aabcbaece7400377939e327382ad9c30069ccd6))
+
+### Bug Fixes
+
+- do not overflow icons in editor on larger font sizes ([424b06e](https://github.com/dhhyi/travel-packlist/commit/424b06e6c311387ad0f673760bc69baed957dfb2))
+- make elements next to scroll up button clickable ([7c30f4c](https://github.com/dhhyi/travel-packlist/commit/7c30f4c46e377ae50f08ffbad67fdd2fd812ef82))
+- preserve encoding when sharing on Android ([cbf34db](https://github.com/dhhyi/travel-packlist/commit/cbf34db1a00e3416965de25275dacac5b6aecd67))
+
 ## [0.1.1](https://github.com/dhhyi/travel-packlist/compare/v0.1.0...v0.1.1) (2024-11-22)
 
 ### Bug Fixes
