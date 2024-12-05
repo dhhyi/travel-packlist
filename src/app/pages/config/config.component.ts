@@ -92,7 +92,12 @@ export default class ConfigComponent {
     this.highlightExport = computed(() => fragment() === 'export-now');
     effect(() => {
       const fragmentValue = fragment();
-      if (fragmentValue === 'export-now') {
+      const exportButtonVerticalPosition =
+        this.exportButton().nativeElement.getBoundingClientRect().top;
+      if (
+        fragmentValue === 'export-now' &&
+        exportButtonVerticalPosition > window.innerHeight
+      ) {
         setTimeout(() => {
           this.exportButton().nativeElement.scrollIntoView({
             behavior: 'smooth',
