@@ -207,6 +207,6 @@ export class EditorConditionComponent {
   }
 
   variableActive(variable: string) {
-    return variable === Always.string || this.activeAnswers()[variable];
+    return this.activeAnswers()[variable];
   }
 }

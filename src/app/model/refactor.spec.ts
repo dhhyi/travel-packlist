@@ -110,7 +110,7 @@ rain AND clouds :-
     it('should filter active rules for empty model', () => {
       const result = refactor.filterActive({ model: {}, rules });
       expect(result.rules).toEqual([rules[0], rules[2]]);
-      expect(result.model).toEqual({});
+      expect(result.model).toEqual({ always: true });
     });
 
     it('should filter active rules for active model', () => {
@@ -119,7 +119,11 @@ rain AND clouds :-
         rules,
       });
       expect(result.rules).toEqual([rules[0], rules[1], rules[3]]);
-      expect(result.model).toEqual({ sunny: true, uv: true });
+      expect(result.model).toEqual({
+        sunny: true,
+        uv: true,
+        always: true,
+      });
     });
     it('should filter active rules and remove transitive disabled fields', () => {
       const result = refactor.filterActive({
@@ -127,7 +131,7 @@ rain AND clouds :-
         rules,
       });
       expect(result.rules).toEqual([rules[0], rules[2]]);
-      expect(result.model).toEqual({ sunny: false });
+      expect(result.model).toEqual({ sunny: false, always: true });
     });
   });
 

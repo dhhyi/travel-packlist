@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Parser } from './parser';
 import { Serializer } from './serializer';
 import {
+  Always,
   And,
   Condition,
   Item,
@@ -110,7 +111,9 @@ export class Refactor {
     );
     const activeModel = this.extractVariables(activeRules).reduce<
       Record<string, VariableType>
-    >((acc, variable) => ({ ...acc, [variable]: data.model[variable] }), {});
+    >((acc, variable) => ({ ...acc, [variable]: data.model[variable] }), {
+      [Always.string]: true,
+    });
 
     if (activeRules.length === data.rules.length) {
       return { model: activeModel, rules: activeRules };
