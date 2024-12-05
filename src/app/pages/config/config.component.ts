@@ -47,6 +47,7 @@ export default class ConfigComponent {
 
   displayKoFi = !ANDROID;
   displayServiceWorkerStatus = !ANDROID;
+  displayVersionCode = ANDROID;
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);

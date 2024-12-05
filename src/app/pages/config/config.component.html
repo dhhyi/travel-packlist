@@ -254,6 +254,11 @@
       >{{ env.version }}</a
     ></span
   >
+  @if (displayVersionCode) {
+    <span class="truncate font-mono text-sm text-slate-500">{{
+      env.versionCode
+    }}</span>
+  }
   <span i18n="@@config.appversion.built" class="italic"
     >built on
     {{ env.build_time * 1000 | date: "long" // i18n(ph="LONG_DATE") }}</span

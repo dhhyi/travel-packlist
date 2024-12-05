@@ -7,6 +7,11 @@ cd $script_dir
 
 git clean -fdx android dist
 
+versionCode=$(git tag -l | wc -l)
+
+environment="$(cat src/environment/env.json)"
+echo "$environment" | jq -M ".versionCode=$versionCode" > src/environment/env.json
+
 sh build-webapp.sh --configuration production,android
 
 pnpm cap add android
@@ -16,7 +21,7 @@ pnpm cap sync
 pnpm generate-assets --android
 
 sed -i "s/versionName.*/versionName $(npm pkg get version)/" android/app/build.gradle
-sed -i "s/versionCode.*/versionCode $(git tag -l | wc -l)/" android/app/build.gradle
+sed -i "s/versionCode.*/versionCode $versionCode/" android/app/build.gradle
 
 mkdir -p dist/android
 
