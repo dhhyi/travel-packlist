@@ -16,14 +16,15 @@
       formControlName="variable"
       i18n-placeholder="@@edit.question.variable.placeholder"
       [ngClass]="{
-        'font-bold text-green-500': highlighVariable() && variableActive(),
-        'font-bold text-red-500': highlighVariable() && !variableActive(),
+        'font-bold': highlighVariable(),
+        'text-green-light': highlighVariable() && variableActive(),
+        'text-red-light': highlighVariable() && !variableActive(),
       }"
       (focus)="focusVariable()"
     />
   </div>
   @if (mode() === "edit" && form.valid === false && form.touched) {
-    <div class="m-1 flex flex-col text-sm text-red-500">
+    <div class="m-1 flex flex-col text-sm text-red-light">
       @if (form.controls.question.errors?.["pattern"]) {
         <span i18n="@@edit.question.question.invalid-characters"
           >Questions cannot contain the characters , ; #</span

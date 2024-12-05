@@ -1,5 +1,3 @@
-const plugin = require("tailwindcss/plugin");
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
@@ -14,14 +12,31 @@ module.exports = {
       },
     },
     screens: {
-      sm: "600px",
+      mobile: "600px",
     },
-  },
-  plugins: [
-    plugin(function ({ addBase }) {
-      addBase({
-        html: { fontSize: "var(--html-font-size)" }, //this font size should come from API
-      });
+    colors: ({ colors }) => ({
+      black: colors.black,
+      white: colors.white,
+      transparent: colors.transparent,
+      slate: colors.slate,
+      gray: {
+        100: colors.gray[100],
+        300: colors.gray[300],
+        500: colors.gray[500],
+        700: colors.gray[700],
+        900: colors.gray[900],
+      },
+      red: {
+        normal: colors.red[700],
+        light: colors.red[500],
+      },
+      green: {
+        normal: colors.green[700],
+        light: colors.green[500],
+      },
+      yellow: {
+        normal: colors.yellow[600],
+      },
     }),
-  ],
+  },
 };

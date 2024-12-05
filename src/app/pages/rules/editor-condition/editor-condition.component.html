@@ -9,9 +9,9 @@
   <span
     class="font-mono"
     [ngClass]="{
-      'font-bold text-green-500':
-        highlighVariable() && variableActive(variable),
-      'font-bold text-red-500': highlighVariable() && !variableActive(variable),
+      'font-bold': highlighVariable(),
+      'text-green-light': highlighVariable() && variableActive(variable),
+      'text-red-light': highlighVariable() && !variableActive(variable),
     }"
     >{{ variable }}</span
   >

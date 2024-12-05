@@ -111,7 +111,7 @@
     i18n="@@config.rules.export"
     type="button"
     [ngClass]="{
-      'animate-pulse bg-green-500': highlightExport() && exportNeeded(),
+      'animate-pulse bg-green-light': highlightExport() && exportNeeded(),
     }"
     [disabled]="!isExportAvailable()"
     (click)="exportRules()"
@@ -121,7 +121,7 @@
   @if (exportNeeded()) {
     <div
       i18n="@@config.rules.export-needed"
-      class="text-center italic text-red-500"
+      class="text-center italic text-red-light"
     >
       Current rules are not backed up!
     </div>

@@ -17,7 +17,7 @@
   />
 </form>
 @if (mode() === "edit" && form.valid === false && form.touched) {
-  <div class="m-1 text-sm text-red-500">
+  <div class="m-1 text-sm text-red-light">
     @if (form.controls.name.touched) {
       @if (form.controls.name.errors?.["pattern"]) {
         <span i18n="@@edit.item.name.invalid-characters"

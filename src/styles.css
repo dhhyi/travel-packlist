@@ -2,106 +2,113 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  height: 100%;
+@layer base {
+  html {
+    height: 100%;
+    font-size: var(--html-font-size, 18px);
+  }
+
+  .bg-active {
+    @apply bg-white dark:bg-slate-900;
+  }
+
+  .bg-disabled {
+    @apply bg-slate-100 dark:bg-slate-800;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+
+    @apply bg-active text-black dark:text-slate-300;
+  }
+
+  app-root {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+  }
+
+  router-outlet {
+    display: none;
+  }
 }
 
-.bg-active {
-  @apply bg-white dark:bg-slate-900;
+@layer components {
+  .card {
+    @apply rounded-md border-2 border-slate-300 p-2 shadow-inner;
+  }
+
+  .card.disabled {
+    @apply bg-disabled opacity-50;
+  }
+
+  button {
+    @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
+  }
+
+  button.red {
+    @apply bg-red-normal text-white hover:bg-red-light;
+  }
+
+  button.icon {
+    @apply m-0 flex justify-center border-none bg-transparent p-1 align-middle;
+  }
+
+  button[disabled] {
+    @apply bg-disabled cursor-not-allowed text-gray-500;
+  }
+
+  button.secondary {
+    @apply bg-slate-200 text-black hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
+  }
+
+  fieldset {
+    @apply rounded-md border border-slate-500 p-2;
+  }
+
+  fieldset > legend {
+    @apply px-1 italic;
+  }
+
+  input,
+  select {
+    @apply h-8 rounded-md border border-slate-300 bg-transparent p-1;
+  }
+
+  select {
+    @apply pl-0;
+  }
+
+  input[disabled],
+  select[disabled] {
+    @apply border border-transparent bg-transparent opacity-80;
+  }
+
+  select[disabled] {
+    @apply appearance-none pl-1 pr-5;
+  }
+
+  input[type="checkbox"] {
+    @apply my-2 h-6 w-6 appearance-none rounded-sm border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+  }
+
+  input[type="radio"] {
+    @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+  }
+
+  input.ng-invalid.ng-touched,
+  input:focus-visible.ng-invalid.ng-touched {
+    @apply border-red-normal bg-red-light outline-red-normal;
+  }
+
+  svg {
+    @apply fill-black dark:fill-slate-300;
+  }
 }
 
-.bg-disabled {
-  @apply bg-slate-100 dark:bg-slate-800;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  height: 100%;
-
-  @apply bg-active text-black dark:text-slate-300;
-}
-
-app-root {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-}
-
-router-outlet {
-  display: none;
-}
-
-.grow-children > * {
-  flex-grow: 1;
-}
-
-.card {
-  @apply rounded-md border-2 border-slate-300 p-2 shadow-inner;
-}
-
-.card.disabled {
-  @apply bg-disabled opacity-50;
-}
-
-button {
-  @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
-}
-
-button.red {
-  @apply bg-red-700 text-white hover:bg-red-500;
-}
-
-button.icon {
-  @apply m-0 flex justify-center border-none bg-transparent p-1 align-middle;
-}
-
-button[disabled] {
-  @apply bg-disabled cursor-not-allowed text-gray-500;
-}
-
-button.secondary {
-  @apply bg-slate-200 text-black hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
-}
-
-fieldset {
-  @apply rounded-md border border-slate-500 p-2;
-}
-
-fieldset > legend {
-  @apply px-1 italic;
-}
-
-input,
-select {
-  @apply h-8 rounded-md border border-slate-300 bg-transparent p-1;
-}
-
-select {
-  @apply pl-0;
-}
-
-input[disabled],
-select[disabled] {
-  @apply border border-transparent bg-transparent opacity-80;
-}
-
-select[disabled] {
-  @apply appearance-none pl-1 pr-5;
-}
-
-input[type="checkbox"] {
-  @apply my-2 h-6 w-6 appearance-none rounded-sm border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
-}
-
-input[type="radio"] {
-  @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
-}
-
-input.ng-invalid.ng-touched,
-input:focus-visible.ng-invalid.ng-touched {
-  @apply border-red-700 bg-red-300 outline-red-700;
-}
-
-svg {
-  @apply fill-black dark:fill-slate-300;
+@layer utilities {
+  .grow-children > * {
+    flex-grow: 1;
+  }
 }
