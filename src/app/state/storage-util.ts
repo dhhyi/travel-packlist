@@ -38,7 +38,9 @@ function filterState<T extends Record<string, unknown>>(
     .map((key) => {
       return [key, state[key]];
     });
-  if (entries.length === 0) return null;
+  if (entries.length === 0) {
+    return null;
+  }
   return Object.fromEntries(entries) as Partial<T>;
 }
 

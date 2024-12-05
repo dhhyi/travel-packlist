@@ -18,6 +18,7 @@ module.exports = tseslint.config(
     plugins: { perfectionist },
     extends: [eslint.configs.recommended],
     rules: {
+      curly: "error",
       "perfectionist/sort-imports": "error",
     },
   },
@@ -33,6 +34,7 @@ module.exports = tseslint.config(
     plugins: { perfectionist },
     extends: [eslint.configs.recommended],
     rules: {
+      curly: "error",
       "perfectionist/sort-imports": "error",
     },
   },
@@ -51,6 +53,7 @@ module.exports = tseslint.config(
     ],
     rules: {
       "@typescript-eslint/no-unsafe-call": "off",
+      curly: "error",
       "perfectionist/sort-imports": "error",
     },
   },
@@ -115,6 +118,7 @@ module.exports = tseslint.config(
         "error",
         { typesToIgnore: ["string"] },
       ],
+      curly: "error",
       "no-restricted-imports": [
         "error",
         {

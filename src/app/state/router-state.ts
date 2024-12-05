@@ -52,7 +52,9 @@ export class RouterState implements ReadWriteState<RouterStateType> {
         ),
       )
       .subscribe((v) => {
-        if (v !== '') manualState.set(v);
+        if (v !== '') {
+          manualState.set(v);
+        }
       });
     effect(() => {
       let manualValue = manualState() || undefined;
