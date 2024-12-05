@@ -28,19 +28,19 @@
     #selectbox
     class="font-mono"
     [style]="{ width: width }"
-    (change)="selection(selectbox.value)"
+    (change)="selection(selectbox.value, value)"
   >
     <!-- eslint-disable @angular-eslint/template/i18n -->
     @for (option of options; track $index) {
       @switch (option) {
         @case ("not") {
-          <option value="not">NOT x</option>
+          <option value="not">NOT {{ variablePlaceholder(value) }}</option>
         }
         @case ("and") {
-          <option value="and">x AND x</option>
+          <option value="and">{{ variablePlaceholder(value) }} AND x</option>
         }
         @case ("or") {
-          <option value="or">x OR x</option>
+          <option value="or">{{ variablePlaceholder(value) }} OR x</option>
         }
         @default {
           <option

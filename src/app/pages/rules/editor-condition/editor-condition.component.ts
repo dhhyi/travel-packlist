@@ -101,13 +101,21 @@ export class EditorConditionComponent {
     ].filter((variable) => !forbidden.includes(variable));
   }
 
-  private selection(value: string): Condition {
+  private createFromPrevious(previous: string): Condition {
+    if (previous === this.please_select || previous === this.always) {
+      return new PleaseSelect();
+    } else {
+      return new Variable(previous);
+    }
+  }
+
+  private selection(value: string, previous: string): Condition {
     if (value === 'not') {
-      return new Not(new PleaseSelect());
+      return new Not(this.createFromPrevious(previous));
     } else if (value === 'and') {
-      return new And(new PleaseSelect(), new PleaseSelect());
+      return new And(this.createFromPrevious(previous), new PleaseSelect());
     } else if (value === 'or') {
-      return new Or(new PleaseSelect(), new PleaseSelect());
+      return new Or(this.createFromPrevious(previous), new PleaseSelect());
     } else if (value === this.always) {
       return new Always();
     } else {
@@ -129,8 +137,8 @@ export class EditorConditionComponent {
     this.content().createEmbeddedView(this.selectTemplate(), {
       $implicit: variable,
       options: this.calculateOptions(forbidden),
-      selection: (value: string) => {
-        changeCallback(this.selection(value));
+      selection: (value: string, previous: string) => {
+        changeCallback(this.selection(value, previous));
       },
       width: (variable.length * 9 + 30).toString() + 'px',
     });
@@ -208,5 +216,11 @@ export class EditorConditionComponent {
 
   variableActive(variable: string) {
     return this.activeAnswers()[variable];
+  }
+
+  variablePlaceholder(variable: string) {
+    return variable === this.always || variable === this.please_select
+      ? 'x'
+      : variable;
   }
 }
