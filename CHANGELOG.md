@@ -1,3 +1,19 @@
+## [0.3.0](https://github.com/dhhyi/travel-packlist/compare/v0.2.0...v0.3.0) (2024-12-05)
+
+### Features
+
+- add partial remove option to condition editor ([68e2f4e](https://github.com/dhhyi/travel-packlist/commit/68e2f4e5b8b6e3245096ed57c02e70cfa4d046b8))
+- improve usability when entering category name ([0b5218e](https://github.com/dhhyi/travel-packlist/commit/0b5218e581b5d7d0c4b8bfa5d5387662160f0b6b))
+- selection in condition editor reuses previous value if possible ([49cee54](https://github.com/dhhyi/travel-packlist/commit/49cee5431abb004a523bd2b81b625bf06e827547))
+
+### Bug Fixes
+
+- correctly handle 'always' ([a48aafe](https://github.com/dhhyi/travel-packlist/commit/a48aafeaedfcba5f89f1ef049cad5fbb16f335e2))
+- hide config button when on config page ([b135614](https://github.com/dhhyi/travel-packlist/commit/b135614c1df45881e98b32be8fc1ee61f331f64e))
+- prevent reserved keywords as variable names ([ec0b618](https://github.com/dhhyi/travel-packlist/commit/ec0b6182dff6bd4b371ee431a17ed13b9c7240dd))
+- scale input of item editor to screen ([acd7d6c](https://github.com/dhhyi/travel-packlist/commit/acd7d6c9cda9ca3eb0d735022ee6edddebea78e3))
+- scroll export button into view when not in view ([af5c25a](https://github.com/dhhyi/travel-packlist/commit/af5c25a1b1782026d569e5528cd8d3ee0a8571a8))
+
 ## [0.2.0](https://github.com/dhhyi/travel-packlist/compare/v0.1.1...v0.2.0) (2024-11-27)
 
 ### Features
