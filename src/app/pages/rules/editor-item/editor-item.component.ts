@@ -7,10 +7,17 @@ import {
   effect,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { debounceTime, filter } from 'rxjs';
 
 import { prompt } from '../../../dialog';
+import { SyntaxError } from '../../../generated/rules';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
 import { Item } from '../../../model/types';
@@ -35,11 +42,7 @@ export class EditorItemComponent {
   form = this.fb.group({
     category: this.fb.control(''),
     name: this.fb.control('', {
-      validators: [
-        Validators.pattern('[^,;#]+'),
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        Validators.required,
-      ],
+      validators: [this.validateNamePattern(), Validators.required.bind(this)],
     }),
   });
 
@@ -119,15 +122,36 @@ export class EditorItemComponent {
   private async addNewCategory() {
     const newCategory = await prompt('Enter new category name');
     if (newCategory) {
-      if (/[,;#]/.test(newCategory)) {
-        alert('Category name cannot contain , ; #');
-        this.form.patchValue({ category: '' });
-        return;
+      try {
+        this.parser.validateCategoryName(newCategory);
+        this.form.patchValue({ category: newCategory });
+      } catch (error) {
+        if (error instanceof SyntaxError) {
+          const pattern = error.found;
+          alert(
+            $localize`:@@edit.item.category.invalid-character:Category name cannot contain '${pattern}:INTERPOLATION:'`,
+          );
+        }
+        this.reset();
       }
-
-      this.form.patchValue({ category: newCategory });
     } else {
       this.reset();
     }
+  }
+
+  private validateNamePattern(): ValidatorFn {
+    return (control: AbstractControl<string | null>) => {
+      const value = control.value?.trim() ?? '';
+      try {
+        this.parser.validateItemNameAndWeight(value);
+        return null;
+      } catch (error) {
+        control.markAsTouched();
+        if (error instanceof SyntaxError) {
+          return { pattern: error.found };
+        }
+        return { pattern: true };
+      }
+    };
   }
 }

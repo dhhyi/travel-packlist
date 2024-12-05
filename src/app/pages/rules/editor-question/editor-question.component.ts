@@ -28,6 +28,8 @@ import {
   withLatestFrom,
 } from 'rxjs';
 
+import { SyntaxError } from '../../../generated/rules';
+import { Parser } from '../../../model/parser';
 import { Always, Question } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
 
@@ -39,6 +41,8 @@ import { GlobalState } from '../../../state/global-state';
 })
 export class EditorQuestionComponent {
   question = input.required<Question>();
+
+  private parser = inject(Parser);
 
   private state = inject(GlobalState);
   private variables = this.state.signal('variables');
@@ -60,17 +64,15 @@ export class EditorQuestionComponent {
   form = this.fb.group({
     question: this.fb.control('', {
       validators: [
-        Validators.pattern('[^,;#]+'),
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        Validators.required,
+        this.validateQuestionPattern(),
+        Validators.required.bind(this),
       ],
     }),
     variable: this.fb.control('', {
       validators: [
-        Validators.pattern(' *[^ ,;#]+ *'),
+        this.validateVariablePattern(),
         validateReservedString(),
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        Validators.required,
+        Validators.required.bind(this),
       ],
       asyncValidators: [
         validateUnusedVariable(
@@ -145,6 +147,38 @@ export class EditorQuestionComponent {
     if (this.form.controls.variable.value === Question.NEW_VARIABLE_NAME) {
       this.form.controls.variable.setValue('', { emitEvent: false });
     }
+  }
+
+  private validateVariablePattern(): ValidatorFn {
+    return (control: AbstractControl<string | null>) => {
+      const value = control.value?.trim() ?? '';
+      try {
+        this.parser.validateVariableName(value);
+        return null;
+      } catch (error) {
+        control.markAsTouched();
+        if (error instanceof SyntaxError) {
+          return { pattern: error.found };
+        }
+        return { pattern: true };
+      }
+    };
+  }
+
+  private validateQuestionPattern(): ValidatorFn {
+    return (control: AbstractControl<string | null>) => {
+      const value = control.value?.trim() ?? '';
+      try {
+        this.parser.validateQuestionString(value);
+        return null;
+      } catch (error) {
+        control.markAsTouched();
+        if (error instanceof SyntaxError) {
+          return { pattern: error.found };
+        }
+        return { pattern: true };
+      }
+    };
   }
 }
 

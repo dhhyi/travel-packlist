@@ -61,7 +61,7 @@ Question "question"
   }
 
 QuestionString "question"
-  = $[^\$,\;]+
+  = $[^\$,;#]+
 
 VariableName "variable name"
   = $([a-zA-Z][a-zA-Z0-9\-\[\]\(\)\{\}_]*)
@@ -86,7 +86,7 @@ Category "category"
   = "[" _ @CategoryName _ "]"
 
 CategoryName "category name"
-  = $[^\]]+
+  = $[^\],;#\[]+
 
 ItemNameAndWeight "item name"
   = @Word|{
@@ -96,10 +96,15 @@ ItemNameAndWeight "item name"
     const slice = begin.replaceAll(/[,;].*/gs, "").trim();
     return slice.split(" ").length - 1;
    }, " "| " " @Weight
-  / words:Word|.., " "| { return [words]; }
+  / words:Word|.., " "| {
+    if (!words.length) {
+      expected("item name");
+    }
+    return [words];
+  }
 
 Word
-  = $[^ \n,;]+
+  = $[^ ,;#]+
 
 Weight "weight"
   = num:Number "kg" {

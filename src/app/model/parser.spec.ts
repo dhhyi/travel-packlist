@@ -216,4 +216,78 @@ describe('Parser', () => {
       expect(rules.length).toEqual(1);
     });
   });
+
+  describe('validateVariableName', () => {
+    it.each(['a', 'a{0}', 'test-a', 'test_a', 'a1'])(
+      'should validate "%s" a valid variable name',
+      (name) => {
+        parser.validateVariableName(name);
+      },
+    );
+
+    it.each(['', 'a a', 'test$a', '123', '1a'])(
+      'should validate "%s" as an invalid variable name',
+      (name) => {
+        expect(() => {
+          parser.validateVariableName(name);
+        }).toThrow();
+      },
+    );
+  });
+
+  describe('validateQuestionString', () => {
+    it.each(['Is it sunny? ', 'AirBnB', 'Something cool a1-[b2](c3)'])(
+      'should validate "%s" a valid question string',
+      (input) => {
+        parser.validateQuestionString(input);
+      },
+    );
+
+    it.each(['', 'Is it sunny? $', 'Is #it', 'It ; is', ' test, not'])(
+      'should validate "%s" as an invalid question string',
+      (input) => {
+        expect(() => {
+          parser.validateQuestionString(input);
+        }).toThrow();
+      },
+    );
+  });
+
+  describe('validateItemNameAndWeight', () => {
+    it.each([
+      'Scrubber {124234}',
+      'Scrubber 100',
+      'Scrubber 0.5kg',
+      '[Scrubber]',
+    ])('should validate "%s" a valid item name', (input) => {
+      parser.validateItemNameAndWeight(input);
+    });
+
+    it.each(['', 'Scrubber,', 'test#test', ';'])(
+      'should validate "%s" as an invalid item name',
+      (input) => {
+        expect(() => {
+          parser.validateItemNameAndWeight(input);
+        }).toThrow();
+      },
+    );
+  });
+
+  describe('validateCategoryName', () => {
+    it.each(['utility', 'test', 'a1-b2(c3)'])(
+      'should validate "%s" a valid category name',
+      (name) => {
+        parser.validateCategoryName(name);
+      },
+    );
+
+    it.each(['', 'test,test', ';', '[cat]', 'test#test'])(
+      'should validate "%s" as an invalid category name',
+      (name) => {
+        expect(() => {
+          parser.validateCategoryName(name);
+        }).toThrow();
+      },
+    );
+  });
 });

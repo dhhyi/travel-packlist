@@ -65,12 +65,14 @@
     "dialog.ok": "OK",
     "edit-raw.parsed-success": "Parsed {$NUMBER_OF_RULES} rules successfully!",
     "edit-raw.waiting": "Waiting for input.",
-    "edit.item.name.invalid-characters": "Item name cannot contain the characters , ; #",
+    "edit.item.category.invalid-character": "Category name cannot contain '{$INTERPOLATION}'",
+    "edit.item.name.invalid-character": "Item name cannot contain the character '{$INTERPOLATION}'",
     "edit.item.name.required": "Item name is required",
-    "edit.question.question.invalid-characters": "Questions cannot contain the characters , ; #",
+    "edit.question.question.invalid-character": "Questions cannot contain this character: '{$INTERPOLATION}'",
     "edit.question.question.placeholder": "question",
     "edit.question.question.required": "Question is required",
-    "edit.question.variable.invalid-characters": "Variables cannot contain spaces, or the characters , ; #",
+    "edit.question.variable.invalid-character": "Variables cannot contain this character: '{$INTERPOLATION}'",
+    "edit.question.variable.invalid-spaces": "Variables cannot contain spaces",
     "edit.question.variable.placeholder": "variable",
     "edit.question.variable.required": "Variable name is required",
     "edit.question.variable.reserved": "This variable name is reserved",
@@ -85,7 +87,6 @@
     "model.new.category": "New",
     "model.new.item": "New Item",
     "model.new.question": "New Question",
-    "parser.error.item": "Could not parse item from '{$INPUT}'",
     "parser.error.rules": "Error parsing rules"
   }
 }

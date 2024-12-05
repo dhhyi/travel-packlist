@@ -65,12 +65,14 @@
     "dialog.ok": "OK",
     "edit-raw.parsed-success": "{$NUMBER_OF_RULES} Regeln erfolgreich geparst!",
     "edit-raw.waiting": "Warte auf Eingabe.",
-    "edit.item.name.invalid-characters": "Der Artikelname darf die Zeichen , ; # nicht enthalten",
+    "edit.item.category.invalid-character": "Kategorie darf '{$INTERPOLATION}' nicht enthalten",
+    "edit.item.name.invalid-character": "Name darf das Zeichen '{$INTERPOLATION}' nicht enthalten",
     "edit.item.name.required": "Artikelname ist erforderlich",
-    "edit.question.question.invalid-characters": "Fragen dürfen die Zeichen , ; # nicht enthalten",
+    "edit.question.question.invalid-character": "Fragen können dieses Zeichen nicht enthalten: '{$INTERPOLATION}'",
     "edit.question.question.placeholder": "Frage",
     "edit.question.question.required": "Frage ist erforderlich",
-    "edit.question.variable.invalid-characters": "Variablen dürfen keine Leerzeichen oder die Zeichen , ; # enthalten",
+    "edit.question.variable.invalid-character": "Variablen können dieses Zeichen nicht enthalten: '{$INTERPOLATION}'",
+    "edit.question.variable.invalid-spaces": "Variablen dürfen keine Leerzeichen enthalten",
     "edit.question.variable.placeholder": "Variable",
     "edit.question.variable.required": "Variablenname ist erforderlich",
     "edit.question.variable.reserved": "Dieser Variablenname ist reserviert",
@@ -85,7 +87,6 @@
     "model.new.category": "Neu",
     "model.new.item": "Neuer Gegenstand",
     "model.new.question": "Neue Frage",
-    "parser.error.item": "Konnte keinen Gegenstand in '{$INPUT}' parsen",
     "parser.error.rules": "Fehler beim Parsen der Regeln"
   }
 }

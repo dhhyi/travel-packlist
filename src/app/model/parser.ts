@@ -85,4 +85,20 @@ export class Parser {
       throw new Error(message.join(''));
     }
   }
+
+  validateVariableName(name: string) {
+    parse(name, this.makeOptions('VariableName'));
+  }
+
+  validateQuestionString(input: string) {
+    parse(input, this.makeOptions('QuestionString'));
+  }
+
+  validateItemNameAndWeight(input: string) {
+    parse(input, this.makeOptions('ItemNameAndWeight'));
+  }
+
+  validateCategoryName(name: string) {
+    parse(name, this.makeOptions('CategoryName'));
+  }
 }
