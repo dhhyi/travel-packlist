@@ -17,6 +17,7 @@ import {
 import { debounceTime, filter } from 'rxjs';
 
 import { prompt } from '../../../dialog';
+import { alert } from '../../../dialog/dialog.component';
 import { SyntaxError } from '../../../generated/rules';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
@@ -119,8 +120,8 @@ export class EditorItemComponent {
     this.reset();
   }
 
-  private async addNewCategory() {
-    const newCategory = await prompt('Enter new category name');
+  private async addNewCategory(prefill = '') {
+    const newCategory = await prompt('Enter new category name', prefill);
     if (newCategory) {
       try {
         this.parser.validateCategoryName(newCategory);
@@ -128,11 +129,16 @@ export class EditorItemComponent {
       } catch (error) {
         if (error instanceof SyntaxError) {
           const pattern = error.found;
-          alert(
-            $localize`:@@edit.item.category.invalid-character:Category name cannot contain '${pattern}:INTERPOLATION:'`,
+          await alert(
+            $localize`:@@edit.item.category.invalid-character:Category name cannot contain '${pattern}:INTERPOLATION:'` as string,
+          );
+        } else {
+          console.error(error);
+          await alert(
+            $localize`:@@edit.item.category.invalid:Invalid category name` as string,
           );
         }
-        this.reset();
+        void this.addNewCategory(newCategory);
       }
     } else {
       this.reset();

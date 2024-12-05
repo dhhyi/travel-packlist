@@ -65,6 +65,7 @@
     "dialog.ok": "OK",
     "edit-raw.parsed-success": "{$NUMBER_OF_RULES} Regeln erfolgreich geparst!",
     "edit-raw.waiting": "Warte auf Eingabe.",
+    "edit.item.category.invalid": "Unzulässiger Kategoriename",
     "edit.item.category.invalid-character": "Kategorie darf '{$INTERPOLATION}' nicht enthalten",
     "edit.item.name.invalid-character": "Name darf das Zeichen '{$INTERPOLATION}' nicht enthalten",
     "edit.item.name.required": "Artikelname ist erforderlich",

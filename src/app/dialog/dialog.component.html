@@ -18,6 +18,7 @@
             i18n="@@dialog.cancel"
             type="button"
             class="secondary"
+            [ngClass]="{ hidden: !self.dialogCancelVisible() }"
             (click)="self.dialogCancel()()"
           >
             Cancel
