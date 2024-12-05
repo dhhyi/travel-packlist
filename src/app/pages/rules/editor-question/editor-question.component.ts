@@ -32,6 +32,12 @@ import { SyntaxError } from '../../../generated/rules';
 import { Parser } from '../../../model/parser';
 import { Always, Question } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
+import {
+  AND,
+  NOT,
+  OR,
+  REMOVE,
+} from '../editor-condition/editor-condition.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -184,7 +190,11 @@ export class EditorQuestionComponent {
 
 function validateReservedString(): ValidatorFn {
   return (control: AbstractControl<string | null>) => {
-    if ([Always.string].some((v) => v === control.value?.trim())) {
+    if (
+      [Always.string, NOT, AND, OR, REMOVE].some(
+        (v) => v === control.value?.trim(),
+      )
+    ) {
       return { reserved: true };
     }
     return null;

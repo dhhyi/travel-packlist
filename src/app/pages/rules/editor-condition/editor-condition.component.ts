@@ -24,6 +24,11 @@ import {
 } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
 
+export const NOT = 'NOT';
+export const AND = 'AND';
+export const OR = 'OR';
+export const REMOVE = 'REMOVE';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
@@ -65,6 +70,10 @@ export class EditorConditionComponent {
 
   please_select = PleaseSelect.string;
   always = Always.string;
+  not = NOT;
+  and = AND;
+  or = OR;
+  remove = REMOVE;
 
   readonly conditionChanged = output<Condition>();
 
@@ -99,10 +108,10 @@ export class EditorConditionComponent {
       this.please_select,
       this.always,
       ...this.selectVariables(),
-      'not',
-      'and',
-      'or',
-      'remove',
+      this.not,
+      this.and,
+      this.or,
+      this.remove,
     ].filter((variable) => !forbidden.includes(variable));
   }
 
@@ -115,13 +124,13 @@ export class EditorConditionComponent {
   }
 
   private selection(value: string, previous: string): Condition | null {
-    if (value === 'not') {
+    if (value === this.not) {
       return new Not(this.createFromPrevious(previous));
-    } else if (value === 'and') {
+    } else if (value === this.and) {
       return new And(this.createFromPrevious(previous), new PleaseSelect());
-    } else if (value === 'or') {
+    } else if (value === this.or) {
       return new Or(this.createFromPrevious(previous), new PleaseSelect());
-    } else if (value === 'remove') {
+    } else if (value === this.remove) {
       return null;
     } else if (value === this.always) {
       return new Always();

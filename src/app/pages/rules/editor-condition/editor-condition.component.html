@@ -33,16 +33,16 @@
     <!-- eslint-disable @angular-eslint/template/i18n -->
     @for (option of options; track $index) {
       @switch (option) {
-        @case ("not") {
+        @case (not) {
           <option value="not">NOT {{ variablePlaceholder(value) }}</option>
         }
-        @case ("and") {
+        @case (and) {
           <option value="and">{{ variablePlaceholder(value) }} AND x</option>
         }
-        @case ("or") {
+        @case (or) {
           <option value="or">{{ variablePlaceholder(value) }} OR x</option>
         }
-        @case ("remove") {
+        @case (remove) {
           <option value="remove">REMOVE</option>
         }
         @default {
