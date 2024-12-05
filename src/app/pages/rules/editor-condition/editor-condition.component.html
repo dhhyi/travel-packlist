@@ -42,6 +42,9 @@
         @case ("or") {
           <option value="or">{{ variablePlaceholder(value) }} OR x</option>
         }
+        @case ("remove") {
+          <option value="remove">REMOVE</option>
+        }
         @default {
           <option
             [value]="option"

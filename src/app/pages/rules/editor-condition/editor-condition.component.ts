@@ -86,7 +86,11 @@ export class EditorConditionComponent {
 
     this.paintKeyword('IF');
     this.paintCondition(this.condition(), (newCondition) => {
-      this.conditionChanged.emit(newCondition);
+      if (newCondition) {
+        this.conditionChanged.emit(newCondition);
+      } else {
+        this.conditionChanged.emit(new PleaseSelect());
+      }
     });
   }
 
@@ -98,6 +102,7 @@ export class EditorConditionComponent {
       'not',
       'and',
       'or',
+      'remove',
     ].filter((variable) => !forbidden.includes(variable));
   }
 
@@ -109,13 +114,15 @@ export class EditorConditionComponent {
     }
   }
 
-  private selection(value: string, previous: string): Condition {
+  private selection(value: string, previous: string): Condition | null {
     if (value === 'not') {
       return new Not(this.createFromPrevious(previous));
     } else if (value === 'and') {
       return new And(this.createFromPrevious(previous), new PleaseSelect());
     } else if (value === 'or') {
       return new Or(this.createFromPrevious(previous), new PleaseSelect());
+    } else if (value === 'remove') {
+      return null;
     } else if (value === this.always) {
       return new Always();
     } else {
@@ -131,7 +138,7 @@ export class EditorConditionComponent {
 
   private paintSelect(
     variable: string,
-    changeCallback: (newCondition: Condition) => void,
+    changeCallback: Parameters<EditorConditionComponent['paintCondition']>[1],
     forbidden: string[],
   ) {
     this.content().createEmbeddedView(this.selectTemplate(), {
@@ -152,7 +159,7 @@ export class EditorConditionComponent {
 
   private paintCondition(
     condition: Condition,
-    changeCallback: (newCondition: Condition) => void,
+    changeCallback: (newCondition: Condition | null) => void,
     forbidden: string[] = [],
   ) {
     if (condition instanceof Not) {
@@ -160,8 +167,12 @@ export class EditorConditionComponent {
       this.paintKeyword('NOT');
       this.paintCondition(
         condition.not,
-        (newCondition: Condition) => {
-          changeCallback(new Not(newCondition));
+        (newCondition) => {
+          if (newCondition) {
+            changeCallback(new Not(newCondition));
+          } else {
+            changeCallback(null);
+          }
         },
         forbiddenNot,
       );
@@ -169,16 +180,24 @@ export class EditorConditionComponent {
       const forbiddenAnd = [...forbidden, this.always];
       this.paintCondition(
         condition.left,
-        (newCondition: Condition) => {
-          changeCallback(new And(newCondition, condition.right));
+        (newCondition) => {
+          if (newCondition) {
+            changeCallback(new And(newCondition, condition.right));
+          } else {
+            changeCallback(condition.right);
+          }
         },
         forbiddenAnd,
       );
       this.paintKeyword('AND');
       this.paintCondition(
         condition.right,
-        (newCondition: Condition) => {
-          changeCallback(new And(condition.left, newCondition));
+        (newCondition) => {
+          if (newCondition) {
+            changeCallback(new And(condition.left, newCondition));
+          } else {
+            changeCallback(condition.left);
+          }
         },
         forbiddenAnd,
       );
@@ -186,16 +205,24 @@ export class EditorConditionComponent {
       const forbiddenOr = [...forbidden, this.always];
       this.paintCondition(
         condition.left,
-        (newCondition: Condition) => {
-          changeCallback(new Or(newCondition, condition.right));
+        (newCondition) => {
+          if (newCondition) {
+            changeCallback(new Or(newCondition, condition.right));
+          } else {
+            changeCallback(condition.right);
+          }
         },
         forbiddenOr,
       );
       this.paintKeyword('OR');
       this.paintCondition(
         condition.right,
-        (newCondition: Condition) => {
-          changeCallback(new Or(condition.left, newCondition));
+        (newCondition) => {
+          if (newCondition) {
+            changeCallback(new Or(condition.left, newCondition));
+          } else {
+            changeCallback(condition.left);
+          }
         },
         forbiddenOr,
       );
