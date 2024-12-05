@@ -199,12 +199,6 @@ export class EditorConditionComponent {
         },
         forbiddenOr,
       );
-    } else if (condition instanceof Always) {
-      if (this.mode() === 'edit') {
-        this.paintSelect(this.always, changeCallback, forbidden);
-      } else {
-        this.paintVariable(this.always);
-      }
     } else if (condition instanceof Variable) {
       if (this.mode() === 'edit') {
         this.paintSelect(condition.variable, changeCallback, forbidden);
