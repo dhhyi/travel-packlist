@@ -82,7 +82,7 @@
 
   input[disabled],
   select[disabled] {
-    @apply border border-transparent bg-transparent opacity-80;
+    @apply border border-transparent bg-transparent;
   }
 
   select[disabled] {

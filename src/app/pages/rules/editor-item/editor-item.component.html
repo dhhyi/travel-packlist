@@ -6,12 +6,9 @@
     <option value="">+</option>
   </select>
   <input
+    class="w-0 flex-1"
     type="text"
     formControlName="name"
-    [ngClass]="{
-      'w-36': fontSize() === 'large',
-      'w-44': fontSize() === 'normal',
-    }"
     (focus)="focus($event)"
     (blur)="blur()"
   />
