@@ -68,12 +68,12 @@ export class EditorConditionComponent {
     this.serializer.serialize(this.condition()),
   );
 
-  please_select = PleaseSelect.string;
-  always = Always.string;
-  not = NOT;
-  and = AND;
-  or = OR;
-  remove = REMOVE;
+  PLEASE_SELECT = PleaseSelect.string;
+  ALWAYS = Always.string;
+  NOT = NOT;
+  AND = AND;
+  OR = OR;
+  REMOVE = REMOVE;
 
   readonly conditionChanged = output<Condition>();
 
@@ -105,18 +105,18 @@ export class EditorConditionComponent {
 
   private calculateOptions(forbidden: string[]) {
     return [
-      this.please_select,
-      this.always,
+      this.PLEASE_SELECT,
+      this.ALWAYS,
       ...this.selectVariables(),
-      this.not,
-      this.and,
-      this.or,
-      this.remove,
+      this.NOT,
+      this.AND,
+      this.OR,
+      this.REMOVE,
     ].filter((variable) => !forbidden.includes(variable));
   }
 
   private createFromPrevious(previous: string): Condition {
-    if (previous === this.please_select || previous === this.always) {
+    if (previous === this.PLEASE_SELECT || previous === this.ALWAYS) {
       return new PleaseSelect();
     } else {
       return new Variable(previous);
@@ -124,15 +124,15 @@ export class EditorConditionComponent {
   }
 
   private selection(value: string, previous: string): Condition | null {
-    if (value === this.not) {
+    if (value === this.NOT) {
       return new Not(this.createFromPrevious(previous));
-    } else if (value === this.and) {
+    } else if (value === this.AND) {
       return new And(this.createFromPrevious(previous), new PleaseSelect());
-    } else if (value === this.or) {
+    } else if (value === this.OR) {
       return new Or(this.createFromPrevious(previous), new PleaseSelect());
-    } else if (value === this.remove) {
+    } else if (value === this.REMOVE) {
       return null;
-    } else if (value === this.always) {
+    } else if (value === this.ALWAYS) {
       return new Always();
     } else {
       return new Variable(value);
@@ -172,7 +172,7 @@ export class EditorConditionComponent {
     forbidden: string[] = [],
   ) {
     if (condition instanceof Not) {
-      const forbiddenNot = forbidden.filter((v) => v !== this.always);
+      const forbiddenNot = forbidden.filter((v) => v !== this.ALWAYS);
       this.paintKeyword('NOT');
       this.paintCondition(
         condition.not,
@@ -186,7 +186,7 @@ export class EditorConditionComponent {
         forbiddenNot,
       );
     } else if (condition instanceof And) {
-      const forbiddenAnd = [...forbidden, this.always];
+      const forbiddenAnd = [...forbidden, this.ALWAYS];
       this.paintCondition(
         condition.left,
         (newCondition) => {
@@ -211,7 +211,7 @@ export class EditorConditionComponent {
         forbiddenAnd,
       );
     } else if (condition instanceof Or) {
-      const forbiddenOr = [...forbidden, this.always];
+      const forbiddenOr = [...forbidden, this.ALWAYS];
       this.paintCondition(
         condition.left,
         (newCondition) => {
@@ -249,7 +249,7 @@ export class EditorConditionComponent {
   }
 
   variablePlaceholder(variable: string) {
-    return variable === this.always || variable === this.please_select
+    return variable === this.ALWAYS || variable === this.PLEASE_SELECT
       ? 'x'
       : variable;
   }
