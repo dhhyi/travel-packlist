@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/dhhyi/travel-packlist/compare/v0.3.0...v0.3.1) (2024-12-06)
+
+### Bug Fixes
+
+- center scroll top button ([02dfa16](https://github.com/dhhyi/travel-packlist/commit/02dfa16ff16ae1520b97392fe868fa84ae4eac5e))
+- repair using operators in editor ([bac6674](https://github.com/dhhyi/travel-packlist/commit/bac667435af13011611469c71fd4b3685775bae7))
+
 ## [0.3.0](https://github.com/dhhyi/travel-packlist/compare/v0.2.0...v0.3.0) (2024-12-05)
 
 ### Features
