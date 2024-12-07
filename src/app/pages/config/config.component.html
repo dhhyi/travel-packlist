@@ -157,9 +157,7 @@
       i18n="@@config.theme.dark"
       type="button"
       class="link"
-      [ngClass]="{
-        active: theme() === 'dark',
-      }"
+      [class]="{ active: theme() === 'dark' }"
       (click)="theme.set('dark')"
     >
       Dark
@@ -168,9 +166,7 @@
       i18n="@@config.theme.light"
       type="button"
       class="link"
-      [ngClass]="{
-        active: theme() === 'light',
-      }"
+      [class]="{ active: theme() === 'light' }"
       (click)="theme.set('light')"
     >
       Light
@@ -179,9 +175,7 @@
       i18n="@@config.theme.system"
       type="button"
       class="link"
-      [ngClass]="{
-        active: theme() === 'system',
-      }"
+      [class]="{ active: theme() === 'system' }"
       (click)="theme.set('system')"
     >
       System
@@ -193,9 +187,7 @@
       i18n="@@config.fontsize.small"
       type="button"
       class="link text-[16px]"
-      [ngClass]="{
-        active: fontSize() === 'small',
-      }"
+      [class]="{ active: fontSize() === 'small' }"
       (click)="fontSize.set('small')"
     >
       small
@@ -204,9 +196,7 @@
       i18n="@@config.fontsize.normal"
       type="button"
       class="link text-[18px]"
-      [ngClass]="{
-        active: fontSize() === 'normal',
-      }"
+      [class]="{ active: fontSize() === 'normal' }"
       (click)="fontSize.set('normal')"
     >
       normal
@@ -215,9 +205,7 @@
       i18n="@@config.fontsize.large"
       type="button"
       class="link text-[20px]"
-      [ngClass]="{
-        active: fontSize() === 'large',
-      }"
+      [class]="{ active: fontSize() === 'large' }"
       (click)="fontSize.set('large')"
     >
       large
@@ -229,9 +217,7 @@
       i18n="@@config.language.detect"
       class="link"
       type="button"
-      [ngClass]="{
-        active: language() === 'auto',
-      }"
+      [class]="{ active: language() === 'auto' }"
       (click)="language.set('auto')"
     >
       detect
@@ -239,9 +225,7 @@
     <button
       class="link"
       type="button"
-      [ngClass]="{
-        active: language() === 'en',
-      }"
+      [class]="{ active: language() === 'en' }"
       (click)="language.set('en')"
     >
       <app-flag-uk class="h-6 w-7" />
@@ -249,9 +233,7 @@
     <button
       type="button"
       class="link"
-      [ngClass]="{
-        active: language() === 'de',
-      }"
+      [class]="{ active: language() === 'de' }"
       (click)="language.set('de')"
     >
       <app-flag-germany class="h-6 w-7" />

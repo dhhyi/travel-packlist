@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -18,7 +17,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
-  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
+  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent],
   templateUrl: './rules.component.html',
 })
 export default class RulesComponent {

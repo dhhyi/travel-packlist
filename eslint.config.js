@@ -196,6 +196,12 @@ module.exports = tseslint.config(
         },
       ],
       "@angular-eslint/template/no-call-expression": "off",
+      "@angular-eslint/template/no-duplicate-attributes": [
+        "error",
+        {
+          ignore: ["class"],
+        },
+      ],
       "@angular-eslint/template/prefer-ngsrc": "off",
     },
   }
