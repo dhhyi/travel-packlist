@@ -31,7 +31,7 @@ import { GlobalState } from '../../../state/global-state';
   templateUrl: './editor-item.component.html',
 })
 export class EditorItemComponent {
-  item = input.required<Item>();
+  readonly item = input.required<Item>();
 
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');

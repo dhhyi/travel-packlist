@@ -37,16 +37,17 @@ import { RulesClipboard } from '../rules.clipboard';
   templateUrl: './toolbar.component.html',
 })
 export class ToolbarComponent {
-  noOfVisibleRules = input.required<number>();
+  readonly noOfVisibleRules = input.required<number>();
 
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');
   searchTerm = this.state.signal('filterRulesQuery');
   clipboard = inject(RulesClipboard);
 
-  sticky = computed(() => this.state.signal('scrollY')() > 48);
+  readonly sticky = computed(() => this.state.signal('scrollY')() > 48);
 
-  searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
+  readonly searchInput =
+    viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 
   focusSearch() {
     setTimeout(() => {

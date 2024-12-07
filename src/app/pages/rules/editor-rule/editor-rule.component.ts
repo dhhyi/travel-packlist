@@ -46,18 +46,20 @@ import { RulesClipboard } from '../rules.clipboard';
   templateUrl: './editor-rule.component.html',
 })
 export class EditorRuleComponent {
-  rule = input.required<Rule>();
+  readonly rule = input.required<Rule>();
 
   readonly ruleChanged = output<Rule>();
   readonly deleteRule = output();
   readonly renameVariable = output<[string, string]>();
 
-  ruleDebugString = computed(() => this.serializer.serialize(this.rule()));
-  errorMessage = signal<string | null>(null);
+  readonly ruleDebugString = computed(() =>
+    this.serializer.serialize(this.rule()),
+  );
+  readonly errorMessage = signal<string | null>(null);
 
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');
-  selectVariables = computed(() => {
+  readonly selectVariables = computed(() => {
     const ruleVariables = this.rule().questions.map((q) => q.variable);
     const allVariables = this.state.get('variables');
     return allVariables.filter((v) => !ruleVariables.includes(v));

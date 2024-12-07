@@ -46,7 +46,7 @@ import {
   templateUrl: './editor-question.component.html',
 })
 export class EditorQuestionComponent {
-  question = input.required<Question>();
+  readonly question = input.required<Question>();
 
   private parser = inject(Parser);
 
@@ -54,11 +54,11 @@ export class EditorQuestionComponent {
   private variables = this.state.signal('variables');
   mode = this.state.signal('rulesMode');
 
-  highlighVariable = computed(
+  readonly highlighVariable = computed(
     () =>
       this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
   );
-  variableActive = computed(
+  readonly variableActive = computed(
     () => this.state.signal('activeAnswers')()[this.question().variable],
   );
   private refactorVariables = this.state.signal('refactorVariables');

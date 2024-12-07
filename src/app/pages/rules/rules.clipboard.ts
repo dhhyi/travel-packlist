@@ -14,8 +14,8 @@ export class RulesClipboard {
   private questions = this.state.signal('clipboardQuestions');
   private items = this.state.signal('clipboardItems');
 
-  itemsCount = computed(() => this.items().length);
-  questionsCount = computed(() => this.questions().length);
+  readonly itemsCount = computed(() => this.items().length);
+  readonly questionsCount = computed(() => this.questions().length);
 
   cutQuestion(question: Question) {
     this.questions.update((questions) => [

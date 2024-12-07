@@ -20,7 +20,9 @@ import { GlobalState } from './state/global-state';
 export class AppComponent {
   private state = inject(GlobalState);
 
-  scrollTopVisible = computed(() => this.state.signal('scrollY')() > 100);
+  readonly scrollTopVisible = computed(
+    () => this.state.signal('scrollY')() > 100,
+  );
 
   scrollTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

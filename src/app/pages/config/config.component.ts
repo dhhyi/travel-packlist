@@ -43,7 +43,7 @@ import { ConfigFacade } from './config.facade';
 })
 export default class ConfigComponent {
   env = env;
-  loading = signal(false);
+  readonly loading = signal(false);
 
   displayKoFi = !ANDROID;
   displayServiceWorkerStatus = !ANDROID;
@@ -65,12 +65,12 @@ export default class ConfigComponent {
 
   exportNeeded = this.state.signal('exportNeeded');
   private facade = inject(ConfigFacade);
-  highlightExport: Signal<boolean>;
-  private exportButton =
+  readonly highlightExport: Signal<boolean>;
+  private readonly exportButton =
     viewChild.required<ElementRef<HTMLButtonElement>>('exportButton');
   isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
 
-  serviceWorkerStatus = computed((): string => {
+  readonly serviceWorkerStatus = computed((): string => {
     switch (this.state.signal('serviceWorkerStatus')()) {
       case 'disabled':
         return $localize`:@@config.service-worker.disabled:disabled` as string;

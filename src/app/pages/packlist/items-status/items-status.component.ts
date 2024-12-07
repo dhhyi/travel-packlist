@@ -9,6 +9,6 @@ import { IconCheckmarkComponent } from '../../../icons/icon-checkmark/icon-check
   templateUrl: './items-status.component.html',
 })
 export class ItemsStatusComponent {
-  count = input<number>(0);
-  total = input<number>(0);
+  readonly count = input<number>(0);
+  readonly total = input<number>(0);
 }

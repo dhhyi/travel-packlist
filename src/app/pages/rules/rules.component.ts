@@ -30,9 +30,9 @@ export default class RulesComponent {
   private activeRules = this.state.signal('activeRules');
   mode = this.state.signal('rulesMode');
   filter = this.state.signal('filterRulesQuery');
-  highlightRule = signal<number | undefined>(undefined);
+  readonly highlightRule = signal<number | undefined>(undefined);
 
-  visibleRules = computed(() => {
+  readonly visibleRules = computed(() => {
     const filter = this.filter();
     if (filter === '') {
       return this.parsedRules().map((rule, index) => ({ rule, index }));

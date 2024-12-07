@@ -41,9 +41,9 @@ export class DisplayItemsComponent {
   private state = inject(GlobalState);
 
   private facade = inject(PacklistFacade);
-  view = this.facade.packlist;
+  readonly view = this.facade.packlist;
 
-  orderBy = computed(() => {
+  readonly orderBy = computed(() => {
     const sorting = this.state.signal('categorySorting')();
     return sorting === 'definition' ? () => 0 : undefined;
   });

@@ -56,7 +56,7 @@ export class PacklistFacade {
     }
   }
 
-  packlist: Signal<PacklistView> = computed(() => {
+  readonly packlist: Signal<PacklistView> = computed(() => {
     const items = this.state.signal('activeItems')();
     let checked = 0;
     let checkedWeight = 0;

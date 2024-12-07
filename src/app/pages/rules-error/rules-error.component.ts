@@ -8,5 +8,5 @@ import { RouterLink } from '@angular/router';
   templateUrl: './rules-error.component.html',
 })
 export default class RulesErrorComponent {
-  error = input<string>();
+  readonly error = input<string>();
 }

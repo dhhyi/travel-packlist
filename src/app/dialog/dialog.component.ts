@@ -10,12 +10,12 @@ import { noop } from 'rxjs';
 })
 export class DialogComponent {
   self = DialogComponent;
-  static dialogVisible = signal<boolean>(false);
-  static dialogPromptVisible = signal<boolean>(false);
-  static dialogCancelVisible = signal<boolean>(true);
-  static dialogMessage = signal<string>('');
-  static dialogOk = signal<(prompt: string) => void>(noop);
-  static dialogCancel = signal<() => void>(noop);
+  static readonly dialogVisible = signal<boolean>(false);
+  static readonly dialogPromptVisible = signal<boolean>(false);
+  static readonly dialogCancelVisible = signal<boolean>(true);
+  static readonly dialogMessage = signal<string>('');
+  static readonly dialogOk = signal<(prompt: string) => void>(noop);
+  static readonly dialogCancel = signal<() => void>(noop);
 }
 
 function showDialog(cancel = true, prompt = false) {

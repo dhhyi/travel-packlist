@@ -17,8 +17,8 @@ import { GlobalState } from '../../../state/global-state';
   imports: [IconCheckmarkComponent],
 })
 export class DisplayQuestionComponent {
-  question = input<string | undefined>(undefined);
-  value = input<VariableType | undefined>(undefined);
+  readonly question = input<string | undefined>(undefined);
+  readonly value = input<VariableType | undefined>(undefined);
   readonly valueChange = output<VariableType>();
 
   private state = inject(GlobalState);

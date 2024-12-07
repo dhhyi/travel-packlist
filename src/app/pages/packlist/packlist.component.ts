@@ -31,7 +31,7 @@ export default class PacklistComponent {
   isLockActive = this.state.signal('answersLocked');
   model = this.state.signal('answers');
 
-  questions = computed(() =>
+  readonly questions = computed(() =>
     this.activeQuestions().filter(
       (q) => !this.isLockActive() || this.model()[q.variable],
     ),

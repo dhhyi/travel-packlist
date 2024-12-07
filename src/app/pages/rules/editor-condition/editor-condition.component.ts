@@ -45,26 +45,30 @@ export const REMOVE = 'REMOVE';
   `,
 })
 export class EditorConditionComponent {
-  condition = input.required<Condition>();
-  selectVariables = input.required<string[]>();
+  readonly condition = input.required<Condition>();
+  readonly selectVariables = input.required<string[]>();
 
-  content = viewChild.required('content', { read: ViewContainerRef });
+  readonly content = viewChild.required('content', { read: ViewContainerRef });
 
-  keywordTemplate = viewChild.required('keyword', { read: TemplateRef });
-  variableTemplate = viewChild.required('variable', { read: TemplateRef });
-  selectTemplate = viewChild.required('select', { read: TemplateRef });
+  readonly keywordTemplate = viewChild.required('keyword', {
+    read: TemplateRef,
+  });
+  readonly variableTemplate = viewChild.required('variable', {
+    read: TemplateRef,
+  });
+  readonly selectTemplate = viewChild.required('select', { read: TemplateRef });
 
   private state = inject(GlobalState);
   private activeAnswers = this.state.signal('activeAnswers');
   private mode = this.state.signal('rulesMode');
 
-  highlighVariable = computed(
+  readonly highlighVariable = computed(
     () =>
       this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
   );
 
   private serializer = inject(Serializer);
-  serializedCondition = computed(() =>
+  readonly serializedCondition = computed(() =>
     this.serializer.serialize(this.condition()),
   );
 

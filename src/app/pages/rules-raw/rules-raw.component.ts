@@ -40,14 +40,14 @@ export default class EditRulesRawComponent {
 
   private fb = inject(FormBuilder).nonNullable;
   rulesControl = this.fb.control(this.state.get('rulesOrTemplate'));
-  private rulesText = toSignal(
+  private readonly rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
-  private rulesPending = computed(() => {
+  private readonly rulesPending = computed(() => {
     return this.rulesText() !== this.state.signal('rulesOrTemplate')();
   });
 
-  parserState = computed<ParserState>(() => {
+  readonly parserState = computed<ParserState>(() => {
     if (this.rulesPending()) {
       return { type: 'pending' };
     } else {
