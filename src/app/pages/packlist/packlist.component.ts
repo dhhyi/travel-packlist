@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -20,7 +19,6 @@ import { DisplayQuestionComponent } from './display-question/display-question.co
     DisplayItemsComponent,
     IconLockOpenComponent,
     IconLockComponent,
-    NgClass,
   ],
   templateUrl: './packlist.component.html',
 })

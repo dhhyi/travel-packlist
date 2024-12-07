@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -27,7 +26,6 @@ import { RulesClipboard } from '../rules.clipboard';
   selector: 'app-toolbar',
   imports: [
     FormsModule,
-    NgClass,
     IconViewComponent,
     IconEditComponent,
     IconDeleteComponent,

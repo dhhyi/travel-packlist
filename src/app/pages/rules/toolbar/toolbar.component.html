@@ -1,12 +1,12 @@
 <div
-  class="bg-active py-2"
-  [ngClass]="{ 'sticky left-0 top-0 z-30 shadow-md': sticky() }"
+  class="bg-active sticky left-0 top-0 z-30 py-2"
+  [class.drop-shadow-sm]="sticky()"
 >
   <div class="mb-1 grid grid-cols-6 gap-2">
     <button
       type="button"
       class="link"
-      [ngClass]="{ active: mode() === 'view' }"
+      [class.active]="mode() === 'view'"
       (click)="mode.set('view')"
     >
       <app-icon-view class="my-auto h-6 w-6" />
@@ -14,7 +14,7 @@
     <button
       type="button"
       class="link"
-      [ngClass]="{ active: mode() === 'edit' }"
+      [class.active]="mode() === 'edit'"
       [disabled]="!noOfVisibleRules() && !!searchTerm()"
       (click)="mode.set('edit')"
     >
@@ -23,7 +23,7 @@
     <button
       type="button"
       class="link"
-      [ngClass]="{ active: mode() === 'delete' }"
+      [class.active]="mode() === 'delete'"
       [disabled]="!noOfVisibleRules()"
       (click)="mode.set('delete')"
     >
@@ -32,7 +32,7 @@
     <button
       type="button"
       class="link"
-      [ngClass]="{ active: mode() === 'cut-paste' }"
+      [class.active]="mode() === 'cut-paste'"
       [disabled]="
         noOfVisibleRules() < 2 &&
         !clipboard.itemsCount() &&
@@ -45,7 +45,7 @@
     <button
       type="button"
       class="link"
-      [ngClass]="{ active: mode() === 'swap' }"
+      [class.active]="mode() === 'swap'"
       [disabled]="!noOfVisibleRules()"
       (click)="mode.set('swap')"
     >
@@ -54,7 +54,7 @@
     <button
       type="button"
       class="link"
-      [ngClass]="{ active: mode() === 'search' }"
+      [class.active]="mode() === 'search'"
       (click)="mode.set('search'); focusSearch()"
     >
       <app-icon-search class="my-auto h-6 w-6" />

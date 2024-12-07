@@ -123,4 +123,15 @@
   svg {
     @apply fill-black dark:fill-slate-300;
   }
+
+  progress::-webkit-progress-bar {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+  }
+
+  progress::-webkit-progress-value {
+    background-color: #999;
+    border-radius: 3px;
+  }
 }

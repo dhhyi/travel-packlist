@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -43,7 +42,7 @@ import {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-question',
-  imports: [ReactiveFormsModule, NgClass, IconArrowForwardComponent],
+  imports: [ReactiveFormsModule, IconArrowForwardComponent],
   templateUrl: './editor-question.component.html',
 })
 export class EditorQuestionComponent {

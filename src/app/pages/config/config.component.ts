@@ -1,4 +1,4 @@
-import { DatePipe, NgClass } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   Component,
   inject,
@@ -32,7 +32,6 @@ import { ConfigFacade } from './config.facade';
     RouterModule,
     FormsModule,
     DatePipe,
-    NgClass,
     FlagGermanyComponent,
     FlagUkComponent,
     IconDownloadComponent,

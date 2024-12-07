@@ -1,4 +1,4 @@
-import { KeyValuePipe, NgClass } from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import {
   Component,
   computed,
@@ -19,22 +19,10 @@ import { PacklistFacade } from '../packlist.facade';
   imports: [
     KeyValuePipe,
     ItemsStatusComponent,
-    NgClass,
     IconKeyDownComponent,
     IconKeyRightComponent,
   ],
   templateUrl: './display-items.component.html',
-  styles: `
-    progress::-webkit-progress-bar {
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      background-color: transparent;
-    }
-    progress::-webkit-progress-value {
-      background-color: #999;
-      border-radius: 3px;
-    }
-  `,
 })
 export class DisplayItemsComponent {
   private state = inject(GlobalState);

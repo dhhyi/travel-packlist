@@ -71,7 +71,10 @@
             role="button"
             tabindex="0"
             class="flex justify-between"
-            [ngClass]="{ 'text-slate-500 line-through': item.checked }"
+            [class]="{
+              'line-through': item.checked,
+              'text-slate-500': item.checked,
+            }"
             (click)="toggleCheckedItem(item)"
             (keypress)="toggleCheckedItem(item)"
           >
