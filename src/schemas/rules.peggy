@@ -68,17 +68,7 @@ VariableName "variable name"
 
 Item "item"
   = category:Category _ item:ItemNameAndWeight {
-    let name
-    let weight
-    if (typeof item[1] === "number") {
-      name = item[0].join(" ").trim();
-      weight = item[1];
-    } else {
-      name = [...item[0], item[1]].join(" ").trim();
-    }
-    if (!name) {
-      expected("item with name");
-    }
+    let { name, weight } = item;
     return new Item(category.trim(), name, weight);
   }
 
@@ -89,18 +79,26 @@ CategoryName "category name"
   = $[^\],;#\[]+
 
 ItemNameAndWeight "item name"
-  = @Word|{
+  = words:Word|{
     // end is the end of the last context
     const begin = input.substring(range().end);
     // calculate count to match the last word into weight
     const slice = begin.replaceAll(/[,;].*/gs, "").trim();
-    return slice.split(" ").length - 1;
-   }, " "| " " @Weight
-  / words:Word|.., " "| {
+    return slice.split(/\s+/).length - 1;
+   }, _ | _ weight:Weight {
     if (!words.length) {
       expected("item name");
     }
-    return [words];
+    if (typeof weight === "string") {
+      return { name: words.concat(weight).join(" "), weight: undefined };
+    }
+    return { name: words.join(" "), weight };
+   }
+  / words:Word|.., _| {
+    if (!words.length) {
+      expected("item name");
+    }
+    return { name: words.join(" "), weight: undefined };
   }
 
 Word
@@ -110,7 +108,9 @@ Weight "weight"
   = num:Number "kg" {
     return options.trackWeight ? num * 1000 : text();
   }
-  / @Number ("g")?
+  / num:Number ("g")? {
+    return options.trackWeight ? num : text();
+  }
 
 Number "number"
   = ([0-9]+) ("."$[0-9]+)? {

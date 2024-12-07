@@ -129,6 +129,13 @@ describe('Parser', () => {
       expect(item.name).toEqual('Scrubber with a complex name');
     });
 
+    it('should parse an item with weight as string if weight tracking is off', () => {
+      const item = parser.parseItem('[utility] Scrubber 100g');
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('Scrubber 100g');
+      expect(item.weight).toBeFalsy();
+    });
+
     it('should parse an item with weight', () => {
       trackWeight = true;
 
