@@ -20,8 +20,7 @@
     "test": "jest --ci",
     "format": "prettier --write \"**/*.*\"",
     "lint": "ng lint",
-    "stylelint": "stylelint \"**/*.css\"",
-    "spellcheck": "cspell \"**/*.md\""
+    "stylelint": "stylelint \"**/*.css\""
   },
   "private": true,
   "dependencies": {
