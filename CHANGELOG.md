@@ -1,3 +1,9 @@
+## [0.3.2](https://github.com/dhhyi/travel-packlist/compare/v0.3.1...v0.3.2) (2024-12-07)
+
+### Bug Fixes
+
+- scroll top button no longer overlaps bottom content ([151d9c1](https://github.com/dhhyi/travel-packlist/commit/151d9c17c4bd0a564fbbba3251e7c45754a2aea7))
+
 ## [0.3.1](https://github.com/dhhyi/travel-packlist/compare/v0.3.0...v0.3.1) (2024-12-06)
 
 ### Bug Fixes
