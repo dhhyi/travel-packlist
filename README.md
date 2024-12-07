@@ -22,9 +22,12 @@ Data is stored in your browser's local storage and not shared with any server. T
 
 ## Technology
 
-This app is developed using Angular 19 with the new experimental zoneless change detection strategy. Wherever possible, I used signals to model data flow.
+This app is developed using Angular 19 with the new experimental zoneless change detection strategy.
+Wherever possible, I used signals to model data flow.
 
 For styling, I use [TailwindCSS](https://tailwindcss.com/).
+
+Managing the rules grammar and parsing it is done using [Peggy](https://peggyjs.org/).
 
 [Showdown](https://showdownjs.com/) is used in a build step for converting the syntax documentation for the rule format from markdown to HTML.
 
@@ -57,7 +60,7 @@ The app will be available at `http://localhost:8080`.
 
 - Rules
   - [Rules Format Documentation](./src/doc/documentation.md)
-  - [Rules EBNF](./src/app/model/ebnf.md)
+  - [Rules Peggy Grammar](./src/schemas/rules.peggy)
 - [State Management](./src/app/state/README.md)
 
 ## Feature FAQ
