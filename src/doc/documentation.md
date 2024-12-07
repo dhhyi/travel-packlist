@@ -51,7 +51,8 @@ You can use variables for defining logic with `AND`, `OR`, and `NOT`.
 > The highest precedence is `NOT`, then `AND`, and finally `OR`. This means all groups of `NOT variable` are evaluated first, then `left AND right` and finally `left OR right` until the whole condition is evaluated.
 
 Variables are defined in questions.
-Conditions trigger the effects of the rule if they are true. So if the condition is not met, then you will neither see any additional questions nor items of that specific rule.
+Conditions trigger the effects of the rule if they are true.
+So if the condition is not met, then you will neither see any additional questions nor items of that specific rule.
 
 Some examples for conditions:
 
@@ -72,4 +73,5 @@ washer OR laundromat
 With all of this you can define a conditional checklist very flexible.
 
 One advice:
-Don't trigger too many effects in one rule. It can get confusing.
+Don't trigger too many effects in one rule.
+It can get confusing.

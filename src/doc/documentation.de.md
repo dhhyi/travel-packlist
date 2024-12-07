@@ -51,7 +51,8 @@ Du kannst Variablen verwenden, um Logik mit `AND`, `OR` und `NOT` zu definieren.
 > Die höchste Priorität hat `NOT`, dann `AND` und schließlich `OR`. Das bedeutet, dass alle Gruppen von `NOT variable` zuerst ausgewertet werden, dann `links AND rechts` und schließlich `links OR rechts`, bis die gesamte Bedingung ausgewertet ist.
 
 Variablen werden in Fragen definiert.
-Bedingungen lösen die Effekte der Regel aus, wenn sie wahr sind. Wenn die Bedingung also nicht erfüllt ist, siehst du weder zusätzliche Fragen noch Gegenstände dieser speziellen Regel.
+Bedingungen lösen die Effekte der Regel aus, wenn sie wahr sind.
+Wenn die Bedingung also nicht erfüllt ist, siehst du weder zusätzliche Fragen noch Gegenstände dieser speziellen Regel.
 
 Einige Beispiele für Bedingungen:
 
@@ -76,4 +77,5 @@ washer OR laundromat
 Mit all dem kannst du eine bedingte Checkliste sehr flexibel definieren.
 
 Ein Ratschlag:
-Löse nicht zu viele Effekte in einer Regel aus. Es kann verwirrend werden.
+Löse nicht zu viele Effekte in einer Regel aus.
+Es kann verwirrend werden.

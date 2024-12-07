@@ -36,6 +36,12 @@ then
   npx eslint $linterFiles --fix || cleanup
 fi
 
+markdownFiles=$(echo "$files" | grep -E '.*\.md' | tr '\n' ' ')
+if [ -n "$markdownFiles" ]
+then
+  node format-markdown.mjs $markdownFiles || cleanup
+fi
+
 prettierFiles=$(echo "$files" | tr '\n' ' ')
 npx prettier $prettierFiles --write --ignore-unknown || cleanup
 
