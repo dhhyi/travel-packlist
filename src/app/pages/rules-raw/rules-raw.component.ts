@@ -31,7 +31,7 @@ type ParserState =
   templateUrl: './rules-raw.component.html',
   styles: `
     :host {
-      @apply flex flex-col;
+      @apply flex grow flex-col;
     }
   `,
 })

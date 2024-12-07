@@ -106,9 +106,3 @@
     @apply fill-black dark:fill-slate-300;
   }
 }
-
-@layer utilities {
-  .grow-children > * {
-    flex-grow: 1;
-  }
-}
