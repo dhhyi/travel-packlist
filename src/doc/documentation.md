@@ -4,13 +4,13 @@
 
 are defined with the following syntax:
 
-```
+```text
 [Condition] :- Effect, Effect, ... ;
 ```
 
 Rules have to be separated by a semicolon character.
 
-```
+```text
 cold_weather :- [Clothing] Coat,
   Do you expect snow? $snow ;
 ```
@@ -26,7 +26,7 @@ Separate multiple effects with commas.
 
 are defined with the following syntax:
 
-```
+```text
 Question? $variable
 ```
 
@@ -37,7 +37,7 @@ You can toggle the answer by clicking on it.
 
 are defined with the following syntax:
 
-```
+```text
 [Category] Name
 ```
 
@@ -48,7 +48,8 @@ An item will be displayed in the list under its category.
 can be empty, in which case they are always true.
 You can use variables for defining logic with `AND`, `OR`, and `NOT`.
 
-> The highest precedence is `NOT`, then `AND`, and finally `OR`. This means all groups of `NOT variable` are evaluated first, then `left AND right` and finally `left OR right` until the whole condition is evaluated.
+> The highest precedence is `NOT`, then `AND`, and finally `OR`.
+> This means all groups of `NOT variable` are evaluated first, then `left AND right` and finally `left OR right` until the whole condition is evaluated.
 
 Variables are defined in questions.
 Conditions trigger the effects of the rule if they are true.
@@ -56,13 +57,13 @@ So if the condition is not met, then you will neither see any additional questio
 
 Some examples for conditions:
 
-```
+```text
 cold_weather AND NOT snow
 ```
 
 > Can mean something like "The weather is cold and it is not snowing".
 
-```
+```text
 washer OR laundromat
 ```
 

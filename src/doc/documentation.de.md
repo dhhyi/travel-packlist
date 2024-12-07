@@ -4,13 +4,13 @@
 
 werden mit der folgenden Syntax definiert:
 
-```
+```text
 [Bedingung] :- Effekt, Effekt, ... ;
 ```
 
 Regeln müssen durch ein Semikolon getrennt werden.
 
-```
+```text
 kaltes_wetter :- [Kleidung] Mantel,
   Erwartest du Schnee? $snow ;
 ```
@@ -26,7 +26,7 @@ Trenne mehrere Effekte mit Kommas.
 
 werden mit der folgenden Syntax definiert:
 
-```
+```text
 Frage? $variable
 ```
 
@@ -37,7 +37,7 @@ Du kannst die Antwort durch Klicken darauf umschalten.
 
 werden mit der folgenden Syntax definiert:
 
-```
+```text
 [Kategorie] Name
 ```
 
@@ -48,7 +48,8 @@ Ein Gegenstand wird in der Liste unter seiner Kategorie angezeigt.
 können leer sein, in diesem Fall sind sie immer wahr.
 Du kannst Variablen verwenden, um Logik mit `AND`, `OR` und `NOT` zu definieren.
 
-> Die höchste Priorität hat `NOT`, dann `AND` und schließlich `OR`. Das bedeutet, dass alle Gruppen von `NOT variable` zuerst ausgewertet werden, dann `links AND rechts` und schließlich `links OR rechts`, bis die gesamte Bedingung ausgewertet ist.
+> Die höchste Priorität hat `NOT`, dann `AND` und schließlich `OR`.
+> Das bedeutet, dass alle Gruppen von `NOT variable` zuerst ausgewertet werden, dann `links AND rechts` und schließlich `links OR rechts`, bis die gesamte Bedingung ausgewertet ist.
 
 Variablen werden in Fragen definiert.
 Bedingungen lösen die Effekte der Regel aus, wenn sie wahr sind.
@@ -58,7 +59,7 @@ Einige Beispiele für Bedingungen:
 
 <!-- cspell:words cold_weather -->
 
-```
+```text
 cold_weather AND NOT snow
 ```
 
@@ -66,7 +67,7 @@ cold_weather AND NOT snow
 
 <!-- cspell:words washer, laundromat -->
 
-```
+```text
 washer OR laundromat
 ```
 

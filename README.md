@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-next-line no-inline-html -->
 <h1>TravelPacklist</h1>
 
 This app is a tool for creating conditional checklists.
@@ -6,7 +7,7 @@ It should be flexible enough to be used for other purposes as well.
 
 The Rules can be defined in a custom format with either free test or a graphical editor.
 
-Use the link https://dhhyi.github.io/travel-packlist/ to access the app.
+Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app deployed on GitHub Pages.
 
 As it is a PWA, you can also install it on your home screen.
 
@@ -73,17 +74,19 @@ The app will be available at `http://localhost:8080`.
 
 ### Will there be support for complex logic with brackets in conditions?
 
-> The current format supports only a flat condition structure with `NOT`, `AND`, and `OR`, which are evaluated in this precedence order. To make more elaborate conditions, you should be able to use brackets to structure the logic, right?
+> The current format supports only a flat condition structure with `NOT`, `AND`, and `OR`, which are evaluated in this precedence order.
+> To make more elaborate conditions, you should be able to use brackets to structure the logic, right?
 
 Yes, brackets would be a nice feature to have, but it will also complicate the design of the UI, which is already quite complex for users not familiar with boolean logic.
 
 For users with complex logic, be aware that you can use the transitive disabling of rules to structure your logic.
-Questions always have a variable associated with them, and since questions are only displayed if a condition is met, the variable is transitively also only true if the condition is true.
+Questions always have a variable associated with them.
+Since questions are only displayed if a condition is met, the variable is transitively also only true if the condition is true.
 This means that most of the combinations i a complex condition are not possible due to the restriction of the variables themselves.
 
 Imagine the following rule snippet:
 
-```
+```text
 :- Will it be cold? $cold;
 cold :- Bring gloves? $gloves, Bring warm drink in thermos? $thermos;
 ```
@@ -97,10 +100,13 @@ This in turn makes the expression bigger and harder to read, but still implement
 
 ### Can I customize the display order of the categories?
 
-> The categories on the pack list are either displayed in alphabetical order or in the order they were defined by the rules. Would it be possible to define a custom order?
+> The categories on the pack list are either displayed in alphabetical order or in the order they were defined by the rules.
+> Would it be possible to define a custom order?
 
 Yes, it would totally be possible to add a user interface for defining a custom order, but this functionality will also add more complexity and error cases.
-What is the behavior if a category is missing in the custom order? What if a category is no longer used? What if a user swaps two pack lists all the time and wants to have a different order of categories for each?
+What is the behavior if a category is missing in the custom order?
+What if a category is no longer used?
+What if a user swaps two pack lists all the time and wants to have a different order of categories for each?
 All those considerations leave me at the decision to not implement this feature.
 
 If you want to define a custom order for your categories, you can use a prefix in the category name that is then sorted alphabetically.
@@ -109,7 +115,8 @@ This way, you can define the order of the categories by the prefix and you don't
 
 ### Will there be a Undo/Redo feature for editing rules?
 
-> The rule editor is quite complex and it is easy to make mistakes. Would it be possible to add an Undo/Redo feature?
+> The rule editor is quite complex and it is easy to make mistakes.
+> Would it be possible to add an Undo/Redo feature?
 
 The application provides an export and import feature that can be used as a backup mechanism.
 This way, you can always revert to a previous state of your rules.

@@ -40,6 +40,7 @@ markdownFiles=$(echo "$files" | grep -E '.*\.md' | tr '\n' ' ')
 if [ -n "$markdownFiles" ]
 then
   node format-markdown.mjs $markdownFiles || cleanup
+  npx markdownlint -i CHANGELOG.md $markdownFiles --fix || cleanup
 fi
 
 prettierFiles=$(echo "$files" | tr '\n' ' ')
