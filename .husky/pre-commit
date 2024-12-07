@@ -1,10 +1,16 @@
 # .husky/pre-commit
 
+set -e
+
 if test -f .git/unstaged.diff
 then
   echo "Found .git/unstaged.diff, please check if this is a result of a previous failed commit and remove it before trying again."
   exit 2
 fi
+
+is_husky() {
+  [ -n "$GIT_INDEX_FILE" ]
+}
 
 cleanup() {
   if test -f .git/unstaged.diff
@@ -15,7 +21,7 @@ cleanup() {
   exit 1
 }
 
-if ! git diff --exit-code >/dev/null
+if is_husky && ! git diff --exit-code >/dev/null
 then
   echo "Unstaged changes detected, saving diff to .git/unstaged.diff"
   git diff >.git/unstaged.diff
@@ -28,15 +34,25 @@ localizations=$(echo "$files" | grep -E 'src/locale/messages.*\.json' | tr '\n' 
 if [ -n "$localizations" ]
 then
   npx sort-json $localizations || cleanup
+elif ! is_husky
+then
+  ls src/locale/messages.*.json | xargs npx sort-json || cleanup
 fi
 
 linterFiles=$(echo "$files" | grep -E 'src/.*\.(ts|js|mjs|html)' | tr '\n' ' ')
 if [ -n "$linterFiles" ]
 then
   npx eslint $linterFiles --fix || cleanup
+elif ! is_husky
+then
+  npx eslint --fix || cleanup
 fi
 
 markdownFiles=$(echo "$files" | grep -E '.*\.md' | grep -v 'CHANGELOG.md' | tr '\n' ' ')
+if ! is_husky
+then
+  markdownFiles=$(find *.md src -name '*.md' | grep -v 'CHANGELOG.md' | tr '\n' ' ')
+fi
 if [ -n "$markdownFiles" ]
 then
   echo "Checking markdown files: $markdownFiles"
@@ -46,11 +62,20 @@ then
 fi
 
 prettierFiles=$(echo "$files" | tr '\n' ' ')
-npx prettier $prettierFiles --write --ignore-unknown || cleanup
+if [ -n "$prettierFiles" ]
+then
+  npx prettier $prettierFiles --write --ignore-unknown || cleanup
+elif ! is_husky
+then
+  npm run format || cleanup
+fi
 
 npm run check-translations || cleanup
 npm test || cleanup
 npm run stylelint -- --fix || cleanup
 npm exec ng build -- --localize --i18n-duplicate-translation=error --i18n-missing-translation=error --output-path node_modules/.build || cleanup
 
-git update-index --again
+if is_husky
+then
+  git update-index --again
+fi

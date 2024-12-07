@@ -24,6 +24,7 @@ module.exports = tseslint.config(
   },
   {
     files: ["**/*.mjs"],
+    ignores: ["src/app/generated/**"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
