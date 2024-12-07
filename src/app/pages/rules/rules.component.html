@@ -14,7 +14,7 @@
   <div
     class="card mb-1"
     [id]="'rule-' + item.index"
-    [ngClass]="{
+    [class]="{
       disabled: showAsDisabled(item.rule),
       'animate-pulse': highlightRule() === item.index,
       'mb-[2.25rem]': mode() === 'view' || mode() === 'search',

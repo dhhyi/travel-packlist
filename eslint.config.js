@@ -140,6 +140,11 @@ module.exports = tseslint.config(
         {
           paths: [
             {
+              importNames: ["NgClass", "NgStyle"],
+              message: "Do not use deprecated directives.",
+              name: "@angular/common",
+            },
+            {
               importNames: [
                 "OnInit",
                 "OnDestroy",
@@ -215,6 +220,12 @@ module.exports = tseslint.config(
         },
       ],
       "@angular-eslint/template/no-call-expression": "off",
+      "@angular-eslint/template/no-duplicate-attributes": [
+        "error",
+        {
+          ignore: ["class"],
+        },
+      ],
       "@angular-eslint/template/prefer-ngsrc": "off",
     },
   }
