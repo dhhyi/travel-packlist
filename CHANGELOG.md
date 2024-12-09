@@ -1,3 +1,11 @@
+## [0.3.3](https://github.com/dhhyi/travel-packlist/compare/v0.3.2...v0.3.3) (2024-12-09)
+
+### Bug Fixes
+
+- better scroll position preservation when switching editor modes ([739d681](https://github.com/dhhyi/travel-packlist/commit/739d681f59a8ccfc329008e2c2dcf37302a28361))
+- prevent selecting 'remove' when 'please select' is selected in condition editor ([a6d632b](https://github.com/dhhyi/travel-packlist/commit/a6d632b31f88a74c08975726d98725de2335b8ed))
+- styling unifications and optimization ([92e0ed9](https://github.com/dhhyi/travel-packlist/commit/92e0ed936c249a594b823b1b0a3ccaff1f7299b4))
+
 ## [0.3.2](https://github.com/dhhyi/travel-packlist/compare/v0.3.1...v0.3.2) (2024-12-07)
 
 ### Bug Fixes
