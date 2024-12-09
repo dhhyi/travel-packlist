@@ -17,6 +17,7 @@
     [ngClass]="{
       disabled: showAsDisabled(item.rule),
       'animate-pulse': highlightRule() === item.index,
+      'mb-9': mode() === 'view' || mode() === 'search',
     }"
   >
     <app-editor-rule
@@ -31,7 +32,7 @@
   <button
     i18n="@@edit.rules.add-rule"
     type="button"
-    class="sticky bottom-0 z-50"
+    class="fixed bottom-2 z-50"
     (click)="addRule()"
   >
     + Rule

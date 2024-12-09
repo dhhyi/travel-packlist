@@ -36,11 +36,7 @@ export const REMOVE = 'REMOVE';
   templateUrl: './editor-condition.component.html',
   styles: `
     :host {
-      display: flex;
-      flex-direction: row;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
+      @apply flex min-h-8 flex-row flex-wrap items-center justify-start gap-2;
     }
   `,
 })
@@ -92,10 +88,6 @@ export class EditorConditionComponent {
 
   private repaint() {
     this.content().clear();
-
-    if (this.mode() !== 'edit' && this.condition() instanceof Always) {
-      return;
-    }
 
     this.paintKeyword('IF');
     this.paintCondition(this.condition(), (newCondition) => {
