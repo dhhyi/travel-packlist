@@ -1,4 +1,4 @@
-<nav class="flex h-12 flex-row items-center pb-2">
+<nav class="flex h-[3rem] flex-row items-center pb-2">
   <a class="flex grow" routerLink="/">
     <img
       alt="application icon"
@@ -13,11 +13,11 @@
   </a>
 </nav>
 
-<div class="flex grow flex-col pb-14">
+<div class="flex grow flex-col pb-[3.5rem]">
   <router-outlet />
 
   @if (scrollTopVisible()) {
-    <div class="fixed bottom-2 left-1/2 w-16 -translate-x-1/2">
+    <div class="fixed bottom-2 left-1/2 -translate-x-1/2">
       <button
         type="button"
         class="flex w-full items-center justify-center rounded-3xl border border-slate-300 shadow-xl"

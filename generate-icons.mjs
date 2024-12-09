@@ -42,7 +42,7 @@ function template(/** @type {string} */ fullName) {
   templateUrl: './${fullName}.component.html',
 })
 export class ${classify(fullName)}Component {
-  readonly class = input<string>('h-4 ${iconType(fullName) === "flag" ? "w-5" : "w-4"}');
+  readonly class = input<string>('h-[1rem] ${iconType(fullName) === "flag" ? "w-[1.25rem]" : "w-[1rem]"}');
 }
 `;
 }

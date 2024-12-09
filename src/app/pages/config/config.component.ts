@@ -39,7 +39,7 @@ import { ConfigFacade } from './config.facade';
   templateUrl: './config.component.html',
   styles: `
     .section {
-      @apply mb-3 flex flex-col gap-2 border-b pb-2;
+      @apply mb-2 flex flex-col gap-2 border-b pb-2;
     }
   `,
 })

@@ -42,9 +42,9 @@
     >
       <div class="flex items-center gap-1">
         @if (category.collapsed) {
-          <app-icon-key-right class="h-5 w-5" />
+          <app-icon-key-right class="h-6 w-6" />
         } @else {
-          <app-icon-key-down class="h-5 w-5" />
+          <app-icon-key-down class="h-6 w-6" />
         }
         <span class="font-bold italic">{{ categoryName }}</span>
         @if (trackWeight() && category.totalWeight) {

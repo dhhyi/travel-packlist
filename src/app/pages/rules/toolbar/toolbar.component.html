@@ -71,7 +71,7 @@
     </button>
   </div>
   @if (mode() === "cut-paste") {
-    <div class="mt-2 flex justify-center gap-5">
+    <div class="mt-2 flex justify-center gap-4">
       <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
       @if (clipboard.itemsCount() === 0 && clipboard.questionsCount() === 0) {
         <span i18n="@@edit.toolbar.clipboard.empty">empty</span>
@@ -97,7 +97,7 @@
     <div class="mt-2 flex items-center">
       <input #searchInput type="text" class="grow" [(ngModel)]="searchTerm" />
       <button type="button" class="link" (click)="clearSearch()">
-        <app-icon-clear class="h-5 w-5" />
+        <app-icon-clear class="h-6 w-6" />
       </button>
     </div>
   }

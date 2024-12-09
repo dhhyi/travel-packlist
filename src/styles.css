@@ -36,7 +36,7 @@
   }
 
   .help {
-    @apply absolute m-3 translate-y-12 rounded-lg border border-slate-300 bg-slate-50 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300;
+    @apply absolute m-2 translate-y-[3rem] rounded-lg border border-slate-300 bg-slate-50 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300;
   }
 
   button {
@@ -86,12 +86,12 @@
   }
 
   select[disabled] {
-    @apply appearance-none pl-1 pr-5;
+    @apply appearance-none pl-1 pr-4;
   }
 
   div:has(> input[type="radio"]):has(> label),
   div:has(> input[type="checkbox"]):has(> label) {
-    @apply flex items-center gap-x-3;
+    @apply flex items-center gap-x-2;
   }
 
   input[type="checkbox"],
