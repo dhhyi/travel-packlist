@@ -38,5 +38,18 @@ module.exports = {
         normal: colors.yellow[600],
       },
     }),
+    fontSize: {
+      sm: ["0.875rem", { lineHeight: "1.25rem" }],
+      base: ["1rem", { lineHeight: "1.5rem" }],
+      lg: ["1.125rem", { lineHeight: "1.75rem" }],
+      xl: ["1.5rem", { lineHeight: "2rem" }],
+    },
+    fontWeight: {
+      normal: 400,
+      bold: 700,
+    },
+    fontFamily: {
+      mono: ["Courier New", "monospace"],
+    },
   },
 };

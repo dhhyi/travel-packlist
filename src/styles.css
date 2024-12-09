@@ -4,8 +4,17 @@
 
 @layer base {
   html {
-    height: 100%;
     font-size: var(--html-font-size, 18px);
+    font-family: sans-serif;
+  }
+
+  body {
+    @apply bg-active text-black dark:text-slate-300;
+  }
+
+  html,
+  body {
+    @apply h-full;
   }
 
   .bg-active {
@@ -14,23 +23,6 @@
 
   .bg-disabled {
     @apply bg-slate-100 dark:bg-slate-800;
-  }
-
-  body {
-    font-family: Arial, sans-serif;
-    height: 100%;
-
-    @apply bg-active text-black dark:text-slate-300;
-  }
-
-  app-root {
-    display: flex;
-    min-height: 100%;
-    flex-direction: column;
-  }
-
-  router-outlet {
-    display: none;
   }
 }
 

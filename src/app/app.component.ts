@@ -16,6 +16,11 @@ import { GlobalState } from './state/global-state';
   selector: 'app-root',
   imports: [RouterModule, IconCogComponent, IconUpComponent, DialogComponent],
   templateUrl: './app.component.html',
+  styles: `
+    :host {
+      @apply flex h-full flex-col;
+    }
+  `,
 })
 export class AppComponent {
   private state = inject(GlobalState);
