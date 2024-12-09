@@ -7,7 +7,7 @@
   >
     Reset Checklist
   </button>
-  <div class="flex items-center gap-3">
+  <div>
     <input type="checkbox" id="track-weight" [(ngModel)]="trackWeight" />
     <label
       i18n="@@config.checklist.track-weight"
@@ -23,11 +23,11 @@
     </p>
   </div>
   <div>
-    <fieldset class="grid grid-cols-2">
+    <fieldset class="flex flex-row flex-wrap gap-x-3">
       <legend i18n="@@config.checklist.category-sorting">
         Sort categories
       </legend>
-      <div class="flex items-center gap-3">
+      <div>
         <input
           type="radio"
           id="sort-alphabetically"
@@ -40,7 +40,7 @@
           >alphabetically</label
         >
       </div>
-      <div class="flex items-center gap-3">
+      <div>
         <input
           type="radio"
           id="sort-definition"
@@ -62,7 +62,7 @@
   <button i18n="@@config.rules.edit" type="button" routerLink="/rules">
     Edit Rules
   </button>
-  <div class="flex items-center gap-3">
+  <div>
     <input
       type="checkbox"
       id="rules-debug-mode"
@@ -72,7 +72,7 @@
       >Fade out disabled rules in editor</label
     >
   </div>
-  <div class="flex items-center gap-3">
+  <div>
     <input
       type="checkbox"
       id="variables-debug-mode"
@@ -84,7 +84,7 @@
       >Highlight variable status in editor</label
     >
   </div>
-  <div class="flex items-center gap-3">
+  <div>
     <input
       type="checkbox"
       id="variables-refactor"
@@ -129,7 +129,7 @@
   <button i18n="@@config.rules.import" type="button" (click)="importRules()">
     Import Rules
   </button>
-  <div class="flex items-center gap-3">
+  <div>
     <input type="checkbox" id="export-reminder" [(ngModel)]="exportReminder" />
     <label i18n="@@config.rules.export-reminder" for="export-reminder"
       >Remind me to regularly export rules</label
@@ -144,8 +144,9 @@
     <button
       i18n="@@config.theme.dark"
       type="button"
+      class="link"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': theme() === 'dark',
+        active: theme() === 'dark',
       }"
       (click)="theme.set('dark')"
     >
@@ -154,8 +155,9 @@
     <button
       i18n="@@config.theme.light"
       type="button"
+      class="link"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': theme() === 'light',
+        active: theme() === 'light',
       }"
       (click)="theme.set('light')"
     >
@@ -164,8 +166,9 @@
     <button
       i18n="@@config.theme.system"
       type="button"
+      class="link"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': theme() === 'system',
+        active: theme() === 'system',
       }"
       (click)="theme.set('system')"
     >
@@ -177,9 +180,9 @@
     <button
       i18n="@@config.fontsize.small"
       type="button"
-      class="text-[16px]"
+      class="link text-[16px]"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'small',
+        active: fontSize() === 'small',
       }"
       (click)="fontSize.set('small')"
     >
@@ -188,9 +191,9 @@
     <button
       i18n="@@config.fontsize.normal"
       type="button"
-      class="text-[18px]"
+      class="link text-[18px]"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'normal',
+        active: fontSize() === 'normal',
       }"
       (click)="fontSize.set('normal')"
     >
@@ -199,9 +202,9 @@
     <button
       i18n="@@config.fontsize.large"
       type="button"
-      class="text-[20px]"
+      class="link text-[20px]"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': fontSize() === 'large',
+        active: fontSize() === 'large',
       }"
       (click)="fontSize.set('large')"
     >
@@ -212,20 +215,20 @@
     <legend i18n="@@config.language">Language</legend>
     <button
       i18n="@@config.language.detect"
-      class="flex items-center justify-center bg-transparent"
+      class="link"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': language() === 'auto',
+        active: language() === 'auto',
       }"
       (click)="language.set('auto')"
     >
       detect
     </button>
     <button
-      class="flex items-center justify-center bg-transparent"
+      class="link"
       type="button"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': language() === 'en',
+        active: language() === 'en',
       }"
       (click)="language.set('en')"
     >
@@ -233,9 +236,9 @@
     </button>
     <button
       type="button"
-      class="flex items-center justify-center bg-transparent"
+      class="link"
       [ngClass]="{
-        'ring ring-slate-800 dark:ring-slate-200': language() === 'de',
+        active: language() === 'de',
       }"
       (click)="language.set('de')"
     >
