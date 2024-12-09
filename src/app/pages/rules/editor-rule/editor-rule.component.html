@@ -6,7 +6,7 @@
     (conditionChanged)="updateCondition($event)"
   />
   @if (mode() === "edit") {
-    <button class="icon" type="button" (click)="resetCondition()">
+    <button class="link" type="button" (click)="resetCondition()">
       <app-icon-clear />
     </button>
   }
@@ -14,10 +14,10 @@
 
 @for (question of rule().questions; track $index) {
   <div class="mb-1 flex items-center">
-    @if (mode() === "swap") {
+    @if (mode() === "swap" && rule().questions.length > 1) {
       @if ($index < rule().questions.length - 1) {
         <button
-          class="icon"
+          class="link p-1"
           type="button"
           (click)="swapQuestions($index, $index + 1)"
         >
@@ -34,16 +34,16 @@
       (variableChanged)="variableChanged($event)"
     />
     @if (mode() === "delete") {
-      <button class="icon" type="button" (click)="deleteQuestion($index)">
+      <button class="link" type="button" (click)="deleteQuestion($index)">
         <app-icon-delete />
       </button>
     } @else if (mode() === "cut-paste") {
-      <button class="icon" type="button" (click)="cutQuestion($index)">
+      <button class="link" type="button" (click)="cutQuestion($index)">
         <app-icon-cut />
       </button>
     } @else if (mode() === "swap" && $index > 0) {
       <button
-        class="icon"
+        class="link p-1"
         type="button"
         (click)="swapQuestions($index - 1, $index)"
       >
@@ -55,10 +55,10 @@
 
 @for (item of rule().items; track $index) {
   <div class="mb-1 flex items-center">
-    @if (mode() === "swap") {
+    @if (mode() === "swap" && rule().items.length > 1) {
       @if ($index < rule().items.length - 1) {
         <button
-          class="icon"
+          class="link p-1"
           type="button"
           (click)="swapItems($index, $index + 1)"
         >
@@ -74,17 +74,17 @@
       (itemChanged)="updateItem($index, $event)"
     />
     @if (mode() === "delete") {
-      <button class="icon" type="button" (click)="deleteItem($index)">
+      <button class="link" type="button" (click)="deleteItem($index)">
         <app-icon-delete />
       </button>
     } @else if (mode() === "cut-paste") {
-      <button class="icon" type="button" (click)="cutItem($index)">
+      <button class="link" type="button" (click)="cutItem($index)">
         <app-icon-cut />
       </button>
     } @else if (mode() === "swap" && $index > 0) {
       <button
         type="button"
-        class="icon"
+        class="link p-1"
         (click)="swapItems($index - 1, $index)"
       >
         <app-icon-up />
@@ -109,12 +109,12 @@
 } @else {
   <div class="flex justify-center">
     @if (mode() === "delete") {
-      <button type="button" class="icon" (click)="deleteRule.emit()">
+      <button type="button" class="link" (click)="deleteRule.emit()">
         <app-icon-delete />
       </button>
     }
     @if (mode() === "cut-paste") {
-      <button type="button" class="icon" (click)="paste()">
+      <button type="button" class="link" (click)="paste()">
         <app-icon-paste />
       </button>
     }

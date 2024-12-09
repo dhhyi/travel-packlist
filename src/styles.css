@@ -44,15 +44,19 @@
   }
 
   button {
-    @apply rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
+    @apply flex items-center justify-center rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
   }
 
   button.red {
     @apply bg-red-normal text-white hover:bg-red-light;
   }
 
-  button.icon {
-    @apply m-0 flex justify-center border-none bg-transparent p-1 align-middle;
+  button.link {
+    @apply border-none bg-transparent;
+  }
+
+  button.active {
+    @apply ring ring-slate-800 dark:ring-slate-200;
   }
 
   button[disabled] {
@@ -89,12 +93,22 @@
     @apply appearance-none pl-1 pr-5;
   }
 
+  div:has(> input[type="radio"]):has(> label),
+  div:has(> input[type="checkbox"]):has(> label) {
+    @apply flex items-center gap-x-3;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    @apply my-2 h-6 w-6 appearance-none border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+  }
+
   input[type="checkbox"] {
-    @apply my-2 h-6 w-6 appearance-none rounded-sm border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+    @apply rounded-sm;
   }
 
   input[type="radio"] {
-    @apply my-2 h-6 w-6 appearance-none rounded-xl border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+    @apply rounded-xl;
   }
 
   input.ng-invalid.ng-touched,

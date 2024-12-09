@@ -5,16 +5,16 @@
   <div class="mb-1 grid grid-cols-6 gap-2">
     <button
       type="button"
-      class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode() === 'view' }"
+      class="link"
+      [ngClass]="{ active: mode() === 'view' }"
       (click)="mode.set('view')"
     >
       <app-icon-view class="my-auto h-6 w-6" />
     </button>
     <button
       type="button"
-      class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode() === 'edit' }"
+      class="link"
+      [ngClass]="{ active: mode() === 'edit' }"
       [disabled]="!noOfVisibleRules() && !!searchTerm()"
       (click)="mode.set('edit')"
     >
@@ -27,8 +27,8 @@
     </button>
     <button
       type="button"
-      class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode() === 'delete' }"
+      class="link"
+      [ngClass]="{ active: mode() === 'delete' }"
       [disabled]="!noOfVisibleRules()"
       (click)="mode.set('delete')"
     >
@@ -39,8 +39,8 @@
     </button>
     <button
       type="button"
-      class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode() === 'cut-paste' }"
+      class="link"
+      [ngClass]="{ active: mode() === 'cut-paste' }"
       [disabled]="noOfVisibleRules() < 2"
       (click)="mode.set('cut-paste')"
     >
@@ -51,8 +51,8 @@
     </button>
     <button
       type="button"
-      class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode() === 'swap' }"
+      class="link"
+      [ngClass]="{ active: mode() === 'swap' }"
       [disabled]="!noOfVisibleRules()"
       (click)="mode.set('swap')"
     >
@@ -63,8 +63,8 @@
     </button>
     <button
       type="button"
-      class="icon"
-      [ngClass]="{ 'ring ring-slate-700': mode() === 'search' }"
+      class="link"
+      [ngClass]="{ active: mode() === 'search' }"
       (click)="mode.set('search'); focusSearch()"
     >
       <app-icon-search class="my-auto h-6 w-6" />
@@ -96,8 +96,8 @@
   } @else if (mode() === "search" || searchTerm()) {
     <div class="mt-2 flex items-center">
       <input #searchInput type="text" class="grow" [(ngModel)]="searchTerm" />
-      <button type="button" class="icon m-3" (click)="clearSearch()">
-        <app-icon-clear />
+      <button type="button" class="link" (click)="clearSearch()">
+        <app-icon-clear class="h-5 w-5" />
       </button>
     </div>
   }
