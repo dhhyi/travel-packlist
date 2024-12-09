@@ -19,6 +19,7 @@ import { confirm } from '../../dialog';
 import { FlagGermanyComponent } from '../../icons/flag-germany/flag-germany.component';
 import { FlagUkComponent } from '../../icons/flag-uk/flag-uk.component';
 import { IconDownloadComponent } from '../../icons/icon-download/icon-download.component';
+import { IconHelpComponent } from '../../icons/icon-help/icon-help.component';
 import { GlobalState } from '../../state/global-state';
 import { ConfigFacade } from './config.facade';
 
@@ -33,6 +34,7 @@ import { ConfigFacade } from './config.facade';
     FlagGermanyComponent,
     FlagUkComponent,
     IconDownloadComponent,
+    IconHelpComponent,
   ],
   templateUrl: './config.component.html',
   styles: `
@@ -62,6 +64,8 @@ export default class ConfigComponent {
   theme = this.state.signal('theme');
   language = this.state.signal('language');
   fontSize = this.state.signal('fontSize');
+
+  readonly trackWeightHelp = signal(false);
 
   exportNeeded = this.state.signal('exportNeeded');
   private facade = inject(ConfigFacade);
