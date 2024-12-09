@@ -15,12 +15,24 @@
       class="grow"
       >Track item weight</label
     >
-    <p
-      i18n="@@config.checklist.track-weight.description"
-      class="w-1/2 text-sm italic"
+    <button
+      class="link"
+      type="button"
+      (click)="trackWeightHelp.set(!trackWeightHelp())"
     >
-      You can enter the item weight appended to the item name in the editor.
-    </p>
+      <app-icon-help class="h-6 w-6" />
+    </button>
+    @if (trackWeightHelp()) {
+      <legend
+        class="help text-sm"
+        i18n="@@config.checklist.track-weight.description"
+        role="contentinfo"
+        (click)="trackWeightHelp.set(false)"
+        (keypress)="trackWeightHelp.set(false)"
+      >
+        You can enter the item weight appended to the item name in the editor.
+      </legend>
+    }
   </div>
   <div>
     <fieldset class="flex flex-row flex-wrap gap-x-3">
