@@ -33,7 +33,11 @@
       type="button"
       class="link"
       [ngClass]="{ active: mode() === 'cut-paste' }"
-      [disabled]="noOfVisibleRules() < 2"
+      [disabled]="
+        noOfVisibleRules() < 2 &&
+        !clipboard.itemsCount() &&
+        !clipboard.questionsCount()
+      "
       (click)="mode.set('cut-paste')"
     >
       <app-icon-reorder class="my-auto h-6 w-6" />
@@ -57,11 +61,9 @@
     </button>
   </div>
   @if (mode() === "cut-paste") {
-    <div class="mt-2 flex justify-center gap-4">
-      <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
-      @if (clipboard.itemsCount() === 0 && clipboard.questionsCount() === 0) {
-        <span i18n="@@edit.toolbar.clipboard.empty">empty</span>
-      } @else {
+    @if (clipboard.itemsCount() > 0 || clipboard.questionsCount() > 0) {
+      <div class="mt-2 flex justify-center gap-4">
+        <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
         @if (clipboard.itemsCount(); as itemsCount) {
           <span i18n="@@edit.toolbar.clipboard.items">{itemsCount, plural,
             one {1 Item}
@@ -77,8 +79,8 @@
 
           }</span>
         }
-      }
-    </div>
+      </div>
+    }
   } @else if (mode() === "search" || searchTerm()) {
     <div class="mt-2 flex items-center">
       <input #searchInput type="text" class="grow" [(ngModel)]="searchTerm" />
