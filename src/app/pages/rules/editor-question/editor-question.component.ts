@@ -29,7 +29,7 @@ import {
 } from 'rxjs';
 
 import { SyntaxError } from '../../../generated/rules';
-import { IconArrowForwardComponent } from '../../../icons/icon-arrow-forward/icon-arrow-forward.component';
+import { IconArrowForwardComponent } from '../../../icons';
 import { Parser } from '../../../model/parser';
 import { Always, Question } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';

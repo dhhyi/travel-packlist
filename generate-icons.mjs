@@ -46,15 +46,30 @@ export class ${classify(fullName)}Component {
 }
 `;
 }
-
-readdirSync("src/app/icons").forEach((file) => {
+const icons = readdirSync("src/app/icons").filter((file) => {
   if (
     !["icon-", "flag-"].some((prefix) => file.startsWith(prefix)) ||
     !statSync(`src/app/icons/${file}`).isDirectory()
   ) {
-    return;
+    return false;
   }
+  return true;
+});
+
+icons.forEach((file) => {
   const componentPath = `src/app/icons/${file}/${file}.component.ts`;
   console.log("generating", componentPath);
   writeFileSync(componentPath, template(file));
 });
+
+const indexPath = `src/app/icons/index.ts`;
+console.log("generating", indexPath);
+writeFileSync(
+  indexPath,
+  icons
+    .map(
+      (file) =>
+        `export { ${classify(file)}Component } from './${file}/${file}.component';`
+    )
+    .join("\n")
+);

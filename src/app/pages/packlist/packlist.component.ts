@@ -6,8 +6,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
-import { IconLockOpenComponent } from '../../icons/icon-lock-open/icon-lock-open.component';
-import { IconLockComponent } from '../../icons/icon-lock/icon-lock.component';
+import { IconLockOpenComponent, IconLockComponent } from '../../icons';
 import { VariableType } from '../../model/types';
 import { GlobalState } from '../../state/global-state';
 import { DisplayItemsComponent } from './display-items/display-items.component';

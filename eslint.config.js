@@ -120,6 +120,7 @@ module.exports = tseslint.config(
         { typesToIgnore: ["string"] },
       ],
       curly: "error",
+      "no-duplicate-imports": "error",
       "no-restricted-imports": [
         "error",
         {
@@ -127,6 +128,10 @@ module.exports = tseslint.config(
             {
               regex: "state/(?!global-state).*",
               message: "Use GlobalState instead",
+            },
+            {
+              regex: "icons/icon-.*",
+              message: "Use 'icons' instead",
             },
           ],
           paths: [

@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 
-import { IconSwapComponent } from '../../icons/icon-swap/icon-swap.component';
+import { IconSwapComponent } from '../../icons';
 import { Refactor } from '../../model/refactor';
 import { Serializer } from '../../model/serializer';
 import { PleaseSelect, Rule } from '../../model/types';

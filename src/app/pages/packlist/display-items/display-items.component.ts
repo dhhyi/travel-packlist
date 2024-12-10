@@ -6,8 +6,7 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
-import { IconKeyDownComponent } from '../../../icons/icon-key-down/icon-key-down.component';
-import { IconKeyRightComponent } from '../../../icons/icon-key-right/icon-key-right.component';
+import { IconKeyDownComponent, IconKeyRightComponent } from '../../../icons';
 import { Serializer } from '../../../model/serializer';
 import { Item } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';

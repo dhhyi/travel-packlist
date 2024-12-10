@@ -16,10 +16,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import env from '../../../environment/env.json';
 import { confirm } from '../../dialog';
-import { FlagGermanyComponent } from '../../icons/flag-germany/flag-germany.component';
-import { FlagUkComponent } from '../../icons/flag-uk/flag-uk.component';
-import { IconDownloadComponent } from '../../icons/icon-download/icon-download.component';
-import { IconHelpComponent } from '../../icons/icon-help/icon-help.component';
+import {
+  FlagGermanyComponent,
+  FlagUkComponent,
+  IconDownloadComponent,
+  IconHelpComponent,
+} from '../../icons';
 import { GlobalState } from '../../state/global-state';
 import { ConfigFacade } from './config.facade';
 

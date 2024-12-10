@@ -7,8 +7,7 @@ import {
 import { RouterModule } from '@angular/router';
 
 import { DialogComponent } from './dialog/dialog.component';
-import { IconArrowUpwardComponent } from './icons/icon-arrow-upward/icon-arrow-upward.component';
-import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
+import { IconArrowUpwardComponent, IconCogComponent } from './icons';
 import { GlobalState } from './state/global-state';
 
 @Component({
