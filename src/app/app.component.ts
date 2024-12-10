@@ -7,14 +7,19 @@ import {
 import { RouterModule } from '@angular/router';
 
 import { DialogComponent } from './dialog/dialog.component';
+import { IconArrowUpwardComponent } from './icons/icon-arrow-upward/icon-arrow-upward.component';
 import { IconCogComponent } from './icons/icon-cog/icon-cog.component';
-import { IconUpComponent } from './icons/icon-up/icon-up.component';
 import { GlobalState } from './state/global-state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  imports: [RouterModule, IconCogComponent, IconUpComponent, DialogComponent],
+  imports: [
+    RouterModule,
+    IconCogComponent,
+    DialogComponent,
+    IconArrowUpwardComponent,
+  ],
   templateUrl: './app.component.html',
   styles: `
     :host {

@@ -8,12 +8,12 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 
+import { IconArrowDownwardComponent } from '../../../icons/icon-arrow-downward/icon-arrow-downward.component';
+import { IconArrowUpwardComponent } from '../../../icons/icon-arrow-upward/icon-arrow-upward.component';
 import { IconClearComponent } from '../../../icons/icon-clear/icon-clear.component';
 import { IconCutComponent } from '../../../icons/icon-cut/icon-cut.component';
 import { IconDeleteComponent } from '../../../icons/icon-delete/icon-delete.component';
-import { IconDownComponent } from '../../../icons/icon-down/icon-down.component';
 import { IconPasteComponent } from '../../../icons/icon-paste/icon-paste.component';
-import { IconUpComponent } from '../../../icons/icon-up/icon-up.component';
 import { Parser } from '../../../model/parser';
 import { Serializer } from '../../../model/serializer';
 import {
@@ -39,9 +39,9 @@ import { RulesClipboard } from '../rules.clipboard';
     IconDeleteComponent,
     IconCutComponent,
     IconPasteComponent,
-    IconDownComponent,
-    IconUpComponent,
     IconClearComponent,
+    IconArrowDownwardComponent,
+    IconArrowUpwardComponent,
   ],
   templateUrl: './editor-rule.component.html',
 })

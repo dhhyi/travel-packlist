@@ -21,7 +21,7 @@
           type="button"
           (click)="swapQuestions($index, $index + 1)"
         >
-          <app-icon-down />
+          <app-icon-arrow-downward />
         </button>
       } @else {
         <span class="ml-6"></span>
@@ -47,7 +47,7 @@
         type="button"
         (click)="swapQuestions($index - 1, $index)"
       >
-        <app-icon-up />
+        <app-icon-arrow-upward />
       </button>
     }
   </div>
@@ -62,7 +62,7 @@
           type="button"
           (click)="swapItems($index, $index + 1)"
         >
-          <app-icon-down />
+          <app-icon-arrow-downward />
         </button>
       } @else {
         <span class="ml-6"></span>
@@ -87,7 +87,7 @@
         class="link p-1"
         (click)="swapItems($index - 1, $index)"
       >
-        <app-icon-up />
+        <app-icon-arrow-upward />
       </button>
     }
   </div>
