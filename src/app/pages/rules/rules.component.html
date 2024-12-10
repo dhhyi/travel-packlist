@@ -38,3 +38,14 @@
     + Rule
   </button>
 }
+
+@if (goToPacklistButtonVisible()) {
+  <a class="fixed bottom-2 right-2 z-50" routerLink="/packlist">
+    <img
+      alt="application icon"
+      i18n-alt="@@app.icon"
+      src="icon.svg"
+      class="h-12"
+    />
+  </a>
+}

@@ -6,6 +6,7 @@ import {
   computed,
   signal,
 } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { IconSwapComponent } from '../../icons';
 import { Refactor } from '../../model/refactor';
@@ -18,7 +19,13 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
-  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent, NgClass],
+  imports: [
+    EditorRuleComponent,
+    ToolbarComponent,
+    IconSwapComponent,
+    NgClass,
+    RouterLink,
+  ],
   templateUrl: './rules.component.html',
 })
 export default class RulesComponent {
@@ -44,6 +51,10 @@ export default class RulesComponent {
         return !filter || this.refactor.contains(item.rule, filter);
       });
   });
+
+  readonly goToPacklistButtonVisible = computed(
+    () => this.state.signal('scrollY')() > 100,
+  );
 
   private updateRules(rules: Rule[]) {
     const serializedRules = this.serializer.serializeRules(rules);
