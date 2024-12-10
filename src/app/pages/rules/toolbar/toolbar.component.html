@@ -18,12 +18,7 @@
       [disabled]="!noOfVisibleRules() && !!searchTerm()"
       (click)="mode.set('edit')"
     >
-      <app-icon-edit
-        class="my-auto h-6 w-6"
-        [ngClass]="{
-          'fill-slate-400': !noOfVisibleRules() && !!searchTerm(),
-        }"
-      />
+      <app-icon-edit class="my-auto h-6 w-6" />
     </button>
     <button
       type="button"
@@ -32,10 +27,7 @@
       [disabled]="!noOfVisibleRules()"
       (click)="mode.set('delete')"
     >
-      <app-icon-delete
-        class="my-auto h-6 w-6"
-        [ngClass]="{ 'fill-slate-400': !noOfVisibleRules() }"
-      />
+      <app-icon-delete class="my-auto h-6 w-6" />
     </button>
     <button
       type="button"
@@ -44,10 +36,7 @@
       [disabled]="noOfVisibleRules() < 2"
       (click)="mode.set('cut-paste')"
     >
-      <app-icon-reorder
-        class="my-auto h-6 w-6"
-        [ngClass]="{ 'fill-slate-400': noOfVisibleRules() < 2 }"
-      />
+      <app-icon-reorder class="my-auto h-6 w-6" />
     </button>
     <button
       type="button"
@@ -56,10 +45,7 @@
       [disabled]="!noOfVisibleRules()"
       (click)="mode.set('swap')"
     >
-      <app-icon-swap
-        class="my-auto h-6 w-6"
-        [ngClass]="{ 'fill-slate-400': !noOfVisibleRules() }"
-      />
+      <app-icon-swap class="my-auto h-6 w-6" />
     </button>
     <button
       type="button"
