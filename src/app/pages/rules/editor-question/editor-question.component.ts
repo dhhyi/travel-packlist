@@ -29,6 +29,7 @@ import {
 } from 'rxjs';
 
 import { SyntaxError } from '../../../generated/rules';
+import { IconArrowForwardComponent } from '../../../icons/icon-arrow-forward/icon-arrow-forward.component';
 import { Parser } from '../../../model/parser';
 import { Always, Question } from '../../../model/types';
 import { GlobalState } from '../../../state/global-state';
@@ -42,7 +43,7 @@ import {
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-question',
-  imports: [ReactiveFormsModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, IconArrowForwardComponent],
   templateUrl: './editor-question.component.html',
 })
 export class EditorQuestionComponent {
