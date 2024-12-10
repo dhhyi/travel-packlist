@@ -6,40 +6,59 @@ const tseslint = require("typescript-eslint");
 
 module.exports = tseslint.config(
   {
-    files: ["**/*.js"],
-    ignores: ["dist/**", "android/**", ".angular/**"],
+    extends: [eslint.configs.recommended],
+    files: ["*.config.js"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "commonjs",
+    },
+    plugins: { perfectionist },
+    rules: {
+      curly: "error",
+      "perfectionist/sort-imports": "error",
+      "perfectionist/sort-objects": ["error", { type: "natural" }],
+    },
+  },
+  {
+    extends: [eslint.configs.recommended],
+    files: ["**/!(*.config).js"],
+    ignores: ["dist/**", "android/**", ".angular/**"],
+    languageOptions: {
+      ecmaVersion: "latest",
       globals: {
         ...globals.node,
       },
+      sourceType: "commonjs",
     },
     plugins: { perfectionist },
-    extends: [eslint.configs.recommended],
     rules: {
       curly: "error",
       "perfectionist/sort-imports": "error",
     },
   },
   {
+    extends: [eslint.configs.recommended],
     files: ["**/*.mjs"],
     ignores: ["src/app/generated/**"],
     languageOptions: {
       ecmaVersion: "latest",
-      sourceType: "module",
       globals: {
         ...globals.node,
       },
+      sourceType: "module",
     },
     plugins: { perfectionist },
-    extends: [eslint.configs.recommended],
     rules: {
       curly: "error",
       "perfectionist/sort-imports": "error",
     },
   },
   {
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.stylisticTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+    ],
     files: ["**/*.spec.ts"],
     languageOptions: {
       parserOptions: {
@@ -47,11 +66,6 @@ module.exports = tseslint.config(
       },
     },
     plugins: { perfectionist },
-    extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.stylisticTypeChecked,
-      ...tseslint.configs.strictTypeChecked,
-    ],
     rules: {
       "@typescript-eslint/no-unsafe-call": "off",
       curly: "error",
@@ -59,6 +73,12 @@ module.exports = tseslint.config(
     },
   },
   {
+    extends: [
+      eslint.configs.recommended,
+      ...tseslint.configs.stylisticTypeChecked,
+      ...tseslint.configs.strictTypeChecked,
+      ...angular.configs.tsAll,
+    ],
     files: ["**/!(*.spec).ts"],
     ignores: ["**/generated/**"],
     languageOptions: {
@@ -67,22 +87,8 @@ module.exports = tseslint.config(
       },
     },
     plugins: { perfectionist },
-    extends: [
-      eslint.configs.recommended,
-      ...tseslint.configs.stylisticTypeChecked,
-      ...tseslint.configs.strictTypeChecked,
-      ...angular.configs.tsAll,
-    ],
     processor: angular.processInlineTemplates,
     rules: {
-      "@angular-eslint/directive-selector": [
-        "error",
-        {
-          type: "attribute",
-          prefix: "app",
-          style: "camelCase",
-        },
-      ],
       "@angular-eslint/component-max-inline-declarations": [
         "error",
         {
@@ -92,14 +98,29 @@ module.exports = tseslint.config(
       "@angular-eslint/component-selector": [
         "error",
         {
-          type: "element",
           prefix: "app",
           style: "kebab-case",
+          type: "element",
+        },
+      ],
+      "@angular-eslint/directive-selector": [
+        "error",
+        {
+          prefix: "app",
+          style: "camelCase",
+          type: "attribute",
         },
       ],
       "@angular-eslint/no-host-metadata-property": "off",
-      "@angular-eslint/prefer-standalone-component": "off",
       "@angular-eslint/prefer-standalone": "off",
+      "@angular-eslint/prefer-standalone-component": "off",
+      "@typescript-eslint/no-unnecessary-parameter-property-assignment":
+        "error",
+      "@typescript-eslint/no-unnecessary-qualifier": "error",
+      "@typescript-eslint/no-unnecessary-type-assertion": [
+        "error",
+        { typesToIgnore: ["string"] },
+      ],
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
@@ -108,35 +129,17 @@ module.exports = tseslint.config(
           caughtErrors: "all",
           caughtErrorsIgnorePattern: "^_",
           destructuredArrayIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
           ignoreRestSiblings: true,
+          varsIgnorePattern: "^_",
         },
-      ],
-      "@typescript-eslint/no-unnecessary-parameter-property-assignment":
-        "error",
-      "@typescript-eslint/no-unnecessary-qualifier": "error",
-      "@typescript-eslint/no-unnecessary-type-assertion": [
-        "error",
-        { typesToIgnore: ["string"] },
       ],
       curly: "error",
       "no-duplicate-imports": "error",
       "no-restricted-imports": [
         "error",
         {
-          patterns: [
-            {
-              regex: "state/(?!global-state).*",
-              message: "Use GlobalState instead",
-            },
-            {
-              regex: "icons/icon-.*",
-              message: "Use 'icons' instead",
-            },
-          ],
           paths: [
             {
-              name: "@angular/core",
               importNames: [
                 "OnInit",
                 "OnDestroy",
@@ -148,9 +151,9 @@ module.exports = tseslint.config(
                 "AfterViewChecked",
               ],
               message: "Do not use lifecycle hooks, use effects instead.",
+              name: "@angular/core",
             },
             {
-              name: "@angular/core",
               importNames: [
                 "ViewChild",
                 "ViewChildren",
@@ -161,23 +164,34 @@ module.exports = tseslint.config(
                 "HostBinding",
               ],
               message: "Do not use decorators, use signals instead.",
+              name: "@angular/core",
             },
             {
-              name: "@angular/core",
               importNames: ["HostListener"],
               message:
                 "Do not use HostListener, use toSignal(fromEvent) instead.",
+              name: "@angular/core",
             },
             {
-              name: "@angular/core",
               importNames: ["HostBinding"],
               message:
                 "Do not use HostBinding, use Component 'host' property instead.",
+              name: "@angular/core",
             },
             {
-              name: "@angular/core/rxjs-interop",
               importNames: ["takeUntilDestroyed"],
               message: "Do not use takeUntilDestroyed, use signals instead.",
+              name: "@angular/core/rxjs-interop",
+            },
+          ],
+          patterns: [
+            {
+              message: "Use GlobalState instead",
+              regex: "state/(?!global-state).*",
+            },
+            {
+              message: "Use 'icons' instead",
+              regex: "icons/icon-.*",
             },
           ],
         },
@@ -186,18 +200,18 @@ module.exports = tseslint.config(
     },
   },
   {
-    files: ["**/*.html"],
-    ignores: ["dist/**", "android/**"],
     extends: [
       ...angular.configs.templateAll,
       ...angular.configs.templateAccessibility,
     ],
+    files: ["**/*.html"],
+    ignores: ["dist/**", "android/**"],
     rules: {
       "@angular-eslint/template/i18n": [
         "warn",
         {
-          ignoreTags: ["meta", "link", "noscript"],
           ignoreAttributes: ["d"],
+          ignoreTags: ["meta", "link", "noscript"],
         },
       ],
       "@angular-eslint/template/no-call-expression": "off",

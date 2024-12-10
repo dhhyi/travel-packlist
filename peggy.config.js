@@ -11,9 +11,9 @@ module.exports = {
     "ItemNameAndWeight",
     "CategoryName",
   ],
+  dts: true,
   format: "es",
   input: "src/schemas/rules.peggy",
   output: "src/app/generated/rules.mjs",
-  dts: true,
   trace: false,
 };
