@@ -165,6 +165,17 @@ describe('Parser', () => {
       expect(item.weight).toEqual(500);
     });
 
+    it('should parse an item with weight and only match the last number', () => {
+      trackWeight = true;
+
+      const item = parser.parseItem(
+        '[utility] Scrubber T 1000 extraordinaire 100g',
+      );
+      expect(item.category).toEqual('utility');
+      expect(item.name).toEqual('Scrubber T 1000 extraordinaire');
+      expect(item.weight).toEqual(100);
+    });
+
     it('should throw an error if the item is invalid', () => {
       expect(() => parser.parseItem('[utility]')).toThrow();
       expect(() => parser.parseItem('[] Scrubber')).toThrow();

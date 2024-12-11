@@ -79,20 +79,19 @@ CategoryName "category name"
   = $[^\],;#\[]+
 
 ItemNameAndWeight "item name"
-  = words:WordNotWeight|.., _ | _ weight:Weight {
-    if (!words.length) {
+  = words:$WordNotWeight|.., _ | _ weight:Weight &{ return options.trackWeight } {
+    const name = words.trim();
+    if (!name.length) {
       expected("item name");
     }
-    if (typeof weight === "string") {
-      return { name: words.concat(weight).join(" "), weight: undefined };
-    }
-    return { name: words.join(" "), weight };
+    return { name, weight };
    }
-  / words:Word|.., _| {
-    if (!words.length) {
+  / words:$Word|.., _| {
+    const name = words.trim();
+    if (!name.length) {
       expected("item name");
     }
-    return { name: words.join(" "), weight: undefined };
+    return { name, weight: undefined };
   }
 
 WordNotWeight "word"
@@ -103,15 +102,13 @@ Word
 
 Weight "weight"
   = num:Number "kg" {
-    return options.trackWeight ? num * 1000 : text();
+    return num * 1000;
   }
-  / num:Number ("g")? {
-    return options.trackWeight ? num : text();
-  }
+  / @Number ("g")?
 
 Number "number"
   = ([0-9]+) ("."$[0-9]+)? {
-    return options.trackWeight ? parseFloat(text()) : text();
+    return parseFloat(text());
   }
 
 _ "whitespace"
