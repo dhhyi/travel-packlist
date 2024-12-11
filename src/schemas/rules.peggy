@@ -17,7 +17,7 @@
 }}
 
 Rules
-  = _ @Rule|.., RuleDelimiter| RuleDelimiter? _ !.
+  = _ @Rule|.., RuleDelimiter| RuleDelimiter? _ EOF
 
 RuleDelimiter "rule end"
   = _ ";" _
@@ -79,13 +79,7 @@ CategoryName "category name"
   = $[^\],;#\[]+
 
 ItemNameAndWeight "item name"
-  = words:Word|{
-    // end is the end of the last context
-    const begin = input.substring(range().end);
-    // calculate count to match the last word into weight
-    const slice = begin.replaceAll(/[,;].*/gs, "").trim();
-    return slice.split(/\s+/).length - 1;
-   }, _ | _ weight:Weight {
+  = words:WordNotWeight|.., _ | _ weight:Weight {
     if (!words.length) {
       expected("item name");
     }
@@ -100,6 +94,9 @@ ItemNameAndWeight "item name"
     }
     return { name: words.join(" "), weight: undefined };
   }
+
+WordNotWeight "word"
+  = !(Weight _ (EOF / "," / ";")) @Word
 
 Word
   = $[^ ,;#]+
@@ -119,3 +116,6 @@ Number "number"
 
 _ "whitespace"
   = [ \t\n\r]*
+
+EOF
+  = !.
