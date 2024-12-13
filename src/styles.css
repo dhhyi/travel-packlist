@@ -104,7 +104,7 @@
 
   input[type="checkbox"],
   input[type="radio"] {
-    @apply my-2 h-6 w-6 appearance-none border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+    @apply my-2 h-6 min-h-6 w-6 min-w-6 appearance-none border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
   }
 
   input[type="checkbox"] {
