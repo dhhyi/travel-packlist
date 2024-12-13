@@ -16,6 +16,10 @@
           ".devcontainer": true,
           ".update_devcontainer.sh": true
         },
+        "tailwindCSS.classAttributes": ["class", "ngClass", "routerLinkActive"],
+        "tailwindCSS.includeLanguages": {
+          "typescript": "css"
+        },
         "terminal.integrated.defaultProfile.linux": "tmux",
         "terminal.integrated.profiles.linux": {
           "tmux": {

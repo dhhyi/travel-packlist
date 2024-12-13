@@ -35,3 +35,9 @@ vscode:
           - "-s"
           - tmux
     terminal.integrated.defaultProfile.linux: tmux
+    tailwindCSS.classAttributes:
+      - class
+      - ngClass
+      - routerLinkActive
+    tailwindCSS.includeLanguages:
+      typescript: css
