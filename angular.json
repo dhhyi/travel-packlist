@@ -44,7 +44,7 @@
                 "input": "www"
               }
             ],
-            "styles": ["src/styles.css"],
+            "styles": ["src/styles.scss"],
             "scripts": [],
             "define": {
               "ANDROID": "false"

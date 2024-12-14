@@ -29,46 +29,50 @@
 @layer components {
   .card {
     @apply rounded-md border-2 border-slate-300 p-2 shadow-inner;
-  }
 
-  .card.disabled {
-    @apply bg-disabled opacity-50;
+    &.disabled {
+      @apply bg-disabled opacity-50;
+    }
   }
 
   .help {
     @apply absolute m-2 translate-y-[3rem] rounded-lg border border-slate-300 bg-slate-50 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300;
   }
 
+  svg {
+    @apply fill-black dark:fill-slate-300;
+  }
+
   button {
     @apply flex items-center justify-center rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
-  }
 
-  button.red {
-    @apply bg-red-normal text-white hover:bg-red-light;
-  }
+    &[disabled] {
+      @apply bg-disabled cursor-not-allowed text-gray-500;
+    }
 
-  button.link {
-    @apply border-none bg-transparent;
-  }
+    &.red {
+      @apply bg-red-normal text-white hover:bg-red-light;
+    }
 
-  button.active {
-    @apply ring ring-slate-800 dark:ring-slate-200;
-  }
+    &.secondary {
+      @apply bg-slate-200 text-black hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
+    }
 
-  button[disabled] {
-    @apply bg-disabled cursor-not-allowed text-gray-500;
-  }
+    &.link {
+      @apply border-none bg-transparent;
 
-  button.link[disabled] {
-    @apply bg-transparent;
-  }
+      &[disabled] {
+        @apply bg-transparent;
 
-  button.link[disabled] > * > svg {
-    @apply fill-slate-500;
-  }
+        > * > svg {
+          @apply fill-slate-500;
+        }
+      }
+    }
 
-  button.secondary {
-    @apply bg-slate-200 text-black hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
+    &.active {
+      @apply ring ring-slate-800 dark:ring-slate-200;
+    }
   }
 
   fieldset {
@@ -82,37 +86,18 @@
   input,
   select {
     @apply h-8 rounded-md border border-slate-300 bg-transparent p-1;
+
+    &[disabled] {
+      @apply border border-transparent bg-transparent;
+    }
   }
 
   select {
     @apply pl-0;
-  }
 
-  input[disabled],
-  select[disabled] {
-    @apply border border-transparent bg-transparent;
-  }
-
-  select[disabled] {
-    @apply appearance-none pl-1 pr-4;
-  }
-
-  div:has(> input[type="radio"]):has(> label),
-  div:has(> input[type="checkbox"]):has(> label) {
-    @apply flex items-center gap-x-2;
-  }
-
-  input[type="checkbox"],
-  input[type="radio"] {
-    @apply my-2 h-6 min-h-6 w-6 min-w-6 appearance-none border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
-  }
-
-  input[type="checkbox"] {
-    @apply rounded-sm;
-  }
-
-  input[type="radio"] {
-    @apply rounded-xl;
+    &[disabled] {
+      @apply appearance-none pl-1 pr-4;
+    }
   }
 
   input.ng-invalid.ng-touched,
@@ -120,7 +105,21 @@
     @apply border-red-normal bg-red-light outline-red-normal;
   }
 
-  svg {
-    @apply fill-black dark:fill-slate-300;
+  input[type="checkbox"],
+  input[type="radio"] {
+    @apply my-2 h-6 min-h-6 w-6 min-w-6 appearance-none border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
+
+    &[type="checkbox"] {
+      @apply rounded-sm;
+    }
+
+    &[type="radio"] {
+      @apply rounded-xl;
+    }
+  }
+
+  div:has(> input[type="radio"]):has(> label),
+  div:has(> input[type="checkbox"]):has(> label) {
+    @apply flex items-center gap-x-2;
   }
 }

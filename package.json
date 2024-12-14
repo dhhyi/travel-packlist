@@ -20,7 +20,7 @@
     "test": "jest --ci",
     "format": "prettier --write \"**/*.*\"",
     "lint": "ng lint",
-    "stylelint": "stylelint \"**/*.css\""
+    "stylelint": "stylelint \"**/*.scss\""
   },
   "private": true,
   "dependencies": {
