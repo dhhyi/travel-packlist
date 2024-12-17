@@ -7,7 +7,9 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "forwardPorts": [4200],
+  "forwardPorts": [
+    4200
+  ],
   "customizations": {
     "vscode": {
       "settings": {
@@ -16,7 +18,12 @@
           ".devcontainer": true,
           ".update_devcontainer.sh": true
         },
-        "tailwindCSS.classAttributes": ["class", "ngClass", "routerLinkActive"],
+        "nxConsole.showProjectDetailsView": false,
+        "tailwindCSS.classAttributes": [
+          "class",
+          "ngClass",
+          "routerLinkActive"
+        ],
         "tailwindCSS.includeLanguages": {
           "typescript": "css"
         },
@@ -36,7 +43,13 @@
         "bierner.markdown-preview-github-styles",
         "github.vscode-github-actions",
         "yzhang.markdown-all-in-one",
-        "peggyjs.peggy-language"
+        "peggyjs.peggy-language",
+        "nrwl.angular-console",
+        "dbaeumer.vscode-eslint",
+        "firsttris.vscode-jest-runner",
+        "ms-playwright.playwright",
+        "redhat.vscode-yaml",
+        "aaron-bond.better-comments"
       ]
     }
   }

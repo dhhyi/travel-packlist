@@ -29,6 +29,8 @@ The app has an export and import feature to backup and restore your data whereve
 This app is developed using Angular 19 with the new experimental zoneless change detection strategy.
 Wherever possible, I used signals to model data flow.
 
+The project uses [Nx](https://nx.dev/) for managing the monorepo and the build process.
+
 For styling, I use [TailwindCSS](https://tailwindcss.com/).
 
 Managing the rules grammar and parsing it is done using [Peggy](https://peggyjs.org/).
@@ -43,7 +45,6 @@ The app is available in multiple languages (English and German at the moment).
 The language can be selected in the settings.
 
 The Angular build process is set up to build all languages and deploy them to the same location.
-The standard build process is customized for localizations, because some files are exchanged depending on the language.
 The language switching is done by navigating to a different index.html.
 The script [`build-webapp.sh`](./build-webapp.sh) is used for building and merging the different localized apps into the same folder.
 

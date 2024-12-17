@@ -1,0 +1,152 @@
+{
+  "name": "travel-packlist",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [],
+  "i18n": {
+    "sourceLocale": "en",
+    "locales": {
+      "de": "libs/locale/src/messages.de.json"
+    }
+  },
+  "targets": {
+    "generate-assets": {
+      "executor": "@travel-packlist/capacitor-assets:run",
+      "options": {
+        "type": "pwa"
+      }
+    },
+    "build": {
+      "executor": "@nx/angular:application",
+      "dependsOn": [
+        "^build",
+        "generate-assets"
+      ],
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/travel-packlist",
+        "index": "{projectRoot}/src/index.html",
+        "browser": "{projectRoot}/src/main.ts",
+        "polyfills": [
+          "@angular/localize/init"
+        ],
+        "tsConfig": "{projectRoot}/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "{projectRoot}/public"
+          }
+        ],
+        "styles": [
+          "{projectRoot}/src/styles.scss"
+        ],
+        "scripts": [],
+        "define": {
+          "ANDROID": "false"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all",
+          "serviceWorker": "{projectRoot}/ngsw-config.json",
+          "i18nMissingTranslation": "error",
+          "i18nDuplicateTranslation": "error"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        },
+        "android": {
+          "define": {
+            "ANDROID": "true"
+          },
+          "outputHashing": "all"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nx/angular:dev-server",
+      "dependsOn": [
+        "^build",
+        "generate-assets"
+      ],
+      "options": {
+        "host": "0.0.0.0"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "travel-packlist:build:production"
+        },
+        "development": {
+          "buildTarget": "travel-packlist:build:development"
+        },
+        "android": {
+          "buildTarget": "travel-packlist:build:android"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@nx/angular:extract-i18n",
+      "dependsOn": [
+        "^build"
+      ],
+      "options": {
+        "buildTarget": "travel-packlist:build:production",
+        "format": "json",
+        "outputPath": "libs/locale/src"
+      },
+      "inputs": [
+        "{workspaceRoot}/apps/**/*.{ts,html}",
+        "{workspaceRoot}/libs/**/*.{ts,html}"
+      ],
+      "outputs": [
+        "{workspaceRoot}/libs/locale/src/messages.json"
+      ],
+      "cache": true
+    },
+    "stylelint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "stylelint",
+        "args": [
+          "--config",
+          ".stylelintrc.json",
+          "src/**/*.scss"
+        ],
+        "cwd": "{projectRoot}"
+      },
+      "inputs": [
+        "{projectRoot}/.stylelintrc.json",
+        "{projectRoot}/src/**/*.scss"
+      ],
+      "cache": true
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "dependsOn": [
+        "*lint",
+        "^build"
+      ]
+    }
+  }
+}

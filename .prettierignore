@@ -1,8 +1,14 @@
+*.txt
 *.ico
+*.webp
 *.png
 pnpm-lock.yaml
 .husky/**
 .editorconfig
 .update_devcontainer.sh
-/android/**
 *.peggy
+/.nx/cache
+/.nx/workspace-data
+.angular
+/dist
+/coverage

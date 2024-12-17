@@ -1,0 +1,55 @@
+{
+  "name": "rules-documentation",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "{projectRoot}/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "*lint"
+      ],
+      "options": {
+        "command": "markdownlint --config ../../util/.markdownlint.json --fix src/doc/*.md",
+        "cwd": "{projectRoot}"
+      },
+      "inputs": [
+        "{workspaceRoot}/util/.markdownlint.json",
+        "{projectRoot}/src/doc/*.md"
+      ],
+      "outputs": [
+        "{projectRoot}/src/doc/*.md"
+      ],
+      "cache": true
+    },
+    "markdownspelllint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cspell --config ../../cspell.config.js src/doc/*.md",
+        "cwd": "{projectRoot}"
+      },
+      "inputs": [
+        "{workspaceRoot}/cspell.config.js",
+        "{projectRoot}/src/doc/*.md"
+      ],
+      "cache": true
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node convert-documentation.mjs",
+        "cwd": "{projectRoot}"
+      },
+      "inputs": [
+        "{projectRoot}/src/doc/documentation*.md",
+        "{projectRoot}/convert-documentation.mjs"
+      ],
+      "outputs": [
+        "{projectRoot}/src/lib/*.ts",
+        "{projectRoot}/src/index.ts"
+      ],
+      "cache": true
+    }
+  }
+}

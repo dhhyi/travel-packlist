@@ -1,0 +1,27 @@
+{
+  "name": "locale",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "{projectRoot}/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "travel-packlist:extract-i18n"
+      ],
+      "options": {
+        "command": "node check-translations.mjs",
+        "cwd": "{projectRoot}"
+      },
+      "inputs": [
+        "{projectRoot}/src/messages*.json",
+        "{projectRoot}/check-translations.mjs"
+      ],
+      "outputs": [
+        "{projectRoot}/src/messages*.json"
+      ],
+      "cache": true
+    }
+  }
+}

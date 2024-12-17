@@ -1,0 +1,35 @@
+<nav
+  class="flex h-[3rem] min-h-[3rem] flex-row items-center pb-2"
+  role="navigation"
+>
+  <a class="flex grow" routerLink="/">
+    <img
+      alt="application icon"
+      i18n-alt="@@app.icon"
+      src="icon.svg"
+      class="h-8"
+    />
+    <span i18n="@@app.title" class="text-xl font-bold">TravelPacklist</span>
+  </a>
+  <a class="pr-2" routerLink="/config" routerLinkActive="hidden">
+    <app-icon-cog class="h-6 w-6" />
+  </a>
+</nav>
+
+<div class="flex grow flex-col pb-[3.5rem]">
+  <router-outlet />
+
+  @if (scrollTopVisible()) {
+    <div class="fixed bottom-2 left-1/2 -translate-x-1/2">
+      <button
+        type="button"
+        class="flex w-full items-center justify-center rounded-3xl border border-slate-300 shadow-xl"
+        (click)="scrollTop()"
+      >
+        <app-icon-arrow-upward class="h-6 w-6" />
+      </button>
+    </div>
+  }
+</div>
+
+<app-dialog />

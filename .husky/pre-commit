@@ -28,52 +28,8 @@ then
   git apply -R .git/unstaged.diff
 fi
 
-files=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
-
-localizations=$(echo "$files" | grep -E 'src/locale/messages.*\.json' | tr '\n' ' ')
-if [ -n "$localizations" ]
-then
-  npx sort-json $localizations || cleanup
-elif ! is_husky
-then
-  ls src/locale/messages.*.json | xargs npx sort-json || cleanup
-fi
-
-linterFiles=$(echo "$files" | grep -E 'src/.*\.(ts|js|mjs|html)' | tr '\n' ' ')
-if [ -n "$linterFiles" ]
-then
-  npx eslint $linterFiles --fix || cleanup
-elif ! is_husky
-then
-  npx eslint --fix || cleanup
-fi
-
-markdownFiles=$(echo "$files" | grep -E '.*\.md' | grep -v 'CHANGELOG.md' | tr '\n' ' ')
-if ! is_husky
-then
-  markdownFiles=$(find *.md src -name '*.md' | grep -v 'CHANGELOG.md' | tr '\n' ' ')
-fi
-if [ -n "$markdownFiles" ]
-then
-  echo "Checking markdown files: $markdownFiles"
-  node format-markdown.mjs $markdownFiles || cleanup
-  npx markdownlint $markdownFiles --fix || cleanup
-  npx cspell $markdownFiles || cleanup
-fi
-
-prettierFiles=$(echo "$files" | tr '\n' ' ')
-if [ -n "$prettierFiles" ]
-then
-  npx prettier $prettierFiles --write --ignore-unknown || cleanup
-elif ! is_husky
-then
-  npm run format || cleanup
-fi
-
-npm run check-translations || cleanup
-npm test || cleanup
-npm run stylelint -- --fix || cleanup
-npm exec ng build -- --localize --i18n-duplicate-translation=error --i18n-missing-translation=error --output-path node_modules/.build || cleanup
+pnpm install --frozen-lockfile
+pnpm exec nx affected -t lint,test,format --nxBail || cleanup
 
 if is_husky
 then

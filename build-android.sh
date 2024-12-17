@@ -5,28 +5,31 @@ set -e
 script_dir="$(readlink -f $(dirname "$0"))"
 cd $script_dir
 
-git clean -fdx android dist
+target="dist/android"
+git clean -fdx $target
 
 versionCode=$(git tag -l | wc -l)
 
-environment="$(cat src/environment/env.json)"
-echo "$environment" | jq -M ".versionCode=$versionCode" > src/environment/env.json
+sourceFolder="apps/travel-packlist"
 
-sh build-webapp.sh --configuration production,android
+environment="$(cat $sourceFolder/src/environment/env.json)"
+echo "$environment" | jq -M ".versionCode=$versionCode" > $sourceFolder/src/environment/env.json
+
+trap "git restore $sourceFolder/src/environment/env.json" EXIT
+
+sh build-webapp.sh --configuration android
 
 pnpm cap add android
 
 pnpm cap sync
 
-pnpm generate-assets --android
+pnpm exec nx run travel-packlist:generate-assets --type android
 
-sed -i "s/versionName.*/versionName $(npm pkg get version)/" android/app/build.gradle
-sed -i "s/versionCode.*/versionCode $versionCode/" android/app/build.gradle
+sed -i "s/versionName.*/versionName $(npm pkg get version)/" $target/app/build.gradle
+sed -i "s/versionCode.*/versionCode $versionCode/" $target/app/build.gradle
 
-mkdir -p dist/android
-
-(cd android && ./gradlew --no-daemon assemble)
-mv android/app/build/outputs/apk/debug/app-debug.apk dist/android/travel-packlist-debug.apk
+(cd $target && ./gradlew --no-daemon assemble)
+mv $target/app/build/outputs/apk/debug/app-debug.apk $target/travel-packlist-debug.apk
 
 if [ ! -f "release.jks" ]; then
     if [ -n "$RELEASE_KEYSTORE" ]; then
@@ -57,4 +60,4 @@ if [ -n "$error" ]; then
 fi
 
 pnpm cap build android --keystorepath "$script_dir/release.jks" --keystorepass $RELEASE_KEYSTORE_PASSWORD --keystorealias $RELEASE_KEYSTORE_ALIAS --keystorealiaspass $RELEASE_KEYSTORE_ALIAS_PASSWORD --androidreleasetype AAB
-mv android/app/build/outputs/bundle/release/app-release-signed.aab dist/android/travel-packlist.aab
+mv $target/app/build/outputs/bundle/release/app-release-signed.aab $target/travel-packlist.aab

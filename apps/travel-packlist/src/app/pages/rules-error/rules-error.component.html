@@ -1,0 +1,13 @@
+<div class="flex flex-col items-center gap-4 text-center">
+  <p i18n="@@app.error.introduction">
+    The following error occurred while parsing the rules:
+  </p>
+  <p class="text-red-normal font-mono">{{ error() }}</p>
+  <p i18n="@@app.error.fix-manually">
+    Unfortunately, this error can only be fixed by changing the rules manually.
+  </p>
+  <p i18n="@@app.error.cta">Please do that</p>
+  <button i18n="@@app.error.cta.label" type="button" routerLink="/rules-raw">
+    here
+  </button>
+</div>

@@ -1,0 +1,45 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": [
+      "es2020",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@travel-packlist/capacitor-assets": [
+        "tools/capacitor-assets/src/index.ts"
+      ],
+      "@travel-packlist/icons": [
+        "libs/icons/src/index.ts"
+      ],
+      "@travel-packlist/model": [
+        "libs/model/src/index.ts"
+      ],
+      "@travel-packlist/rules-documentation": [
+        "libs/rules-documentation/src/index.ts"
+      ],
+      "@travel-packlist/rules-template": [
+        "libs/rules-template/src/index.ts"
+      ],
+      "@travel-packlist/state": [
+        "libs/state/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

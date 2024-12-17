@@ -26,8 +26,8 @@ jobs:
       - name: Set up JDK 📦
         uses: actions/setup-java@v4
         with:
-          distribution: "microsoft"
-          java-version: "17"
+          distribution: 'microsoft'
+          java-version: '17'
 
       - name: Install and Build 🔧
         run: |

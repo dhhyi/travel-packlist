@@ -1,23 +1,45 @@
 {
-  "plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-sh"],
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-sh"
+  ],
+  "singleQuote": true,
   "overrides": [
     {
-      "files": ["*.sh", ".git*", ".*ignore"],
+      "files": [
+        "*.sh",
+        ".git*",
+        ".*ignore"
+      ],
       "options": {
         "parser": "sh",
         "indent": 4
       }
     },
     {
-      "files": ["*.js", "*.mjs"],
+      "files": [
+        "*.js",
+        "*.mjs"
+      ],
       "options": {
         "trailingComma": "es5"
       }
     },
     {
-      "files": ["*.svg"],
+      "files": [
+        "*.svg"
+      ],
       "options": {
         "parser": "html"
+      }
+    },
+    {
+      "files": [
+        "*.json"
+      ],
+      "options": {
+        "parser": "json",
+        "printWidth": 5
       }
     }
   ]

@@ -9,6 +9,6 @@ RUN mkdir -p "/" && echo "IyEvYmluL2Jhc2gKaWYgWyAteiAiJCoiIF07IHRoZW4KICB0bXV4IG
 USER vscode
 ENV HOME=/home/vscode
 
-RUN echo "alias ng='pnpm ng'" | tee -a $HOME/.bashrc $HOME/.zshrc
+RUN echo "alias nx='pnpm exec nx'" | tee -a $HOME/.bashrc $HOME/.zshrc
 
 EXPOSE 4200

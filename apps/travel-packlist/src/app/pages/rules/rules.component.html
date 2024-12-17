@@ -1,0 +1,51 @@
+<app-toolbar [noOfVisibleRules]="visibleRules().length" />
+@for (item of visibleRules(); track item.index) {
+  @if (item.index > 0 && mode() === 'swap' && !filter()) {
+    <div class="flex justify-center">
+      <button
+        type="button"
+        class="link"
+        (click)="swapRules(item.index - 1, item.index)"
+      >
+        <app-icon-swap />
+      </button>
+    </div>
+  }
+  <div
+    class="card mb-1"
+    [id]="'rule-' + item.index"
+    [ngClass]="{
+      disabled: showAsDisabled(item.rule),
+      'animate-pulse': highlightRule() === item.index,
+      'mb-[2.25rem]': mode() === 'view' || mode() === 'search',
+    }"
+  >
+    <app-editor-rule
+      [rule]="item.rule"
+      (ruleChanged)="updateRule(item.index, $event)"
+      (deleteRule)="deleteRule(item.index)"
+      (renameVariable)="renameVariable($event)"
+    />
+  </div>
+}
+@if (mode() === 'edit' && !filter()) {
+  <button
+    i18n="@@edit.rules.add-rule"
+    type="button"
+    class="fixed bottom-2 z-50"
+    (click)="addRule()"
+  >
+    + Rule
+  </button>
+}
+
+@if (goToPacklistButtonVisible()) {
+  <a class="fixed bottom-2 right-2 z-50" routerLink="/packlist">
+    <img
+      alt="application icon"
+      i18n-alt="@@app.icon"
+      src="icon.svg"
+      class="h-12"
+    />
+  </a>
+}

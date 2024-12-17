@@ -1,0 +1,10 @@
+{
+  "name": "travel-packlist-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "{projectRoot}/src",
+  "implicitDependencies": [
+    "travel-packlist"
+  ],
+  "targets": {}
+}
