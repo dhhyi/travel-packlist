@@ -24,16 +24,48 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-target="dist/browser"
+target="dist/web"
 base_href="${base_href:-/}"
 build="${configuration:-production}"
 
-environment="$(cat src/environment/env.json)"
-echo "$environment" | jq -M ".version=$(npm pkg get version)" | jq -M ".git_hash=\"$(git rev-parse HEAD)\"" | jq -M ".build_time=$(date +%s)" > src/environment/env.json
+rm -Rf "$target"
+mkdir -p "$target"
 
-trap 'git restore src/environment/env.json' EXIT
+sourceFolder="apps/travel-packlist"
 
-pnpm ng build --base-href=$base_href --configuration=$build
+environment="$(cat $sourceFolder/src/environment/env.json)"
+echo "$environment" | jq -M ".version=$(npm pkg get version)" | jq -M ".git_hash=\"$(git rev-parse HEAD)\"" | jq -M ".build_time=$(date +%s)" > $sourceFolder/src/environment/env.json
+
+trap "git restore $sourceFolder/src/environment/env.json" EXIT
+
+pnpm nx build travel-packlist --localize --base-href=$base_href --configuration=$build --verbose
+
+buildFolder="dist/$sourceFolder/browser"
+
+for folder in $(ls $buildFolder); do
+    (
+        cd $buildFolder/$folder
+        echo "Fixing file hashes in $PWD"
+        for run in initial 2nd 3rd 4th 5th 6th; do
+            find . -type f | grep -E "\b[0-9A-Za-f]{8}\b" | xargs -i{} basename {} | while read file; do
+                sha1=$(sha1sum $file | cut -d' ' -f1 | cut -c-8)
+                fileHash=$(echo $file | grep -oE "\b[0-9A-Za-f]{8}\b")
+                if [ "$sha1" = "$fileHash" ]; then
+                    continue
+                fi
+                newFile=$(echo $file | sed -E "s/\b[0-9A-Za-f]{8}\b/$sha1/")
+                find . -type f | xargs -rl sed -i "s/$file/$newFile/g"
+                mv $file $newFile
+            done
+        done
+    )
+done
+
+cp $buildFolder/en/*.* $target
+
+cat $buildFolder/en/index.html \
+    | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
+        > $target/index.html
 
 if [ "$base_href" != "/" ]; then
     manifest="$(cat $target/manifest.json)"
@@ -41,22 +73,17 @@ if [ "$base_href" != "/" ]; then
 fi
 
 for lang in de; do
-    pnpm ng build --base-href=$base_href --configuration=$build,$lang --delete-output-path=false
-
-    cat $target/$lang/index.html \
+    cat $buildFolder/$lang/index.html \
         | sed "s|<base href=.*|<base href=\"$base_href\">|g" \
             > $target/index.$lang.html
 
-    cp $target/$lang/polyfills*.js \
-        $target/$lang/main*.js \
-        $target/$lang/chunk*.js \
-        $target/$lang/styles*.css \
+    cp $buildFolder/$lang/polyfills*.js \
+        $buildFolder/$lang/main*.js \
+        $buildFolder/$lang/chunk*.js \
+        $buildFolder/$lang/styles*.css \
         $target
-
-    rm -rf $target/$lang
-
 done
 
 if [ -f $target/ngsw.json ]; then
-    npx ngsw-config dist/browser ngsw-config.json "$base_href"
+    npx ngsw-config $target $sourceFolder/ngsw-config.json "$base_href"
 fi

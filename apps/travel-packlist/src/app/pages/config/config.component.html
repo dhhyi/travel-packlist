@@ -1,0 +1,354 @@
+<div class="section">
+  <span i18n="@@config.checklist" class="font-bold">Checklist</span>
+  <button
+    i18n="@@config.checklist.reset"
+    type="button"
+    (click)="resetChecklist()"
+  >
+    Reset Checklist
+  </button>
+  <div>
+    <input type="checkbox" id="track-weight" [(ngModel)]="trackWeight" />
+    <label
+      i18n="@@config.checklist.track-weight"
+      for="track-weight"
+      class="grow"
+      >Track item weight</label
+    >
+    <button
+      class="link"
+      type="button"
+      (click)="trackWeightHelp.set(!trackWeightHelp())"
+    >
+      <app-icon-help class="h-6 w-6" />
+    </button>
+    @if (trackWeightHelp()) {
+      <legend
+        class="help"
+        i18n="@@config.checklist.track-weight.description"
+        role="contentinfo"
+        (click)="trackWeightHelp.set(false)"
+        (keypress)="trackWeightHelp.set(false)"
+      >
+        You can enter the item weight appended to the item name in the editor.
+      </legend>
+    }
+  </div>
+  <div>
+    <fieldset class="flex flex-row flex-wrap gap-x-6">
+      <legend i18n="@@config.checklist.category-sorting">
+        Sort categories
+      </legend>
+      <div>
+        <input
+          type="radio"
+          id="sort-alphabetically"
+          value="alphabetically"
+          [(ngModel)]="categorySorting"
+        />
+        <label
+          i18n="@@config.checklist.category-sorting.alphabetically"
+          for="sort-alphabetically"
+          >alphabetically</label
+        >
+      </div>
+      <div>
+        <input
+          type="radio"
+          id="sort-definition"
+          value="definition"
+          [(ngModel)]="categorySorting"
+        />
+        <label
+          i18n="@@config.checklist.category-sorting.definition"
+          for="sort-definition"
+          >order of definition</label
+        >
+      </div>
+    </fieldset>
+  </div>
+</div>
+
+<div class="section">
+  <span i18n="@@config.rules" class="font-bold">Rules</span>
+  <button i18n="@@config.rules.edit" type="button" routerLink="/rules">
+    Edit Rules
+  </button>
+  <div>
+    <input
+      type="checkbox"
+      id="rules-debug-mode"
+      [(ngModel)]="fadeOutDisabledRules"
+    />
+    <label i18n="@@config.rules.edit.fadeout-disabled" for="rules-debug-mode"
+      >Fade out disabled rules in editor</label
+    >
+  </div>
+  <div>
+    <input
+      type="checkbox"
+      id="variables-debug-mode"
+      [(ngModel)]="highlightVariableStatus"
+    />
+    <label
+      i18n="@@config.rules.edit.highlight-variables"
+      for="variables-debug-mode"
+      >Highlight variable status in editor</label
+    >
+  </div>
+  <div>
+    <input
+      type="checkbox"
+      id="variables-refactor"
+      [(ngModel)]="refactorVariables"
+    />
+    <label i18n="@@config.rules.refactor-variables" for="variables-refactor"
+      >Rename all occurrences when renaming variables</label
+    >
+  </div>
+  <hr />
+  <button
+    i18n="@@config.rules.documentation"
+    type="button"
+    routerLink="/documentation"
+  >
+    Documentation
+  </button>
+  <button i18n="@@config.rules.edit-raw" type="button" routerLink="/rules-raw">
+    Edit Rules with Code
+  </button>
+  <hr />
+  <button
+    #exportButton
+    i18n="@@config.rules.export"
+    type="button"
+    [ngClass]="{
+      'bg-green-light animate-pulse': highlightExport() && exportNeeded(),
+    }"
+    [disabled]="!isExportAvailable()"
+    (click)="exportRules()"
+  >
+    Export Rules
+  </button>
+  @if (exportNeeded()) {
+    <div
+      i18n="@@config.rules.export-needed"
+      class="text-red-light text-center italic"
+    >
+      Current rules are not backed up!
+    </div>
+  }
+  <button i18n="@@config.rules.import" type="button" (click)="importRules()">
+    Import Rules
+  </button>
+  <div>
+    <input type="checkbox" id="export-reminder" [(ngModel)]="exportReminder" />
+    <label i18n="@@config.rules.export-reminder" for="export-reminder"
+      >Remind me to regularly export rules</label
+    >
+  </div>
+</div>
+
+<div class="section">
+  <span i18n="@@config.appearance" class="font-bold">Appearance</span>
+  <fieldset class="grid grid-cols-3 gap-2">
+    <legend i18n="@@config.theme">Theme</legend>
+    <button
+      i18n="@@config.theme.dark"
+      type="button"
+      class="link"
+      [ngClass]="{
+        active: theme() === 'dark',
+      }"
+      (click)="theme.set('dark')"
+    >
+      Dark
+    </button>
+    <button
+      i18n="@@config.theme.light"
+      type="button"
+      class="link"
+      [ngClass]="{
+        active: theme() === 'light',
+      }"
+      (click)="theme.set('light')"
+    >
+      Light
+    </button>
+    <button
+      i18n="@@config.theme.system"
+      type="button"
+      class="link"
+      [ngClass]="{
+        active: theme() === 'system',
+      }"
+      (click)="theme.set('system')"
+    >
+      System
+    </button>
+  </fieldset>
+  <fieldset class="grid grid-cols-3 gap-2">
+    <legend i18n="@@config.fontsize">Font Size</legend>
+    <button
+      i18n="@@config.fontsize.small"
+      type="button"
+      class="link text-[16px]"
+      [ngClass]="{
+        active: fontSize() === 'small',
+      }"
+      (click)="fontSize.set('small')"
+    >
+      small
+    </button>
+    <button
+      i18n="@@config.fontsize.normal"
+      type="button"
+      class="link text-[18px]"
+      [ngClass]="{
+        active: fontSize() === 'normal',
+      }"
+      (click)="fontSize.set('normal')"
+    >
+      normal
+    </button>
+    <button
+      i18n="@@config.fontsize.large"
+      type="button"
+      class="link text-[20px]"
+      [ngClass]="{
+        active: fontSize() === 'large',
+      }"
+      (click)="fontSize.set('large')"
+    >
+      large
+    </button>
+  </fieldset>
+  <fieldset class="grid grid-cols-3 gap-2">
+    <legend i18n="@@config.language">Language</legend>
+    <button
+      i18n="@@config.language.detect"
+      class="link"
+      type="button"
+      [ngClass]="{
+        active: language() === 'auto',
+      }"
+      (click)="language.set('auto')"
+    >
+      detect
+    </button>
+    <button
+      class="link"
+      type="button"
+      [ngClass]="{
+        active: language() === 'en',
+      }"
+      (click)="language.set('en')"
+    >
+      <app-flag-uk class="h-6 w-8" />
+    </button>
+    <button
+      type="button"
+      class="link"
+      [ngClass]="{
+        active: language() === 'de',
+      }"
+      (click)="language.set('de')"
+    >
+      <app-flag-germany class="h-6 w-8" />
+    </button>
+  </fieldset>
+</div>
+
+<div class="section">
+  <span i18n="@@config.appversion" class="font-bold">App Version</span>
+  <span
+    ><a
+      [href]="
+        'https://github.com/dhhyi/travel-packlist/releases/tag/v' + env.version
+      "
+    >
+      @if (displayVersionCode) {
+        {{ env.versionCode }} ({{ env.version }})
+      } @else {
+        {{ env.version }}
+      }
+    </a></span
+  >
+  <span i18n="@@config.appversion.built" class="italic"
+    >built on
+    {{ env.build_time * 1000 | date: 'long' // i18n(ph="LONG_DATE") }}</span
+  >
+  <span class="truncate font-mono text-sm text-slate-500"
+    ><a
+      [href]="'https://github.com/dhhyi/travel-packlist/commit/' + env.git_hash"
+      >{{ env.git_hash }}</a
+    ></span
+  >
+  @if (displayServiceWorkerStatus) {
+    <span i18n="@@config.service-worker" class="font-mono text-sm"
+      >Service Worker: {{ serviceWorkerStatus() }}</span
+    >
+  }
+</div>
+
+<div class="section">
+  <span i18n="@@config.support" class="font-bold">Support</span>
+  <div class="flex flex-col gap-4">
+    <p i18n="@@config.support.issues">
+      If you find any bugs or have any suggestions, please open an issue on
+      GitHub:
+      <a href="https://github.com/dhhyi/travel-packlist/issues" target="_blank">
+        <img
+          class="inline"
+          src="https://img.shields.io/github/issues/dhhyi/travel-packlist"
+          alt="GitHub issues"
+          i18n-alt="@@config.support.issues.github"
+        />
+      </a>
+    </p>
+    <p i18n="@@config.support.email">
+      Alternatively, you can reach out to me by
+      <a href="mailto:dhhyi@aol.com" target="_blank">
+        <img
+          class="inline"
+          src="https://img.shields.io/badge/email-dhhyi%40aol.com-blue"
+          alt="Email"
+          i18n-alt="@@config.support.email.label"
+        />
+      </a>
+    </p>
+    @if (displayKoFi) {
+      <p i18n="@@config.support.ko-fi">
+        If you like this app, please consider to
+        <a href="https://ko-fi.com/danilohoffmann" target="_blank">
+          <img
+            class="inline max-w-[10rem]"
+            src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
+            alt="Buy Me a Coffee at ko-fi.com"
+            i18n-alt="@@config.support.ko-fi.label"
+          />
+        </a>
+      </p>
+    }
+  </div>
+</div>
+
+<div class="section">
+  <span i18n="@@config.dangerzone" class="font-bold">DANGER!</span>
+  <button
+    i18n="@@config.dangerzone.reset"
+    type="button"
+    class="red"
+    (click)="resetEverything()"
+  >
+    Reset Application
+  </button>
+</div>
+
+@if (loading()) {
+  <div
+    class="loading fixed left-0 top-0 flex h-svh w-full items-center justify-center bg-white opacity-30"
+  >
+    <app-icon-download class="h-[12rem] w-[12rem]" />
+  </div>
+}

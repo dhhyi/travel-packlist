@@ -16,6 +16,7 @@
           ".devcontainer": true,
           ".update_devcontainer.sh": true
         },
+        "nxConsole.showProjectDetailsView": false,
         "tailwindCSS.classAttributes": ["class", "ngClass", "routerLinkActive"],
         "tailwindCSS.includeLanguages": {
           "typescript": "css"
@@ -23,8 +24,7 @@
         "terminal.integrated.defaultProfile.linux": "tmux",
         "terminal.integrated.profiles.linux": {
           "tmux": {
-            "args": ["new-session", "-A", "-s", "tmux"],
-            "path": "tmux"
+            "path": "/tmux-or-else.sh"
           }
         }
       },
@@ -37,7 +37,13 @@
         "bierner.markdown-preview-github-styles",
         "github.vscode-github-actions",
         "yzhang.markdown-all-in-one",
-        "peggyjs.peggy-language"
+        "peggyjs.peggy-language",
+        "nrwl.angular-console",
+        "dbaeumer.vscode-eslint",
+        "firsttris.vscode-jest-runner",
+        "ms-playwright.playwright",
+        "redhat.vscode-yaml",
+        "aaron-bond.better-comments"
       ]
     }
   }

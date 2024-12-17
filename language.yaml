@@ -5,7 +5,16 @@ devcontainer:
     packages:
       - tmux
     user:
-      - RUN echo "alias ng='pnpm ng'" | tee -a $HOME/.bashrc $HOME/.zshrc
+      - RUN echo "alias nx='pnpm exec nx'" | tee -a $HOME/.bashrc $HOME/.zshrc
+    files:
+      - type: script
+        path: /tmux-or-else.sh
+        content: |
+          #!/bin/bash
+          if [ -z "$*" ]; then
+            tmux new-session -A -s tmux
+          fi
+          exec sh "$@"
   ports:
     - 4200
 extras:
@@ -24,16 +33,17 @@ vscode:
     - github.vscode-github-actions
     - yzhang.markdown-all-in-one
     - peggyjs.peggy-language
+    - nrwl.angular-console
+    - dbaeumer.vscode-eslint
+    - firsttris.vscode-jest-runner
+    - ms-playwright.playwright
+    - redhat.vscode-yaml
+    - aaron-bond.better-comments
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
     terminal.integrated.profiles.linux:
       tmux:
-        path: tmux
-        args:
-          - new-session
-          - "-A"
-          - "-s"
-          - tmux
+        path: /tmux-or-else.sh
     terminal.integrated.defaultProfile.linux: tmux
     tailwindCSS.classAttributes:
       - class
@@ -41,3 +51,4 @@ vscode:
       - routerLinkActive
     tailwindCSS.includeLanguages:
       typescript: css
+    nxConsole.showProjectDetailsView: false
