@@ -46,7 +46,7 @@ The language can be selected in the settings.
 
 The Angular build process is set up to build all languages and deploy them to the same location.
 The language switching is done by navigating to a different index.html.
-The script [`build-webapp.sh`](./build-webapp.sh) is used for building and merging the different localized apps into the same folder.
+The build process merges the different localized Angular apps into the same folder.
 
 ## Resources
 

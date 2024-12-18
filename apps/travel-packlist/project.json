@@ -12,16 +12,31 @@
     }
   },
   "targets": {
+    "build-required": {
+      "executor": "nx:noop",
+      "dependsOn": ["^build", "generate-*"]
+    },
     "generate-assets": {
       "executor": "@travel-packlist/capacitor-assets:run",
       "options": {
         "type": "pwa"
-      }
+      },
+      "inputs": [
+        "{projectRoot}/public/icon.svg",
+        "{projectRoot}/public/manifest.json"
+      ],
+      "outputs": [
+        "{projectRoot}/public/manifest.json",
+        "{projectRoot}/public/icon-*.webp"
+      ],
+      "cache": true
     },
     "build": {
       "executor": "@nx/angular:application",
-      "dependsOn": ["^build", "generate-assets"],
+      "dependsOn": ["build-required"],
+      "inputs": ["default", "^production"],
       "outputs": ["{options.outputPath}"],
+      "cache": true,
       "options": {
         "outputPath": "dist/apps/travel-packlist",
         "index": "{projectRoot}/src/index.html",
@@ -39,7 +54,8 @@
         "scripts": [],
         "define": {
           "ANDROID": "false"
-        }
+        },
+        "plugins": ["{projectRoot}/plugins/versioning-plugin.js"]
       },
       "configurations": {
         "production": {
@@ -76,7 +92,7 @@
     },
     "serve": {
       "executor": "@nx/angular:dev-server",
-      "dependsOn": ["^build", "generate-assets"],
+      "dependsOn": ["build-required"],
       "options": {
         "host": "0.0.0.0"
       },
@@ -101,10 +117,7 @@
         "format": "json",
         "outputPath": "libs/locale/src"
       },
-      "inputs": [
-        "{workspaceRoot}/apps/**/*.{ts,html}",
-        "{workspaceRoot}/libs/**/*.{ts,html}"
-      ],
+      "inputs": ["production", "^production"],
       "outputs": ["{workspaceRoot}/libs/locale/src/messages.json"],
       "cache": true
     },

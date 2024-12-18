@@ -12,12 +12,7 @@ versionCode=$(git tag -l | wc -l)
 
 sourceFolder="apps/travel-packlist"
 
-environment="$(cat $sourceFolder/src/environment/env.json)"
-echo "$environment" | jq -M ".versionCode=$versionCode" > $sourceFolder/src/environment/env.json
-
-trap "git restore $sourceFolder/src/environment/env.json" EXIT
-
-sh build-webapp.sh --configuration android
+pnpm exec nx build travel-packlist-web --configuration android
 
 pnpm cap add android
 
