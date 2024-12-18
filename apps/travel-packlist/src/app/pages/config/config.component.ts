@@ -21,7 +21,6 @@ import {
 } from '@travel-packlist/icons';
 import { GlobalState } from '@travel-packlist/state';
 
-import env from '../../../environment/env.json';
 import { confirm } from '../../dialog';
 import { ConfigFacade } from './config.facade';
 
@@ -46,12 +45,16 @@ import { ConfigFacade } from './config.facade';
   `,
 })
 export default class ConfigComponent {
-  env = env;
   readonly loading = signal(false);
 
   displayKoFi = !ANDROID;
   displayServiceWorkerStatus = !ANDROID;
   displayVersionCode = ANDROID;
+
+  buildTime = BUILD_TIME;
+  version = VERSION;
+  gitHash = GIT_HASH;
+  versionCode = VERSION_CODE;
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);

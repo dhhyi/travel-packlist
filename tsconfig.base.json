@@ -8,7 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "esnext",
     "module": "esnext",
     "lib": [
       "es2020",
@@ -35,6 +35,9 @@
       ],
       "@travel-packlist/state": [
         "libs/state/src/index.ts"
+      ],
+      "@travel-packlist/webapp-plugin": [
+        "tools/webapp-plugin/src/index.ts"
       ]
     }
   },

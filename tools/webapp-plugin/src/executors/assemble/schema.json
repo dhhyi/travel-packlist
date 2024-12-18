@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Executor Schema",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "buildTarget": {
+      "type": "string",
+      "description": "The build target for building the Angular application"
+    },
+    "baseHref": {
+      "type": "string",
+      "description": "The base href for the application being built",
+      "default": "/"
+    },
+    "outputPath": {
+      "type": "string",
+      "description": "The output path for the application being built"
+    }
+  },
+  "required": [
+    "buildTarget"
+  ],
+  "additionalProperties": false
+}

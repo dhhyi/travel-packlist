@@ -1,0 +1,8 @@
+{
+  "executors": {
+    "assemble": {
+      "implementation": "./src/executors/assemble/executor",
+      "schema": "./src/executors/assemble/schema.json"
+    }
+  }
+}

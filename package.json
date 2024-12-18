@@ -9,7 +9,7 @@
     "prepare": "husky",
     "format": "nx format --all",
     "dev": "nx serve travel-packlist",
-    "start": "sh build-webapp.sh && npx http-server dist/web"
+    "start": "nx serve travel-packlist-web"
   },
   "nx": {
     "includedScripts": [
@@ -86,7 +86,6 @@
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.0.0",
     "globals": "^15.13.0",
-    "http-server": "^14.1.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-preset-angular": "^14.4.2",

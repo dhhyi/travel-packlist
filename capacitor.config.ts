@@ -6,7 +6,7 @@ const config: CapacitorConfig = {
   },
   appId: 'dev.dhhyi',
   appName: 'TravelPacklist',
-  webDir: 'dist/web',
+  webDir: 'dist/web-android',
 };
 
 export default config;

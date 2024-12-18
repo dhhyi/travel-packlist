@@ -17,7 +17,7 @@ jobs:
         run: |
           npm install -g pnpm
           pnpm i --frozen-lockfile --prod
-          sh build-webapp.sh --base-href "/travel-packlist/"
+          pnpm exec nx build travel-packlist-web --configuration gh-pages
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
