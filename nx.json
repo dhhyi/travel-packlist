@@ -30,7 +30,8 @@
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint.config.js"
-      ]
+      ],
+      "dependsOn": ["*lint"]
     },
     "@nx/jest:jest": {
       "cache": true,
@@ -61,6 +62,14 @@
         "lightColor": "#f1f5f9",
         "darkColor": "#0f172a"
       }
+    },
+    "@travel-packlist/check-plugin:markdown": {
+      "inputs": [
+        "{projectRoot}/*.md",
+        "!{projectRoot}/CHANGELOG.md",
+        "{workspaceRoot}/*.md"
+      ],
+      "cache": true
     }
   },
   "plugins": [
@@ -74,6 +83,12 @@
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@travel-packlist/check-plugin",
+      "options": {
+        "exclude": ["CHANGELOG.md"]
       }
     }
   ],

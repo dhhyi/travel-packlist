@@ -16,14 +16,7 @@
       "format",
       "dev",
       "start"
-    ],
-    "targets": {
-      "format": {
-        "dependsOn": [
-          "util:markdownformat"
-        ]
-      }
-    }
+    ]
   },
   "private": true,
   "dependencies": {

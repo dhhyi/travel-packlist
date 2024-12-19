@@ -3,6 +3,10 @@
     "translations": {
       "implementation": "./src/executors/translations/executor",
       "schema": "./src/executors/translations/schema.json"
+    },
+    "markdown": {
+      "implementation": "./src/executors/markdown/executor",
+      "schema": "./src/executors/markdown/schema.json"
     }
   }
 }
