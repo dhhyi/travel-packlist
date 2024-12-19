@@ -5,6 +5,21 @@
   "projectType": "library",
   "tags": [],
   "targets": {
+    "markdown-schema2ts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "json2ts",
+        "input": "{projectRoot}/src/executors/markdown/schema.json",
+        "output": "{projectRoot}/src/executors/markdown/schema.d.ts"
+      },
+      "inputs": [
+        "{projectRoot}/src/executors/markdown/schema.json"
+      ],
+      "outputs": [
+        "{options.output}"
+      ],
+      "cache": true
+    },
     "translations-schema2ts": {
       "executor": "nx:run-commands",
       "options": {

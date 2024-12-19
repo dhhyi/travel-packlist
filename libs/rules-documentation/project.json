@@ -6,32 +6,15 @@
   "tags": [],
   "targets": {
     "lint": {
-      "executor": "nx:run-commands",
-      "dependsOn": [
-        "*lint"
-      ],
+      "executor": "@travel-packlist/check-plugin:markdown",
       "options": {
-        "command": "markdownlint --config ../../util/.markdownlint.json --fix src/doc/*.md",
-        "cwd": "{projectRoot}"
+        "pattern": "{projectRoot}/src/doc/*.md"
       },
       "inputs": [
-        "{workspaceRoot}/util/.markdownlint.json",
         "{projectRoot}/src/doc/*.md"
       ],
       "outputs": [
-        "{projectRoot}/src/doc/*.md"
-      ],
-      "cache": true
-    },
-    "markdownspelllint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "cspell --config ../../cspell.config.js src/doc/*.md",
-        "cwd": "{projectRoot}"
-      },
-      "inputs": [
-        "{workspaceRoot}/cspell.config.js",
-        "{projectRoot}/src/doc/*.md"
+        "{options.pattern}"
       ],
       "cache": true
     },

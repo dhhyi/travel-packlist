@@ -11,57 +11,7 @@
           "{workspaceRoot}/*.*",
           "{workspaceRoot}/util/**/*.*"
         ]
-      },
-      "dependsOn": [
-        "*lint"
-      ]
-    },
-    "markdownlint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "markdownlint --config util/.markdownlint.json --fix -i CHANGELOG.md {apps,libs}/*/*.md *.md",
-        "cwd": "{workspaceRoot}"
-      },
-      "inputs": [
-        "{workspaceRoot}/util/.markdownlint.json",
-        "{workspaceRoot}/apps/*/*.md",
-        "{workspaceRoot}/libs/*/*.md",
-        "{workspaceRoot}/*.md"
-      ],
-      "outputs": [
-        "{workspaceRoot}/apps/*/*.md",
-        "{workspaceRoot}/libs/*/*.md",
-        "{workspaceRoot}/README.md",
-        "{workspaceRoot}/RELEASING.md"
-      ],
-      "cache": true
-    },
-    "markdownspelllint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "cspell --config cspell.config.js {apps,libs}/*/*.md *.md --exclude CHANGELOG.md",
-        "cwd": "{workspaceRoot}"
-      },
-      "inputs": [
-        "{workspaceRoot}/cspell.config.js",
-        "{workspaceRoot}/apps/*/*.md",
-        "{workspaceRoot}/libs/*/*.md",
-        "{workspaceRoot}/*.md"
-      ],
-      "cache": true
-    },
-    "markdownformat": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "node util/format-markdown.mjs",
-        "cwd": "{workspaceRoot}"
-      },
-      "inputs": [
-        "{workspaceRoot}/apps/**/*.md",
-        "{workspaceRoot}/libs/**/*.md",
-        "{workspaceRoot}/*.md"
-      ],
-      "cache": true
+      }
     }
   }
 }
