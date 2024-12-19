@@ -1,0 +1,32 @@
+import {
+  EnvironmentProviders,
+  InjectionToken,
+  LOCALE_ID,
+  makeEnvironmentProviders,
+} from '@angular/core';
+
+<% for (const lang of languages) {
+%>import template_<%= lang %> from './lib/<%= lang %>';
+<% } %>
+
+export const RULES_TEMPLATE = new InjectionToken<string>(
+  'RULES_TEMPLATE',
+);
+
+function getRulesTemplate(locale: string): string {
+<% for (const lang of languages.filter(l => l !== 'default')) { %>
+  if (locale.startsWith('<%= lang %>')) {
+    return template_<%= lang %>;
+  }<% } %>
+  return template_default;
+}
+
+export function provideRulesTemplate(): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    {
+      provide: RULES_TEMPLATE,
+      useFactory: getRulesTemplate,
+      deps: [LOCALE_ID],
+    },
+  ]);
+}

@@ -4,6 +4,11 @@
       "factory": "./src/generators/icons/generator",
       "schema": "./src/generators/icons/schema.json",
       "description": "icons generator"
+    },
+    "templates": {
+      "factory": "./src/generators/templates/generator",
+      "schema": "./src/generators/templates/schema.json",
+      "description": "templates generator"
     }
   }
 }

@@ -1,0 +1,12 @@
+import { TestBed } from '@angular/core/testing';
+import { Parser } from '@travel-packlist/model';
+
+import template from './<%= lang %>';
+
+describe('<%= lang %> template', () => {
+  it('should parse', () => {
+    const parser = TestBed.inject(Parser);
+    const result = parser.parseRules(template);
+    expect(result).toBeDefined();
+  });
+});
