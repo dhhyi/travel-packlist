@@ -18,6 +18,7 @@
       "@travel-packlist/capacitor-assets": [
         "tools/capacitor-assets/src/index.ts"
       ],
+      "@travel-packlist/check-plugin": ["tools/check-plugin/src/index.ts"],
       "@travel-packlist/icons": ["libs/icons/src/index.ts"],
       "@travel-packlist/model": ["libs/model/src/index.ts"],
       "@travel-packlist/rules-documentation": [
