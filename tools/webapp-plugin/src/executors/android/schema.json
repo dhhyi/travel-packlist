@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Executor Schema",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "outputPath": {
+      "type": "string",
+      "description": "The output path for the application being built"
+    },
+    "assemblyTask": {
+      "type": "string",
+      "description": "The task to run to assemble the application"
+    },
+    "assetTask": {
+      "type": "string",
+      "description": "The task to run to generate assets with @capacitor/assets"
+    },
+    "bundles": {
+      "type": "array",
+      "description": "The list of bundles to build",
+      "items": {
+        "type": "string",
+        "enum": [
+          "AAB",
+          "APK"
+        ]
+      },
+      "default": [
+        "APK"
+      ]
+    }
+  },
+  "required": [
+    "assetTask",
+    "assemblyTask",
+    "outputPath",
+    "bundles"
+  ],
+  "additionalProperties": false
+}

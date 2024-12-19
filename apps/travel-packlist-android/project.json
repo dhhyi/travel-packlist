@@ -1,0 +1,53 @@
+{
+  "name": "travel-packlist-android",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": [
+    "travel-packlist"
+  ],
+  "targets": {
+    "generate-assets": {
+      "executor": "@travel-packlist/capacitor-assets:run",
+      "options": {
+        "type": "android"
+      }
+    },
+    "build": {
+      "executor": "@travel-packlist/webapp-plugin:android",
+      "dependsOn": [
+        "travel-packlist:build-required"
+      ],
+      "options": {
+        "assemblyTask": "travel-packlist-web:build:android",
+        "assetTask": "generate-assets",
+        "outputPath": "dist/android"
+      },
+      "configurations": {
+        "all-bundles": {
+          "bundles": [
+            "AAB",
+            "APK"
+          ]
+        }
+      },
+      "inputs": [
+        "^production"
+      ],
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "cache": true
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "commands": [
+          "pnpm cap run android"
+        ]
+      }
+    }
+  }
+}

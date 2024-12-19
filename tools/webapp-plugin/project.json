@@ -20,6 +20,21 @@
       ],
       "cache": true
     },
+    "android-schema2ts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "json2ts",
+        "input": "{projectRoot}/src/executors/android/schema.json",
+        "output": "{projectRoot}/src/executors/android/schema.d.ts"
+      },
+      "inputs": [
+        "{projectRoot}/src/executors/android/schema.json"
+      ],
+      "outputs": [
+        "{options.output}"
+      ],
+      "cache": true
+    },
     "build": {
       "executor": "@nx/js:tsc",
       "dependsOn": [
