@@ -69,7 +69,8 @@
     "@nx/js:tsc": {
       "cache": true,
       "dependsOn": [
-        "^build"
+        "^build",
+        "schema2ts-*"
       ],
       "inputs": [
         "production",
@@ -126,7 +127,8 @@
           "CHANGELOG.md"
         ]
       }
-    }
+    },
+    "@travel-packlist/json-schema-to-typescript"
   ],
   "generators": {
     "@nx/angular:application": {

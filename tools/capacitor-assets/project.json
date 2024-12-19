@@ -5,26 +5,8 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "schema2ts": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "json2ts",
-        "input": "{projectRoot}/src/executors/schema.json",
-        "output": "{projectRoot}/src/executors/schema.d.ts"
-      },
-      "inputs": [
-        "{projectRoot}/src/executors/schema.json"
-      ],
-      "outputs": [
-        "{options.output}"
-      ],
-      "cache": true
-    },
     "build": {
       "executor": "@nx/js:tsc",
-      "dependsOn": [
-        "schema2ts"
-      ],
       "outputs": [
         "{options.outputPath}"
       ],

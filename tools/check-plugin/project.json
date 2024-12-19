@@ -5,41 +5,8 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "markdown-schema2ts": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "json2ts",
-        "input": "{projectRoot}/src/executors/markdown/schema.json",
-        "output": "{projectRoot}/src/executors/markdown/schema.d.ts"
-      },
-      "inputs": [
-        "{projectRoot}/src/executors/markdown/schema.json"
-      ],
-      "outputs": [
-        "{options.output}"
-      ],
-      "cache": true
-    },
-    "translations-schema2ts": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "json2ts",
-        "input": "{projectRoot}/src/executors/translations/schema.json",
-        "output": "{projectRoot}/src/executors/translations/schema.d.ts"
-      },
-      "inputs": [
-        "{projectRoot}/src/executors/translations/schema.json"
-      ],
-      "outputs": [
-        "{options.output}"
-      ],
-      "cache": true
-    },
     "build": {
       "executor": "@nx/js:tsc",
-      "dependsOn": [
-        "*-schema2ts"
-      ],
       "outputs": [
         "{options.outputPath}"
       ],

@@ -1,5 +1,5 @@
 {
-  "name": "webapp-plugin",
+  "name": "json-schema-to-typescript",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "{projectRoot}/src",
   "projectType": "library",
