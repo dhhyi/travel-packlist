@@ -1,0 +1,16 @@
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+
+/**
+ * icon for <%= icon %>
+ *
+ * this file is generated
+ */
+@Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-<%= icon %>',
+  standalone: true,
+  templateUrl: './<%= name %>.html',
+})
+export class <%= classify(icon) %>Component {
+  readonly class = input<string>('h-[1rem] <% if (icon.startsWith('flag')) { %>w-[1.25rem]<% } else { %>w-[1rem]<% } %>');
+}

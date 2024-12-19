@@ -19,6 +19,9 @@
         "tools/capacitor-assets/src/index.ts"
       ],
       "@travel-packlist/check-plugin": ["tools/check-plugin/src/index.ts"],
+      "@travel-packlist/generate-plugin": [
+        "tools/generate-plugin/src/index.ts"
+      ],
       "@travel-packlist/icons": ["libs/icons/src/index.ts"],
       "@travel-packlist/json-schema-to-typescript": [
         "tools/json-schema-to-typescript/src/index.ts"

@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "icons": {
+      "factory": "./src/generators/icons/generator",
+      "schema": "./src/generators/icons/schema.json",
+      "description": "icons generator"
+    }
+  }
+}

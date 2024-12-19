@@ -1,0 +1,3 @@
+<% for (const { icon, relative } of icons) {
+%>export { <%= classify(icon) %>Component } from '<%= relative %>';
+<% } %>
