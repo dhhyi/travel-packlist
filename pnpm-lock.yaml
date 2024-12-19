@@ -192,6 +192,9 @@ importers:
       markdownlint-cli:
         specifier: ^0.43.0
         version: 0.43.0
+      nx-stylelint:
+        specifier: ^18.0.0
+        version: 18.0.0(nx@20.2.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(stylelint-config-standard@36.0.1(stylelint@16.12.0(typescript@5.6.3)))(stylelint@16.12.0(typescript@5.6.3))(typescript@5.6.3)
       onchange:
         specifier: ^7.1.0
         version: 7.1.0
@@ -207,9 +210,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.9
         version: 0.6.9(prettier@3.4.2)
-      stylelint:
-        specifier: ^16.11.0
-        version: 16.12.0(typescript@5.6.3)
       stylelint-config-standard:
         specifier: ^36.0.1
         version: 36.0.1(stylelint@16.12.0(typescript@5.6.3))
@@ -6242,6 +6242,19 @@ packages:
 
   nwsapi@2.2.16:
     resolution: {integrity: sha512-F1I/bimDpj3ncaNDhfyMWuFqmQDBwDB0Fogc2qpL3BWvkQteFD/8BzWuIRl83rq0DXfm8SGt/HFhLXZyljTXcQ==}
+
+  nx-stylelint@18.0.0:
+    resolution: {integrity: sha512-q3SivGO9FFugQ0UhhVXNxfuvo/wyXgogmYe7IvaXqqDyS4N+wZ3l4JERKsEe0X16W5lykRys/2zzIoCpqoKlSw==}
+    engines: {node: ^18.13.0 || ^20.9.0 || >=22.0.0}
+    peerDependencies:
+      stylelint: ^16.0.0
+      stylelint-config-standard: '>=35.0.0'
+      stylelint-config-standard-scss: '>=12.0.0'
+    peerDependenciesMeta:
+      stylelint-config-standard:
+        optional: true
+      stylelint-config-standard-scss:
+        optional: true
 
   nx@20.2.2:
     resolution: {integrity: sha512-wHgC/NQ82Q3LOeUZXPI2j/JhpZwb7JjRc0uDn3kQU+lN/ulySCJHTHCf4CIglW4NjZeN1WZZ7YMeddtFWETGGA==}
@@ -15649,6 +15662,18 @@ snapshots:
       boolbase: 1.0.0
 
   nwsapi@2.2.16: {}
+
+  nx-stylelint@18.0.0(nx@20.2.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))(stylelint-config-standard@36.0.1(stylelint@16.12.0(typescript@5.6.3)))(stylelint@16.12.0(typescript@5.6.3))(typescript@5.6.3):
+    dependencies:
+      '@nx/devkit': 20.2.2(nx@20.2.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      cosmiconfig: 9.0.0(typescript@5.6.3)
+      stylelint: 16.12.0(typescript@5.6.3)
+      tslib: 2.8.1
+    optionalDependencies:
+      stylelint-config-standard: 36.0.1(stylelint@16.12.0(typescript@5.6.3))
+    transitivePeerDependencies:
+      - nx
+      - typescript
 
   nx@20.2.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.6.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)):
     dependencies:

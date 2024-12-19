@@ -10,7 +10,8 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/.stylelintrc.json"
     ],
     "sharedGlobals": [
       "{workspaceRoot}/util/versioning-helpers.js",
@@ -61,6 +62,16 @@
         "lightColor": "#f1f5f9",
         "darkColor": "#0f172a"
       }
+    },
+    "nx-stylelint:lint": {
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.scss"]
+      },
+      "inputs": [
+        "{projectRoot}/**/*.{css,scss}",
+        "{workspaceRoot}/util/.stylelintrc.json"
+      ],
+      "cache": true
     }
   },
   "plugins": [
