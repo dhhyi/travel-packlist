@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "title": "Generator Schema",
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string",
+      "description": "The source root of the project"
+    },
+    "pattern": {
+      "type": "string",
+      "description": "The pattern form matching icons"
+    }
+  },
+  "required": [
+    "path",
+    "pattern"
+  ],
+  "additionalProperties": false
+}

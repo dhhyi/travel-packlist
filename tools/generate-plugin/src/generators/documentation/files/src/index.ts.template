@@ -1,0 +1,32 @@
+import {
+  EnvironmentProviders,
+  InjectionToken,
+  LOCALE_ID,
+  makeEnvironmentProviders,
+} from '@angular/core';
+
+<% for (const lang of languages) {
+%>import documentation_<%= lang %> from './lib/<%= lang %>';
+<% } %>
+
+export const RULES_DOCUMENTATION = new InjectionToken<string>(
+  'RULES_DOCUMENTATION',
+);
+
+function getRulesDocumentation(locale: string): string {
+<% for (const lang of languages.filter(l => l !== 'default')) { %>
+  if (locale.startsWith('<%= lang %>')) {
+    return documentation_<%= lang %>;
+  }<% } %>
+  return documentation_default;
+}
+
+export function provideRulesDocumentation(): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    {
+      provide: RULES_DOCUMENTATION,
+      useFactory: getRulesDocumentation,
+      deps: [LOCALE_ID],
+    },
+  ]);
+}
