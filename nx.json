@@ -13,7 +13,8 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/.stylelintrc.json"
     ],
     "sharedGlobals": [
       "{workspaceRoot}/util/versioning-helpers.js",
@@ -89,6 +90,18 @@
         "{projectRoot}/*.md",
         "!{projectRoot}/CHANGELOG.md",
         "{workspaceRoot}/*.md"
+      ],
+      "cache": true
+    },
+    "nx-stylelint:lint": {
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.scss"
+        ]
+      },
+      "inputs": [
+        "{projectRoot}/**/*.{css,scss}",
+        "{workspaceRoot}/util/.stylelintrc.json"
       ],
       "cache": true
     }

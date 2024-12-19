@@ -4,13 +4,13 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "{projectRoot}/src",
-  "tags": [],
   "i18n": {
     "sourceLocale": "en",
     "locales": {
       "de": "libs/locale/src/messages.de.json"
     }
   },
+  "tags": [],
   "targets": {
     "build-required": {
       "executor": "nx:noop",
@@ -146,29 +146,15 @@
       ],
       "cache": true
     },
-    "stylelint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "stylelint",
-        "args": [
-          "--config",
-          ".stylelintrc.json",
-          "src/**/*.scss"
-        ],
-        "cwd": "{projectRoot}"
-      },
-      "inputs": [
-        "{projectRoot}/.stylelintrc.json",
-        "{projectRoot}/src/**/*.scss"
-      ],
-      "cache": true
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "dependsOn": [
         "*lint",
         "^build"
       ]
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint"
     }
   }
 }
