@@ -17,13 +17,11 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node convert-documentation.mjs",
-        "cwd": "{projectRoot}"
+        "command": "nx g @travel-packlist/generate-plugin:documentation",
+        "path": "{projectRoot}/src",
+        "pattern": "{projectRoot}/src/doc/documentation*.md"
       },
-      "inputs": [
-        "{projectRoot}/src/doc/documentation*.md",
-        "{projectRoot}/convert-documentation.mjs"
-      ],
+      "inputs": ["{projectRoot}/src/doc/documentation*.md"],
       "outputs": ["{projectRoot}/src/lib/*.ts", "{projectRoot}/src/index.ts"],
       "cache": true
     }

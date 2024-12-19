@@ -9,6 +9,11 @@
       "factory": "./src/generators/templates/generator",
       "schema": "./src/generators/templates/schema.json",
       "description": "templates generator"
+    },
+    "documentation": {
+      "factory": "./src/generators/documentation/generator",
+      "schema": "./src/generators/documentation/schema.json",
+      "description": "documentation generator"
     }
   }
 }
