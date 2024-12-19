@@ -3,6 +3,10 @@
     "assemble": {
       "implementation": "./src/executors/assemble/executor",
       "schema": "./src/executors/assemble/schema.json"
+    },
+    "android": {
+      "implementation": "./src/executors/android/executor",
+      "schema": "./src/executors/android/schema.json"
     }
   }
 }

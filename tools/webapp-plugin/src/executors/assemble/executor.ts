@@ -16,6 +16,11 @@ import {
   existsSync,
 } from 'fs';
 
+import {
+  moveFile,
+  removeDirectoryRecursive,
+  updateFile,
+} from '../../file-operations';
 import { ExecutorSchema } from './schema';
 
 function consolidateOptions(
@@ -128,31 +133,6 @@ function fixFileHashes(folder: string) {
     writeFileSync(`${folder}/${f.currentName}`, f.content);
   });
 }
-
-const moveFile = (
-  from: string,
-  to: string,
-  modify: (content: string) => string = (x) => x,
-) => {
-  writeFileSync(to, modify(readFileSync(from, { encoding: 'utf-8' })));
-  unlinkSync(from);
-};
-
-const updateFile = (path: string, modify: (content: string) => string) => {
-  writeFileSync(path, modify(readFileSync(path, { encoding: 'utf-8' })));
-};
-
-const removeDirectoryRecursive = (path: string) => {
-  readdirSync(path).forEach((file) => {
-    const curPath = `${path}/${file}`;
-    if (statSync(curPath).isDirectory()) {
-      removeDirectoryRecursive(curPath);
-    } else {
-      unlinkSync(curPath);
-    }
-  });
-  rmdirSync(path);
-};
 
 /**
  * merges multiple Angular apps into the same folder

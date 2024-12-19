@@ -25,6 +25,7 @@
       ],
       "@travel-packlist/rules-template": ["libs/rules-template/src/index.ts"],
       "@travel-packlist/state": ["libs/state/src/index.ts"],
+      "@travel-packlist/versioning": ["util/versioning-helpers.js"],
       "@travel-packlist/webapp-plugin": ["tools/webapp-plugin/src/index.ts"]
     }
   },
