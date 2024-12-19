@@ -52,7 +52,7 @@
     },
     "@nx/js:tsc": {
       "cache": true,
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "schema2ts-*"],
       "inputs": ["production", "^production"]
     },
     "@travel-packlist/capacitor-assets:run": {
@@ -101,7 +101,8 @@
       "options": {
         "exclude": ["CHANGELOG.md"]
       }
-    }
+    },
+    "@travel-packlist/json-schema-to-typescript"
   ],
   "generators": {
     "@nx/angular:application": {
