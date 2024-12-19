@@ -1,0 +1,8 @@
+{
+  "executors": {
+    "translations": {
+      "implementation": "./src/executors/translations/executor",
+      "schema": "./src/executors/translations/schema.json"
+    }
+  }
+}

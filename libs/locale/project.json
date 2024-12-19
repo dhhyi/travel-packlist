@@ -6,20 +6,20 @@
   "tags": [],
   "targets": {
     "lint": {
-      "executor": "nx:run-commands",
+      "executor": "@travel-packlist/check-plugin:translations",
       "dependsOn": [
         "travel-packlist:extract-i18n"
       ],
       "options": {
-        "command": "node check-translations.mjs",
-        "cwd": "{projectRoot}"
+        "pattern": "{projectRoot}/src/messages*.json",
+        "defaultLocale": "en"
       },
       "inputs": [
         "{projectRoot}/src/messages*.json",
         "{projectRoot}/check-translations.mjs"
       ],
       "outputs": [
-        "{projectRoot}/src/messages*.json"
+        "{options.pattern}"
       ],
       "cache": true
     }
