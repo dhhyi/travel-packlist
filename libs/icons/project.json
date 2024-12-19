@@ -8,11 +8,11 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node generate-icons.mjs",
-        "cwd": "{projectRoot}"
+        "command": "nx g @travel-packlist/generate-plugin:icons",
+        "path": "{projectRoot}/src",
+        "pattern": "{projectRoot}/src/lib/**/*.html"
       },
       "inputs": [
-        "{projectRoot}/generate-icons.mjs",
         "{projectRoot}/src/lib/**/*.html"
       ],
       "outputs": [
