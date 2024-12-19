@@ -8,12 +8,12 @@
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node convert-templates.mjs",
-        "cwd": "{projectRoot}"
+        "command": "nx g @travel-packlist/generate-plugin:templates",
+        "path": "{projectRoot}/src",
+        "pattern": "{projectRoot}/src/txt/template*.txt"
       },
       "inputs": [
-        "{projectRoot}/src/txt/template*.txt",
-        "{projectRoot}/convert-templates.mjs"
+        "{projectRoot}/src/txt/template*.txt"
       ],
       "outputs": [
         "{projectRoot}/src/lib/*.ts",
