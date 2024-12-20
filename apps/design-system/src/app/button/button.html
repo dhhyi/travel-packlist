@@ -1,0 +1,35 @@
+<ng-template #svg>
+  <div>
+    <svg class="h-4 w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5l7 7-7 7"
+      ></path>
+    </svg>
+  </div>
+</ng-template>
+
+<div class="flex flex-col gap-y-4">
+  <button>{{ text || 'Primary Button' }}</button>
+  <button disabled>{{ text || 'Primary Button' }}</button>
+
+  <button class="secondary">{{ text || 'Secondary Button' }}</button>
+
+  <button class="red">{{ text || 'Red Button' }}</button>
+
+  <button class="link">{{ text || 'Link Button' }}</button>
+  <button class="link" disabled>{{ text || 'Link Button' }}</button>
+  <button class="link active">{{ text || 'Link Button' }}</button>
+
+  <button class="link">
+    <ng-container *ngTemplateOutlet="svg"></ng-container>
+  </button>
+  <button class="link" disabled>
+    <ng-container *ngTemplateOutlet="svg"></ng-container>
+  </button>
+  <button class="link active">
+    <ng-container *ngTemplateOutlet="svg"></ng-container>
+  </button>
+</div>

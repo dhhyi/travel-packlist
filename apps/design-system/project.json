@@ -1,0 +1,69 @@
+{
+  "name": "design-system",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "implicitDependencies": [
+    "travel-packlist"
+  ],
+  "targets": {
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "{projectRoot}/.storybook",
+        "browserTarget": "design-system:build",
+        "compodoc": false,
+        "styles": [
+          "apps/travel-packlist/src/styles.scss"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": [
+        "{options.outputDir}"
+      ],
+      "options": {
+        "outputDir": "dist/{projectRoot}",
+        "configDir": "{projectRoot}/.storybook",
+        "browserTarget": "design-system:build",
+        "compodoc": false,
+        "styles": [
+          "apps/travel-packlist/src/styles.scss"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c {projectRoot}/.storybook --url=http://localhost:4400"
+      }
+    },
+    "serve": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "design-system:build",
+        "staticFilePath": "dist/{projectRoot}",
+        "spa": true
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "design-system:build:ci"
+        }
+      }
+    }
+  }
+}
