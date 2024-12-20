@@ -23,8 +23,7 @@
         "terminal.integrated.defaultProfile.linux": "tmux",
         "terminal.integrated.profiles.linux": {
           "tmux": {
-            "args": ["new-session", "-A", "-s", "tmux"],
-            "path": "tmux"
+            "path": "/tmux-or-else.sh"
           }
         }
       },

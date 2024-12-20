@@ -6,6 +6,15 @@ devcontainer:
       - tmux
     user:
       - RUN echo "alias ng='pnpm ng'" | tee -a $HOME/.bashrc $HOME/.zshrc
+    files:
+      - type: script
+        path: /tmux-or-else.sh
+        content: |
+          #!/bin/bash
+          if [ -z "$*" ]; then
+            tmux new-session -A -s tmux
+          fi
+          exec sh "$@"
   ports:
     - 4200
 extras:
@@ -28,12 +37,7 @@ vscode:
     editor.defaultFormatter: esbenp.prettier-vscode
     terminal.integrated.profiles.linux:
       tmux:
-        path: tmux
-        args:
-          - new-session
-          - "-A"
-          - "-s"
-          - tmux
+        path: /tmux-or-else.sh
     terminal.integrated.defaultProfile.linux: tmux
     tailwindCSS.classAttributes:
       - class
