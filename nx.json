@@ -147,5 +147,6 @@
       "skipTests": true,
       "changeDetection": "OnPush"
     }
-  }
+  },
+  "nxCloudId": "676534afe3d486b0dc961fdf"
 }
