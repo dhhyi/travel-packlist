@@ -16,6 +16,11 @@
       },
       "description": "The exclude patterns to ignore the files",
       "default": []
+    },
+    "fix": {
+      "type": "boolean",
+      "description": "Whether to fix the issues automatically",
+      "default": false
     }
   },
   "required": [

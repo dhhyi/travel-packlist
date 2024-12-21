@@ -60,6 +60,9 @@
     },
     "stylelint": {
       "executor": "nx-stylelint:lint"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
     }
   }
 }

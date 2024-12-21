@@ -48,10 +48,30 @@
         "{workspaceRoot}/eslint.config.js"
       ],
       "dependsOn": [
+        "generate",
+        "*lint"
+      ],
+      "configurations": {
+        "pre-commit": {
+          "fix": true,
+          "maxWarnings": 0
+        },
+        "ci": {
+          "fix": false,
+          "maxWarnings": 0
+        }
+      }
+    },
+    "lint": {
+      "dependsOn": [
+        "generate",
         "*lint"
       ]
     },
     "@nx/jest:jest": {
+      "dependsOn": [
+        "generate"
+      ],
       "cache": true,
       "inputs": [
         "default",
@@ -99,7 +119,15 @@
         "!{projectRoot}/CHANGELOG.md",
         "{workspaceRoot}/*.md"
       ],
-      "cache": true
+      "cache": true,
+      "configurations": {
+        "pre-commit": {
+          "fix": true
+        },
+        "ci": {
+          "fix": false
+        }
+      }
     },
     "nx-stylelint:lint": {
       "options": {

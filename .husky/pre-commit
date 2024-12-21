@@ -29,7 +29,7 @@ then
 fi
 
 pnpm install --frozen-lockfile
-pnpm exec nx affected -t lint,test,format --nxBail || cleanup
+pnpm exec nx affected -t lint,test,format --nxBail --configuration pre-commit || cleanup
 
 if is_husky
 then

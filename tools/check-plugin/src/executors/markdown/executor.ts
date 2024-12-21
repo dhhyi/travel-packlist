@@ -5,7 +5,7 @@ import { globSync } from 'glob';
 
 import { ExecutorSchema } from './schema';
 
-function enforceNewlinesInFile(file: string): void {
+function enforceNewlinesInFile(file: string, options: ExecutorSchema): void {
   const fileContent = fs.readFileSync(file, { encoding: 'utf-8' });
   const newContent = fileContent
     .split('\n')
@@ -18,11 +18,17 @@ function enforceNewlinesInFile(file: string): void {
     })
     .join('\n');
   if (newContent !== fileContent) {
-    fs.writeFileSync(file, newContent);
+    if (options.fix) {
+      fs.writeFileSync(file, newContent);
+    } else {
+      throw new Error(
+        `File ${file} does not have a newline after every sentence. Run with --fix to fix.`,
+      );
+    }
   }
 }
 
-function runMarkdownLint(context, files: string[]) {
+function runMarkdownLint(context, files: string[], options: ExecutorSchema) {
   let markdownLintConfig = `${context.projectsConfigurations.projects[context.projectName].root}/.markdownlint.json`;
   if (!fs.existsSync(markdownLintConfig)) {
     markdownLintConfig = `${context.root}/.markdownlint.json`;
@@ -31,7 +37,11 @@ function runMarkdownLint(context, files: string[]) {
     }
   }
   console.log(`Running markdownlint with config: ${markdownLintConfig}`);
-  execSync(`markdownlint --config ${markdownLintConfig} ${files.join(' ')}`, {
+  const command = ['markdownlint', '--config', markdownLintConfig];
+  if (options.fix) {
+    command.push('--fix');
+  }
+  execSync(command.concat(files).join(' '), {
     stdio: 'inherit',
   });
 }
@@ -56,8 +66,8 @@ const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
       throw new Error(`No files found for pattern: ${options.pattern}`);
     }
 
-    files.forEach(enforceNewlinesInFile);
-    runMarkdownLint(context, files);
+    files.forEach((file) => enforceNewlinesInFile(file, options));
+    runMarkdownLint(context, files, options);
     runCspellCheck(context, files);
 
     return { success: true };

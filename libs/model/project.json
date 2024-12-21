@@ -5,7 +5,7 @@
   "projectType": "library",
   "tags": [],
   "targets": {
-    "build": {
+    "generate": {
       "executor": "nx:run-commands",
       "cache": true,
       "options": {
@@ -22,9 +22,6 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "dependsOn": [
-        "build"
-      ],
       "outputs": [
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
@@ -33,10 +30,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "dependsOn": [
-        "build"
-      ]
+      "executor": "@nx/eslint:lint"
     }
   }
 }

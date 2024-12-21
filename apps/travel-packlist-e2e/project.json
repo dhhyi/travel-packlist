@@ -6,5 +6,9 @@
   "implicitDependencies": [
     "travel-packlist"
   ],
-  "targets": {}
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
 }
