@@ -1,6 +1,5 @@
-const sharedConfig = require('../../apps/travel-packlist/tailwind.config');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  ...sharedConfig,
+  content: ['{apps,libs}/**/src/**/!(*.stories|*.spec).{ts,html}'],
+  presets: [require('./tailwind.theme')],
 };

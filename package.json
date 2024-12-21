@@ -9,12 +9,14 @@
     "prepare": "husky",
     "format": "nx format --all",
     "dev": "nx serve travel-packlist",
+    "design": "nx storybook design-system",
     "start": "nx serve travel-packlist-web"
   },
   "nx": {
     "includedScripts": [
       "format",
       "dev",
+      "design",
       "start"
     ],
     "targets": {

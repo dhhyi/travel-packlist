@@ -5,6 +5,10 @@
       "{projectRoot}/**/*",
       "sharedGlobals"
     ],
+    "design": [
+      "{workspaceRoot}/apps/design-system/src/**/*.scss",
+      "{workspaceRoot}/apps/design-system/tailwind.*.js"
+    ],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",

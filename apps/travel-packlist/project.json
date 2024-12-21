@@ -10,6 +10,9 @@
       "de": "libs/locale/src/messages.de.json"
     }
   },
+  "implicitDependencies": [
+    "!design-system"
+  ],
   "tags": [],
   "targets": {
     "build-required": {
@@ -41,7 +44,8 @@
       ],
       "inputs": [
         "default",
-        "^production"
+        "^production",
+        "design"
       ],
       "outputs": [
         "{options.outputPath}"
@@ -63,7 +67,7 @@
           }
         ],
         "styles": [
-          "{projectRoot}/src/styles.scss"
+          "apps/design-system/src/styles.scss"
         ],
         "scripts": [],
         "define": {
@@ -152,9 +156,6 @@
         "*lint",
         "^build"
       ]
-    },
-    "stylelint": {
-      "executor": "nx-stylelint:lint"
     }
   }
 }

@@ -2,52 +2,43 @@
   "name": "design-system",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "implicitDependencies": [
-    "travel-packlist"
-  ],
   "targets": {
     "storybook": {
       "executor": "@storybook/angular:start-storybook",
       "options": {
-        "port": 4400,
-        "configDir": "{projectRoot}/.storybook",
+        "port": 4444,
+        "host": "0.0.0.0",
+        "configDir": "{projectRoot}/storybook",
         "browserTarget": "design-system:build",
         "compodoc": false,
         "styles": [
-          "apps/travel-packlist/src/styles.scss"
+          "{projectRoot}/src/styles.scss"
         ]
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
       }
     },
     "build": {
       "executor": "@storybook/angular:build-storybook",
-      "outputs": [
-        "{options.outputDir}"
-      ],
       "options": {
         "outputDir": "dist/{projectRoot}",
-        "configDir": "{projectRoot}/.storybook",
+        "configDir": "{projectRoot}/storybook",
         "browserTarget": "design-system:build",
         "compodoc": false,
         "styles": [
-          "apps/travel-packlist/src/styles.scss"
+          "{projectRoot}/src/styles.scss"
         ]
       },
       "configurations": {
         "ci": {
           "quiet": true
         }
-      }
-    },
-    "test-storybook": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "test-storybook -c {projectRoot}/.storybook --url=http://localhost:4400"
-      }
+      },
+      "inputs": [
+        "default"
+      ],
+      "outputs": [
+        "{options.outputDir}"
+      ],
+      "cache": true
     },
     "serve": {
       "executor": "@nx/web:file-server",
@@ -57,6 +48,8 @@
       "options": {
         "buildTarget": "design-system:build",
         "staticFilePath": "dist/{projectRoot}",
+        "port": 4444,
+        "host": "0.0.0.0",
         "spa": true
       },
       "configurations": {
@@ -64,6 +57,9 @@
           "buildTarget": "design-system:build:ci"
         }
       }
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint"
     }
   }
 }
