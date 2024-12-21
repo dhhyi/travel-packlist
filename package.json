@@ -1,5 +1,5 @@
 {
-  "name": "@travel-packlist/root",
+  "name": "@travel-packlist",
   "version": "0.3.3",
   "license": "MIT",
   "scripts": {
@@ -16,7 +16,24 @@
       "format",
       "dev",
       "start"
-    ]
+    ],
+    "targets": {
+      "lint": {
+        "executor": "@nx/eslint:lint",
+        "options": {
+          "lintFilePatterns": [
+            "*.*",
+            "util/*.*"
+          ]
+        }
+      },
+      "markdownlint": {
+        "executor": "@travel-packlist/check-plugin:markdown",
+        "options": {
+          "pattern": "*.md"
+        }
+      }
+    }
   },
   "private": true,
   "dependencies": {

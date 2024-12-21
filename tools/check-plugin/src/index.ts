@@ -16,18 +16,17 @@ export const createNodesV2: CreateNodesV2<object> = [
 
 async function createNodesInternal(configFilePath: string, options: object) {
   const projectRoot = dirname(configFilePath).replace(/\\/g, '/');
-  const project = projectRoot === '.' ? 'util' : projectRoot;
 
   const isProject =
-    existsSync(join(project, 'project.json')) ||
-    existsSync(join(project, 'package.json'));
+    existsSync(join(projectRoot, 'project.json')) ||
+    existsSync(join(projectRoot, 'package.json'));
   if (!isProject) {
     return {};
   }
 
   return {
     projects: {
-      [project]: {
+      [projectRoot]: {
         targets: {
           markdownlint: {
             executor: '@travel-packlist/check-plugin:markdown',
