@@ -3,7 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "{projectRoot}/src",
   "projectType": "library",
-  "tags": [],
+  "tags": [
+    "scope:state"
+  ],
   "targets": {
     "generate": {
       "executor": "nx:run-commands",

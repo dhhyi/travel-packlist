@@ -3,7 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "{projectRoot}/src",
   "projectType": "library",
-  "tags": [],
+  "tags": [
+    "localized"
+  ],
   "targets": {
     "lint": {
       "executor": "@travel-packlist/check-plugin:translations",

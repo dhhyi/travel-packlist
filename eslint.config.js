@@ -17,8 +17,28 @@ module.exports = [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
           depConstraints: [
             {
-              onlyDependOnLibsWithTags: ['*'],
-              sourceTag: '*',
+              onlyDependOnLibsWithTags: ['scope:main'],
+              sourceTag: 'scope:testing',
+            },
+            {
+              onlyDependOnLibsWithTags: ['scope:state', 'scope:generated'],
+              sourceTag: 'scope:main',
+            },
+            {
+              onlyDependOnLibsWithTags: ['scope:generated', 'scope:state'],
+              sourceTag: 'scope:design',
+            },
+            {
+              onlyDependOnLibsWithTags: ['scope:generated', 'scope:state'],
+              sourceTag: 'scope:state',
+            },
+            {
+              notDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:generated',
+            },
+            {
+              notDependOnLibsWithTags: ['*'],
+              sourceTag: 'plugin',
             },
           ],
           enforceBuildableLibDependency: true,

@@ -2,7 +2,10 @@
   "name": "rules-template",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "{projectRoot}/src",
-  "tags": [],
+  "tags": [
+    "scope:generated",
+    "localized"
+  ],
   "projectType": "library",
   "targets": {
     "generate": {

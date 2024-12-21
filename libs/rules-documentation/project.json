@@ -3,7 +3,10 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "{projectRoot}/src",
   "projectType": "library",
-  "tags": [],
+  "tags": [
+    "scope:generated",
+    "localized"
+  ],
   "targets": {
     "lint": {
       "executor": "@travel-packlist/check-plugin:markdown",

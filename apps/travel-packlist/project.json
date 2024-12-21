@@ -4,6 +4,9 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:main"
+  ],
   "i18n": {
     "sourceLocale": "en",
     "locales": {
@@ -13,7 +16,6 @@
   "implicitDependencies": [
     "!design-system"
   ],
-  "tags": [],
   "targets": {
     "build-required": {
       "executor": "nx:noop",
