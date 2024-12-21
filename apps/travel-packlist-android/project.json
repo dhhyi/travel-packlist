@@ -23,7 +23,7 @@
         "outputPath": "dist/android"
       },
       "configurations": {
-        "all-bundles": {
+        "ci": {
           "bundles": [
             "AAB",
             "APK"

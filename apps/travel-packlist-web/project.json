@@ -21,7 +21,7 @@
           "buildTarget": "travel-packlist:build:android",
           "outputPath": "dist/web-android"
         },
-        "gh-pages": {
+        "ci": {
           "buildTarget": "travel-packlist:build:production",
           "baseHref": "/travel-packlist/",
           "outputPath": "dist/web"
