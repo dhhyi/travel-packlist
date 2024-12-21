@@ -1,0 +1,51 @@
+<div class="flex h-12 items-center justify-center gap-2">
+  @if (selectedColor(); as color) {
+  <div>You selected: {{color}}</div>
+  <div class="text-sm">(Copied to clipboard)</div>
+  } @else {
+  <div>Click on a color to select it.</div>
+  }
+</div>
+
+<fieldset>
+  <legend>slate</legend>
+  <div class="color bg-slate-100"></div>
+  <div class="color bg-slate-200"></div>
+  <div class="color bg-slate-300"></div>
+  <div class="color bg-slate-400"></div>
+  <div class="color bg-slate-500"></div>
+  <div class="color bg-slate-600"></div>
+  <div class="color bg-slate-700"></div>
+  <div class="color bg-slate-800"></div>
+  <div class="color bg-slate-900"></div>
+</fieldset>
+
+<fieldset>
+  <legend>grayscale</legend>
+  <div class="color bg-white"></div>
+  <div class="color bg-gray-100"></div>
+  <div class="color bg-gray-300"></div>
+  <div class="color bg-gray-500"></div>
+  <div class="color bg-gray-700"></div>
+  <div class="color bg-gray-900"></div>
+  <div class="color bg-black"></div>
+</fieldset>
+
+<div class="flex gap-4">
+  <fieldset>
+    <legend>green</legend>
+    <div class="color bg-green-light"></div>
+    <div class="color bg-green-normal"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>red</legend>
+    <div class="color bg-red-light"></div>
+    <div class="color bg-red-normal"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>yellow</legend>
+    <div class="color bg-yellow-normal"></div>
+  </fieldset>
+</div>

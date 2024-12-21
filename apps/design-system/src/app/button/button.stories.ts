@@ -2,10 +2,11 @@ import type { Meta, StoryObj } from '@storybook/angular';
 
 import { NgTemplateOutlet } from '@angular/common';
 import { Component } from '@angular/core';
+import { IconCogComponent } from '@travel-packlist/icons';
 
 @Component({
   standalone: true,
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, IconCogComponent],
   selector: 'ds-button',
   templateUrl: './button.html',
   styles: `
@@ -15,6 +16,10 @@ import { Component } from '@angular/core';
     div {
       @apply content-center text-center;
     }
+
+    :host > div {
+      @apply mb-8;
+    }
   `,
 })
 class Button {
@@ -23,7 +28,7 @@ class Button {
 
 const meta: Meta<Button> = {
   component: Button,
-  title: 'General/Buttons',
+  title: 'Components/Buttons',
   argTypes: {
     text: { control: 'text' },
   },

@@ -17,7 +17,17 @@ const theme = {
       light: colors.red[500],
       normal: colors.red[700],
     },
-    slate: colors.slate,
+    slate: {
+      100: colors.slate[100],
+      200: colors.slate[200],
+      300: colors.slate[300],
+      400: colors.slate[400],
+      500: colors.slate[500],
+      600: colors.slate[600],
+      700: colors.slate[700],
+      800: colors.slate[800],
+      900: colors.slate[900],
+    },
     transparent: colors.transparent,
     white: colors.white,
     yellow: {

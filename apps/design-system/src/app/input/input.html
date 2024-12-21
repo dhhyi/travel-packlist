@@ -1,0 +1,45 @@
+<input type="text" placeholder="input" />
+
+<input type="text" value="disabled input" disabled />
+
+<select>
+  <option value="1">select</option>
+  <option value="2">option 1</option>
+  <option value="3">option 2</option>
+</select>
+
+<div>
+  <input type="checkbox" id="checkbox1" />
+  <label for="checkbox1">checkbox</label>
+</div>
+
+<div>
+  <input type="checkbox" id="checkbox2" />
+  <label for="checkbox2" class="grow">checkbox</label>
+
+  <button class="link" type="button" (click)="displayHelp.set(!displayHelp())">
+    <app-icon-help class="h-6 w-6" />
+  </button>
+  @if (displayHelp()) {
+  <legend
+    class="help"
+    role="contentinfo"
+    (click)="displayHelp.set(false)"
+    (keypress)="displayHelp.set(false)"
+  >
+    This is a help text for the checkbox
+  </legend>
+  }
+</div>
+
+<fieldset class="flex flex-row flex-wrap gap-x-6">
+  <legend>radio group</legend>
+  <div>
+    <input type="radio" id="radio1" name="radio" />
+    <label for="radio1">radio option 1</label>
+  </div>
+  <div>
+    <input type="radio" id="radio2" name="radio" />
+    <label for="radio2">radio option 2</label>
+  </div>
+</fieldset>
