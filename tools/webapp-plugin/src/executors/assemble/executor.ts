@@ -79,29 +79,52 @@ function fixFileHashes(folder: string) {
     return createHash('sha1').update(content).digest('hex').slice(0, 8);
   };
 
+  const memoizedWith = (
+    getValue: () => string,
+    expensiveCalculation: (input: string) => string,
+  ) => {
+    let memoized: string;
+    let value: string;
+    return function () {
+      if (!memoized || value !== getValue()) {
+        value = getValue();
+        memoized = expensiveCalculation(value);
+      }
+      return memoized;
+    };
+  };
+
   class File {
     constructor(
-      public content: string,
-      public currentHash: string,
-      public currentName: string,
+      private currentContent: string,
+      private currentHash: string,
+      private currentName: string,
     ) {}
 
-    get actualHash() {
-      return hash(this.content);
-    }
+    private calculateActualHash = memoizedWith(() => this.currentContent, hash);
 
     get isCorrectlyHashed() {
-      return this.currentHash === this.actualHash;
+      return (
+        !this.currentHash || this.currentHash === this.calculateActualHash()
+      );
+    }
+
+    get name() {
+      return this.currentName;
+    }
+
+    get content() {
+      return this.currentContent;
     }
 
     rename(files: File[]) {
       numOfFileRenames++;
       const oldName = this.currentName;
-      const newHash = this.actualHash;
+      const newHash = this.calculateActualHash();
       this.currentName = this.currentName.replace(this.currentHash, newHash);
       this.currentHash = newHash;
       files.forEach((f) => {
-        f.content = f.content.replace(
+        f.currentContent = f.currentContent.replace(
           new RegExp(`${oldName}`, 'g'),
           this.currentName,
         );
@@ -124,9 +147,18 @@ function fixFileHashes(folder: string) {
     })
     .filter(Boolean);
 
+  // sort files by number of least dependencies
+  const dependencies: Record<string, File[]> = {};
+  files.forEach((f) => {
+    dependencies[f.name] = files.filter((dep) => f.content.includes(dep.name));
+  });
+  files.sort(
+    (a, b) => dependencies[a.name].length - dependencies[b.name].length,
+  );
+
   // rename files in file contents until all hashes are correct
   while (true) {
-    const i = files.findIndex((el) => el.currentHash && !el.isCorrectlyHashed);
+    const i = files.findIndex((el) => !el.isCorrectlyHashed);
     if (i === -1) {
       break;
     }
@@ -135,7 +167,7 @@ function fixFileHashes(folder: string) {
 
   // write files back to disk
   files.forEach((f) => {
-    writeFileSync(`${folder}/${f.currentName}`, f.content);
+    writeFileSync(`${folder}/${f.name}`, f.content);
   });
 
   console.log(
