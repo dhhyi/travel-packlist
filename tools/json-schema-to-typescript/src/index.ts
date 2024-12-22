@@ -37,6 +37,7 @@ async function createNodesInternal(schemaInput: string) {
   return {
     projects: {
       [project]: {
+        implicitDependencies: ['json-schema-to-typescript'],
         targets: {
           ['schema2ts-' + shaPath]: {
             executor: 'nx:run-commands',

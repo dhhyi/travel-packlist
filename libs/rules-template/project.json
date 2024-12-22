@@ -6,6 +6,9 @@
     "scope:generated",
     "localized"
   ],
+  "implicitDependencies": [
+    "generate-plugin"
+  ],
   "projectType": "library",
   "targets": {
     "generate": {

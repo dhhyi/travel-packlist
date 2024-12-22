@@ -27,6 +27,7 @@ async function createNodesInternal(configFilePath: string, options: object) {
   return {
     projects: {
       [projectRoot]: {
+        implicitDependencies: ['check-plugin'],
         targets: {
           markdownlint: {
             executor: '@travel-packlist/check-plugin:markdown',

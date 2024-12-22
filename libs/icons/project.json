@@ -6,6 +6,9 @@
   "tags": [
     "scope:generated"
   ],
+  "implicitDependencies": [
+    "generate-plugin"
+  ],
   "targets": {
     "generate": {
       "executor": "nx:run-commands",

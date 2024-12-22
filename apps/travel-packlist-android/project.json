@@ -6,7 +6,9 @@
     "assembly"
   ],
   "implicitDependencies": [
-    "travel-packlist"
+    "travel-packlist",
+    "webapp-plugin",
+    "capacitor-assets"
   ],
   "targets": {
     "generate-assets": {

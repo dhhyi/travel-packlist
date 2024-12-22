@@ -14,7 +14,8 @@
     }
   },
   "implicitDependencies": [
-    "!design-system"
+    "!design-system",
+    "capacitor-assets"
   ],
   "targets": {
     "build-required": {
