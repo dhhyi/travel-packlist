@@ -71,7 +71,11 @@ async function runAngularBuild(
 function fixFileHashes(folder: string) {
   console.log('Fixing file hashes in', folder);
 
+  let numOfHashCalculations = 0;
+  let numOfFileRenames = 0;
+
   const hash = (content): string => {
+    numOfHashCalculations++;
     return createHash('sha1').update(content).digest('hex').slice(0, 8);
   };
 
@@ -91,6 +95,7 @@ function fixFileHashes(folder: string) {
     }
 
     rename(files: File[]) {
+      numOfFileRenames++;
       const oldName = this.currentName;
       const newHash = this.actualHash;
       this.currentName = this.currentName.replace(this.currentHash, newHash);
@@ -132,6 +137,10 @@ function fixFileHashes(folder: string) {
   files.forEach((f) => {
     writeFileSync(`${folder}/${f.currentName}`, f.content);
   });
+
+  console.log(
+    `Wrote back ${files.length} files after ${numOfHashCalculations} hash calculations and ${numOfFileRenames} file renames`,
+  );
 }
 
 /**
