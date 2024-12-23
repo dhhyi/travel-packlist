@@ -7,14 +7,12 @@
     "version": "npm run changelog -- -s && git add CHANGELOG.md",
     "release-notes": "conventional-changelog -r 2 -n util/conventionalcommits.mjs -o",
     "prepare": "husky",
-    "format": "nx format --all",
     "dev": "nx serve travel-packlist",
     "design": "nx storybook design-system",
     "start": "nx serve travel-packlist-web"
   },
   "nx": {
     "includedScripts": [
-      "format",
       "dev",
       "design",
       "start"
@@ -33,6 +31,20 @@
         "executor": "@travel-packlist/check-plugin:markdown",
         "options": {
           "pattern": "*.md"
+        }
+      },
+      "format": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "nx format:write --all"
+        },
+        "configurations": {
+          "ci": {
+            "command": "nx format:check --all"
+          },
+          "pre-commit": {
+            "command": "nx format:write --uncommitted"
+          }
         }
       }
     }

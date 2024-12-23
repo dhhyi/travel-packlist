@@ -12,3 +12,4 @@ pnpm-lock.yaml
 .angular
 /dist
 /coverage
+**/src/generated/**
