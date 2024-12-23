@@ -4,8 +4,6 @@ devcontainer:
   build:
     packages:
       - tmux
-    user:
-      - RUN echo "alias nx='pnpm exec nx'" | tee -a $HOME/.bashrc $HOME/.zshrc
     files:
       - type: script
         path: /tmux-or-else.sh
@@ -15,6 +13,16 @@ devcontainer:
             tmux new-session -A -s tmux
           fi
           exec sh "$@"
+      - type: script
+        path: /usr/bin/nx
+        content: |
+          #!/bin/bash
+          if test "$1" != "reset"; then
+            if pnpm exec nx daemon | grep -q "not running" ; then
+              pnpm exec nx daemon --start
+            fi
+          fi
+          exec pnpm exec nx "$@"
   ports:
     - 4200
 extras:
