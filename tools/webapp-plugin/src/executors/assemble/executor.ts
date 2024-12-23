@@ -148,13 +148,16 @@ function fixFileHashes(folder: string) {
     .filter(Boolean);
 
   // sort files by number of least dependencies
-  const dependencies: Record<string, File[]> = {};
-  files.forEach((f) => {
-    dependencies[f.name] = files.filter((dep) => f.content.includes(dep.name));
-  });
-  files.sort(
-    (a, b) => dependencies[a.name].length - dependencies[b.name].length,
-  );
+  function createSorter() {
+    function countDependencies(file: File) {
+      return files.filter((dep) => file.content.includes(dep.name)).length;
+    }
+    const cache = Object.fromEntries(
+      files.map((f) => [f.name, countDependencies(f)]),
+    );
+    return (a: File, b: File) => cache[a.name] - cache[b.name];
+  }
+  files.sort(createSorter());
 
   // rename files in file contents until all hashes are correct
   while (true) {
