@@ -37,7 +37,7 @@ module.exports = [
               sourceTag: 'scope:generated',
             },
             {
-              notDependOnLibsWithTags: ['*'],
+              onlyDependOnLibsWithTags: ['utility'],
               sourceTag: 'plugin',
             },
           ],

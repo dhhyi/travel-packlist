@@ -1,16 +1,16 @@
-const cp = require('child_process');
-const fs = require('fs');
+import * as cp from 'child_process';
+import * as fs from 'fs';
 
-function getPackageJsonVersion() {
+export function getPackageJsonVersion() {
   if (!fs.existsSync('package.json')) {
     return 'unavailable';
   }
   const packageJson = fs.readFileSync('package.json', 'utf8');
-  const version = JSON.parse(packageJson).version;
+  const version = JSON.parse(packageJson).version as string;
   return version || 'unavailable';
 }
 
-function getGitCommitHash() {
+export function getGitCommitHash() {
   try {
     return cp.execSync('git rev-parse HEAD').toString().trim();
   } catch (error) {
@@ -19,7 +19,7 @@ function getGitCommitHash() {
   }
 }
 
-function getVersionCode() {
+export function getVersionCode() {
   try {
     const tags = cp.execSync('git tag -l').toString().trim().split('\n');
     return tags.length;
@@ -28,9 +28,3 @@ function getVersionCode() {
     return 0;
   }
 }
-
-module.exports = {
-  getPackageJsonVersion,
-  getGitCommitHash,
-  getVersionCode,
-};

@@ -45,6 +45,12 @@
       "@travel-packlist/state": [
         "libs/state/src/index.ts"
       ],
+      "@travel-packlist/versioning": [
+        "tools/versioning/src/index.ts"
+      ],
+      "@travel-packlist/versioning/esbuild-plugin": [
+        "tools/versioning/src/lib/esbuild-plugin.ts"
+      ],
       "@travel-packlist/webapp-plugin": [
         "tools/webapp-plugin/src/index.ts"
       ]

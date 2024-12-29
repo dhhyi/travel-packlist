@@ -4,14 +4,13 @@ import {
   PromiseExecutor,
   runExecutor,
 } from '@nx/devkit';
-import { execSync } from 'child_process';
-import { existsSync, writeFileSync } from 'fs';
-
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import {
   getPackageJsonVersion,
   getVersionCode,
-} from '../../../../../util/versioning-helpers';
+} from '@travel-packlist/versioning';
+import { execSync } from 'child_process';
+import { existsSync, writeFileSync } from 'fs';
+
 import {
   moveFile,
   removeDirectoryRecursive,
@@ -67,11 +66,11 @@ async function prepareAndroidProject(
     throw new Error('app/build.gradle not found in the output path');
   }
   updateFile(buildGradlePath, (content) => {
-    const versionName = getPackageJsonVersion() as string;
-    const versionCode = getVersionCode() as string;
+    const versionName = getPackageJsonVersion();
+    const versionCode = getVersionCode();
     return content
       .replace(/versionName ".*"/, `versionName "${versionName}"`)
-      .replace(/versionCode \d+/, `versionCode ${versionCode}`);
+      .replace(/versionCode \d+/, `versionCode ${versionCode.toString()}`);
   });
 }
 
