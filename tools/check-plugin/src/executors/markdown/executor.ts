@@ -1,4 +1,4 @@
-import { PromiseExecutor, cacheDir } from '@nx/devkit';
+import { ExecutorContext, PromiseExecutor, cacheDir } from '@nx/devkit';
 import axios from 'axios';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
@@ -36,20 +36,20 @@ async function checkLinksInFile(file: string): Promise<void> {
     for (let line = 0; line < perLine.length; line++) {
       const index = perLine[line].indexOf(str);
       if (index > 0) {
-        return `:${line + 1}:${index + 1}`;
+        return ':' + (line + 1).toString() + ':' + (index + 1).toString();
       }
     }
     return '';
   }
 
   let isError = false;
-  const externalLinks = [];
+  const externalLinks: string[] = [];
 
   const content = fs.readFileSync(file, { encoding: 'utf-8' });
 
-  const links = content.match(/\[.*?\](\(|: +)[^\s]*\)?/g) || [];
-  links.forEach((link) => {
-    const linkTo = /\](\(<?|:\s+)(.*?)(>?\)|$|#)/.exec(link)[2];
+  const links = content.match(/\[.*?\](\(|: +)[^\s]*\)?/g) ?? [];
+  for (const link of links) {
+    const linkTo = /\](\(<?|:\s+)(.*?)(>?\)|$|#)/.exec(link)?.[2];
     if (linkTo) {
       // link is not document-internal
       if (linkTo.startsWith('http')) {
@@ -66,7 +66,7 @@ async function checkLinksInFile(file: string): Promise<void> {
         }
       }
     }
-  });
+  }
 
   if (isError) {
     console.error('found dead internal links');
@@ -76,10 +76,12 @@ async function checkLinksInFile(file: string): Promise<void> {
   if (externalLinks.length > 0) {
     const cacheLinksPath = path.join(cacheDir, 'checked-external-links.json');
 
-    function getLinksCache(): Record<string, boolean> {
-      return fs.existsSync(cacheLinksPath)
-        ? JSON.parse(fs.readFileSync(cacheLinksPath, 'utf-8'))
-        : {};
+    function getLinksCache() {
+      return (
+        fs.existsSync(cacheLinksPath)
+          ? JSON.parse(fs.readFileSync(cacheLinksPath, 'utf-8'))
+          : {}
+      ) as Record<string, boolean>;
     }
 
     function writeNewCache(checkedLinks: Record<string, boolean>) {
@@ -95,7 +97,7 @@ async function checkLinksInFile(file: string): Promise<void> {
       fs.writeFileSync(cacheLinksPath, newCache);
     }
 
-    async function checkExternalLinkError(link) {
+    async function checkExternalLinkError(link: string) {
       console.log('checking', link);
       return axios.head(link).catch(() => axios.get(link));
     }
@@ -107,8 +109,8 @@ async function checkLinksInFile(file: string): Promise<void> {
         .map((link) =>
           checkExternalLinkError(link)
             .then(() => (checkedLinks[link] = true))
-            .catch((error) => {
-              console.error(error.message);
+            .catch((error: unknown) => {
+              console.error((error as Error).message);
               console.error(
                 `${file + getLineInfoOfString(content, link)}: found dead link to "${link}"`,
               );
@@ -118,14 +120,22 @@ async function checkLinksInFile(file: string): Promise<void> {
     );
     writeNewCache(checkedLinks);
 
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (isError) {
       process.exit(1);
     }
   }
 }
 
-function runMarkdownLint(context, files: string[], options: ExecutorSchema) {
-  let markdownLintConfig = `${context.projectsConfigurations.projects[context.projectName].root}/.markdownlint.json`;
+function runMarkdownLint(
+  context: ExecutorContext,
+  files: string[],
+  options: ExecutorSchema,
+) {
+  const projectConfig =
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    context.projectsConfigurations.projects[context.projectName!];
+  let markdownLintConfig = `${projectConfig.root}/.markdownlint.json`;
   if (!fs.existsSync(markdownLintConfig)) {
     markdownLintConfig = `${context.root}/.markdownlint.json`;
     if (!fs.existsSync(markdownLintConfig)) {
@@ -142,7 +152,7 @@ function runMarkdownLint(context, files: string[], options: ExecutorSchema) {
   });
 }
 
-function runCspellCheck(context, files: string[]) {
+function runCspellCheck(context: ExecutorContext, files: string[]) {
   const cspellConfig = `${context.root}/cspell.config.js`;
   if (!fs.existsSync(cspellConfig)) {
     throw new Error(`cspell.config.js not found in project root`);
@@ -172,7 +182,7 @@ const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
 
     return { success: true };
   } catch (error) {
-    console.error(error.message);
+    console.error((error as Error).message);
     return { success: false };
   }
 };

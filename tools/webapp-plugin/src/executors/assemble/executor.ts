@@ -23,13 +23,16 @@ import {
 } from '../../file-operations';
 import { ExecutorSchema } from './schema';
 
+type ConsolidatedOptions = ReturnType<typeof consolidateOptions>;
+
 function consolidateOptions(
   options: ExecutorSchema,
   context: ExecutorContext,
-): ExecutorSchema {
+): ExecutorSchema & { outputPath: string } {
   const outputPath =
     options.outputPath ??
-    `dist/${context.projectsConfigurations.projects[context.projectName].root}`;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    `dist/${context.projectsConfigurations.projects[context.projectName!].root}`;
 
   return {
     ...options,
@@ -41,7 +44,7 @@ function consolidateOptions(
  * Runs Angular build for the specified target with localization enabled to the new output path
  */
 async function runAngularBuild(
-  options: ExecutorSchema,
+  options: ConsolidatedOptions,
   context: ExecutorContext,
 ) {
   console.log(
@@ -74,7 +77,7 @@ function fixFileHashes(folder: string) {
   let numOfHashCalculations = 0;
   let numOfFileRenames = 0;
 
-  const hash = (content): string => {
+  const hash = (content: string): string => {
     numOfHashCalculations++;
     return createHash('sha1').update(content).digest('hex').slice(0, 8);
   };
@@ -97,7 +100,7 @@ function fixFileHashes(folder: string) {
   class File {
     constructor(
       private currentContent: string,
-      private currentHash: string,
+      private currentHash: string | undefined,
       private currentName: string,
     ) {}
 
@@ -118,6 +121,9 @@ function fixFileHashes(folder: string) {
     }
 
     rename(files: File[]) {
+      if (!this.currentHash) {
+        return;
+      }
       numOfFileRenames++;
       const oldName = this.currentName;
       const newHash = this.calculateActualHash();
@@ -125,7 +131,7 @@ function fixFileHashes(folder: string) {
       this.currentHash = newHash;
       files.forEach((f) => {
         f.currentContent = f.currentContent.replace(
-          new RegExp(`${oldName}`, 'g'),
+          new RegExp(oldName, 'g'),
           this.currentName,
         );
       });
@@ -145,7 +151,7 @@ function fixFileHashes(folder: string) {
       unlinkSync(`${folder}/${file}`);
       return new File(content, oldHash, file);
     })
-    .filter(Boolean);
+    .filter(Boolean) as File[];
 
   // sort files by number of least dependencies
   function createSorter() {
@@ -160,6 +166,7 @@ function fixFileHashes(folder: string) {
   files.sort(createSorter());
 
   // rename files in file contents until all hashes are correct
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   while (true) {
     const i = files.findIndex((el) => !el.isCorrectlyHashed);
     if (i === -1) {
@@ -174,14 +181,14 @@ function fixFileHashes(folder: string) {
   });
 
   console.log(
-    `Wrote back ${files.length} files after ${numOfHashCalculations} hash calculations and ${numOfFileRenames} file renames`,
+    `Wrote back ${files.length.toString()} files after ${numOfHashCalculations.toString()} hash calculations and ${numOfFileRenames.toString()} file renames`,
   );
 }
 
 /**
  * merges multiple Angular apps into the same folder
  */
-function mergeAngularApps(options: ExecutorSchema) {
+function mergeAngularApps(options: ConsolidatedOptions) {
   const folder = `${options.outputPath}/browser`;
   readdirSync(folder).forEach((lang) => {
     if (statSync(`${folder}/${lang}`).isDirectory()) {
@@ -207,7 +214,7 @@ function mergeAngularApps(options: ExecutorSchema) {
   rmdirSync(folder);
 
   updateFile(`${options.outputPath}/manifest.json`, (content) => {
-    const manifest = JSON.parse(content);
+    const manifest = JSON.parse(content) as { start_url: string };
     manifest.start_url = options.baseHref;
     return JSON.stringify(manifest);
   });
@@ -217,7 +224,7 @@ function mergeAngularApps(options: ExecutorSchema) {
 
 function recreateServiceWorkerConfig(
   context: ExecutorContext,
-  options: ExecutorSchema,
+  options: ConsolidatedOptions,
 ) {
   if (existsSync(`${options.outputPath}/ngsw.json`)) {
     console.log('Recreating service worker config');
@@ -238,7 +245,10 @@ function cleanOutputPath(outputPath: string) {
   }
 }
 
-async function assemble(options: ExecutorSchema, context: ExecutorContext) {
+async function assemble(
+  options: ConsolidatedOptions,
+  context: ExecutorContext,
+) {
   cleanOutputPath(options.outputPath);
   await runAngularBuild(options, context);
   mergeAngularApps(options);
@@ -250,7 +260,7 @@ const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
     await assemble(consolidateOptions(options, context), context);
     return { success: true };
   } catch (error) {
-    console.error(error.message);
+    console.error((error as Error).message);
     return { success: false };
   }
 };

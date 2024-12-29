@@ -15,6 +15,7 @@ export const createNodesV2: CreateNodesV2<object> = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/require-await
 async function createNodesInternal(schemaInput: string) {
   const project = schemaInput.replace(/\/src\/.*$/, '');
   const schemaInputRelative = schemaInput.replace(project + '/', '');

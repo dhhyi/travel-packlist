@@ -19,20 +19,6 @@ import {
 } from '../../file-operations';
 import { ExecutorSchema } from './schema';
 
-function consolidateOptions(
-  options: ExecutorSchema,
-  context: ExecutorContext,
-): ExecutorSchema {
-  const outputPath =
-    options.outputPath ??
-    `dist/${context.projectsConfigurations.projects[context.projectName].root}`;
-
-  return {
-    ...options,
-    outputPath,
-  };
-}
-
 function cleanOutputPath(outputPath: string) {
   if (existsSync(outputPath)) {
     removeDirectoryRecursive(outputPath);
@@ -64,7 +50,8 @@ async function prepareAndroidProject(
 
   for await (const s of await runExecutor(
     {
-      project: context.projectName,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      project: context.projectName!,
       target: options.assetTask,
     },
     {},
@@ -80,8 +67,8 @@ async function prepareAndroidProject(
     throw new Error('app/build.gradle not found in the output path');
   }
   updateFile(buildGradlePath, (content) => {
-    const versionName = getPackageJsonVersion();
-    const versionCode = getVersionCode();
+    const versionName = getPackageJsonVersion() as string;
+    const versionCode = getVersionCode() as string;
     return content
       .replace(/versionName ".*"/, `versionName "${versionName}"`)
       .replace(/versionCode \d+/, `versionCode ${versionCode}`);
@@ -169,10 +156,10 @@ async function android(options: ExecutorSchema, context: ExecutorContext) {
 
 const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
   try {
-    await android(consolidateOptions(options, context), context);
+    await android(options, context);
     return { success: true };
   } catch (error) {
-    console.error(error.message);
+    console.error((error as Error).message);
     return { success: false };
   }
 };

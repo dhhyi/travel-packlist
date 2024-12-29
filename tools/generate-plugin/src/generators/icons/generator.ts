@@ -10,7 +10,9 @@ import { GeneratorSchema } from './schema';
 function classify(name: string): string {
   return (
     name.substring(0, 1).toUpperCase() +
-    name.substring(1).replace(/-([a-z])/g, (_, char) => char.toUpperCase())
+    name
+      .substring(1)
+      .replace(/-([a-z])/g, (_, char: string) => char.toUpperCase())
   );
 }
 

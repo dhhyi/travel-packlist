@@ -1,4 +1,4 @@
-import { PromiseExecutor } from '@nx/devkit';
+import { Executor } from '@nx/devkit';
 import { execSync } from 'child_process';
 import {
   existsSync,
@@ -12,7 +12,8 @@ import {
 
 import { ExecutorSchema } from './schema';
 
-const runExecutor: PromiseExecutor<ExecutorSchema> = async (options) => {
+// eslint-disable-next-line @typescript-eslint/require-await
+const runExecutor: Executor<ExecutorSchema> = async (options) => {
   const capacitorAssetsCommand = ['npx', '@capacitor/assets', 'generate'];
 
   if (options.lightColor) {
@@ -55,22 +56,25 @@ const runExecutor: PromiseExecutor<ExecutorSchema> = async (options) => {
   const assetPath = options.assetPath;
 
   /**
-   * @type {{background_color: string; theme_color: string ;icons: {src: string}[]}}
+   * @type {}
    */
   const manifest = JSON.parse(
     readFileSync(manifestPath, { encoding: 'utf-8' }),
-  );
+  ) as {
+    background_color: string;
+    theme_color: string;
+    icons: { src: string }[];
+  };
 
   manifest.icons.forEach((icon) => {
     icon.src = icon.src.replace(/.*icons./, '');
   });
   if (options.lightColor) {
     manifest.background_color = options.lightColor;
+    manifest.theme_color = options.lightColor;
   }
   if (options.darkColor) {
     manifest.theme_color = options.darkColor;
-  } else {
-    manifest.theme_color = options.lightColor;
   }
 
   const newManifest = JSON.stringify(manifest, null, 2) + '\n';

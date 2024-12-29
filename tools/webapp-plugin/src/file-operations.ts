@@ -15,7 +15,7 @@ export const moveFile = (
   let content = readFileSync(from, modify ? { encoding: 'utf-8' } : undefined);
   unlinkSync(from);
   if (modify) {
-    content = modify(content);
+    content = modify(content as string);
   }
   writeFileSync(to, content);
 };

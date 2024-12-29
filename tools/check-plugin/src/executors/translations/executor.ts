@@ -1,4 +1,4 @@
-import { PromiseExecutor } from '@nx/devkit';
+import { Executor } from '@nx/devkit';
 import { readFileSync, writeFileSync } from 'fs';
 import { globSync } from 'glob';
 
@@ -9,7 +9,8 @@ interface Translations {
   translations: Record<string, string>;
 }
 
-const run: PromiseExecutor<ExecutorSchema> = async (options) => {
+// eslint-disable-next-line @typescript-eslint/require-await
+const run: Executor<ExecutorSchema> = async (options) => {
   try {
     let errors = false;
     const files = globSync(options.pattern);
@@ -83,7 +84,7 @@ const run: PromiseExecutor<ExecutorSchema> = async (options) => {
 
     return { success: !errors };
   } catch (error) {
-    console.error(error.message);
+    console.error((error as Error).message);
     return { success: false };
   }
 };

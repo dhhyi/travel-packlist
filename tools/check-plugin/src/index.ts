@@ -14,7 +14,7 @@ export const createNodesV2: CreateNodesV2<object> = [
   },
 ];
 
-async function createNodesInternal(configFilePath: string, options: object) {
+function createNodesInternal(configFilePath: string, options?: object) {
   const projectRoot = dirname(configFilePath).replace(/\\/g, '/');
 
   const isProject =

@@ -20,7 +20,8 @@
     }
   },
   "required": [
-    "buildTarget"
+    "buildTarget",
+    "baseHref"
   ],
   "additionalProperties": false
 }

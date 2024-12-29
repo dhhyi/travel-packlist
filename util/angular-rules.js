@@ -1,16 +1,10 @@
-const eslint = require('@eslint/js');
 const angular = require('angular-eslint');
 const tseslint = require('typescript-eslint');
 
 const rules = (tsconfig) =>
   tseslint.config(
     {
-      extends: [
-        eslint.configs.recommended,
-        ...tseslint.configs.stylisticTypeChecked,
-        ...tseslint.configs.strictTypeChecked,
-        ...angular.configs.tsAll,
-      ],
+      extends: [...angular.configs.tsAll],
       files: ['**/*.ts', '**/*.tsx'],
       languageOptions: {
         parserOptions: {
@@ -43,25 +37,6 @@ const rules = (tsconfig) =>
         '@angular-eslint/no-host-metadata-property': 'off',
         '@angular-eslint/prefer-standalone': 'off',
         '@angular-eslint/prefer-standalone-component': 'off',
-        '@typescript-eslint/no-unnecessary-parameter-property-assignment':
-          'error',
-        '@typescript-eslint/no-unnecessary-qualifier': 'error',
-        '@typescript-eslint/no-unnecessary-type-assertion': [
-          'error',
-          { typesToIgnore: ['string'] },
-        ],
-        '@typescript-eslint/no-unused-vars': [
-          'error',
-          {
-            args: 'all',
-            argsIgnorePattern: '^_',
-            caughtErrors: 'all',
-            caughtErrorsIgnorePattern: '^_',
-            destructuredArrayIgnorePattern: '^_',
-            ignoreRestSiblings: true,
-            varsIgnorePattern: '^_',
-          },
-        ],
         'no-restricted-imports': [
           'error',
           {
@@ -113,7 +88,6 @@ const rules = (tsconfig) =>
             ],
           },
         ],
-        'perfectionist/sort-imports': 'error',
       },
     },
     {

@@ -11,7 +11,7 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
     const name = path.basename(file, path.extname(file));
     const lang = path.extname(name).substring(1) || 'default';
 
-    const content = tree.read(file).toString('utf-8');
+    const content = tree.read(file)?.toString('utf-8');
 
     const folder = path.join(options.path);
 

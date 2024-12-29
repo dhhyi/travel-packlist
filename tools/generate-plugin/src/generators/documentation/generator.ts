@@ -13,7 +13,8 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
     const lang = path.extname(name).substring(1) || 'default';
 
     const converter = new showdown.Converter();
-    const markdown = tree.read(file).toString('utf-8');
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const markdown = tree.read(file)!.toString('utf-8');
     const html = converter.makeHtml(markdown);
 
     const folder = path.join(options.path);
