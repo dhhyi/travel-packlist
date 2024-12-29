@@ -8,7 +8,8 @@
     "localized"
   ],
   "implicitDependencies": [
-    "generate-plugin"
+    "generate-plugin",
+    "check-plugin"
   ],
   "targets": {
     "lint": {

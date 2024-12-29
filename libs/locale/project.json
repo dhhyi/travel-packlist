@@ -6,6 +6,9 @@
   "tags": [
     "localized"
   ],
+  "implicitDependencies": [
+    "check-plugin"
+  ],
   "targets": {
     "lint": {
       "executor": "@travel-packlist/check-plugin:translations",

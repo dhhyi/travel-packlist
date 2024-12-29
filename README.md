@@ -67,9 +67,9 @@ The app will be available at `http://localhost:8080`.
 ## More Documentation
 
 - Rules
-  - [Rules Format Documentation](./src/doc/documentation.md)
-  - [Rules Peggy Grammar](./src/schemas/rules.peggy)
-- [State Management](./src/app/state/README.md)
+  - [Rules Format Documentation](./libs/rules-documentation/src/doc/documentation.md)
+  - [Rules Peggy Grammar](./libs/model/src/schemas/rules.peggy)
+- [State Management](./libs/state/README.md)
 
 ## Feature FAQ
 

@@ -17,6 +17,9 @@
       "design",
       "start"
     ],
+    "implicitDependencies": [
+      "check-plugin"
+    ],
     "targets": {
       "lint": {
         "executor": "@nx/eslint:lint",
@@ -98,6 +101,7 @@
     "@typescript-eslint/utils": "^8.18.1",
     "angular-eslint": "^19.0.2",
     "autoprefixer": "^10.4.20",
+    "axios": "^1.7.9",
     "conventional-changelog-cli": "^5.0.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "cspell": "^8.17.1",

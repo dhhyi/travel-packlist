@@ -26,31 +26,31 @@ The State Management in this application is a self-brew solution providing a fla
 
 ## Information
 
-### [`PersistentState`](./persistent-state.ts)
+### [`PersistentState`](./src/lib/persistent-state.ts)
 
 The `PersistentState` class is a singleton class that persists a slice of the state to the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 The state is hydrated from the local storage on application start and is persisted to the local storage on every state change.
 
-### [`SessionState`](./session-state.ts)
+### [`SessionState`](./src/lib/session-state.ts)
 
 The `SessionState` class is a singleton class that holds the session state of the application which is also persisted to the [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
 The state is hydrated from the session storage on application start and is persisted on every state change.
 
-### [`RouterState`](./router-state.ts)
+### [`RouterState`](./src/lib/router-state.ts)
 
 The `RouterState` class is a singleton class that holds a slice of the state as routing query parameters.
 The state is synchronized with the current URL query parameters.
 
-### [`TransientState`](./transient-state.ts)
+### [`TransientState`](./src/lib/transient-state.ts)
 
 The `TransientState` class is a singleton class that holds transient state that is not persisted but exists only in memory.
 
-### [`DerivedState`](./derived-state.ts)
+### [`DerivedState`](./src/lib/derived-state.ts)
 
 The `DerivedState` class is a singleton class that holds derived fields from other state slices.
 The derived fields are computed on every state change and are neither persisted nor editable.
 
-### [`GlobalState`](./global-state.ts)
+### [`GlobalState`](./src/lib/global-state.ts)
 
 The `GlobalState` class is a singleton class that combines all state slices into a single state object.
 All artifacts using state management should use the `GlobalState` class to access and modify the state.
