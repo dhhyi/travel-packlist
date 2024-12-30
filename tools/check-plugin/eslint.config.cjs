@@ -1,6 +1,6 @@
 const { includeIgnoreFile } = require('@eslint/compat');
 
-const baseConfig = require('../../eslint.config.js');
+const baseConfig = require('../../eslint.base.config.cjs');
 const typescriptRules = require('../../util/typescript-rules.js');
 
 module.exports = [

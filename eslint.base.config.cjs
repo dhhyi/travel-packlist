@@ -1,10 +1,8 @@
-const { includeIgnoreFile } = require('@eslint/compat');
 const eslint = require('@eslint/js');
 const nx = require('@nx/eslint-plugin');
 const perfectionist = require('eslint-plugin-perfectionist');
 
 module.exports = [
-  includeIgnoreFile(require.resolve('./.gitignore')),
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
