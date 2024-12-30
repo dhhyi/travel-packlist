@@ -49,18 +49,19 @@ Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
 
 ## Technology
 
-This app is developed using Angular 19 with the new experimental zoneless change detection strategy.
+This app is developed using [Angular 19](https://angular.dev/) with the new experimental zoneless change detection strategy.
 Wherever possible, I used signals to model data flow.
 
 The project uses [Nx](https://nx.dev/) for managing the monorepo and the build process.
-
-For styling, I use [TailwindCSS](https://tailwindcss.com/).
 
 Managing the rules grammar and parsing it is done using [Peggy](https://peggyjs.org/).
 
 [Showdown](https://showdownjs.com/) is used in a build step for converting the syntax documentation for the rule format from markdown to HTML.
 
 For packaging the app into an Android bundle, I use [Capacitor](https://capacitorjs.com/).
+
+For styling, I use [TailwindCSS](https://tailwindcss.com/).
+The design system can be previewed using [Storybook](https://storybook.js.org/).
 
 ### Multiple Languages
 
@@ -88,6 +89,8 @@ The app will be available at `http://localhost:4200`.
 To build the app with multiple languages and service worker, run `pnpm build`.
 You can also use `pnpm start` instead to build and start a local server.
 The app will be available at `http://localhost:8080`.
+
+The design system can be previewed with `pnpm design` and is available at `http://localhost:4444`.
 
 ### Development with Devcontainer
 
@@ -151,5 +154,5 @@ Please backup your rules regularly to be able to revert to a previous state if n
 
 ## More Documentation
 
-- [Peggy Grammar for Rules](./libs/model/src/schemas/rules.peggy)
+- [Data Model](./libs/model/README.md)
 - [State Management](./libs/state/README.md)
