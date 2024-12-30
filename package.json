@@ -6,6 +6,7 @@
     "changelog": "conventional-changelog -i CHANGELOG.md -n util/conventionalcommits.mjs",
     "version": "npm run changelog -- -s && git add CHANGELOG.md",
     "release-notes": "conventional-changelog -r 2 -n util/conventionalcommits.mjs -o",
+    "create-prettierignore": "node util/create-prettierignore.mjs",
     "prepare": "husky",
     "dev": "nx serve travel-packlist",
     "design": "nx storybook design-system",
@@ -36,8 +37,25 @@
           "pattern": "*.md"
         }
       },
+      "create-prettierignore": {
+        "executor": "nx:run-script",
+        "options": {
+          "script": "create-prettierignore"
+        },
+        "inputs": [
+          "{workspaceRoot}/util/create-prettierignore.mjs",
+          "{workspaceRoot}/**/.gitingore"
+        ],
+        "outputs": [
+          "{workspaceRoot}/.prettierignore"
+        ],
+        "cache": true
+      },
       "format": {
         "executor": "nx:run-commands",
+        "dependsOn": [
+          "create-prettierignore"
+        ],
         "options": {
           "command": "nx format:write --all"
         },
