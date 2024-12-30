@@ -1,28 +1,51 @@
-<!-- markdownlint-disable-next-line no-inline-html -->
-<h1>TravelPacklist</h1>
+<!-- markdownlint-disable -->
+<!-- spellchecker:disable -->
+<h1>TravelPacklist
+  <a href="./README.md">
+    <img
+      src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/united-kingdom-flag-icon.svg"
+      alt="English"
+      style="width: 24px;">
+  </a>
+  <a href="./README.de.md">
+    <img
+      src="https://uxwing.com/wp-content/themes/uxwing/download/flags-landmarks/germany-flag-icon.svg"
+      alt="German"
+      style="width: 24px;">
+  </a>
+</h1>
+<!-- spellchecker:enable -->
+<!-- markdownlint-enable -->
 
 This app is a tool for creating conditional checklists.
 I use it for creating a pack list for my travels, depending on the duration, the activities, the expected weather, etc.
 It should be flexible enough to be used for other purposes as well.
 
-The Rules can be defined in a custom format with either free test or a graphical editor.
+Custom rules can be defined in a with either free text in a [specific grammar](./libs/rules-documentation/src/doc/documentation.md) or a graphical editor.
 
 Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app deployed on GitHub Pages.
 
-As it is a PWA, you can also install it on your home screen.
+As it is a PWA, you can also install it on your home screen for an easy access.
+There is also an Android App available in the Play Store, which is currently in testing and not yet publicly available.
+However, you can [become a tester](https://play.google.com/apps/testing/dev.dhhyi).
 
 Data is stored in your browser's local storage and not shared with any server.
 The app has an export and import feature to backup and restore your data wherever you like.
+Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
+
+<!-- markdownlint-disable-next-line no-inline-html -->
+<h2 id="toc">Table of Contents</h2>
 
 - [Technology](#technology)
   - [Multiple Languages](#multiple-languages)
 - [Resources](#resources)
 - [Development](#development)
-- [More Documentation](#more-documentation)
+  - [Development with Devcontainer](#development-with-devcontainer)
 - [Feature FAQ](#feature-faq)
   - [Will there be support for complex logic with brackets in conditions?](#will-there-be-support-for-complex-logic-with-brackets-in-conditions)
   - [Can I customize the display order of the categories?](#can-i-customize-the-display-order-of-the-categories)
   - [Will there be a Undo/Redo feature for editing rules?](#will-there-be-a-undoredo-feature-for-editing-rules)
+- [More Documentation](#more-documentation)
 
 ## Technology
 
@@ -50,8 +73,10 @@ The build process merges the different localized Angular apps into the same fold
 
 ## Resources
 
+<!-- cSpell:words uxwing -->
+
 - [Google Material Icons](https://fonts.google.com/icons)
-- [Flags for the language selection](https://uxwing.com/united-kingdom-flag-icon/)
+- Flags for the language selection from [uxwing.com](https://uxwing.com)
 
 ## Development
 
@@ -64,12 +89,11 @@ To build the app with multiple languages and service worker, run `pnpm build`.
 You can also use `pnpm start` instead to build and start a local server.
 The app will be available at `http://localhost:8080`.
 
-## More Documentation
+### Development with Devcontainer
 
-- Rules
-  - [Rules Format Documentation](./libs/rules-documentation/src/doc/documentation.md)
-  - [Rules Peggy Grammar](./libs/model/src/schemas/rules.peggy)
-- [State Management](./libs/state/README.md)
+Provided, you have Docker installed, I recommend using VSCode with the included devcontainer for development.
+Simply open the workspace in VSCode and (you probably will be prompted to) re-open the workspace in the devcontainer.
+This will set up a development environment with all necessary tools and extensions installed.
 
 ## Feature FAQ
 
@@ -124,3 +148,8 @@ This way, you can always revert to a previous state of your rules.
 Adding an Undo/Redo feature would add a lot of complexity to the application and would also require a lot of testing to ensure that it works correctly in all cases.
 I decided to not implement this feature to keep the application simple and easy to maintain.
 Please backup your rules regularly to be able to revert to a previous state if needed.
+
+## More Documentation
+
+- [Peggy Grammar for Rules](./libs/model/src/schemas/rules.peggy)
+- [State Management](./libs/state/README.md)

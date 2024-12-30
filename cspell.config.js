@@ -9,7 +9,7 @@ const cspell = {
       language: 'de-de',
     },
   ],
-  words: ['TravelPacklist', 'EBNF', 'packlist'],
+  words: ['TravelPacklist', 'packlist'],
 };
 
 module.exports = cspell;
