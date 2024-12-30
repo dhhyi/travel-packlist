@@ -50,6 +50,7 @@
         "*lint",
         "schema2ts-*"
       ],
+      "defaultConfiguration": "pre-commit",
       "configurations": {
         "pre-commit": {
           "fix": true,
@@ -119,6 +120,7 @@
         "{workspaceRoot}/*.md"
       ],
       "cache": true,
+      "defaultConfiguration": "pre-commit",
       "configurations": {
         "pre-commit": {
           "fix": true

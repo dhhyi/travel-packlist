@@ -172,13 +172,13 @@ const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
       throw new Error(`No files found for pattern: ${options.pattern}`);
     }
 
-    runMarkdownLint(context, files, options);
-    runCspellCheck(context, files);
-
     for (const file of files) {
       enforceNewlinesInFile(file, options);
       await checkLinksInFile(file);
     }
+
+    runMarkdownLint(context, files, options);
+    runCspellCheck(context, files);
 
     return { success: true };
   } catch (error) {
