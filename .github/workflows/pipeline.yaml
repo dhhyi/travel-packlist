@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # https://manski.net/articles/github/actions/dump-context
-      - name: Dump GitHub context
+      - name: Dump GitHub Context for Debugging 🪲
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
@@ -25,19 +25,41 @@ jobs:
           fetch-tags: true
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+      - name: Install pnpm 📦
+        uses: pnpm/action-setup@v4
         with:
           version: 9
           run_install: false
 
-      - name: Install Node.js
+      - name: Install Node.js 📦
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Install dependencies
+      - name: Set up JDK 📦
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+
+      - name: Install Production Dependencies 📦
+        run: pnpm install --frozen-lockfile --prod
+
+      - name: Build Applications 🔧
+        run: |
+          pnpm exec nx run-many \
+            --configuration ci \
+            -t build \
+            -p travel-packlist-android \
+               travel-packlist-web
+        env:
+          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
+          RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
+          RELEASE_KEYSTORE_ALIAS_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_ALIAS_PASSWORD }}
+
+      - name: Install All Dependencies 📦
         run: pnpm install --frozen-lockfile
 
       - name: Check 🚦
@@ -55,25 +77,8 @@ jobs:
       - name: Check No Changes 🚦
         run: git diff --exit-code
 
-      - name: Set up JDK 📦
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'microsoft'
-          java-version: '17'
-
-      - name: Build 🔧
-        run: |
-          pnpm exec nx run-many \
-            --configuration ci \
-            -t build \
-            -p travel-packlist-android \
-               travel-packlist-web \
-               design-system
-        env:
-          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
-          RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
-          RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
-          RELEASE_KEYSTORE_ALIAS_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_ALIAS_PASSWORD }}
+      - name: Build Design System 🎨
+        run: pnpm exec nx run design-system:build --configuration ci
 
       - name: Deploy GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4

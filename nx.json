@@ -154,12 +154,6 @@
   },
   "plugins": [
     {
-      "plugin": "@nx/playwright/plugin",
-      "options": {
-        "targetName": "e2e"
-      }
-    },
-    {
       "plugin": "@travel-packlist/check-plugin",
       "options": {
         "exclude": [

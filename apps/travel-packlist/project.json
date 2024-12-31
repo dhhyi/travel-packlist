@@ -22,8 +22,7 @@
       "executor": "nx:noop",
       "dependsOn": [
         "^generate",
-        "generate-*",
-        "versioning:build"
+        "generate-*"
       ]
     },
     "generate-assets": {
