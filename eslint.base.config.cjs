@@ -60,7 +60,8 @@ module.exports = [
     },
   },
   {
-    files: ['**/*.config.{js,ts}'],
+    files: ['**/*.config.{js,ts,cjs,mjs}', '**/*-rules.{js,ts,cjs,mjs}'],
+    plugins: { perfectionist },
     rules: {
       'perfectionist/sort-objects': ['error', { type: 'natural' }],
     },

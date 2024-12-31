@@ -1,11 +1,4 @@
-import {
-  effect,
-  inject,
-  Injectable,
-  Injector,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 import { VariableType } from '@travel-packlist/model';
 
 import { loadState, saveState } from './storage-util';
@@ -43,7 +36,6 @@ const persistentStateKeys = Object.keys(initialState) as Keys[];
 @Injectable({ providedIn: 'root' })
 export class PersistentState implements ReadWriteState<PersistentStateType> {
   private state = loadState(localStorage, initialState);
-  private injector = inject(Injector);
 
   private signalMap = new Map<
     Keys,
@@ -66,7 +58,7 @@ export class PersistentState implements ReadWriteState<PersistentStateType> {
             this.persist();
           }
         },
-        { manualCleanup: true, injector: this.injector },
+        { manualCleanup: true },
       );
       this.signalMap.set(key, newSignal);
     }

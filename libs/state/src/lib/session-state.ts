@@ -1,11 +1,4 @@
-import {
-  effect,
-  inject,
-  Injectable,
-  Injector,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { effect, Injectable, signal, WritableSignal } from '@angular/core';
 
 import { saveState, loadState } from './storage-util';
 import { ReadWriteState } from './types';
@@ -22,7 +15,6 @@ export const sessionStateKeys = Object.keys(initialState) as Keys[];
 @Injectable({ providedIn: 'root' })
 export class SessionState implements ReadWriteState<SessionStateType> {
   private state = loadState(sessionStorage, initialState);
-  private injector = inject(Injector);
 
   private signalMap = new Map<Keys, WritableSignal<SessionStateType[Keys]>>();
 
@@ -41,7 +33,7 @@ export class SessionState implements ReadWriteState<SessionStateType> {
             this.persist();
           }
         },
-        { manualCleanup: true, injector: this.injector },
+        { manualCleanup: true },
       );
       this.signalMap.set(key, newSignal);
     }

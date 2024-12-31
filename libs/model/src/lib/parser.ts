@@ -1,4 +1,4 @@
-import { inject, Injectable, InjectionToken, Injector } from '@angular/core';
+import { inject, Injectable, InjectionToken } from '@angular/core';
 
 import {
   parse,
@@ -20,12 +20,13 @@ export const PARSER_CONFIG_PROVIDER = new InjectionToken<ParserConfig>(
 
 @Injectable({ providedIn: 'root' })
 export class Parser {
-  private injector = inject(Injector);
+  private config =
+    inject(PARSER_CONFIG_PROVIDER, {
+      optional: true,
+    }) ?? defaultConfig;
 
   isTrackWeight(): boolean {
-    return this.injector
-      .get(PARSER_CONFIG_PROVIDER, defaultConfig)
-      .isTrackWeight();
+    return this.config.isTrackWeight();
   }
 
   private makeOptions<T extends StartRuleNames>(

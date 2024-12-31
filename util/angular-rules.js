@@ -81,6 +81,12 @@ const rules = (tsconfig) =>
                 name: '@angular/core',
               },
               {
+                importNames: ['Injector'],
+                message:
+                  'Do not use Injector, use inject without cycles instead.',
+                name: '@angular/core',
+              },
+              {
                 importNames: ['takeUntilDestroyed'],
                 message: 'Do not use takeUntilDestroyed, use signals instead.',
                 name: '@angular/core/rxjs-interop',

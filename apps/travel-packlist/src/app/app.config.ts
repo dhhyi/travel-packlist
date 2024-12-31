@@ -4,6 +4,8 @@ import {
   isDevMode,
   inject,
   provideAppInitializer,
+  // eslint-disable-next-line no-restricted-imports
+  Injector,
 } from '@angular/core';
 import {
   provideRouter,
@@ -24,9 +26,11 @@ import { RulesShare } from './services/rules-share/rules-share.interface';
 import { WebRulesShare } from './services/rules-share/web-rules-share';
 import { RulesExportReminder } from './services/rules.export-reminder';
 
-function initParserConfig(globalState: GlobalState): ParserConfig {
+function initParserConfig(injector: Injector): ParserConfig {
   return {
-    isTrackWeight: globalState.signal('trackWeight'),
+    isTrackWeight: () => {
+      return injector.get(GlobalState).get('trackWeight');
+    },
   };
 }
 
@@ -48,7 +52,7 @@ export const appConfig: ApplicationConfig = {
       inject(RulesExportReminder).init();
     }),
     {
-      deps: [GlobalState],
+      deps: [Injector],
       provide: PARSER_CONFIG_PROVIDER,
       useFactory: initParserConfig,
     },

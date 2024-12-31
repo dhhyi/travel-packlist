@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { effect, inject, Injectable, Injector, isDevMode } from '@angular/core';
+import { effect, inject, Injectable, isDevMode } from '@angular/core';
 import {
   FontSizes,
   GlobalState,
@@ -9,20 +9,19 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
-  private injector = inject(Injector);
+  private state = inject(GlobalState);
   private document = inject(DOCUMENT);
 
   init() {
-    const state = this.injector.get(GlobalState);
-    const theme = state.signal('theme');
+    const theme = this.state.signal('theme');
     effect(() => {
       this.applyTheme(theme());
     });
-    const preferredLanguage = state.signal('preferredLanguage');
+    const preferredLanguage = this.state.signal('preferredLanguage');
     effect(() => {
       this.applyLanguage(preferredLanguage());
     });
-    const fontSize = state.signal('fontSize');
+    const fontSize = this.state.signal('fontSize');
     effect(() => {
       this.applyFontSize(fontSize());
     });
