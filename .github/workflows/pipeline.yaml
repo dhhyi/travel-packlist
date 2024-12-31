@@ -78,7 +78,10 @@ jobs:
         run: git diff --exit-code
 
       - name: Build Design System 🎨
-        run: pnpm exec nx run design-system:build --configuration ci
+        run: |
+          pnpm exec nx run design-system:build --configuration ci
+          mv dist/apps/design-system/index.html dist/apps/design-system/index.design.html
+          cp -Rfv dist/apps/design-system/* dist/web/
 
       - name: Deploy GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4

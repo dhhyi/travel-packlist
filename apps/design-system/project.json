@@ -64,6 +64,12 @@
     "stylelint": {
       "executor": "nx-stylelint:lint"
     },
+    "doc-markdownlint": {
+      "executor": "@travel-packlist/check-plugin:markdown",
+      "options": {
+        "pattern": "{projectRoot}/**/*.mdx"
+      }
+    },
     "lint": {
       "executor": "@nx/eslint:lint"
     }

@@ -61,7 +61,8 @@ Managing the rules grammar and parsing it is done using [Peggy](https://peggyjs.
 For packaging the app into an Android bundle, I use [Capacitor](https://capacitorjs.com/).
 
 For styling, I use [TailwindCSS](https://tailwindcss.com/).
-The design system can be previewed using [Storybook](https://storybook.js.org/).
+The design system is implemented using [Storybook](https://storybook.js.org/).
+It is deployed [here](https://dhhyi.github.io/travel-packlist/index.design.html).
 
 ### Multiple Languages
 
