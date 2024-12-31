@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Parser, PARSER_CONFIG_PROVIDER, ParserConfig } from './parser';
 import { And, Item, Not, Or, Question, Variable } from './types';
 
-describe('Parser', () => {
+describe('parser', () => {
   let parser: Parser;
   let trackWeight: boolean;
 
@@ -27,6 +27,7 @@ describe('Parser', () => {
   describe('parseCondition', () => {
     it('should parse a variable', () => {
       const condition = parser.parseCondition('a');
+
       expect(condition).toBeInstanceOf(Variable);
       expect(condition.evaluate({ a: true })).toBe(true);
       expect(condition.evaluate({ a: false })).toBe(false);
@@ -34,6 +35,7 @@ describe('Parser', () => {
 
     it('should parse a NOT condition', () => {
       const condition = parser.parseCondition('NOT a');
+
       expect(condition).toBeInstanceOf(Not);
       expect(condition.evaluate({ a: true })).toBe(false);
       expect(condition.evaluate({ a: false })).toBe(true);
@@ -41,6 +43,7 @@ describe('Parser', () => {
 
     it('should parse an AND condition', () => {
       const condition = parser.parseCondition('a AND b');
+
       expect(condition).toBeInstanceOf(And);
       expect(condition.evaluate({ a: true, b: true })).toBe(true);
       expect(condition.evaluate({ a: false, b: true })).toBe(false);
@@ -50,6 +53,7 @@ describe('Parser', () => {
 
     it('should parse an OR condition', () => {
       const condition = parser.parseCondition('a OR b');
+
       expect(condition).toBeInstanceOf(Or);
       expect(condition.evaluate({ a: true, b: true })).toBe(true);
       expect(condition.evaluate({ a: false, b: true })).toBe(true);
@@ -59,6 +63,7 @@ describe('Parser', () => {
 
     it('should parse "a AND NOT b" condition', () => {
       const condition = parser.parseCondition('a AND NOT b');
+
       expect(condition).toBeInstanceOf(And);
       expect(condition.evaluate({ a: true, b: true })).toBe(false);
       expect(condition.evaluate({ a: false, b: true })).toBe(false);
@@ -68,6 +73,7 @@ describe('Parser', () => {
 
     it('should parse "a OR NOT b AND c" condition', () => {
       const condition = parser.parseCondition('a OR NOT b AND c');
+
       expect(condition).toBeInstanceOf(Or);
       expect(condition.evaluate({ a: true, b: true, c: true })).toBe(true);
       expect(condition.evaluate({ a: false, b: true, c: true })).toBe(false);
@@ -81,6 +87,7 @@ describe('Parser', () => {
 
     it('should simplify "NOT NOT NOT a" to " NOT a"', () => {
       const condition = parser.parseCondition('NOT NOT NOT a');
+
       expect(condition).toBeInstanceOf(Not);
       expect((condition as Not).not).toBeInstanceOf(Variable);
       expect(condition).toHaveProperty('not.variable', 'a');
@@ -89,6 +96,7 @@ describe('Parser', () => {
 
     it('should simplify "NOT NOT NOT NOT a" to "a"', () => {
       const condition = parser.parseCondition('NOT NOT NOT NOT a');
+
       expect(condition).toBeInstanceOf(Variable);
       expect(condition).toHaveProperty('variable', 'a');
       expect(condition.evaluate({ a: true })).toBe(true);
@@ -103,18 +111,21 @@ describe('Parser', () => {
   describe('parseQuestion', () => {
     it('should parse a question', () => {
       const question = parser.parseQuestion('Is it sunny? $sunny');
+
       expect(question).toHaveProperty('question', 'Is it sunny?');
       expect(question).toHaveProperty('variable', 'sunny');
     });
 
     it('should parse a question without question mark', () => {
       const question = parser.parseQuestion('AirBnB $airbnb');
+
       expect(question).toHaveProperty('question', 'AirBnB');
       expect(question).toHaveProperty('variable', 'airbnb');
     });
 
     it('should parse a question with cryptic variable name', () => {
       const question = parser.parseQuestion('Is it sunny? $a1-[b2](c3)');
+
       expect(question).toHaveProperty('question', 'Is it sunny?');
       expect(question).toHaveProperty('variable', 'a1-[b2](c3)');
     });
@@ -127,18 +138,21 @@ describe('Parser', () => {
   describe('parseItem', () => {
     it('should parse an item', () => {
       const item = parser.parseItem('[utility] Scrubber');
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber');
     });
 
     it('should parse an item with long name', () => {
       const item = parser.parseItem('[utility] Scrubber with a complex name');
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber with a complex name');
     });
 
     it('should parse an item with weight as string if weight tracking is off', () => {
       const item = parser.parseItem('[utility] Scrubber 100g');
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber 100g');
       expect(item).toHaveProperty('weight', undefined);
@@ -148,6 +162,7 @@ describe('Parser', () => {
       trackWeight = true;
 
       const item = parser.parseItem('[utility] Scrubber 100');
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber');
       expect(item).toHaveProperty('weight', 100);
@@ -159,6 +174,7 @@ describe('Parser', () => {
       const item = parser.parseItem(
         '[utility] Scrubber with a complex name 100',
       );
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber with a complex name');
       expect(item).toHaveProperty('weight', 100);
@@ -168,6 +184,7 @@ describe('Parser', () => {
       trackWeight = true;
 
       const item = parser.parseItem('[utility] Scrubber 0.5kg');
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber');
       expect(item).toHaveProperty('weight', 500);
@@ -179,6 +196,7 @@ describe('Parser', () => {
       const item = parser.parseItem(
         '[utility] Scrubber T 1000 extraordinaire 100g',
       );
+
       expect(item).toHaveProperty('category', 'utility');
       expect(item).toHaveProperty('name', 'Scrubber T 1000 extraordinaire');
       expect(item).toHaveProperty('weight', 100);
@@ -200,17 +218,23 @@ describe('Parser', () => {
       expect(effects).toHaveLength(3);
 
       expect(effects[0]).toBeInstanceOf(Question);
+
       const question = effects[0] as Question;
+
       expect(question).toHaveProperty('question', 'Is it sunny?');
       expect(question).toHaveProperty('variable', 'sunny');
 
       expect(effects[1]).toBeInstanceOf(Item);
+
       const item1 = effects[1] as Item;
+
       expect(item1).toHaveProperty('category', 'utility');
       expect(item1).toHaveProperty('name', 'Scrubber');
 
       expect(effects[2]).toBeInstanceOf(Item);
+
       const item2 = effects[2] as Item;
+
       expect(item2).toHaveProperty('category', 'utility');
       expect(item2).toHaveProperty('name', 'Clothesline');
     });
@@ -247,7 +271,9 @@ describe('Parser', () => {
     it.each(['a', 'a{0}', 'test-a', 'test_a', 'a1'])(
       'should validate "%s" a valid variable name',
       (name) => {
-        parser.validateVariableName(name);
+        expect(() => {
+          parser.validateVariableName(name);
+        }).not.toThrow();
       },
     );
 
@@ -265,7 +291,9 @@ describe('Parser', () => {
     it.each(['Is it sunny? ', 'AirBnB', 'Something cool a1-[b2](c3)'])(
       'should validate "%s" a valid question string',
       (input) => {
-        parser.validateQuestionString(input);
+        expect(() => {
+          parser.validateQuestionString(input);
+        }).not.toThrow();
       },
     );
 
@@ -286,7 +314,9 @@ describe('Parser', () => {
       'Scrubber 0.5kg',
       '[Scrubber]',
     ])('should validate "%s" a valid item name', (input) => {
-      parser.validateItemNameAndWeight(input);
+      expect(() => {
+        parser.validateItemNameAndWeight(input);
+      }).not.toThrow();
     });
 
     it.each(['', 'Scrubber,', 'test#test', ';'])(
@@ -303,7 +333,9 @@ describe('Parser', () => {
     it.each(['utility', 'test', 'a1-b2(c3)'])(
       'should validate "%s" a valid category name',
       (name) => {
-        parser.validateCategoryName(name);
+        expect(() => {
+          parser.validateCategoryName(name);
+        }).not.toThrow();
       },
     );
 
@@ -319,15 +351,15 @@ describe('Parser', () => {
 
   describe('forceParseWeight', () => {
     it('should parse weight as number', () => {
-      expect(parser.forceParseWeight('name 100')).toEqual(100);
+      expect(parser.forceParseWeight('name 100')).toBe(100);
     });
 
     it('should parse weight as number with kilos', () => {
-      expect(parser.forceParseWeight('name 0.5kg')).toEqual(500);
+      expect(parser.forceParseWeight('name 0.5kg')).toBe(500);
     });
 
     it('should return 0 if no weight could be parsed', () => {
-      expect(parser.forceParseWeight('test')).toEqual(0);
+      expect(parser.forceParseWeight('test')).toBe(0);
     });
   });
 });

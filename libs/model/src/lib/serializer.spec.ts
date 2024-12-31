@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { Parser } from './parser';
 import { serializeRules, serializeWeight } from './serializer';
 
-describe('Serializer', () => {
+describe('serializer', () => {
   let parser: Parser;
 
   beforeEach(() => {
@@ -55,26 +55,26 @@ sunny :-
 
   describe('serializeWeight', () => {
     it('should serialize a weight', () => {
-      expect(serializeWeight(123)).toMatchInlineSnapshot(`"123g"`);
+      expect(serializeWeight(123)).toBe('123g');
     });
 
     it('should serialize a weight with a decimal', () => {
-      expect(serializeWeight(123.456)).toMatchInlineSnapshot(`"123.456g"`);
+      expect(serializeWeight(123.456)).toBe('123.456g');
     });
 
     it('should serialize a weight with a decimal and a zero', () => {
-      expect(serializeWeight(123.0)).toMatchInlineSnapshot(`"123g"`);
+      expect(serializeWeight(123.0)).toBe('123g');
     });
 
     it('should serialize a weight with preferred unit', () => {
-      expect(serializeWeight(123, 'kg')).toMatchInlineSnapshot(`"0.123kg"`);
-      expect(serializeWeight(123, 'g')).toMatchInlineSnapshot(`"123g"`);
+      expect(serializeWeight(123, 'kg')).toBe('0.123kg');
+      expect(serializeWeight(123, 'g')).toBe('123g');
     });
 
     it('should serialize a weight with preferred unit and rounding', () => {
-      expect(serializeWeight(123, 'kg', 1)).toMatchInlineSnapshot(`"0.1kg"`);
-      expect(serializeWeight(123, 'g', 1)).toMatchInlineSnapshot(`"123g"`);
-      expect(serializeWeight(123, undefined, 1)).toMatchInlineSnapshot(`"123g"`);
+      expect(serializeWeight(123, 'kg', 1)).toBe('0.1kg');
+      expect(serializeWeight(123, 'g', 1)).toBe('123g');
+      expect(serializeWeight(123, undefined, 1)).toBe('123g');
     });
   });
 });

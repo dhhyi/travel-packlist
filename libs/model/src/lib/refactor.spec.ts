@@ -5,7 +5,7 @@ import { Refactor } from './refactor';
 import { serializeRules } from './serializer';
 import { Rule } from './types';
 
-describe('Refactor', () => {
+describe('refactor', () => {
   let refactor: Refactor;
   let parser: Parser;
 
@@ -23,7 +23,10 @@ describe('Refactor', () => {
       ];
 
       const variables = refactor.extractVariables(rules);
-      expect(variables).toEqual(['sunny', 'cold']);
+
+      expect(variables).toHaveLength(2);
+      expect(variables).toContain('sunny');
+      expect(variables).toContain('cold');
     });
   });
 
@@ -36,7 +39,10 @@ describe('Refactor', () => {
       ];
 
       const categories = refactor.extractCategories(rules);
-      expect(categories).toEqual(['utility', 'washing']);
+
+      expect(categories).toHaveLength(2);
+      expect(categories).toContain('utility');
+      expect(categories).toContain('washing');
     });
   });
 
@@ -44,6 +50,7 @@ describe('Refactor', () => {
     it('should rename variable in question', () => {
       const question = parser.parseQuestion('Is it sunny? $sunny');
       const result = refactor.renameVariable('sunny', 'rainy', question);
+
       expect(result.toString()).toMatchInlineSnapshot(`"Is it sunny? $rainy"`);
     });
 
@@ -107,12 +114,38 @@ rain AND clouds :-
         parser.parseRule('NOT sunny :- [Clothes] Beanie'),
         parser.parseRule('uv :- [Utility] Sunscreen'),
       ];
+
+      expect.addSnapshotSerializer({
+        test: (value: ReturnType<Refactor['filterActive']>) =>
+          Array.isArray(value.rules) && typeof value.model === 'object',
+        print: (value) => {
+          const v = value as ReturnType<Refactor['filterActive']>;
+          return JSON.stringify(
+            {
+              ...v,
+              rules: v.rules.map((r) => rules.indexOf(r)),
+            },
+            null,
+            2,
+          );
+        },
+      });
     });
 
     it('should filter active rules for empty model', () => {
       const result = refactor.filterActive({ model: {}, rules });
-      expect(result.rules).toEqual([rules[0], rules[2]]);
-      expect(result.model).toEqual({ always: true });
+
+      expect(result).toMatchInlineSnapshot(`
+{
+  "model": {
+    "always": true
+  },
+  "rules": [
+    0,
+    2
+  ]
+}
+`);
     });
 
     it('should filter active rules for active model', () => {
@@ -120,20 +153,41 @@ rain AND clouds :-
         model: { sunny: true, uv: true },
         rules,
       });
-      expect(result.rules).toEqual([rules[0], rules[1], rules[3]]);
-      expect(result.model).toEqual({
-        sunny: true,
-        uv: true,
-        always: true,
-      });
+
+      expect(result).toMatchInlineSnapshot(`
+{
+  "model": {
+    "always": true,
+    "sunny": true,
+    "uv": true
+  },
+  "rules": [
+    0,
+    1,
+    3
+  ]
+}
+`);
     });
+
     it('should filter active rules and remove transitive disabled fields', () => {
       const result = refactor.filterActive({
         model: { sunny: false, uv: true },
         rules,
       });
-      expect(result.rules).toEqual([rules[0], rules[2]]);
-      expect(result.model).toEqual({ sunny: false, always: true });
+
+      expect(result).toMatchInlineSnapshot(`
+{
+  "model": {
+    "always": true,
+    "sunny": false
+  },
+  "rules": [
+    0,
+    2
+  ]
+}
+`);
     });
   });
 
@@ -147,7 +201,9 @@ rain AND clouds :-
       ];
 
       const result = refactor.countItemsAndWeights(rules);
-      expect(result).toEqual({ items: 5, weights: 4 });
+
+      expect(result).toHaveProperty('items', 5);
+      expect(result).toHaveProperty('weights', 4);
     });
   });
 });
