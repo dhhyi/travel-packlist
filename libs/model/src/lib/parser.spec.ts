@@ -308,4 +308,18 @@ describe('Parser', () => {
       },
     );
   });
+
+  describe('forceParseWeight', () => {
+    it('should parse weight as number', () => {
+      expect(parser.forceParseWeight('name 100')).toEqual(100);
+    });
+
+    it('should parse weight as number with kilos', () => {
+      expect(parser.forceParseWeight('name 0.5kg')).toEqual(500);
+    });
+
+    it.only('should return 0 if no weight could be parsed', () => {
+      expect(parser.forceParseWeight('test')).toEqual(0);
+    });
+  });
 });

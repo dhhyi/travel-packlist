@@ -46,11 +46,8 @@ export class Parser {
     return parse(input, this.makeOptions('Question')) as Question;
   }
 
-  parseItem(input: string, forceWeightTracking?: boolean) {
-    return parse(
-      input,
-      this.makeOptions('Item', { forceWeightTracking }),
-    ) as Item;
+  parseItem(input: string) {
+    return parse(input, this.makeOptions('Item')) as Item;
   }
 
   parseEffects(input: string) {
@@ -100,5 +97,14 @@ export class Parser {
 
   validateCategoryName(name: string) {
     parse(name, this.makeOptions('CategoryName'));
+  }
+
+  forceParseWeight(input: string) {
+    const parsed = parse(
+      input,
+      this.makeOptions('ItemNameAndWeight', { forceWeightTracking: true }),
+    ) as { weight: number | undefined };
+
+    return parsed.weight ?? 0;
   }
 }

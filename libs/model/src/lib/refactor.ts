@@ -170,10 +170,7 @@ export class Refactor {
           if (this.parser.isTrackWeight()) {
             itemHasWeight = item.weight ? 1 : 0;
           } else {
-            const { weight } = this.parser.parseItem(
-              this.serializer.serialize(item),
-              true,
-            );
+            const weight = this.parser.forceParseWeight(item.name);
             itemHasWeight = weight ? 1 : 0;
           }
           return {
