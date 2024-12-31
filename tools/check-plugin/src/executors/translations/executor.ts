@@ -54,7 +54,7 @@ const run: Executor<ExecutorSchema> = async (options) => {
 
     translations
       .filter((t) => t.locale !== options.defaultLocale)
-      .map((translation) => {
+      .forEach((translation) => {
         translation.translations = Object.fromEntries(
           Object.entries(translation.translations).filter(([key]) => {
             if (!defaultKeys.includes(key)) {
@@ -66,6 +66,21 @@ const run: Executor<ExecutorSchema> = async (options) => {
             return true;
           }),
         );
+      });
+
+    translations
+      .filter((t) => t.locale !== options.defaultLocale)
+      .forEach((translation) => {
+        const currentTranslationKeys = Object.keys(translation.translations);
+        if (currentTranslationKeys.length !== defaultKeys.length) {
+          const missingKeys = defaultKeys.filter(
+            (key) => !currentTranslationKeys.includes(key),
+          );
+          console.warn(
+            `Translation for locale "${translation.locale}" is incomplete. The following keys are missing:\n  ${missingKeys.join('\n  ')}`,
+          );
+          errors = true;
+        }
       });
 
     translations.forEach((translation) => {
