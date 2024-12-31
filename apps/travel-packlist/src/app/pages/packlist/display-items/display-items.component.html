@@ -29,6 +29,12 @@
   }
 </div>
 
+@if (!view().numberOfItems) {
+  <div class="flex flex-col items-center">
+    <p i18n="@@packlist.no-items" class="text-center">No items available.</p>
+  </div>
+}
+
 @for (group of view().categories | keyvalue: orderBy(); track group.key) {
   @let categoryName = group.key;
   @let category = group.value;

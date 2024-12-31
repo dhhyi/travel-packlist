@@ -138,7 +138,15 @@
       Current rules are not backed up!
     </div>
   }
-  <button i18n="@@config.rules.import" type="button" (click)="importRules()">
+  <button
+    #importButton
+    i18n="@@config.rules.import"
+    type="button"
+    [ngClass]="{
+      'bg-green-light animate-pulse': highlightImport(),
+    }"
+    (click)="importRules()"
+  >
     Import Rules
   </button>
   <div>

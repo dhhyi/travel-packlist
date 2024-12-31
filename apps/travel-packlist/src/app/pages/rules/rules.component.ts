@@ -107,6 +107,11 @@ export default class RulesComponent {
     }, 4000);
   }
 
+  addRuleAndEdit() {
+    this.addRule();
+    this.mode.set('edit');
+  }
+
   swapRules(index1: number, index2: number) {
     const rules = this.parsedRules();
     const temp = rules[index1];

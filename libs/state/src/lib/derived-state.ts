@@ -28,6 +28,7 @@ export interface DerivedStateType {
   preferredLanguage: SupportedLanguage;
   rulesHash: string;
   rulesOrTemplate: string;
+  numberOfRules: number;
   rulesContainComments: boolean;
   parsedRules: Rule[];
   ruleParserError: string;
@@ -100,7 +101,7 @@ export class DerivedState {
 
     const rulesOrTemplate = computed(() => {
       const raw = this.state.signal('rules')();
-      if (!raw) {
+      if (raw === undefined) {
         return this.rulesTemplate;
       }
       return raw;
@@ -126,6 +127,11 @@ export class DerivedState {
         };
       }
     });
+
+    this.signalMap.set(
+      'numberOfRules',
+      computed(() => ruleParsing().parsedRules.length),
+    );
 
     const percentageOfItemsWithWeights = computed(() => {
       const { ruleParserError, parsedRules } = ruleParsing();

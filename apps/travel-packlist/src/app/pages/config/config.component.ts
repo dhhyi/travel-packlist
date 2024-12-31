@@ -78,6 +78,9 @@ export default class ConfigComponent {
   private readonly exportButton =
     viewChild.required<ElementRef<HTMLButtonElement>>('exportButton');
   isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
+  readonly highlightImport: Signal<boolean>;
+  private readonly importButton =
+    viewChild.required<ElementRef<HTMLButtonElement>>('importButton');
 
   readonly serviceWorkerStatus = computed((): string => {
     switch (this.state.signal('serviceWorkerStatus')()) {
@@ -99,19 +102,29 @@ export default class ConfigComponent {
   constructor() {
     const fragment = toSignal(this.route.fragment);
     this.highlightExport = computed(() => fragment() === 'export-now');
+    this.highlightImport = computed(() => fragment() === 'import');
     effect(() => {
       const fragmentValue = fragment();
-      const exportButtonVerticalPosition =
-        this.exportButton().nativeElement.getBoundingClientRect().top;
-      if (
-        fragmentValue === 'export-now' &&
-        exportButtonVerticalPosition > window.innerHeight
-      ) {
-        setTimeout(() => {
-          this.exportButton().nativeElement.scrollIntoView({
-            behavior: 'smooth',
-          });
-        }, 2000);
+      if (fragmentValue === 'export-now') {
+        const buttonVerticalPosition =
+          this.exportButton().nativeElement.getBoundingClientRect().top;
+        if (buttonVerticalPosition > window.innerHeight) {
+          setTimeout(() => {
+            this.exportButton().nativeElement.scrollIntoView({
+              behavior: 'smooth',
+            });
+          }, 2000);
+        }
+      } else if (fragmentValue === 'import') {
+        const buttonVerticalPosition =
+          this.importButton().nativeElement.getBoundingClientRect().top;
+        if (buttonVerticalPosition > window.innerHeight) {
+          setTimeout(() => {
+            this.importButton().nativeElement.scrollIntoView({
+              behavior: 'smooth',
+            });
+          }, 2000);
+        }
       }
     });
   }

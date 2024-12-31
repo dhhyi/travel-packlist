@@ -68,9 +68,7 @@ export default class EditRulesRawComponent {
     );
     effect(() => {
       const value = ruleUpdates();
-      if (value) {
-        this.state.set('rules', value);
-      }
+      this.state.set('rules', value);
     });
   }
 }

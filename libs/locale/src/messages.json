@@ -81,12 +81,17 @@
     "edit.rules.add-item": "+ Item",
     "edit.rules.add-question": "+ Question",
     "edit.rules.add-rule": "+ Rule",
+    "edit.rules.add-rule-and-edit": "+ Rule",
+    "edit.rules.empty": "There are no rules defined yet.",
     "edit.toolbar.clipboard": "Clipboard:",
     "edit.toolbar.clipboard.items": "{VAR_PLURAL, plural, one {1 Item} other {{INTERPOLATION} Items}}",
     "edit.toolbar.clipboard.questions": "{VAR_PLURAL, plural, one {1 Question} other {{INTERPOLATION} Questions}}",
     "model.new.category": "New",
     "model.new.item": "New Item",
     "model.new.question": "New Question",
+    "packlist.no-items": "No items available.",
+    "packlist.no-questions": "No questions available, please {$START_TAG_BUTTON} create {$CLOSE_TAG_BUTTON} some.",
+    "packlist.no-rules": "No rules available, please {$START_TAG_BUTTON} import {$CLOSE_TAG_BUTTON} or {$START_TAG_BUTTON_1} create {$CLOSE_TAG_BUTTON} some.",
     "parser.error.rules": "Error parsing rules"
   }
 }

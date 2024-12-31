@@ -5,6 +5,7 @@ import {
   inject,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   IconLockOpenComponent,
   IconLockComponent,
@@ -28,15 +29,24 @@ import { DisplayQuestionComponent } from './display-question/display-question.co
   templateUrl: './packlist.component.html',
 })
 export default class PacklistComponent {
+  private router = inject(Router);
+
   private state = inject(GlobalState);
   private activeQuestions = this.state.signal('activeQuestions');
   isLockActive = this.state.signal('answersLocked');
   model = this.state.signal('answers');
 
+  readonly rulesAvailable = computed(
+    () => this.state.signal('numberOfRules')() > 0,
+  );
+
   readonly questions = computed(() =>
     this.activeQuestions().filter(
       (q) => !this.isLockActive() || this.model()[q.variable],
     ),
+  );
+  readonly questionsAvailable = computed(
+    () => this.activeQuestions().length > 0,
   );
 
   modelChange(variable: string, value: VariableType): void {
@@ -45,5 +55,15 @@ export default class PacklistComponent {
 
   toggleLock() {
     this.isLockActive.update((lock) => !lock);
+  }
+
+  goToRulesEdit() {
+    void this.router.navigate(['/rules']).then(() => {
+      this.state.set('rulesMode', 'edit');
+    });
+  }
+
+  goToConfigImport() {
+    void this.router.navigate(['/config'], { fragment: 'import' });
   }
 }

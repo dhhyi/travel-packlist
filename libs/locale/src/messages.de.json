@@ -81,12 +81,17 @@
     "edit.rules.add-item": "+ Gegenstand",
     "edit.rules.add-question": "+ Frage",
     "edit.rules.add-rule": "+ Regel",
+    "edit.rules.add-rule-and-edit": "+ Regel",
+    "edit.rules.empty": "Es sind noch keine Regeln definiert.",
     "edit.toolbar.clipboard": "Zwischenablage:",
     "edit.toolbar.clipboard.items": "{VAR_PLURAL, plural, one {1 Gegenstand} other {{INTERPOLATION} Gegenstände}}",
     "edit.toolbar.clipboard.questions": "{VAR_PLURAL, plural, one {1 Frage} other {{INTERPOLATION} Fragen}}",
     "model.new.category": "Neu",
     "model.new.item": "Neuer Gegenstand",
     "model.new.question": "Neue Frage",
+    "packlist.no-items": "Keine Artikel verfügbar.",
+    "packlist.no-questions": "Es sind keine Fragen verfügbar, bitte {$START_TAG_BUTTON}erstelle{$CLOSE_TAG_BUTTON} welche.",
+    "packlist.no-rules": "Es sind keine Regeln verfügbar, bitte {$START_TAG_BUTTON}importiere{$CLOSE_TAG_BUTTON} oder {$START_TAG_BUTTON_1}erstelle{$CLOSE_TAG_BUTTON} welche.",
     "parser.error.rules": "Fehler beim Parsen der Regeln"
   }
 }
