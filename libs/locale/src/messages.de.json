@@ -89,9 +89,13 @@
     "model.new.category": "Neu",
     "model.new.item": "Neuer Gegenstand",
     "model.new.question": "Neue Frage",
+    "packlist.item-packing.progress": "Gegenstandsfortschritt",
+    "packlist.item-packing.status": "Gegenstandsstatus",
     "packlist.no-items": "Keine Artikel verfügbar.",
     "packlist.no-questions": "Es sind keine Fragen verfügbar, bitte {$START_TAG_BUTTON}erstelle{$CLOSE_TAG_BUTTON} welche.",
     "packlist.no-rules": "Es sind keine Regeln verfügbar, bitte {$START_TAG_BUTTON}importiere{$CLOSE_TAG_BUTTON} oder {$START_TAG_BUTTON_1}erstelle{$CLOSE_TAG_BUTTON} welche.",
+    "packlist.weight-packing.progress": "Gewichtsfortschritt",
+    "packlist.weight-packing.status": "Gewichtsstatus",
     "parser.error.rules": "Fehler beim Parsen der Regeln"
   }
 }

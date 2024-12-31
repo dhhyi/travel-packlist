@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:4200",
+      "localStorage": [
+        {
+          "name": "state",
+          "value": "{\"rules\":\":- [Utility] Paper Tissues,[Utility] Backpack;:- Are you traveling longer than 3 days? $longer; longer :- [Electronics] Phone Charger, [Electronics] Tablet; :- Will it be sunny? $sunny, Will it be rainy? $rainy; sunny :- Do you expect a high UV index? $uv, [Utility] Sunglasses, [Clothes] Short Pants; rainy :- [Clothes] Rain Jacket; NOT rainy :- [Clothes] Jacket; NOT sunny :- [Clothes] Long Pants; uv :- [Utility] Sunscreen;\"}"
+        }
+      ]
+    }
+  ]
+}

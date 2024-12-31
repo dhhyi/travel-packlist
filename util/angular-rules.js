@@ -107,7 +107,7 @@ const rules = (tsconfig) =>
         '@angular-eslint/template/i18n': [
           'warn',
           {
-            ignoreAttributes: ['d', 'fragment'],
+            ignoreAttributes: ['d', 'fragment', 'aria-live'],
             ignoreTags: ['meta', 'link', 'noscript'],
           },
         ],

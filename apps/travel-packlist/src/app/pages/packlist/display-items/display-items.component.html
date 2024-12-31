@@ -6,25 +6,46 @@
   @if (trackWeight()) {
     <div class="mb-1 flex">
       <progress
+        role="progressbar"
+        title="weight packing progress"
+        i18n-title="@@packlist.weight-packing.progress"
         class="grow"
         [value]="checkedWeight"
         [max]="totalWeight"
       ></progress>
     </div>
     <div class="flex flex-col items-center">
-      <span>{{ checkedItems }} / {{ totalItems }}</span>
-      <span>{{ serializeWeightPartition(checkedWeight, totalWeight) }}</span>
+      <span
+        title="item packing status"
+        i18n-title="@@packlist.item-packing.status"
+        aria-live="polite"
+        >{{ checkedItems }} / {{ totalItems }}</span
+      >
+      <span
+        title="weight packing status"
+        i18n-title="@@packlist.weight-packing.status"
+        aria-live="polite"
+        >{{ serializeWeightPartition(checkedWeight, totalWeight) }}</span
+      >
     </div>
   } @else {
     <div class="mb-1 flex">
       <progress
+        role="progressbar"
+        title="item packing progress"
+        i18n-title="@@packlist.item-packing.progress"
         class="grow"
         [value]="checkedItems"
         [max]="totalItems"
       ></progress>
     </div>
     <div class="flex justify-center">
-      <span>{{ checkedItems }} / {{ totalItems }}</span>
+      <span
+        title="item packing status"
+        i18n-title="@@packlist.item-packing.status"
+        aria-live="polite"
+        >{{ checkedItems }} / {{ totalItems }}</span
+      >
     </div>
   }
 </div>
@@ -77,6 +98,7 @@
             role="button"
             tabindex="0"
             class="flex justify-between"
+            [attr.aria-pressed]="item.checked"
             [ngClass]="{
               'text-slate-600 line-through dark:text-slate-400': item.checked,
             }"

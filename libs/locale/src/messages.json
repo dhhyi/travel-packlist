@@ -89,9 +89,13 @@
     "model.new.category": "New",
     "model.new.item": "New Item",
     "model.new.question": "New Question",
+    "packlist.item-packing.progress": "item packing progress",
+    "packlist.item-packing.status": "item packing status",
     "packlist.no-items": "No items available.",
     "packlist.no-questions": "No questions available, please {$START_TAG_BUTTON} create {$CLOSE_TAG_BUTTON} some.",
     "packlist.no-rules": "No rules available, please {$START_TAG_BUTTON} import {$CLOSE_TAG_BUTTON} or {$START_TAG_BUTTON_1} create {$CLOSE_TAG_BUTTON} some.",
+    "packlist.weight-packing.progress": "weight packing progress",
+    "packlist.weight-packing.status": "weight packing status",
     "parser.error.rules": "Error parsing rules"
   }
 }
