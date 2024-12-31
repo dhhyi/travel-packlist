@@ -4,7 +4,6 @@ import {
   inject,
   input,
   output,
-  signal,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import {
@@ -16,7 +15,6 @@ import {
   IconPasteComponent,
 } from '@travel-packlist/icons';
 import {
-  Parser,
   Condition,
   Item,
   PleaseSelect,
@@ -53,9 +51,6 @@ export class EditorRuleComponent {
   readonly deleteRule = output();
   readonly renameVariable = output<[string, string]>();
 
-  readonly ruleDebugString = computed(() => this.rule.toString());
-  readonly errorMessage = signal<string | null>(null);
-
   private state = inject(GlobalState);
   mode = this.state.signal('rulesMode');
   readonly selectVariables = computed(() => {
@@ -65,21 +60,6 @@ export class EditorRuleComponent {
   });
 
   private clipboard = inject(RulesClipboard);
-
-  private parser = inject(Parser);
-
-  private compileRule(rule: Rule): boolean {
-    try {
-      this.parser.parseRule(rule.toString());
-      this.errorMessage.set(null);
-      return true;
-    } catch (error) {
-      if (error instanceof Error) {
-        this.errorMessage.set(error.message);
-      }
-      return false;
-    }
-  }
 
   resetCondition() {
     this.updateCondition(new PleaseSelect());
@@ -91,9 +71,7 @@ export class EditorRuleComponent {
       this.rule().questions,
       this.rule().items,
     );
-    if (this.compileRule(newRule)) {
-      this.ruleChanged.emit(newRule);
-    }
+    this.ruleChanged.emit(newRule);
   }
 
   private emitNewQuestions(questions: Question[]) {
@@ -102,9 +80,7 @@ export class EditorRuleComponent {
       questions,
       this.rule().items,
     );
-    if (this.compileRule(newRule)) {
-      this.ruleChanged.emit(newRule);
-    }
+    this.ruleChanged.emit(newRule);
   }
 
   updateQuestion(index: number, question: Question) {
@@ -147,9 +123,7 @@ export class EditorRuleComponent {
       this.rule().questions,
       items,
     );
-    if (this.compileRule(newRule)) {
-      this.ruleChanged.emit(newRule);
-    }
+    this.ruleChanged.emit(newRule);
   }
 
   updateItem(index: number, item: Item) {
