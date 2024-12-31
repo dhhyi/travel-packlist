@@ -7,7 +7,8 @@
     "localized"
   ],
   "implicitDependencies": [
-    "check-plugin"
+    "check-plugin",
+    "travel-packlist"
   ],
   "targets": {
     "lint": {
@@ -20,6 +21,7 @@
         "defaultLocale": "en"
       },
       "inputs": [
+        "^production",
         "{projectRoot}/src/messages*.json",
         "{projectRoot}/check-translations.mjs"
       ],
