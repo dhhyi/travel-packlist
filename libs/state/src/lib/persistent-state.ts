@@ -43,7 +43,6 @@ export class PersistentState implements ReadWriteState<PersistentStateType> {
   >();
 
   constructor() {
-    this.loadLegacyState();
     this.initializeSignals();
   }
 
@@ -62,51 +61,6 @@ export class PersistentState implements ReadWriteState<PersistentStateType> {
       );
       this.signalMap.set(key, newSignal);
     }
-  }
-
-  /**
-   * Load legacy state from localStorage.
-   * This is only necessary for users who have used the old version of the checklist.
-   *
-   * TODO: Remove this function after the next major release.
-   */
-  private loadLegacyState() {
-    /* eslint-disable @typescript-eslint/no-non-null-assertion */
-    if (localStorage.getItem('answers')) {
-      this.state.answers = JSON.parse(
-        localStorage.getItem('answers')!,
-      ) as PersistentStateType['answers'];
-      localStorage.removeItem('answers');
-    }
-    if (localStorage.getItem('checkedItems')) {
-      this.state.checkedItems = JSON.parse(
-        localStorage.getItem('checkedItems')!,
-      ) as PersistentStateType['checkedItems'];
-      localStorage.removeItem('checkedItems');
-    }
-    if (localStorage.getItem('collapsedCategories')) {
-      this.state.collapsedCategories = JSON.parse(
-        localStorage.getItem('collapsedCategories')!,
-      ) as PersistentStateType['collapsedCategories'];
-      localStorage.removeItem('collapsedCategories');
-    }
-    if (localStorage.getItem('rules')) {
-      this.state.rules = localStorage.getItem('rules')!;
-      localStorage.removeItem('rules');
-    }
-    if (localStorage.getItem('config')) {
-      const config = JSON.parse(
-        localStorage.getItem('config')!,
-      ) as PersistentStateType;
-      this.state.fadeOutDisabledRules = config.fadeOutDisabledRules;
-      this.state.trackWeight = config.trackWeight;
-      this.state.answersLocked = config.answersLocked;
-      this.state.theme = config.theme;
-      this.state.language = config.language;
-      localStorage.removeItem('config');
-    }
-    /* eslint-enable @typescript-eslint/no-non-null-assertion */
-    this.persist();
   }
 
   private persist() {
