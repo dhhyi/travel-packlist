@@ -12,7 +12,6 @@ import {
   effect,
 } from '@angular/core';
 import {
-  Serializer,
   Always,
   And,
   Condition,
@@ -62,10 +61,7 @@ export class EditorConditionComponent {
       this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
   );
 
-  private serializer = inject(Serializer);
-  readonly serializedCondition = computed(() =>
-    this.serializer.serialize(this.condition()),
-  );
+  readonly serializedCondition = computed(() => this.condition().toString());
 
   PLEASE_SELECT = PleaseSelect.string;
   ALWAYS = Always.string;

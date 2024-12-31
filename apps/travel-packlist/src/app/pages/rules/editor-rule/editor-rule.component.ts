@@ -17,7 +17,6 @@ import {
 } from '@travel-packlist/icons';
 import {
   Parser,
-  Serializer,
   Condition,
   Item,
   PleaseSelect,
@@ -54,9 +53,7 @@ export class EditorRuleComponent {
   readonly deleteRule = output();
   readonly renameVariable = output<[string, string]>();
 
-  readonly ruleDebugString = computed(() =>
-    this.serializer.serialize(this.rule()),
-  );
+  readonly ruleDebugString = computed(() => this.rule.toString());
   readonly errorMessage = signal<string | null>(null);
 
   private state = inject(GlobalState);
@@ -70,11 +67,10 @@ export class EditorRuleComponent {
   private clipboard = inject(RulesClipboard);
 
   private parser = inject(Parser);
-  private serializer = inject(Serializer);
 
   private compileRule(rule: Rule): boolean {
     try {
-      this.parser.parseRule(this.serializer.serialize(rule));
+      this.parser.parseRule(rule.toString());
       this.errorMessage.set(null);
       return true;
     } catch (error) {

@@ -2,18 +2,16 @@ import { TestBed } from '@angular/core/testing';
 
 import { Parser } from './parser';
 import { Refactor } from './refactor';
-import { Serializer } from './serializer';
+import { serializeRules } from './serializer';
 import { Rule } from './types';
 
 describe('Refactor', () => {
   let refactor: Refactor;
   let parser: Parser;
-  let serializer: Serializer;
 
   beforeEach(() => {
     refactor = TestBed.inject(Refactor);
     parser = TestBed.inject(Parser);
-    serializer = TestBed.inject(Serializer);
   });
 
   describe('extractVariables', () => {
@@ -46,21 +44,21 @@ describe('Refactor', () => {
     it('should rename variable in question', () => {
       const question = parser.parseQuestion('Is it sunny? $sunny');
       const result = refactor.renameVariable('sunny', 'rainy', question);
-      expect(result.variable).toBe('rainy');
+      expect(result.toString()).toMatchInlineSnapshot(`"Is it sunny? $rainy"`);
     });
 
     it('should rename variable in simple condition', () => {
       const condition = parser.parseCondition('sunny');
       const result = refactor.renameVariable('sunny', 'rainy', condition);
 
-      expect(serializer.serialize(result)).toBe('rainy');
+      expect(result.toString()).toMatchInlineSnapshot(`"rainy"`);
     });
 
     it('should rename variable in complex condition', () => {
       const condition = parser.parseCondition('sunny AND rainy');
       const result = refactor.renameVariable('sunny', 'cloudy', condition);
 
-      expect(serializer.serialize(result)).toBe('cloudy AND rainy');
+      expect(result.toString()).toMatchInlineSnapshot(`"cloudy AND rainy"`);
     });
 
     it('should rename variable in rule', () => {
@@ -69,9 +67,11 @@ describe('Refactor', () => {
       );
       const result = refactor.renameVariable('sunny', 'cloudy', rule);
 
-      expect(serializer.serialize(result)).toBe(`cloudy :-
+      expect(result.toString()).toMatchInlineSnapshot(`
+"cloudy :-
    Is it rainy? $rainy,
-   [weather] umbrella`);
+   [weather] umbrella"
+`);
     });
 
     it('should rename variable in rules', () => {
@@ -85,13 +85,15 @@ describe('Refactor', () => {
       result = refactor.renameVariable('cloudy', 'clouds', result);
       result = refactor.renameVariable('windy', 'wind', result);
 
-      expect(serializer.serializeRules(result)).toBe(`sunny :-
+      expect(serializeRules(result)).toMatchInlineSnapshot(`
+"sunny :-
    Is it rainy? $rain,
    [weather] umbrella;
 
 rain AND clouds :-
    Is it windy? $wind,
-   [weather] jacket;`);
+   [weather] jacket;"
+`);
     });
   });
 

@@ -14,7 +14,12 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { SyntaxError, Parser, Serializer, Item } from '@travel-packlist/model';
+import {
+  SyntaxError,
+  Parser,
+  Item,
+  serializeWeight,
+} from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
 import { debounceTime, filter } from 'rxjs';
 
@@ -45,7 +50,6 @@ export class EditorItemComponent {
   });
 
   private parser = inject(Parser);
-  private serializer = inject(Serializer);
 
   constructor() {
     effect(() => {
@@ -70,9 +74,7 @@ export class EditorItemComponent {
         return;
       }
 
-      const serialized = this.serializer.serialize(
-        new Item(value.category, value.name),
-      );
+      const serialized = new Item(value.category, value.name).toString();
       this.itemChanged.emit(this.parser.parseItem(serialized));
     });
 
@@ -92,7 +94,7 @@ export class EditorItemComponent {
     if (!this.blockPatch) {
       let name = this.item().name;
       if (this.item().weight) {
-        name += ` ${this.serializer.serializeWeight(this.item().weight)}`;
+        name += ` ${serializeWeight(this.item().weight)}`;
       }
 
       this.form.patchValue(

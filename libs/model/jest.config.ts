@@ -2,6 +2,7 @@ export default {
   coverageDirectory: '../../coverage/libs/model',
   displayName: 'model',
   preset: '../../jest.preset.js',
+  prettierPath: null,
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',

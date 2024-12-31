@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 
 import { Parser } from './parser';
-import { Serializer } from './serializer';
 import {
   Always,
   And,
@@ -22,7 +21,6 @@ interface FilterFunctionType {
 
 @Injectable({ providedIn: 'root' })
 export class Refactor {
-  private serializer = inject(Serializer);
   private parser = inject(Parser);
 
   extractVariables(rules: Rule[]): string[] {

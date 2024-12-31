@@ -9,7 +9,7 @@ import {
   IconKeyDownComponent,
   IconKeyRightComponent,
 } from '@travel-packlist/icons';
-import { Serializer, Item } from '@travel-packlist/model';
+import { serializeWeight, Item } from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
 
 import { ItemsStatusComponent } from '../items-status/items-status.component';
@@ -51,14 +51,13 @@ export class DisplayItemsComponent {
 
   trackWeight = this.state.signal('trackWeight');
 
-  private serializer = inject(Serializer);
-  serializeWeight = this.serializer.serializeWeight.bind(this.serializer);
+  serializeWeight = serializeWeight;
 
   serializeWeightPartition(checked: number, total: number): string {
     return (
-      this.serializer.serializeWeight(checked, undefined, 1) +
+      serializeWeight(checked, undefined, 1) +
       ' / ' +
-      this.serializer.serializeWeight(total, undefined, 1)
+      serializeWeight(total, undefined, 1)
     );
   }
 

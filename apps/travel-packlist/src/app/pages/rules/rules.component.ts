@@ -10,8 +10,8 @@ import { RouterLink } from '@angular/router';
 import { IconSwapComponent } from '@travel-packlist/icons';
 import {
   Refactor,
-  Serializer,
   PleaseSelect,
+  serializeRules,
   Rule,
 } from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
@@ -32,7 +32,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
   templateUrl: './rules.component.html',
 })
 export default class RulesComponent {
-  private serializer = inject(Serializer);
   private refactor = inject(Refactor);
 
   private state = inject(GlobalState);
@@ -60,7 +59,7 @@ export default class RulesComponent {
   );
 
   private updateRules(rules: Rule[]) {
-    const serializedRules = this.serializer.serializeRules(rules);
+    const serializedRules = serializeRules(rules);
     this.state.set('rules', serializedRules);
   }
 

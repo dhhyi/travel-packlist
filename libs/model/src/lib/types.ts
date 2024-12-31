@@ -1,3 +1,5 @@
+import { serializeWeight } from './serializer';
+
 /* eslint-disable @angular-eslint/runtime-localize */
 export class Rule {
   constructor(
@@ -5,6 +7,33 @@ export class Rule {
     public readonly questions: Question[] = [],
     public readonly items: Item[] = [],
   ) {}
+
+  toString(): string {
+    const tokens = [];
+    if (!(this.condition instanceof Always)) {
+      const condition = this.condition.toString();
+      if (condition) {
+        tokens.push(condition, ' ');
+      }
+    }
+    tokens.push(':-');
+
+    const effects = this.questions
+      .map((q) => q.toString())
+      .concat(this.items.map((i) => i.toString()));
+    if (effects.length === 1 && tokens.length === 1) {
+      tokens.push(' ', effects[0]);
+    } else {
+      for (let index = 0; index < effects.length; index++) {
+        const effect = effects[index];
+        if (index > 0) {
+          tokens.push(',');
+        }
+        tokens.push('\n', '   ', effect);
+      }
+    }
+    return tokens.join('');
+  }
 }
 
 export class Question {
@@ -15,6 +44,10 @@ export class Question {
     public readonly question: string,
     public readonly variable: string,
   ) {}
+
+  toString(): string {
+    return this.question + ' $' + this.variable;
+  }
 }
 
 export class Item {
@@ -25,6 +58,14 @@ export class Item {
     public readonly name: string,
     public readonly weight?: number,
   ) {}
+
+  toString(): string {
+    let item = `[${this.category}] ${this.name}`.trim();
+    if (this.weight) {
+      item += ' ' + serializeWeight(this.weight);
+    }
+    return item;
+  }
 }
 
 export type VariableType = boolean;
@@ -36,6 +77,10 @@ export class Variable {
 
   evaluate(model: Record<string, VariableType>): boolean {
     return model[this.variable];
+  }
+
+  toString(): string {
+    return this.variable;
   }
 }
 
@@ -64,6 +109,10 @@ export class Not {
   evaluate(model: Record<string, VariableType>): boolean {
     return !this.not.evaluate(model);
   }
+
+  toString(): string {
+    return 'NOT ' + this.not.toString();
+  }
 }
 
 export class And {
@@ -75,6 +124,10 @@ export class And {
   evaluate(model: Record<string, VariableType>): boolean {
     return this.left.evaluate(model) && this.right.evaluate(model);
   }
+
+  toString(): string {
+    return this.left.toString() + ' AND ' + this.right.toString();
+  }
 }
 
 export class Or {
@@ -85,5 +138,9 @@ export class Or {
 
   evaluate(model: Record<string, VariableType>): boolean {
     return this.left.evaluate(model) || this.right.evaluate(model);
+  }
+
+  toString(): string {
+    return this.left.toString() + ' OR ' + this.right.toString();
   }
 }
