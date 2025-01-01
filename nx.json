@@ -19,12 +19,12 @@
       "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/.stylelintrc.json",
       "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
-      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/storybook/**/*",
       "!{projectRoot}/tsconfig.storybook.json"
     ],
     "sharedGlobals": [
-      "{workspaceRoot}/util/versioning-helpers.js",
-      "{workspaceRoot}/tsconfig.base.json"
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/pnpm-lock.yaml"
     ]
   },
   "targetDefaults": {
