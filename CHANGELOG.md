@@ -1,3 +1,16 @@
+## [0.4.0](https://github.com/dhhyi/travel-packlist/compare/v0.3.3...v0.4.0) (2025-01-01)
+
+### Features
+
+- add jump to packlist button in editor ([76a10d3](https://github.com/dhhyi/travel-packlist/commit/76a10d3ac24a2a1aec0c40a2c8e5d67a6bed0185))
+- make it possible to define rules from scratch ([a101aec](https://github.com/dhhyi/travel-packlist/commit/a101aecf1884e14a6c3bdff61fd8a7175d3db899))
+
+### Bug Fixes
+
+- display clipboard only when something is selected ([a0d0764](https://github.com/dhhyi/travel-packlist/commit/a0d0764d14d7dd2aa864dd306da23ab588955ab4))
+- display disabled icons correctly ([d2a838c](https://github.com/dhhyi/travel-packlist/commit/d2a838caffe1e237722498c76a3a20b6fc51609f))
+- increase contrast of checked packlist items ([8d440ce](https://github.com/dhhyi/travel-packlist/commit/8d440ce80f6c698687bb8f95d3fb5ce122b9815d))
+
 ## [0.3.3](https://github.com/dhhyi/travel-packlist/compare/v0.3.2...v0.3.3) (2024-12-09)
 
 ### Bug Fixes
