@@ -33,7 +33,8 @@
         }
       },
       "inputs": [
-        "^production"
+        "^production",
+        "version"
       ],
       "outputs": [
         "{options.outputPath}"

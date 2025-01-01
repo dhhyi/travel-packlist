@@ -25,6 +25,11 @@
     "sharedGlobals": [
       "{workspaceRoot}/tsconfig.base.json",
       "{workspaceRoot}/pnpm-lock.yaml"
+    ],
+    "version": [
+      {
+        "runtime": "npm pkg get version"
+      }
     ]
   },
   "targetDefaults": {
