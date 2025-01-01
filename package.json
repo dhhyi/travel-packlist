@@ -120,9 +120,9 @@
     "@storybook/angular": "^8.4.7",
     "@storybook/core-server": "^8.4.7",
     "@types/jest": "^29.5.14",
-    "@types/node": "22.10.2",
+    "@types/node": "22.10.3",
     "@types/showdown": "^2.0.6",
-    "@typescript-eslint/utils": "^8.18.1",
+    "@typescript-eslint/utils": "^8.19.0",
     "angular-eslint": "^19.0.2",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
@@ -152,7 +152,7 @@
     "stylelint-config-standard": "^36.0.1",
     "ts-jest": "^29.2.5",
     "ts-node": "10.9.2",
-    "typescript-eslint": "8.18.1",
+    "typescript-eslint": "8.19.0",
     "zone.js": "~0.15.0"
   }
 }
