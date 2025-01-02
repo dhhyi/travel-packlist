@@ -12,8 +12,8 @@ import {
 import { serializeWeight, Item } from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
 
-import { ItemsStatusComponent } from '../items-status/items-status.component';
 import { PacklistFacade } from '../packlist.facade';
+import { ItemsStatusComponent } from './items-status/items-status.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

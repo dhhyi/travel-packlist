@@ -3,7 +3,7 @@ import { IconCheckmarkComponent } from '@travel-packlist/icons';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-status',
+  selector: 'app-items-status',
   imports: [IconCheckmarkComponent],
   templateUrl: './items-status.component.html',
 })

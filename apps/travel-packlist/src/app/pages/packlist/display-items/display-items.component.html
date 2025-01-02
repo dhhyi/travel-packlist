@@ -89,7 +89,10 @@
           </span>
         }
       </div>
-      <app-status [count]="category.checked" [total]="category.items.length" />
+      <app-items-status
+        [count]="category.checked"
+        [total]="category.items.length"
+      />
     </div>
     @if (!category.collapsed) {
       <ul class="pt-2">

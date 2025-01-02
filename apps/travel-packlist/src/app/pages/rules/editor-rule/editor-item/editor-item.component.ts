@@ -23,8 +23,7 @@ import {
 import { GlobalState } from '@travel-packlist/state';
 import { debounceTime, filter } from 'rxjs';
 
-import { prompt } from '../../../dialog';
-import { alert } from '../../../dialog/dialog.component';
+import { alert, prompt } from '../../../../dialog';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -48,7 +48,8 @@
       "inputs": [
         "default",
         "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint*.config.*"
+        "{workspaceRoot}/eslint*.config.*",
+        "{workspaceRoot}/util/*-rules.js"
       ],
       "dependsOn": [
         "generate",

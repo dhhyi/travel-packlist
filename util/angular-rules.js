@@ -92,6 +92,13 @@ const rules = (tsconfig) =>
                 name: '@angular/core/rxjs-interop',
               },
             ],
+            patterns: [
+              {
+                group: ['../**/*.component'],
+                importNamePattern: 'Component$',
+                message: 'Only import deeper nested components.',
+              },
+            ],
           },
         ],
       },

@@ -1,1 +1,1 @@
-export { prompt, confirm } from './dialog.component';
+export { alert, prompt, confirm } from './dialog.component';

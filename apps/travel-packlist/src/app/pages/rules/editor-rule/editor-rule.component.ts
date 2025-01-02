@@ -23,10 +23,10 @@ import {
 } from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
 
-import { EditorConditionComponent } from '../editor-condition/editor-condition.component';
-import { EditorItemComponent } from '../editor-item/editor-item.component';
-import { EditorQuestionComponent } from '../editor-question/editor-question.component';
 import { RulesClipboard } from '../rules.clipboard';
+import { EditorConditionComponent } from './editor-condition/editor-condition.component';
+import { EditorItemComponent } from './editor-item/editor-item.component';
+import { EditorQuestionComponent } from './editor-question/editor-question.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
