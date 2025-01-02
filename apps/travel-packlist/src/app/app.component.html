@@ -2,18 +2,29 @@
   class="flex h-[3rem] min-h-[3rem] flex-row items-center pb-2"
   role="navigation"
 >
-  <a class="flex grow" routerLink="/">
-    <img
-      alt="application icon"
-      i18n-alt="@@app.icon"
-      src="icon.svg"
-      class="h-8"
-    />
-    <span i18n="@@app.title" class="text-xl font-bold">TravelPacklist</span>
-  </a>
-  <a class="pr-2" routerLink="/config" routerLinkActive="hidden">
+  <button
+    type="button"
+    class="link grow justify-start pl-0"
+    aria-label="Go to TravelPacklist"
+    role="banner"
+    i18n-aria-label="@@app.banner.home-link"
+    routerLink="/"
+  >
+    <!-- eslint-disable-next-line @angular-eslint/template/alt-text -->
+    <img aria-hidden="true" src="icon.svg" class="h-8" />
+    <h1 i18n="@@app.title" class="text-xl font-bold">TravelPacklist</h1>
+  </button>
+  <button
+    type="button"
+    role="link"
+    class="link pr-2"
+    routerLink="/config"
+    routerLinkActive="hidden"
+    aria-label="Go to configuration"
+    i18n-aria-label="@@app.banner.config-link"
+  >
     <app-icon-cog class="h-6 w-6" />
-  </a>
+  </button>
 </nav>
 
 <div class="flex grow flex-col pb-[3.5rem]">
@@ -23,6 +34,8 @@
     <div class="fixed bottom-2 left-1/2 -translate-x-1/2">
       <button
         type="button"
+        aria-label="Scroll to top"
+        i18n-aria-label="@@app.scroll-top"
         class="flex w-full items-center justify-center rounded-3xl border border-slate-300 shadow-xl"
         (click)="scrollTop()"
       >

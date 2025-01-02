@@ -1,11 +1,14 @@
 {
   "locale": "en",
   "translations": {
+    "app.banner.config-link": "Go to configuration",
+    "app.banner.home-link": "Go to TravelPacklist",
     "app.error.cta": "Please do that",
     "app.error.cta.label": "here",
     "app.error.fix-manually": "Unfortunately, this error can only be fixed by changing the rules manually.",
     "app.error.introduction": "The following error occurred while parsing the rules:",
     "app.icon": "application icon",
+    "app.scroll-top": "Scroll to top",
     "app.title": "TravelPacklist",
     "app.update.apply.question": "A new version of the app is available. Do you want to reload?",
     "config.appearance": "Appearance",
@@ -89,13 +92,14 @@
     "model.new.category": "New",
     "model.new.item": "New Item",
     "model.new.question": "New Question",
-    "packlist.item-packing.progress": "item packing progress",
-    "packlist.item-packing.status": "item packing status",
     "packlist.no-items": "No items available.",
     "packlist.no-questions": "No questions available, please {$START_TAG_BUTTON} create {$CLOSE_TAG_BUTTON} some.",
     "packlist.no-rules": "No rules available, please {$START_TAG_BUTTON} import {$CLOSE_TAG_BUTTON} or {$START_TAG_BUTTON_1} create {$CLOSE_TAG_BUTTON} some.",
-    "packlist.weight-packing.progress": "weight packing progress",
-    "packlist.weight-packing.status": "weight packing status",
+    "packlist.progress.items": "item packing progress",
+    "packlist.progress.items.label": "You have packed {$CHECKED_ITEMS} out of {$TOTAL_ITEMS} items.",
+    "packlist.progress.weight": "weight packing progress",
+    "packlist.progress.weight.label": "You have packed {$CHECKED_WEIGHT} out of {$TOTAL_WEIGHT} by packing {$CHECKED_ITEMS} out of {$TOTAL_ITEMS} items.",
+    "packlist.toggle-answers-lock": "Lock answers",
     "parser.error.rules": "Error parsing rules"
   }
 }

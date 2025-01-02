@@ -1,71 +1,15 @@
-<div class="card mb-1">
-  @let checkedItems = view().checked;
-  @let totalItems = view().numberOfItems;
-  @let checkedWeight = view().checkedWeight;
-  @let totalWeight = view().totalWeight;
-  @if (trackWeight()) {
-    <div class="mb-1 flex">
-      <progress
-        role="progressbar"
-        title="weight packing progress"
-        i18n-title="@@packlist.weight-packing.progress"
-        class="grow"
-        [value]="checkedWeight"
-        [max]="totalWeight"
-      ></progress>
-    </div>
-    <div class="flex flex-col items-center">
-      <span
-        title="item packing status"
-        i18n-title="@@packlist.item-packing.status"
-        aria-live="polite"
-        >{{ checkedItems }} / {{ totalItems }}</span
-      >
-      <span
-        title="weight packing status"
-        i18n-title="@@packlist.weight-packing.status"
-        aria-live="polite"
-        >{{ serializeWeightPartition(checkedWeight, totalWeight) }}</span
-      >
-    </div>
-  } @else {
-    <div class="mb-1 flex">
-      <progress
-        role="progressbar"
-        title="item packing progress"
-        i18n-title="@@packlist.item-packing.progress"
-        class="grow"
-        [value]="checkedItems"
-        [max]="totalItems"
-      ></progress>
-    </div>
-    <div class="flex justify-center">
-      <span
-        title="item packing status"
-        i18n-title="@@packlist.item-packing.status"
-        aria-live="polite"
-        >{{ checkedItems }} / {{ totalItems }}</span
-      >
-    </div>
-  }
-</div>
-
-@if (!view().numberOfItems) {
+@if (!facade.numberOfItems()) {
   <div class="flex flex-col items-center">
     <p i18n="@@packlist.no-items" class="text-center">No items available.</p>
   </div>
 }
 
-@for (group of view().categories | keyvalue: orderBy(); track group.key) {
-  @let categoryName = group.key;
-  @let category = group.value;
-  <div class="card mb-1">
+@for (category of facade.packlist(); track category.name) {
+  <div class="card mb-1" role="list" [attr.aria-label]="category.name">
     <div
-      role="button"
-      tabindex="0"
+      aria-hidden="true"
       class="flex justify-between"
-      (click)="toggleCategoryCollapse(categoryName)"
-      (keypress)="toggleCategoryCollapse(categoryName)"
+      (click)="facade.toggleCategoryCollapse(category.name)"
     >
       <div class="flex items-center gap-1">
         @if (category.collapsed) {
@@ -73,8 +17,8 @@
         } @else {
           <app-icon-key-down class="h-6 w-6" />
         }
-        <span class="font-bold italic">{{ categoryName }}</span>
-        @if (trackWeight() && category.totalWeight) {
+        <span class="font-bold italic">{{ category.name }}</span>
+        @if (facade.trackWeight() && category.totalWeight) {
           <span class="text-sm">
             @if (category.checkedWeight === category.totalWeight) {
               ({{ serializeWeight(category.checkedWeight, undefined, 1) }})
@@ -95,26 +39,26 @@
       />
     </div>
     @if (!category.collapsed) {
-      <ul class="pt-2">
-        @for (item of category.items; track $index) {
-          <li
-            role="button"
+      @for (item of category.items; track $index) {
+        <div role="listitem">
+          <div
+            role="checkbox"
             tabindex="0"
             class="flex justify-between"
-            [attr.aria-pressed]="item.checked"
+            [attr.aria-checked]="item.checked"
             [ngClass]="{
               'text-slate-600 line-through dark:text-slate-400': item.checked,
             }"
-            (click)="toggleCheckedItem(item)"
-            (keypress)="toggleCheckedItem(item)"
+            (click)="facade.toggleCheckedItem(item)"
+            (keypress)="facade.toggleCheckedItem(item)"
           >
             {{ item.name }}
-            @if (item.weight && trackWeight()) {
+            @if (item.weight && facade.trackWeight()) {
               <span class="italic">{{ serializeWeight(item.weight) }}</span>
             }
-          </li>
-        }
-      </ul>
+          </div>
+        </div>
+      }
     }
   </div>
 }

@@ -1,40 +1,7 @@
-@if (rulesAvailable()) {
-  @if (!questionsAvailable()) {
-    <div class="flex flex-col items-center">
-      <p class="text-center" i18n="@@packlist.no-questions">
-        No questions available, please
-        <button
-          type="button"
-          class="link inline p-0 underline"
-          (click)="goToRulesEdit()"
-        >
-          create
-        </button>
-        some.
-      </p>
-    </div>
-  } @else {
-    @for (question of questions(); track question.question) {
-      <div class="card mb-1" [ngClass]="{ disabled: isLockActive() }">
-        <app-display-question
-          [question]="question.question"
-          [value]="model()[question.variable]"
-          (valueChange)="modelChange(question.variable, $event)"
-        />
-      </div>
-    }
-    <div class="flex justify-center">
-      <button type="button" class="link" (click)="toggleLock()">
-        @if (isLockActive()) {
-          <app-icon-lock class="h-6 w-6" />
-        } @else {
-          <app-icon-lock-open class="h-6 w-6" />
-        }
-      </button>
-    </div>
-
-    <app-display-items />
-  }
+@if (facade.rulesAvailable()) {
+  <app-display-questions />
+  <app-packlist-status />
+  <app-display-items />
 } @else {
   <div class="flex flex-col items-center">
     <p class="text-center" i18n="@@packlist.no-rules">
@@ -42,7 +9,7 @@
       <button
         class="link inline p-0 underline"
         type="button"
-        (click)="goToConfigImport()"
+        (click)="facade.goToConfigImport()"
       >
         import
       </button>
@@ -50,7 +17,7 @@
       <button
         class="link inline p-0 underline"
         type="button"
-        (click)="goToRulesEdit()"
+        (click)="facade.goToRulesEdit()"
       >
         create
       </button>

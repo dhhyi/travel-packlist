@@ -1,0 +1,37 @@
+<div class="card mb-1">
+  <div class="mb-1 flex">
+    @if (facade.trackWeight()) {
+      <progress
+        class="grow"
+        role="progressbar"
+        title="weight packing progress"
+        i18n-title="@@packlist.progress.weight"
+        aria-live="polite"
+        [attr.aria-label]="statusLabelText()"
+        [value]="facade.checkedWeight()"
+        [max]="facade.totalWeight()"
+      ></progress>
+    } @else {
+      <progress
+        class="grow"
+        role="progressbar"
+        title="item packing progress"
+        i18n-title="@@packlist.progress.items"
+        aria-live="polite"
+        [attr.aria-label]="statusLabelText()"
+        [value]="facade.numberOfCheckedItems()"
+        [max]="facade.numberOfItems()"
+      ></progress>
+    }
+  </div>
+  <div class="flex flex-col items-center" aria-hidden="true">
+    <span
+      >{{ facade.numberOfCheckedItems() }} / {{ facade.numberOfItems() }}</span
+    >
+    @if (facade.trackWeight()) {
+      <span>{{
+        serializeWeightPartition(facade.checkedWeight(), facade.totalWeight())
+      }}</span>
+    }
+  </div>
+</div>

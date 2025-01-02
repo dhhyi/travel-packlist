@@ -10,6 +10,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   selector: 'app-<%= icon %>',
   standalone: true,
   templateUrl: './<%= name %>.html',
+  host: {
+    '[attr.aria-hidden]': 'true',
+  }
 })
 export class <%= classify(icon) %>Component {
   readonly class = input<string>('h-[1rem] <% if (icon.startsWith('flag')) { %>w-[1.25rem]<% } else { %>w-[1rem]<% } %>');

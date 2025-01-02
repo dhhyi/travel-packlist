@@ -5,7 +5,7 @@ export class PacklistPage {
 
   async navigate() {
     await this.page.goto('/');
-    expect(await this.page.getByRole('navigation').textContent()).toContain(
+    expect(await this.page.getByRole('banner').textContent()).toContain(
       'TravelPacklist',
     );
   }
@@ -14,7 +14,11 @@ export class PacklistPage {
     return this.page.getByTitle('item packing progress');
   }
 
-  item(name: string, pressed: boolean) {
-    return this.page.getByRole('button', { name, pressed });
+  item(name: string, checked: boolean) {
+    return this.page.getByRole('checkbox', { name, checked });
+  }
+
+  question(name: string, checked: boolean) {
+    return this.page.getByRole('checkbox', { name, checked });
   }
 }

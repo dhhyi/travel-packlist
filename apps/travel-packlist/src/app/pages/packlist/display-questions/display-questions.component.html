@@ -1,0 +1,52 @@
+@if (!facade.questionsAvailable()) {
+  <div class="flex flex-col items-center">
+    <p class="text-center" i18n="@@packlist.no-questions">
+      No questions available, please
+      <button
+        type="button"
+        class="link inline p-0 underline"
+        (click)="facade.goToRulesEdit()"
+      >
+        create
+      </button>
+      some.
+    </p>
+  </div>
+} @else {
+  @for (question of facade.questions(); track question.question) {
+    <div
+      class="card mb-1 flex flex-row justify-between"
+      role="checkbox"
+      tabindex="0"
+      [attr.aria-checked]="facade.isQuestionActive(question)"
+      [attr.aria-disabled]="facade.isAnswersLockActive()"
+      [attr.aria-label]="question.question"
+      [class.disabled]="facade.isAnswersLockActive()"
+      (click)="facade.toggleQuestion(question)"
+      (keypress)="facade.toggleQuestion(question)"
+    >
+      <span aria-hidden="true" class="font-bold">{{ question.question }}</span>
+      @if (facade.isQuestionActive(question)) {
+        <app-icon-checkmark />
+      }
+    </div>
+  }
+  <div class="flex justify-center">
+    <button
+      type="button"
+      class="link"
+      role="button"
+      aria-label="Lock answers"
+      i18n-aria-label="@@packlist.toggle-answers-lock"
+      [attr.aria-pressed]="facade.isAnswersLockActive()"
+      (click)="facade.toggleAnswersLock()"
+      (keypress)="facade.toggleAnswersLock()"
+    >
+      @if (facade.isAnswersLockActive()) {
+        <app-icon-lock class="h-6 w-6" />
+      } @else {
+        <app-icon-lock-open class="h-6 w-6" />
+      }
+    </button>
+  </div>
+}
