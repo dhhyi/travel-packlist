@@ -80,8 +80,10 @@ jobs:
       - name: Build Design System 🎨
         run: |
           pnpm exec nx run design-system:build --configuration ci
+          echo "::group::Move and Copy Design System Files"
           mv dist/apps/design-system/index.html dist/apps/design-system/index.design.html
           cp -Rfv dist/apps/design-system/* dist/web/
+          echo "::endgroup::"
 
       - name: Deploy GitHub Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4
