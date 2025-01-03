@@ -1,6 +1,7 @@
 <nav
   class="flex h-[3rem] min-h-[3rem] flex-row items-center pb-2"
   role="navigation"
+  [inert]="overlayVisible()"
 >
   <button
     type="button"
@@ -27,7 +28,7 @@
   </button>
 </nav>
 
-<div class="flex grow flex-col pb-[3.5rem]">
+<div class="flex grow flex-col pb-[3.5rem]" [inert]="overlayVisible()">
   <router-outlet />
 
   @if (scrollTopVisible()) {
@@ -45,4 +46,4 @@
   }
 </div>
 
-<app-dialog />
+<app-dialog (overlayVisible)="overlayVisible.set($event)" />

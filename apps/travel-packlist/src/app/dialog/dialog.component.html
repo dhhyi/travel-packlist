@@ -1,11 +1,15 @@
 @if (self.dialogVisible()) {
   <div
-    class="bg-disabled fixed left-0 top-0 z-40 h-full w-full opacity-50"
+    class="bg-disabled pointer-events-none fixed left-0 top-0 z-40 h-full w-full opacity-50"
   ></div>
-  <div class="fixed left-0 top-0 z-50 flex h-full w-full">
+  <div
+    class="fixed left-0 top-0 z-50 flex h-full w-full"
+    role="dialog"
+    aria-describedby="dialog-message"
+  >
     <div class="card bg-disabled m-auto w-[300px]">
       <div class="m-2 flex flex-col gap-4">
-        <div>{{ self.dialogMessage() }}</div>
+        <div id="dialog-message">{{ self.dialogMessage() }}</div>
         <input
           #prompt
           id="prompt"
@@ -17,6 +21,7 @@
           <button
             i18n="@@dialog.cancel"
             type="button"
+            role="button"
             class="secondary"
             [ngClass]="{ hidden: !self.dialogCancelVisible() }"
             (click)="self.dialogCancel()()"
@@ -24,8 +29,10 @@
             Cancel
           </button>
           <button
+            id="ok-button"
             i18n="@@dialog.ok"
-            type="button"
+            type="submit"
+            role="button"
             (click)="self.dialogOk()(prompt.value)"
           >
             OK

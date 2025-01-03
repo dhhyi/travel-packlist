@@ -1,5 +1,11 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  output,
+  signal,
+} from '@angular/core';
 import { noop } from 'rxjs';
 
 @Component({
@@ -16,6 +22,14 @@ export class DialogComponent {
   static readonly dialogMessage = signal<string>('');
   static readonly dialogOk = signal<(prompt: string) => void>(noop);
   static readonly dialogCancel = signal<() => void>(noop);
+
+  readonly overlayVisible = output<boolean>();
+
+  constructor() {
+    effect(() => {
+      this.overlayVisible.emit(DialogComponent.dialogVisible());
+    });
+  }
 }
 
 function showDialog(cancel = true, prompt = false) {
@@ -30,8 +44,28 @@ function hideDialog() {
   DialogComponent.dialogCancelVisible.set(true);
 }
 
+function focusPrompt(prefill: string): void {
+  const input = document.querySelector<HTMLInputElement>('#prompt');
+  if (!input) {
+    throw new Error('Prompt input not found');
+  }
+  input.value = prefill;
+  input.focus();
+}
+
+function focusOkButton() {
+  const button = document.querySelector<HTMLButtonElement>('#ok-button');
+  if (!button) {
+    throw new Error('Ok button not found');
+  }
+  button.focus();
+}
+
 export function confirm(message: string): Promise<boolean> {
   DialogComponent.dialogMessage.set(message);
+  setTimeout(() => {
+    focusOkButton();
+  }, 100);
   showDialog();
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {
@@ -48,10 +82,7 @@ export function confirm(message: string): Promise<boolean> {
 export function prompt(message: string, prefill = ''): Promise<string | null> {
   DialogComponent.dialogMessage.set(message);
   setTimeout(() => {
-    // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
-    const input = document.querySelector('#prompt') as HTMLInputElement;
-    input.value = prefill;
-    input.focus();
+    focusPrompt(prefill);
   }, 100);
   showDialog(true, true);
   return new Promise((resolve) => {
@@ -68,6 +99,9 @@ export function prompt(message: string, prefill = ''): Promise<string | null> {
 
 export function alert(message: string): Promise<void> {
   DialogComponent.dialogMessage.set(message);
+  setTimeout(() => {
+    focusOkButton();
+  }, 100);
   showDialog(false);
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {

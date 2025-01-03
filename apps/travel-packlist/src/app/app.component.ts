@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   inject,
   computed,
+  signal,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
@@ -31,6 +32,7 @@ import { DialogComponent } from './dialog/dialog.component';
 })
 export class AppComponent {
   private state = inject(GlobalState);
+  readonly overlayVisible = signal<boolean>(false);
 
   readonly scrollTopVisible = computed(
     () => this.state.signal('scrollY')() > 100,
