@@ -1,3 +1,9 @@
+## [0.4.0-accessibility-1](https://github.com/dhhyi/travel-packlist/compare/v0.4.0...v0.4.0-accessibility-1) (2025-01-03)
+
+### Features
+
+- rework packlist for accessibility ([d3f51e2](https://github.com/dhhyi/travel-packlist/commit/d3f51e253774f8a3c5f826408f9d41c375e4a09e))
+
 ## [0.4.0](https://github.com/dhhyi/travel-packlist/compare/v0.3.3...v0.4.0) (2025-01-01)
 
 ### Features
