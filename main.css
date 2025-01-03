@@ -1189,9 +1189,6 @@ div:has(> input[type=radio]):has(> label),
 .pr-2 {
   padding-right: 0.5rem;
 }
-.pt-2 {
-  padding-top: 0.5rem;
-}
 .text-center {
   text-align: center;
 }
