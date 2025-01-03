@@ -18,6 +18,7 @@
         "pattern": "{projectRoot}/src/lib/**/*.html"
       },
       "inputs": [
+        "^production",
         "{projectRoot}/src/lib/**/*.html"
       ],
       "outputs": [

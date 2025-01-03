@@ -19,6 +19,7 @@
         "pattern": "{projectRoot}/src/txt/template*.txt"
       },
       "inputs": [
+        "^production",
         "{projectRoot}/src/txt/template*.txt"
       ],
       "outputs": [

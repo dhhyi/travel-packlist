@@ -18,6 +18,7 @@
         "pattern": "{projectRoot}/src/doc/*.md"
       },
       "inputs": [
+        "^production",
         "{projectRoot}/src/doc/*.md"
       ],
       "outputs": [
