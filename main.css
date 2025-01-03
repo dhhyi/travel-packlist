@@ -1186,6 +1186,9 @@ div:has(> input[type=radio]):has(> label),
 .pb-\[3\.5rem\] {
   padding-bottom: 3.5rem;
 }
+.pl-0 {
+  padding-left: 0;
+}
 .pr-2 {
   padding-right: 0.5rem;
 }
