@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   computed,
@@ -30,7 +29,6 @@ export const REMOVE = 'REMOVE';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
-  imports: [NgClass],
   templateUrl: './editor-condition.component.html',
   styles: `
     :host {

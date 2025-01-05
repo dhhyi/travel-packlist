@@ -7,12 +7,9 @@
 
 <ng-template #variable let-variable>
   <span
-    class="font-mono"
-    [ngClass]="{
-      'font-bold': highlighVariable(),
-      'text-green-light': highlighVariable() && variableActive(variable),
-      'text-red-light': highlighVariable() && !variableActive(variable),
-    }"
+    class="font-mono font-bold"
+    [class.text-green]="highlighVariable() && variableActive(variable)"
+    [class.text-red]="highlighVariable() && !variableActive(variable)"
     >{{ variable }}</span
   >
 </ng-template>

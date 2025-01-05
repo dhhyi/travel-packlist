@@ -140,3 +140,13 @@
     }
   }
 }
+
+@layer utilities {
+  .text-green {
+    @apply text-green-normal dark:text-green-light;
+  }
+
+  .text-red {
+    @apply text-red-normal dark:text-red-light;
+  }
+}

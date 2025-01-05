@@ -12,12 +12,12 @@
       }
       @case ('success') {
         <!-- prettier-ignore -->
-        <div i18n="@@edit-raw.parsed-success" class="text-green-normal">
+        <div i18n="@@edit-raw.parsed-success" class="text-green">
           Parsed {{ state.rules // i18n(ph="NUMBER_OF_RULES") }} rules successfully!
         </div>
       }
       @default {
-        <div class="text-red-normal">{{ state.error }}</div>
+        <div class="text-red">{{ state.error }}</div>
       }
     }
   }
