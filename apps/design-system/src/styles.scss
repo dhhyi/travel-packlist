@@ -133,5 +133,10 @@
     .accessible-content {
       @apply min-h-[49px] min-w-[49px];
     }
+
+    input[type='checkbox'],
+    input[type='radio'] {
+      @apply border-8;
+    }
   }
 }
