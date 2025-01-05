@@ -38,6 +38,7 @@ export default class RulesComponent {
   private parsedRules = this.state.signal('parsedRules');
   private activeRules = this.state.signal('activeRules');
   mode = this.state.signal('rulesMode');
+  accessibility = this.state.signal('accessibility');
   filter = this.state.signal('filterRulesQuery');
   readonly highlightRule = signal<number | undefined>(undefined);
 

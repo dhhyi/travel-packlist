@@ -32,7 +32,12 @@
     [ngClass]="{
       disabled: showAsDisabled(item.rule),
       'animate-pulse': highlightRule() === item.index,
-      'mb-[2.25rem]': mode() === 'view' || mode() === 'search',
+      'mb-[2.25rem]':
+        (mode() === 'view' || mode() === 'search') &&
+        accessibility() === 'compact',
+      'mb-12':
+        (mode() === 'view' || mode() === 'search') &&
+        accessibility() === 'accessible',
     }"
   >
     <app-editor-rule

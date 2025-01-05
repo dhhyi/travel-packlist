@@ -8,7 +8,7 @@
   <div class="card mb-1" role="list" [attr.aria-label]="category.name">
     <div
       aria-hidden="true"
-      class="flex justify-between"
+      class="accessible-content flex items-center justify-between"
       (click)="facade.toggleCategoryCollapse(category.name)"
     >
       <div class="flex items-center gap-1">
@@ -44,7 +44,7 @@
           <div
             role="checkbox"
             tabindex="0"
-            class="flex justify-between"
+            class="flex items-center justify-between"
             [attr.aria-checked]="item.checked"
             [ngClass]="{
               'text-slate-600 line-through dark:text-slate-400': item.checked,

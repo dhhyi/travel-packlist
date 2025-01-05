@@ -23,6 +23,7 @@ const initialState = {
   answersLocked: false,
   theme: 'system' as 'system' | 'light' | 'dark',
   fontSize: 'normal' as 'small' | 'normal' | 'large',
+  accessibility: 'accessible' as 'accessible' | 'compact',
   language: 'auto' as 'auto' | SupportedLanguage,
   exportReminder: false,
   lastExportHash: '',

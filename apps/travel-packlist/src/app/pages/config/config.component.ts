@@ -69,6 +69,7 @@ export default class ConfigComponent {
   theme = this.state.signal('theme');
   language = this.state.signal('language');
   fontSize = this.state.signal('fontSize');
+  accessibility = this.state.signal('accessibility');
 
   readonly trackWeightHelp = signal(false);
 

@@ -114,12 +114,24 @@
     }
 
     &[type='radio'] {
-      @apply rounded-xl;
+      @apply rounded-full;
     }
   }
 
   div:has(> input[type='radio']):has(> label),
   div:has(> input[type='checkbox']):has(> label) {
     @apply flex items-center gap-x-2;
+  }
+
+  .accessible {
+    button,
+    input,
+    select,
+    [role='button'],
+    [role='checkbox'],
+    [role='radio'],
+    .accessible-content {
+      @apply min-h-[49px] min-w-[49px];
+    }
   }
 }

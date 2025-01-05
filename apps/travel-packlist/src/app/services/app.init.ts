@@ -25,6 +25,10 @@ export class AppInit {
     effect(() => {
       this.applyFontSize(fontSize());
     });
+    const accessibility = this.state.signal('accessibility');
+    effect(() => {
+      this.applyAccessibilityClass(accessibility());
+    });
   }
 
   private applyTheme(theme: Themes | undefined) {
@@ -58,5 +62,10 @@ export class AppInit {
       '--html-font-size',
       size === 'small' ? '16px' : size === 'normal' ? '18px' : '20px',
     );
+  }
+
+  private applyAccessibilityClass(clazz: 'accessible' | 'compact') {
+    document.documentElement.classList.remove('accessible', 'compact');
+    document.documentElement.classList.add(clazz);
   }
 }

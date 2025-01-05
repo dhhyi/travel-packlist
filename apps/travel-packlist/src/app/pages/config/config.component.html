@@ -231,6 +231,31 @@
       large
     </button>
   </fieldset>
+  <fieldset class="grid grid-cols-2 gap-2">
+    <legend i18n="@@config.accessibility">Accessibility</legend>
+    <button
+      i18n="@@config.accessibility.accessible"
+      type="button"
+      class="link"
+      [ngClass]="{
+        active: accessibility() === 'accessible',
+      }"
+      (click)="accessibility.set('accessible')"
+    >
+      accessible
+    </button>
+    <button
+      i18n="@@config.accessibility.compact"
+      type="button"
+      class="link"
+      [ngClass]="{
+        active: accessibility() === 'compact',
+      }"
+      (click)="accessibility.set('compact')"
+    >
+      compact
+    </button>
+  </fieldset>
   <fieldset class="grid grid-cols-3 gap-2">
     <legend i18n="@@config.language">Language</legend>
     <button
