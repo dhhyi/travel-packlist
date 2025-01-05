@@ -716,8 +716,7 @@ select[disabled] {
   padding-left: 0.25rem;
   padding-right: 1rem;
 }
-input[type=checkbox],
-  input[type=radio] {
+input[type=radio] {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   height: 1.5rem;
@@ -729,42 +728,31 @@ input[type=checkbox],
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
 }
-input[type=checkbox]:checked,
-  input[type=radio]:checked {
+input[type=radio]:checked {
   --tw-bg-opacity: 1;
   background-color: rgb(203 213 225 / var(--tw-bg-opacity, 1));
 }
-input[type=checkbox]:hover,
-  input[type=radio]:hover {
+input[type=radio]:hover {
   --tw-border-opacity: 1;
   border-color: rgb(148 163 184 / var(--tw-border-opacity, 1));
 }
-input[type=checkbox]:where(.dark, .dark *),
-  input[type=radio]:where(.dark, .dark *) {
+input[type=radio]:where(.dark, .dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
 }
-input[type=checkbox]:checked:where(.dark, .dark *),
-  input[type=radio]:checked:where(.dark, .dark *) {
+input[type=radio]:checked:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(51 65 85 / var(--tw-bg-opacity, 1));
 }
-input[type=checkbox][type=checkbox],
-  input[type=radio][type=checkbox] {
-  border-radius: 0.125rem;
-}
-input[type=checkbox][type=radio],
-  input[type=radio][type=radio] {
+input[type=radio][type=radio] {
   border-radius: 9999px;
 }
-div:has(> input[type=radio]):has(> label),
-  div:has(> input[type=checkbox]):has(> label) {
+div:has(> input[type=radio]):has(> label) {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
 }
 .accessible button,
-  .accessible input,
   .accessible select,
   .accessible [role=button],
   .accessible [role=checkbox],
@@ -773,9 +761,12 @@ div:has(> input[type=radio]):has(> label),
   min-height: 49px;
   min-width: 49px;
 }
-.accessible input[type=checkbox],
-  .accessible input[type=radio] {
-  border-width: 8px;
+.accessible input[type=radio] {
+  height: 2rem;
+  min-height: 2rem;
+  width: 2rem;
+  min-width: 2rem;
+  border-width: 6px;
 }
 .pointer-events-none {
   pointer-events: none;
