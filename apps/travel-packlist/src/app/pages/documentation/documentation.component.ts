@@ -13,7 +13,9 @@ import { RULES_DOCUMENTATION } from '@travel-packlist/rules-documentation';
   selector: 'app-documentation',
   standalone: true,
   template: '<div class="rules-documentation" [innerHTML]="safeHtml"></div>',
-  encapsulation: ViewEncapsulation.ShadowDom,
+  // disable encapsulation to allow styling the injected HTML
+  // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
+  encapsulation: ViewEncapsulation.None,
   styles: `
     h1 {
       @apply m-0 py-2 text-xl font-bold;
@@ -32,16 +34,16 @@ import { RULES_DOCUMENTATION } from '@travel-packlist/rules-documentation';
     }
 
     pre {
-      @apply mx-2 my-0 rounded bg-gray-500 p-2 font-mono;
+      @apply mx-2 my-0 rounded bg-gray-300 p-2 font-mono dark:bg-gray-700;
     }
 
     code {
-      @apply bg-gray-500 px-1 font-bold;
+      @apply bg-gray-300 px-1 font-bold dark:bg-gray-700;
       white-space: pre-wrap;
     }
 
     blockquote {
-      @apply mx-2 my-0 mb-2 border-l-4 border-gray-500 p-2;
+      @apply mx-2 my-0 mb-2 border-l-4 border-gray-300 p-2 dark:border-gray-700;
     }
   `,
 })
