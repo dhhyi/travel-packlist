@@ -755,13 +755,26 @@ input[type=checkbox][type=checkbox],
 }
 input[type=checkbox][type=radio],
   input[type=radio][type=radio] {
-  border-radius: 0.75rem;
+  border-radius: 9999px;
 }
 div:has(> input[type=radio]):has(> label),
   div:has(> input[type=checkbox]):has(> label) {
   display: flex;
   align-items: center;
   column-gap: 0.5rem;
+}
+.accessible button,
+  .accessible input,
+  .accessible select,
+  .accessible [role=button],
+  .accessible [role=checkbox],
+  .accessible [role=radio],
+  .accessible .accessible-content {
+  min-height: 49px;
+  min-width: 49px;
+}
+.pointer-events-none {
+  pointer-events: none;
 }
 .static {
   position: static;
@@ -829,6 +842,9 @@ div:has(> input[type=radio]):has(> label),
 }
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+.mb-12 {
+  margin-bottom: 3rem;
 }
 .mb-2 {
   margin-bottom: 0.5rem;
