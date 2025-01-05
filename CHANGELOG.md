@@ -1,3 +1,10 @@
+## [0.4.0-accessibility-2](https://github.com/dhhyi/travel-packlist/compare/v0.4.0-accessibility-1...v0.4.0-accessibility-2) (2025-01-05)
+
+### Features
+
+- accessibility improvements for dialog ([d423bd0](https://github.com/dhhyi/travel-packlist/commit/d423bd0efd20fb03c91e8c22ec4b7755b36a04cb))
+- config option for making interactive elements accessible by setting minimum height ([b0c1409](https://github.com/dhhyi/travel-packlist/commit/b0c14098486c85b3171ad47c3488b3eb315c7ab1))
+
 ## [0.4.0-accessibility-1](https://github.com/dhhyi/travel-packlist/compare/v0.4.0...v0.4.0-accessibility-1) (2025-01-03)
 
 ### Features
