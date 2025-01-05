@@ -19,16 +19,28 @@ module.exports = [
               sourceTag: 'scope:testing',
             },
             {
-              onlyDependOnLibsWithTags: ['scope:state', 'scope:generated'],
+              onlyDependOnLibsWithTags: [
+                'scope:state',
+                'scope:generated',
+                'scope:components',
+              ],
               sourceTag: 'scope:main',
             },
             {
-              onlyDependOnLibsWithTags: ['scope:generated', 'scope:state'],
+              onlyDependOnLibsWithTags: [
+                'scope:generated',
+                'scope:state',
+                'scope:components',
+              ],
               sourceTag: 'scope:design',
             },
             {
               onlyDependOnLibsWithTags: ['scope:generated', 'scope:state'],
               sourceTag: 'scope:state',
+            },
+            {
+              onlyDependOnLibsWithTags: ['scope:generated'],
+              sourceTag: 'scope:components',
             },
             {
               notDependOnLibsWithTags: ['*'],

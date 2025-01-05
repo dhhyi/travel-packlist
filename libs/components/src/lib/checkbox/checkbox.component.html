@@ -1,0 +1,25 @@
+<div
+  class="my-2 h-6 min-h-6 w-6 min-w-6 appearance-none rounded-sm border-4 border-slate-300 hover:border-slate-400 dark:border-slate-700"
+  tabindex="-1"
+  [class]="{
+    'bg-slate-300': model(),
+    'dark:bg-slate-700': model(),
+  }"
+  [id]="id()"
+></div>
+<label class="grow" [htmlFor]="id()">{{ label() }}</label>
+@if (help()) {
+  <button class="link" type="button" tabindex="-1" (click)="toggleHelp($event)">
+    <app-icon-help class="h-6 w-6" />
+  </button>
+  @if (helpVisible()) {
+    <legend
+      class="help"
+      role="contentinfo"
+      (click)="toggleHelp($event)"
+      (keypress)="toggleHelp($event)"
+    >
+      {{ help() }}
+    </legend>
+  }
+}

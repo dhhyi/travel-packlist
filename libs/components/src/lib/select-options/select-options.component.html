@@ -1,0 +1,26 @@
+<fieldset
+  role="radiogroup"
+  class="flex flex-wrap justify-evenly gap-2 gap-y-4 pb-4"
+  [attr.aria-label]="label()"
+>
+  <legend>{{ label() }}</legend>
+  @for (option of options(); track option) {
+    <div
+      role="radio"
+      tabindex="0"
+      class="bg-active flex items-center text-nowrap"
+      [attr.aria-checked]="model() === option"
+      (click)="model.set(option)"
+      (keypress)="model.set(option)"
+    >
+      <div
+        class="mr-2 h-6 min-h-6 w-6 min-w-6 rounded-full border-4 border-slate-300 dark:border-slate-700"
+        [class]="{
+          'bg-slate-300': model() === option,
+          'dark:bg-slate-700': model() === option,
+        }"
+      ></div>
+      <ng-container *ngTemplateOutlet="template(option)" />
+    </div>
+  }
+</fieldset>

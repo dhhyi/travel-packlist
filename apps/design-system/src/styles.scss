@@ -105,38 +105,14 @@
     @apply border-red-normal bg-red-light outline-red-normal;
   }
 
-  input[type='checkbox'],
-  input[type='radio'] {
-    @apply my-2 h-6 min-h-6 w-6 min-w-6 appearance-none border-4 border-slate-300 checked:bg-slate-300 hover:border-slate-400 dark:border-slate-700 dark:checked:bg-slate-700;
-
-    &[type='checkbox'] {
-      @apply rounded-sm;
-    }
-
-    &[type='radio'] {
-      @apply rounded-full;
-    }
-  }
-
-  div:has(> input[type='radio']):has(> label),
-  div:has(> input[type='checkbox']):has(> label) {
-    @apply flex items-center gap-x-2;
-  }
-
   .accessible {
     button,
-    input,
     select,
     [role='button'],
     [role='checkbox'],
     [role='radio'],
     .accessible-content {
       @apply min-h-[49px] min-w-[49px];
-    }
-
-    input[type='checkbox'],
-    input[type='radio'] {
-      @apply border-8;
     }
   }
 }

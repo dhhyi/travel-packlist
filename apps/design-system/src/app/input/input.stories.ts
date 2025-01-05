@@ -1,13 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
+import { JsonPipe } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ComponentsModule } from '@travel-packlist/components';
 import { IconHelpComponent } from '@travel-packlist/icons';
 
 @Component({
   standalone: true,
   selector: 'ds-input',
   templateUrl: './input.html',
-  imports: [IconHelpComponent],
+  imports: [IconHelpComponent, ReactiveFormsModule, ComponentsModule, JsonPipe],
   styles: `
     :host {
       @apply flex flex-col gap-y-4;
@@ -17,7 +20,25 @@ import { IconHelpComponent } from '@travel-packlist/icons';
   `,
 })
 class Input {
-  displayHelp = signal(false);
+  form = new FormGroup({
+    input: new FormControl(''),
+    input_disabled: new FormControl({
+      value: 'disabled input',
+      disabled: true,
+    }),
+    select: new FormControl('1'),
+    checkbox: new FormControl(false),
+    checkbox_help: new FormControl(false),
+    radio: new FormControl('option 1'),
+  });
+
+  checkbox = signal(false);
+
+  constructor() {
+    this.form.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
+  }
 }
 
 const meta: Meta<Input> = {

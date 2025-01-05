@@ -1,8 +1,18 @@
 const angular = require('angular-eslint');
 const tseslint = require('typescript-eslint');
 
-const rules = (tsconfig) =>
-  tseslint.config(
+const defaultOptions = {
+  prefix: 'app',
+};
+
+const rules = (tsconfig, options) => {
+  const config = {
+    ...defaultOptions,
+    ...options,
+  };
+  console.log('config', config, options);
+  console.log('tsconfig', tsconfig);
+  return tseslint.config(
     {
       extends: [...angular.configs.tsAll],
       files: ['**/*.ts', '**/*.tsx'],
@@ -21,7 +31,7 @@ const rules = (tsconfig) =>
         '@angular-eslint/component-selector': [
           'error',
           {
-            prefix: 'app',
+            prefix: config.prefix,
             style: 'kebab-case',
             type: 'element',
           },
@@ -29,7 +39,7 @@ const rules = (tsconfig) =>
         '@angular-eslint/directive-selector': [
           'error',
           {
-            prefix: 'app',
+            prefix: config.prefix,
             style: 'camelCase',
             type: 'attribute',
           },
@@ -125,9 +135,14 @@ const rules = (tsconfig) =>
           },
         ],
         '@angular-eslint/template/no-call-expression': 'off',
+        '@angular-eslint/template/no-duplicate-attributes': [
+          'error',
+          { ignore: ['class'] },
+        ],
         '@angular-eslint/template/prefer-ngsrc': 'off',
       },
     }
   );
+};
 
 module.exports = rules;

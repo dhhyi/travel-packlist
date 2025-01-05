@@ -13,11 +13,11 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ComponentsModule } from '@travel-packlist/components';
 import {
   FlagGermanyComponent,
   FlagUkComponent,
   IconDownloadComponent,
-  IconHelpComponent,
 } from '@travel-packlist/icons';
 import { GlobalState } from '@travel-packlist/state';
 
@@ -29,13 +29,13 @@ import { ConfigFacade } from './config.facade';
   selector: 'app-config',
   imports: [
     RouterModule,
-    FormsModule,
     DatePipe,
     NgClass,
     FlagGermanyComponent,
     FlagUkComponent,
     IconDownloadComponent,
-    IconHelpComponent,
+    FormsModule,
+    ComponentsModule,
   ],
   templateUrl: './config.component.html',
   styles: `
