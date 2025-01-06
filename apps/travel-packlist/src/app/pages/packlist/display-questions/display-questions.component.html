@@ -15,7 +15,7 @@
 } @else {
   @for (question of facade.questions(); track question.question) {
     <div
-      class="card mb-1 flex flex-row justify-between"
+      class="card mb-1 flex flex-row items-center justify-between"
       role="checkbox"
       tabindex="0"
       [attr.aria-checked]="facade.isQuestionActive(question)"
