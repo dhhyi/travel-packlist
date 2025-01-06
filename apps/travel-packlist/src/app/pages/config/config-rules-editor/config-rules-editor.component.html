@@ -1,0 +1,32 @@
+<h2 i18n="@@config.rules">Rules Editor</h2>
+<button i18n="@@config.rules.edit" type="button" routerLink="/rules">
+  Edit Rules
+</button>
+<cmp-checkbox
+  id="rules-debug-mode"
+  label="Fade out disabled rules in editor"
+  i18n-label="@@config.rules.edit.fadeout-disabled"
+  [(ngModel)]="fadeOutDisabledRules"
+/>
+<cmp-checkbox
+  id="variables-debug-mode"
+  label="Highlight variable status in editor"
+  i18n-label="@@config.rules.edit.highlight-variables"
+  [(ngModel)]="highlightVariableStatus"
+/>
+<cmp-checkbox
+  id="variables-refactor"
+  label="Rename all occurrences when renaming variables"
+  i18n-label="@@config.rules.refactor-variables"
+  [(ngModel)]="refactorVariables"
+/>
+<button
+  i18n="@@config.rules.documentation"
+  type="button"
+  routerLink="/documentation"
+>
+  Documentation
+</button>
+<button i18n="@@config.rules.edit-raw" type="button" routerLink="/rules-raw">
+  Edit Rules with Code
+</button>

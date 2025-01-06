@@ -1,0 +1,42 @@
+<button
+  #exportButton
+  i18n="@@config.rules.export"
+  type="button"
+  [ngClass]="{
+    'bg-green-light animate-pulse': highlightExport() && exportNeeded(),
+  }"
+  [disabled]="!isExportAvailable()"
+  (click)="exportRules()"
+>
+  Export Rules
+</button>
+@if (exportNeeded()) {
+  <div i18n="@@config.rules.export-needed" class="text-red text-center italic">
+    Current rules are not backed up!
+  </div>
+}
+<button
+  #importButton
+  i18n="@@config.rules.import"
+  type="button"
+  [ngClass]="{
+    'bg-green-light animate-pulse': highlightImport(),
+  }"
+  (click)="importRules()"
+>
+  Import Rules
+</button>
+<cmp-checkbox
+  id="export-reminder"
+  label="Remind me to regularly export rules"
+  i18n-label="@@config.rules.export-reminder"
+  [(ngModel)]="exportReminder"
+/>
+
+@if (loading()) {
+  <div
+    class="loading fixed left-0 top-0 flex h-svh w-full items-center justify-center bg-white opacity-30"
+  >
+    <app-icon-download class="h-[12rem] w-[12rem]" />
+  </div>
+}

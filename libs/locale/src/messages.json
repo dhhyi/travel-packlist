@@ -34,7 +34,7 @@
     "config.fontsize.small": "small",
     "config.language": "Language",
     "config.language.detect": "detect",
-    "config.rules": "Rules",
+    "config.rules": "Rules Editor",
     "config.rules.documentation": "Documentation",
     "config.rules.edit": "Edit Rules",
     "config.rules.edit-raw": "Edit Rules with Code",

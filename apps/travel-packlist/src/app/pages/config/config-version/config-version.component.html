@@ -1,0 +1,25 @@
+<h2 i18n="@@config.appversion">App Version</h2>
+<span
+  ><a
+    [href]="'https://github.com/dhhyi/travel-packlist/releases/tag/v' + version"
+  >
+    @if (displayVersionCode) {
+      {{ versionCode }} ({{ version }})
+    } @else {
+      {{ version }}
+    }
+  </a></span
+>
+<span i18n="@@config.appversion.built" class="italic"
+  >built on {{ buildTime | date: 'long' // i18n(ph="LONG_DATE") }}</span
+>
+<span class="truncate font-mono text-sm text-slate-500"
+  ><a [href]="'https://github.com/dhhyi/travel-packlist/commit/' + gitHash">{{
+    gitHash
+  }}</a></span
+>
+@if (displayServiceWorkerStatus) {
+  <span i18n="@@config.service-worker" class="font-mono text-sm"
+    >Service Worker: {{ serviceWorkerStatus() }}</span
+  >
+}

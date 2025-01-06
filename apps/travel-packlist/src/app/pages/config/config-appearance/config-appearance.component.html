@@ -1,0 +1,56 @@
+<h2 i18n="@@config.appearance">Appearance</h2>
+<cmp-select-options
+  label="Theme"
+  i18n-label="@@config.theme"
+  [(ngModel)]="theme"
+>
+  <ng-template value="dark" i18n="@@config.theme.dark">Dark</ng-template>
+  <ng-template value="light" i18n="@@config.theme.light">Light</ng-template>
+  <ng-template value="system" i18n="@@config.theme.system">System</ng-template>
+</cmp-select-options>
+<cmp-select-options
+  label="Font Size"
+  i18n-label="@@config.fontsize"
+  [(ngModel)]="fontSize"
+>
+  <ng-template value="small"
+    ><span class="text-[16px]" i18n="@@config.fontsize.small"
+      >small</span
+    ></ng-template
+  >
+  <ng-template value="normal"
+    ><span class="text-[18px]" i18n="@@config.fontsize.normal"
+      >normal</span
+    ></ng-template
+  >
+  <ng-template value="large"
+    ><span class="text-[20px]" i18n="@@config.fontsize.large"
+      >large</span
+    ></ng-template
+  >
+</cmp-select-options>
+<cmp-select-options
+  label="Accessibility"
+  i18n-label="@@config.accessibility"
+  [(ngModel)]="accessibility"
+>
+  <ng-template value="accessible" i18n="@@config.accessibility.accessible"
+    >accessible</ng-template
+  >
+  <ng-template value="compact" i18n="@@config.accessibility.compact"
+    >compact</ng-template
+  >
+</cmp-select-options>
+<cmp-select-options
+  label="Language"
+  i18n-label="@@config.language"
+  [(ngModel)]="language"
+>
+  <ng-template value="auto" i18n="@@config.language.detect">detect</ng-template>
+  <ng-template value="en">
+    <app-flag-uk class="h-6 w-8" />
+  </ng-template>
+  <ng-template value="de">
+    <app-flag-germany class="h-6 w-8" />
+  </ng-template>
+</cmp-select-options>

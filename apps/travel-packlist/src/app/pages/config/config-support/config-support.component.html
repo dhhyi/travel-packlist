@@ -1,0 +1,39 @@
+<h2 i18n="@@config.support">Support</h2>
+<div class="flex flex-col gap-4">
+  <p i18n="@@config.support.issues">
+    If you find any bugs or have any suggestions, please open an issue on
+    GitHub:
+    <a href="https://github.com/dhhyi/travel-packlist/issues" target="_blank">
+      <img
+        class="inline"
+        src="https://img.shields.io/github/issues/dhhyi/travel-packlist"
+        alt="GitHub issues"
+        i18n-alt="@@config.support.issues.github"
+      />
+    </a>
+  </p>
+  <p i18n="@@config.support.email">
+    Alternatively, you can reach out to me by
+    <a href="mailto:dhhyi@aol.com" target="_blank">
+      <img
+        class="inline"
+        src="https://img.shields.io/badge/email-dhhyi%40aol.com-blue"
+        alt="Email"
+        i18n-alt="@@config.support.email.label"
+      />
+    </a>
+  </p>
+  @if (displayKoFi) {
+    <p i18n="@@config.support.ko-fi">
+      If you like this app, please consider to
+      <a href="https://ko-fi.com/danilohoffmann" target="_blank">
+        <img
+          class="inline max-w-[10rem]"
+          src="https://storage.ko-fi.com/cdn/brandasset/kofi_button_stroke.png"
+          alt="Buy Me a Coffee at ko-fi.com"
+          i18n-alt="@@config.support.ko-fi.label"
+        />
+      </a>
+    </p>
+  }
+</div>
