@@ -1,6 +1,9 @@
 <h2 i18n="@@config.appversion">App Version</h2>
-<span
-  ><a
+<span>
+  <!-- eslint-disable @angular-eslint/template/no-interpolation-in-attributes -->
+  <a
+    class="accessible-content inline-block content-center"
+    [attr.aria-label]="currentVersionLabel"
     [href]="'https://github.com/dhhyi/travel-packlist/releases/tag/v' + version"
   >
     @if (displayVersionCode) {
@@ -14,9 +17,12 @@
   >built on {{ buildTime | date: 'long' // i18n(ph="LONG_DATE") }}</span
 >
 <span class="truncate font-mono text-sm text-slate-500"
-  ><a [href]="'https://github.com/dhhyi/travel-packlist/commit/' + gitHash">{{
-    gitHash
-  }}</a></span
+  ><a
+    class="accessible-content inline-block content-center"
+    attr.aria-label="Current git hash starts with {{ gitHash | slice: 0 : 8 }}"
+    [href]="'https://github.com/dhhyi/travel-packlist/commit/' + gitHash"
+    >{{ gitHash }}</a
+  ></span
 >
 @if (displayServiceWorkerStatus) {
   <span i18n="@@config.service-worker" class="font-mono text-sm"

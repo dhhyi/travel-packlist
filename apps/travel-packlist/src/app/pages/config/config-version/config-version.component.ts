@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, SlicePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,7 +12,7 @@ import { GlobalState } from '@travel-packlist/state';
   selector: 'app-config-version',
   templateUrl: './config-version.component.html',
   styleUrl: '../config-section.scss',
-  imports: [DatePipe],
+  imports: [DatePipe, SlicePipe],
 })
 export class ConfigVersionComponent {
   private state = inject(GlobalState);
@@ -24,6 +24,9 @@ export class ConfigVersionComponent {
   version = VERSION;
   gitHash = GIT_HASH;
   versionCode = VERSION_CODE;
+
+  readonly currentVersionLabel =
+    $localize`:@@config.version.current:Current version is ${this.version}:VERSION:` as string;
 
   readonly serviceWorkerStatus = computed((): string => {
     switch (this.state.signal('serviceWorkerStatus')()) {
