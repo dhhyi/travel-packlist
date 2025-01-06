@@ -716,42 +716,6 @@ select[disabled] {
   padding-left: 0.25rem;
   padding-right: 1rem;
 }
-input[type=radio] {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  height: 1.5rem;
-  min-height: 1.5rem;
-  width: 1.5rem;
-  min-width: 1.5rem;
-  appearance: none;
-  border-width: 4px;
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
-}
-input[type=radio]:checked {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity, 1));
-}
-input[type=radio]:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(148 163 184 / var(--tw-border-opacity, 1));
-}
-input[type=radio]:where(.dark, .dark *) {
-  --tw-border-opacity: 1;
-  border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
-}
-input[type=radio]:checked:where(.dark, .dark *) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity, 1));
-}
-input[type=radio][type=radio] {
-  border-radius: 9999px;
-}
-div:has(> input[type=radio]):has(> label) {
-  display: flex;
-  align-items: center;
-  column-gap: 0.5rem;
-}
 .accessible button,
   .accessible select,
   .accessible [role=button],
@@ -760,13 +724,6 @@ div:has(> input[type=radio]):has(> label) {
   .accessible .accessible-content {
   min-height: 49px;
   min-width: 49px;
-}
-.accessible input[type=radio] {
-  height: 2rem;
-  min-height: 2rem;
-  width: 2rem;
-  min-width: 2rem;
-  border-width: 6px;
 }
 .pointer-events-none {
   pointer-events: none;
@@ -830,6 +787,10 @@ div:has(> input[type=radio]):has(> label) {
 .my-0 {
   margin-top: 0;
   margin-bottom: 0;
+}
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .my-auto {
   margin-top: auto;
@@ -919,6 +880,9 @@ div:has(> input[type=radio]):has(> label) {
 .h-svh {
   height: 100svh;
 }
+.min-h-6 {
+  min-height: 1.5rem;
+}
 .min-h-8 {
   min-height: 2rem;
 }
@@ -948,6 +912,9 @@ div:has(> input[type=radio]):has(> label) {
 }
 .w-full {
   width: 100%;
+}
+.min-w-6 {
+  min-width: 1.5rem;
 }
 .max-w-\[10rem\] {
   max-width: 10rem;
@@ -981,6 +948,9 @@ div:has(> input[type=radio]):has(> label) {
 .resize-none {
   resize: none;
 }
+.appearance-none {
+  appearance: none;
+}
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1013,6 +983,9 @@ div:has(> input[type=radio]):has(> label) {
 }
 .justify-between {
   justify-content: space-between;
+}
+.justify-evenly {
+  justify-content: space-evenly;
 }
 .gap-1 {
   gap: 0.25rem;
@@ -1052,14 +1025,26 @@ div:has(> input[type=radio]):has(> label) {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.text-nowrap {
+  text-wrap: nowrap;
+}
 .rounded {
   border-radius: 0.25rem;
 }
 .rounded-3xl {
   border-radius: 1.5rem;
 }
+.rounded-full {
+  border-radius: 9999px;
+}
+.rounded-sm {
+  border-radius: 0.125rem;
+}
 .border {
   border-width: 1px;
+}
+.border-4 {
+  border-width: 4px;
 }
 .border-b {
   border-bottom-width: 1px;
@@ -1070,6 +1055,10 @@ div:has(> input[type=radio]):has(> label) {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
+}
+.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
 }
 .border-slate-700 {
   --tw-border-opacity: 1;
@@ -1186,6 +1175,9 @@ div:has(> input[type=radio]):has(> label) {
 }
 .pb-2 {
   padding-bottom: 0.5rem;
+}
+.pb-4 {
+  padding-bottom: 1rem;
 }
 .pb-8 {
   padding-bottom: 2rem;
@@ -1333,6 +1325,10 @@ div:has(> input[type=radio]):has(> label) {
 .disabled\:disabled:disabled.card {
   opacity: 0.5;
 }
+.hover\:border-slate-400:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(148 163 184 / var(--tw-border-opacity, 1));
+}
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1341,9 +1337,17 @@ div:has(> input[type=radio]):has(> label) {
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
 }
+.dark\:border-slate-700:where(.dark, .dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
+}
 .dark\:bg-gray-900:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
+}
+.dark\:bg-slate-700:where(.dark, .dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(51 65 85 / var(--tw-bg-opacity, 1));
 }
 .dark\:text-gray-300:where(.dark, .dark *) {
   --tw-text-opacity: 1;
