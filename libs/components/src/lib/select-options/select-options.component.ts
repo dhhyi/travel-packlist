@@ -43,7 +43,6 @@ export class SelectOptionsComponent<T extends string>
 {
   readonly label = input.required<string>();
   readonly model = signal<T | undefined>(undefined);
-  readonly options = input.required<T[]>();
   readonly children = contentChildren(SelectOptionDirective<T>);
 
   onChanged: (value: T | undefined) => void = noop;
