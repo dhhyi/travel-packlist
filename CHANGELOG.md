@@ -1,3 +1,12 @@
+## [0.4.0-accessibility-3](https://github.com/dhhyi/travel-packlist/compare/v0.4.0-accessibility-2...v0.4.0-accessibility-3) (2025-01-06)
+
+### Bug Fixes
+
+- better contrast for colored text ([24085a0](https://github.com/dhhyi/travel-packlist/commit/24085a08680bcd7f5ce2bda63962030d0a4bbdcd))
+- better visibility for scroll-up button in light mode ([67594db](https://github.com/dhhyi/travel-packlist/commit/67594db2e9231db4ae5a7d5342c014176eb315fa))
+- bigger borders for checkbox and radio buttons in accessible mode ([f42a7bb](https://github.com/dhhyi/travel-packlist/commit/f42a7bb9736fcd2a1a0fea1259f3ad0b92eefe45))
+- more contrast on code examples in documentation ([a8162ee](https://github.com/dhhyi/travel-packlist/commit/a8162ee388ac2452990702d61de864288791954f))
+
 ## [0.4.0-accessibility-2](https://github.com/dhhyi/travel-packlist/compare/v0.4.0-accessibility-1...v0.4.0-accessibility-2) (2025-01-05)
 
 ### Features
