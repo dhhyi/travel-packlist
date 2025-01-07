@@ -9,8 +9,8 @@ export class ConfigPage extends Banner {
     super(page);
   }
 
-  toPacklistPage() {
-    this.banner().click();
+  async toPacklistPage() {
+    await this.banner().click();
     return new PacklistPage(this.page);
   }
 
@@ -21,5 +21,11 @@ export class ConfigPage extends Banner {
   async toRulesRawPage() {
     await this.editRulesWithCodeButton().click();
     return new RulesRawPage(this.page);
+  }
+
+  trackItemWeight() {
+    return this.page.getByRole('checkbox', {
+      name: 'Track item weight',
+    });
   }
 }

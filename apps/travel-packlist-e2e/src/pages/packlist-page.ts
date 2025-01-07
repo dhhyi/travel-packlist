@@ -25,6 +25,10 @@ export class PacklistPage extends Banner {
     return this.page.getByTitle('item packing progress');
   }
 
+  weightPackingProgress() {
+    return this.page.getByTitle('weight packing progress');
+  }
+
   item(name: string, checked: boolean) {
     return this.page.getByRole('checkbox', { name, checked });
   }
