@@ -21,7 +21,7 @@
     class="accessible-content inline-block content-center"
     attr.aria-label="Current git hash starts with {{ gitHash | slice: 0 : 8 }}"
     [href]="'https://github.com/dhhyi/travel-packlist/commit/' + gitHash"
-    >{{ gitHash }}</a
+    ><span aria-hidden="true">{{ gitHash }}</span></a
   ></span
 >
 @if (displayServiceWorkerStatus) {

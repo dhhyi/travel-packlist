@@ -10,6 +10,10 @@ export class PacklistPage {
     );
   }
 
+  configLink() {
+    return this.page.getByLabel('Go to configuration');
+  }
+
   itemPackingProgress() {
     return this.page.getByTitle('item packing progress');
   }
