@@ -1,28 +1,28 @@
 <div class="flex flex-col gap-y-4">
-  <button>{{ text || 'primary' }}</button>
-  <button disabled>{{ text || 'primary' }}</button>
+  <button type="button">{{ text || 'primary' }}</button>
+  <button type="button" disabled>{{ text || 'primary' }}</button>
 </div>
 
 <div class="flex flex-col">
-  <button class="secondary">{{ text || 'secondary' }}</button>
+  <button type="button" class="secondary">{{ text || 'secondary' }}</button>
 </div>
 
 <div class="flex flex-col">
-  <button class="red">{{ text || 'red' }}</button>
+  <button type="button" class="red">{{ text || 'red' }}</button>
 </div>
 
 <div class="grid grid-cols-3 gap-4">
-  <button class="link">{{ text || 'link' }}</button>
-  <button class="link" disabled>{{ text || 'link' }}</button>
-  <button class="link active">{{ text || 'link' }}</button>
+  <button type="button" class="link">{{ text || 'link' }}</button>
+  <button type="button" class="link" disabled>{{ text || 'link' }}</button>
+  <button type="button" class="link active">{{ text || 'link' }}</button>
 
-  <button class="link">
+  <button type="button" class="link">
     <app-icon-cog />
   </button>
-  <button class="link" disabled>
+  <button type="button" class="link" disabled>
     <app-icon-cog />
   </button>
-  <button class="link active">
+  <button type="button" class="link active">
     <app-icon-cog />
   </button>
 </div>

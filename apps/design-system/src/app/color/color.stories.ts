@@ -1,10 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
-import { Component, Directive, ElementRef, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Directive,
+  ElementRef,
+  signal,
+} from '@angular/core';
 
 const selectedColor = signal<string | undefined>(undefined);
 
 @Directive({
+  // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'div.color',
 })
 class ColorDirective {
@@ -14,7 +21,7 @@ class ColorDirective {
     );
     element.nativeElement.addEventListener('click', () => {
       if (color) {
-        navigator.clipboard.writeText(color);
+        void navigator.clipboard.writeText(color);
         selectedColor.set(color);
 
         element.nativeElement.classList.add('border');
@@ -27,6 +34,7 @@ class ColorDirective {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [ColorDirective],
   selector: 'ds-color',

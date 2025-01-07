@@ -10,7 +10,7 @@ const rules = (tsconfig, options) => {
     ...defaultOptions,
     ...options,
   };
-  console.log('config', config, options);
+  console.log('config', config);
   console.log('tsconfig', tsconfig);
   return tseslint.config(
     {

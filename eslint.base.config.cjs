@@ -1,4 +1,5 @@
 const eslint = require('@eslint/js');
+// eslint-disable-next-line no-restricted-modules
 const nx = require('@nx/eslint-plugin');
 const perfectionist = require('eslint-plugin-perfectionist');
 
@@ -75,6 +76,18 @@ module.exports = [
     files: ['**/*.config.{js,ts,cjs,mjs}', '**/*-rules.{js,ts,cjs,mjs}'],
     plugins: { perfectionist },
     rules: {
+      'no-restricted-modules': [
+        'error',
+        {
+          paths: [
+            {
+              message:
+                'Import from `util/angular-rules` and `util/typescript-rules` instead.',
+              name: '@nx/eslint-plugin',
+            },
+          ],
+        },
+      ],
       'perfectionist/sort-objects': ['error', { type: 'natural' }],
     },
   },

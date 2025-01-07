@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { NgTemplateOutlet } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IconCogComponent } from '@travel-packlist/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [NgTemplateOutlet, IconCogComponent],
   selector: 'ds-button',

@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { JsonPipe } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '@travel-packlist/components';
 import { IconHelpComponent } from '@travel-packlist/icons';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   selector: 'ds-input',
   templateUrl: './input.html',
@@ -31,8 +32,6 @@ class Input {
     checkbox_help: new FormControl(false),
     radio: new FormControl('option 1'),
   });
-
-  checkbox = signal(false);
 
   constructor() {
     this.form.valueChanges.subscribe((value) => {
