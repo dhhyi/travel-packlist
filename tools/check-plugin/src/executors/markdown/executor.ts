@@ -143,7 +143,7 @@ function runMarkdownLint(
     }
   }
   console.log(`Running markdownlint with config: ${markdownLintConfig}`);
-  const command = ['markdownlint', '--config', markdownLintConfig];
+  const command = ['pnpm', 'markdownlint', '--config', markdownLintConfig];
   if (options.fix) {
     command.push('--fix');
   }
@@ -159,7 +159,8 @@ function runCspellCheck(context: ExecutorContext, files: string[]) {
   }
 
   console.log(`Running cspell with config: ${cspellConfig}`);
-  execSync(`cspell -c ${cspellConfig} ${files.join(' ')}`, {
+  const command = ['pnpm', 'cspell', '-c', cspellConfig].concat(files);
+  execSync(command.join(' '), {
     stdio: 'inherit',
   });
 }
