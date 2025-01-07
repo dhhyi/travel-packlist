@@ -1,17 +1,17 @@
 import { expect, type Page } from '@playwright/test';
 
-export class PacklistPage {
-  constructor(private page: Page) {}
+import { Banner } from './banner';
+
+export class PacklistPage extends Banner {
+  constructor(page: Page) {
+    super(page);
+  }
 
   async navigate() {
     await this.page.goto('/');
     expect(await this.page.getByRole('banner').textContent()).toContain(
       'TravelPacklist',
     );
-  }
-
-  configLink() {
-    return this.page.getByLabel('Go to configuration');
   }
 
   itemPackingProgress() {
