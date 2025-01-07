@@ -1,3 +1,9 @@
+## [0.4.0-accessibility-4](https://github.com/dhhyi/travel-packlist/compare/v0.4.0-accessibility-3...v0.4.0-accessibility-4) (2025-01-07)
+
+### Features
+
+- improve accessibility of config page ([fc318c8](https://github.com/dhhyi/travel-packlist/commit/fc318c8d43bc3dd067fc9f770f23ff35d1378499))
+
 ## [0.4.0-accessibility-3](https://github.com/dhhyi/travel-packlist/compare/v0.4.0-accessibility-2...v0.4.0-accessibility-3) (2025-01-06)
 
 ### Bug Fixes
