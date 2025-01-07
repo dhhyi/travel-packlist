@@ -1,19 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-import { RulesRawPage } from './pages/rules-raw-page';
+import { startWithRules } from './pages';
 
 test('empty rules', async ({ page }) => {
-  const rulesRaw = new RulesRawPage(page);
-  await rulesRaw.navigate();
-
-  await rulesRaw.rawRules().fill('');
-
-  await expect(rulesRaw.parserState()).toHaveText(
-    'Parsed 0 rules successfully!',
-  );
-
-  await rulesRaw.banner().click();
-
+  await startWithRules(page, '');
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - paragraph:
@@ -26,17 +16,7 @@ test('empty rules', async ({ page }) => {
 });
 
 test('empty rule', async ({ page }) => {
-  const rulesRaw = new RulesRawPage(page);
-  await rulesRaw.navigate();
-
-  await rulesRaw.rawRules().fill(':-');
-
-  await expect(rulesRaw.parserState()).toHaveText(
-    'Parsed 1 rules successfully!',
-  );
-
-  await rulesRaw.banner().click();
-
+  await startWithRules(page, ':-');
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - paragraph:
@@ -49,17 +29,7 @@ test('empty rule', async ({ page }) => {
 });
 
 test('rule without items', async ({ page }) => {
-  const rulesRaw = new RulesRawPage(page);
-  await rulesRaw.navigate();
-
-  await rulesRaw.rawRules().fill(':- Will it be sunny? $sunny');
-
-  await expect(rulesRaw.parserState()).toHaveText(
-    'Parsed 1 rules successfully!',
-  );
-
-  await rulesRaw.banner().click();
-
+  await startWithRules(page, ':- Will it be sunny? $sunny');
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - checkbox "Will it be sunny?"

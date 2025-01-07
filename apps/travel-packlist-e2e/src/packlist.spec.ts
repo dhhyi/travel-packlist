@@ -1,10 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-import { PacklistPage } from './pages/packlist-page';
+import { start } from './pages';
 
 test('click items', async ({ page }) => {
-  const packlist = new PacklistPage(page);
-  await packlist.navigate();
+  const packlist = await start(page);
+
+  await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
+    - progressbar "You have packed 0 out of 4 items."
+  `);
 
   await packlist.question('Will it be rainy?', false).click();
 

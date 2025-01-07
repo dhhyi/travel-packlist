@@ -1,19 +1,22 @@
-import { expect, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 
 import { Banner } from './banner';
 import { ConfigPage } from './config-page';
+import { PacklistPage } from './packlist-page';
 
 export class RulesRawPage extends Banner {
   constructor(page: Page) {
     super(page);
   }
 
-  async navigate() {
-    await this.page.goto('/');
-    const config = new ConfigPage(this.page);
-    await config.navigate();
-    await config.editRulesWithCode().click();
-    await expect(this.rawRules()).toBeVisible();
+  async toPacklistPage() {
+    await this.banner().click();
+    return new PacklistPage(this.page);
+  }
+
+  async toConfigPage() {
+    await this.configLink().click();
+    return new ConfigPage(this.page);
   }
 
   rawRules() {

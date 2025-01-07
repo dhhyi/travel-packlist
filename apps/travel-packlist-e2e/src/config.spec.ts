@@ -1,10 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-import { ConfigPage } from './pages/config-page';
+import { start } from './pages';
 
 test('config', async ({ page }) => {
-  const config = new ConfigPage(page);
-  await config.navigate();
+  await start(page).then((page) => page.toConfigPage());
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation:

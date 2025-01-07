@@ -2,11 +2,11 @@ import { type Page } from '@playwright/test';
 export class Banner {
   constructor(protected page: Page) {}
 
-  configLink() {
+  protected configLink() {
     return this.page.getByLabel('Go to configuration');
   }
 
-  banner() {
+  protected banner() {
     return this.page.getByRole('banner');
   }
 }
