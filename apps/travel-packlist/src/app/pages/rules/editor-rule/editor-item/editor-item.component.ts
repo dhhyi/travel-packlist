@@ -128,13 +128,11 @@ export class EditorItemComponent {
         if (error instanceof SyntaxError) {
           const pattern = error.found;
           await alert(
-            $localize`:@@edit.item.category.invalid-character:Category name cannot contain '${pattern}:INTERPOLATION:'` as string,
+            $localize`Category name cannot contain '${pattern}:INTERPOLATION:'`,
           );
         } else {
           console.error(error);
-          await alert(
-            $localize`:@@edit.item.category.invalid:Invalid category name` as string,
-          );
+          await alert($localize`Invalid category name`);
         }
         void this.addNewCategory(newCategory);
       }

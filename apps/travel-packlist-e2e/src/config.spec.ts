@@ -39,7 +39,7 @@ test('config', async ({ page }) => {
       - radio "accessible" [checked]
       - radio "compact"
     - radiogroup "Language":
-      - radio "detect" [checked]
+      - radio "auto" [checked]
       - radio
       - radio
     - heading "App Version" [level=2]

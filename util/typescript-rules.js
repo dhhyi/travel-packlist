@@ -20,10 +20,7 @@ const rules = (tsconfig) =>
         '@typescript-eslint/no-unnecessary-parameter-property-assignment':
           'error',
         '@typescript-eslint/no-unnecessary-qualifier': 'error',
-        '@typescript-eslint/no-unnecessary-type-assertion': [
-          'error',
-          { typesToIgnore: ['string'] },
-        ],
+        '@typescript-eslint/no-unnecessary-type-assertion': 'error',
         '@typescript-eslint/no-unused-vars': [
           'error',
           {

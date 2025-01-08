@@ -30,7 +30,7 @@ export class RulesExportReminder {
         }),
         switchMap(() =>
           confirm(
-            $localize`:@@config.rules.export-reminder.question:The current rules haven't been exported for some time now. Do you want to export them now?` as string,
+            $localize`The current rules haven't been exported for some time now. Do you want to export them now?`,
           ),
         ),
         filter(identity),

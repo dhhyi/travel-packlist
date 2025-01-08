@@ -37,8 +37,7 @@ export class Rule {
 }
 
 export class Question {
-  static NEW_QUESTION_NAME =
-    $localize`:@@model.new.question:New Question` as string;
+  static NEW_QUESTION_NAME = $localize`New Question`;
   static NEW_VARIABLE_NAME = 'new_variable';
   constructor(
     public readonly question: string,
@@ -51,8 +50,8 @@ export class Question {
 }
 
 export class Item {
-  static NEW_ITEM_NAME = $localize`:@@model.new.item:New Item` as string;
-  static NEW_CATEGORY_NAME = $localize`:@@model.new.category:New` as string;
+  static NEW_ITEM_NAME = $localize`New Item`;
+  static NEW_CATEGORY_NAME = $localize`New`;
   constructor(
     public readonly category: string,
     public readonly name: string,

@@ -2,16 +2,16 @@
   class="flex flex-col"
   role="group"
   aria-label="question"
-  i18n-aria-label="@@edit.question.label"
+  i18n-aria-label
   [formGroup]="form"
 >
   <input
     class="grow"
     type="text"
     placeholder="question"
-    i18n-placeholder="@@edit.question.question.placeholder"
+    i18n-placeholder
     aria-label="question"
-    i18n-aria-label="@@edit.question.question.label"
+    i18n-aria-label
     formControlName="question"
     (focus)="focusQuestion()"
   />
@@ -21,9 +21,9 @@
       class="grow font-mono font-bold"
       type="text"
       placeholder="variable"
-      i18n-placeholder="@@edit.question.variable.placeholder"
+      i18n-placeholder
       aria-label="variable"
-      i18n-aria-label="@@edit.question.variable.label"
+      i18n-aria-label
       formControlName="variable"
       [class.text-green]="highlighVariable() && variableActive()"
       [class.text-red]="highlighVariable() && !variableActive()"
@@ -33,40 +33,30 @@
   @if (mode() === 'edit' && form.valid === false && form.touched) {
     <div class="text-red m-1 flex flex-col text-sm" role="alert">
       @if (form.controls.question.errors?.['pattern']; as pattern) {
-        <span i18n="@@edit.question.question.invalid-character"
+        <span i18n
           >Questions cannot contain this character: '{{ pattern }}'</span
         >
       }
       @if (form.controls.question.errors?.['required']) {
-        <span i18n="@@edit.question.question.required"
-          >Question is required</span
-        >
+        <span i18n>Question is required</span>
       }
       @if (form.controls.variable.errors?.['pattern']; as pattern) {
         @if (pattern === ' ') {
-          <span i18n="@@edit.question.variable.invalid-spaces"
-            >Variables cannot contain spaces</span
-          >
+          <span i18n>Variables cannot contain spaces</span>
         } @else {
-          <span i18n="@@edit.question.variable.invalid-character"
+          <span i18n
             >Variables cannot contain this character: '{{ pattern }}'</span
           >
         }
       }
       @if (form.controls.variable.errors?.['required']) {
-        <span i18n="@@edit.question.variable.required"
-          >Variable name is required</span
-        >
+        <span i18n>Variable name is required</span>
       }
       @if (form.controls.variable.errors?.['reserved']) {
-        <span i18n="@@edit.question.variable.reserved"
-          >This variable name is reserved</span
-        >
+        <span i18n>This variable name is reserved</span>
       }
       @if (form.controls.variable.errors?.['used']) {
-        <span i18n="@@edit.question.variable.used"
-          >This variable name is already used</span
-        >
+        <span i18n>This variable name is already used</span>
       }
     </div>
   }

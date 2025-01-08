@@ -223,7 +223,7 @@ test('rule editor - cut-paste', async ({ page }) => {
       - button "paste from clipboard"
   `);
 
-  await expect(editor.clipboard).toHaveText('Clipboard: 1 Item 1 Question');
+  await expect(editor.clipboard).toHaveText('Clipboard: 1 Item and 1 Question');
 
   await editor.rule(2).pasteButton.click();
 

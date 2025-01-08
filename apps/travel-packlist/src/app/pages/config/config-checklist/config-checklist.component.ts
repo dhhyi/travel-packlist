@@ -24,9 +24,7 @@ export class ConfigChecklistComponent {
 
   async resetChecklist() {
     if (
-      await confirm(
-        $localize`:@@config.checklist.reset.question:Are you sure you want to reset the checklist?` as string,
-      )
+      await confirm($localize`Are you sure you want to reset the checklist?`)
     ) {
       this.facade.resetChecklist();
       await this.router.navigate(['/packlist']);

@@ -2,7 +2,7 @@
   class="flex"
   role="group"
   aria-label="item"
-  i18n-aria-label="@@edit.item.label"
+  i18n-aria-label
   [formGroup]="form"
 >
   <select
@@ -10,7 +10,7 @@
     name="categories"
     formControlName="category"
     aria-label="category"
-    i18n-aria-label="@@edit.item.category.label"
+    i18n-aria-label
   >
     @for (category of categories(); track category) {
       <option [value]="category">{{ category }}</option>
@@ -22,7 +22,7 @@
     type="text"
     formControlName="name"
     aria-label="item name"
-    i18n-aria-label="@@edit.item.name.label"
+    i18n-aria-label
     (focus)="focus($event)"
     (blur)="blur()"
   />
@@ -31,12 +31,10 @@
   <div class="text-red-light m-1 text-sm" role="alert">
     @if (form.controls.name.touched) {
       @if (form.controls.name.errors?.['pattern']; as pattern) {
-        <span i18n="@@edit.item.name.invalid-character"
-          >Item name cannot contain the character '{{ pattern }}'</span
-        >
+        <span i18n>Item name cannot contain the character '{{ pattern }}'</span>
       }
       @if (form.controls.name.errors?.['required']) {
-        <span i18n="@@edit.item.name.required">Item name is required</span>
+        <span i18n>Item name is required</span>
       }
     }
   </div>

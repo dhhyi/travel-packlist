@@ -69,9 +69,7 @@ export class Parser {
       return parse(inputWOComments, this.makeOptions('Rules')) as Rule[];
     } catch (error) {
       const message: string[] = [];
-      message.push(
-        $localize`:@@parser.error.rules:Error parsing rules` as string,
-      );
+      message.push($localize`Error parsing rules`);
       if (error instanceof SyntaxError) {
         const line = error.location.start.line.toString();
         const column = error.location.start.column.toString();

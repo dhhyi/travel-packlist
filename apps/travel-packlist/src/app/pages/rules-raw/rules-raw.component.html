@@ -1,13 +1,13 @@
 <textarea
   aria-label="Rules as code"
-  i18n-aria-label="@@edit-raw.rules-textbox"
+  i18n-aria-label
   class="grow resize-none rounded border border-gray-300 bg-gray-100 px-1 py-0 pb-8 font-mono leading-tight text-gray-700 focus:outline-none dark:bg-gray-900 dark:text-gray-300"
   [formControl]="rulesControl"
 ></textarea>
 <div
   class="bg-active bottom-0 p-2 font-mono"
   aria-label="Parser state"
-  i18n-aria-label="@@edit-raw.parser-state"
+  i18n-aria-label
   aria-live="polite"
 >
   @if (parserState(); as state) {
@@ -15,27 +15,26 @@
       @case ('pending') {
         <div
           aria-label="pending"
-          i18n-aria-label="@@edit-raw.state.parsing"
-          i18n="@@edit-raw.waiting"
+          i18n-aria-label
+          i18n
           class="text-yellow-normal"
         >
           Waiting for input.
         </div>
       }
       @case ('success') {
-        <!-- prettier-ignore -->
-        <div aria-label="success"
-          i18n-aria-label="@@edit-raw.state.success"
-         i18n="@@edit-raw.parsed-success" class="text-green">
-          Parsed {{ state.rules // i18n(ph="NUMBER_OF_RULES") }} rules successfully!
+        @let numberOfRules = state.rules;
+        <div aria-label="success" i18n-aria-label i18n class="text-green">
+          Parsed
+          {numberOfRules // i18n(ph="NUMBER_OF_RULES"), plural,
+            one {1 rule}
+            other {{{numberOfRules}} rules}
+          }
+          successfully!
         </div>
       }
       @default {
-        <div
-          aria-label="error"
-          i18n-aria-label="@@edit-raw.state.error"
-          class="text-red"
-        >
+        <div aria-label="error" i18n-aria-label class="text-red">
           {{ state.error }}
         </div>
       }

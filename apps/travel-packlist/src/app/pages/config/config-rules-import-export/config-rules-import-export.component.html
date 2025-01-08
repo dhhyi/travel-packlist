@@ -1,6 +1,6 @@
 <button
   #exportButton
-  i18n="@@config.rules.export"
+  i18n
   type="button"
   [ngClass]="{
     'bg-green-light animate-pulse': highlightExport() && exportNeeded(),
@@ -11,13 +11,13 @@
   Export Rules
 </button>
 @if (exportNeeded()) {
-  <div i18n="@@config.rules.export-needed" class="text-red text-center italic">
+  <div i18n class="text-red text-center italic">
     Current rules are not backed up!
   </div>
 }
 <button
   #importButton
-  i18n="@@config.rules.import"
+  i18n
   type="button"
   [ngClass]="{
     'bg-green-light animate-pulse': highlightImport(),
@@ -29,7 +29,7 @@
 <cmp-checkbox
   id="export-reminder"
   label="Remind me to regularly export rules"
-  i18n-label="@@config.rules.export-reminder"
+  i18n-label
   [(ngModel)]="exportReminder"
 />
 

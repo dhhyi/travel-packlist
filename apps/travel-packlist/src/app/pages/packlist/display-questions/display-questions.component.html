@@ -1,6 +1,6 @@
 @if (!facade.questionsAvailable()) {
   <div class="flex flex-col items-center">
-    <p class="text-center" i18n="@@packlist.no-questions">
+    <p class="text-center" i18n>
       No questions available, please
       <button
         type="button"
@@ -37,7 +37,7 @@
       class="link"
       role="button"
       aria-label="Lock answers"
-      i18n-aria-label="@@packlist.toggle-answers-lock"
+      i18n-aria-label
       [attr.aria-pressed]="facade.isAnswersLockActive()"
       (click)="facade.toggleAnswersLock()"
       (keypress)="facade.toggleAnswersLock()"

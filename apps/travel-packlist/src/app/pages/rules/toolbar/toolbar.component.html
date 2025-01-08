@@ -8,19 +8,15 @@
     class="mb-1 grid grid-cols-6 gap-2"
     role="radiogroup"
     aria-label="Editor Mode"
-    i18n-aria-label="@@editor.toolbar.editor-mode"
+    i18n-aria-label
   >
-    <app-toolbar-button
-      type="view"
-      label="View"
-      i18n-label="@@editor.toolbar.editor-mode.view"
-    >
+    <app-toolbar-button type="view" label="View" i18n-label>
       <app-icon-view class="my-auto h-6 w-6" />
     </app-toolbar-button>
     <app-toolbar-button
       type="edit"
       label="Edit"
-      i18n-label="@@editor.toolbar.editor-mode.edit"
+      i18n-label
       [disabled]="!noOfVisibleRules() && !!searchTerm()"
     >
       <app-icon-edit class="my-auto h-6 w-6" />
@@ -28,7 +24,7 @@
     <app-toolbar-button
       type="delete"
       label="Delete"
-      i18n-label="@@editor.toolbar.editor-mode.delete"
+      i18n-label
       [disabled]="!noOfVisibleRules()"
     >
       <app-icon-delete class="my-auto h-6 w-6" />
@@ -36,7 +32,7 @@
     <app-toolbar-button
       type="cut-paste"
       label="Cut/Paste"
-      i18n-label="@@editor.toolbar.editor-mode.cut-paste"
+      i18n-label
       [disabled]="
         noOfVisibleRules() < 2 &&
         !clipboard.itemsCount() &&
@@ -48,42 +44,38 @@
     <app-toolbar-button
       type="swap"
       label="Swap"
-      i18n-label="@@editor.toolbar.editor-mode.swap"
+      i18n-label
       [disabled]="!noOfVisibleRules()"
     >
       <app-icon-swap class="my-auto h-6 w-6" />
     </app-toolbar-button>
-    <app-toolbar-button
-      type="search"
-      label="Search"
-      i18n-label="@@editor.toolbar.editor-mode.search"
-    >
+    <app-toolbar-button type="search" label="Search" i18n-label>
       <app-icon-search class="my-auto h-6 w-6" />
     </app-toolbar-button>
   </div>
   @if (mode() === 'cut-paste') {
     @if (clipboard.itemsCount() > 0 || clipboard.questionsCount() > 0) {
+      @let itemsCount = clipboard.itemsCount();
+      @let questionsCount = clipboard.questionsCount();
+      @let both = !!itemsCount && !!questionsCount;
       <div
         class="mt-2 flex justify-center gap-4"
         role="status"
         aria-label="clipboard"
-        i18n-aria-label="@@editor.toolbar.clipboard"
+        i18n-aria-label
+        i18n
       >
-        <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
-        @if (clipboard.itemsCount(); as itemsCount) {
-          <span i18n="@@edit.toolbar.clipboard.items">{itemsCount, plural,
-            one {1 Item}
-            other {{{itemsCount}} Items}
-          }</span>
+        Clipboard:
+        {itemsCount // i18n(ph="NUMBER_OF_ITEMS"), plural,
+          =0 {}
+          one {1 Item}
+          other {{{itemsCount}} Items}
         }
-        @if (clipboard.questionsCount(); as questionsCount) {
-          <span
-            i18n="@@edit.toolbar.clipboard.questions"
-            >{questionsCount, plural,
-              one {1 Question}
-              other {{{questionsCount}} Questions}
-
-          }</span>
+        {both // i18n(ph="BOTH_DEFINED"), select, true {and} other {}}
+        {questionsCount // i18n(ph="NUMBER_OF_QUESTIONS"), plural,
+          =0 {}
+          one {1 Question}
+          other {{{questionsCount}} Questions}
         }
       </div>
     }
@@ -95,14 +87,14 @@
         class="grow"
         role="searchbox"
         aria-label="search in rules"
-        i18n-aria-label="@@editor.toolbar.search.label"
+        i18n-aria-label
         [(ngModel)]="searchTerm"
       />
       <button
         type="button"
         class="link"
         aria-label="clear search"
-        i18n-aria-label="@@editor.toolbar.search.clear"
+        i18n-aria-label
         (click)="clearSearch()"
       >
         <app-icon-clear class="h-6 w-6" />

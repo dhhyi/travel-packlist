@@ -55,7 +55,7 @@ test('edit rules raw with error', async ({ page }) => {
   await rulesRaw.rawRules().fill(':- Will it be sunny? $sunny;');
 
   await expect(rulesRaw.parserState()).toHaveText(
-    'Parsed 1 rules successfully!',
+    'Parsed 1 rule successfully!',
   );
 
   await rulesRaw.rawRules().fill('error');

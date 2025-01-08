@@ -5,7 +5,7 @@
         class="grow"
         role="progressbar"
         title="weight packing progress"
-        i18n-title="@@packlist.progress.weight"
+        i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
         [value]="facade.checkedWeight()"
@@ -16,7 +16,7 @@
         class="grow"
         role="progressbar"
         title="item packing progress"
-        i18n-title="@@packlist.progress.items"
+        i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
         [value]="facade.numberOfCheckedItems()"

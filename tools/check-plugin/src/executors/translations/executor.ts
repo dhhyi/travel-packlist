@@ -27,8 +27,8 @@ const run: Executor<ExecutorSchema> = async (options) => {
 
     translations.forEach((translation) => {
       Object.keys(translation.translations).forEach((key) => {
-        if (!/^[a-z][a-z0-9.-]*[a-z0-9]$/.test(key)) {
-          console.warn(`Key "${key}" is not snake case`);
+        if (!/^[0-9]+$/.test(key)) {
+          console.warn(`Key "${key}" is not a number`);
           errors = true;
         }
       });
@@ -77,7 +77,7 @@ const run: Executor<ExecutorSchema> = async (options) => {
             (key) => !currentTranslationKeys.includes(key),
           );
           console.warn(
-            `Translation for locale "${translation.locale}" is incomplete. The following keys are missing:\n  ${missingKeys.join('\n  ')}`,
+            `Translation for locale "${translation.locale}" is incomplete. The following keys are missing:\n  ${missingKeys.map((key) => `${key}: ${defaultLocale.translations[key]}`).join('\n  ')}`,
           );
           errors = true;
         }

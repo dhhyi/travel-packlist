@@ -1,7 +1,7 @@
 <div
   class="mb-1 flex items-center"
   aria-label="condition"
-  i18n-aria-label="@@edit.rules.condition.label"
+  i18n-aria-label
   role="group"
 >
   <app-editor-condition
@@ -15,7 +15,7 @@
       class="link"
       type="button"
       aria-label="reset condition"
-      i18n-aria-label="@@edit.rules.condition.reset"
+      i18n-aria-label
       (click)="resetCondition()"
     >
       <app-icon-clear />
@@ -31,7 +31,7 @@
           class="link p-1"
           type="button"
           aria-label="move question down"
-          i18n-aria-label="@@edit.rules.question.move-down"
+          i18n-aria-label
           (click)="swapQuestions($index, $index + 1)"
         >
           <app-icon-arrow-downward />
@@ -51,7 +51,7 @@
         class="link"
         type="button"
         aria-label="delete question"
-        i18n-aria-label="@@edit.rules.question.delete"
+        i18n-aria-label
         (click)="deleteQuestion($index)"
       >
         <app-icon-delete />
@@ -61,7 +61,7 @@
         class="link"
         type="button"
         aria-label="cut question"
-        i18n-aria-label="@@edit.rules.question.cut"
+        i18n-aria-label
         (click)="cutQuestion($index)"
       >
         <app-icon-cut />
@@ -71,7 +71,7 @@
         class="link p-1"
         type="button"
         aria-label="move question up"
-        i18n-aria-label="@@edit.rules.question.move-up"
+        i18n-aria-label
         (click)="swapQuestions($index - 1, $index)"
       >
         <app-icon-arrow-upward />
@@ -88,7 +88,7 @@
           class="link p-1"
           type="button"
           aria-label="move item down"
-          i18n-aria-label="@@edit.rules.item.move-down"
+          i18n-aria-label
           (click)="swapItems($index, $index + 1)"
         >
           <app-icon-arrow-downward />
@@ -107,7 +107,7 @@
         class="link"
         type="button"
         aria-label="delete item"
-        i18n-aria-label="@@edit.rules.item.delete"
+        i18n-aria-label
         (click)="deleteItem($index)"
       >
         <app-icon-delete />
@@ -117,7 +117,7 @@
         class="link"
         type="button"
         aria-label="cut item"
-        i18n-aria-label="@@edit.rules.item.cut"
+        i18n-aria-label
         (click)="cutItem($index)"
       >
         <app-icon-cut />
@@ -127,7 +127,7 @@
         type="button"
         class="link p-1"
         aria-label="move item up"
-        i18n-aria-label="@@edit.rules.item.move-up"
+        i18n-aria-label
         (click)="swapItems($index - 1, $index)"
       >
         <app-icon-arrow-upward />
@@ -139,21 +139,21 @@
 @if (mode() === 'edit') {
   <div class="flex justify-end gap-2">
     <button
-      i18n="@@edit.rules.add-question"
+      i18n
       class="h-8"
       type="button"
       aria-label="add question"
-      i18n-aria-label="@@edit.rules.add-question.label"
+      i18n-aria-label
       (click)="addQuestion()"
     >
       + Question
     </button>
     <button
-      i18n="@@edit.rules.add-item"
+      i18n
       class="h-8"
       type="button"
       aria-label="add item"
-      i18n-aria-label="@@edit.rules.add-item.label"
+      i18n-aria-label
       (click)="addItem()"
     >
       + Item
@@ -166,7 +166,7 @@
         type="button"
         class="link"
         aria-label="delete rule"
-        i18n-aria-label="@@edit.rules.delete"
+        i18n-aria-label
         (click)="deleteRule.emit()"
       >
         <app-icon-delete />
@@ -177,7 +177,7 @@
         type="button"
         class="link"
         aria-label="paste from clipboard"
-        i18n-aria-label="@@edit.rules.paste"
+        i18n-aria-label
         (click)="paste()"
       >
         <app-icon-paste />

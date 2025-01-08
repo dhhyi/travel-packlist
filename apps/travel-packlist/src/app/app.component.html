@@ -8,12 +8,12 @@
     class="link grow justify-start pl-0"
     aria-label="Go to TravelPacklist"
     role="banner"
-    i18n-aria-label="@@app.banner.home-link"
+    i18n-aria-label
     routerLink="/"
   >
     <!-- eslint-disable-next-line @angular-eslint/template/alt-text -->
     <img aria-hidden="true" src="icon.svg" class="h-8" />
-    <h1 i18n="@@app.title" class="text-xl font-bold">TravelPacklist</h1>
+    <h1 i18n class="text-xl font-bold">TravelPacklist</h1>
   </button>
   <button
     type="button"
@@ -22,7 +22,7 @@
     routerLink="/config"
     routerLinkActive="hidden"
     aria-label="Go to configuration"
-    i18n-aria-label="@@app.banner.config-link"
+    i18n-aria-label
   >
     <app-icon-cog class="h-6 w-6" />
   </button>
@@ -36,7 +36,7 @@
       <button
         type="button"
         aria-label="Scroll to top"
-        i18n-aria-label="@@app.scroll-top"
+        i18n-aria-label
         class="flex w-full items-center justify-center rounded-3xl border border-slate-700 shadow-xl dark:border-slate-300"
         (click)="scrollTop()"
       >

@@ -27,7 +27,7 @@ export class ConfigFacade {
     if (
       this.state.get('exportNeeded') &&
       !(await confirm(
-        $localize`:@@config.rules.import.export-first:You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?` as string,
+        $localize`You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?`,
       ))
     ) {
       return Promise.resolve(false);
@@ -68,7 +68,7 @@ export class ConfigFacade {
     ) {
       if (
         await confirm(
-          $localize`:@@config.rules.import.suggest-track-weight:It seems that the imported rules contain items with weights. Shall we enable the weight tracking?` as string,
+          $localize`It seems that the imported rules contain items with weights. Shall we enable the weight tracking?`,
         )
       ) {
         this.state.set('trackWeight', true);

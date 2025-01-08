@@ -1,6 +1,5 @@
-<h2 i18n="@@config.appversion">App Version</h2>
+<h2 i18n>App Version</h2>
 <span>
-  <!-- eslint-disable @angular-eslint/template/no-interpolation-in-attributes -->
   <a
     class="accessible-content inline-block content-center"
     [attr.aria-label]="currentVersionLabel"
@@ -13,19 +12,19 @@
     }
   </a></span
 >
-<span i18n="@@config.appversion.built" class="italic"
+<span i18n class="italic"
   >built on {{ buildTime | date: 'long' // i18n(ph="LONG_DATE") }}</span
 >
 <span class="truncate font-mono text-sm text-slate-500"
   ><a
     class="accessible-content inline-block content-center"
-    attr.aria-label="Current git hash starts with {{ gitHash | slice: 0 : 8 }}"
+    [attr.aria-label]="gitHashLabel"
     [href]="'https://github.com/dhhyi/travel-packlist/commit/' + gitHash"
     ><span aria-hidden="true">{{ gitHash }}</span></a
   ></span
 >
 @if (displayServiceWorkerStatus) {
-  <span i18n="@@config.service-worker" class="font-mono text-sm"
+  <span i18n class="font-mono text-sm"
     >Service Worker: {{ serviceWorkerStatus() }}</span
   >
 }

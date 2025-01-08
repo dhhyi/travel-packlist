@@ -33,7 +33,7 @@ export class AppUpdate {
         filter((event) => event.type === 'VERSION_READY'),
         switchMap(() =>
           confirm(
-            $localize`:@@app.update.apply.question:A new version of the app is available. Do you want to reload?` as string,
+            $localize`A new version of the app is available. Do you want to reload?`,
           ),
         ),
         filter(identity),

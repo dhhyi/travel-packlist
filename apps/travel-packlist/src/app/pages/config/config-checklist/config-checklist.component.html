@@ -1,32 +1,18 @@
-<h2 i18n="@@config.checklist">Checklist</h2>
-<button
-  i18n="@@config.checklist.reset"
-  type="button"
-  (click)="resetChecklist()"
->
-  Reset Checklist
-</button>
+<h2 i18n>Checklist</h2>
+<button i18n type="button" (click)="resetChecklist()">Reset Checklist</button>
 <cmp-checkbox
   id="track-weight"
   label="Track item weight"
-  i18n-label="@@config.checklist.track-weight"
+  i18n-label
   help="You can enter the item weight appended to the item name in the editor."
-  i18n-help="@@config.checklist.track-weight.description"
+  i18n-help
   [(ngModel)]="trackWeight"
 />
 <cmp-select-options
   label="Sort categories"
-  i18n-label="@@config.checklist.category-sorting"
+  i18n-label
   [(ngModel)]="categorySorting"
 >
-  <ng-template
-    value="alphabetically"
-    i18n="@@config.checklist.category-sorting.alphabetically"
-    >alphabetically</ng-template
-  >
-  <ng-template
-    value="definition"
-    i18n="@@config.checklist.category-sorting.definition"
-    >order of definition</ng-template
-  >
+  <ng-template value="alphabetically" i18n>alphabetically</ng-template>
+  <ng-template value="definition" i18n>order of definition</ng-template>
 </cmp-select-options>

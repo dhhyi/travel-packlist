@@ -1,4 +1,4 @@
-import { DatePipe, SlicePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,7 +12,7 @@ import { GlobalState } from '@travel-packlist/state';
   selector: 'app-config-version',
   templateUrl: './config-version.component.html',
   styleUrl: '../config-section.scss',
-  imports: [DatePipe, SlicePipe],
+  imports: [DatePipe],
 })
 export class ConfigVersionComponent {
   private state = inject(GlobalState);
@@ -25,23 +25,23 @@ export class ConfigVersionComponent {
   gitHash = GIT_HASH;
   versionCode = VERSION_CODE;
 
-  readonly currentVersionLabel =
-    $localize`:@@config.version.current:Current version is ${this.version}:VERSION:` as string;
+  readonly currentVersionLabel = $localize`Current version is ${this.version}:VERSION:`;
+  readonly gitHashLabel = $localize`Current git hash starts with ${this.gitHash.substring(0, 8)}:GIT_HASH:`;
 
   readonly serviceWorkerStatus = computed((): string => {
     switch (this.state.signal('serviceWorkerStatus')()) {
       case 'disabled':
-        return $localize`:@@config.service-worker.disabled:disabled` as string;
+        return $localize`disabled`;
       case 'error':
-        return $localize`:@@config.service-worker.error:error` as string;
+        return $localize`error`;
       case 'unrecoverable':
-        return $localize`:@@config.service-worker.unrecoverable:unrecoverable - please refresh` as string;
+        return $localize`unrecoverable - please refresh`;
       case 'init':
-        return $localize`:@@config.service-worker.init:initializing` as string;
+        return $localize`initializing`;
       case 'ok':
-        return $localize`:@@config.service-worker.ok:ok` as string;
+        return $localize`ok`;
       case 'update-available':
-        return $localize`:@@config.service-worker.update-available:update available` as string;
+        return $localize`update available`;
     }
   });
 }

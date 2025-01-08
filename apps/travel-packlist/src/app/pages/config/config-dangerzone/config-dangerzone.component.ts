@@ -18,7 +18,7 @@ export class ConfigDangerzoneComponent {
   async resetEverything() {
     if (
       await confirm(
-        $localize`:@@config.dangerzone.reset.question:Are you sure you want to reset the whole application?` as string,
+        $localize`Are you sure you want to reset the whole application?`,
       )
     ) {
       this.state.reset();

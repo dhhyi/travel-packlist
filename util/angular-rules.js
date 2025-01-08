@@ -124,8 +124,8 @@ const rules = (tsconfig, options) => {
         '@angular-eslint/template/i18n': [
           'warn',
           {
+            checkId: false,
             ignoreAttributes: [
-              'd',
               'fragment',
               'aria-describedby',
               'aria-labelledby',
