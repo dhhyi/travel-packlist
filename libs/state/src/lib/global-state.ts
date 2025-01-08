@@ -14,6 +14,7 @@ export type Themes = State['theme'];
 export type Languages = State['language'];
 export type FontSizes = State['fontSize'];
 export { type SupportedLanguage } from './persistent-state';
+export type RuleModes = NonNullable<State['rulesMode']>;
 
 @Injectable({ providedIn: 'root' })
 export class GlobalState {

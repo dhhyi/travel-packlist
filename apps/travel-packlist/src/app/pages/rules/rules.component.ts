@@ -59,6 +59,10 @@ export default class RulesComponent {
     () => this.state.signal('scrollY')() > 100,
   );
 
+  ruleLabel(index: number) {
+    return $localize`:@@edit.rules.rule-label:Rule #${(index + 1).toString()}:NUMBER:`;
+  }
+
   private updateRules(rules: Rule[]) {
     const serializedRules = serializeRules(rules);
     this.state.set('rules', serializedRules);

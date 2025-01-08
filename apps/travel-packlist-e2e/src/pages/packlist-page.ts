@@ -29,6 +29,10 @@ export class PacklistPage extends Banner {
     return this.page.getByTitle('weight packing progress');
   }
 
+  lockAnswersButton() {
+    return this.page.getByRole('button', { name: 'Lock answers' });
+  }
+
   item(name: string, checked: boolean) {
     return this.page.getByRole('checkbox', { name, checked });
   }

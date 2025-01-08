@@ -1,0 +1,17 @@
+<button
+  #button
+  type="button"
+  class="link h-full w-full"
+  role="radio"
+  [tabIndex]="mode() === type() ? 0 : -1"
+  [attr.aria-label]="label()"
+  [attr.aria-checked]="mode() === type()"
+  [class.active]="mode() === type()"
+  [disabled]="disabled()"
+  (click)="mode.set(type())"
+  (keypress)="mode.set(type())"
+  (keydown.arrowLeft)="focusPrevious.emit()"
+  (keydown.arrowRight)="focusNext.emit()"
+>
+  <ng-content />
+</button>

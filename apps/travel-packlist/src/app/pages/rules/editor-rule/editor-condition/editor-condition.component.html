@@ -2,7 +2,7 @@
 <ng-container #content />
 
 <ng-template #keyword let-text>
-  <span class="font-bold">{{ text }}</span>
+  <span class="font-bold" role="text">{{ text }}</span>
 </ng-template>
 
 <ng-template #variable let-variable>
@@ -24,6 +24,9 @@
   <select
     #selectbox
     class="font-mono"
+    role="combobox"
+    aria-label="variable"
+    i18n-aria-label="@@edit.rules.variable-select.label"
     [style]="{ width: width }"
     (change)="selection(selectbox.value, value)"
   >

@@ -1,11 +1,13 @@
 <app-toolbar [noOfVisibleRules]="visibleRules().length" />
 
-@if (!visibleRules().length) {
+@if (!visibleRules().length && !filter()) {
   <div class="flex h-[calc(100vh-4rem)] items-center justify-center">
     <div class="flex flex-col items-center gap-6">
       <p i18n="@@edit.rules.empty">There are no rules defined yet.</p>
       <button
         i18n="@@edit.rules.add-rule-and-edit"
+        aria-label="Add rule"
+        i18n-aria-label="@@edit.rules.add-rule.label"
         type="button"
         (click)="addRuleAndEdit()"
       >
@@ -20,6 +22,8 @@
       <button
         type="button"
         class="link"
+        aria-label="Swap rule above with rule below"
+        i18n-aria-label="@@edit.rules.swap"
         (click)="swapRules(item.index - 1, item.index)"
       >
         <app-icon-swap />
@@ -28,6 +32,9 @@
   }
   <div
     class="card mb-1"
+    role="group"
+    tabindex="0"
+    [attr.aria-label]="ruleLabel(item.index)"
     [id]="'rule-' + item.index"
     [ngClass]="{
       disabled: showAsDisabled(item.rule),
@@ -51,6 +58,8 @@
 @if (mode() === 'edit' && !filter() && visibleRules().length) {
   <button
     i18n="@@edit.rules.add-rule"
+    aria-label="Add rule"
+    i18n-aria-label="@@edit.rules.add-rule.label"
     type="button"
     class="fixed bottom-2 z-50"
     (click)="addRule()"

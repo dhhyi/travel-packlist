@@ -1,6 +1,7 @@
 import { type Page } from '@playwright/test';
 
 import { Banner } from './banner';
+import { EditorPage } from './editor-page';
 import { PacklistPage } from './packlist-page';
 import { RulesRawPage } from './rules-raw-page';
 
@@ -21,6 +22,15 @@ export class ConfigPage extends Banner {
   async toRulesRawPage() {
     await this.editRulesWithCodeButton().click();
     return new RulesRawPage(this.page);
+  }
+
+  private editRulesButton() {
+    return this.page.getByRole('button', { name: 'Edit Rules', exact: true });
+  }
+
+  async toEditorPage() {
+    await this.editRulesButton().click();
+    return new EditorPage(this.page);
   }
 
   trackItemWeight() {

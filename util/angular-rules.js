@@ -127,9 +127,10 @@ const rules = (tsconfig, options) => {
             ignoreAttributes: [
               'd',
               'fragment',
-              'aria-live',
-              'aria-labelledby',
               'aria-describedby',
+              'aria-labelledby',
+              'aria-live',
+              'aria-orientation',
             ],
             ignoreTags: ['meta', 'link', 'noscript'],
           },

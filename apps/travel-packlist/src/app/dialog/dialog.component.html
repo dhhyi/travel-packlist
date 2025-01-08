@@ -2,18 +2,19 @@
   <div
     class="bg-disabled pointer-events-none fixed left-0 top-0 z-40 h-full w-full opacity-50"
   ></div>
-  <div
-    class="fixed left-0 top-0 z-50 flex h-full w-full"
-    role="dialog"
-    aria-describedby="dialog-message"
-  >
-    <div class="card bg-disabled m-auto w-[300px]">
+  <div class="fixed left-0 top-0 z-50 flex h-full w-full">
+    <div
+      class="card bg-disabled m-auto w-[300px]"
+      role="dialog"
+      aria-describedby="dialog-message"
+    >
       <div class="m-2 flex flex-col gap-4">
         <div id="dialog-message">{{ self.dialogMessage() }}</div>
         <input
           #prompt
           id="prompt"
           type="text"
+          role="textbox"
           [ngClass]="{ hidden: !self.dialogPromptVisible() }"
           (keydown.enter)="self.dialogOk()(prompt.value)"
         />

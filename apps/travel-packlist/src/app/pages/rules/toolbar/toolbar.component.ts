@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -7,6 +6,8 @@ import {
   input,
   viewChild,
   computed,
+  viewChildren,
+  effect,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -21,13 +22,13 @@ import {
 import { GlobalState } from '@travel-packlist/state';
 
 import { RulesClipboard } from '../rules.clipboard';
+import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-toolbar',
   imports: [
     FormsModule,
-    NgClass,
     IconViewComponent,
     IconEditComponent,
     IconDeleteComponent,
@@ -35,10 +36,13 @@ import { RulesClipboard } from '../rules.clipboard';
     IconSwapComponent,
     IconSearchComponent,
     IconClearComponent,
+    ToolbarButtonComponent,
   ],
   templateUrl: './toolbar.component.html',
 })
 export class ToolbarComponent {
+  private readonly toolbarButtons = viewChildren(ToolbarButtonComponent);
+
   readonly noOfVisibleRules = input.required<number>();
 
   private state = inject(GlobalState);
@@ -50,6 +54,38 @@ export class ToolbarComponent {
 
   readonly searchInput =
     viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
+
+  constructor() {
+    effect(() => {
+      this.toolbarButtons().forEach((button) => {
+        button.focusNext.subscribe(() => {
+          this.focusNext();
+        });
+        button.focusPrevious.subscribe(() => {
+          this.focusPrevious();
+        });
+      });
+    });
+  }
+
+  private focusNext() {
+    const buttons = this.toolbarButtons();
+    const count = buttons.length;
+    const index = buttons.findIndex((button) => button.type() === this.mode());
+    if (index !== -1) {
+      const nextIndex = (index + 1) % count;
+      buttons[nextIndex].focus();
+    }
+  }
+  private focusPrevious() {
+    const buttons = this.toolbarButtons();
+    const count = buttons.length;
+    const index = buttons.findIndex((button) => button.type() === this.mode());
+    if (index !== -1) {
+      const nextIndex = (index - 1 + count) % count;
+      buttons[nextIndex].focus();
+    }
+  }
 
   focusSearch() {
     setTimeout(() => {

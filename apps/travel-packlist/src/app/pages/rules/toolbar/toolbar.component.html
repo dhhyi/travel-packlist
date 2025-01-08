@@ -1,68 +1,74 @@
 <div
-  class="bg-active py-2"
-  [ngClass]="{ 'sticky left-0 top-0 z-30 shadow-md': sticky() }"
+  role="toolbar"
+  aria-orientation="horizontal"
+  class="bg-active sticky left-0 top-0 z-30 py-2"
+  [class.shadow-md]="sticky()"
 >
-  <div class="mb-1 grid grid-cols-6 gap-2">
-    <button
-      type="button"
-      class="link"
-      [ngClass]="{ active: mode() === 'view' }"
-      (click)="mode.set('view')"
+  <div
+    class="mb-1 grid grid-cols-6 gap-2"
+    role="radiogroup"
+    aria-label="Editor Mode"
+    i18n-aria-label="@@editor.toolbar.editor-mode"
+  >
+    <app-toolbar-button
+      type="view"
+      label="View"
+      i18n-label="@@editor.toolbar.editor-mode.view"
     >
       <app-icon-view class="my-auto h-6 w-6" />
-    </button>
-    <button
-      type="button"
-      class="link"
-      [ngClass]="{ active: mode() === 'edit' }"
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="edit"
+      label="Edit"
+      i18n-label="@@editor.toolbar.editor-mode.edit"
       [disabled]="!noOfVisibleRules() && !!searchTerm()"
-      (click)="mode.set('edit')"
     >
       <app-icon-edit class="my-auto h-6 w-6" />
-    </button>
-    <button
-      type="button"
-      class="link"
-      [ngClass]="{ active: mode() === 'delete' }"
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="delete"
+      label="Delete"
+      i18n-label="@@editor.toolbar.editor-mode.delete"
       [disabled]="!noOfVisibleRules()"
-      (click)="mode.set('delete')"
     >
       <app-icon-delete class="my-auto h-6 w-6" />
-    </button>
-    <button
-      type="button"
-      class="link"
-      [ngClass]="{ active: mode() === 'cut-paste' }"
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="cut-paste"
+      label="Cut/Paste"
+      i18n-label="@@editor.toolbar.editor-mode.cut-paste"
       [disabled]="
         noOfVisibleRules() < 2 &&
         !clipboard.itemsCount() &&
         !clipboard.questionsCount()
       "
-      (click)="mode.set('cut-paste')"
     >
       <app-icon-reorder class="my-auto h-6 w-6" />
-    </button>
-    <button
-      type="button"
-      class="link"
-      [ngClass]="{ active: mode() === 'swap' }"
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="swap"
+      label="Swap"
+      i18n-label="@@editor.toolbar.editor-mode.swap"
       [disabled]="!noOfVisibleRules()"
-      (click)="mode.set('swap')"
     >
       <app-icon-swap class="my-auto h-6 w-6" />
-    </button>
-    <button
-      type="button"
-      class="link"
-      [ngClass]="{ active: mode() === 'search' }"
-      (click)="mode.set('search'); focusSearch()"
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="search"
+      label="Search"
+      i18n-label="@@editor.toolbar.editor-mode.search"
     >
       <app-icon-search class="my-auto h-6 w-6" />
-    </button>
+    </app-toolbar-button>
   </div>
   @if (mode() === 'cut-paste') {
     @if (clipboard.itemsCount() > 0 || clipboard.questionsCount() > 0) {
-      <div class="mt-2 flex justify-center gap-4">
+      <div
+        class="mt-2 flex justify-center gap-4"
+        role="status"
+        aria-label="clipboard"
+        i18n-aria-label="@@editor.toolbar.clipboard"
+      >
         <span i18n="@@edit.toolbar.clipboard">Clipboard:</span>
         @if (clipboard.itemsCount(); as itemsCount) {
           <span i18n="@@edit.toolbar.clipboard.items">{itemsCount, plural,
@@ -83,8 +89,22 @@
     }
   } @else if (mode() === 'search' || searchTerm()) {
     <div class="mt-2 flex items-center">
-      <input #searchInput type="text" class="grow" [(ngModel)]="searchTerm" />
-      <button type="button" class="link" (click)="clearSearch()">
+      <input
+        #searchInput
+        type="text"
+        class="grow"
+        role="searchbox"
+        aria-label="search in rules"
+        i18n-aria-label="@@editor.toolbar.search.label"
+        [(ngModel)]="searchTerm"
+      />
+      <button
+        type="button"
+        class="link"
+        aria-label="clear search"
+        i18n-aria-label="@@editor.toolbar.search.clear"
+        (click)="clearSearch()"
+      >
         <app-icon-clear class="h-6 w-6" />
       </button>
     </div>

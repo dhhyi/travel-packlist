@@ -1,4 +1,9 @@
-<div class="mb-1 flex items-center">
+<div
+  class="mb-1 flex items-center"
+  aria-label="condition"
+  i18n-aria-label="@@edit.rules.condition.label"
+  role="group"
+>
   <app-editor-condition
     class="accessible-content grow"
     [condition]="rule().condition"
@@ -6,7 +11,13 @@
     (conditionChanged)="updateCondition($event)"
   />
   @if (mode() === 'edit') {
-    <button class="link" type="button" (click)="resetCondition()">
+    <button
+      class="link"
+      type="button"
+      aria-label="reset condition"
+      i18n-aria-label="@@edit.rules.condition.reset"
+      (click)="resetCondition()"
+    >
       <app-icon-clear />
     </button>
   }
@@ -19,6 +30,8 @@
         <button
           class="link p-1"
           type="button"
+          aria-label="move question down"
+          i18n-aria-label="@@edit.rules.question.move-down"
           (click)="swapQuestions($index, $index + 1)"
         >
           <app-icon-arrow-downward />
@@ -34,17 +47,31 @@
       (variableChanged)="variableChanged($event)"
     />
     @if (mode() === 'delete') {
-      <button class="link" type="button" (click)="deleteQuestion($index)">
+      <button
+        class="link"
+        type="button"
+        aria-label="delete question"
+        i18n-aria-label="@@edit.rules.question.delete"
+        (click)="deleteQuestion($index)"
+      >
         <app-icon-delete />
       </button>
     } @else if (mode() === 'cut-paste') {
-      <button class="link" type="button" (click)="cutQuestion($index)">
+      <button
+        class="link"
+        type="button"
+        aria-label="cut question"
+        i18n-aria-label="@@edit.rules.question.cut"
+        (click)="cutQuestion($index)"
+      >
         <app-icon-cut />
       </button>
     } @else if (mode() === 'swap' && $index > 0) {
       <button
         class="link p-1"
         type="button"
+        aria-label="move question up"
+        i18n-aria-label="@@edit.rules.question.move-up"
         (click)="swapQuestions($index - 1, $index)"
       >
         <app-icon-arrow-upward />
@@ -60,6 +87,8 @@
         <button
           class="link p-1"
           type="button"
+          aria-label="move item down"
+          i18n-aria-label="@@edit.rules.item.move-down"
           (click)="swapItems($index, $index + 1)"
         >
           <app-icon-arrow-downward />
@@ -74,17 +103,31 @@
       (itemChanged)="updateItem($index, $event)"
     />
     @if (mode() === 'delete') {
-      <button class="link" type="button" (click)="deleteItem($index)">
+      <button
+        class="link"
+        type="button"
+        aria-label="delete item"
+        i18n-aria-label="@@edit.rules.item.delete"
+        (click)="deleteItem($index)"
+      >
         <app-icon-delete />
       </button>
     } @else if (mode() === 'cut-paste') {
-      <button class="link" type="button" (click)="cutItem($index)">
+      <button
+        class="link"
+        type="button"
+        aria-label="cut item"
+        i18n-aria-label="@@edit.rules.item.cut"
+        (click)="cutItem($index)"
+      >
         <app-icon-cut />
       </button>
     } @else if (mode() === 'swap' && $index > 0) {
       <button
         type="button"
         class="link p-1"
+        aria-label="move item up"
+        i18n-aria-label="@@edit.rules.item.move-up"
         (click)="swapItems($index - 1, $index)"
       >
         <app-icon-arrow-upward />
@@ -99,6 +142,8 @@
       i18n="@@edit.rules.add-question"
       class="h-8"
       type="button"
+      aria-label="add question"
+      i18n-aria-label="@@edit.rules.add-question.label"
       (click)="addQuestion()"
     >
       + Question
@@ -107,6 +152,8 @@
       i18n="@@edit.rules.add-item"
       class="h-8"
       type="button"
+      aria-label="add item"
+      i18n-aria-label="@@edit.rules.add-item.label"
       (click)="addItem()"
     >
       + Item
@@ -115,12 +162,24 @@
 } @else {
   <div class="flex justify-center">
     @if (mode() === 'delete') {
-      <button type="button" class="link" (click)="deleteRule.emit()">
+      <button
+        type="button"
+        class="link"
+        aria-label="delete rule"
+        i18n-aria-label="@@edit.rules.delete"
+        (click)="deleteRule.emit()"
+      >
         <app-icon-delete />
       </button>
     }
     @if (mode() === 'cut-paste') {
-      <button type="button" class="link" (click)="paste()">
+      <button
+        type="button"
+        class="link"
+        aria-label="paste from clipboard"
+        i18n-aria-label="@@edit.rules.paste"
+        (click)="paste()"
+      >
         <app-icon-paste />
       </button>
     }

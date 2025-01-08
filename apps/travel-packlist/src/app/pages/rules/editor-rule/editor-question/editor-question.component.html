@@ -1,9 +1,17 @@
-<form class="flex flex-col" [formGroup]="form">
+<form
+  class="flex flex-col"
+  role="group"
+  aria-label="question"
+  i18n-aria-label="@@edit.question.label"
+  [formGroup]="form"
+>
   <input
     class="grow"
     type="text"
     placeholder="question"
     i18n-placeholder="@@edit.question.question.placeholder"
+    aria-label="question"
+    i18n-aria-label="@@edit.question.question.label"
     formControlName="question"
     (focus)="focusQuestion()"
   />
@@ -13,15 +21,17 @@
       class="grow font-mono font-bold"
       type="text"
       placeholder="variable"
-      formControlName="variable"
       i18n-placeholder="@@edit.question.variable.placeholder"
+      aria-label="variable"
+      i18n-aria-label="@@edit.question.variable.label"
+      formControlName="variable"
       [class.text-green]="highlighVariable() && variableActive()"
       [class.text-red]="highlighVariable() && !variableActive()"
       (focus)="focusVariable()"
     />
   </div>
   @if (mode() === 'edit' && form.valid === false && form.touched) {
-    <div class="text-red m-1 flex flex-col text-sm">
+    <div class="text-red m-1 flex flex-col text-sm" role="alert">
       @if (form.controls.question.errors?.['pattern']; as pattern) {
         <span i18n="@@edit.question.question.invalid-character"
           >Questions cannot contain this character: '{{ pattern }}'</span
