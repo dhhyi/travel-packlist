@@ -1,6 +1,6 @@
 {
   "name": "travel-packlist-root",
-  "version": "0.4.0-accessibility-4",
+  "version": "0.5.0",
   "license": "MIT",
   "scripts": {
     "changelog": "conventional-changelog -i CHANGELOG.md -n util/conventionalcommits.mjs",
