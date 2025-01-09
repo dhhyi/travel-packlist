@@ -22,12 +22,7 @@ const rules = (tsconfig, options) => {
         },
       },
       rules: {
-        '@angular-eslint/component-max-inline-declarations': [
-          'error',
-          {
-            styles: 10,
-          },
-        ],
+        '@angular-eslint/component-max-inline-declarations': 'error',
         '@angular-eslint/component-selector': [
           'error',
           {

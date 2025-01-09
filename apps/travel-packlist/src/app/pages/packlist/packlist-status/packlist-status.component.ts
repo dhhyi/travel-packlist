@@ -15,17 +15,6 @@ import {
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: `
-    progress::-webkit-progress-bar {
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      background-color: transparent;
-    }
-    progress::-webkit-progress-value {
-      background-color: #999;
-      border-radius: 3px;
-    }
-  `,
 })
 export class PacklistStatusComponent {
   facade = inject(PacklistFacade);
