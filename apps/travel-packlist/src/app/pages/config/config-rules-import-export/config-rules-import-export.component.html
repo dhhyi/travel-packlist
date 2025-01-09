@@ -2,9 +2,7 @@
   #exportButton
   i18n
   type="button"
-  [ngClass]="{
-    'bg-green-light animate-pulse': highlightExport() && exportNeeded(),
-  }"
+  [class.highlighted]="highlightExport() && exportNeeded()"
   [disabled]="!isExportAvailable()"
   (click)="exportRules()"
 >
@@ -19,9 +17,7 @@
   #importButton
   i18n
   type="button"
-  [ngClass]="{
-    'bg-green-light animate-pulse': highlightImport(),
-  }"
+  [class.highlighted]="highlightImport()"
   (click)="importRules()"
 >
   Import Rules

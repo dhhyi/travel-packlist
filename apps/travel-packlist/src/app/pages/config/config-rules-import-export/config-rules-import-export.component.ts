@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,7 +23,7 @@ import { ConfigFacade } from '../config.facade';
   selector: 'app-config-rules-import-export',
   templateUrl: './config-rules-import-export.component.html',
   styleUrl: '../config-section.scss',
-  imports: [FormsModule, ComponentsModule, IconDownloadComponent, NgClass],
+  imports: [FormsModule, ComponentsModule, IconDownloadComponent],
 })
 export class ConfigRulesImportExportComponent {
   private router = inject(Router);

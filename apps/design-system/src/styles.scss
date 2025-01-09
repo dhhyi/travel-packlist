@@ -73,6 +73,10 @@
     &.active {
       @apply ring ring-slate-800 dark:ring-slate-200;
     }
+
+    &.highlighted {
+      @apply bg-green-light animate-pulse;
+    }
   }
 
   fieldset {
