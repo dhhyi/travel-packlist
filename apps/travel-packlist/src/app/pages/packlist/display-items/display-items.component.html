@@ -46,9 +46,7 @@
             tabindex="0"
             class="flex items-center justify-between"
             [attr.aria-checked]="item.checked"
-            [ngClass]="{
-              'text-slate-600 line-through dark:text-slate-400': item.checked,
-            }"
+            [class.text-checked-item]="item.checked"
             (click)="facade.toggleCheckedItem(item)"
             (keypress)="facade.toggleCheckedItem(item)"
           >

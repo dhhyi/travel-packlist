@@ -141,4 +141,8 @@
   .text-red {
     @apply text-red-normal dark:text-red-light;
   }
+
+  .text-checked-item {
+    @apply text-slate-600 line-through dark:text-slate-400;
+  }
 }

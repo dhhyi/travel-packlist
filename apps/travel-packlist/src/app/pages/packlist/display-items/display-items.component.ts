@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import {
   IconKeyDownComponent,
@@ -15,12 +14,7 @@ import { ItemsStatusComponent } from './items-status/items-status.component';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-items',
-  imports: [
-    ItemsStatusComponent,
-    NgClass,
-    IconKeyDownComponent,
-    IconKeyRightComponent,
-  ],
+  imports: [ItemsStatusComponent, IconKeyDownComponent, IconKeyRightComponent],
   templateUrl: './display-items.component.html',
 })
 export class DisplayItemsComponent {
