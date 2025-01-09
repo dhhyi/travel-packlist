@@ -29,6 +29,9 @@ As it is a PWA, you can also install it on your home screen for an easy access.
 There is also an Android App available in the Play Store, which is currently in testing and not yet publicly available.
 However, you can [become a tester](https://play.google.com/apps/testing/dev.dhhyi).
 
+<!-- markdownlint-disable-next-line no-inline-html -->
+<p style="text-align: center;"><img src="./qr-code-testing.png" alt="QR Code for testing the Android App" style="width: 200px;"></p>
+
 Data is stored in your browser's local storage and not shared with any server.
 The app has an export and import feature to backup and restore your data wherever you like.
 Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
