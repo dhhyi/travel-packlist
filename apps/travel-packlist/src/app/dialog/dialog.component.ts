@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,7 +9,6 @@ import { noop } from 'rxjs';
 
 @Component({
   selector: 'app-dialog',
-  imports: [NgClass],
   templateUrl: './dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

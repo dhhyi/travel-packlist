@@ -1,4 +1,3 @@
-import { NgClass } from '@angular/common';
 import {
   Component,
   inject,
@@ -26,7 +25,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     EditorRuleComponent,
     ToolbarComponent,
     IconSwapComponent,
-    NgClass,
     RouterLink,
   ],
   templateUrl: './rules.component.html',
