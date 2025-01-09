@@ -96,6 +96,17 @@ const rules = (tsconfig, options) => {
                 message: 'Do not use takeUntilDestroyed, use signals instead.',
                 name: '@angular/core/rxjs-interop',
               },
+              {
+                importNames: ['NgClass'],
+                message:
+                  'Do not use ngClass, use [class] with object of single keys or [class.clazz] instead.',
+                name: '@angular/common',
+              },
+              {
+                importNames: ['NgStyle'],
+                message: 'Do not use ngStyle, use [style] instead.',
+                name: '@angular/common',
+              },
             ],
             patterns: [
               {
