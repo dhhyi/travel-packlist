@@ -14,7 +14,8 @@
     "build": {
       "executor": "@travel-packlist/webapp-plugin:assemble",
       "dependsOn": [
-        "travel-packlist:build-required"
+        "travel-packlist:build-required",
+        "travel-packlist:extract-i18n"
       ],
       "defaultConfiguration": "production",
       "configurations": {
