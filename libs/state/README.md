@@ -1,65 +1,67 @@
 # State Management
 
-The State Management in this application is a self-brew solution providing a flat state object whose properties can be accessed and modified either by using signals or by accessor functions.
+The State Management in this application is a self-brew solution providing a flat state object whose properties can be accessed and modified using signals.
+The state is build by a [`StateBuilder`](./src/lib/state-builder.ts) class that combines all state slices into a single state object.
 
-## State Slices
+## Read/Write State Slices
 
-| Class           | Storage          | Trigger                               |
-| --------------- | ---------------- | ------------------------------------- |
-| PersistentState | localStorage     | On every state change                 |
-| SessionState    | sessionStorage   | On every state change                 |
-| RouterState     | URL query params | Synchronized with URL                 |
-| TransientState  | None             | On every state change                 |
-| DerivedState    | None             | On every change of dependent property |
-| GlobalState     | None             |                                       |
+| Constructors      | Storage          | Trigger               |
+| ----------------- | ---------------- | --------------------- |
+| localStorageState | localStorage     | On every state change |
+| sessionState      | sessionStorage   | On every state change |
+| routerState       | URL query params | Synchronized with URL |
+| transientState    | None             | On every state change |
 
-## API
+## Derived State Slices
 
-| Class           | get | set         | signal         |
-| --------------- | --- | ----------- | -------------- |
-| PersistentState | yes | yes         | WritableSignal |
-| SessionState    | yes | yes         | WritableSignal |
-| RouterState     | yes | yes         | WritableSignal |
-| TransientState  | yes | yes         | WritableSignal |
-| DerivedState    | yes | no          | Signal         |
-| GlobalState     | yes | (forwarded) | (forwarded)    |
+A number of state properties are derived from other state properties in [`GlobalState`](./src/lib/global-state.ts).
+These properties are read-only and are computed on every dependent signal change.
 
-## Information
+## Classes
 
-### [`PersistentState`](./src/lib/persistent-state.ts)
+### [`read-write/localstorage-state`](./src/lib/read-write/localstorage-state.ts)
 
-The `PersistentState` class is a singleton class that persists a slice of the state to the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+The `localStorageState` function persists a slice of the state to the [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 The state is hydrated from the local storage on application start and is persisted to the local storage on every state change.
 
-### [`SessionState`](./src/lib/session-state.ts)
+### [`read-write/session-state`](./src/lib/read-write/session-state.ts)
 
-The `SessionState` class is a singleton class that holds the session state of the application which is also persisted to the [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
+The `sessionState` function holds the session state of the application which is also persisted to the [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage).
 The state is hydrated from the session storage on application start and is persisted on every state change.
 
-### [`RouterState`](./src/lib/router-state.ts)
+### [`read-write/router-state`](./src/lib/read-write/router-state.ts)
 
-The `RouterState` class is a singleton class that holds a slice of the state as routing query parameters.
+The `routerState` function holds a slice of the state as routing query parameters.
 The state is synchronized with the current URL query parameters.
 
-### [`TransientState`](./src/lib/transient-state.ts)
+### [`read-write/transient-state`](./src/lib/read-write/transient-state.ts)
 
-The `TransientState` class is a singleton class that holds transient state that is not persisted but exists only in memory.
+The `transientState` function holds transient state that is not persisted and exists only in memory.
 
-### [`DerivedState`](./src/lib/derived-state.ts)
+### [`readonly/browser-state`](./src/lib/readonly/browser-state.ts)
 
-The `DerivedState` class is a singleton class that holds derived fields from other state slices.
-The derived fields are computed on every state change and are neither persisted nor editable.
+This function constructs derived state properties with browser specific information.
 
-### [`GlobalState`](./src/lib/global-state.ts)
+### [`readonly/rule-parsing`](./src/lib/readonly/rule-parsing.ts)
 
-The `GlobalState` class is a singleton class that combines all state slices into a single state object.
-All artifacts using state management should use the `GlobalState` class to access and modify the state.
-This is also enforced by an eslint rule.
+This function constructs derived state properties concerned with parsing the rules.
+
+### [`readonly/rule-analysis`](./src/lib/readonly/rule-analysis.ts)
+
+This function constructs derived state properties concerned with analyzing the rules and extracting information from them.
+
+### [`GLOBAL_STATE`](./src/lib/global-state.ts)
+
+The `GLOBAL_STATE` injection key that combines all state slices into a single state object.
+All artifacts using state management should inject this token to access and modify the state via its signals.
+
+### [`StateBuilder`](./src/lib/state-builder.ts)
+
+The `StateBuilder` class is used to construct the state object from the state slices.
 
 ## Extending the State
 
 If a new state property is required it should be added to the state slice where it should be persisted.
-Add the initial value and the type to the `initialState` object in the respective state slice.
+Add the initial value and the type to the `initialState` object in the respective read-write state slices and add a mapping in the state creator function.
 
-If the property is derived from other properties it has to be added to the `DerivedState` instead.
-Add the property and type to the state type and provide a computed signal in the initializer method.
+If the property is derived from other properties it has to be added to one of the derived state slices in the `readonly` folder.

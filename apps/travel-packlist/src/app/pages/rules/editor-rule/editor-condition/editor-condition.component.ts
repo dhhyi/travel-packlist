@@ -19,7 +19,7 @@ import {
   PleaseSelect,
   Variable,
 } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 export const NOT = 'NOT';
 export const AND = 'AND';
@@ -50,13 +50,12 @@ export class EditorConditionComponent {
   });
   readonly selectTemplate = viewChild.required('select', { read: TemplateRef });
 
-  private state = inject(GlobalState);
-  private activeAnswers = this.state.signal('activeAnswers');
-  private mode = this.state.signal('rulesMode');
+  private state = inject(GLOBAL_STATE);
+  private activeAnswers = this.state.active.answers;
+  private mode = this.state.router.rulesMode;
 
   readonly highlighVariable = computed(
-    () =>
-      this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
+    () => this.mode() !== 'edit' && this.state.config.highlightVariableStatus(),
   );
 
   readonly serializedCondition = computed(() => this.condition().toString());

@@ -1,16 +1,12 @@
-import { inject } from '@angular/core';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
-import { GlobalState } from '@travel-packlist/state';
 
 import { RulesShare } from './rules-share.interface';
 
 export class AndroidRulesShare extends RulesShare {
-  private state = inject(GlobalState);
-
   async exportRules() {
-    const path = this.state.get('exportFileName');
-    const rules = this.state.get('rules');
+    const path = this.exportFileName();
+    const rules = this.state.rules.raw();
     if (!rules) {
       console.error('No rules available');
       return;

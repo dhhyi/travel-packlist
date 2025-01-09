@@ -2,32 +2,28 @@ import { DOCUMENT } from '@angular/common';
 import { effect, inject, Injectable, isDevMode } from '@angular/core';
 import {
   FontSizes,
-  GlobalState,
+  GLOBAL_STATE,
   SupportedLanguage,
   Themes,
 } from '@travel-packlist/state';
 
 @Injectable({ providedIn: 'root' })
 export class AppInit {
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
   private document = inject(DOCUMENT);
 
   init() {
-    const theme = this.state.signal('theme');
     effect(() => {
-      this.applyTheme(theme());
+      this.applyTheme(this.state.config.theme());
     });
-    const preferredLanguage = this.state.signal('preferredLanguage');
     effect(() => {
-      this.applyLanguage(preferredLanguage());
+      this.applyLanguage(this.state.config.preferredLanguage());
     });
-    const fontSize = this.state.signal('fontSize');
     effect(() => {
-      this.applyFontSize(fontSize());
+      this.applyFontSize(this.state.config.fontSize());
     });
-    const accessibility = this.state.signal('accessibility');
     effect(() => {
-      this.applyAccessibilityClass(accessibility());
+      this.applyAccessibilityClass(this.state.config.accessibility());
     });
   }
 

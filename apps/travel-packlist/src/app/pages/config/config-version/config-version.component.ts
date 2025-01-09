@@ -5,7 +5,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,7 +15,7 @@ import { GlobalState } from '@travel-packlist/state';
   imports: [DatePipe],
 })
 export class ConfigVersionComponent {
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
 
   displayServiceWorkerStatus = !ANDROID;
   displayVersionCode = ANDROID;
@@ -29,7 +29,7 @@ export class ConfigVersionComponent {
   readonly gitHashLabel = $localize`Current git hash starts with ${this.gitHash.substring(0, 8)}:GIT_HASH:`;
 
   readonly serviceWorkerStatus = computed((): string => {
-    switch (this.state.signal('serviceWorkerStatus')()) {
+    switch (this.state.serviceWorker.status()) {
       case 'disabled':
         return $localize`disabled`;
       case 'error':

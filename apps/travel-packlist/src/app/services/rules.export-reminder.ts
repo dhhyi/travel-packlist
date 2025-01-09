@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter, identity, interval, map, switchMap, tap } from 'rxjs';
 
 import { confirm } from '../dialog';
@@ -8,9 +8,9 @@ import { confirm } from '../dialog';
 @Injectable({ providedIn: 'root' })
 export class RulesExportReminder {
   private router = inject(Router);
-  private state = inject(GlobalState);
-  private exportNeeded = this.state.signal('exportNeeded');
-  private reminderActive = this.state.signal('exportReminder');
+  private state = inject(GLOBAL_STATE);
+  private exportNeeded = this.state.rules.exportNeeded;
+  private reminderActive = this.state.config.exportReminder;
   private lastAskedHash: string[] = [];
 
   init() {
@@ -23,7 +23,7 @@ export class RulesExportReminder {
             this.exportOverdue() &&
             this.enoughTimeSinceLastEditPassed(),
         ),
-        map(() => this.state.get('rulesHash')),
+        map(() => this.state.rules.hash()),
         filter((currentHash) => !this.lastAskedHash.includes(currentHash)),
         tap((currentHash) => {
           this.lastAskedHash.push(currentHash);
@@ -41,13 +41,13 @@ export class RulesExportReminder {
   }
 
   private exportOverdue() {
-    const lastExportDate = this.state.get('lastExportDate');
+    const lastExportDate = this.state.export.lastDate();
     const now = new Date().getTime();
     return now - lastExportDate > minutesInMilliseconds(10);
   }
 
   private enoughTimeSinceLastEditPassed() {
-    const lastRulesAction = this.state.get('lastRulesAction');
+    const lastRulesAction = this.state.rules.lastAction();
     const now = new Date().getTime();
     return now - lastRulesAction > minutesInMilliseconds(2);
   }

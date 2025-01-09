@@ -10,7 +10,7 @@ import {
   IconArrowUpwardComponent,
   IconCogComponent,
 } from '@travel-packlist/icons';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { DialogComponent } from './dialog/dialog.component';
 
@@ -31,11 +31,11 @@ import { DialogComponent } from './dialog/dialog.component';
   `,
 })
 export class AppComponent {
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
   readonly overlayVisible = signal<boolean>(false);
 
   readonly scrollTopVisible = computed(
-    () => this.state.signal('scrollY')() > 100,
+    () => this.state.browser.scrollY() > 100,
   );
 
   scrollTop() {

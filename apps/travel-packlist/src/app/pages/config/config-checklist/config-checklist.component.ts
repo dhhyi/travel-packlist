@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ComponentsModule } from '@travel-packlist/components';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { confirm } from '../../../dialog';
 import { ConfigFacade } from '../config.facade';
@@ -16,11 +16,11 @@ import { ConfigFacade } from '../config.facade';
 })
 export class ConfigChecklistComponent {
   private router = inject(Router);
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
   private facade = inject(ConfigFacade);
 
-  trackWeight = this.state.signal('trackWeight');
-  categorySorting = this.state.signal('categorySorting');
+  trackWeight = this.state.config.trackWeight;
+  categorySorting = this.state.config.categorySorting;
 
   async resetChecklist() {
     if (

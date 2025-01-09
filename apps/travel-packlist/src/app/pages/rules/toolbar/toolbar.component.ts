@@ -19,7 +19,7 @@ import {
   IconSwapComponent,
   IconViewComponent,
 } from '@travel-packlist/icons';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { RulesClipboard } from '../rules.clipboard';
 import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component';
@@ -45,12 +45,12 @@ export class ToolbarComponent {
 
   readonly noOfVisibleRules = input.required<number>();
 
-  private state = inject(GlobalState);
-  mode = this.state.signal('rulesMode');
-  searchTerm = this.state.signal('filterRulesQuery');
+  private state = inject(GLOBAL_STATE);
+  mode = this.state.router.rulesMode;
+  searchTerm = this.state.router.filterRulesQuery;
   clipboard = inject(RulesClipboard);
 
-  readonly sticky = computed(() => this.state.signal('scrollY')() > 48);
+  readonly sticky = computed(() => this.state.browser.scrollY() > 48);
 
   readonly searchInput =
     viewChild.required<ElementRef<HTMLInputElement>>('searchInput');

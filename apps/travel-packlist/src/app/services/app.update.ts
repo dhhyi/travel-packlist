@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { SwUpdate, UnrecoverableStateEvent } from '@angular/service-worker';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 import { tap, filter, interval, switchMap, identity, merge } from 'rxjs';
 
 import { confirm } from '../dialog';
@@ -8,7 +8,7 @@ import { confirm } from '../dialog';
 @Injectable({ providedIn: 'root' })
 export class AppUpdate {
   private swUpdate = inject(SwUpdate);
-  private status = inject(GlobalState).signal('serviceWorkerStatus');
+  private status = inject(GLOBAL_STATE).serviceWorker.status;
 
   init() {
     merge(this.swUpdate.versionUpdates, this.swUpdate.unrecoverable)

@@ -1,18 +1,13 @@
-import { inject } from '@angular/core';
-import { GlobalState } from '@travel-packlist/state';
-
 import { RulesShare } from './rules-share.interface';
 
 export class WebRulesShare extends RulesShare {
-  private state = inject(GlobalState);
-
   private async webShareRules() {
-    const rules = this.state.get('rules');
+    const rules = this.state.rules.raw();
     if (!rules) {
       console.error('No rules available');
       return;
     }
-    const fileName = this.state.get('exportFileName');
+    const fileName = this.exportFileName();
     await navigator.share({
       title: fileName,
       files: [
@@ -24,7 +19,7 @@ export class WebRulesShare extends RulesShare {
   }
 
   private downloadRules() {
-    const rules = this.state.get('rules');
+    const rules = this.state.rules.raw();
     if (!rules) {
       console.error('No rules available');
       return;
@@ -33,12 +28,12 @@ export class WebRulesShare extends RulesShare {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = this.state.get('exportFileName');
+    a.download = this.exportFileName();
     a.click();
   }
 
   async exportRules(): Promise<void> {
-    if (this.state.get('isMobile') && 'share' in navigator) {
+    if (this.state.browser.isMobile() && 'share' in navigator) {
       await this.webShareRules();
     } else {
       this.downloadRules();

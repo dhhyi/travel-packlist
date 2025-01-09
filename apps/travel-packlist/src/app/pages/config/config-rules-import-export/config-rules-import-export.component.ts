@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComponentsModule } from '@travel-packlist/components';
 import { IconDownloadComponent } from '@travel-packlist/icons';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { ConfigFacade } from '../config.facade';
 
@@ -28,10 +28,10 @@ import { ConfigFacade } from '../config.facade';
 export class ConfigRulesImportExportComponent {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
 
-  exportReminder = this.state.signal('exportReminder');
-  exportNeeded = this.state.signal('exportNeeded');
+  exportReminder = this.state.config.exportReminder;
+  exportNeeded = this.state.rules.exportNeeded;
   private facade = inject(ConfigFacade);
   readonly highlightExport: Signal<boolean>;
   private readonly exportButton =

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { GlobalState } from '@travel-packlist/state';
+import { RESET_SWITCH } from '@travel-packlist/state';
 
 import { confirm } from '../../../dialog';
 
@@ -13,7 +13,7 @@ import { confirm } from '../../../dialog';
 export class ConfigDangerzoneComponent {
   private router = inject(Router);
 
-  private state = inject(GlobalState);
+  private reset = inject(RESET_SWITCH);
 
   async resetEverything() {
     if (
@@ -21,7 +21,7 @@ export class ConfigDangerzoneComponent {
         $localize`Are you sure you want to reset the whole application?`,
       )
     ) {
-      this.state.reset();
+      this.reset();
       await this.router.navigate(['/packlist']);
     }
   }

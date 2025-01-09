@@ -1,14 +1,14 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { Parser, Item, Question } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Injectable({ providedIn: 'root' })
 export class RulesClipboard {
   private parser = inject(Parser);
 
-  private state = inject(GlobalState);
-  private questions = this.state.signal('clipboardQuestions');
-  private items = this.state.signal('clipboardItems');
+  private state = inject(GLOBAL_STATE);
+  private questions = this.state.clipboard.questions;
+  private items = this.state.clipboard.items;
 
   readonly itemsCount = computed(() => this.items().length);
   readonly questionsCount = computed(() => this.questions().length);

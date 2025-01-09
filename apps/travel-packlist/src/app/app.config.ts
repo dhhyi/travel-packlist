@@ -16,7 +16,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
 import { provideRulesDocumentation } from '@travel-packlist/rules-documentation';
 import { provideRulesTemplate } from '@travel-packlist/rules-template';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { routes } from './pages/app.routes';
 import { AppInit } from './services/app.init';
@@ -29,7 +29,7 @@ import { RulesExportReminder } from './services/rules.export-reminder';
 function initParserConfig(injector: Injector): ParserConfig {
   return {
     isTrackWeight: () => {
-      return injector.get(GlobalState).get('trackWeight');
+      return injector.get(GLOBAL_STATE).config.trackWeight();
     },
   };
 }

@@ -1,0 +1,113 @@
+import { effect, Signal, signal, WritableSignal } from '@angular/core';
+import { VariableType } from '@travel-packlist/model';
+
+import { loadState, saveState } from './storage-util';
+
+export const supportedLanguages = ['en', 'de'] as const;
+export type SupportedLanguage = (typeof supportedLanguages)[number];
+
+const initialState = {
+  rules: undefined as string | undefined,
+  answers: {} as Record<string, VariableType>,
+  checkedItems: [] as string[],
+  collapsedCategories: [] as string[],
+  categorySorting: 'alphabetically' as 'alphabetically' | 'definition',
+  trackWeight: false,
+  answersLocked: false,
+  fadeOutDisabledRules: false,
+  highlightVariableStatus: false,
+  refactorVariables: true,
+  theme: 'system' as 'system' | 'light' | 'dark',
+  fontSize: 'normal' as 'small' | 'normal' | 'large',
+  accessibility: 'accessible' as 'accessible' | 'compact',
+  language: 'auto' as 'auto' | SupportedLanguage,
+  exportReminder: false,
+  lastExportHash: '',
+  lastExportDate: 0,
+};
+
+export type State = typeof initialState;
+
+export type Themes = State['theme'];
+export type FontSizes = State['fontSize'];
+
+const state = loadState(localStorage, initialState);
+
+function persist() {
+  saveState(localStorage, state, initialState);
+}
+
+const createSignal = function <K extends keyof State>(
+  this: { triggerReset: Signal<boolean> },
+  key: K,
+) {
+  const newSignal = signal(state[key]);
+  effect(
+    () => {
+      const newValue = newSignal();
+      if (newValue !== state[key]) {
+        (state[key] as unknown) = newValue;
+        persist();
+      }
+    },
+    { manualCleanup: true },
+  );
+  effect(() => {
+    if (this.triggerReset()) {
+      newSignal.set(initialState[key]);
+    }
+  });
+  return newSignal;
+};
+
+export type LocalStorageState = ReturnType<typeof localStorageState>;
+
+export const localStorageState = (triggerReset: Signal<boolean>) => {
+  const create = createSignal.bind({ triggerReset }) as <K extends keyof State>(
+    key: K,
+  ) => WritableSignal<State[K]>;
+  return {
+    rules: {
+      /** storage: raw rules (use rulesOrTemplate for a non-nullish value) */
+      raw: create('rules'),
+    },
+    packlist: {
+      /** storage: the answers from checked questions in the packlist */
+      answers: create('answers'),
+      /** storage: the checked items in the packlist */
+      checkedItems: create('checkedItems'),
+      /** storage: the categories that are collapsed in the packlist */
+      collapsedCategories: create('collapsedCategories'),
+      /** storage: whether to lock the answers in the packlist */
+      answersLocked: create('answersLocked'),
+    },
+    config: {
+      /** storage: how to sort categories in the packlist */
+      categorySorting: create('categorySorting'),
+      /** storage: whether to track weight of items in the packlist */
+      trackWeight: create('trackWeight'),
+      /** storage: whether to fade out disabled rules in the editor */
+      fadeOutDisabledRules: create('fadeOutDisabledRules'),
+      /** storage: whether to highlight the status of variables in the editor */
+      highlightVariableStatus: create('highlightVariableStatus'),
+      /** storage: whether to rename all variables when renaming one in editor */
+      refactorVariables: create('refactorVariables'),
+      /** storage: the theme of the app */
+      theme: create('theme'),
+      /** storage: the font size of the app */
+      fontSize: create('fontSize'),
+      /** storage: the accessibility mode of the app */
+      accessibility: create('accessibility'),
+      /** storage: the language of the app */
+      language: create('language'),
+      /** storage: whether to remind the user to export the rules */
+      exportReminder: create('exportReminder'),
+    },
+    export: {
+      /** storage: the hash of the last exported rules */
+      lastHash: create('lastExportHash'),
+      /** storage: the date of the last export */
+      lastDate: create('lastExportDate'),
+    },
+  };
+};

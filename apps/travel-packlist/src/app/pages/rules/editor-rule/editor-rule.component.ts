@@ -21,7 +21,7 @@ import {
   Question,
   Rule,
 } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { RulesClipboard } from '../rules.clipboard';
 import { EditorConditionComponent } from './editor-condition/editor-condition.component';
@@ -51,11 +51,11 @@ export class EditorRuleComponent {
   readonly deleteRule = output();
   readonly renameVariable = output<[string, string]>();
 
-  private state = inject(GlobalState);
-  mode = this.state.signal('rulesMode');
+  private state = inject(GLOBAL_STATE);
+  mode = this.state.router.rulesMode;
   readonly selectVariables = computed(() => {
     const ruleVariables = this.rule().questions.map((q) => q.variable);
-    const allVariables = this.state.get('variables');
+    const allVariables = this.state.rules.variables();
     return allVariables.filter((v) => !ruleVariables.includes(v));
   });
 

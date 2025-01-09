@@ -7,7 +7,7 @@ import {
   output,
   viewChild,
 } from '@angular/core';
-import { GlobalState, RuleModes } from '@travel-packlist/state';
+import { GLOBAL_STATE, RuleModes } from '@travel-packlist/state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,8 +15,8 @@ import { GlobalState, RuleModes } from '@travel-packlist/state';
   templateUrl: './toolbar-button.component.html',
 })
 export class ToolbarButtonComponent {
-  private state = inject(GlobalState);
-  readonly mode = this.state.signal('rulesMode');
+  private state = inject(GLOBAL_STATE);
+  readonly mode = this.state.router.rulesMode;
 
   readonly type = input.required<RuleModes>();
   readonly label = input.required<string>();

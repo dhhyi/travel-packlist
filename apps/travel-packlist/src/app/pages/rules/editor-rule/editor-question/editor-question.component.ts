@@ -18,7 +18,7 @@ import {
 } from '@angular/forms';
 import { IconArrowForwardComponent } from '@travel-packlist/icons';
 import { SyntaxError, Parser, Always, Question } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 import {
   filter,
   iif,
@@ -47,18 +47,17 @@ export class EditorQuestionComponent {
 
   private parser = inject(Parser);
 
-  private state = inject(GlobalState);
-  private variables = this.state.signal('variables');
-  mode = this.state.signal('rulesMode');
+  private state = inject(GLOBAL_STATE);
+  private variables = this.state.rules.variables;
+  mode = this.state.router.rulesMode;
 
   readonly highlighVariable = computed(
-    () =>
-      this.mode() !== 'edit' && this.state.signal('highlightVariableStatus')(),
+    () => this.mode() !== 'edit' && this.state.config.highlightVariableStatus(),
   );
   readonly variableActive = computed(
-    () => this.state.signal('activeAnswers')()[this.question().variable],
+    () => this.state.active.answers()[this.question().variable],
   );
-  private refactorVariables = this.state.signal('refactorVariables');
+  private refactorVariables = this.state.config.refactorVariables;
 
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();

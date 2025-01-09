@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ComponentsModule } from '@travel-packlist/components';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -12,8 +12,8 @@ import { GlobalState } from '@travel-packlist/state';
   imports: [ComponentsModule, FormsModule, RouterLink],
 })
 export class ConfigRulesEditorComponent {
-  private state = inject(GlobalState);
-  fadeOutDisabledRules = this.state.signal('fadeOutDisabledRules');
-  highlightVariableStatus = this.state.signal('highlightVariableStatus');
-  refactorVariables = this.state.signal('refactorVariables');
+  private state = inject(GLOBAL_STATE);
+  fadeOutDisabledRules = this.state.config.fadeOutDisabledRules;
+  highlightVariableStatus = this.state.config.highlightVariableStatus;
+  refactorVariables = this.state.config.refactorVariables;
 }

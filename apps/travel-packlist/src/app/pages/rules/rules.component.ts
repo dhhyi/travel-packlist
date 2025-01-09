@@ -13,7 +13,7 @@ import {
   serializeRules,
   Rule,
 } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -32,12 +32,12 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 export default class RulesComponent {
   private refactor = inject(Refactor);
 
-  private state = inject(GlobalState);
-  private parsedRules = this.state.signal('parsedRules');
-  private activeRules = this.state.signal('activeRules');
-  mode = this.state.signal('rulesMode');
-  accessibility = this.state.signal('accessibility');
-  filter = this.state.signal('filterRulesQuery');
+  private state = inject(GLOBAL_STATE);
+  private parsedRules = this.state.rules.parsed;
+  private activeRules = this.state.active.rules;
+  mode = this.state.router.rulesMode;
+  accessibility = this.state.config.accessibility;
+  filter = this.state.router.filterRulesQuery;
   readonly highlightRule = signal<number | undefined>(undefined);
 
   readonly visibleRules = computed(() => {
@@ -54,7 +54,7 @@ export default class RulesComponent {
   });
 
   readonly goToPacklistButtonVisible = computed(
-    () => this.state.signal('scrollY')() > 100,
+    () => this.state.browser.scrollY() > 100,
   );
 
   ruleLabel(index: number) {
@@ -63,7 +63,7 @@ export default class RulesComponent {
 
   private updateRules(rules: Rule[]) {
     const serializedRules = serializeRules(rules);
-    this.state.set('rules', serializedRules);
+    this.state.rules.raw.set(serializedRules);
   }
 
   updateRule(index: number, rule: Rule) {
@@ -126,7 +126,7 @@ export default class RulesComponent {
 
   showAsDisabled(rule: Rule): boolean {
     return (
-      this.state.get('fadeOutDisabledRules') &&
+      this.state.config.fadeOutDisabledRules() &&
       !this.activeRules().includes(rule)
     );
   }

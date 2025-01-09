@@ -1,21 +1,33 @@
-import { inject, Injectable } from '@angular/core';
-import { GlobalState } from '@travel-packlist/state';
+import { computed, inject, Injectable } from '@angular/core';
+import { Refactor } from '@travel-packlist/model';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { confirm } from '../../dialog';
 import { RulesShare } from '../../services/rules-share/rules-share.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigFacade {
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
   private rulesShare = inject(RulesShare);
+  private refactor = inject(Refactor);
+
+  private readonly percentageOfItemsWithWeights = computed(() => {
+    if (!this.state.rules.parserError()) {
+      const { items, weights } = this.refactor.countItemsAndWeights(
+        this.state.rules.parsed(),
+      );
+      return weights / items;
+    }
+    return 0;
+  });
 
   private resetHash() {
-    this.state.set('lastExportHash', this.state.get('rulesHash'));
-    this.state.set('lastExportDate', new Date().getTime());
+    this.state.export.lastHash.set(this.state.rules.hash());
+    this.state.export.lastDate.set(new Date().getTime());
   }
 
   isExportAvailable(): boolean {
-    return !!this.state.get('rules');
+    return !!this.state.rules.raw();
   }
 
   async exportRules() {
@@ -25,7 +37,7 @@ export class ConfigFacade {
 
   async importRules() {
     if (
-      this.state.get('exportNeeded') &&
+      this.state.rules.exportNeeded() &&
       !(await confirm(
         $localize`You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?`,
       ))
@@ -47,7 +59,7 @@ export class ConfigFacade {
           return;
         }
         const text = await file.text();
-        this.state.set('rules', text);
+        this.state.rules.raw.set(text);
         this.resetHash();
 
         setTimeout(() => {
@@ -63,23 +75,23 @@ export class ConfigFacade {
 
   private async promptEnableWeightTracking() {
     if (
-      this.state.get('percentageOfItemsWithWeights') > 0.1 &&
-      !this.state.get('trackWeight')
+      !this.state.config.trackWeight() &&
+      this.percentageOfItemsWithWeights() > 0.1
     ) {
       if (
         await confirm(
           $localize`It seems that the imported rules contain items with weights. Shall we enable the weight tracking?`,
         )
       ) {
-        this.state.set('trackWeight', true);
+        this.state.config.trackWeight.set(true);
       }
     }
   }
 
   resetChecklist() {
-    this.state.set('answers', {});
-    this.state.set('checkedItems', []);
-    this.state.set('collapsedCategories', []);
-    this.state.set('answersLocked', false);
+    this.state.packlist.answers.set({});
+    this.state.packlist.checkedItems.set([]);
+    this.state.packlist.collapsedCategories.set([]);
+    this.state.packlist.answersLocked.set(false);
   }
 }

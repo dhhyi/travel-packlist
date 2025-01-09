@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, Signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { Item, Question, serializeWeight } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 function serialize(item: Item): string {
   return `${item.category}-${item.name}`;
@@ -19,21 +19,19 @@ interface CategoryView {
 @Injectable({ providedIn: 'root' })
 export class PacklistFacade {
   private router = inject(Router);
-  private state = inject(GlobalState);
+  private state = inject(GLOBAL_STATE);
 
-  readonly numberOfItems = computed(
-    () => this.state.signal('activeItems')().length,
-  );
+  readonly numberOfItems = computed(() => this.state.active.items().length);
 
-  readonly checkedItems = this.state.signal('checkedItems');
-  private collapsedCategories = this.state.signal('collapsedCategories');
+  readonly checkedItems = this.state.packlist.checkedItems;
+  private collapsedCategories = this.state.packlist.collapsedCategories;
 
   isItemChecked(item: Item): boolean {
     return this.checkedItems().includes(serialize(item));
   }
 
   readonly numberOfCheckedItems = computed(() => {
-    const activeItems = this.state.signal('activeItems')().map(serialize);
+    const activeItems = this.state.active.items().map(serialize);
     return this.checkedItems().filter((item) => activeItems.includes(item))
       .length;
   });
@@ -64,14 +62,14 @@ export class PacklistFacade {
   private readonly categoriesOrderBy: Signal<
     (left: string, right: string) => number
   > = computed(() => {
-    const sorting = this.state.signal('categorySorting')();
+    const sorting = this.state.config.categorySorting();
     return sorting === 'definition'
       ? () => 0
       : (left, right) => left.localeCompare(right);
   });
 
   readonly packlist = computed(() => {
-    const items = this.state.signal('activeItems')();
+    const items = this.state.active.items();
     const checkedItems = this.checkedItems();
     const unorderedCategories = items.reduce<Record<string, CategoryView>>(
       (groups, item) => {
@@ -115,13 +113,13 @@ export class PacklistFacade {
   );
 
   readonly rulesAvailable = computed(
-    () => this.state.signal('numberOfRules')() > 0,
+    () => this.state.rules.parsed().length > 0,
   );
 
-  readonly isAnswersLockActive = this.state.signal('answersLocked');
+  readonly isAnswersLockActive = this.state.packlist.answersLocked;
 
-  private model = this.state.signal('answers');
-  private activeQuestions = this.state.signal('activeQuestions');
+  private model = this.state.packlist.answers;
+  private activeQuestions = this.state.active.questions;
 
   readonly questions = computed(() =>
     this.activeQuestions().filter(
@@ -150,11 +148,11 @@ export class PacklistFacade {
     this.isAnswersLockActive.update((lock) => !lock);
   }
 
-  trackWeight = this.state.signal('trackWeight');
+  trackWeight = this.state.config.trackWeight;
 
   goToRulesEdit() {
     void this.router.navigate(['/rules']).then(() => {
-      this.state.set('rulesMode', 'edit');
+      this.state.router.rulesMode.set('edit');
     });
   }
 

@@ -20,7 +20,7 @@ import {
   Item,
   serializeWeight,
 } from '@travel-packlist/model';
-import { GlobalState } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter } from 'rxjs';
 
 import { alert, prompt } from '../../../../dialog';
@@ -34,9 +34,9 @@ import { alert, prompt } from '../../../../dialog';
 export class EditorItemComponent {
   readonly item = input.required<Item>();
 
-  private state = inject(GlobalState);
-  mode = this.state.signal('rulesMode');
-  categories = this.state.signal('categories');
+  private state = inject(GLOBAL_STATE);
+  mode = this.state.router.rulesMode;
+  categories = this.state.rules.categories;
 
   readonly itemChanged = output<Item>();
 
