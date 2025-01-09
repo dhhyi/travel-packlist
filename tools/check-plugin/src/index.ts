@@ -35,6 +35,7 @@ function createNodesInternal(configFilePath: string, options?: object) {
               ...options,
               pattern: `${projectRoot}/*.md`,
             },
+            inputs: ['default', '{projectRoot}/*.md'],
           },
         },
       },
