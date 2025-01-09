@@ -142,8 +142,18 @@
           "{projectRoot}/**/*.scss"
         ]
       },
+      "defaultConfiguration": "pre-commit",
+      "configurations": {
+        "pre-commit": {
+          "fix": true
+        },
+        "ci": {
+          "fix": false
+        }
+      },
       "inputs": [
         "{projectRoot}/**/*.{css,scss}",
+        "{projectRoot}/.stylelintrc.json",
         "{workspaceRoot}/util/.stylelintrc.json"
       ],
       "cache": true
