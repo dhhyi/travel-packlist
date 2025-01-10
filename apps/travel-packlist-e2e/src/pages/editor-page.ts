@@ -57,7 +57,7 @@ export class EditorPage extends Banner {
                 .waitFor({ state: 'hidden' })
                 .then(() => resolve(true))
                 .catch(() => resolve(false)),
-            500,
+            100,
           );
         }),
       },
@@ -98,7 +98,7 @@ export class EditorPage extends Banner {
                   .waitFor({ state: 'hidden' })
                   .then(() => resolve(true))
                   .catch(() => resolve(false)),
-              500,
+              100,
             );
           }),
         };
@@ -136,7 +136,7 @@ export class EditorPage extends Banner {
                   .waitFor({ state: 'hidden' })
                   .then(() => resolve(true))
                   .catch(() => resolve(false)),
-              500,
+              100,
             );
           }),
         };

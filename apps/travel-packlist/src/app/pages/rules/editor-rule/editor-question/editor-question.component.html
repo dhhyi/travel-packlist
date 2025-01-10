@@ -30,7 +30,7 @@
       (focus)="focusVariable()"
     />
   </div>
-  @if (mode() === 'edit' && form.valid === false && form.touched) {
+  @if (mode() === 'edit' && form.valid === false && form.dirty) {
     <div class="text-red m-1 flex flex-col text-sm" role="alert">
       @if (form.controls.question.errors?.['pattern']; as pattern) {
         <span i18n

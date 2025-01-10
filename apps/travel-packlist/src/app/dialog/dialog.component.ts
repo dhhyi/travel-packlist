@@ -63,7 +63,7 @@ export function confirm(message: string): Promise<boolean> {
   DialogComponent.dialogMessage.set(message);
   setTimeout(() => {
     focusOkButton();
-  }, 100);
+  }, 0);
   showDialog();
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {
@@ -81,7 +81,7 @@ export function prompt(message: string, prefill = ''): Promise<string | null> {
   DialogComponent.dialogMessage.set(message);
   setTimeout(() => {
     focusPrompt(prefill);
-  }, 100);
+  }, 0);
   showDialog(true, true);
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set((value: string) => {
@@ -99,7 +99,7 @@ export function alert(message: string): Promise<void> {
   DialogComponent.dialogMessage.set(message);
   setTimeout(() => {
     focusOkButton();
-  }, 100);
+  }, 0);
   showDialog(false);
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {

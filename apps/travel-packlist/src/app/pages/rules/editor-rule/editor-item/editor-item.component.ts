@@ -21,7 +21,7 @@ import {
   serializeWeight,
 } from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
-import { debounceTime, filter } from 'rxjs';
+import { filter } from 'rxjs';
 
 import { alert, prompt } from '../../../../dialog';
 
@@ -57,10 +57,7 @@ export class EditorItemComponent {
     });
 
     const validFormUpdates = toSignal(
-      this.form.valueChanges.pipe(
-        debounceTime(500),
-        filter(() => this.form.valid),
-      ),
+      this.form.valueChanges.pipe(filter(() => this.form.valid)),
     );
 
     effect(() => {
@@ -148,7 +145,6 @@ export class EditorItemComponent {
         this.parser.validateItemNameAndWeight(value);
         return null;
       } catch (error) {
-        control.markAsTouched();
         if (error instanceof SyntaxError) {
           return { pattern: error.found };
         }

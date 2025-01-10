@@ -20,7 +20,6 @@ import { IconArrowForwardComponent } from '@travel-packlist/icons';
 import { SyntaxError, Parser, Always, Question } from '@travel-packlist/model';
 import { GlobalState } from '@travel-packlist/state';
 import {
-  debounceTime,
   filter,
   iif,
   map,
@@ -94,10 +93,7 @@ export class EditorQuestionComponent {
     });
 
     const validFormUpdates = toSignal(
-      this.form.valueChanges.pipe(
-        debounceTime(500),
-        filter(() => this.form.valid),
-      ),
+      this.form.valueChanges.pipe(filter(() => this.form.valid)),
     );
     effect(() => {
       const value = validFormUpdates();
@@ -160,7 +156,6 @@ export class EditorQuestionComponent {
         this.parser.validateVariableName(value);
         return null;
       } catch (error) {
-        control.markAsTouched();
         if (error instanceof SyntaxError) {
           return { pattern: error.found };
         }
@@ -176,7 +171,6 @@ export class EditorQuestionComponent {
         this.parser.validateQuestionString(value);
         return null;
       } catch (error) {
-        control.markAsTouched();
         if (error instanceof SyntaxError) {
           return { pattern: error.found };
         }
