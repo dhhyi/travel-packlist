@@ -22,8 +22,7 @@ test('config', async ({ page }) => {
     - checkbox "Rename all occurrences when renaming variables" [checked]
     - button "Documentation"
     - button "Edit Rules with Code"
-    - button "Export Rules"
-    - text: Current rules are not backed up!
+    - button "Export Rules" [disabled]
     - button "Import Rules"
     - checkbox "Remind me to regularly export rules"
     - heading "Appearance" [level=2]

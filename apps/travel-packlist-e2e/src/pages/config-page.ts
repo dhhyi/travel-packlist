@@ -38,4 +38,24 @@ export class ConfigPage extends Banner {
       name: 'Track item weight',
     });
   }
+
+  exportNeededAlert() {
+    return this.page
+      .getByRole('alert')
+      .and(this.page.getByLabel('Export needed', { exact: true }));
+  }
+
+  resetChecklistButton() {
+    return this.page.getByRole('button', {
+      name: 'Reset Checklist',
+      exact: true,
+    });
+  }
+
+  resetApplicationButton() {
+    return this.page.getByRole('button', {
+      name: 'Reset Application',
+      exact: true,
+    });
+  }
 }

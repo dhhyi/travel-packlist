@@ -2,6 +2,7 @@ import { type Page } from '@playwright/test';
 import { RuleModes } from '@travel-packlist/state';
 
 import { Banner } from './banner';
+import { ConfigPage } from './config-page';
 import { PacklistPage } from './packlist-page';
 
 export class EditorPage extends Banner {
@@ -36,7 +37,10 @@ export class EditorPage extends Banner {
   addRuleButton = this.page.getByRole('button', { name: 'add rule' });
 
   rule(num: number) {
-    const rule = this.page.getByRole('group', { name: `Rule #${num}` });
+    const rule = this.page.getByRole('group', {
+      name: `Rule #${num}`,
+      exact: true,
+    });
     return {
       get: rule,
       condition: {
@@ -155,5 +159,10 @@ export class EditorPage extends Banner {
   async toPacklistPage() {
     await this.banner().click();
     return new PacklistPage(this.page);
+  }
+
+  async toConfigPage() {
+    await this.configLink().click();
+    return new ConfigPage(this.page);
   }
 }

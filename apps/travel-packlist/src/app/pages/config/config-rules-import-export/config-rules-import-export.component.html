@@ -9,7 +9,14 @@
   Export Rules
 </button>
 @if (exportNeeded()) {
-  <div i18n class="text-red text-center italic">
+  <div
+    i18n
+    class="text-red text-center italic"
+    role="alert"
+    aria-live="polite"
+    aria-label="Export needed"
+    i18n-aria-label
+  >
     Current rules are not backed up!
   </div>
 }
