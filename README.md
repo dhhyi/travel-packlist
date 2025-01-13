@@ -21,11 +21,11 @@ This app is a tool for creating conditional checklists.
 I use it for creating a pack list for my travels, depending on the duration, the activities, the expected weather, etc.
 It should be flexible enough to be used for other purposes as well.
 
-Custom rules can be defined in a with either free text in a [specific grammar](./libs/rules-documentation/src/doc/documentation.md) or a graphical editor.
+Custom rules can be defined either with free text in a [specific grammar](./libs/rules-documentation/src/doc/documentation.md) or a graphical editor.
 
 Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app deployed on GitHub Pages.
 
-As it is a PWA, you can also install it on your home screen for an easy access.
+As it is a PWA, you can also install it on your home screen for easy access.
 There is also an Android App available in the Play Store, which is currently in testing and not yet publicly available.
 However, you can [become a tester](https://play.google.com/apps/testing/dev.dhhyi).
 
@@ -47,7 +47,7 @@ Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
 - [Feature FAQ](#feature-faq)
   - [Will there be support for complex logic with brackets in conditions?](#will-there-be-support-for-complex-logic-with-brackets-in-conditions)
   - [Can I customize the display order of the categories?](#can-i-customize-the-display-order-of-the-categories)
-  - [Will there be a Undo/Redo feature for editing rules?](#will-there-be-a-undoredo-feature-for-editing-rules)
+  - [Will there be an Undo/Redo feature for editing rules?](#will-there-be-an-undoredo-feature-for-editing-rules)
 - [More Documentation](#more-documentation)
 
 ## Technology
@@ -98,7 +98,7 @@ The design system can be previewed with `pnpm design` and is available at `http:
 
 ### Development with Devcontainer
 
-Provided, you have Docker installed, I recommend using VSCode with the included devcontainer for development.
+Provided you have Docker installed, I recommend using VSCode with the included devcontainer for development.
 Simply open the workspace in VSCode and (you probably will be prompted to) re-open the workspace in the devcontainer.
 This will set up a development environment with all necessary tools and extensions installed.
 
@@ -114,7 +114,7 @@ Yes, brackets would be a nice feature to have, but it will also complicate the d
 For users with complex logic, be aware that you can use the transitive disabling of rules to structure your logic.
 Questions always have a variable associated with them.
 Since questions are only displayed if a condition is met, the variable is transitively also only true if the condition is true.
-This means that most of the combinations i a complex condition are not possible due to the restriction of the variables themselves.
+This means that most of the combinations in a complex condition are not possible due to the restriction of the variables themselves.
 
 Imagine the following rule snippet:
 
@@ -127,7 +127,7 @@ With this structure, it is implicitly defined that `gloves` and `thermos` can on
 In other words, if `cold` is false, `gloves` and `thermos` are also false because the user will not see the questions associated with those variables.
 This is a simple way to structure your complex logic without the need for brackets.
 
-If that doesn't work for you I recommend converting the condition to [disjunctive normal form (DNF)](https://en.wikipedia.org/wiki/Disjunctive_normal_form) to make it flat.
+If that doesn't work for you, I recommend converting the condition to [disjunctive normal form (DNF)](https://en.wikipedia.org/wiki/Disjunctive_normal_form) to make it flat.
 This in turn makes the expression bigger and harder to read, but still implementable with the current restrictions.
 
 ### Can I customize the display order of the categories?
@@ -145,7 +145,7 @@ If you want to define a custom order for your categories, you can use a prefix i
 For example, you can use `1Shelter`, `2Clothing`, `3Hygiene`, etc.
 This way, you can define the order of the categories by the prefix and you don't have to reorder the rules all the time.
 
-### Will there be a Undo/Redo feature for editing rules?
+### Will there be an Undo/Redo feature for editing rules?
 
 > The rule editor is quite complex and it is easy to make mistakes.
 > Would it be possible to add an Undo/Redo feature?
