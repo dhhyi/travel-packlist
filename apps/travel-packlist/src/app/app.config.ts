@@ -7,6 +7,7 @@ import {
   // eslint-disable-next-line no-restricted-imports
   Injector,
 } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   provideRouter,
   withComponentInputBinding,
@@ -42,6 +43,7 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode() && !ANDROID,
       registrationStrategy: 'registerImmediately',
     }),
+    provideAnimationsAsync(),
     provideAppInitializer(() => {
       inject(AppInit).init();
     }),

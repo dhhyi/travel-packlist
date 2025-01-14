@@ -72,6 +72,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/animations": "^19.0.6",
     "@angular/common": "^19.0.6",
     "@angular/compiler": "^19.0.6",
     "@angular/compiler-cli": "^19.0.6",
@@ -102,7 +103,6 @@
     "typescript": "~5.6.3"
   },
   "devDependencies": {
-    "@angular/animations": "^19.0.6",
     "@cspell/cspell-types": "^8.17.1",
     "@cspell/dict-de-de": "^4.0.3",
     "@eslint/compat": "^1.2.5",

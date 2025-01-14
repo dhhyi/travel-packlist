@@ -1,6 +1,6 @@
 <progress
   class="w-full"
   aria-hidden="true"
-  [value]="value()"
+  [value]="currentCount$ | async"
   [max]="max()"
 ></progress>

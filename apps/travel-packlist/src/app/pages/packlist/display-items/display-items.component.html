@@ -4,59 +4,70 @@
   </div>
 }
 
-@for (category of facade.packlist(); track category.name) {
-  <div class="card mb-1" role="list" [attr.aria-label]="category.name">
+<div
+  class="contents"
+  [@animateCategory]="facade.packlist()"
+  [@.disabled]="animationsDisabled()"
+>
+  @for (category of facade.packlist(); track category.name) {
     <div
-      aria-hidden="true"
-      class="accessible-content flex items-center justify-between"
-      (click)="facade.toggleCategoryCollapse(category.name)"
+      class="card mb-1 overflow-hidden"
+      role="list"
+      [attr.aria-label]="category.name"
+      [@animateItems]="category"
     >
-      <div class="flex items-center gap-1">
-        @if (category.collapsed) {
-          <app-icon-key-right class="h-6 w-6" />
-        } @else {
-          <app-icon-key-down class="h-6 w-6" />
-        }
-        <span class="font-bold italic">{{ category.name }}</span>
-        @if (facade.trackWeight() && category.totalWeight) {
-          <span class="text-sm">
-            @if (category.checkedWeight === category.totalWeight) {
-              ({{ serializeWeight(category.checkedWeight, undefined, 1) }})
-            } @else {
-              ({{
-                serializeWeightPartition(
-                  category.checkedWeight,
-                  category.totalWeight
-                )
-              }})
-            }
-          </span>
-        }
-      </div>
-      <app-items-status
-        [count]="category.checked"
-        [total]="category.items.length"
-      />
-    </div>
-    @if (!category.collapsed) {
-      @for (item of category.items; track $index) {
-        <div role="listitem">
-          <div
-            role="checkbox"
-            tabindex="0"
-            class="flex items-center justify-between"
-            [attr.aria-checked]="item.checked"
-            [class.text-checked-item]="item.checked"
-            (click)="facade.toggleCheckedItem(item)"
-            (keypress)="facade.toggleCheckedItem(item)"
-          >
-            {{ item.name }}
-            @if (item.weight && facade.trackWeight()) {
-              <span class="italic">{{ serializeWeight(item.weight) }}</span>
-            }
-          </div>
+      <div
+        aria-hidden="true"
+        class="accessible-content flex items-center justify-between"
+        (click)="facade.toggleCategoryCollapse(category.name)"
+      >
+        <div class="flex items-center gap-1">
+          <app-icon-key-right
+            class="h-6 w-6"
+            [@animateChevron]="category.collapsed"
+          />
+          <span class="font-bold italic">{{ category.name }}</span>
+          @if (facade.trackWeight() && category.totalWeight) {
+            <span class="text-sm">
+              @if (category.checkedWeight === category.totalWeight) {
+                ({{ serializeWeight(category.checkedWeight, undefined, 1) }})
+              } @else {
+                ({{
+                  serializeWeightPartition(
+                    category.checkedWeight,
+                    category.totalWeight
+                  )
+                }})
+              }
+            </span>
+          }
         </div>
+        <app-items-status
+          [count]="category.checked"
+          [total]="category.items.length"
+        />
+      </div>
+      @if (!category.collapsed) {
+        @for (item of category.items; track item.name) {
+          <div role="listitem">
+            <div
+              role="checkbox"
+              tabindex="0"
+              class="flex select-none items-center justify-between"
+              [attr.aria-checked]="item.checked"
+              [class.text-checked-item]="item.checked"
+              [@animateStrikeThrough]="item.checked"
+              (click)="facade.toggleCheckedItem(item)"
+              (keypress)="facade.toggleCheckedItem(item)"
+            >
+              {{ item.name }}
+              @if (item.weight && facade.trackWeight()) {
+                <span class="italic">{{ serializeWeight(item.weight) }}</span>
+              }
+            </div>
+          </div>
+        }
       }
-    }
-  </div>
-}
+    </div>
+  }
+</div>

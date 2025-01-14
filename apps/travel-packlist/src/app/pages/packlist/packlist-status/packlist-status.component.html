@@ -9,6 +9,7 @@
         [attr.aria-label]="statusLabelText()"
         [value]="facade.checkedWeight()"
         [max]="facade.totalWeight()"
+        [animationDuration]="animationDuration()"
       />
     } @else {
       <cmp-progress
@@ -19,6 +20,7 @@
         [attr.aria-label]="statusLabelText()"
         [value]="facade.numberOfCheckedItems()"
         [max]="facade.numberOfItems()"
+        [animationDuration]="animationDuration()"
       />
     }
   </div>

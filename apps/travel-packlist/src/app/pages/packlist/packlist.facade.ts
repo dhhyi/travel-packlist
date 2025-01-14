@@ -21,6 +21,10 @@ export class PacklistFacade {
   private router = inject(Router);
   private state = inject(GLOBAL_STATE);
 
+  readonly isAccessibleMode = computed(
+    () => this.state.config.accessibility() === 'accessible',
+  );
+
   readonly numberOfItems = computed(() => this.state.active.items().length);
 
   readonly checkedItems = this.state.packlist.checkedItems;

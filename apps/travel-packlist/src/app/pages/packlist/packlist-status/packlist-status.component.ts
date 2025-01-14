@@ -1,8 +1,10 @@
 import {
+  afterRender,
   ChangeDetectionStrategy,
   Component,
   computed,
   inject,
+  signal,
 } from '@angular/core';
 import { ComponentsModule } from '@travel-packlist/components';
 
@@ -35,4 +37,12 @@ export class PacklistStatusComponent {
       return $localize`You have packed ${checkedItems}:CHECKED_ITEMS: out of ${totalItems}:TOTAL_ITEMS: items.`;
     }
   });
+
+  readonly animationDuration = signal(0);
+
+  constructor() {
+    afterRender(() => {
+      this.animationDuration.set(this.facade.isAccessibleMode() ? 0 : 500);
+    });
+  }
 }
