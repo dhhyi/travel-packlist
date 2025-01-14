@@ -18,6 +18,7 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
     generateFiles(tree, path.join(__dirname, 'files', 'template'), folder, {
       lang,
       content,
+      file: path.basename(file),
     });
 
     return lang;

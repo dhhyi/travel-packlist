@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "types": [
-      "jest"
+      "jest",
+      "node"
     ]
   },
   "extends": "./tsconfig.json",

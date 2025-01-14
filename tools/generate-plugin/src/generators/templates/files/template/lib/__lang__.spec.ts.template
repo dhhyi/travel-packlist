@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { Parser } from '@travel-packlist/model';
 
-import template from './<%= lang %>';
+const template = require('../txt/<%= file %>');
 
 describe('<%= lang %> template', () => {
   it('should parse', () => {
     const parser = TestBed.inject(Parser);
     const result = parser.parseRules(template);
     expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThan(0);
   });
 });
