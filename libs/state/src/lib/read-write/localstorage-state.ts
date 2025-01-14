@@ -1,5 +1,14 @@
-import { effect, Signal, signal, WritableSignal } from '@angular/core';
+import {
+  computed,
+  effect,
+  inject,
+  linkedSignal,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { VariableType } from '@travel-packlist/model';
+import { RULES_TEMPLATE } from '@travel-packlist/rules-template';
 
 import { loadState, saveState } from './storage-util';
 
@@ -66,10 +75,20 @@ export const localStorageState = (triggerReset: Signal<boolean>) => {
   const create = createSignal.bind({ triggerReset }) as <K extends keyof State>(
     key: K,
   ) => WritableSignal<State[K]>;
+  const template = inject(RULES_TEMPLATE);
+  const rawRules = create('rules');
+  const raw = linkedSignal(() => rawRules() ?? template);
+  effect(() => {
+    const newRules = raw();
+    rawRules.set(newRules === template ? undefined : newRules);
+  });
+
   return {
     rules: {
-      /** storage: raw rules (use rulesOrTemplate for a non-nullish value) */
-      raw: create('rules'),
+      /** storage: raw rules or default template */
+      raw,
+      /** derived: rules are not the default template */
+      customized: computed(() => !!rawRules()),
     },
     packlist: {
       /** storage: the answers from checked questions in the packlist */

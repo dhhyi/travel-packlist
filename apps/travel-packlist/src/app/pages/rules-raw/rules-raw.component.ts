@@ -38,12 +38,12 @@ export default class EditRulesRawComponent {
   private state = inject(GLOBAL_STATE);
 
   private fb = inject(FormBuilder).nonNullable;
-  rulesControl = this.fb.control(this.state.rules.rulesOrTemplate());
+  rulesControl = this.fb.control(this.state.rules.raw());
   private readonly rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
   private readonly rulesPending = computed(() => {
-    return this.rulesText() !== this.state.rules.rulesOrTemplate();
+    return this.rulesText() !== this.state.rules.raw();
   });
 
   readonly parserState = computed<ParserState>(() => {
@@ -68,7 +68,8 @@ export default class EditRulesRawComponent {
     );
     effect(() => {
       const value = ruleUpdates();
-      this.state.rules.raw.set(value);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.state.rules.raw.set(value!);
     });
   }
 }

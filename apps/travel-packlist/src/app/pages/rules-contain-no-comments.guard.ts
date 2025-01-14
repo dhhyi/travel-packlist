@@ -8,7 +8,7 @@ let guardAlreadyPassed = false;
 
 export const rulesContainNoComments: CanActivateFn = async () => {
   const rules = inject(GLOBAL_STATE).rules.raw();
-  const rulesContainComments = computed(() => rules?.includes('#'));
+  const rulesContainComments = computed(() => rules.includes('#'));
   if (!guardAlreadyPassed && rulesContainComments()) {
     const confirmed = await confirm(
       $localize`The current rules contain comments. Editing them with the graphical editor will discard these comments. Do you want to proceed?`,

@@ -2,8 +2,9 @@ import { signal, Signal, WritableSignal } from '@angular/core';
 
 type Structured<T = unknown> = Record<string, Record<string, T>>;
 
-type PersistentStateConstructor<T extends Structured<WritableSignal<unknown>>> =
-  (triggerReset: Signal<boolean>) => T;
+type PersistentStateConstructor<T extends Structured<Signal<unknown>>> = (
+  triggerReset: Signal<boolean>,
+) => T;
 
 type DerivedStateConstructor<
   S extends Structured<Signal<unknown>>,
@@ -29,7 +30,7 @@ export class StateBuilder<T extends Record<string, never>> {
     return new StateBuilder({}, signal(false));
   }
 
-  extend<S extends Structured<WritableSignal<unknown>>>(
+  extend<S extends Structured<Signal<unknown>>>(
     ctr: PersistentStateConstructor<S>,
   ): StateBuilder<S & T> {
     const writableSignals = ctr(this.triggerReset);

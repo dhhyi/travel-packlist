@@ -27,7 +27,7 @@ export class ConfigFacade {
   }
 
   isExportAvailable(): boolean {
-    return !!this.state.rules.raw();
+    return !!this.state.rules.customized();
   }
 
   async exportRules() {
