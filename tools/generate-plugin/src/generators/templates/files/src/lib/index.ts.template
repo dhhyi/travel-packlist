@@ -1,32 +1,29 @@
 import {
   EnvironmentProviders,
-  InjectionToken,
+  inject,
   LOCALE_ID,
   makeEnvironmentProviders,
+  provideAppInitializer,
+  signal,
 } from '@angular/core';
 
-<% for (const lang of languages) {
-%>import template_<%= lang %> from './<%= lang %>';
-<% } %>
+const rulesTemplateInternal = signal('');
+export const rulesTemplate = rulesTemplateInternal.asReadonly();
 
-export const RULES_TEMPLATE = new InjectionToken<string>(
-  'RULES_TEMPLATE',
-);
-
-function getRulesTemplate(locale: string): string {
+async function getRulesTemplate(locale: string): Promise<string> {
 <% for (const lang of languages.filter(l => l !== 'default')) { %>
   if (locale.startsWith('<%= lang %>')) {
-    return template_<%= lang %>;
+    return import('../txt/template.<%= lang %>.txt', { with: { loader: 'text' } }).then(m => m.default);
   }<% } %>
-  return template_default;
+  return import('../txt/template.txt', { with: { loader: 'text' } }).then(t => t.default);
 }
 
 export function provideRulesTemplate(): EnvironmentProviders {
   return makeEnvironmentProviders([
-    {
-      provide: RULES_TEMPLATE,
-      useFactory: getRulesTemplate,
-      deps: [LOCALE_ID],
-    },
+    provideAppInitializer(() => {
+      return getRulesTemplate(inject(LOCALE_ID)).then(t => {
+        return rulesTemplateInternal.set(t);
+      });
+    }),
   ]);
 }
