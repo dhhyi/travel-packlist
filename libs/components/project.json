@@ -11,5 +11,11 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     }
+  },
+  "generators": {
+    "@nx/angular:component": {
+      "style": "scss",
+      "prefix": "cmp"
+    }
   }
 }
