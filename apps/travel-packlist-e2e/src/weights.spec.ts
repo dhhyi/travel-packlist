@@ -12,8 +12,6 @@ test('weight tracking', async ({ page }) => {
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 2 items."
   `);
-  await expect(packlist.itemPackingProgress()).toHaveAttribute('value', '0');
-  await expect(packlist.itemPackingProgress()).toHaveAttribute('max', '2');
 
   const config = await packlist.toConfigPage();
 
@@ -26,16 +24,10 @@ test('weight tracking', async ({ page }) => {
   await expect(packlist.weightPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0g out of 1.1kg by packing 0 out of 2 items."
   `);
-  await expect(packlist.weightPackingProgress()).toHaveAttribute('value', '0');
-  await expect(packlist.weightPackingProgress()).toHaveAttribute('max', '1150');
 
   await packlist.item('umbrella', false).click();
 
   await expect(packlist.weightPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 150g out of 1.1kg by packing 1 out of 2 items."
   `);
-  await expect(packlist.weightPackingProgress()).toHaveAttribute(
-    'value',
-    '150',
-  );
 });

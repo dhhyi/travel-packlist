@@ -109,17 +109,6 @@
     @apply border-red-normal bg-red-light outline-red-normal;
   }
 
-  progress::-webkit-progress-bar {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    background-color: transparent;
-  }
-
-  progress::-webkit-progress-value {
-    background-color: #999;
-    border-radius: 3px;
-  }
-
   .accessible {
     button,
     input,

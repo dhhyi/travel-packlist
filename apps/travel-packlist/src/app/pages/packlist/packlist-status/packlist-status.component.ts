@@ -4,6 +4,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
+import { ComponentsModule } from '@travel-packlist/components';
 
 import {
   PacklistFacade,
@@ -12,9 +13,10 @@ import {
 } from '../packlist.facade';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ComponentsModule],
 })
 export class PacklistStatusComponent {
   facade = inject(PacklistFacade);

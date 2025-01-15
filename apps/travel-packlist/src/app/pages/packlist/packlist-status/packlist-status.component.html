@@ -1,27 +1,25 @@
 <div class="card mb-1">
   <div class="mb-1 flex">
     @if (facade.trackWeight()) {
-      <progress
+      <cmp-progress
         class="grow"
-        role="progressbar"
         title="weight packing progress"
         i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
         [value]="facade.checkedWeight()"
         [max]="facade.totalWeight()"
-      ></progress>
+      />
     } @else {
-      <progress
+      <cmp-progress
         class="grow"
-        role="progressbar"
         title="item packing progress"
         i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
         [value]="facade.numberOfCheckedItems()"
         [max]="facade.numberOfItems()"
-      ></progress>
+      />
     }
   </div>
   <div class="flex flex-col items-center" aria-hidden="true">

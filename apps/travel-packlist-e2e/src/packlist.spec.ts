@@ -21,18 +21,19 @@ test('click items', async ({ page }) => {
 
   await packlist.question('Will it be rainy?', false).click();
 
-  await expect(packlist.itemPackingProgress()).toHaveAttribute('value', '0');
   await expect(packlist.item('Rain Jacket', false)).toBeVisible();
 
   await packlist.item('Rain Jacket', false).click();
   await packlist.item('Pants', false).click();
 
-  await expect(packlist.itemPackingProgress()).toHaveAttribute('value', '2');
+  await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
+    - progressbar "You have packed 2 out of 4 items."
+  `);
+
   await expect(packlist.item('Rain Jacket', true)).toBeVisible();
 
   await packlist.item('Rain Jacket', true).click();
 
-  await expect(packlist.itemPackingProgress()).toHaveAttribute('value', '1');
   await expect(packlist.item('Rain Jacket', false)).toBeVisible();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
@@ -74,7 +75,6 @@ test('click items', async ({ page }) => {
 
   await config.toPacklistPage();
 
-  await expect(packlist.itemPackingProgress()).toHaveAttribute('value', '0');
   await expect(packlist.item('Pants', false)).toBeVisible();
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
