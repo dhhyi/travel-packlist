@@ -731,15 +731,6 @@ select[disabled] {
   padding-left: 0.25rem;
   padding-right: 1rem;
 }
-progress::-webkit-progress-bar {
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    background-color: transparent;
-  }
-progress::-webkit-progress-value {
-    background-color: #999;
-    border-radius: 3px;
-  }
 .accessible button,
   .accessible input,
   .accessible select,
@@ -875,6 +866,9 @@ progress::-webkit-progress-value {
 .grid {
   display: grid;
 }
+.contents {
+  display: contents;
+}
 .hidden {
   display: none;
 }
@@ -976,6 +970,10 @@ progress::-webkit-progress-value {
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+.select-none {
+  -webkit-user-select: none;
+          user-select: none;
+}
 .resize-none {
   resize: none;
 }
@@ -1053,6 +1051,9 @@ progress::-webkit-progress-value {
 }
 .gap-y-4 {
   row-gap: 1rem;
+}
+.overflow-hidden {
+  overflow: hidden;
 }
 .truncate {
   overflow: hidden;
@@ -1330,6 +1331,9 @@ progress::-webkit-progress-value {
 }
 .ease-in {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+}
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 .text-green {
   --tw-text-opacity: 1;
