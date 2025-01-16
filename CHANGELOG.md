@@ -1,3 +1,9 @@
+## [0.6.0](https://github.com/dhhyi/travel-packlist/compare/v0.5.0...v0.6.0) (2025-01-16)
+
+### Features
+
+- add animations to application ([0bd5a53](https://github.com/dhhyi/travel-packlist/commit/0bd5a53e91a40a8675a2c522369feec7ea3a69cb))
+
 ## [0.5.0](https://github.com/dhhyi/travel-packlist/compare/v0.4.0...v0.5.0) (2025-01-08)
 
 ### Features
