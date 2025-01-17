@@ -84,9 +84,9 @@ export class EditorItemComponent {
     });
   }
 
-  blockPatch = false;
+  private blockPatch = false;
 
-  reset() {
+  private reset() {
     if (!this.blockPatch) {
       let name = this.item().name;
       if (this.item().weight) {

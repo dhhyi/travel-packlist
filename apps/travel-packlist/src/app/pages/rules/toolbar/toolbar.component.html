@@ -34,9 +34,7 @@
       label="Cut/Paste"
       i18n-label
       [disabled]="
-        noOfVisibleRules() < 2 &&
-        !clipboard.itemsCount() &&
-        !clipboard.questionsCount()
+        noOfVisibleRules() < 2 && !clipboardItems() && !clipboardQuestions()
       "
     >
       <app-icon-reorder class="my-auto h-6 w-6" />
@@ -54,10 +52,10 @@
     </app-toolbar-button>
   </div>
   @if (mode() === 'cut-paste') {
-    @if (clipboard.itemsCount() > 0 || clipboard.questionsCount() > 0) {
-      @let itemsCount = clipboard.itemsCount();
-      @let questionsCount = clipboard.questionsCount();
-      @let both = !!itemsCount && !!questionsCount;
+    @let itemsCount = clipboardItems();
+    @let questionsCount = clipboardQuestions();
+    @let both = !!itemsCount && !!questionsCount;
+    @if (itemsCount > 0 || questionsCount > 0) {
       <div
         class="mt-2 flex justify-center gap-4"
         role="status"

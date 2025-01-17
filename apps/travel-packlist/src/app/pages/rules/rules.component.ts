@@ -29,7 +29,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
   ],
   templateUrl: './rules.component.html',
 })
-export default class RulesComponent {
+export class RulesComponent {
   private refactor = inject(Refactor);
 
   private state = inject(GLOBAL_STATE);

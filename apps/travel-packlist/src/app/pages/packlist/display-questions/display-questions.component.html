@@ -1,11 +1,11 @@
-@if (!facade.questionsAvailable()) {
+@if (!questionsAvailable()) {
   <div class="flex flex-col items-center">
     <p class="text-center" i18n>
       No questions available, please
       <button
         type="button"
         class="link inline p-0 underline"
-        (click)="facade.goToRulesEdit()"
+        (click)="goToRulesEdit()"
       >
         create
       </button>
@@ -13,26 +13,23 @@
     </p>
   </div>
 } @else {
-  <div
-    [@.disabled]="animationsDisabled()"
-    [@animateQuestions]="facade.questions()"
-  >
-    @for (question of facade.questions(); track question.question) {
+  <div [@.disabled]="animationsDisabled()" [@animateQuestions]="questions()">
+    @for (question of questions(); track question.question) {
       <div
         class="card mb-1 flex flex-row items-center justify-between overflow-hidden"
         role="checkbox"
         tabindex="0"
-        [attr.aria-checked]="facade.isQuestionActive(question)"
-        [attr.aria-disabled]="facade.isAnswersLockActive()"
+        [attr.aria-checked]="isQuestionActive(question)"
+        [attr.aria-disabled]="isAnswersLockActive()"
         [attr.aria-label]="question.question"
-        [class.disabled]="facade.isAnswersLockActive()"
-        (click)="facade.toggleQuestion(question)"
-        (keypress)="facade.toggleQuestion(question)"
+        [class.disabled]="isAnswersLockActive()"
+        (click)="toggleQuestion(question)"
+        (keypress)="toggleQuestion(question)"
       >
         <span aria-hidden="true" class="select-none font-bold">{{
           question.question
         }}</span>
-        @if (facade.isQuestionActive(question)) {
+        @if (isQuestionActive(question)) {
           <app-icon-checkmark />
         }
       </div>
@@ -45,11 +42,11 @@
       role="button"
       aria-label="Lock answers"
       i18n-aria-label
-      [attr.aria-pressed]="facade.isAnswersLockActive()"
-      (click)="facade.toggleAnswersLock()"
-      (keypress)="facade.toggleAnswersLock()"
+      [attr.aria-pressed]="isAnswersLockActive()"
+      (click)="toggleAnswersLock()"
+      (keypress)="toggleAnswersLock()"
     >
-      @if (facade.isAnswersLockActive()) {
+      @if (isAnswersLockActive()) {
         <app-icon-lock class="h-6 w-6" />
       } @else {
         <app-icon-lock-open class="h-6 w-6" />

@@ -42,13 +42,15 @@ export class EditorConditionComponent {
 
   readonly content = viewChild.required('content', { read: ViewContainerRef });
 
-  readonly keywordTemplate = viewChild.required('keyword', {
+  private readonly keywordTemplate = viewChild.required('keyword', {
     read: TemplateRef,
   });
-  readonly variableTemplate = viewChild.required('variable', {
+  private readonly variableTemplate = viewChild.required('variable', {
     read: TemplateRef,
   });
-  readonly selectTemplate = viewChild.required('select', { read: TemplateRef });
+  private readonly selectTemplate = viewChild.required('select', {
+    read: TemplateRef,
+  });
 
   private state = inject(GLOBAL_STATE);
   private activeAnswers = this.state.active.answers;
@@ -58,10 +60,8 @@ export class EditorConditionComponent {
     () => this.mode() !== 'edit' && this.state.config.highlightVariableStatus(),
   );
 
-  readonly serializedCondition = computed(() => this.condition().toString());
-
+  private ALWAYS = Always.string;
   PLEASE_SELECT = PleaseSelect.string;
-  ALWAYS = Always.string;
   NOT = NOT;
   AND = AND;
   OR = OR;

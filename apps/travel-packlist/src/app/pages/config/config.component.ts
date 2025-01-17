@@ -23,4 +23,4 @@ import { ConfigVersionComponent } from './config-version/config-version.componen
   templateUrl: './config.component.html',
 })
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
-export default class ConfigComponent {}
+export class ConfigComponent {}

@@ -7,7 +7,7 @@ const initialState = {
   clipboardQuestions: [] as string[],
 };
 
-export type State = typeof initialState;
+type State = typeof initialState;
 
 const state = loadState(sessionStorage, initialState);
 

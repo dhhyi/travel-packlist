@@ -104,7 +104,12 @@ const animateStrikeThrough = trigger('animateStrikeThrough', [
   ],
 })
 export class DisplayItemsComponent {
-  facade = inject(PacklistFacade);
+  private facade = inject(PacklistFacade);
+  numberOfItems = this.facade.numberOfItems;
+  packlist = this.facade.packlist;
+  trackWeight = this.facade.trackWeight;
+  toggleCategoryCollapse = this.facade.toggleCategoryCollapse;
+  toggleCheckedItem = this.facade.toggleCheckedItem;
 
   serializeWeight = serializeWeight;
 

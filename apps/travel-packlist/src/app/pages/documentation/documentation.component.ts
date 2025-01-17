@@ -47,7 +47,7 @@ import { RULES_DOCUMENTATION } from '@travel-packlist/rules-documentation';
     }
   `,
 })
-export default class DocumentationComponent {
+export class DocumentationComponent {
   private documentationHtml = inject(RULES_DOCUMENTATION);
   private bypass = inject(DomSanitizer);
   safeHtml = this.bypass.bypassSecurityTrustHtml(this.documentationHtml);

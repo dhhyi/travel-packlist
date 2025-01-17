@@ -13,7 +13,7 @@ const initialState = {
   filterRulesQuery: undefined as string | undefined,
 };
 
-export type State = typeof initialState;
+type State = typeof initialState;
 
 export type RuleModes = State['rulesMode'];
 

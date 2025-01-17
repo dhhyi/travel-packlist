@@ -45,8 +45,8 @@ export class SelectOptionsComponent<T extends string>
   readonly model = signal<T | undefined>(undefined);
   readonly children = contentChildren(SelectOptionDirective<T>);
 
-  onChanged: (value: T | undefined) => void = noop;
-  onTouched: () => void = noop;
+  private onChanged: (value: T | undefined) => void = noop;
+  private onTouched: () => void = noop;
 
   constructor() {
     effect(() => {

@@ -51,7 +51,14 @@ const animateQuestions = trigger('animateQuestions', [
   animations: [animateQuestions],
 })
 export class DisplayQuestionsComponent {
-  facade = inject(PacklistFacade);
+  private facade = inject(PacklistFacade);
+  questions = this.facade.questions;
+  questionsAvailable = this.facade.questionsAvailable;
+  isQuestionActive = this.facade.isQuestionActive;
+  isAnswersLockActive = this.facade.isAnswersLockActive;
+  toggleAnswersLock = this.facade.toggleAnswersLock;
+  toggleQuestion = this.facade.toggleQuestion;
+  goToRulesEdit = this.facade.goToRulesEdit;
 
   readonly animationsDisabled = signal(true);
 

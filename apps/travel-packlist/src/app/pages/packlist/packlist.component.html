@@ -1,4 +1,4 @@
-@if (facade.rulesAvailable()) {
+@if (rulesAvailable()) {
   <app-display-questions />
   <app-packlist-status />
   <app-display-items />
@@ -9,7 +9,7 @@
       <button
         class="link inline p-0 underline"
         type="button"
-        (click)="facade.goToConfigImport()"
+        (click)="goToConfigImport()"
       >
         import
       </button>
@@ -17,7 +17,7 @@
       <button
         class="link inline p-0 underline"
         type="button"
-        (click)="facade.goToRulesEdit()"
+        (click)="goToRulesEdit()"
       >
         create
       </button>

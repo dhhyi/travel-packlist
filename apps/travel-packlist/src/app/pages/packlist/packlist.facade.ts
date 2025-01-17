@@ -27,12 +27,8 @@ export class PacklistFacade {
 
   readonly numberOfItems = computed(() => this.state.active.items().length);
 
-  readonly checkedItems = this.state.packlist.checkedItems;
+  private readonly checkedItems = this.state.packlist.checkedItems;
   private collapsedCategories = this.state.packlist.collapsedCategories;
-
-  isItemChecked(item: Item): boolean {
-    return this.checkedItems().includes(serialize(item));
-  }
 
   readonly numberOfCheckedItems = computed(() => {
     const activeItems = this.state.active.items().map(serialize);
@@ -40,20 +36,20 @@ export class PacklistFacade {
       .length;
   });
 
-  isCategoryCollapsed(category: string): boolean {
+  private isCategoryCollapsed(category: string): boolean {
     return this.collapsedCategories().includes(category);
   }
 
-  toggleCheckedItem(item: Item) {
+  toggleCheckedItem = (item: Item) => {
     const serialized = serialize(item);
     if (this.checkedItems().includes(serialized)) {
       this.checkedItems.update((old) => old.filter((i) => i !== serialized));
     } else {
       this.checkedItems.update((old) => [...old, serialized]);
     }
-  }
+  };
 
-  toggleCategoryCollapse(category: string) {
+  toggleCategoryCollapse = (category: string) => {
     if (this.collapsedCategories().includes(category)) {
       this.collapsedCategories.update((old) =>
         old.filter((c) => c !== category),
@@ -61,7 +57,7 @@ export class PacklistFacade {
     } else {
       this.collapsedCategories.update((old) => [...old, category]);
     }
-  }
+  };
 
   private readonly categoriesOrderBy: Signal<
     (left: string, right: string) => number
@@ -134,7 +130,7 @@ export class PacklistFacade {
     () => this.activeQuestions().length > 0,
   );
 
-  toggleQuestion(question: Question): void {
+  toggleQuestion = (question: Question): void => {
     if (this.isAnswersLockActive()) {
       return;
     }
@@ -142,27 +138,27 @@ export class PacklistFacade {
       ...model,
       [question.variable]: !model[question.variable],
     }));
-  }
+  };
 
-  isQuestionActive(question: Question): boolean {
+  isQuestionActive = (question: Question): boolean => {
     return this.model()[question.variable];
-  }
+  };
 
-  toggleAnswersLock() {
+  toggleAnswersLock = () => {
     this.isAnswersLockActive.update((lock) => !lock);
-  }
+  };
 
   trackWeight = this.state.config.trackWeight;
 
-  goToRulesEdit() {
+  goToRulesEdit = () => {
     void this.router.navigate(['/rules']).then(() => {
       this.state.router.rulesMode.set('edit');
     });
-  }
+  };
 
-  goToConfigImport() {
+  goToConfigImport = () => {
     void this.router.navigate(['/config'], { fragment: 'import' });
-  }
+  };
 }
 
 export { serializeWeight } from '@travel-packlist/model';

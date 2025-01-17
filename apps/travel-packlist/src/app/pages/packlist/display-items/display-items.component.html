@@ -1,4 +1,4 @@
-@if (!facade.numberOfItems()) {
+@if (!numberOfItems()) {
   <div class="flex flex-col items-center">
     <p i18n class="text-center">No items available.</p>
   </div>
@@ -6,10 +6,10 @@
 
 <div
   class="contents"
-  [@animateCategory]="facade.packlist()"
+  [@animateCategory]="packlist()"
   [@.disabled]="animationsDisabled()"
 >
-  @for (category of facade.packlist(); track category.name) {
+  @for (category of packlist(); track category.name) {
     <div
       class="card mb-1 overflow-hidden"
       role="list"
@@ -19,7 +19,7 @@
       <div
         aria-hidden="true"
         class="accessible-content flex items-center justify-between"
-        (click)="facade.toggleCategoryCollapse(category.name)"
+        (click)="toggleCategoryCollapse(category.name)"
       >
         <div class="flex items-center gap-1">
           <app-icon-key-right
@@ -27,7 +27,7 @@
             [@animateChevron]="category.collapsed"
           />
           <span class="font-bold italic">{{ category.name }}</span>
-          @if (facade.trackWeight() && category.totalWeight) {
+          @if (trackWeight() && category.totalWeight) {
             <span class="text-sm">
               @if (category.checkedWeight === category.totalWeight) {
                 ({{ serializeWeight(category.checkedWeight, undefined, 1) }})
@@ -57,11 +57,11 @@
               [attr.aria-checked]="item.checked"
               [class.text-checked-item]="item.checked"
               [@animateStrikeThrough]="item.checked"
-              (click)="facade.toggleCheckedItem(item)"
-              (keypress)="facade.toggleCheckedItem(item)"
+              (click)="toggleCheckedItem(item)"
+              (keypress)="toggleCheckedItem(item)"
             >
               {{ item.name }}
-              @if (item.weight && facade.trackWeight()) {
+              @if (item.weight && trackWeight()) {
                 <span class="italic">{{ serializeWeight(item.weight) }}</span>
               }
             </div>

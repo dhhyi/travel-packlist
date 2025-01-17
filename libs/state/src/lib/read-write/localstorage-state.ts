@@ -35,7 +35,7 @@ const initialState = {
   lastExportDate: 0,
 };
 
-export type State = typeof initialState;
+type State = typeof initialState;
 
 export type Themes = State['theme'];
 export type FontSizes = State['fontSize'];

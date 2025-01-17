@@ -48,7 +48,9 @@ export class ToolbarComponent {
   private state = inject(GLOBAL_STATE);
   mode = this.state.router.rulesMode;
   searchTerm = this.state.router.filterRulesQuery;
-  clipboard = inject(RulesClipboard);
+  private clipboard = inject(RulesClipboard);
+  clipboardItems = this.clipboard.itemsCount;
+  clipboardQuestions = this.clipboard.questionsCount;
 
   readonly sticky = computed(() => this.state.browser.scrollY() > 48);
 
@@ -87,7 +89,7 @@ export class ToolbarComponent {
     }
   }
 
-  focusSearch() {
+  private focusSearch() {
     setTimeout(() => {
       this.searchInput().nativeElement.focus();
     }, 50);

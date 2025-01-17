@@ -15,6 +15,9 @@ import { PacklistFacade } from './packlist.facade';
   ],
   templateUrl: './packlist.component.html',
 })
-export default class PacklistComponent {
-  facade = inject(PacklistFacade);
+export class PacklistComponent {
+  private facade = inject(PacklistFacade);
+  rulesAvailable = this.facade.rulesAvailable;
+  goToRulesEdit = this.facade.goToRulesEdit;
+  goToConfigImport = this.facade.goToConfigImport;
 }
