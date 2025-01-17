@@ -7,6 +7,14 @@
     "markdown": {
       "implementation": "./src/executors/markdown/executor",
       "schema": "./src/executors/markdown/schema.json"
+    },
+    "dead-code": {
+      "implementation": "./src/executors/dead-code/executor",
+      "schema": "./src/executors/dead-code/schema.json"
+    },
+    "dead-code-summary": {
+      "implementation": "./src/executors/dead-code-summary/executor",
+      "schema": "./src/executors/dead-code-summary/schema.json"
     }
   }
 }

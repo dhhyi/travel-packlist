@@ -133,7 +133,6 @@ function runMarkdownLint(
   options: ExecutorSchema,
 ) {
   const projectConfig =
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     context.projectsConfigurations.projects[context.projectName!];
   let markdownLintConfig = `${projectConfig.root}/.markdownlint.json`;
   if (!fs.existsSync(markdownLintConfig)) {

@@ -136,6 +136,15 @@
         }
       }
     },
+    "@travel-packlist/check-plugin:dead-code": {
+      "dependsOn": [
+        "generate"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}/dead-code-{imports,exports}.json"
+      ],
+      "cache": true
+    },
     "nx-stylelint:lint": {
       "options": {
         "lintFilePatterns": [

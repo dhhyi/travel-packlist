@@ -6,6 +6,9 @@
   "tags": [
     "scope:state"
   ],
+  "implicitDependencies": [
+    "check-plugin"
+  ],
   "targets": {
     "generate": {
       "executor": "nx:run-commands",
@@ -33,6 +36,15 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json",
+        "exclude": [
+          "**/generated/**"
+        ]
+      }
     }
   }
 }

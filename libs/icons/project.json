@@ -7,7 +7,8 @@
     "scope:generated"
   ],
   "implicitDependencies": [
-    "generate-plugin"
+    "generate-plugin",
+    "check-plugin"
   ],
   "targets": {
     "generate": {
@@ -26,6 +27,12 @@
         "{projectRoot}/src/lib/**/*.ts"
       ],
       "cache": true
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

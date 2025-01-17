@@ -7,4 +7,10 @@ module.exports = [
   includeIgnoreFile(require.resolve('./.gitignore')),
   ...baseConfig,
   ...typescriptRules(require.resolve('./tsconfig.lib.json')),
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    rules: {
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
 ];

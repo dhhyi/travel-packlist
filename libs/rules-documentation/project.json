@@ -41,6 +41,12 @@
         "{projectRoot}/src/index.ts"
       ],
       "cache": true
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

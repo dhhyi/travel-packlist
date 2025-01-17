@@ -159,6 +159,12 @@
       "dependsOn": [
         "^generate"
       ]
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.app.json"
+      }
     }
   }
 }

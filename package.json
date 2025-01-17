@@ -19,7 +19,9 @@
       "start"
     ],
     "implicitDependencies": [
-      "check-plugin"
+      "check-plugin",
+      "libs/*",
+      "apps/*"
     ],
     "targets": {
       "lint": {
@@ -67,6 +69,12 @@
             "command": "nx format:write --uncommitted"
           }
         }
+      },
+      "dead-code": {
+        "executor": "@travel-packlist/check-plugin:dead-code-summary",
+        "dependsOn": [
+          "^dead-code"
+        ]
       }
     }
   },
@@ -124,6 +132,7 @@
     "@storybook/angular": "^8.4.7",
     "@storybook/core-server": "^8.4.7",
     "@types/jest": "^29.5.14",
+    "@types/minimatch": "^5.1.2",
     "@types/node": "22.10.5",
     "@types/showdown": "^2.0.6",
     "@typescript-eslint/utils": "^8.19.1",
@@ -155,6 +164,7 @@
     "stylelint": "^16.13.0",
     "stylelint-config-standard": "^37.0.0",
     "ts-jest": "^29.2.5",
+    "ts-morph": "^25.0.0",
     "ts-node": "10.9.2",
     "typescript-eslint": "8.19.1",
     "zone.js": "~0.15.0"

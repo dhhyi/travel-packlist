@@ -7,9 +7,18 @@
   "tags": [
     "scope:components"
   ],
+  "implicitDependencies": [
+    "check-plugin"
+  ],
   "targets": {
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   },
   "generators": {

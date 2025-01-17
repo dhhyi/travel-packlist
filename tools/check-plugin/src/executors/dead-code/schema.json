@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Executor Schema",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "tsConfig": {
+      "type": "string",
+      "description": "Path to the tsconfig file"
+    },
+    "exclude": {
+      "type": "array",
+      "description": "List of paths glob patterns to exclude from the check",
+      "items": {
+        "type": "string"
+      }
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "Print additional information",
+      "default": false
+    }
+  },
+  "required": [
+    "tsConfig"
+  ],
+  "additionalProperties": false
+}
