@@ -12,7 +12,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ComponentsModule } from '@travel-packlist/components';
+import { CheckboxComponent } from '@travel-packlist/components';
 import { IconDownloadComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
@@ -23,7 +23,7 @@ import { ConfigFacade } from '../config.facade';
   selector: 'app-config-rules-import-export',
   templateUrl: './config-rules-import-export.component.html',
   styleUrl: '../config-section.scss',
-  imports: [FormsModule, ComponentsModule, IconDownloadComponent],
+  imports: [FormsModule, CheckboxComponent, IconDownloadComponent],
 })
 export class ConfigRulesImportExportComponent {
   private router = inject(Router);

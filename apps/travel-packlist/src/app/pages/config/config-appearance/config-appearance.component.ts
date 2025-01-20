@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ComponentsModule } from '@travel-packlist/components';
+import {
+  SelectOptionsComponent,
+  SelectOptionDirective,
+} from '@travel-packlist/components';
 import { FlagGermanyComponent, FlagUkComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
@@ -11,7 +14,8 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   styleUrl: '../config-section.scss',
   imports: [
     FormsModule,
-    ComponentsModule,
+    SelectOptionsComponent,
+    SelectOptionDirective,
     FlagGermanyComponent,
     FlagUkComponent,
   ],

@@ -6,7 +6,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ComponentsModule } from '@travel-packlist/components';
+import { ProgressComponent } from '@travel-packlist/components';
 
 import {
   PacklistFacade,
@@ -18,7 +18,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
-  imports: [ComponentsModule],
+  imports: [ProgressComponent],
 })
 export class PacklistStatusComponent {
   facade = inject(PacklistFacade);

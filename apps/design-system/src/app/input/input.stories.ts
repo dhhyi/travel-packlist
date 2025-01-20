@@ -3,7 +3,11 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ComponentsModule } from '@travel-packlist/components';
+import {
+  CheckboxComponent,
+  SelectOptionDirective,
+  SelectOptionsComponent,
+} from '@travel-packlist/components';
 import { IconHelpComponent } from '@travel-packlist/icons';
 
 @Component({
@@ -11,7 +15,14 @@ import { IconHelpComponent } from '@travel-packlist/icons';
   standalone: true,
   selector: 'ds-input',
   templateUrl: './input.html',
-  imports: [IconHelpComponent, ReactiveFormsModule, ComponentsModule, JsonPipe],
+  imports: [
+    IconHelpComponent,
+    CheckboxComponent,
+    SelectOptionsComponent,
+    SelectOptionDirective,
+    ReactiveFormsModule,
+    JsonPipe,
+  ],
   styles: `
     :host {
       @apply flex flex-col gap-y-4;

@@ -1,7 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ComponentsModule } from '@travel-packlist/components';
+import {
+  CheckboxComponent,
+  SelectOptionsComponent,
+  SelectOptionDirective,
+} from '@travel-packlist/components';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { confirm } from '../../../dialog';
@@ -12,7 +16,12 @@ import { ConfigFacade } from '../config.facade';
   templateUrl: './config-checklist.component.html',
   styleUrl: '../config-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, ComponentsModule],
+  imports: [
+    FormsModule,
+    CheckboxComponent,
+    SelectOptionsComponent,
+    SelectOptionDirective,
+  ],
 })
 export class ConfigChecklistComponent {
   private router = inject(Router);
