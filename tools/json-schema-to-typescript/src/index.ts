@@ -30,17 +30,22 @@ async function createNodesInternal(schemaInput: string) {
   const schemaInputWithRoot = `{projectRoot}/${schemaInputRelative}`;
   const schemaOutputWithRoot = schemaInputWithRoot.replace(/\.json$/, '.d.ts');
 
-  const shaPath = createHash('sha1')
-    .update(schemaInput)
-    .digest('hex')
-    .substring(0, 8);
+  const regex = /\/(executor|generator)s\/([\w-]+)\/schema\.json$/;
+  let id: string;
+  if (regex.test(schemaInputWithRoot)) {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const [, type, name] = regex.exec(schemaInputWithRoot)!;
+    id = `${name}-${type}`;
+  } else {
+    id = createHash('sha1').update(schemaInput).digest('hex').substring(0, 8);
+  }
 
   return {
     projects: {
       [project]: {
         implicitDependencies: ['json-schema-to-typescript'],
         targets: {
-          ['schema2ts-' + shaPath]: {
+          ['schema2ts-' + id]: {
             executor: 'nx:run-commands',
             options: {
               commands: [

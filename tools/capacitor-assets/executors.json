@@ -1,8 +1,8 @@
 {
   "executors": {
     "run": {
-      "implementation": "./src/executors/run",
-      "schema": "./src/executors/schema.json"
+      "implementation": "./src/executors/run/executor",
+      "schema": "./src/executors/run/schema.json"
     }
   }
 }
