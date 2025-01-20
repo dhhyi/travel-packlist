@@ -7,7 +7,10 @@ function findGitignoreFiles(dir) {
 
   for (const file of files) {
     const filePath = path.join(dir, file.name);
-    if (file.isDirectory() && file.name !== 'node_modules') {
+    if (
+      file.isDirectory() &&
+      !['node_modules', '.nx'].some((e) => file.name === e)
+    ) {
       gitignoreFiles.push(...findGitignoreFiles(filePath));
     } else if (file.name === '.gitignore') {
       console.log('reading', filePath);
