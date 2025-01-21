@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Item, Question, serializeWeight } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
-function serialize(item: Item): string {
+function serialize(item: Pick<Item, 'category' | 'name'>): string {
   return `${item.category}-${item.name}`;
 }
 
@@ -13,7 +13,7 @@ interface CategoryView {
   checkedWeight: number;
   totalWeight: number;
   collapsed: boolean;
-  items: (Item & { checked: boolean })[];
+  items: (Pick<Item, 'category' | 'name' | 'weight'> & { checked: boolean })[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -40,7 +40,7 @@ export class PacklistFacade {
     return this.collapsedCategories().includes(category);
   }
 
-  toggleCheckedItem = (item: Item) => {
+  toggleCheckedItem = (item: Parameters<typeof serialize>[0]) => {
     const serialized = serialize(item);
     if (this.checkedItems().includes(serialized)) {
       this.checkedItems.update((old) => old.filter((i) => i !== serialized));
@@ -85,7 +85,9 @@ export class PacklistFacade {
           };
         }
         groups[item.category].items.push({
-          ...item,
+          category: item.category,
+          name: item.name,
+          weight: item.weight,
           checked: checkedItems.includes(serialize(item)),
         });
         if (checkedItems.includes(serialize(item))) {
