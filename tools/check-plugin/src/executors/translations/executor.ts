@@ -1,6 +1,5 @@
 import { Executor } from '@nx/devkit';
-import { readFileSync, writeFileSync } from 'fs';
-import { globSync } from 'glob';
+import { globSync, readFileSync, writeFileSync } from 'fs';
 
 import { ExecutorSchema } from './schema';
 
@@ -38,7 +37,7 @@ const run: Executor<ExecutorSchema> = async (options) => {
       translation.translations = Object.fromEntries(
         Object.entries(translation.translations)
           .map(([key, value]) => [key.trim(), value.trim()] as const)
-          .sort(([k1], [k2]) => k1.localeCompare(k2)),
+          .toSorted(([k1], [k2]) => k1.localeCompare(k2)),
       );
     });
 

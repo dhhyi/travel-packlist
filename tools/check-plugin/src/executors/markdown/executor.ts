@@ -2,7 +2,7 @@ import { ExecutorContext, PromiseExecutor, cacheDir } from '@nx/devkit';
 import axios from 'axios';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
-import { globSync } from 'glob';
+import { Minimatch } from 'minimatch';
 import * as path from 'path';
 
 import { ExecutorSchema } from './schema';
@@ -166,7 +166,12 @@ function runCspellCheck(context: ExecutorContext, files: string[]) {
 
 const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
   try {
-    const files = globSync(options.pattern, { ignore: options.exclude });
+    const excludes = (options.exclude ?? []).map(
+      (pattern) => new Minimatch(pattern),
+    );
+    const files = fs
+      .globSync(options.pattern)
+      .filter((file) => !excludes.some((exclude) => exclude.match(file)));
 
     if (files.length === 0) {
       throw new Error(`No files found for pattern: ${options.pattern}`);

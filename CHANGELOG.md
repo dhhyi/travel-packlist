@@ -136,8 +136,8 @@
 
 - german rules template ([2a98d3e1e914](https://github.com/dhhyi/travel-packlist/commit/2a98d3e1e9148db3d01d23656f119a29f64dffb3))
 - allow choosing all types of operands in deeper condition ([4feacebe4629](https://github.com/dhhyi/travel-packlist/commit/4feacebe46295d8cc927ac53a3afb32b441446b0))
-- detect language ([ad274467494e](ad274467494e8fc098809303d6ea539c8f5076db))
-- add custom dialog ([922043a158bc](922043a158bc72cb27d34000f67b232cb3ae53af))
+- detect language ([ad274467494e](https://github.com/dhhyi/travel-packlist/commit/ad274467494e8fc098809303d6ea539c8f5076db))
+- add custom dialog ([922043a158bc](https://github.com/dhhyi/travel-packlist/commit/922043a158bc72cb27d34000f67b232cb3ae53af))
 - display service worker state ([4bbc3c37bed2](https://github.com/dhhyi/travel-packlist/commit/4bbc3c37bed26b452b11035eab56248c74a65647))
 
 ### Bug Fixes

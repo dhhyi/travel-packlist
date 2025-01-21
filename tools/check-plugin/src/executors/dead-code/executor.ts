@@ -437,7 +437,7 @@ function writeImportReport(this: Context) {
               });
             }
           })
-          .filter(Boolean) as [string, string][];
+          .filter((x) => !!x);
       })
       .reduce<ImportReport>((acc, [m, name]) => {
         acc[m] = [...(acc[m] ?? []), name].filter(

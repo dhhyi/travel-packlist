@@ -55,9 +55,6 @@ const runExecutor: Executor<ExecutorSchema> = async (options) => {
   const manifestPath = options.pwaManifestPath;
   const assetPath = options.assetPath;
 
-  /**
-   * @type {}
-   */
   const manifest = JSON.parse(
     readFileSync(manifestPath, { encoding: 'utf-8' }),
   ) as {

@@ -28,7 +28,7 @@ type ConsolidatedOptions = ReturnType<typeof consolidateOptions>;
 function consolidateOptions(
   options: ExecutorSchema,
   context: ExecutorContext,
-): ExecutorSchema & { outputPath: string } {
+): Required<ExecutorSchema> {
   const outputPath =
     options.outputPath ??
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -151,7 +151,7 @@ function fixFileHashes(folder: string) {
       unlinkSync(`${folder}/${file}`);
       return new File(content, oldHash, file);
     })
-    .filter(Boolean) as File[];
+    .filter((x) => !!x);
 
   // sort files by number of least dependencies
   function createSorter() {

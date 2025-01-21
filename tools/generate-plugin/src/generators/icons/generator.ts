@@ -1,5 +1,5 @@
 import { formatFiles, generateFiles, Tree } from '@nx/devkit';
-import { globSync } from 'glob';
+import { globSync } from 'fs';
 import * as path from 'path';
 
 import { GeneratorSchema } from './schema';

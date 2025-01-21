@@ -99,11 +99,10 @@ export class PacklistFacade {
       },
       {},
     );
-    const categories = Object.entries(unorderedCategories).map((e) => e[1]);
     const sorter = this.categoriesOrderBy();
-    categories.sort((l, r) => sorter(l.name, r.name));
-
-    return categories;
+    return Object.entries(unorderedCategories)
+      .map((e) => e[1])
+      .toSorted((l, r) => sorter(l.name, r.name));
   });
 
   readonly totalWeight = computed(() =>

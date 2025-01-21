@@ -71,9 +71,6 @@ importers:
       '@nx/devkit':
         specifier: 20.3.2
         version: 20.3.2(nx@20.3.2(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.17)(typescript@5.7.3))(@swc/core@1.5.29(@swc/helpers@0.5.15)))
-      glob:
-        specifier: ^11.0.1
-        version: 11.0.1
       husky:
         specifier: ^9.1.7
         version: 9.1.7

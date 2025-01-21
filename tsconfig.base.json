@@ -8,11 +8,11 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": [
-      "es2020",
-      "dom"
+      "ESNext",
+      "DOM"
     ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,

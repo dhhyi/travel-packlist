@@ -101,7 +101,6 @@
     "@capacitor/share": "^6.0.3",
     "@nx/angular": "20.3.2",
     "@nx/devkit": "20.3.2",
-    "glob": "^11.0.1",
     "husky": "^9.1.7",
     "nx": "20.3.2",
     "peggy": "^4.2.0",

@@ -1,6 +1,5 @@
 import { PromiseExecutor } from '@nx/devkit';
-import { readFileSync } from 'fs';
-import { globSync } from 'glob';
+import { globSync, readFileSync } from 'fs';
 import { basename } from 'path';
 
 import { ExportReport, ImportReport } from '../dead-code/executor';
