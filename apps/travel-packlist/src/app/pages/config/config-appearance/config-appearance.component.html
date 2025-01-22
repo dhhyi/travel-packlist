@@ -1,4 +1,13 @@
 <h2 i18n>Appearance</h2>
+<cmp-select-options label="Language" i18n-label [(ngModel)]="language">
+  <ng-template value="auto" i18n>auto</ng-template>
+  <ng-template value="en">
+    <app-flag-uk class="h-6 w-8" />
+  </ng-template>
+  <ng-template value="de">
+    <app-flag-germany class="h-6 w-8" />
+  </ng-template>
+</cmp-select-options>
 <cmp-select-options label="Theme" i18n-label [(ngModel)]="theme">
   <ng-template value="dark" i18n>Dark</ng-template>
   <ng-template value="light" i18n>Light</ng-template>
@@ -23,12 +32,9 @@
   <ng-template value="accessible" i18n>accessible</ng-template>
   <ng-template value="compact" i18n>compact</ng-template>
 </cmp-select-options>
-<cmp-select-options label="Language" i18n-label [(ngModel)]="language">
-  <ng-template value="auto" i18n>auto</ng-template>
-  <ng-template value="en">
-    <app-flag-uk class="h-6 w-8" />
-  </ng-template>
-  <ng-template value="de">
-    <app-flag-germany class="h-6 w-8" />
-  </ng-template>
-</cmp-select-options>
+<cmp-checkbox
+  id="animations"
+  label="Animations"
+  i18n-label
+  [(ngModel)]="animations"
+/>

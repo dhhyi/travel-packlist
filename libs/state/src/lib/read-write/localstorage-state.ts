@@ -28,6 +28,7 @@ const initialState = {
   refactorVariables: true,
   theme: 'system' as 'system' | 'light' | 'dark',
   fontSize: 'normal' as 'small' | 'normal' | 'large',
+  animations: true,
   accessibility: 'accessible' as 'accessible' | 'compact',
   language: 'auto' as 'auto' | SupportedLanguage,
   exportReminder: false,
@@ -117,6 +118,8 @@ export const localStorageState = (triggerReset: Signal<boolean>) => {
       fontSize: create('fontSize'),
       /** storage: the accessibility mode of the app */
       accessibility: create('accessibility'),
+      /** storage: animations enabled */
+      animations: create('animations'),
       /** storage: the language of the app */
       language: create('language'),
       /** storage: whether to remind the user to export the rules */

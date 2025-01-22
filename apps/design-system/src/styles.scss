@@ -117,7 +117,7 @@
     [role='checkbox'],
     [role='radio'],
     .accessible-content {
-      @apply min-h-[49px] min-w-[49px];
+      @apply h-[49px] min-w-[49px];
     }
   }
 }

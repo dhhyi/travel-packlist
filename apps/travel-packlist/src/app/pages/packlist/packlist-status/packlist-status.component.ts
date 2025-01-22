@@ -42,7 +42,7 @@ export class PacklistStatusComponent {
 
   constructor() {
     afterRender(() => {
-      this.animationDuration.set(this.facade.isAccessibleMode() ? 0 : 500);
+      this.animationDuration.set(this.facade.animationsEnabled() ? 500 : 0);
     });
   }
 }

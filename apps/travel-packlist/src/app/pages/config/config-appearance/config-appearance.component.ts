@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import {
   SelectOptionsComponent,
   SelectOptionDirective,
+  CheckboxComponent,
 } from '@travel-packlist/components';
 import { FlagGermanyComponent, FlagUkComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
@@ -18,6 +19,7 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
     SelectOptionDirective,
     FlagGermanyComponent,
     FlagUkComponent,
+    CheckboxComponent,
   ],
 })
 export class ConfigAppearanceComponent {
@@ -26,4 +28,5 @@ export class ConfigAppearanceComponent {
   language = this.state.config.language;
   fontSize = this.state.config.fontSize;
   accessibility = this.state.config.accessibility;
+  animations = this.state.config.animations;
 }

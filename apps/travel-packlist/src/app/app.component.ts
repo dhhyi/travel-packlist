@@ -124,9 +124,7 @@ export class AppComponent {
 
   constructor() {
     afterRender(() => {
-      this.disableAnimations.set(
-        this.state.config.accessibility() === 'accessible',
-      );
+      this.disableAnimations.set(!this.state.config.animations());
     });
   }
 

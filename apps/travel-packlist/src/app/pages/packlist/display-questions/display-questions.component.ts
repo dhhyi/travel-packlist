@@ -64,7 +64,7 @@ export class DisplayQuestionsComponent {
 
   constructor() {
     afterRender(() => {
-      this.animationsDisabled.set(this.facade.isAccessibleMode());
+      this.animationsDisabled.set(!this.facade.animationsEnabled());
     });
   }
 }

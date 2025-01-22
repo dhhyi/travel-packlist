@@ -26,6 +26,10 @@ test('config', async ({ page }) => {
     - button "Import Rules"
     - checkbox "Remind me to regularly export rules"
     - heading "Appearance" [level=2]
+    - radiogroup "Language":
+      - radio "auto" [checked]
+      - radio
+      - radio
     - radiogroup "Theme":
       - radio "Dark"
       - radio "Light"
@@ -37,10 +41,7 @@ test('config', async ({ page }) => {
     - radiogroup "Accessibility":
       - radio "accessible" [checked]
       - radio "compact"
-    - radiogroup "Language":
-      - radio "auto" [checked]
-      - radio
-      - radio
+    - checkbox "Animations" [checked]
     - heading "App Version" [level=2]
     - link /Current version is .+/
     - text: /built on .+/
