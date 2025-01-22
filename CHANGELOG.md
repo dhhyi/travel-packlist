@@ -1,3 +1,11 @@
+## [0.6.1](https://github.com/dhhyi/travel-packlist/compare/v0.6.0...v0.6.1) (2025-01-22)
+
+### Bug Fixes
+
+- add aria labels for language selection ([1ed7c43](https://github.com/dhhyi/travel-packlist/commit/1ed7c43bfe6ba576870d851a386036d8676657ee))
+- animations enabled by default ([c46a770](https://github.com/dhhyi/travel-packlist/commit/c46a770fad41c7c3d5c6a3c0eb012a08537fb951))
+- smoother page transition ([575cdab](https://github.com/dhhyi/travel-packlist/commit/575cdab05c00ae64dcebd915b8384113e21b1792))
+
 ## [0.6.0](https://github.com/dhhyi/travel-packlist/compare/v0.5.0...v0.6.0) (2025-01-16)
 
 ### Features
