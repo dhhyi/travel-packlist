@@ -738,7 +738,7 @@ select[disabled] {
   .accessible [role=checkbox],
   .accessible [role=radio],
   .accessible .accessible-content {
-  min-height: 49px;
+  height: 49px;
   min-width: 49px;
 }
 .pointer-events-none {
