@@ -29,9 +29,16 @@ import { DialogComponent } from './dialog/dialog.component';
 
 const slideTransition = animation(
   [
-    query(':enter, :leave', style({ position: 'fixed', width: '100%' }), {
-      optional: true,
-    }),
+    query(
+      ':enter, :leave',
+      style({
+        position: 'fixed',
+        width: `${(Math.min(window.innerWidth, 600) - 18).toFixed(0)}px`,
+      }),
+      {
+        optional: true,
+      },
+    ),
     query(':enter', style({ opacity: 0, transform: '{{ from }}' }), {
       optional: true,
     }),
