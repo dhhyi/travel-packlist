@@ -28,8 +28,8 @@ test('config', async ({ page }) => {
     - heading "Appearance" [level=2]
     - radiogroup "Language":
       - radio "auto" [checked]
-      - radio
-      - radio
+      - radio "English"
+      - radio "German"
     - radiogroup "Theme":
       - radio "Dark"
       - radio "Light"
