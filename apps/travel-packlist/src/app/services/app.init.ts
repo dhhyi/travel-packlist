@@ -25,6 +25,9 @@ export class AppInit {
     effect(() => {
       this.applyAccessibilityClass(this.state.config.accessibility());
     });
+    effect(() => {
+      this.applyAnimationClass(this.state.config.animations());
+    });
   }
 
   private applyTheme(theme: Themes | undefined) {
@@ -63,5 +66,9 @@ export class AppInit {
   private applyAccessibilityClass(clazz: 'accessible' | 'compact') {
     document.documentElement.classList.remove('accessible', 'compact');
     document.documentElement.classList.add(clazz);
+  }
+
+  private applyAnimationClass(value: boolean) {
+    document.documentElement.classList.toggle('animations', value);
   }
 }
