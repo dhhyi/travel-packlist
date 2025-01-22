@@ -1,5 +1,6 @@
 import { Executor } from '@nx/devkit';
 import { globSync, readFileSync, writeFileSync } from 'fs';
+import { createInterface } from 'readline/promises';
 
 import { ExecutorSchema } from './schema';
 
@@ -8,7 +9,6 @@ interface Translations {
   translations: Record<string, string>;
 }
 
-// eslint-disable-next-line @typescript-eslint/require-await
 const run: Executor<ExecutorSchema> = async (options) => {
   try {
     let errors = false;
@@ -24,22 +24,14 @@ const run: Executor<ExecutorSchema> = async (options) => {
       return { ...(JSON.parse(content) as Translations), file };
     });
 
-    translations.forEach((translation) => {
-      Object.keys(translation.translations).forEach((key) => {
+    for (const translation of translations) {
+      for (const key of Object.keys(translation.translations)) {
         if (!/^[0-9]+$/.test(key)) {
           console.warn(`Key "${key}" is not a number`);
           errors = true;
         }
-      });
-    });
-
-    translations.forEach((translation) => {
-      translation.translations = Object.fromEntries(
-        Object.entries(translation.translations)
-          .map(([key, value]) => [key.trim(), value.trim()] as const)
-          .toSorted(([k1], [k2]) => k1.localeCompare(k2)),
-      );
-    });
+      }
+    }
 
     const defaultLocale = translations.find(
       (t) => t.locale === options.defaultLocale,
@@ -51,50 +43,78 @@ const run: Executor<ExecutorSchema> = async (options) => {
 
     const defaultKeys = Object.keys(defaultLocale.translations);
 
-    translations
-      .filter((t) => t.locale !== options.defaultLocale)
-      .forEach((translation) => {
-        translation.translations = Object.fromEntries(
-          Object.entries(translation.translations).filter(([key]) => {
-            if (!defaultKeys.includes(key)) {
-              console.warn(`Key "${key}" not found in default locale`);
-              errors = true;
-              return false;
-            }
+    const nonDefaultTranslations = translations.filter(
+      (t) => t.locale !== options.defaultLocale,
+    );
 
-            return true;
-          }),
+    for (const translation of nonDefaultTranslations) {
+      translation.translations = Object.fromEntries(
+        Object.entries(translation.translations).filter(([key]) => {
+          if (!defaultKeys.includes(key)) {
+            console.warn(
+              `Key "${key}" not found in default locale -- removing`,
+            );
+            errors = true;
+            return false;
+          }
+
+          return true;
+        }),
+      );
+    }
+
+    for (const translation of nonDefaultTranslations) {
+      const currentTranslationKeys = Object.keys(translation.translations);
+      if (currentTranslationKeys.length !== defaultKeys.length) {
+        const missingKeys = defaultKeys.filter(
+          (key) => !currentTranslationKeys.includes(key),
         );
-      });
-
-    translations
-      .filter((t) => t.locale !== options.defaultLocale)
-      .forEach((translation) => {
-        const currentTranslationKeys = Object.keys(translation.translations);
-        if (currentTranslationKeys.length !== defaultKeys.length) {
-          const missingKeys = defaultKeys.filter(
-            (key) => !currentTranslationKeys.includes(key),
-          );
-          console.warn(
-            `Translation for locale "${translation.locale}" is incomplete. The following keys are missing:\n  ${missingKeys.map((key) => `${key}: ${defaultLocale.translations[key]}`).join('\n  ')}`,
-          );
-          errors = true;
+        console.warn(
+          `Translation for locale "${translation.locale}" is incomplete. The following keys are missing:\n  ${missingKeys.map((key) => `${key}: ${defaultLocale.translations[key]}`).join('\n  ')}`,
+        );
+        errors = true;
+        if (!process.env.CI) {
+          if (options.interactive) {
+            console.log(
+              `\nPlease provide translations for locale "${translation.locale}"!`,
+            );
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+            const rl = createInterface({
+              input: process.stdin,
+              output: process.stdout,
+            });
+            for (const key of missingKeys) {
+              console.log(
+                `\n${key} - ${defaultLocale.locale}: ${defaultLocale.translations[key]}`,
+              );
+              const input = await rl.question(translation.locale + ': ');
+              translation.translations[key] = input.trim();
+            }
+          } else {
+            console.log('\nRun with --interactive to fix the issues');
+          }
         }
-      });
+      }
+    }
 
-    translations.forEach((translation) => {
+    for (const translation of translations) {
+      const normalizedTranslations = Object.fromEntries(
+        Object.entries(translation.translations)
+          .map(([key, value]) => [key.trim(), value.trim()] as const)
+          .toSorted(([k1], [k2]) => k1.localeCompare(k2)),
+      );
       writeFileSync(
         translation.file,
         JSON.stringify(
           {
             locale: translation.locale,
-            translations: translation.translations,
+            translations: normalizedTranslations,
           },
           null,
           2,
         ) + '\n',
       );
-    });
+    }
 
     return { success: !errors };
   } catch (error) {

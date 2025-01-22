@@ -12,6 +12,11 @@
     "defaultLocale": {
       "type": "string",
       "description": "The default locale to use for the translations"
+    },
+    "interactive": {
+      "type": "boolean",
+      "description": "Whether to run the executor in interactive mode",
+      "default": false
     }
   },
   "required": [
