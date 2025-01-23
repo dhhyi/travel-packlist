@@ -118,4 +118,8 @@ jobs:
             dist/android/travel-packlist-$VERSION.aab \
             -t "Release $VERSION" \
             -F RELEASE-NOTES.md
-          cat RELEASE-NOTES.md | grep -oE 'patches \[#([0-9]+)\]' | grep -oE '[0-9]+' | xargs -rl gh issue close
+          cat RELEASE-NOTES.md | grep -oE 'closes \[#([0-9]+)\]' | grep -oE '[0-9]+' | xargs -rl gh issue close
+        # 'closes' is the wording in the release notes
+        # for adding a reference in the commit just use the #number without
+        # anything that automatically closes the issue
+        # (https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
