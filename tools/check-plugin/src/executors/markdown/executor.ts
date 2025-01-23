@@ -54,6 +54,8 @@ async function checkLinksInFile(file: string): Promise<void> {
       // link is not document-internal
       if (linkTo.startsWith('http')) {
         externalLinks.push(linkTo.replace(/\/$/, ''));
+      } else if (linkTo.startsWith('mailto:')) {
+        continue;
       } else {
         const normalized = path.normalize(
           path.join(path.dirname(file), linkTo),
