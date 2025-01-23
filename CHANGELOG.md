@@ -1,3 +1,9 @@
+## [0.6.2](https://github.com/dhhyi/travel-packlist/compare/v0.6.1...v0.6.2) (2025-01-23)
+
+### Bug Fixes
+
+- raw edit page invalidates standard rules ([a296348](https://github.com/dhhyi/travel-packlist/commit/a296348d968d95ecfa5dd9c589bd133dc6ae840e)), closes [#5](https://github.com/dhhyi/travel-packlist/issues/5)
+
 ## [0.6.1](https://github.com/dhhyi/travel-packlist/compare/v0.6.0...v0.6.1) (2025-01-22)
 
 ### Bug Fixes
