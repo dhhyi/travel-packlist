@@ -27,10 +27,7 @@ Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app depl
 
 As it is a PWA, you can also install it on your home screen for easy access.
 There is also an Android App available in the Play Store, which is currently in testing and not yet publicly available.
-However, you can [become a tester](https://play.google.com/apps/testing/dev.dhhyi).
-
-<!-- markdownlint-disable-next-line no-inline-html -->
-<p style="text-align: center;"><img src="./qr-code-testing.png" alt="QR Code for testing the Android App" style="width: 200px;"></p>
+However, you can [become a tester](mailto:danilo.hoffmann1+travel-packlist@googlemail.com?subject=Requesting%20Access%20to%20TravelPacklist%20Testing&body=Hi,%0A%0AI%20would%20like%20to%20get%20access%20to%20the%20Testing%20version%20of%20TravelPacklist.%0A%0AMy%20Google%20Account%20EMail%20for%20my%20Android%20Phone%20is:).
 
 Data is stored in your browser's local storage and not shared with any server.
 The app has an export and import feature to backup and restore your data wherever you like.

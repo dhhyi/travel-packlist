@@ -29,11 +29,7 @@ Verwende [diesen Link](https://dhhyi.github.io/travel-packlist/), um die auf Git
 
 Da es sich um eine PWA handelt, kannst du sie auch für einen einfachen Zugriff auf deinem Startbildschirm installieren.
 Es gibt auch eine Android-App im Play Store, die sich derzeit im Test befindet und noch nicht öffentlich verfügbar ist.
-Du kannst aber [Tester werden](https://play.google.com/apps/testing/dev.dhhyi).
-
-<!-- cSpell:words align -->
-<!-- markdownlint-disable-next-line no-inline-html -->
-<p style="text-align: center;"><img src="./qr-code-testing.png" alt="QR code zum Testen der Android App" style="width: 200px;"></p>
+Du kannst aber [Tester werden](mailto:danilo.hoffmann1+travel-packlist@googlemail.com?subject=Anfrage%20auf%20Zugang%20zur%20TravelPacklist%20Testversion&body=Hallo,%0A%0Aich%20möchte%20Zugang%20zur%20Testversion%20von%20TravelPacklist%20erhalten.%0A%0AMeine%20Google%20Konto%20E-Mail%20für%20mein%20Android-Telefon%20ist:).
 
 Daten werden im lokalen Speicher deines Browsers gespeichert und nicht mit einem Server geteilt.
 Die App verfügt über eine Export- und Importfunktion, um deine Daten zu sichern und wiederherzustellen.
