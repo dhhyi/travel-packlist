@@ -118,4 +118,4 @@ jobs:
             dist/android/travel-packlist-$VERSION.aab \
             -t "Release $VERSION" \
             -F RELEASE-NOTES.md
-          cat RELEASE-NOTES.md | grep -oE 'closes \[#([0-9]+)\]' | grep -oE '[0-9]+' | xargs -rl gh issue close
+          cat RELEASE-NOTES.md | grep -oE 'patches \[#([0-9]+)\]' | grep -oE '[0-9]+' | xargs -rl gh issue close
