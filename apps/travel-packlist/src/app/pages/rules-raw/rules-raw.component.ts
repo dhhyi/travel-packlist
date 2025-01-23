@@ -68,8 +68,9 @@ export class EditRulesRawComponent {
     );
     effect(() => {
       const value = ruleUpdates();
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.state.rules.raw.set(value!);
+      if (typeof value === 'string' && value !== this.state.rules.raw()) {
+        this.state.rules.raw.set(value);
+      }
     });
   }
 }
