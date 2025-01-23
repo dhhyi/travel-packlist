@@ -13,11 +13,7 @@ export const ruleParsing = ({
       const parsedRules = parser.parseRules(raw());
       return { parsedRules, ruleParserError: '' };
     } catch (error) {
-      if (error instanceof Error) {
-        console.warn(error.message);
-      } else {
-        console.error(error);
-      }
+      console.error(error);
       const errorText =
         error instanceof Error ? error.message : 'An unknown error occurred';
       return {
