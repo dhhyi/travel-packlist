@@ -136,6 +136,18 @@
         }
       }
     },
+    "@travel-packlist/check-plugin:tsconfig": {
+      "cache": true,
+      "defaultConfiguration": "pre-commit",
+      "configurations": {
+        "pre-commit": {
+          "fix": true
+        },
+        "ci": {
+          "fix": false
+        }
+      }
+    },
     "@travel-packlist/check-plugin:dead-code": {
       "dependsOn": [
         "generate"

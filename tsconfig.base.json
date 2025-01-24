@@ -58,9 +58,5 @@
         "tools/webapp-plugin/src/index.ts"
       ]
     }
-  },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  }
 }

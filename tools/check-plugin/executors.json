@@ -15,6 +15,10 @@
     "dead-code-summary": {
       "implementation": "./src/executors/dead-code-summary/executor",
       "schema": "./src/executors/dead-code-summary/schema.json"
+    },
+    "tsconfig": {
+      "implementation": "./src/executors/tsconfig/executor",
+      "schema": "./src/executors/tsconfig/schema.json"
     }
   }
 }
