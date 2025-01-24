@@ -1,10 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "types": [
-      "@angular/localize"
-    ]
-  },
   "exclude": [
     "src/**/*.spec.ts",
     "src/test-setup.ts",

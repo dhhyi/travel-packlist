@@ -1,3 +1,5 @@
+/// <reference types="@angular/localize" />
+
 export * from './lib/types';
 export * from './lib/parser';
 export { Refactor } from './lib/refactor';
