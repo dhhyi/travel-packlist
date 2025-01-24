@@ -2,8 +2,17 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "outDir": "dist/out-tsc",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
     "sourceMap": true,
-    "declaration": false,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -57,6 +66,19 @@
       "@travel-packlist/webapp-plugin": [
         "tools/webapp-plugin/src/index.ts"
       ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true,
+    "extendedDiagnostics": {
+      "defaultCategory": "error"
     }
   }
 }
