@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "include": [
-    "src/**/*.ts"
+    "playwright.config.ts",
+    "src/**/*.spec.ts"
   ]
 }

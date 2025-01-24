@@ -6,7 +6,7 @@ const typescriptRules = require('../../util/typescript-rules.js');
 module.exports = [
   playwright.configs['flat/recommended'],
   ...baseConfig,
-  ...typescriptRules(require.resolve('./tsconfig.json')),
+  ...typescriptRules(__dirname),
   {
     files: ['**/*.spec.ts'],
     rules: {

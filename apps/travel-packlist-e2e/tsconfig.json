@@ -1,14 +1,10 @@
 {
-  "compilerOptions": {
-    "allowJs": true,
-    "module": "commonjs",
-    "outDir": "../../dist/out-tsc",
-    "sourceMap": false
-  },
   "extends": "../../tsconfig.base.json",
-  "include": [
-    "**/*.ts",
-    "playwright.config.ts",
-    "src/**/*.spec.ts"
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.spec.json"
+    }
   ]
 }

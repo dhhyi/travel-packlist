@@ -1,17 +1,13 @@
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "resolveJsonModule": true
-  },
   "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
     {
-      "path": "./tsconfig.editor.json"
+      "path": "./tsconfig.app.json"
     },
     {
-      "path": "./tsconfig.app.json"
+      "path": "./tsconfig.editor.json"
     }
   ]
 }

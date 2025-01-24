@@ -1,9 +1,4 @@
 {
-  "compilerOptions": {
-    "types": [
-      "@angular/localize"
-    ]
-  },
   "exclude": [
     "jest.config.ts",
     "src/**/*.spec.ts",
