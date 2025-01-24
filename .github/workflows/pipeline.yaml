@@ -46,6 +46,12 @@ jobs:
       - name: Install Production Dependencies 📦
         run: pnpm install --frozen-lockfile --prod
 
+      - name: Restore Nx Cache
+        uses: actions/cache/restore@v4
+        with:
+          key: nx-${{ runner.os }}
+          path: .nx
+
       - name: Build Applications 🔧
         run: |
           pnpm exec nx run-many \
@@ -91,6 +97,12 @@ jobs:
           folder: dist/web
           branch: gh-pages
           clean: false
+
+      - name: Cache Nx
+        uses: actions/cache/save@v4
+        with:
+          path: .nx
+          key: nx-${{ runner.os }}
 
       - name: Check for Release 🧐
         id: check_release
