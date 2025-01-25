@@ -299,6 +299,7 @@ test('rule editor - swap', async ({ page }) => {
   `);
 
   await editor.rule(1).question(1).moveDownButton.click();
+
   await expect(editor.rule(1).question(1).question).toHaveValue(
     'Will it be rainy?',
   );
@@ -307,6 +308,7 @@ test('rule editor - swap', async ({ page }) => {
   );
 
   await editor.rule(1).item(2).moveUpButton.click();
+
   await expect(editor.rule(1).item(1).itemName).toHaveValue('boots');
   await expect(editor.rule(1).item(2).itemName).toHaveValue('umbrella');
 });
@@ -337,14 +339,18 @@ test('rule editor - search', async ({ page }) => {
   `);
 
   await editor.searchBox().fill('sunscreen');
+
   await expect(editor.rule(1).get).toBeHidden();
 
   await editor.clearSearchButton().click();
+
   await expect(editor.rule(1).get).toBeVisible();
 
   await editor.searchBox().fill('tent');
+
   await expect(editor.rule(1).get).toBeHidden();
 
   await editor.searchBox().fill('umbrella');
+
   await expect(editor.rule(1).get).toBeVisible();
 });

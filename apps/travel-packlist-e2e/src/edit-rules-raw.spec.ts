@@ -8,6 +8,7 @@ test('edit rules raw', async ({ page }) => {
     .then((p) => p.toRulesRawPage());
 
   await expect(rulesRaw.rawRules()).toBeVisible();
+
   await rulesRaw.rawRules().fill('');
 
   await expect(rulesRaw.parserState()).toHaveText(
@@ -32,7 +33,7 @@ test('edit rules raw', async ({ page }) => {
 
   const packlist = await rulesRaw.toPacklistPage();
 
-  packlist.question('Will it be sunny?', false).click();
+  await packlist.question('Will it be sunny?', false).click();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
@@ -52,6 +53,7 @@ test('edit rules raw with error', async ({ page }) => {
     .then((p) => p.toRulesRawPage());
 
   await expect(rulesRaw.rawRules()).toBeVisible();
+
   await rulesRaw.rawRules().fill(':- Will it be sunny? $sunny;');
 
   await expect(rulesRaw.parserState()).toHaveText(

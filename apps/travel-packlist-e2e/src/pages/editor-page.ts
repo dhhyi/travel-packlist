@@ -1,4 +1,3 @@
-import { type Page } from '@playwright/test';
 import { RuleModes } from '@travel-packlist/state';
 
 import { Banner } from './banner';
@@ -6,10 +5,6 @@ import { ConfigPage } from './config-page';
 import { PacklistPage } from './packlist-page';
 
 export class EditorPage extends Banner {
-  constructor(page: Page) {
-    super(page);
-  }
-
   get toolbar() {
     return this.page.getByRole('toolbar');
   }
@@ -38,7 +33,7 @@ export class EditorPage extends Banner {
 
   rule(num: number) {
     const rule = this.page.getByRole('group', {
-      name: `Rule #${num}`,
+      name: `Rule #${num.toString()}`,
       exact: true,
     });
     return {
@@ -50,15 +45,17 @@ export class EditorPage extends Banner {
             .locator(this.page.getByRole('combobox', { name: 'variable' }))
             .nth(num - 1),
         noErrors: new Promise<boolean>((resolve) => {
-          setTimeout(
-            async () =>
-              await rule
-                .locator(this.page.getByRole('alert'))
-                .waitFor({ state: 'hidden' })
-                .then(() => resolve(true))
-                .catch(() => resolve(false)),
-            100,
-          );
+          setTimeout(() => {
+            rule
+              .locator(this.page.getByRole('alert'))
+              .waitFor({ state: 'hidden' })
+              .then(() => {
+                resolve(true);
+              })
+              .catch(() => {
+                resolve(false);
+              });
+          }, 100);
         }),
       },
       question: (num: number) => {
@@ -92,14 +89,16 @@ export class EditorPage extends Banner {
             .nth(num - 1),
           errors,
           noErrors: new Promise<boolean>((resolve) => {
-            setTimeout(
-              async () =>
-                await errors
-                  .waitFor({ state: 'hidden' })
-                  .then(() => resolve(true))
-                  .catch(() => resolve(false)),
-              100,
-            );
+            setTimeout(() => {
+              errors
+                .waitFor({ state: 'hidden' })
+                .then(() => {
+                  resolve(true);
+                })
+                .catch(() => {
+                  resolve(false);
+                });
+            }, 100);
           }),
         };
       },
@@ -130,14 +129,16 @@ export class EditorPage extends Banner {
             .nth(num - 1),
           errors,
           noErrors: new Promise<boolean>((resolve) => {
-            setTimeout(
-              async () =>
-                await errors
-                  .waitFor({ state: 'hidden' })
-                  .then(() => resolve(true))
-                  .catch(() => resolve(false)),
-              100,
-            );
+            setTimeout(() => {
+              errors
+                .waitFor({ state: 'hidden' })
+                .then(() => {
+                  resolve(true);
+                })
+                .catch(() => {
+                  resolve(false);
+                });
+            }, 100);
           }),
         };
       },

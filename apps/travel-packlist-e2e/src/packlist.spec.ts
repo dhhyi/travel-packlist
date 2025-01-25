@@ -61,6 +61,7 @@ test('click items', async ({ page }) => {
   const config = await packlist.toConfigPage();
 
   await config.resetChecklistButton().click();
+
   await expect(config.dialog()).toBeVisible();
 
   await expect(config.dialog()).toMatchAriaSnapshot(`
@@ -71,6 +72,7 @@ test('click items', async ({ page }) => {
   `);
 
   await config.dialog.confirm().click();
+
   await expect(config.dialog()).toBeHidden();
 
   await config.toPacklistPage();

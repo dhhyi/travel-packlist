@@ -28,8 +28,11 @@ test('export status - changed rules', async ({ page }) => {
   );
 
   await config.resetApplicationButton().click();
+
   await expect(config.dialog()).toBeVisible();
+
   await config.dialog.confirm().click();
+
   await expect(config.dialog()).toBeHidden();
 
   await expect(config.exportNeededAlert()).toBeHidden();

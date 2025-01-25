@@ -4,6 +4,7 @@ import { startWithRules } from './pages';
 
 test('empty rules', async ({ page }) => {
   await startWithRules(page, '');
+
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - paragraph:
@@ -17,6 +18,7 @@ test('empty rules', async ({ page }) => {
 
 test('empty rule', async ({ page }) => {
   await startWithRules(page, ':-');
+
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - paragraph:
@@ -30,6 +32,7 @@ test('empty rule', async ({ page }) => {
 
 test('rule without items', async ({ page }) => {
   await startWithRules(page, ':- Will it be sunny? $sunny');
+
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - checkbox "Will it be sunny?"

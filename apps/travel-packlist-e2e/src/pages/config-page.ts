@@ -1,15 +1,9 @@
-import { type Page } from '@playwright/test';
-
 import { Banner } from './banner';
 import { EditorPage } from './editor-page';
 import { PacklistPage } from './packlist-page';
 import { RulesRawPage } from './rules-raw-page';
 
 export class ConfigPage extends Banner {
-  constructor(page: Page) {
-    super(page);
-  }
-
   async toPacklistPage() {
     await this.banner().click();
     return new PacklistPage(this.page);

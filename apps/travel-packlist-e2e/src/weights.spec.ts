@@ -16,6 +16,7 @@ test('weight tracking', async ({ page }) => {
   const config = await packlist.toConfigPage();
 
   await config.trackItemWeight().check();
+
   await expect(config.trackItemWeight()).toBeChecked();
 
   await config.toPacklistPage();
