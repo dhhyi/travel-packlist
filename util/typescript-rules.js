@@ -1,9 +1,23 @@
 const eslint = require('@eslint/js');
 const jest = require('eslint-plugin-jest');
+const { existsSync, statSync } = require('fs');
 const tseslint = require('typescript-eslint');
 
-const rules = (tsconfig) =>
-  tseslint.config(
+const rules = (tsConfigOrFolder) => {
+  let tsconfig;
+  if (statSync(tsConfigOrFolder).isDirectory()) {
+    tsconfig = ['lib', 'app', 'spec']
+      .map((name) => `${tsConfigOrFolder}/tsconfig.${name}.json`)
+      .filter(existsSync);
+    if (tsconfig.length === 0) {
+      throw new Error(`No tsconfig files found in ${tsConfigOrFolder}`);
+    } else if (tsconfig.length === 1) {
+      tsconfig = tsconfig[0];
+    }
+  } else {
+    tsconfig = tsConfigOrFolder;
+  }
+  return tseslint.config(
     {
       extends: [
         eslint.configs.recommended,
@@ -50,5 +64,6 @@ const rules = (tsconfig) =>
       },
     }
   );
+};
 
 module.exports = rules;

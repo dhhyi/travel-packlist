@@ -1,15 +1,30 @@
 const angular = require('angular-eslint');
+const { existsSync, statSync } = require('fs');
 const tseslint = require('typescript-eslint');
 
 const defaultOptions = {
-  prefix: 'app',
+  prefix: 'unset',
 };
 
-const rules = (tsconfig, options) => {
+const rules = (tsConfigOrFolder, options) => {
+  let tsconfig;
+  if (statSync(tsConfigOrFolder).isDirectory()) {
+    tsconfig = ['lib', 'app', 'spec']
+      .map((name) => `${tsConfigOrFolder}/tsconfig.${name}.json`)
+      .filter(existsSync);
+    if (tsconfig.length === 0) {
+      throw new Error(`No tsconfig files found in ${tsConfigOrFolder}`);
+    } else if (tsconfig.length === 1) {
+      tsconfig = tsconfig[0];
+    }
+  } else {
+    tsconfig = tsConfigOrFolder;
+  }
   const config = {
     ...defaultOptions,
     ...options,
   };
+  console.log(__dirname);
   console.log('config', config);
   console.log('tsconfig', tsconfig);
   return tseslint.config(

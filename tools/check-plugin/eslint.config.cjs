@@ -6,7 +6,7 @@ const typescriptRules = require('../../util/typescript-rules.js');
 module.exports = [
   includeIgnoreFile(require.resolve('./.gitignore')),
   ...baseConfig,
-  ...typescriptRules(require.resolve('./tsconfig.lib.json')),
+  ...typescriptRules(__dirname),
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {

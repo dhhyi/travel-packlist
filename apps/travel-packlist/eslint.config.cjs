@@ -4,6 +4,6 @@ const typescriptRules = require('../../util/typescript-rules');
 
 module.exports = [
   ...baseConfig,
-  ...typescriptRules(require.resolve('./tsconfig.app.json')),
-  ...angularRules(require.resolve('./tsconfig.app.json')),
+  ...typescriptRules(__dirname),
+  ...angularRules(__dirname, { prefix: 'app' }),
 ];
