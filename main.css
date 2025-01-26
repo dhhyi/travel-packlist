@@ -1400,7 +1400,7 @@ select[disabled] {
     padding-bottom: var(--safe-area-inset-bottom, 0.5rem) !important;
   }
 .p-content-safe-bottom {
-    padding-bottom: calc(var(--safe-area-inset-bottom, 0) + 3.5rem) !important;
+    padding-bottom: calc(var(--safe-area-inset-bottom, 0.5rem) + 3.5rem) !important;
   }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
