@@ -19,10 +19,6 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-      - name: Get current date
-        id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
       - name: Checkout 🛎️
         uses: actions/checkout@v4
         with:
@@ -50,13 +46,29 @@ jobs:
       - name: Install Production Dependencies 📦
         run: pnpm install --frozen-lockfile --prod
 
+      - name: Get Git Hashes
+        id: git
+        run: |
+          echo "hash0=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+          echo "hash1=$(git rev-parse HEAD~1)" >> $GITHUB_OUTPUT
+          echo "hash2=$(git rev-parse HEAD~2)" >> $GITHUB_OUTPUT
+          echo "hash3=$(git rev-parse HEAD~3)" >> $GITHUB_OUTPUT
+          echo "hash4=$(git rev-parse HEAD~4)" >> $GITHUB_OUTPUT
+          echo "hash5=$(git rev-parse HEAD~5)" >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
       - name: Nx Cache
         uses: actions/cache@v4
         with:
-          key: nx-${{ runner.os }}-${{ steps.date.outputs.date }}-${{ github.run_id }}
+          key: nx-${{ runner.os }}-${{ steps.git.outputs.hash0 }}
           path: .nx
           restore-keys: |
-            nx-${{ runner.os }}-${{ steps.date.outputs.date }}
+            nx-${{ runner.os }}-${{ steps.git.outputs.hash0 }}
+            nx-${{ runner.os }}-${{ steps.git.outputs.hash1 }}
+            nx-${{ runner.os }}-${{ steps.git.outputs.hash2 }}
+            nx-${{ runner.os }}-${{ steps.git.outputs.hash3 }}
+            nx-${{ runner.os }}-${{ steps.git.outputs.hash4 }}
+            nx-${{ runner.os }}-${{ steps.git.outputs.hash5 }}
             nx-${{ runner.os }}
 
       - name: Build Applications 🔧
