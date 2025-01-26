@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
 @layer base {
   html {
@@ -52,7 +50,7 @@
   }
 
   button {
-    @apply flex items-center justify-center rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
+    @apply flex items-center justify-center rounded-sm bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
 
     &[disabled] {
       @apply bg-disabled cursor-not-allowed text-gray-500;
@@ -75,7 +73,7 @@
     }
 
     &.active {
-      @apply ring ring-slate-800 dark:ring-slate-200;
+      @apply ring-3 ring-slate-800 dark:ring-slate-200;
     }
 
     &.highlighted {
