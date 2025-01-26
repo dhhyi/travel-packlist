@@ -6,6 +6,12 @@ const config: CapacitorConfig = {
   },
   appId: 'dev.dhhyi',
   appName: 'TravelPacklist',
+  plugins: {
+    SafeArea: {
+      customColorsForSystemBars: false,
+      enabled: true,
+    },
+  },
   webDir: 'dist/web-android',
 };
 

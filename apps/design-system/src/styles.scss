@@ -153,4 +153,18 @@
   .text-checked-item {
     @apply text-slate-600 line-through dark:text-slate-400;
   }
+
+  .p-safe-top {
+    padding-top: var(--safe-area-inset-top, 0.5rem) !important;
+  }
+
+  .p-safe-bottom {
+    padding-bottom: var(--safe-area-inset-bottom, 0.5rem) !important;
+  }
+
+  .p-content-safe-bottom {
+    padding-bottom: calc(
+      var(--safe-area-inset-bottom, 0.5rem) + 3.5rem
+    ) !important;
+  }
 }
