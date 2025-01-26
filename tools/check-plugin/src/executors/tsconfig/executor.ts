@@ -29,7 +29,9 @@ class Context {
     this.projectRoot =
       context.projectsConfigurations.projects[context.projectName!].root;
 
-    this.tsConfigs = globSync(options.pattern);
+    this.tsConfigs = globSync(options.pattern).map((p) =>
+      p.replace(/\\/g, '/'),
+    );
   }
 
   allConfigs(): Iterator<string> {
