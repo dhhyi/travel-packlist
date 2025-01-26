@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "types": [
+      "jest"
+    ]
+  },
+  "extends": "./tsconfig.json",
+  "files": [
+    "src/test-setup.ts"
+  ],
+  "include": [
+    "jest.config.ts",
+    "src/**/*.spec.ts"
+  ]
+}
