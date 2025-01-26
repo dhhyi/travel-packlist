@@ -1,22 +1,34 @@
 {
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "extendedDiagnostics": {
+      "defaultCategory": "error"
+    },
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
+    "baseUrl": ".",
+    "declaration": true,
+    "declarationMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "target": "ESNext",
-    "module": "ESNext",
+    "inlineSources": true,
     "lib": [
-      "ESNext",
-      "DOM"
+      "DOM",
+      "ESNext"
     ],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "outDir": "dist/out-tsc",
     "paths": {
       "@travel-packlist/capacitor-assets": [
         "tools/capacitor-assets/src/index.ts"
@@ -57,6 +69,12 @@
       "@travel-packlist/webapp-plugin": [
         "tools/webapp-plugin/src/index.ts"
       ]
-    }
+    },
+    "rootDir": ".",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext"
   }
 }

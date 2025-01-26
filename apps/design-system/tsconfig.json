@@ -1,27 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true
   },
+  "extends": "../../tsconfig.base.json",
   "files": [],
   "include": [],
   "references": [
     {
       "path": "./storybook/tsconfig.json"
     }
-  ],
-  "extends": "../../tsconfig.base.json",
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
+  ]
 }

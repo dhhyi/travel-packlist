@@ -1,23 +1,18 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "target": "ESNext",
     "types": [
+      "@angular/localize",
       "jest",
-      "node",
-      "@angular/localize"
+      "node"
     ]
   },
+  "extends": "./tsconfig.json",
   "files": [
     "src/test-setup.ts"
   ],
   "include": [
     "jest.config.ts",
-    "src/**/*.test.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts",
-    "src/index.ts"
+    "src/**/*.spec.ts"
   ]
 }
