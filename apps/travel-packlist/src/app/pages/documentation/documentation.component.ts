@@ -34,7 +34,7 @@ import { RULES_DOCUMENTATION } from '@travel-packlist/rules-documentation';
     }
 
     pre {
-      @apply mx-2 my-0 rounded bg-gray-300 p-2 font-mono dark:bg-gray-700;
+      @apply mx-2 my-0 rounded-sm bg-gray-300 p-2 font-mono dark:bg-gray-700;
     }
 
     code {
