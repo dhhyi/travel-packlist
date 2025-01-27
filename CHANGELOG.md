@@ -1,3 +1,9 @@
+## [0.6.4](https://github.com/dhhyi/travel-packlist/compare/v0.6.3...v0.6.4) (2025-01-27)
+
+### Bug Fixes
+
+- repair status bar overlay after capacitor upgrade ([55bce29](https://github.com/dhhyi/travel-packlist/commit/55bce298399b8f30bb43f5543c809e7449437246))
+
 ## [0.6.3](https://github.com/dhhyi/travel-packlist/compare/v0.6.2...v0.6.3) (2025-01-26)
 
 ## [0.6.2](https://github.com/dhhyi/travel-packlist/compare/v0.6.1...v0.6.2) (2025-01-23)
