@@ -1394,13 +1394,13 @@ select[disabled] {
   color: rgb(148 163 184 / var(--tw-text-opacity, 1));
 }
 .p-safe-top {
-    padding-top: var(--safe-area-inset-top, 0.5rem) !important;
+    padding-top: calc(var(--safe-area-inset-top) + 0.5rem) !important;
   }
 .p-safe-bottom {
-    padding-bottom: var(--safe-area-inset-bottom, 0.5rem) !important;
+    padding-bottom: calc(var(--safe-area-inset-bottom) + 0.5rem) !important;
   }
 .p-content-safe-bottom {
-    padding-bottom: calc(var(--safe-area-inset-bottom, 0.5rem) + 3.5rem) !important;
+    padding-bottom: calc(var(--safe-area-inset-bottom) + 3.5rem) !important;
   }
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
