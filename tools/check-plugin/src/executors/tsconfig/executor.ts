@@ -180,15 +180,42 @@ function check(this: Context, tsConfigPath: string) {
 
   if (
     this.projectRoot.startsWith('libs/') &&
-    tsConfigPath.endsWith('/tsconfig.lib.json') &&
-    tsConfig.include &&
-    (tsConfig.include.length !== 1 || tsConfig.include[0] !== 'src/**/*.ts')
+    tsConfigPath.endsWith('/tsconfig.lib.json')
   ) {
-    console.error(
-      'include should be set to ["src/**/*.ts"] for tsconfig.lib.json',
+    if (
+      tsConfig.include &&
+      (tsConfig.include.length !== 1 || tsConfig.include[0] !== 'src/**/*.ts')
+    ) {
+      console.error(
+        'include should be set to ["src/**/*.ts"] for tsconfig.lib.json',
+      );
+      this.fixableErrors++;
+      tsConfig.include = ['src/**/*.ts'];
+    }
+    const testFilePatterns = globSync(
+      '{jest.config.ts,src/test-setup.ts,src/**/*.spec.ts}',
+      { cwd: dirname(tsConfigPath) },
     );
-    this.fixableErrors++;
-    tsConfig.include = ['src/**/*.ts'];
+    if (testFilePatterns.length > 0) {
+      if (!tsConfig.exclude) {
+        tsConfig.exclude = [];
+      }
+      if (!tsConfig.exclude.includes('src/**/*.spec.ts')) {
+        console.error('exclude should include src/**/*.spec.ts');
+        this.fixableErrors++;
+        tsConfig.exclude.push('src/**/*.spec.ts');
+      }
+      if (!tsConfig.exclude.includes('jest.config.ts')) {
+        console.error('exclude should include jest.config.ts');
+        this.fixableErrors++;
+        tsConfig.exclude.push('jest.config.ts');
+      }
+      if (!tsConfig.exclude.includes('src/test-setup.ts')) {
+        console.error('exclude should include src/test-setup.ts');
+        this.fixableErrors++;
+        tsConfig.exclude.push('src/test-setup.ts');
+      }
+    }
   }
 
   if (tsConfigPath.endsWith('/tsconfig.spec.json')) {
