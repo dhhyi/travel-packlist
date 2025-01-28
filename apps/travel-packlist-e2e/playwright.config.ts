@@ -24,7 +24,7 @@ export default defineConfig({
       },
     },
   ],
-  reporter: [['html', { host: '0.0.0.0', outputFolder: 'dist/e2e' }]],
+  reporter: [['list'], ['html', { host: '0.0.0.0', outputFolder: 'dist/e2e' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
