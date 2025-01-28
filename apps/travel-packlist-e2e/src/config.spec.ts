@@ -41,7 +41,7 @@ test('config', async ({ page }) => {
     - radiogroup "Accessibility":
       - radio "accessible" [checked]
       - radio "compact"
-    - checkbox "Animations" [checked]
+    - checkbox "Animations" [checked=false]
     - heading "App Version" [level=2]
     - link /Current version is .+/
     - text: /built on .+/

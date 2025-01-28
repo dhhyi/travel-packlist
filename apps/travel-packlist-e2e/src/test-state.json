@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:4200",
+      "localStorage": [
+        {
+          "name": "state",
+          "value": "{\"animations\":false}"
+        }
+      ]
+    }
+  ]
+}
