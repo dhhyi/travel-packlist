@@ -1,3 +1,9 @@
+## [0.6.5](https://github.com/dhhyi/travel-packlist/compare/v0.6.4...v0.6.5) (2025-01-28)
+
+### Bug Fixes
+
+- do not track error pages in browser history ([c3af35e](https://github.com/dhhyi/travel-packlist/commit/c3af35e903b00098d2d7059c47158037cf1896da)), closes [#6](https://github.com/dhhyi/travel-packlist/issues/6)
+
 ## [0.6.4](https://github.com/dhhyi/travel-packlist/compare/v0.6.3...v0.6.4) (2025-01-27)
 
 ### Bug Fixes
