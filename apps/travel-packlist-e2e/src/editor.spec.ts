@@ -9,7 +9,7 @@ test('rule editor - empty', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View" [checked]
@@ -31,7 +31,7 @@ test('rule editor - view', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View" [checked]
@@ -69,9 +69,9 @@ test('rule editor - edit', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await editor.mode('edit').click();
+  await editor.toolbar.mode('edit').click();
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View"
@@ -119,9 +119,9 @@ test('rule editor - delete', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await editor.mode('delete').click();
+  await editor.toolbar.mode('delete').click();
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View"
@@ -185,9 +185,9 @@ test('rule editor - cut-paste', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await editor.mode('cut-paste').click();
+  await editor.toolbar.mode('cut-paste').click();
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View"
@@ -223,7 +223,9 @@ test('rule editor - cut-paste', async ({ page }) => {
       - button "paste from clipboard"
   `);
 
-  await expect(editor.clipboard).toHaveText('Clipboard: 1 Item and 1 Question');
+  await expect(editor.toolbar.clipboard()).toHaveText(
+    'Clipboard: 1 Item and 1 Question',
+  );
 
   await editor.rule(2).pasteButton.click();
 
@@ -247,7 +249,7 @@ test('rule editor - cut-paste', async ({ page }) => {
       - button "paste from clipboard"
   `);
 
-  await expect(editor.clipboard).toBeHidden();
+  await expect(editor.toolbar.clipboard()).toBeHidden();
 });
 
 test('rule editor - swap', async ({ page }) => {
@@ -260,9 +262,9 @@ test('rule editor - swap', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await editor.mode('swap').click();
+  await editor.toolbar.mode('swap').click();
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View"
@@ -323,9 +325,9 @@ test('rule editor - search', async ({ page }) => {
     .toConfigPage()
     .then((page) => page.toEditorPage());
 
-  await editor.mode('search').click();
+  await editor.toolbar.mode('search').click();
 
-  await expect(editor.toolbar).toMatchAriaSnapshot(`
+  await expect(editor.toolbar()).toMatchAriaSnapshot(`
     - toolbar:
       - radiogroup "Editor Mode":
         - radio "View"
@@ -338,19 +340,19 @@ test('rule editor - search', async ({ page }) => {
       - button "clear search"
   `);
 
-  await editor.searchBox().fill('sunscreen');
+  await editor.toolbar.searchBox().fill('sunscreen');
 
   await expect(editor.rule(1).get).toBeHidden();
 
-  await editor.clearSearchButton().click();
+  await editor.toolbar.clearSearchButton().click();
 
   await expect(editor.rule(1).get).toBeVisible();
 
-  await editor.searchBox().fill('tent');
+  await editor.toolbar.searchBox().fill('tent');
 
   await expect(editor.rule(1).get).toBeHidden();
 
-  await editor.searchBox().fill('umbrella');
+  await editor.toolbar.searchBox().fill('umbrella');
 
   await expect(editor.rule(1).get).toBeVisible();
 });

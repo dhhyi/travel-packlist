@@ -7,7 +7,29 @@ import { RulesRawPage } from './rules-raw-page';
 
 export class EditorPage extends Banner {
   get toolbar() {
-    return this.page.getByRole('toolbar');
+    const toolbar = this.page.getByRole('toolbar');
+    const fn = function () {
+      return toolbar;
+    };
+    fn.mode = (mode: RuleModes) => {
+      return this.page.getByRole('radio', {
+        name: new RegExp(mode.replace(/[^a-z]/g, '.*'), 'i'),
+      });
+    };
+    fn.searchBox = () => {
+      return toolbar.locator(this.page.getByRole('searchbox'));
+    };
+    fn.clearSearchButton = () => {
+      return toolbar.locator(
+        this.page.getByRole('button', { name: 'clear search' }),
+      );
+    };
+    fn.clipboard = () => {
+      return this.page
+        .getByRole('status')
+        .and(this.page.getByLabel('clipboard'));
+    };
+    return fn;
   }
 
   get error() {
@@ -26,26 +48,6 @@ export class EditorPage extends Banner {
       return new RulesRawPage(this.page);
     };
     return fn;
-  }
-
-  mode(mode: RuleModes) {
-    return this.page.getByRole('radio', {
-      name: new RegExp(mode.replace(/[^a-z]/g, '.*'), 'i'),
-    });
-  }
-
-  searchBox() {
-    return this.toolbar.locator(this.page.getByRole('searchbox'));
-  }
-
-  clearSearchButton() {
-    return this.toolbar.locator(
-      this.page.getByRole('button', { name: 'clear search' }),
-    );
-  }
-
-  get clipboard() {
-    return this.page.getByRole('status').and(this.page.getByLabel('clipboard'));
   }
 
   addRuleButton = this.page.getByRole('button', { name: 'add rule' });

@@ -9,7 +9,7 @@ test('export status - default rules', async ({ page }) => {
 
   const editor = await config.toEditorPage();
 
-  await editor.mode('delete').click();
+  await editor.toolbar.mode('delete').click();
   await editor.rule(1).deleteButton.click();
 
   await editor.toConfigPage();

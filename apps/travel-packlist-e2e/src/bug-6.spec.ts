@@ -31,5 +31,5 @@ test('bug #6', async ({ page }) => {
   await page.goBack();
 
   await expect(editor.error()).toBeHidden();
-  await expect(editor.toolbar).toBeVisible();
+  await expect(editor.toolbar()).toBeVisible();
 });
