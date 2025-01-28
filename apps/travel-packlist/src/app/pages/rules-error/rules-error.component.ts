@@ -1,12 +1,22 @@
-import { Component, input, ChangeDetectionStrategy } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  Component,
+  input,
+  ChangeDetectionStrategy,
+  inject,
+} from '@angular/core';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-error',
-  imports: [RouterLink],
   templateUrl: './rules-error.component.html',
 })
 export class RulesErrorComponent {
   readonly error = input<string>();
+
+  private state = inject(GLOBAL_STATE);
+
+  goToRawEditor() {
+    this.state.router.go('rules-raw');
+  }
 }

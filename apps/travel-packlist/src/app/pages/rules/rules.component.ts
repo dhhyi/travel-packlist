@@ -5,7 +5,6 @@ import {
   computed,
   signal,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { IconSwapComponent } from '@travel-packlist/icons';
 import {
   Refactor,
@@ -21,12 +20,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
-  imports: [
-    EditorRuleComponent,
-    ToolbarComponent,
-    IconSwapComponent,
-    RouterLink,
-  ],
+  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
@@ -139,5 +133,9 @@ export class RulesComponent {
     );
 
     this.updateRules(rules);
+  }
+
+  goToPacklist() {
+    this.state.router.go('packlist');
   }
 }

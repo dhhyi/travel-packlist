@@ -1,5 +1,5 @@
 <h2 i18n>Rules Editor</h2>
-<button i18n type="button" routerLink="/rules">Edit Rules</button>
+<button i18n type="button" (click)="go('rules')">Edit Rules</button>
 <cmp-checkbox
   id="rules-debug-mode"
   label="Fade out disabled rules in editor"
@@ -18,5 +18,7 @@
   i18n-label
   [(ngModel)]="refactorVariables"
 />
-<button i18n type="button" routerLink="/documentation">Documentation</button>
-<button i18n type="button" routerLink="/rules-raw">Edit Rules with Code</button>
+<button i18n type="button" (click)="go('documentation')">Documentation</button>
+<button i18n type="button" (click)="go('rules-raw')">
+  Edit Rules with Code
+</button>

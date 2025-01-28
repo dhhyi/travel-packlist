@@ -70,6 +70,15 @@ const navigation = {
   packlist(this: NavThis) {
     void this.router.navigate(['/packlist']);
   },
+  rules(this: NavThis) {
+    void this.router.navigate(['/rules']);
+  },
+  documentation(this: NavThis) {
+    void this.router.navigate(['/documentation']);
+  },
+  'rules-raw'(this: NavThis) {
+    void this.router.navigate(['/rules-raw']);
+  },
   'rules->edit'(this: NavThis) {
     void this.router.navigate(['/rules']).then(() => {
       this.rulesMode.set('edit');

@@ -69,7 +69,11 @@
 }
 
 @if (goToPacklistButtonVisible()) {
-  <a class="fixed bottom-2 right-2 z-50" routerLink="/packlist">
+  <a
+    class="fixed bottom-2 right-2 z-50"
+    aria-hidden="true"
+    (click)="goToPacklist()"
+  >
     <img alt="application icon" i18n-alt src="icon.svg" class="h-12" />
   </a>
 }

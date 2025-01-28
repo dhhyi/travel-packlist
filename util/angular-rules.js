@@ -122,6 +122,11 @@ const rules = (tsConfigOrFolder, options) => {
                 message: 'Do not use ngStyle, use [style] instead.',
                 name: '@angular/common',
               },
+              {
+                importNames: ['RouterLink'],
+                message: 'Do not use routerLink, use router state instead.',
+                name: '@angular/router',
+              },
             ],
             patterns: [
               {
