@@ -1,5 +1,4 @@
 import { computed, inject, Injectable, Signal } from '@angular/core';
-import { Router } from '@angular/router';
 import { Item, Question, serializeWeight } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
@@ -14,7 +13,6 @@ interface CategoryView {
 
 @Injectable({ providedIn: 'root' })
 export class PacklistFacade {
-  private router = inject(Router);
   private state = inject(GLOBAL_STATE);
 
   readonly animationsEnabled = this.state.config.animations;
@@ -138,14 +136,12 @@ export class PacklistFacade {
 
   trackWeight = this.state.config.trackWeight;
 
-  goToRulesEdit = () => {
-    void this.router.navigate(['/rules']).then(() => {
-      this.state.router.rulesMode.set('edit');
-    });
+  goToConfigImport = () => {
+    this.state.router.go('config#import');
   };
 
-  goToConfigImport = () => {
-    void this.router.navigate(['/config'], { fragment: 'import' });
+  goToRulesEdit = () => {
+    this.state.router.go('rules->edit');
   };
 }
 

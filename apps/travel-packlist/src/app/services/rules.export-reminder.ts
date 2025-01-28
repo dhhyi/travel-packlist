@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter, identity, interval, map, switchMap, tap } from 'rxjs';
 
@@ -7,7 +6,6 @@ import { confirm } from '../dialog';
 
 @Injectable({ providedIn: 'root' })
 export class RulesExportReminder {
-  private router = inject(Router);
   private state = inject(GLOBAL_STATE);
   private exportNeeded = this.state.rules.exportNeeded;
   private reminderActive = this.state.config.exportReminder;
@@ -36,7 +34,7 @@ export class RulesExportReminder {
         filter(identity),
       )
       .subscribe(() => {
-        void this.router.navigate(['/config'], { fragment: 'export-now' });
+        this.state.router.go('config#export');
       });
   }
 

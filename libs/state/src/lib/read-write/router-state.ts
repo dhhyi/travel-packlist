@@ -1,4 +1,5 @@
 import { inject, WritableSignal, signal, effect, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
@@ -60,13 +61,44 @@ const createSignal = <K extends keyof State>(
   return manualState;
 };
 
+interface NavThis {
+  router: Router;
+  rulesMode: WritableSignal<RuleModes>;
+}
+
+const navigation = {
+  packlist(this: NavThis) {
+    void this.router.navigate(['/packlist']);
+  },
+  'rules->edit'(this: NavThis) {
+    void this.router.navigate(['/rules']).then(() => {
+      this.rulesMode.set('edit');
+    });
+  },
+  'config#import'(this: NavThis) {
+    void this.router.navigate(['/config'], { fragment: 'import' });
+  },
+  'config#export'(this: NavThis) {
+    void this.router.navigate(['/config'], { fragment: 'export-now' });
+  },
+};
+
 export const routerState = (triggerReset: Signal<boolean>) => {
+  const router = inject(Router);
+  const route = inject(ActivatedRoute);
+  const rulesMode = createSignal('rulesMode', triggerReset);
   return {
     router: {
       /** router: mode of the editor */
-      rulesMode: createSignal('rulesMode', triggerReset),
+      rulesMode,
       /** router: filter query for rules in editor */
       filterRulesQuery: createSignal('filterRulesQuery', triggerReset),
+      /** router read-only: current fragment */
+      fragment: toSignal(route.fragment) as Signal<string | undefined>,
+      /** router: navigate to a page */
+      go: (page: keyof typeof navigation) => {
+        navigation[page].call({ router, rulesMode });
+      },
     },
   };
 };

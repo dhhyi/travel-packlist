@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { RESET_SWITCH } from '@travel-packlist/state';
+import { GLOBAL_STATE, RESET_SWITCH } from '@travel-packlist/state';
 
 import { confirm } from '../../../dialog';
 
@@ -11,9 +10,8 @@ import { confirm } from '../../../dialog';
   styleUrl: '../config-section.scss',
 })
 export class ConfigDangerzoneComponent {
-  private router = inject(Router);
-
   private reset = inject(RESET_SWITCH);
+  private state = inject(GLOBAL_STATE);
 
   async resetEverything() {
     if (
@@ -22,7 +20,7 @@ export class ConfigDangerzoneComponent {
       )
     ) {
       this.reset();
-      await this.router.navigate(['/packlist']);
+      this.state.router.go('packlist');
     }
   }
 }

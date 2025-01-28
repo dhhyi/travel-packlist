@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import {
   CheckboxComponent,
   SelectOptionsComponent,
@@ -24,7 +23,6 @@ import { ConfigFacade } from '../config.facade';
   ],
 })
 export class ConfigChecklistComponent {
-  private router = inject(Router);
   private state = inject(GLOBAL_STATE);
   private facade = inject(ConfigFacade);
 
@@ -36,7 +34,7 @@ export class ConfigChecklistComponent {
       await confirm($localize`Are you sure you want to reset the checklist?`)
     ) {
       this.facade.resetChecklist();
-      await this.router.navigate(['/packlist']);
+      this.state.router.go('packlist');
     }
   }
 }
