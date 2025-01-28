@@ -3,10 +3,29 @@ import { RuleModes } from '@travel-packlist/state';
 import { Banner } from './banner';
 import { ConfigPage } from './config-page';
 import { PacklistPage } from './packlist-page';
+import { RulesRawPage } from './rules-raw-page';
 
 export class EditorPage extends Banner {
   get toolbar() {
     return this.page.getByRole('toolbar');
+  }
+
+  get error() {
+    const error = this.page.getByRole('alert');
+    const fn = function () {
+      return error;
+    };
+    fn.goToRulesRaw = async () => {
+      await error
+        .locator(
+          this.page
+            .getByRole('button')
+            .and(this.page.getByLabel('fix error in raw editor')),
+        )
+        .click();
+      return new RulesRawPage(this.page);
+    };
+    return fn;
   }
 
   mode(mode: RuleModes) {

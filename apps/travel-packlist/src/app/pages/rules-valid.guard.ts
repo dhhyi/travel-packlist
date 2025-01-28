@@ -8,8 +8,10 @@ export const rulesValid: CanActivateFn = () => {
 
   const error = state.rules.parserError();
   if (error) {
-    return router.createUrlTree(['/rules-error'], {
+    const targetUrl = router.getCurrentNavigation()?.finalUrl;
+    return router.navigate(['/rules-error'], {
       queryParams: { error },
+      browserUrl: targetUrl,
     });
   } else {
     return true;
