@@ -80,8 +80,12 @@ describe('state builder', () => {
         })
         .derive((state) => {
           const d = computed(() => state.group.c() * state.group.a());
+          const randomize = () => {
+            state.group.a.set(10);
+            state.group.b.set(20);
+          };
           return {
-            group: { d },
+            group: { d, randomize },
           };
         });
 
@@ -106,6 +110,11 @@ describe('state builder', () => {
 
       expect(state.group.c()).toBe(0);
       expect(state.group.d()).toBe(0);
+
+      state.group.randomize();
+
+      expect(state.group.c()).toBe(30);
+      expect(state.group.d()).toBe(300);
     }));
   });
 });
