@@ -1,0 +1,37 @@
+:-
+   a $a,
+   b $b,
+   c $c;
+
+a :-
+   [rules] 1: a;
+
+NOT a :-
+   [rules] 2: NOT a;
+
+a AND b :-
+   [rules] 3: a AND b;
+
+NOT a AND b :-
+   [rules] 4: NOT a AND b;
+
+NOT a AND NOT b :-
+   [rules] 5: NOT a AND NOT b;
+
+a OR c :-
+   [rules] 6: a OR c;
+
+a OR NOT c :-
+   [rules] 7: a OR NOT c;
+
+NOT a OR NOT c :-
+   [rules] 8: NOT a OR NOT c;
+
+a AND b OR c :-
+   [rules] 9: a AND b OR c;
+
+NOT a AND b OR NOT c :-
+   [rules] 10: NOT a AND b OR NOT c;
+
+NOT a AND b OR NOT c AND a OR NOT b AND c :-
+   [rules] 11: NOT a AND b OR NOT c AND a OR NOT b AND c;
