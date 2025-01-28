@@ -63,6 +63,7 @@ module.exports = [
     rules: {
       curly: 'error',
       'no-duplicate-imports': 'error',
+      'object-shorthand': 'error',
       'perfectionist/sort-imports': 'error',
     },
   },
