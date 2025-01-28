@@ -89,9 +89,6 @@ export class ConfigFacade {
   }
 
   resetChecklist() {
-    this.state.packlist.answers.set({});
-    this.state.packlist.checkedItems.set([]);
-    this.state.packlist.collapsedCategories.set([]);
-    this.state.packlist.answersLocked.set(false);
+    this.state.packlist.reset();
   }
 }

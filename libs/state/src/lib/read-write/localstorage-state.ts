@@ -84,6 +84,10 @@ export const localStorageState = (triggerReset: Signal<boolean>) => {
     rawRules.set(newRules === template ? undefined : newRules);
   });
 
+  const answers = create('answers');
+  const checkedItems = create('checkedItems');
+  const collapsedCategories = create('collapsedCategories');
+  const answersLocked = create('answersLocked');
   return {
     rules: {
       /** storage: raw rules or default template */
@@ -93,13 +97,20 @@ export const localStorageState = (triggerReset: Signal<boolean>) => {
     },
     packlist: {
       /** storage: the answers from checked questions in the packlist */
-      answers: create('answers'),
+      answers,
       /** storage: the checked items in the packlist */
-      checkedItems: create('checkedItems'),
+      checkedItems,
       /** storage: the categories that are collapsed in the packlist */
-      collapsedCategories: create('collapsedCategories'),
+      collapsedCategories,
       /** storage: whether to lock the answers in the packlist */
-      answersLocked: create('answersLocked'),
+      answersLocked,
+      /** reset the packlist sub state */
+      reset: () => {
+        answers.set(initialState.answers);
+        checkedItems.set(initialState.checkedItems);
+        collapsedCategories.set(initialState.collapsedCategories);
+        answersLocked.set(initialState.answersLocked);
+      },
     },
     config: {
       /** storage: how to sort categories in the packlist */

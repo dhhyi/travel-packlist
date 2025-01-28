@@ -3,10 +3,6 @@ import { Router } from '@angular/router';
 import { Item, Question, serializeWeight } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
-function serialize(item: Pick<Item, 'category' | 'name'>): string {
-  return `${item.category}-${item.name}`;
-}
-
 interface CategoryView {
   name: string;
   checked: number;
@@ -29,7 +25,7 @@ export class PacklistFacade {
   private collapsedCategories = this.state.packlist.collapsedCategories;
 
   readonly numberOfCheckedItems = computed(() => {
-    const activeItems = this.state.active.items().map(serialize);
+    const activeItems = this.state.active.items();
     return this.checkedItems().filter((item) => activeItems.includes(item))
       .length;
   });
@@ -38,14 +34,7 @@ export class PacklistFacade {
     return this.collapsedCategories().includes(category);
   }
 
-  toggleCheckedItem = (item: Parameters<typeof serialize>[0]) => {
-    const serialized = serialize(item);
-    if (this.checkedItems().includes(serialized)) {
-      this.checkedItems.update((old) => old.filter((i) => i !== serialized));
-    } else {
-      this.checkedItems.update((old) => [...old, serialized]);
-    }
-  };
+  toggleCheckedItem = this.state.packlist.toggleCheckedItem;
 
   toggleCategoryCollapse = (category: string) => {
     if (this.collapsedCategories().includes(category)) {
@@ -86,9 +75,9 @@ export class PacklistFacade {
           category: item.category,
           name: item.name,
           weight: item.weight,
-          checked: checkedItems.includes(serialize(item)),
+          checked: checkedItems.includes(item),
         });
-        if (checkedItems.includes(serialize(item))) {
+        if (checkedItems.includes(item)) {
           groups[item.category].checked++;
           groups[item.category].checkedWeight += item.weight ?? 0;
         }

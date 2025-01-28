@@ -4,6 +4,8 @@ import { Refactor } from '@travel-packlist/model';
 import { LocalStorageState } from '../read-write/localstorage-state';
 import { RuleParsing } from './rule-parsing';
 
+export type RuleAnalysis = ReturnType<typeof ruleAnalysis>;
+
 export const ruleAnalysis = ({
   rules: { parsed: parsedRules },
   packlist: { answers },

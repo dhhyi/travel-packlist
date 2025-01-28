@@ -5,6 +5,7 @@ import { routerState } from './read-write/router-state';
 import { sessionState } from './read-write/session-state';
 import { transientState } from './read-write/transient-state';
 import { browserState } from './readonly/browser-state';
+import { elevateCheckedItems } from './readonly/elevate-checked-items';
 import { ruleAnalysis } from './readonly/rule-analysis';
 import { ruleParsing } from './readonly/rule-parsing';
 import { StateBuilder } from './state-builder';
@@ -19,7 +20,8 @@ function buildState() {
     .extend(transientState)
     .derive(browserState)
     .derive(ruleParsing)
-    .derive(ruleAnalysis);
+    .derive(ruleAnalysis)
+    .derive(elevateCheckedItems);
 }
 
 const STATE_BUILDER = new InjectionToken<ReturnType<typeof buildState>>(
