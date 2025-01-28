@@ -8,6 +8,10 @@ permissions:
   issues: write
 jobs:
   build-and-deploy:
+    environment:
+      # this environment is added here to provide a link to the design system on the GitHub project page
+      name: design-system
+      url: https://dhhyi.github.io/travel-packlist/index.design.html
     concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
