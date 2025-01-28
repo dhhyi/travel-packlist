@@ -73,7 +73,7 @@ const run: Executor<ExecutorSchema> = async (options) => {
           `Translation for locale "${translation.locale}" is incomplete. The following keys are missing:\n  ${missingKeys.map((key) => `${key}: ${defaultLocale.translations[key]}`).join('\n  ')}`,
         );
         errors = true;
-        if (!process.env.CI) {
+        if (!process.env['CI']) {
           if (options.interactive) {
             console.log(
               `\nPlease provide translations for locale "${translation.locale}"!`,

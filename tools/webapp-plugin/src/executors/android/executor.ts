@@ -94,18 +94,18 @@ function buildAPK(options: ExecutorSchema) {
 function buildAAB(options: ExecutorSchema) {
   console.log('Building AAB...');
 
-  if (!process.env.RELEASE_KEYSTORE) {
+  if (!process.env['RELEASE_KEYSTORE']) {
     throw new Error('RELEASE_KEYSTORE environment variable is not set');
   }
-  if (!process.env.RELEASE_KEYSTORE_PASSWORD) {
+  if (!process.env['RELEASE_KEYSTORE_PASSWORD']) {
     throw new Error(
       'RELEASE_KEYSTORE_PASSWORD environment variable is not set',
     );
   }
-  if (!process.env.RELEASE_KEYSTORE_ALIAS) {
+  if (!process.env['RELEASE_KEYSTORE_ALIAS']) {
     throw new Error('RELEASE_KEYSTORE_ALIAS environment variable is not set');
   }
-  if (!process.env.RELEASE_KEYSTORE_ALIAS_PASSWORD) {
+  if (!process.env['RELEASE_KEYSTORE_ALIAS_PASSWORD']) {
     throw new Error(
       'RELEASE_KEYSTORE_ALIAS_PASSWORD environment variable is not set',
     );
@@ -113,15 +113,15 @@ function buildAAB(options: ExecutorSchema) {
 
   writeFileSync(
     `${options.outputPath}/release.jks`,
-    Buffer.from(process.env.RELEASE_KEYSTORE, 'base64'),
+    Buffer.from(process.env['RELEASE_KEYSTORE'], 'base64'),
   );
 
   const command = [
     'npx cap build android',
     `--keystorepath "release.jks"`,
-    `--keystorepass ${process.env.RELEASE_KEYSTORE_PASSWORD}`,
-    `--keystorealias ${process.env.RELEASE_KEYSTORE_ALIAS}`,
-    `--keystorealiaspass ${process.env.RELEASE_KEYSTORE_ALIAS_PASSWORD}`,
+    `--keystorepass ${process.env['RELEASE_KEYSTORE_PASSWORD']}`,
+    `--keystorealias ${process.env['RELEASE_KEYSTORE_ALIAS']}`,
+    `--keystorealiaspass ${process.env['RELEASE_KEYSTORE_ALIAS_PASSWORD']}`,
     '--androidreleasetype AAB',
   ];
 

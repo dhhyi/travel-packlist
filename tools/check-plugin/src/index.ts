@@ -57,7 +57,12 @@ function createMarkdownLint(markdownFilePath: string, options?: object) {
               ...options,
               pattern: `${projectRoot}/*.md`,
             },
-            inputs: ['default', '{projectRoot}/*.md'],
+            inputs: [
+              'default',
+              '{projectRoot}/*.md',
+              '{workspaceRoot}/tools/check-plugin/src/index.ts',
+              '{workspaceRoot}/tools/check-plugin/src/executors/markdown/executor.ts',
+            ],
           },
         },
       },
@@ -79,7 +84,6 @@ function createTSConfigLint(tsConfigFilePath: string) {
     return {
       projects: {
         [projectRoot]: {
-          implicitDependencies: ['check-plugin'],
           targets: {
             tsconfiglint: {
               executor: '@travel-packlist/check-plugin:tsconfig',
@@ -101,7 +105,6 @@ function createTSConfigLint(tsConfigFilePath: string) {
     return {
       projects: {
         [projectRoot]: {
-          implicitDependencies: ['check-plugin'],
           targets: {
             tsconfiglint: {
               executor: '@travel-packlist/check-plugin:tsconfig',

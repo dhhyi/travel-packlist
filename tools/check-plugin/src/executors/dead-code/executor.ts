@@ -410,7 +410,6 @@ function writeExportReport(this: Context) {
     writeFileSync(reportPath, JSON.stringify(report, null, 2), {
       encoding: 'utf-8',
     });
-    return exportTokens;
   }
 }
 
@@ -436,6 +435,7 @@ function writeImportReport(this: Context) {
                 return [module, name] as const;
               });
             }
+            return undefined;
           })
           .filter((x) => !!x);
       })
