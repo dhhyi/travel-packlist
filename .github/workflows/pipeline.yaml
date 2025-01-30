@@ -95,7 +95,7 @@ jobs:
           echo "running affected for $noOfCommits commits"
           pnpm exec nx affected \
             --configuration ci \
-            -t test,lint,format,e2e,dead-code,tsconfiglint \
+            -t test,lint,format,e2e,dead-code,tsconfiglint,build \
             --base=HEAD~$noOfCommits \
             --head=HEAD
 
