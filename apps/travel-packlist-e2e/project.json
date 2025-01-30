@@ -7,7 +7,8 @@
     "scope:testing"
   ],
   "implicitDependencies": [
-    "travel-packlist"
+    "travel-packlist",
+    "webapp-plugin"
   ],
   "targets": {
     "lint": {
