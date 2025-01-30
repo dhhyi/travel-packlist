@@ -27,9 +27,7 @@
           "APK"
         ]
       },
-      "default": [
-        "APK"
-      ]
+      "default": []
     },
     "targetSdkVersion": {
       "type": "number",
