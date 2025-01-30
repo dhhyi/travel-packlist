@@ -65,13 +65,11 @@ jobs:
           key: nx-${{ runner.os }}-${{ steps.git.outputs.hash0 }}
           path: .nx
           restore-keys: |
-            nx-${{ runner.os }}-${{ steps.git.outputs.hash0 }}
             nx-${{ runner.os }}-${{ steps.git.outputs.hash1 }}
             nx-${{ runner.os }}-${{ steps.git.outputs.hash2 }}
             nx-${{ runner.os }}-${{ steps.git.outputs.hash3 }}
             nx-${{ runner.os }}-${{ steps.git.outputs.hash4 }}
             nx-${{ runner.os }}-${{ steps.git.outputs.hash5 }}
-            nx-${{ runner.os }}
 
       - name: Build Applications 🔧
         run: |
