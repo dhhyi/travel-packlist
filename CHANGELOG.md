@@ -1,3 +1,5 @@
+## [0.6.7](https://github.com/dhhyi/travel-packlist/compare/v0.6.6...v0.6.7) (2025-01-30)
+
 ## [0.6.6](https://github.com/dhhyi/travel-packlist/compare/v0.6.5...v0.6.6) (2025-01-30)
 
 ### Bug Fixes
