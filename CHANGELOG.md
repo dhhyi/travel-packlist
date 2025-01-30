@@ -1,3 +1,9 @@
+## [0.6.6](https://github.com/dhhyi/travel-packlist/compare/v0.6.5...v0.6.6) (2025-01-30)
+
+### Bug Fixes
+
+- toolbar and buttons on editor are reachable again on Android ([8632d3d](https://github.com/dhhyi/travel-packlist/commit/8632d3d42cc36e627221002b39a8cd7f950cab78))
+
 ## [0.6.5](https://github.com/dhhyi/travel-packlist/compare/v0.6.4...v0.6.5) (2025-01-28)
 
 ### Bug Fixes
