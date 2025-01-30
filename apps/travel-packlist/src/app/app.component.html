@@ -29,14 +29,14 @@
 </nav>
 
 <div
-  class="p-content-safe-bottom flex grow flex-col"
+  class="flex grow flex-col pb-[3.5rem]"
   [@routeTransition]="hierarchy()"
   [@.disabled]="disableAnimations()"
   [inert]="overlayVisible()"
 >
   <router-outlet />
   <div
-    class="p-safe-bottom fixed bottom-2 left-1/2 -translate-x-1/2"
+    class="fixed bottom-2 left-1/2 -translate-x-1/2"
     [class.hidden]="!scrollTopVisible()"
   >
     <button

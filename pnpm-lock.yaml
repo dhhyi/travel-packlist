@@ -47,9 +47,6 @@ importers:
       '@angular/service-worker':
         specifier: ~19.1.4
         version: 19.1.4(@angular/core@19.1.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1)
-      '@capacitor-community/safe-area':
-        specifier: 7.0.0-alpha.1
-        version: 7.0.0-alpha.1(@capacitor/core@7.0.1)
       '@capacitor/android':
         specifier: ^7.0.1
         version: 7.0.1(@capacitor/core@7.0.1)
@@ -1158,11 +1155,6 @@ packages:
 
   '@blakeembrey/template@1.2.0':
     resolution: {integrity: sha512-w/63nURdkRPpg3AXbNr7lPv6HgOuVDyefTumiXsbXxtIwcuk5EXayWR5OpSwDjsQPgaYsfUSedMduaNOjAYY8A==}
-
-  '@capacitor-community/safe-area@7.0.0-alpha.1':
-    resolution: {integrity: sha512-N6ktkRiofqrt+N/vQzh4jcWY8IzJ4TVw1tKAPssvbddWFTyZzXzSdBeX/l/nracJF0PZqmLdA7JYTBfnOxXQYw==}
-    peerDependencies:
-      '@capacitor/core': '>=7.0.0'
 
   '@capacitor/android@7.0.1':
     resolution: {integrity: sha512-jukJJHfkcyEBOkFBJRD3EwXMIIQo7lSv0ExPWgsIliPdGXLAj6ElvK2JaYEzec3vKyLc4RTNFVv0PMEU0vnImg==}
@@ -11482,10 +11474,6 @@ snapshots:
   '@blakeembrey/deque@1.0.5': {}
 
   '@blakeembrey/template@1.2.0': {}
-
-  '@capacitor-community/safe-area@7.0.0-alpha.1(@capacitor/core@7.0.1)':
-    dependencies:
-      '@capacitor/core': 7.0.1
 
   '@capacitor/android@7.0.1(@capacitor/core@7.0.1)':
     dependencies:
