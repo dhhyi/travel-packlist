@@ -11,18 +11,8 @@ import {
 import { execSync } from 'child_process';
 import { existsSync, writeFileSync } from 'fs';
 
-import {
-  moveFile,
-  removeDirectoryRecursive,
-  updateFile,
-} from '../../file-operations';
+import { moveFile, updateFile } from '../../file-operations';
 import { ExecutorSchema } from './schema';
-
-function cleanOutputPath(outputPath: string) {
-  if (existsSync(outputPath)) {
-    removeDirectoryRecursive(outputPath);
-  }
-}
 
 async function buildAssembly(
   context: ExecutorContext,
@@ -43,9 +33,38 @@ async function prepareAndroidProject(
   context: ExecutorContext,
   options: ExecutorSchema,
 ) {
-  ['telemetry off', 'add android', 'sync'].forEach((command) => {
-    execSync(`npx cap ${command}`, { stdio: 'inherit' });
-  });
+  if (!existsSync(options.outputPath)) {
+    execSync('pnpm cap telemetry off', { stdio: 'inherit' });
+    execSync('pnpm cap add android', { stdio: 'inherit' });
+
+    const buildGradlePath = `${options.outputPath}/app/build.gradle`;
+    if (!existsSync(buildGradlePath)) {
+      throw new Error('app/build.gradle not found in the output path');
+    }
+    updateFile(buildGradlePath, (content) => {
+      const versionName = getPackageJsonVersion();
+      const versionCode = getVersionCode();
+      return content
+        .replace(/versionName ".*"/, `versionName "${versionName}"`)
+        .replace(/versionCode \d+/, `versionCode ${versionCode.toString()}`);
+    });
+
+    const targetSdkVersion = options.targetSdkVersion;
+    if (typeof targetSdkVersion === 'number') {
+      const variablesGradlePath = `${options.outputPath}/variables.gradle`;
+      if (!existsSync(variablesGradlePath)) {
+        throw new Error('variables.gradle not found in the output path');
+      }
+      updateFile(variablesGradlePath, (content) => {
+        return content.replace(
+          /targetSdkVersion = \d+/,
+          `targetSdkVersion = ${targetSdkVersion.toString()}`,
+        );
+      });
+    }
+  }
+
+  execSync('pnpm cap sync', { stdio: 'inherit' });
 
   for await (const s of await runExecutor(
     {
@@ -59,32 +78,6 @@ async function prepareAndroidProject(
     if (!s.success) {
       throw new Error('Error while running asset task');
     }
-  }
-
-  const buildGradlePath = `${options.outputPath}/app/build.gradle`;
-  if (!existsSync(buildGradlePath)) {
-    throw new Error('app/build.gradle not found in the output path');
-  }
-  updateFile(buildGradlePath, (content) => {
-    const versionName = getPackageJsonVersion();
-    const versionCode = getVersionCode();
-    return content
-      .replace(/versionName ".*"/, `versionName "${versionName}"`)
-      .replace(/versionCode \d+/, `versionCode ${versionCode.toString()}`);
-  });
-
-  const targetSdkVersion = options.targetSdkVersion;
-  if (typeof targetSdkVersion === 'number') {
-    const variablesGradlePath = `${options.outputPath}/variables.gradle`;
-    if (!existsSync(variablesGradlePath)) {
-      throw new Error('variables.gradle not found in the output path');
-    }
-    updateFile(variablesGradlePath, (content) => {
-      return content.replace(
-        /targetSdkVersion = \d+/,
-        `targetSdkVersion = ${targetSdkVersion.toString()}`,
-      );
-    });
   }
 }
 
@@ -150,8 +143,6 @@ function buildAAB(options: ExecutorSchema) {
 }
 
 async function android(options: ExecutorSchema, context: ExecutorContext) {
-  cleanOutputPath(options.outputPath);
-
   await buildAssembly(context, options);
   await prepareAndroidProject(context, options);
 
