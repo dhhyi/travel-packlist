@@ -30,6 +30,10 @@
       "default": [
         "APK"
       ]
+    },
+    "targetSdkVersion": {
+      "type": "number",
+      "description": "The target SDK version for the application"
     }
   },
   "required": [

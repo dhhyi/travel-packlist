@@ -72,6 +72,20 @@ async function prepareAndroidProject(
       .replace(/versionName ".*"/, `versionName "${versionName}"`)
       .replace(/versionCode \d+/, `versionCode ${versionCode.toString()}`);
   });
+
+  const targetSdkVersion = options.targetSdkVersion;
+  if (typeof targetSdkVersion === 'number') {
+    const variablesGradlePath = `${options.outputPath}/variables.gradle`;
+    if (!existsSync(variablesGradlePath)) {
+      throw new Error('variables.gradle not found in the output path');
+    }
+    updateFile(variablesGradlePath, (content) => {
+      return content.replace(
+        /targetSdkVersion = \d+/,
+        `targetSdkVersion = ${targetSdkVersion.toString()}`,
+      );
+    });
+  }
 }
 
 function buildAPK(options: ExecutorSchema) {
