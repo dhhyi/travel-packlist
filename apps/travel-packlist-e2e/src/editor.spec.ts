@@ -42,15 +42,15 @@ test('rule editor - view', async ({ page }) => {
         - radio "Search"
   `);
 
-  await expect(editor.rule(1).condition.get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1).condition()).toMatchAriaSnapshot(`
     - group "condition": IF NOT rainy
   `);
-  await expect(editor.rule(1).question(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1).question(1)()).toMatchAriaSnapshot(`
     - group "question":
       - textbox "question" [disabled]: Will it be sunny?
       - textbox "variable" [disabled]: sunny
   `);
-  await expect(editor.rule(1).item(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1).item(1)()).toMatchAriaSnapshot(`
     - group "item":
       - combobox "category" [disabled]:
         - option "tool" [selected]
@@ -82,7 +82,7 @@ test('rule editor - edit', async ({ page }) => {
         - radio "Search"
   `);
 
-  await expect(editor.rule(1).condition.get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1).condition()).toMatchAriaSnapshot(`
     - group "condition":
       - text: IF NOT
       - combobox:
@@ -95,12 +95,12 @@ test('rule editor - edit', async ({ page }) => {
         - option "REMOVE"
       - button "reset condition"
   `);
-  await expect(editor.rule(1).question(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1).question(1)()).toMatchAriaSnapshot(`
     - group "question":
       - textbox "question": Will it be sunny?
       - textbox "variable": sunny
   `);
-  await expect(editor.rule(1).item(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1).item(1)()).toMatchAriaSnapshot(`
     - group "item":
       - combobox "category":
         - option "tool" [selected]
@@ -132,7 +132,7 @@ test('rule editor - delete', async ({ page }) => {
         - radio "Search"
   `);
 
-  await expect(editor.rule(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
       - group "condition": IF NOT rainy
       - group "question":
@@ -148,9 +148,9 @@ test('rule editor - delete', async ({ page }) => {
       - button "delete rule"
   `);
 
-  await editor.rule(1).question(1).deleteButton.click();
+  await editor.rule(1).question(1).deleteButton().click();
 
-  await expect(editor.rule(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
       - group "condition": IF NOT rainy
       - group "item":
@@ -162,17 +162,17 @@ test('rule editor - delete', async ({ page }) => {
       - button "delete rule"
   `);
 
-  await editor.rule(1).item(1).deleteButton.click();
+  await editor.rule(1).item(1).deleteButton().click();
 
-  await expect(editor.rule(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
       - group "condition": IF NOT rainy
       - button "delete rule"
   `);
 
-  await editor.rule(1).deleteButton.click();
+  await editor.rule(1).deleteButton().click();
 
-  await expect(editor.rule(1).get).toBeHidden();
+  await expect(editor.rule(1)()).toBeHidden();
 });
 
 test('rule editor - cut-paste', async ({ page }) => {
@@ -198,7 +198,7 @@ test('rule editor - cut-paste', async ({ page }) => {
         - radio "Search"
   `);
 
-  await expect(editor.rule(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
       - group "condition": IF NOT rainy
       - group "question":
@@ -214,10 +214,10 @@ test('rule editor - cut-paste', async ({ page }) => {
       - button "paste from clipboard"
   `);
 
-  await editor.rule(1).question(1).cutButton.click();
-  await editor.rule(1).item(1).cutButton.click();
+  await editor.rule(1).question(1).cutButton().click();
+  await editor.rule(1).item(1).cutButton().click();
 
-  await expect(editor.rule(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
       - group "condition": IF NOT rainy
       - button "paste from clipboard"
@@ -227,9 +227,9 @@ test('rule editor - cut-paste', async ({ page }) => {
     'Clipboard: 1 Item and 1 Question',
   );
 
-  await editor.rule(2).pasteButton.click();
+  await editor.rule(2).pasteButton().click();
 
-  await expect(editor.rule(2).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(2)()).toMatchAriaSnapshot(`
     - 'group "Rule #2"':
       - group "condition": IF NOT sunny
       - group "question":
@@ -275,7 +275,7 @@ test('rule editor - swap', async ({ page }) => {
         - radio "Search"
   `);
 
-  await expect(editor.rule(1).get).toMatchAriaSnapshot(`
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
       - group "condition": IF always
       - button "move question down"
@@ -300,19 +300,19 @@ test('rule editor - swap', async ({ page }) => {
       - button "move item up"
   `);
 
-  await editor.rule(1).question(1).moveDownButton.click();
+  await editor.rule(1).question(1).moveDownButton().click();
 
-  await expect(editor.rule(1).question(1).question).toHaveValue(
+  await expect(editor.rule(1).question(1).question()).toHaveValue(
     'Will it be rainy?',
   );
-  await expect(editor.rule(1).question(2).question).toHaveValue(
+  await expect(editor.rule(1).question(2).question()).toHaveValue(
     'Will it be sunny?',
   );
 
-  await editor.rule(1).item(2).moveUpButton.click();
+  await editor.rule(1).item(2).moveUpButton().click();
 
-  await expect(editor.rule(1).item(1).itemName).toHaveValue('boots');
-  await expect(editor.rule(1).item(2).itemName).toHaveValue('umbrella');
+  await expect(editor.rule(1).item(1).itemName()).toHaveValue('boots');
+  await expect(editor.rule(1).item(2).itemName()).toHaveValue('umbrella');
 });
 
 test('rule editor - search', async ({ page }) => {
@@ -342,17 +342,17 @@ test('rule editor - search', async ({ page }) => {
 
   await editor.toolbar.searchBox().fill('sunscreen');
 
-  await expect(editor.rule(1).get).toBeHidden();
+  await expect(editor.rule(1)()).toBeHidden();
 
   await editor.toolbar.clearSearchButton().click();
 
-  await expect(editor.rule(1).get).toBeVisible();
+  await expect(editor.rule(1)()).toBeVisible();
 
   await editor.toolbar.searchBox().fill('tent');
 
-  await expect(editor.rule(1).get).toBeHidden();
+  await expect(editor.rule(1)()).toBeHidden();
 
   await editor.toolbar.searchBox().fill('umbrella');
 
-  await expect(editor.rule(1).get).toBeVisible();
+  await expect(editor.rule(1)()).toBeVisible();
 });

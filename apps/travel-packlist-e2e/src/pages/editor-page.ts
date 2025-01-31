@@ -57,18 +57,79 @@ export class EditorPage extends Banner {
       name: `Rule #${num.toString()}`,
       exact: true,
     });
-    return {
-      get: rule,
-      condition: {
-        get: rule.locator(this.page.getByRole('group', { name: 'condition' })),
-        variable: (num: number) =>
+    const condition = rule.locator(
+      this.page.getByRole('group', { name: 'condition' }),
+    );
+    const ruleFn = function () {
+      return rule;
+    };
+    ruleFn.addQuestionButton = () =>
+      rule.locator(this.page.getByRole('button', { name: 'add question' }));
+    ruleFn.addItemButton = () =>
+      rule.locator(this.page.getByRole('button', { name: 'add item' }));
+    ruleFn.deleteButton = () =>
+      rule.locator(this.page.getByRole('button', { name: 'delete rule' }));
+    ruleFn.pasteButton = () =>
+      rule.locator(
+        this.page.getByRole('button', { name: 'paste from clipboard' }),
+      );
+    const ruleConditionFn = function () {
+      return condition;
+    };
+    ruleConditionFn.variable = (num: number) =>
+      rule
+        .locator(this.page.getByRole('combobox', { name: 'variable' }))
+        .nth(num - 1);
+    ruleConditionFn.noErrors = () =>
+      new Promise<boolean>((resolve) => {
+        setTimeout(() => {
           rule
-            .locator(this.page.getByRole('combobox', { name: 'variable' }))
-            .nth(num - 1),
-        noErrors: new Promise<boolean>((resolve) => {
+            .locator(this.page.getByRole('alert'))
+            .waitFor({ state: 'hidden' })
+            .then(() => {
+              resolve(true);
+            })
+            .catch(() => {
+              resolve(false);
+            });
+        }, 100);
+      });
+    ruleFn.condition = ruleConditionFn;
+    ruleFn.question = (num: number) => {
+      const question = rule.locator(
+        this.page.getByRole('group', { name: 'question' }).nth(num - 1),
+      );
+      const errors = question.locator(this.page.getByRole('alert'));
+      const fn = function () {
+        return question;
+      };
+      fn.variable = () =>
+        question.locator(this.page.getByRole('textbox', { name: 'variable' }));
+      fn.question = () =>
+        question.locator(this.page.getByRole('textbox', { name: 'question' }));
+      fn.deleteButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'delete question' }))
+          .nth(num - 1);
+      fn.moveDownButton = () =>
+        rule
+          .locator(
+            this.page.getByRole('button', { name: 'move question down' }),
+          )
+          .nth(num - 1);
+      fn.moveUpButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'move question up' }))
+          .nth(num - 2);
+      fn.cutButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'cut question' }))
+          .nth(num - 1);
+      fn.errors = () => errors;
+      fn.noErrors = () =>
+        new Promise<boolean>((resolve) => {
           setTimeout(() => {
-            rule
-              .locator(this.page.getByRole('alert'))
+            errors
               .waitFor({ state: 'hidden' })
               .then(() => {
                 resolve(true);
@@ -77,105 +138,54 @@ export class EditorPage extends Banner {
                 resolve(false);
               });
           }, 100);
-        }),
-      },
-      question: (num: number) => {
-        const question = rule.locator(
-          this.page.getByRole('group', { name: 'question' }).nth(num - 1),
-        );
-        const errors = question.locator(this.page.getByRole('alert'));
-        return {
-          get: question,
-          variable: question.locator(
-            this.page.getByRole('textbox', { name: 'variable' }),
-          ),
-          question: question.locator(
-            this.page.getByRole('textbox', { name: 'question' }),
-          ),
-          deleteButton: rule
-            .locator(this.page.getByRole('button', { name: 'delete question' }))
-            .nth(num - 1),
-          moveDownButton: rule
-            .locator(
-              this.page.getByRole('button', { name: 'move question down' }),
-            )
-            .nth(num - 1),
-          moveUpButton: rule
-            .locator(
-              this.page.getByRole('button', { name: 'move question up' }),
-            )
-            .nth(num - 2),
-          cutButton: rule
-            .locator(this.page.getByRole('button', { name: 'cut question' }))
-            .nth(num - 1),
-          errors,
-          noErrors: new Promise<boolean>((resolve) => {
-            setTimeout(() => {
-              errors
-                .waitFor({ state: 'hidden' })
-                .then(() => {
-                  resolve(true);
-                })
-                .catch(() => {
-                  resolve(false);
-                });
-            }, 100);
-          }),
-        };
-      },
-      item: (num: number) => {
-        const item = rule
-          .locator(this.page.getByRole('group', { name: 'item' }))
-          .nth(num - 1);
-        const errors = item.locator(this.page.getByRole('alert'));
-        return {
-          get: item,
-          category: item.locator(
-            this.page.getByRole('combobox', { name: 'category' }),
-          ),
-          itemName: item.locator(
-            this.page.getByRole('textbox', { name: 'item name' }),
-          ),
-          deleteButton: rule
-            .locator(this.page.getByRole('button', { name: 'delete item' }))
-            .nth(num - 1),
-          moveDownButton: rule
-            .locator(this.page.getByRole('button', { name: 'move item down' }))
-            .nth(num - 1),
-          moveUpButton: rule
-            .locator(this.page.getByRole('button', { name: 'move item up' }))
-            .nth(num - 2),
-          cutButton: rule
-            .locator(this.page.getByRole('button', { name: 'cut item' }))
-            .nth(num - 1),
-          errors,
-          noErrors: new Promise<boolean>((resolve) => {
-            setTimeout(() => {
-              errors
-                .waitFor({ state: 'hidden' })
-                .then(() => {
-                  resolve(true);
-                })
-                .catch(() => {
-                  resolve(false);
-                });
-            }, 100);
-          }),
-        };
-      },
-      addQuestionButton: rule.locator(
-        this.page.getByRole('button', { name: 'add question' }),
-      ),
-      addItemButton: rule.locator(
-        this.page.getByRole('button', { name: 'add item' }),
-      ),
-      deleteButton: rule.locator(
-        this.page.getByRole('button', { name: 'delete rule' }),
-      ),
-      pasteButton: rule.locator(
-        this.page.getByRole('button', { name: 'paste from clipboard' }),
-      ),
+        });
+      return fn;
     };
+    ruleFn.item = (num: number) => {
+      const item = rule
+        .locator(this.page.getByRole('group', { name: 'item' }))
+        .nth(num - 1);
+      const errors = item.locator(this.page.getByRole('alert'));
+      const fn = function () {
+        return item;
+      };
+      fn.category = () =>
+        item.locator(this.page.getByRole('combobox', { name: 'category' }));
+      fn.itemName = () =>
+        item.locator(this.page.getByRole('textbox', { name: 'item name' }));
+      fn.deleteButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'delete item' }))
+          .nth(num - 1);
+      fn.moveDownButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'move item down' }))
+          .nth(num - 1);
+      fn.moveUpButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'move item up' }))
+          .nth(num - 2);
+      fn.cutButton = () =>
+        rule
+          .locator(this.page.getByRole('button', { name: 'cut item' }))
+          .nth(num - 1);
+      fn.errors = () => errors;
+      fn.noErrors = () =>
+        new Promise<boolean>((resolve) => {
+          setTimeout(() => {
+            errors
+              .waitFor({ state: 'hidden' })
+              .then(() => {
+                resolve(true);
+              })
+              .catch(() => {
+                resolve(false);
+              });
+          }, 100);
+        });
+      return fn;
+    };
+    return ruleFn;
   }
 
   async toPacklistPage() {

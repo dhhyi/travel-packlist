@@ -10,60 +10,60 @@ test('happy path editor to packlist', async ({ page }) => {
   await editor.addRuleButton.click();
   const rule1 = editor.rule(1);
 
-  await expect(rule1.get).toBeVisible();
+  await expect(rule1()).toBeVisible();
 
   await rule1.condition.variable(1).selectOption('always');
 
-  expect(await rule1.condition.noErrors).toBe(true);
+  expect(await rule1.condition.noErrors()).toBe(true);
 
-  await rule1.addQuestionButton.click();
+  await rule1.addQuestionButton().click();
 
-  await expect(rule1.question(1).get).toBeVisible();
+  await expect(rule1.question(1)()).toBeVisible();
 
-  await rule1.question(1).question.fill('Will it be sunny?');
-  await rule1.question(1).variable.fill('sunny');
+  await rule1.question(1).question().fill('Will it be sunny?');
+  await rule1.question(1).variable().fill('sunny');
 
-  expect(await rule1.question(1).noErrors).toBe(true);
+  expect(await rule1.question(1).noErrors()).toBe(true);
 
-  await rule1.addQuestionButton.click();
+  await rule1.addQuestionButton().click();
 
-  await expect(rule1.question(2).get).toBeVisible();
+  await expect(rule1.question(2)()).toBeVisible();
 
-  await rule1.question(2).question.fill('Will it be rainy?');
-  await rule1.question(2).variable.fill('rainy');
+  await rule1.question(2).question().fill('Will it be rainy?');
+  await rule1.question(2).variable().fill('rainy');
 
-  expect(await rule1.question(2).noErrors).toBe(true);
+  expect(await rule1.question(2).noErrors()).toBe(true);
 
   await editor.addRuleButton.click();
   const rule2 = editor.rule(2);
 
-  await expect(rule2.get).toBeVisible();
+  await expect(rule2()).toBeVisible();
 
   await rule2.condition.variable(1).selectOption('sunny');
 
-  expect(await rule2.condition.noErrors).toBe(true);
+  expect(await rule2.condition.noErrors()).toBe(true);
 
   await rule2.condition.variable(1).selectOption('sunny AND x');
 
-  expect(await rule2.condition.noErrors).toBe(true);
+  expect(await rule2.condition.noErrors()).toBe(true);
 
   await rule2.condition.variable(2).selectOption('NOT x');
 
-  expect(await rule2.condition.noErrors).toBe(true);
+  expect(await rule2.condition.noErrors()).toBe(true);
 
   await rule2.condition.variable(2).selectOption('rainy');
 
-  expect(await rule2.condition.noErrors).toBe(true);
+  expect(await rule2.condition.noErrors()).toBe(true);
 
-  await rule2.addItemButton.click();
+  await rule2.addItemButton().click();
 
-  await expect(rule2.item(1).get).toBeVisible();
+  await expect(rule2.item(1)()).toBeVisible();
 
-  await rule2.item(1).itemName.fill('Sunscreen');
+  await rule2.item(1).itemName().fill('Sunscreen');
 
-  expect(await rule2.item(1).noErrors).toBe(true);
+  expect(await rule2.item(1).noErrors()).toBe(true);
 
-  await rule2.item(1).category.selectOption('+');
+  await rule2.item(1).category().selectOption('+');
 
   await expect(editor.dialog()).toBeVisible();
 
@@ -71,7 +71,7 @@ test('happy path editor to packlist', async ({ page }) => {
   await editor.dialog.confirm().click();
 
   await expect(editor.dialog()).toBeHidden();
-  expect(await rule2.item(1).noErrors).toBe(true);
+  expect(await rule2.item(1).noErrors()).toBe(true);
 
   const packlist = await editor.toPacklistPage();
 
