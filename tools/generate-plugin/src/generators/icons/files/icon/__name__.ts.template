@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, computed, ElementRef, afterRender, inject } from '@angular/core';
 
 /**
  * icon for <%= icon %>
@@ -9,12 +9,12 @@ import { ChangeDetectionStrategy, Component, input, computed } from '@angular/co
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-<%= icon %>, [<%= camelize(icon) %>]',
   standalone: true,
-  templateUrl: './<%= name %>.html',
+  templateUrl: './<%= name %>.svg',
 })
 export class <%= classify(icon) %>Component {
   readonly class = input<string | undefined>();
   readonly iconClass = input<string | undefined>();
-  svgClass = computed(() => {
+  private readonly svgClass = computed(() => {
     const classes = (this.iconClass() ?? this.class() ?? '').split(' ');
     if (!classes.find((c) => c.startsWith('h-'))) {
       classes.push('h-[1rem]');
@@ -24,4 +24,14 @@ export class <%= classify(icon) %>Component {
     }
     return classes;
   });
+  private elementRef = inject(ElementRef);
+  constructor() {
+    afterRender(() => {
+      const svg = this.elementRef.nativeElement.querySelector('svg');
+      for (let i = svg.classList.length - 1; i >= 0; i--) {
+        svg.classList.remove(svg.classList[i]);
+      }
+      svg.classList.add(...this.svgClass());
+    });
+  }
 }

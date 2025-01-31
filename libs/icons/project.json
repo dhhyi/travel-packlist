@@ -16,11 +16,11 @@
       "options": {
         "command": "nx g @travel-packlist/generate-plugin:icons",
         "path": "{projectRoot}/src",
-        "pattern": "{projectRoot}/src/lib/**/*.html"
+        "pattern": "{projectRoot}/src/lib/**/*.svg"
       },
       "inputs": [
         "^production",
-        "{projectRoot}/src/lib/**/*.html"
+        "{projectRoot}/src/lib/**/*.svg"
       ],
       "outputs": [
         "{projectRoot}/src/index.ts",
