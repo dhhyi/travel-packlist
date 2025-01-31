@@ -36,7 +36,7 @@ jobs:
       - name: Install Node.js 📦
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 'latest'
           cache: 'pnpm'
 
       - name: Set up JDK 📦
