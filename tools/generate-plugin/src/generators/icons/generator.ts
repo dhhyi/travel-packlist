@@ -32,10 +32,7 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
 
     const relative =
       './' +
-      path
-        .relative(options.path, file)
-        .replace(/\\/g, '/')
-        .replace('.html', '');
+      path.relative(options.path, file).replace(/\\/g, '/').replace('.svg', '');
     icons.push({ icon, relative });
 
     generateFiles(tree, path.join(__dirname, 'files', 'icon'), folder, {
