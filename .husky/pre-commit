@@ -29,7 +29,21 @@ then
 fi
 
 pnpm install --frozen-lockfile
-pnpm exec nx affected -t lint,test,format --nxBail --configuration pre-commit || cleanup
+
+cmd="affected"
+if git diff --exit-code --quiet --cached
+then
+  if [ -n "$*" ]
+  then
+    base="--base=$1"
+  else
+    cmd="run-many"
+  fi
+fi
+
+set -x
+pnpm exec nx $cmd -t lint,test,format --nxBail --configuration pre-commit $base || cleanup
+set +x
 
 if is_husky
 then
