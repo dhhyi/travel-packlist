@@ -16,6 +16,8 @@
     <h1 i18n class="text-xl font-bold">TravelPacklist</h1>
   </button>
   <button
+    iconCog
+    iconClass="h-6 w-6"
     type="button"
     role="link"
     class="link pr-2"
@@ -23,9 +25,7 @@
     routerLinkActive="hidden"
     aria-label="Go to configuration"
     i18n-aria-label
-  >
-    <app-icon-cog class="h-6 w-6" />
-  </button>
+  ></button>
 </nav>
 
 <div
@@ -40,14 +40,14 @@
     [class.hidden]="!scrollTopVisible()"
   >
     <button
+      iconArrowUpward
+      iconClass="h-6 w-6"
       type="button"
       aria-label="Scroll to top"
       i18n-aria-label
       class="flex w-full items-center justify-center rounded-3xl border border-slate-700 shadow-xl dark:border-slate-300"
       (click)="scrollTop()"
-    >
-      <app-icon-arrow-upward class="h-6 w-6" />
-    </button>
+    ></button>
   </div>
 </div>
 

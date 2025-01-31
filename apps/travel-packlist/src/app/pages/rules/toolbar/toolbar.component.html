@@ -89,14 +89,14 @@
         [(ngModel)]="searchTerm"
       />
       <button
+        iconClear
+        iconClass="h-6 w-6"
         type="button"
         class="link"
         aria-label="clear search"
         i18n-aria-label
         (click)="clearSearch()"
-      >
-        <app-icon-clear class="h-6 w-6" />
-      </button>
+      ></button>
     </div>
   }
 </div>

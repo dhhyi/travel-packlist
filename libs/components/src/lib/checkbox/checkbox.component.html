@@ -10,14 +10,14 @@
 <label class="grow" [htmlFor]="id()">{{ label() }}</label>
 @if (help()) {
   <button
+    iconHelp
+    iconClass="h-6 w-6"
     class="link"
     type="button"
     tabindex="-1"
     aria-hidden="true"
     (click)="toggleHelp($event)"
-  >
-    <app-icon-help class="h-6 w-6" />
-  </button>
+  ></button>
   @if (helpVisible()) {
     <legend
       class="help"

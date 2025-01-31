@@ -16,6 +16,10 @@ function classify(name: string): string {
   );
 }
 
+function camelize(name: string): string {
+  return name.replace(/-([a-z])/g, (_, char: string) => char.toUpperCase());
+}
+
 export async function generator(tree: Tree, options: GeneratorSchema) {
   const files = globSync(options.pattern);
 
@@ -39,12 +43,14 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
       name,
       icon,
       classify,
+      camelize,
     });
   });
 
   generateFiles(tree, path.join(__dirname, 'files', 'src'), options.path, {
     icons,
     classify,
+    camelize,
   });
 
   await formatFiles(tree);

@@ -56,6 +56,10 @@
 
     &[disabled] {
       @apply bg-disabled cursor-not-allowed text-gray-500;
+
+      svg {
+        @apply fill-slate-500;
+      }
     }
 
     &.red {
@@ -68,14 +72,6 @@
 
     &.link {
       @apply border-none bg-transparent;
-
-      &[disabled] {
-        @apply bg-transparent;
-
-        > * > svg {
-          @apply fill-slate-500;
-        }
-      }
     }
 
     &.active {

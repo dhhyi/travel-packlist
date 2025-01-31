@@ -157,6 +157,7 @@ const rules = (tsConfigOrFolder, options) => {
               'aria-labelledby',
               'aria-live',
               'aria-orientation',
+              'iconClass',
             ],
             ignoreTags: ['meta', 'link', 'noscript'],
           },

@@ -20,14 +20,13 @@
   @if (item.index > 0 && mode() === 'swap' && !filter()) {
     <div class="flex justify-center">
       <button
+        iconSwap
         type="button"
         class="link"
         aria-label="Swap rule above with rule below"
         i18n-aria-label
         (click)="swapRules(item.index - 1, item.index)"
-      >
-        <app-icon-swap />
-      </button>
+      ></button>
     </div>
   }
   <div

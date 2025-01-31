@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, computed } from '@angular/core';
 
 /**
  * icon for <%= icon %>
@@ -7,13 +7,21 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
  */
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  selector: 'app-<%= icon %>',
+  selector: 'app-<%= icon %>, [<%= camelize(icon) %>]',
   standalone: true,
   templateUrl: './<%= name %>.html',
-  host: {
-    '[attr.aria-hidden]': 'true',
-  }
 })
 export class <%= classify(icon) %>Component {
-  readonly class = input<string>('h-[1rem] <% if (icon.startsWith('flag')) { %>w-[1.25rem]<% } else { %>w-[1rem]<% } %>');
+  readonly class = input<string | undefined>();
+  readonly iconClass = input<string | undefined>();
+  svgClass = computed(() => {
+    const classes = (this.iconClass() ?? this.class() ?? '').split(' ');
+    if (!classes.find((c) => c.startsWith('h-'))) {
+      classes.push('h-[1rem]');
+    }
+    if (!classes.find((c) => c.startsWith('w-'))) {
+      classes.push('<% if (icon.startsWith('flag')) { %>w-[1.25rem]<% } else { %>w-[1rem]<% } %>');
+    }
+    return classes;
+  });
 }
