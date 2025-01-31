@@ -19,7 +19,7 @@ export class ConfigDangerzoneComponent {
         $localize`Are you sure you want to reset the whole application?`,
       )
     ) {
-      this.reset();
+      await this.reset();
       this.state.router.go('packlist');
     }
   }

@@ -39,12 +39,15 @@ export const GLOBAL_STATE = new InjectionToken<GlobalState>('GLOBAL_STATE', {
   },
 });
 
-export const RESET_SWITCH = new InjectionToken<() => void>('RESET_SWITCH', {
-  providedIn: 'root',
-  factory: () => {
-    const state = inject(STATE_BUILDER);
-    return () => {
-      state.reset();
-    };
+export const RESET_SWITCH = new InjectionToken<() => Promise<void>>(
+  'RESET_SWITCH',
+  {
+    providedIn: 'root',
+    factory: () => {
+      const state = inject(STATE_BUILDER);
+      return async () => {
+        await state.reset();
+      };
+    },
   },
-});
+);

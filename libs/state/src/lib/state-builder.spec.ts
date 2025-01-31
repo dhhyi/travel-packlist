@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-restricted-imports
 import { computed, effect, Injector, signal } from '@angular/core';
-import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { StateBuilder } from './state-builder';
 
@@ -19,7 +19,7 @@ describe('state builder', () => {
   });
 
   describe('extend', () => {
-    it('should extend the state', fakeAsync(() => {
+    it('should extend the state', async () => {
       const builder = StateBuilder.builder().extend((reset) => {
         const a = signal(1);
         effect(
@@ -45,15 +45,14 @@ describe('state builder', () => {
 
       expect(state.group.a()).toBe(2);
 
-      builder.reset();
-      tick();
+      await builder.reset();
 
       expect(state.group.a()).toBe(0);
-    }));
+    });
   });
 
   describe('derive', () => {
-    it('should derive the state', fakeAsync(() => {
+    it('should derive the state', async () => {
       const builder = StateBuilder.builder()
         .extend((reset) => {
           const a = signal(1);
@@ -105,8 +104,7 @@ describe('state builder', () => {
       expect(state.group.c()).toBe(5);
       expect(state.group.d()).toBe(10);
 
-      builder.reset();
-      tick();
+      await builder.reset();
 
       expect(state.group.c()).toBe(0);
       expect(state.group.d()).toBe(0);
@@ -115,6 +113,6 @@ describe('state builder', () => {
 
       expect(state.group.c()).toBe(30);
       expect(state.group.d()).toBe(300);
-    }));
+    });
   });
 });

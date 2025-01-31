@@ -88,7 +88,8 @@ export class StateBuilder<T extends Structured> {
     return this.state;
   }
 
-  reset(): void {
+  async reset(): Promise<void> {
     this.triggerReset.set(Date.now() as unknown as boolean);
+    await new Promise((resolve) => setTimeout(resolve, 0));
   }
 }
