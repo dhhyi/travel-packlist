@@ -102,7 +102,7 @@
     @apply pl-0;
 
     &[disabled] {
-      @apply appearance-none pl-1 pr-4;
+      @apply appearance-none pr-4 pl-1;
     }
   }
 
@@ -135,16 +135,14 @@
   }
 }
 
-@layer utilities {
-  .text-green {
-    @apply text-green-normal dark:text-green-light;
-  }
+@utility text-green {
+  @apply text-green-normal dark:text-green-light;
+}
 
-  .text-red {
-    @apply text-red-normal dark:text-red-light;
-  }
+@utility text-red {
+  @apply text-red-normal dark:text-red-light;
+}
 
-  .text-checked-item {
-    @apply text-slate-600 line-through dark:text-slate-400;
-  }
+@utility text-checked-item {
+  @apply text-slate-600 line-through dark:text-slate-400;
 }
