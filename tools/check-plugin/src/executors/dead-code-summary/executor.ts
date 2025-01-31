@@ -17,6 +17,7 @@ const run: PromiseExecutor<ExecutorSchema> = async () => {
       .reduce(
         (acc, file) => {
           const fileBaseName = basename(file, '.json');
+          console.log('found', file);
           if (fileBaseName.endsWith('exports')) {
             acc.exportFiles.push(file);
           } else {
