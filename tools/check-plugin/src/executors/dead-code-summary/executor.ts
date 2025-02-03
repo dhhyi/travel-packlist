@@ -11,7 +11,7 @@ const run: PromiseExecutor<ExecutorSchema> = async () => {
     console.log('Running dead code summary');
 
     const { exportFiles, importFiles } = globSync(
-      `dist/{apps,libs}/*/dead-code-{exports,imports}.json`,
+      `dist/{apps,libs}/*/dead-code/{exports,imports}.json`,
     )
       .map((file) => file)
       .reduce(

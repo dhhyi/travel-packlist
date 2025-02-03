@@ -74,7 +74,12 @@
         "executor": "@travel-packlist/check-plugin:dead-code-summary",
         "dependsOn": [
           "^dead-code"
-        ]
+        ],
+        "inputs": [
+          "{workspaceRoot}/dist/**/dead-code/imports.json",
+          "{workspaceRoot}/dist/**/dead-code/exports.json"
+        ],
+        "cache": true
       }
     }
   },

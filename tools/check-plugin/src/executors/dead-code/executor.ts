@@ -318,7 +318,7 @@ function getSimpleName(node: Node): string {
 }
 
 function reportFileName(id: string, type: 'exports' | 'imports') {
-  return `dist/${id}/dead-code-${type}.json`;
+  return `dist/${id}/dead-code/${type}.json`;
 }
 
 export type ExportReport = Record<

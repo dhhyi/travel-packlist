@@ -184,8 +184,12 @@
       "dependsOn": [
         "generate"
       ],
+      "inputs": [
+        "default",
+        "^production"
+      ],
       "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}/dead-code-{imports,exports}.json"
+        "{workspaceRoot}/dist/{projectRoot}/dead-code/{imports,exports}.json"
       ],
       "cache": true
     },
