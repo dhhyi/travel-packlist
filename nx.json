@@ -254,5 +254,5 @@
       "changeDetection": "OnPush"
     }
   },
-  "neverConnectToCloud": true
+  "nxCloudId": "676534afe3d486b0dc961fdf"
 }
