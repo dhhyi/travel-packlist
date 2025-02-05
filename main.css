@@ -754,12 +754,15 @@ select[disabled] {
   padding-right: 1rem;
 }
 .accessible button,
-  .accessible input,
-  .accessible select,
   .accessible [role=button],
   .accessible [role=checkbox],
   .accessible [role=radio],
   .accessible .accessible-content {
+  min-height: 49px;
+  min-width: 49px;
+}
+.accessible input,
+  .accessible select {
   min-height: 49px;
 }
 .animations button,
