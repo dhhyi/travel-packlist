@@ -4,6 +4,7 @@ const qBefore = {
   opacity: 0,
   transform: 'scale(0.9)',
   height: 0,
+  minHeight: 0,
   padding: 0,
   margin: '-2px',
 };
@@ -11,6 +12,7 @@ const qAfter = {
   opacity: 1,
   transform: 'scale(1)',
   height: '*',
+  minHeight: '*',
   padding: '*',
   margin: '*',
 };

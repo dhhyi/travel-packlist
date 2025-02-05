@@ -121,7 +121,7 @@
     [role='checkbox'],
     [role='radio'],
     .accessible-content {
-      @apply h-[49px] min-w-[49px];
+      @apply min-h-[49px] min-w-[49px];
     }
   }
 
