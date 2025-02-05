@@ -115,13 +115,16 @@
 
   .accessible {
     button,
-    input,
-    select,
     [role='button'],
     [role='checkbox'],
     [role='radio'],
     .accessible-content {
       @apply min-h-[49px] min-w-[49px];
+    }
+
+    input,
+    select {
+      @apply min-h-[49px];
     }
   }
 
