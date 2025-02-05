@@ -62,6 +62,13 @@ async function prepareAndroidProject(
         );
       });
     }
+
+    updateFile(`${options.outputPath}/app/proguard-rules.pro`, (content) => {
+      return (
+        content +
+        '\n\n# https://developer.android.com/build/shrink-code#retracing\n-keepattributes LineNumberTable,SourceFile\n-renamesourcefileattribute SourceFile\n'
+      );
+    });
   }
 
   execSync('pnpm cap sync', { stdio: 'inherit' });
