@@ -48,6 +48,11 @@
         "buildTarget": "build",
         "port": 8080,
         "host": "0.0.0.0"
+      },
+      "configurations": {
+        "e2e": {
+          "port": 4200
+        }
       }
     }
   }

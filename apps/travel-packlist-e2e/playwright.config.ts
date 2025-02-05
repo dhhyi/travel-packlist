@@ -33,13 +33,14 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
+    serviceWorkers: 'block',
     storageState: require.resolve('./src/test-state.json'),
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'pnpm exec nx run travel-packlist:serve',
+    command: 'pnpm exec nx run travel-packlist-web:serve:e2e',
     cwd: workspaceRoot,
     reuseExistingServer: !process.env.CI,
     url: 'http://localhost:4200',

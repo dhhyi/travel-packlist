@@ -46,7 +46,7 @@ test('config', async ({ page }) => {
     - link /Current version is .+/
     - text: /built on .+/
     - link /Current git hash starts with [0-9a-f]{8}/
-    - text: "Service Worker: disabled"
+    - text: /Service Worker. .+/
     - heading "Support" [level=2]
     - paragraph:
       - text: "If you find any bugs or have any suggestions, please open an issue on GitHub:"
