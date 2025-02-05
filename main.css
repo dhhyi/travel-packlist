@@ -760,7 +760,7 @@ select[disabled] {
   .accessible [role=checkbox],
   .accessible [role=radio],
   .accessible .accessible-content {
-  height: 49px;
+  min-height: 49px;
   min-width: 49px;
 }
 .animations button,
