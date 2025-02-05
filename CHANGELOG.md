@@ -1,3 +1,9 @@
+## [0.6.8](https://github.com/dhhyi/travel-packlist/compare/v0.6.7...v0.6.8) (2025-02-05)
+
+### Bug Fixes
+
+- repair editor icon display in small mobile view ([d302805](https://github.com/dhhyi/travel-packlist/commit/d3028059aa8b36271954f5124f0a63b46703979c))
+
 ## [0.6.7](https://github.com/dhhyi/travel-packlist/compare/v0.6.6...v0.6.7) (2025-01-30)
 
 ## [0.6.6](https://github.com/dhhyi/travel-packlist/compare/v0.6.5...v0.6.6) (2025-01-30)
