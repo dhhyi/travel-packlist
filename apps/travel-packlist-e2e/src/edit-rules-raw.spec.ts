@@ -65,4 +65,6 @@ test('edit rules raw with error', async ({ page }) => {
   await expect(rulesRaw.parserState()).toContainText(
     'Error parsing rules at line 1 column 1',
   );
+
+  await expect(page).toHaveScreenshot();
 });

@@ -14,6 +14,7 @@ test('empty rules', async ({ page }) => {
       - button "create"
       - text: some.
   `);
+  await expect(page).toHaveScreenshot();
 });
 
 test('empty rule', async ({ page }) => {
@@ -28,6 +29,7 @@ test('empty rule', async ({ page }) => {
     - progressbar "You have packed 0 out of 0 items."
     - paragraph: No items available.
   `);
+  await expect(page).toHaveScreenshot();
 });
 
 test('rule without items', async ({ page }) => {
@@ -40,4 +42,5 @@ test('rule without items', async ({ page }) => {
     - progressbar "You have packed 0 out of 0 items."
     - paragraph: No items available.
   `);
+  await expect(page).toHaveScreenshot();
 });

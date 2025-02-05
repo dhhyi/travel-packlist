@@ -1,5 +1,5 @@
 <h2 i18n>App Version</h2>
-<span>
+<span class="e2e-hidden">
   <a
     class="accessible-content inline-block content-center"
     [attr.aria-label]="currentVersionLabel"
@@ -12,10 +12,10 @@
     }
   </a></span
 >
-<span i18n class="italic"
+<span i18n class="e2e-hidden italic"
   >built on {{ buildTime | date: 'long' // i18n(ph="LONG_DATE") }}</span
 >
-<span class="truncate font-mono text-sm text-slate-500"
+<span class="e2e-hidden truncate font-mono text-sm text-slate-500"
   ><a
     class="accessible-content inline-block content-center"
     [attr.aria-label]="gitHashLabel"

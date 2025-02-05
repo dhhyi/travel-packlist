@@ -60,4 +60,6 @@ test('config', async ({ page }) => {
     - heading "DANGER!" [level=2]
     - button "Reset Application"
   `);
+
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });

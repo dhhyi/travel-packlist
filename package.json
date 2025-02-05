@@ -84,6 +84,11 @@
     }
   },
   "private": true,
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
+  },
   "dependencies": {
     "@angular-devkit/build-angular": "~19.1.5",
     "@angular/animations": "~19.1.4",

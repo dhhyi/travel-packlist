@@ -73,6 +73,13 @@ test('happy path editor to packlist', async ({ page }) => {
   await expect(editor.dialog()).toBeHidden();
   expect(await rule2.item(1).noErrors()).toBe(true);
 
+  await expect(page).toHaveScreenshot();
+
+  await rule2().hover();
+  await page.mouse.wheel(0, 500);
+
+  await expect(page).toHaveScreenshot();
+
   const packlist = await editor.toPacklistPage();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
@@ -98,4 +105,6 @@ test('happy path editor to packlist', async ({ page }) => {
       - listitem:
         - checkbox "Sunscreen" [checked]
   `);
+
+  await expect(page).toHaveScreenshot();
 });

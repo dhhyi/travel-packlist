@@ -23,9 +23,13 @@ test('export status - changed rules', async ({ page }) => {
   );
 
   await expect(config.exportNeededAlert()).toBeVisible();
+
+  await config.exportNeededAlert().scrollIntoViewIfNeeded();
+
   await expect(config.exportNeededAlert()).toHaveText(
     'Current rules are not backed up!',
   );
+  await expect(page).toHaveScreenshot();
 
   await config.resetApplicationButton().click();
 

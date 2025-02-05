@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   issues: write
+  packages: write
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 jobs:
@@ -97,7 +98,7 @@ jobs:
           echo "running affected for $noOfCommits commits"
           pnpm exec nx affected \
             --configuration ci \
-            -t test,lint,format,e2e,tsconfiglint,build \
+            -t test,lint,format,tsconfiglint,build \
             --base=HEAD~$noOfCommits \
             --head=HEAD
 
@@ -122,6 +123,46 @@ jobs:
           folder: dist/web
           branch: gh-pages
           clean: false
+
+      - name: Set up Docker Buildx 🐳
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build E2E Docker Image 🐳
+        run: |
+          docker buildx build \
+            -t ghcr.io/dhhyi/travel-packlist-e2e:latest \
+            --label org.opencontainers.image.source=https://github.com/dhhyi/travel-packlist \
+            --label org.opencontainers.image.description="End-to-End Tests for Travel Packlist" \
+            --label org.opencontainers.image.title="Travel Packlist E2E" \
+            --cache-from type=registry,ref=ghcr.io/dhhyi/travel-packlist-e2e-cache \
+            --cache-to type=registry,ref=ghcr.io/dhhyi/travel-packlist-e2e-cache,mode=max \
+            -f apps/travel-packlist-e2e/Dockerfile \
+            -o type=docker \
+            .
+
+      - name: E2E Tests 🧪
+        run: |
+          docker run \
+            -v $(pwd)/apps/travel-packlist-e2e:/ws/apps/travel-packlist-e2e \
+            -e CI=true \
+            ghcr.io/dhhyi/travel-packlist-e2e:latest \
+            travel-packlist-e2e:e2e --configuration ci
+
+      - name: Package E2E Results 📦
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: apps/travel-packlist-e2e/dist
+          if-no-files-found: warn
+          include-hidden-files: true
 
       - name: Check for Release 🧐
         id: check_release

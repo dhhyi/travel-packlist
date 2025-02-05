@@ -70,6 +70,7 @@ test('click items', async ({ page }) => {
       - button "Cancel"
       - button "OK"
   `);
+  await expect(page).toHaveScreenshot();
 
   await config.dialog.confirm().click();
 

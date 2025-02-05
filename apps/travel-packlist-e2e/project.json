@@ -14,21 +14,16 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
-    "install-sys-dependencies": {
-      "command": "pnpm playwright install-deps chromium"
-    },
-    "install-browsers": {
-      "command": "pnpm playwright install chromium"
+    "install": {
+      "commands": [
+        "pnpm playwright install-deps chromium",
+        "pnpm playwright install chromium"
+      ]
     },
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "pnpm playwright install-deps chromium",
-          "pnpm playwright install chromium",
-          "pnpm playwright test -j 1 -c {projectRoot}/playwright.config.ts"
-        ],
-        "parallel": false
+        "command": "pnpm playwright test -j 1 -c {projectRoot}/playwright.config.ts"
       },
       "inputs": [
         "default",

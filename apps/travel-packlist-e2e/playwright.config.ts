@@ -10,6 +10,11 @@ const baseURL = process.env['BASE_URL'] ?? 'http://localhost:4200';
  */
 export default defineConfig({
   ...nxE2EPreset(__filename, { testDir: './src' }),
+  expect: {
+    toHaveScreenshot: {
+      stylePath: './src/screenshot.css',
+    },
+  },
   projects: [
     {
       name: 'Chromium',
@@ -24,7 +29,7 @@ export default defineConfig({
       },
     },
   ],
-  reporter: [['list'], ['html', { host: '0.0.0.0', outputFolder: 'dist/e2e' }]],
+  reporter: [['list'], ['html', { host: '0.0.0.0', outputFolder: 'dist' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
