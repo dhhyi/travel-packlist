@@ -23,7 +23,7 @@
   },
   "generators": {
     "@nx/angular:component": {
-      "style": "scss",
+      "style": "css",
       "prefix": "cmp"
     }
   }

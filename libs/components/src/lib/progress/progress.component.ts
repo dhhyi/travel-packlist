@@ -25,7 +25,7 @@ const easeOutQuad = (x: number): number => x * (2 - x);
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-progress',
   templateUrl: './progress.component.html',
-  styleUrl: './progress.component.scss',
+  styleUrl: './progress.component.css',
   imports: [AsyncPipe],
   host: {
     role: 'progressbar',

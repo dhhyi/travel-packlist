@@ -7,7 +7,7 @@ import { confirm } from '../../../dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-dangerzone',
   templateUrl: './config-dangerzone.component.html',
-  styleUrl: '../config-section.scss',
+  styleUrl: '../config-section.css',
 })
 export class ConfigDangerzoneComponent {
   private reset = inject(RESET_SWITCH);

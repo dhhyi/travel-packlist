@@ -11,7 +11,7 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-version',
   templateUrl: './config-version.component.html',
-  styleUrl: '../config-section.scss',
+  styleUrl: '../config-section.css',
   imports: [DatePipe],
 })
 export class ConfigVersionComponent {

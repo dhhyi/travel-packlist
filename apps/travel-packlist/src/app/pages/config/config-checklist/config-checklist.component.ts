@@ -13,7 +13,7 @@ import { ConfigFacade } from '../config.facade';
 @Component({
   selector: 'app-config-checklist',
   templateUrl: './config-checklist.component.html',
-  styleUrl: '../config-section.scss',
+  styleUrl: '../config-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,

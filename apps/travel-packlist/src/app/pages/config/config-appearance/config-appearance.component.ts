@@ -12,7 +12,7 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-appearance',
   templateUrl: './config-appearance.component.html',
-  styleUrl: '../config-section.scss',
+  styleUrl: '../config-section.css',
   imports: [
     FormsModule,
     SelectOptionsComponent,

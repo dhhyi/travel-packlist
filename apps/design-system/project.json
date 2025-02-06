@@ -15,7 +15,7 @@
         "browserTarget": "design-system:build",
         "compodoc": false,
         "styles": [
-          "{projectRoot}/src/styles.scss"
+          "{projectRoot}/src/styles.css"
         ]
       }
     },
@@ -27,7 +27,7 @@
         "browserTarget": "design-system:build",
         "compodoc": false,
         "styles": [
-          "{projectRoot}/src/styles.scss"
+          "{projectRoot}/src/styles.css"
         ]
       },
       "configurations": {

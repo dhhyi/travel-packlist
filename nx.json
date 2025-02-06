@@ -6,7 +6,7 @@
       "sharedGlobals"
     ],
     "design": [
-      "{workspaceRoot}/apps/design-system/src/**/*.scss",
+      "{workspaceRoot}/apps/design-system/src/**/*.css",
       "{workspaceRoot}/apps/design-system/tailwind.*.js"
     ],
     "production": [
@@ -196,7 +196,7 @@
     "nx-stylelint:lint": {
       "options": {
         "lintFilePatterns": [
-          "{projectRoot}/**/*.scss"
+          "{projectRoot}/**/*.css"
         ]
       },
       "defaultConfiguration": "pre-commit",

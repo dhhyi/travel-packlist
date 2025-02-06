@@ -19,7 +19,7 @@ import { noop } from 'rxjs';
   selector: 'cmp-checkbox',
   imports: [FormsModule, IconHelpComponent],
   templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.scss',
+  styleUrl: './checkbox.component.css',
   host: {
     '(click)': 'toggle()',
     '(keypress)': 'toggle()',

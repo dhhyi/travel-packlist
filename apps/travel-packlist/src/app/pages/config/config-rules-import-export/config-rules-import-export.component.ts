@@ -20,7 +20,7 @@ import { ConfigFacade } from '../config.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-import-export',
   templateUrl: './config-rules-import-export.component.html',
-  styleUrl: '../config-section.scss',
+  styleUrl: '../config-section.css',
   imports: [FormsModule, CheckboxComponent, IconDownloadComponent],
 })
 export class ConfigRulesImportExportComponent {

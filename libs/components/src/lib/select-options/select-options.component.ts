@@ -27,7 +27,7 @@ export class SelectOptionDirective<V extends string> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-select-options',
   templateUrl: './select-options.component.html',
-  styleUrl: './select-options.component.scss',
+  styleUrl: './select-options.component.css',
   imports: [NgTemplateOutlet],
   providers: [
     {

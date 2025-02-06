@@ -63,7 +63,7 @@
           "@angular/localize/init"
         ],
         "tsConfig": "{projectRoot}/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
+        "inlineStyleLanguage": "css",
         "assets": [
           {
             "glob": "**/*",
@@ -71,7 +71,7 @@
           }
         ],
         "styles": [
-          "apps/design-system/src/styles.scss"
+          "apps/design-system/src/styles.css"
         ],
         "scripts": [],
         "define": {
