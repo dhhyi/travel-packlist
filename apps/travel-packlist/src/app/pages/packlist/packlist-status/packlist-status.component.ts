@@ -7,6 +7,10 @@ import {
   signal,
 } from '@angular/core';
 import { ProgressComponent } from '@travel-packlist/components';
+import {
+  IconLockComponent,
+  IconLockOpenComponent,
+} from '@travel-packlist/icons';
 
 import {
   PacklistFacade,
@@ -18,10 +22,18 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
-  imports: [ProgressComponent],
+  imports: [IconLockOpenComponent, IconLockComponent, ProgressComponent],
 })
 export class PacklistStatusComponent {
-  facade = inject(PacklistFacade);
+  private facade = inject(PacklistFacade);
+  questionsAvailable = this.facade.questionsAvailable;
+  isAnswersLockActive = this.facade.isAnswersLockActive;
+  toggleAnswersLock = this.facade.toggleAnswersLock;
+  trackWeight = this.facade.trackWeight;
+  checkedWeight = this.facade.checkedWeight;
+  totalWeight = this.facade.totalWeight;
+  numberOfCheckedItems = this.facade.numberOfCheckedItems;
+  numberOfItems = this.facade.numberOfItems;
 
   serializeWeightPartition = serializeWeightPartition;
 

@@ -1,10 +1,10 @@
 import {
   animate,
+  group,
   query,
   style,
   transition,
   trigger,
-  group,
   useAnimation,
 } from '@angular/animations';
 import {
@@ -14,11 +14,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import {
-  IconLockOpenComponent,
-  IconLockComponent,
-  IconCheckmarkComponent,
-} from '@travel-packlist/icons';
+import { IconCheckmarkComponent } from '@travel-packlist/icons';
 
 import {
   staggerInCard,
@@ -47,7 +43,7 @@ const animateQuestions = trigger('animateQuestions', [
   selector: 'app-display-questions',
   templateUrl: './display-questions.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconLockOpenComponent, IconLockComponent, IconCheckmarkComponent],
+  imports: [IconCheckmarkComponent],
   animations: [animateQuestions],
 })
 export class DisplayQuestionsComponent {
@@ -56,7 +52,6 @@ export class DisplayQuestionsComponent {
   questionsAvailable = this.facade.questionsAvailable;
   isQuestionActive = this.facade.isQuestionActive;
   isAnswersLockActive = this.facade.isAnswersLockActive;
-  toggleAnswersLock = this.facade.toggleAnswersLock;
   toggleQuestion = this.facade.toggleQuestion;
   goToRulesEdit = this.facade.goToRulesEdit;
 

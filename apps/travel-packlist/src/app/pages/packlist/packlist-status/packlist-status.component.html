@@ -1,14 +1,34 @@
+@if (questionsAvailable()) {
+  <div class="flex justify-center">
+    <button
+      type="button"
+      class="link"
+      role="button"
+      aria-label="Lock answers"
+      i18n-aria-label
+      [attr.aria-pressed]="isAnswersLockActive()"
+      (click)="toggleAnswersLock()"
+      (keypress)="toggleAnswersLock()"
+    >
+      @if (isAnswersLockActive()) {
+        <app-icon-lock class="h-6 w-6" />
+      } @else {
+        <app-icon-lock-open class="h-6 w-6" />
+      }
+    </button>
+  </div>
+}
 <div class="card mb-1">
   <div class="mb-1 flex">
-    @if (facade.trackWeight()) {
+    @if (trackWeight()) {
       <cmp-progress
         class="grow"
         title="weight packing progress"
         i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
-        [value]="facade.checkedWeight()"
-        [max]="facade.totalWeight()"
+        [value]="checkedWeight()"
+        [max]="totalWeight()"
         [animationDuration]="animationDuration()"
       />
     } @else {
@@ -18,19 +38,17 @@
         i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
-        [value]="facade.numberOfCheckedItems()"
-        [max]="facade.numberOfItems()"
+        [value]="numberOfCheckedItems()"
+        [max]="numberOfItems()"
         [animationDuration]="animationDuration()"
       />
     }
   </div>
   <div class="flex flex-col items-center" aria-hidden="true">
-    <span
-      >{{ facade.numberOfCheckedItems() }} / {{ facade.numberOfItems() }}</span
-    >
-    @if (facade.trackWeight()) {
+    <span>{{ numberOfCheckedItems() }} / {{ numberOfItems() }}</span>
+    @if (trackWeight()) {
       <span>{{
-        serializeWeightPartition(facade.checkedWeight(), facade.totalWeight())
+        serializeWeightPartition(checkedWeight(), totalWeight())
       }}</span>
     }
   </div>

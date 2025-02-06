@@ -35,22 +35,4 @@
       </div>
     }
   </div>
-  <div class="flex justify-center">
-    <button
-      type="button"
-      class="link"
-      role="button"
-      aria-label="Lock answers"
-      i18n-aria-label
-      [attr.aria-pressed]="isAnswersLockActive()"
-      (click)="toggleAnswersLock()"
-      (keypress)="toggleAnswersLock()"
-    >
-      @if (isAnswersLockActive()) {
-        <app-icon-lock class="h-6 w-6" />
-      } @else {
-        <app-icon-lock-open class="h-6 w-6" />
-      }
-    </button>
-  </div>
 }
