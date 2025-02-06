@@ -10,6 +10,7 @@ import {
 import { VariableType } from '@travel-packlist/model';
 import { RULES_TEMPLATE } from '@travel-packlist/rules-template';
 
+import { RESET_SIGNAL } from '../state-builder';
 import { loadState, saveState } from './storage-util';
 
 export const supportedLanguages = ['en', 'de'] as const;
@@ -72,7 +73,8 @@ const createSignal = function <K extends keyof State>(
 
 export type LocalStorageState = ReturnType<typeof localStorageState>;
 
-export const localStorageState = (triggerReset: Signal<boolean>) => {
+export const localStorageState = () => {
+  const triggerReset = inject(RESET_SIGNAL);
   const create = createSignal.bind({ triggerReset }) as <K extends keyof State>(
     key: K,
   ) => WritableSignal<State[K]>;

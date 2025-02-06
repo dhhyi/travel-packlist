@@ -1,7 +1,9 @@
-import { inject, WritableSignal, signal, effect, Signal } from '@angular/core';
+import { effect, inject, signal, Signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
+
+import { RESET_SIGNAL } from '../state-builder';
 
 const initialState = {
   rulesMode: 'view' as
@@ -92,9 +94,10 @@ const navigation = {
   },
 };
 
-export const routerState = (triggerReset: Signal<boolean>) => {
+export const routerState = () => {
   const router = inject(Router);
   const route = inject(ActivatedRoute);
+  const triggerReset = inject(RESET_SIGNAL);
   const rulesMode = createSignal('rulesMode', triggerReset);
   return {
     router: {

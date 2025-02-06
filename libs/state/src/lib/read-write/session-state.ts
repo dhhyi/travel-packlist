@@ -1,6 +1,7 @@
-import { effect, Signal, signal } from '@angular/core';
+import { effect, inject, Signal, signal } from '@angular/core';
 
-import { saveState, loadState } from './storage-util';
+import { RESET_SIGNAL } from '../state-builder';
+import { loadState, saveState } from './storage-util';
 
 const initialState = {
   clipboardItems: [] as string[],
@@ -38,7 +39,8 @@ const persist = () => {
   saveState(sessionStorage, state, initialState);
 };
 
-export const sessionState = (triggerReset: Signal<boolean>) => {
+export const sessionState = () => {
+  const triggerReset = inject(RESET_SIGNAL);
   return {
     clipboard: {
       /** session: items in the clipboard */

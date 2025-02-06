@@ -18,10 +18,10 @@ function buildState() {
     .extend(routerState)
     .extend(sessionState)
     .extend(transientState)
-    .derive(browserState)
-    .derive(ruleParsing)
-    .derive(ruleAnalysis)
-    .derive(elevateCheckedItems);
+    .extend(browserState)
+    .extend(ruleParsing)
+    .extend(ruleAnalysis)
+    .extend(elevateCheckedItems);
 }
 
 const STATE_BUILDER = new InjectionToken<ReturnType<typeof buildState>>(

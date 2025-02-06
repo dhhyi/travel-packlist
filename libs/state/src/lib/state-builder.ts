@@ -1,4 +1,10 @@
-import { signal, Signal, WritableSignal } from '@angular/core';
+import {
+  inject,
+  InjectionToken,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Dispatch = (...args: any[]) => unknown;
@@ -34,11 +40,7 @@ type CombinedStructured<A extends Structured, B extends Structured> = {
         : never;
 };
 
-type PersistentStateConstructor<T extends Structured> = (
-  triggerReset: Signal<boolean>,
-) => T;
-
-type DerivedStateConstructor<S extends Structured, T extends Structured> = (
+type StateConstructor<S extends Structured, T extends Structured> = (
   state: S,
 ) => T;
 
@@ -54,34 +56,27 @@ function merge<A extends Structured, B extends Structured>(
     }, {}) as CombinedStructured<A, B>;
 }
 
+export const RESET_SIGNAL = new InjectionToken<WritableSignal<boolean>>(
+  'RESET_SIGNAL',
+  {
+    providedIn: 'root',
+    factory: () => signal(false),
+  },
+);
+
 export class StateBuilder<T extends Structured> {
-  private constructor(
-    private state: T,
-    private triggerReset: WritableSignal<boolean>,
-  ) {}
+  private triggerReset = inject(RESET_SIGNAL);
+  private constructor(private state: T) {}
 
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   static builder(): StateBuilder<{}> {
-    return new StateBuilder({}, signal(false));
+    return new StateBuilder({});
   }
 
   extend<S extends Structured>(
-    ctr: PersistentStateConstructor<S>,
+    ctr: StateConstructor<T, S>,
   ): StateBuilder<CombinedStructured<T, S>> {
-    const writableSignals = ctr(this.triggerReset);
-    return new StateBuilder(
-      merge(this.state, writableSignals),
-      this.triggerReset,
-    );
-  }
-
-  derive<S extends Structured>(
-    ctr: DerivedStateConstructor<T, S>,
-  ): StateBuilder<CombinedStructured<T, S>> {
-    return new StateBuilder(
-      merge(this.state, ctr(this.state)),
-      this.triggerReset,
-    );
+    return new StateBuilder(merge(this.state, ctr(this.state)));
   }
 
   build(): T {

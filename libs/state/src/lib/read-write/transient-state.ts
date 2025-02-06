@@ -1,4 +1,6 @@
-import { effect, Signal, signal } from '@angular/core';
+import { effect, inject, Signal, signal } from '@angular/core';
+
+import { RESET_SIGNAL } from '../state-builder';
 
 const createSignal = <T>(initialValue: T, triggerReset: Signal<boolean>) => {
   const newSignal = signal(initialValue);
@@ -11,7 +13,8 @@ const createSignal = <T>(initialValue: T, triggerReset: Signal<boolean>) => {
   return newSignal;
 };
 
-export const transientState = (triggerReset: Signal<boolean>) => {
+export const transientState = () => {
+  const triggerReset = inject(RESET_SIGNAL);
   return {
     serviceWorker: {
       /** transient: status of the service worker */
