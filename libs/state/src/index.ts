@@ -1,9 +1,9 @@
 export { GLOBAL_STATE, RESET_SWITCH } from './lib/global-state';
 
 export {
+  FontSizes,
   SupportedLanguage,
   Themes,
-  FontSizes,
-} from './lib/read-write/localstorage-state';
+} from './lib/slices/config-state';
 
-export { RuleModes } from './lib/read-write/router-state';
+export { RuleModes } from './lib/slices/router-state';

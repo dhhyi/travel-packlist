@@ -1,12 +1,12 @@
 import { computed, signal } from '@angular/core';
 
 import {
-  LocalStorageState,
+  ConfigState,
   SupportedLanguage,
   supportedLanguages,
-} from '../read-write/localstorage-state';
+} from './config-state';
 
-export const browserState = ({ config: { language } }: LocalStorageState) => {
+export const browserState = ({ config: { language } }: ConfigState) => {
   const scrollY = signal(window.scrollY);
   window.addEventListener('scroll', () => {
     scrollY.set(window.scrollY);

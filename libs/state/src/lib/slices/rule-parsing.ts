@@ -1,12 +1,22 @@
-import { inject, computed, signal, effect } from '@angular/core';
+import { computed, effect, inject, linkedSignal, signal } from '@angular/core';
 import { Parser } from '@travel-packlist/model';
+import { RULES_TEMPLATE } from '@travel-packlist/rules-template';
 
-import { LocalStorageState } from '../read-write/localstorage-state';
+import { createLocalStorageSignalState } from '../persistence/storage-signal';
 
-export const ruleParsing = ({
-  rules: { raw, customized },
-  export: { lastHash },
-}: LocalStorageState) => {
+export const ruleParsing = () => {
+  const template = inject(RULES_TEMPLATE);
+  const rawRules = createLocalStorageSignalState<string | undefined>(
+    'rules',
+    undefined,
+  );
+  const raw = linkedSignal(() => rawRules() ?? template);
+  effect(() => {
+    const newRules = raw();
+    rawRules.set(newRules === template ? undefined : newRules);
+  });
+  const customized = computed(() => !!rawRules());
+
   const parser = inject(Parser);
   const ruleParsing = computed(() => {
     try {
@@ -30,9 +40,14 @@ export const ruleParsing = ({
   });
 
   const rulesHash = computed(() => cyrb53(raw()).toString(16));
+  const lastHash = createLocalStorageSignalState('lastExportHash', '');
 
   return {
     rules: {
+      /** storage: raw rules or default template */
+      raw,
+      /** derived: rules are not the default template */
+      customized,
       /** derived: parsed rules (check ruleParserError for errors) */
       parsed: computed(() => ruleParsing().parsedRules),
       /** derived: error message if parsing failed */
@@ -45,6 +60,12 @@ export const ruleParsing = ({
       exportNeeded: computed(() => {
         return customized() && rulesHash() !== lastHash();
       }),
+    },
+    export: {
+      /** storage: the hash of the last exported rules */
+      lastHash,
+      /** storage: the date of the last export */
+      lastDate: createLocalStorageSignalState('lastExportDate', 0),
     },
   };
 };

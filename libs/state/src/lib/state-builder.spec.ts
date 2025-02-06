@@ -1,8 +1,15 @@
-// eslint-disable-next-line no-restricted-imports
-import { computed, effect, Injector, signal } from '@angular/core';
+import {
+  computed,
+  effect,
+  inject,
+  // eslint-disable-next-line no-restricted-imports
+  Injector,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { StateBuilder } from './state-builder';
+import { RESET_SIGNAL, StateBuilder } from './state-builder';
 
 describe('state builder', () => {
   let injector: Injector;
@@ -12,51 +19,64 @@ describe('state builder', () => {
   });
 
   it('should create an instance', () => {
-    const builder = StateBuilder.builder();
+    const builder = runInInjectionContext(injector, () =>
+      StateBuilder.builder(),
+    );
 
     expect(builder).toBeTruthy();
     expect(builder.build()).toBeTruthy();
   });
 
-  describe('extend', () => {
-    it('should extend the state', async () => {
-      const builder = StateBuilder.builder().extend((reset) => {
+  it('should extend the state', async () => {
+    const state = runInInjectionContext(injector, () => {
+      return StateBuilder.builder().extend(() => {
         const a = signal(1);
-        effect(
-          () => {
-            // eslint-disable-next-line jest/no-conditional-in-test
-            if (reset()) {
-              a.set(0);
-            }
-          },
-          { injector },
-        );
+        const reset = inject(RESET_SIGNAL);
+        effect(() => {
+          // eslint-disable-next-line jest/no-conditional-in-test
+          if (reset()) {
+            a.set(0);
+          }
+        });
         return {
           group: { a },
         };
       });
+    }).build();
 
-      const state = builder.build();
+    expect(state.group.a).toBeTruthy();
+    expect(state.group.a()).toBe(1);
 
-      expect(state.group.a).toBeTruthy();
-      expect(state.group.a()).toBe(1);
+    state.group.a.set(2);
 
-      state.group.a.set(2);
+    expect(state.group.a()).toBe(2);
 
-      expect(state.group.a()).toBe(2);
+    await runInInjectionContext(injector, () => {
+      return StateBuilder.builder().extend(() => {
+        const a = signal(1);
+        const reset = inject(RESET_SIGNAL);
+        effect(() => {
+          // eslint-disable-next-line jest/no-conditional-in-test
+          if (reset()) {
+            a.set(0);
+          }
+        });
+        return {
+          group: { a },
+        };
+      });
+    }).reset();
 
-      await builder.reset();
-
-      expect(state.group.a()).toBe(0);
-    });
+    expect(state.group.a()).toBe(0);
   });
 
-  describe('derive', () => {
-    it('should derive the state', async () => {
-      const builder = StateBuilder.builder()
-        .extend((reset) => {
+  it('should derive the state', async () => {
+    const builder = runInInjectionContext(injector, () =>
+      StateBuilder.builder()
+        .extend(() => {
           const a = signal(1);
           const b = signal(2);
+          const reset = inject(RESET_SIGNAL);
           effect(
             () => {
               // eslint-disable-next-line jest/no-conditional-in-test
@@ -71,13 +91,13 @@ describe('state builder', () => {
             group: { a, b },
           };
         })
-        .derive((state) => {
+        .extend((state) => {
           const c = computed(() => state.group.a() + state.group.b());
           return {
             group: { c },
           };
         })
-        .derive((state) => {
+        .extend((state) => {
           const d = computed(() => state.group.c() * state.group.a());
           const randomize = () => {
             state.group.a.set(10);
@@ -86,33 +106,33 @@ describe('state builder', () => {
           return {
             group: { d, randomize },
           };
-        });
+        }),
+    );
 
-      const state = builder.build();
+    const state = builder.build();
 
-      expect(state.group.c).toBeTruthy();
-      expect(state.group.c()).toBe(3);
-      expect(state.group.d()).toBe(3);
+    expect(state.group.c).toBeTruthy();
+    expect(state.group.c()).toBe(3);
+    expect(state.group.d()).toBe(3);
 
-      state.group.a.set(2);
+    state.group.a.set(2);
 
-      expect(state.group.c()).toBe(4);
-      expect(state.group.d()).toBe(8);
+    expect(state.group.c()).toBe(4);
+    expect(state.group.d()).toBe(8);
 
-      state.group.b.set(3);
+    state.group.b.set(3);
 
-      expect(state.group.c()).toBe(5);
-      expect(state.group.d()).toBe(10);
+    expect(state.group.c()).toBe(5);
+    expect(state.group.d()).toBe(10);
 
-      await builder.reset();
+    await builder.reset();
 
-      expect(state.group.c()).toBe(0);
-      expect(state.group.d()).toBe(0);
+    expect(state.group.c()).toBe(0);
+    expect(state.group.d()).toBe(0);
 
-      state.group.randomize();
+    state.group.randomize();
 
-      expect(state.group.c()).toBe(30);
-      expect(state.group.d()).toBe(300);
-    });
+    expect(state.group.c()).toBe(30);
+    expect(state.group.d()).toBe(300);
   });
 });

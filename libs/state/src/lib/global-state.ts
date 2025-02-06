@@ -1,27 +1,25 @@
 import { inject, InjectionToken } from '@angular/core';
 
-import { localStorageState } from './read-write/localstorage-state';
-import { routerState } from './read-write/router-state';
-import { sessionState } from './read-write/session-state';
-import { transientState } from './read-write/transient-state';
-import { browserState } from './readonly/browser-state';
-import { elevateCheckedItems } from './readonly/elevate-checked-items';
-import { ruleAnalysis } from './readonly/rule-analysis';
-import { ruleParsing } from './readonly/rule-parsing';
+import { browserState } from './slices/browser-state';
+import { clipboardState } from './slices/clipboard-state';
+import { configState } from './slices/config-state';
+import { packlistState } from './slices/packlist-state';
+import { routerState } from './slices/router-state';
+import { ruleParsing } from './slices/rule-parsing';
+import { serviceWorkerState } from './slices/service-worker-state';
 import { StateBuilder } from './state-builder';
 
 type GlobalState = ReturnType<ReturnType<typeof buildState>['build']>;
 
 function buildState() {
   return StateBuilder.builder()
-    .extend(localStorageState)
     .extend(routerState)
-    .extend(sessionState)
-    .extend(transientState)
-    .derive(browserState)
-    .derive(ruleParsing)
-    .derive(ruleAnalysis)
-    .derive(elevateCheckedItems);
+    .extend(clipboardState)
+    .extend(serviceWorkerState)
+    .extend(configState)
+    .extend(browserState)
+    .extend(ruleParsing)
+    .extend(packlistState);
 }
 
 const STATE_BUILDER = new InjectionToken<ReturnType<typeof buildState>>(
