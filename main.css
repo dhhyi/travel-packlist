@@ -1458,6 +1458,12 @@ select {
   --tw-text-opacity: 1;
   color: rgb(148 163 184 / var(--tw-text-opacity, 1));
 }
+.text-skipped-item {
+  font-style: italic;
+  opacity: 0.3;
+    /* stylelint-disable-next-line */
+    text-shadow: 0 0 4px #64748b;
+}
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
