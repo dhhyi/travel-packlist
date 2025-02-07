@@ -12,9 +12,11 @@ import {
 import { FormsModule } from '@angular/forms';
 import { CheckboxComponent } from '@travel-packlist/components';
 import { IconDownloadComponent } from '@travel-packlist/icons';
+import { Refactor } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
-import { ConfigFacade } from '../config.facade';
+import { confirm } from '../../../dialog';
+import { RulesShare } from '../../../services/rules-share/rules-share.interface';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,11 +30,9 @@ export class ConfigRulesImportExportComponent {
 
   exportReminder = this.state.config.exportReminder;
   exportNeeded = this.state.rules.exportNeeded;
-  private facade = inject(ConfigFacade);
   readonly highlightExport: Signal<boolean>;
   private readonly exportButton =
     viewChild.required<ElementRef<HTMLButtonElement>>('exportButton');
-  isExportAvailable = this.facade.isExportAvailable.bind(this.facade);
   readonly highlightImport: Signal<boolean>;
   private readonly importButton =
     viewChild.required<ElementRef<HTMLButtonElement>>('importButton');
@@ -71,13 +71,89 @@ export class ConfigRulesImportExportComponent {
 
   async importRules() {
     this.loading.set(true);
-    if (await this.facade.importRules()) {
+    if (await this.triggerImportRules()) {
       this.state.router.go('packlist');
     }
     this.loading.set(false);
   }
 
+  private rulesShare = inject(RulesShare);
+  private refactor = inject(Refactor);
+
+  private readonly percentageOfItemsWithWeights = computed(() => {
+    if (!this.state.rules.parserError()) {
+      const { items, weights } = this.refactor.countItemsAndWeights(
+        this.state.rules.parsed(),
+      );
+      return weights / items;
+    }
+    return 0;
+  });
+
+  private resetHash() {
+    this.state.export.lastHash.set(this.state.rules.hash());
+    this.state.export.lastDate.set(new Date().getTime());
+  }
+
+  isExportAvailable(): boolean {
+    return !!this.state.rules.customized();
+  }
+
   async exportRules() {
-    await this.facade.exportRules();
+    await this.rulesShare.exportRules();
+    this.resetHash();
+  }
+
+  private async triggerImportRules() {
+    if (
+      this.state.rules.exportNeeded() &&
+      !(await confirm(
+        $localize`You have unsaved changes that will be lost if you import new rules. Do you want to continue anyway?`,
+      ))
+    ) {
+      return Promise.resolve(false);
+    }
+
+    return new Promise<boolean>((resolve) => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.txt';
+      input.addEventListener('cancel', () => {
+        resolve(false);
+      });
+      input.onchange = async () => {
+        const file = input.files?.[0];
+        if (!file) {
+          resolve(false);
+          return;
+        }
+        const text = await file.text();
+        this.state.rules.raw.set(text);
+        this.resetHash();
+
+        setTimeout(() => {
+          void this.promptEnableWeightTracking();
+        }, 2000);
+
+        this.state.packlist.reset();
+        resolve(true);
+      };
+      input.click();
+    });
+  }
+
+  private async promptEnableWeightTracking() {
+    if (
+      !this.state.config.trackWeight() &&
+      this.percentageOfItemsWithWeights() > 0.1
+    ) {
+      if (
+        await confirm(
+          $localize`It seems that the imported rules contain items with weights. Shall we enable the weight tracking?`,
+        )
+      ) {
+        this.state.config.trackWeight.set(true);
+      }
+    }
   }
 }
