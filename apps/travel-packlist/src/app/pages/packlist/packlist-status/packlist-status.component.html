@@ -27,8 +27,8 @@
         i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
-        [value]="checkedWeight()"
-        [max]="totalWeight()"
+        [value]="stats().checkedWeight"
+        [max]="stats().totalWeight"
         [animationDuration]="animationDuration()"
       />
     } @else {
@@ -38,17 +38,17 @@
         i18n-title
         aria-live="polite"
         [attr.aria-label]="statusLabelText()"
-        [value]="numberOfCheckedItems()"
-        [max]="numberOfItems()"
+        [value]="stats().checkedItems"
+        [max]="stats().totalItems"
         [animationDuration]="animationDuration()"
       />
     }
   </div>
   <div class="flex flex-col items-center" aria-hidden="true">
-    <span>{{ numberOfCheckedItems() }} / {{ numberOfItems() }}</span>
+    <span>{{ stats().checkedItems }} / {{ stats().totalItems }}</span>
     @if (trackWeight()) {
       <span>{{
-        serializeWeightPartition(checkedWeight(), totalWeight())
+        serializeWeightPartition(stats().checkedWeight, stats().totalWeight)
       }}</span>
     }
   </div>

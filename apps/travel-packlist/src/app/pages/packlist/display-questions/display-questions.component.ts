@@ -11,16 +11,18 @@ import {
   afterRender,
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   signal,
 } from '@angular/core';
 import { IconCheckmarkComponent } from '@travel-packlist/icons';
+import { Question } from '@travel-packlist/model';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import {
   staggerInCard,
   staggerOutCard,
 } from '../../../animations/card.animations';
-import { PacklistFacade } from '../packlist.facade';
 
 const animateQuestions = trigger('animateQuestions', [
   transition('* <=> *', [
@@ -47,19 +49,41 @@ const animateQuestions = trigger('animateQuestions', [
   animations: [animateQuestions],
 })
 export class DisplayQuestionsComponent {
-  private facade = inject(PacklistFacade);
-  questions = this.facade.questions;
-  questionsAvailable = this.facade.questionsAvailable;
-  isQuestionActive = this.facade.isQuestionActive;
-  isAnswersLockActive = this.facade.isAnswersLockActive;
-  toggleQuestion = this.facade.toggleQuestion;
-  goToRulesEdit = this.facade.goToRulesEdit;
+  private state = inject(GLOBAL_STATE);
+
+  questions = this.state.active.questions;
+
+  isQuestionActive = (question: Question): boolean => {
+    return this.state.packlist.answers()[question.variable];
+  };
+
+  isAnswersLockActive = this.state.packlist.answersLocked;
+
+  readonly displayQuestions = computed(() =>
+    this.questions().filter(
+      (q) => !this.isAnswersLockActive() || this.isQuestionActive(q),
+    ),
+  );
+
+  toggleQuestion = (question: Question): void => {
+    if (this.isAnswersLockActive()) {
+      return;
+    }
+    this.state.packlist.answers.update((model) => ({
+      ...model,
+      [question.variable]: !model[question.variable],
+    }));
+  };
+
+  goToRulesEdit() {
+    this.state.router.go('rules->edit');
+  }
 
   readonly animationsDisabled = signal(true);
 
   constructor() {
     afterRender(() => {
-      this.animationsDisabled.set(!this.facade.animationsEnabled());
+      this.animationsDisabled.set(!this.state.config.animations());
     });
   }
 }

@@ -1,4 +1,4 @@
-@if (!numberOfItems()) {
+@if (!stats().totalItems) {
   <div class="flex flex-col items-center">
     <p i18n class="text-center">No items available.</p>
   </div>
@@ -43,7 +43,7 @@
           }
         </div>
         <app-items-status
-          [count]="category.checked"
+          [count]="category.checkedItems"
           [total]="category.items.length"
         />
       </div>

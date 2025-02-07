@@ -11,23 +11,23 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
+  afterRender,
+  ChangeDetectionStrategy,
   Component,
   inject,
-  ChangeDetectionStrategy,
   signal,
-  afterRender,
 } from '@angular/core';
 import { IconKeyRightComponent } from '@travel-packlist/icons';
+import {
+  serializeWeight,
+  serializeWeightPartition,
+} from '@travel-packlist/model';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import {
   staggerInCard,
   staggerOutCard,
 } from '../../../animations/card.animations';
-import {
-  PacklistFacade,
-  serializeWeight,
-  serializeWeightPartition,
-} from '../packlist.facade';
 import { ItemsStatusComponent } from './items-status/items-status.component';
 
 const animateCategory = trigger('animateCategory', [
@@ -104,12 +104,12 @@ const animateStrikeThrough = trigger('animateStrikeThrough', [
   ],
 })
 export class DisplayItemsComponent {
-  private facade = inject(PacklistFacade);
-  numberOfItems = this.facade.numberOfItems;
-  packlist = this.facade.packlist;
-  trackWeight = this.facade.trackWeight;
-  toggleCategoryCollapse = this.facade.toggleCategoryCollapse;
-  toggleCheckedItem = this.facade.toggleCheckedItem;
+  private state = inject(GLOBAL_STATE);
+  stats = this.state.packlist.stats;
+  packlist = this.state.packlist.model;
+  trackWeight = this.state.config.trackWeight;
+  toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
+  toggleCheckedItem = this.state.packlist.toggleCheckedItem;
 
   serializeWeight = serializeWeight;
 
@@ -119,7 +119,7 @@ export class DisplayItemsComponent {
 
   constructor() {
     afterRender(() => {
-      this.animationsDisabled.set(!this.facade.animationsEnabled());
+      this.animationsDisabled.set(!this.state.config.animations());
     });
   }
 }

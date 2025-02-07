@@ -1,4 +1,4 @@
-@if (!questionsAvailable()) {
+@if (!questions().length) {
   <div class="flex flex-col items-center">
     <p class="text-center" i18n>
       No questions available, please
@@ -13,8 +13,11 @@
     </p>
   </div>
 } @else {
-  <div [@.disabled]="animationsDisabled()" [@animateQuestions]="questions()">
-    @for (question of questions(); track question.question) {
+  <div
+    [@.disabled]="animationsDisabled()"
+    [@animateQuestions]="displayQuestions()"
+  >
+    @for (question of displayQuestions(); track question.question) {
       <div
         class="card mb-1 flex flex-row items-center justify-between overflow-hidden"
         role="checkbox"

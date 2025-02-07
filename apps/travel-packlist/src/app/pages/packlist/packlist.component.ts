@@ -1,9 +1,14 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+} from '@angular/core';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { DisplayItemsComponent } from './display-items/display-items.component';
 import { DisplayQuestionsComponent } from './display-questions/display-questions.component';
 import { PacklistStatusComponent } from './packlist-status/packlist-status.component';
-import { PacklistFacade } from './packlist.facade';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,8 +21,17 @@ import { PacklistFacade } from './packlist.facade';
   templateUrl: './packlist.component.html',
 })
 export class PacklistComponent {
-  private facade = inject(PacklistFacade);
-  rulesAvailable = this.facade.rulesAvailable;
-  goToRulesEdit = this.facade.goToRulesEdit;
-  goToConfigImport = this.facade.goToConfigImport;
+  private state = inject(GLOBAL_STATE);
+
+  readonly rulesAvailable = computed(
+    () => this.state.rules.parsed().length > 0,
+  );
+
+  goToRulesEdit() {
+    this.state.router.go('rules->edit');
+  }
+
+  goToConfigImport() {
+    this.state.router.go('config#import');
+  }
 }

@@ -30,3 +30,14 @@ export function serializeWeight(
     return prefer === 'kg' ? weightInKilos : weightInGrams;
   }
 }
+
+export function serializeWeightPartition(
+  checked: number,
+  total: number,
+): string {
+  return (
+    serializeWeight(checked, undefined, 1) +
+    ' / ' +
+    serializeWeight(total, undefined, 1)
+  );
+}

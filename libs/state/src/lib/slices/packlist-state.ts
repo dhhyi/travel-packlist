@@ -1,7 +1,8 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, Signal } from '@angular/core';
 import { Item, Refactor, VariableType } from '@travel-packlist/model';
 
 import { createLocalStorageSignalState } from '../persistence/storage-signal';
+import { ConfigState } from './config-state';
 import { RuleParsing } from './rule-parsing';
 
 const create = createLocalStorageSignalState;
@@ -12,7 +13,8 @@ function serialize(item: Pick<Item, 'category' | 'name'>): string {
 
 export const packlistState = ({
   rules: { parsed: parsedRules },
-}: RuleParsing) => {
+  config: { categorySorting },
+}: RuleParsing & ConfigState) => {
   const answers = create<Record<string, VariableType>>('answers', {});
   const stringCheckedItems = create<string[]>('checkedItems', []);
   const collapsedCategories = create<string[]>('collapsedCategories', []);
@@ -42,6 +44,80 @@ export const packlistState = ({
     }
   };
 
+  const toggleCategoryCollapse = (category: string) => {
+    if (collapsedCategories().includes(category)) {
+      collapsedCategories.update((old) => old.filter((c) => c !== category));
+    } else {
+      collapsedCategories.update((old) => [...old, category]);
+    }
+  };
+
+  function isCategoryCollapsed(category: string): boolean {
+    return collapsedCategories().includes(category);
+  }
+
+  const categoriesOrderBy: Signal<(left: string, right: string) => number> =
+    computed(() => {
+      const sorting = categorySorting();
+      return sorting === 'definition'
+        ? () => 0
+        : (left, right) => left.localeCompare(right);
+    });
+
+  const model = computed(() => {
+    function initialize(item: Pick<Item, 'category'>) {
+      return {
+        name: item.category,
+        items: [] as (Item & { checked: boolean })[],
+        totalItems: 0,
+        checkedItems: 0,
+        totalWeight: 0,
+        checkedWeight: 0,
+        collapsed: isCategoryCollapsed(item.category),
+      };
+    }
+    const unorderedCategories = items().reduce<
+      Record<string, ReturnType<typeof initialize>>
+    >((groups, item) => {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (!groups[item.category]) {
+        groups[item.category] = initialize(item);
+      }
+      groups[item.category].items.push({
+        category: item.category,
+        name: item.name,
+        weight: item.weight,
+        checked: checkedItems().includes(item),
+      });
+      if (checkedItems().includes(item)) {
+        groups[item.category].checkedItems++;
+        groups[item.category].checkedWeight += item.weight ?? 0;
+      }
+      groups[item.category].totalItems++;
+      groups[item.category].totalWeight += item.weight ?? 0;
+      return groups;
+    }, {});
+
+    const sorter = categoriesOrderBy();
+
+    return Object.entries(unorderedCategories)
+      .map((e) => e[1])
+      .toSorted((l, r) => sorter(l.name, r.name));
+  });
+
+  const stats = computed(() =>
+    Object.entries(model()).reduce(
+      (acc, [, category]) => {
+        acc.totalItems += category.totalItems;
+        acc.checkedItems += category.checkedItems;
+        acc.totalWeight += category.totalWeight;
+        acc.checkedWeight += category.checkedWeight;
+        return acc;
+      },
+      { totalItems: 0, checkedItems: 0, totalWeight: 0, checkedWeight: 0 },
+    ),
+  );
+
   return {
     rules: {
       /** derived: all categories extracted from parsed rules */
@@ -58,18 +134,18 @@ export const packlistState = ({
       questions: computed(() =>
         activeRules().flatMap((rule) => rule.questions),
       ),
-      /** derived: currently active items */
-      items,
     },
     packlist: {
       /** storage: the answers from checked questions in the packlist */
       answers,
-      /** derived: checked items */
-      checkedItems,
+      /** derived: display model for the packlist */
+      model,
+      /** derived: stats for the packlist */
+      stats,
       /** toggle the checked state of an item */
       toggleCheckedItem,
-      /** storage: the categories that are collapsed in the packlist */
-      collapsedCategories,
+      /** toggle the collapsed state of a category */
+      toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
       answersLocked,
       /** reset the packlist sub state */
