@@ -114,7 +114,6 @@ jobs:
           echo "::endgroup::"
 
       - name: Dead-Code
-        continue-on-error: true
         run: pnpm exec nx run-many --configuration ci -t dead-code
 
       - name: Deploy GitHub Pages 🚀
