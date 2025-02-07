@@ -18,6 +18,8 @@ export const configState = () => ({
     ),
     /** storage: whether to track weight of items in the packlist */
     trackWeight: create('trackWeight', false),
+    /** storage: whether to allow skipping items in the packlist */
+    skipItems: create('skipItems', false),
     /** storage: whether to fade out disabled rules in the editor */
     fadeOutDisabledRules: create('fadeOutDisabledRules', false),
     /** storage: whether to highlight the status of variables in the editor */

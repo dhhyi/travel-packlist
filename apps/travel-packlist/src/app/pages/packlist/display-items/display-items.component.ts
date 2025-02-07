@@ -19,6 +19,7 @@ import {
 } from '@angular/core';
 import { IconKeyRightComponent } from '@travel-packlist/icons';
 import {
+  Item,
   serializeWeight,
   serializeWeightPartition,
 } from '@travel-packlist/model';
@@ -121,5 +122,27 @@ export class DisplayItemsComponent {
     afterRender(() => {
       this.animationsDisabled.set(!this.state.config.animations());
     });
+  }
+
+  dblclick(item: Item) {
+    if (!this.state.browser.isMobile()) {
+      this.state.packlist.toggleSkippedItem(item);
+    }
+  }
+
+  private touchAction: unknown;
+
+  touchStart(item: Item) {
+    if (this.state.browser.isMobile()) {
+      this.touchAction = setTimeout(() => {
+        this.state.packlist.toggleSkippedItem(item);
+      }, 800);
+    }
+  }
+
+  touchEnd() {
+    if (this.touchAction) {
+      clearTimeout(this.touchAction as number);
+    }
   }
 }

@@ -8,6 +8,13 @@
   i18n-help
   [(ngModel)]="trackWeight"
 />
+<cmp-checkbox
+  id="skip-items"
+  label="Allow skipping items"
+  i18n-label
+  [help]="skipItemsHelpText()"
+  [(ngModel)]="skipItems"
+/>
 <cmp-select-options
   label="Sort categories"
   i18n-label

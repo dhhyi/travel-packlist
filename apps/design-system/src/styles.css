@@ -152,4 +152,10 @@
   .text-checked-item {
     @apply text-slate-600 line-through dark:text-slate-400;
   }
+
+  .text-skipped-item {
+    @apply italic opacity-30;
+    /* stylelint-disable-next-line */
+    text-shadow: 0 0 4px theme(colors.slate.500);
+  }
 }

@@ -33,6 +33,12 @@ export class ConfigPage extends Banner {
     });
   }
 
+  skipItems() {
+    return this.page.getByRole('checkbox', {
+      name: 'Allow skipping items',
+    });
+  }
+
   exportNeededAlert() {
     return this.page
       .getByRole('alert')

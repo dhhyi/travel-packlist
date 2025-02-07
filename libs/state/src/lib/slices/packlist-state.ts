@@ -13,10 +13,11 @@ function serialize(item: Pick<Item, 'category' | 'name'>): string {
 
 export const packlistState = ({
   rules: { parsed: parsedRules },
-  config: { categorySorting },
+  config: { categorySorting, skipItems },
 }: RuleParsing & ConfigState) => {
   const answers = create<Record<string, VariableType>>('answers', {});
   const stringCheckedItems = create<string[]>('checkedItems', []);
+  const stringSkippedItems = create<string[]>('skippedItems', []);
   const collapsedCategories = create<string[]>('collapsedCategories', []);
   const answersLocked = create('answersLocked', false);
 
@@ -41,6 +42,21 @@ export const packlistState = ({
       );
     } else {
       stringCheckedItems.update((old) => [...old, serialize(item)]);
+    }
+  };
+  const skippedItems = computed(() =>
+    items().filter((item) => stringSkippedItems().includes(serialize(item))),
+  );
+  const toggleSkippedItem = (item: Item) => {
+    if (!skipItems()) {
+      return;
+    }
+    if (stringSkippedItems().includes(serialize(item))) {
+      stringSkippedItems.update((old) =>
+        old.filter((i) => i !== serialize(item)),
+      );
+    } else {
+      stringSkippedItems.update((old) => [...old, serialize(item)]);
     }
   };
 
@@ -68,7 +84,7 @@ export const packlistState = ({
     function initialize(item: Pick<Item, 'category'>) {
       return {
         name: item.category,
-        items: [] as (Item & { checked: boolean })[],
+        items: [] as (Item & { checked: boolean; skipped: boolean })[],
         totalItems: 0,
         checkedItems: 0,
         totalWeight: 0,
@@ -83,18 +99,23 @@ export const packlistState = ({
       if (!groups[item.category]) {
         groups[item.category] = initialize(item);
       }
+      const skipped = skipItems() && skippedItems().includes(item);
+      const checked = !skipped && checkedItems().includes(item);
       groups[item.category].items.push({
         category: item.category,
         name: item.name,
         weight: item.weight,
-        checked: checkedItems().includes(item),
+        checked,
+        skipped,
       });
-      if (checkedItems().includes(item)) {
+      if (checked) {
         groups[item.category].checkedItems++;
         groups[item.category].checkedWeight += item.weight ?? 0;
       }
-      groups[item.category].totalItems++;
-      groups[item.category].totalWeight += item.weight ?? 0;
+      if (!skipped) {
+        groups[item.category].totalItems++;
+        groups[item.category].totalWeight += item.weight ?? 0;
+      }
       return groups;
     }, {});
 
@@ -144,6 +165,8 @@ export const packlistState = ({
       stats,
       /** toggle the checked state of an item */
       toggleCheckedItem,
+      /** toggle the skipped state of an item */
+      toggleSkippedItem,
       /** toggle the collapsed state of a category */
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
@@ -152,6 +175,7 @@ export const packlistState = ({
       reset: () => {
         answers.set({});
         stringCheckedItems.set([]);
+        stringSkippedItems.set([]);
         collapsedCategories.set([]);
         answersLocked.set(false);
       },

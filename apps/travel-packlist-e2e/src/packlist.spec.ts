@@ -1,19 +1,18 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 import { startWithRules } from './pages';
 
+const rules = `:- [Utility] Paper Tissues,[Utility] Backpack;
+  :- Are you traveling longer than 3 days? $longer;
+  longer :- [Electronics] Phone Charger, [Electronics] Tablet;
+  :- Will it be sunny? $sunny, Will it be rainy? $rainy;
+  sunny :- Do you expect a high UV index? $uv, [Utility] Sunglasses, [Clothes] Short Pants;
+  rainy :- [Clothes] Rain Jacket;
+  NOT rainy :- [Clothes] Jacket;
+  NOT sunny :- [Clothes] Long Pants; uv :- [Utility] Sunscreen;`;
+
 test('click items', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `:- [Utility] Paper Tissues,[Utility] Backpack;
-    :- Are you traveling longer than 3 days? $longer;
-    longer :- [Electronics] Phone Charger, [Electronics] Tablet;
-    :- Will it be sunny? $sunny, Will it be rainy? $rainy;
-    sunny :- Do you expect a high UV index? $uv, [Utility] Sunglasses, [Clothes] Short Pants;
-    rainy :- [Clothes] Rain Jacket;
-    NOT rainy :- [Clothes] Jacket;
-    NOT sunny :- [Clothes] Long Pants; uv :- [Utility] Sunscreen;`,
-  );
+  const packlist = await startWithRules(page, rules);
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
@@ -82,4 +81,46 @@ test('click items', async ({ page }) => {
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
   `);
+});
+
+test('skip items', async ({ page }) => {
+  const packlist = await startWithRules(page, rules);
+
+  await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
+    - progressbar "You have packed 0 out of 4 items."
+  `);
+
+  await packlist.question('Will it be rainy?', false).click();
+
+  await expect(packlist.item('Rain Jacket', false)).toBeVisible();
+
+  await packlist.item('Rain Jacket', false).dblclick();
+
+  // double click does not change the state
+  await expect(packlist.item('Rain Jacket', false)).toBeVisible();
+
+  await packlist.item('Pants', false).click();
+
+  await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
+    - progressbar "You have packed 1 out of 4 items."
+  `);
+
+  const config = await packlist.toConfigPage();
+
+  await config.skipItems().check();
+
+  await expect(config.skipItems()).toBeChecked();
+
+  await config.toPacklistPage();
+
+  await expect(packlist.item('Rain Jacket', false)).toBeVisible();
+
+  // double click skips
+  await packlist.item('Rain Jacket').dblclick();
+
+  await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
+    - progressbar "You have packed 1 out of 3 items."
+  `);
+
+  await expect(page).toHaveScreenshot();
 });

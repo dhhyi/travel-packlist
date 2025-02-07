@@ -19,7 +19,7 @@ export class PacklistPage extends Banner {
     return this.page.getByRole('button', { name: 'Lock answers' });
   }
 
-  item(name: string, checked: boolean) {
+  item(name: string, checked: boolean | undefined = undefined) {
     return this.page.getByRole('checkbox', { name, checked });
   }
 

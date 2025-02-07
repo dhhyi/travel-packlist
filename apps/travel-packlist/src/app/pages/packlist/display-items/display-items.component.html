@@ -44,7 +44,7 @@
         </div>
         <app-items-status
           [count]="category.checkedItems"
-          [total]="category.items.length"
+          [total]="category.totalItems"
         />
       </div>
       @if (!category.collapsed) {
@@ -55,10 +55,14 @@
               tabindex="0"
               class="flex select-none items-center justify-between"
               [attr.aria-checked]="item.checked"
-              [class.text-checked-item]="item.checked"
+              [class.text-checked-item]="item.checked && !item.skipped"
+              [class.text-skipped-item]="item.skipped"
               [@animateStrikeThrough]="item.checked"
               (click)="toggleCheckedItem(item)"
               (keypress)="toggleCheckedItem(item)"
+              (dblclick)="dblclick(item)"
+              (touchstart)="touchStart(item)"
+              (touchend)="touchEnd()"
             >
               {{ item.name }}
               @if (item.weight && trackWeight()) {

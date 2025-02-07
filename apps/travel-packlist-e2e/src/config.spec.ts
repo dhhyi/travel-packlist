@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 import { start } from './pages';
 
@@ -12,6 +12,7 @@ test('config', async ({ page }) => {
     - heading "Checklist" [level=2]
     - button "Reset Checklist"
     - checkbox "Track item weight. (You can enter the item weight appended to the item name in the editor.)"
+    - checkbox "Allow skipping items. (You can skip items in the packlist by double clicking them.)"
     - radiogroup "Sort categories":
       - radio "alphabetically" [checked]
       - radio "order of definition"
