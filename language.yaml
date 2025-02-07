@@ -47,6 +47,7 @@ vscode:
     - ms-playwright.playwright
     - redhat.vscode-yaml
     - aaron-bond.better-comments
+    - peakchen90.open-html-in-browser
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
     terminal.integrated.profiles.linux:
