@@ -1,0 +1,26 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  [class]="chartClass()"
+  [attr.viewBox]="'0 0 120 ' + (120 + 8 * segments().length)"
+>
+  @for (path of paths(); track $index) {
+    <path
+      stroke="white"
+      stroke-width="0.5"
+      [attr.d]="path.path"
+      [attr.fill]="color(path.name)"
+    />
+  }
+  @for (l of sortedSegments(); track $index) {
+    <text
+      font-size="6"
+      [attr.x]="padding"
+      [attr.y]="115 + 8 * $index"
+      [attr.fill]="color(l.name)"
+    >
+      <tspan dy="1.2em" [attr.x]="padding">
+        {{ l.name }} ({{ l.value | percent }})
+      </tspan>
+    </text>
+  }
+</svg>

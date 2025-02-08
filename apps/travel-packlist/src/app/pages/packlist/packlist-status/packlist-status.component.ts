@@ -1,4 +1,11 @@
 import {
+  group,
+  query,
+  transition,
+  trigger,
+  useAnimation,
+} from '@angular/animations';
+import {
   afterRender,
   ChangeDetectionStrategy,
   Component,
@@ -6,10 +13,14 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ProgressComponent } from '@travel-packlist/components';
+import {
+  PieChartComponent,
+  ProgressComponent,
+} from '@travel-packlist/components';
 import {
   IconLockComponent,
   IconLockOpenComponent,
+  IconPieChartComponent,
 } from '@travel-packlist/icons';
 import {
   serializeWeight,
@@ -17,11 +28,32 @@ import {
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
+import {
+  staggerInCard,
+  staggerOutCard,
+} from '../../../animations/card.animations';
+
+const animateDiagram = trigger('animateDiagram', [
+  transition('* <=> *', [
+    group([
+      query('div.card:enter', useAnimation(staggerInCard), { optional: true }),
+      query('div.card:leave', useAnimation(staggerOutCard), { optional: true }),
+    ]),
+  ]),
+]);
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
-  imports: [IconLockOpenComponent, IconLockComponent, ProgressComponent],
+  imports: [
+    IconLockOpenComponent,
+    IconLockComponent,
+    IconPieChartComponent,
+    ProgressComponent,
+    PieChartComponent,
+  ],
+  animations: [animateDiagram],
 })
 export class PacklistStatusComponent {
   private state = inject(GLOBAL_STATE);
@@ -53,8 +85,24 @@ export class PacklistStatusComponent {
 
   readonly animationDuration = signal(0);
 
+  readonly statsVisible = this.state.packlist.weightStatsVisible;
+
+  readonly weightStats = computed(() => {
+    const totalWeight = this.stats().totalWeight;
+    return this.state.packlist
+      .model()
+      .map((category) => ({
+        name: category.name,
+        value: category.totalWeight / totalWeight,
+      }))
+      .filter((category) => category.value > 0);
+  });
+
+  readonly animationsDisabled = signal(true);
+
   constructor() {
     afterRender(() => {
+      this.animationsDisabled.set(!this.state.config.animations());
       this.animationDuration.set(this.state.config.animations() ? 500 : 0);
     });
   }

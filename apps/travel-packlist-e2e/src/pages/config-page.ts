@@ -58,4 +58,16 @@ export class ConfigPage extends Banner {
       exact: true,
     });
   }
+
+  get accessibility() {
+    const accessibility = this.page.getByRole('radiogroup', {
+      name: 'Accessibility',
+    });
+    const fn = function () {
+      return accessibility;
+    };
+    fn.compact = () =>
+      accessibility.locator(this.page.getByRole('radio', { name: 'compact' }));
+    return fn;
+  }
 }

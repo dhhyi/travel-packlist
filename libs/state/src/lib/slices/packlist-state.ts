@@ -1,7 +1,10 @@
 import { computed, inject, Signal } from '@angular/core';
 import { Item, Refactor, VariableType } from '@travel-packlist/model';
 
-import { createLocalStorageSignalState } from '../persistence/storage-signal';
+import {
+  createLocalStorageSignalState,
+  createSessionStorageSignalState,
+} from '../persistence/storage-signal';
 import { ConfigState } from './config-state';
 import { RuleParsing } from './rule-parsing';
 
@@ -20,6 +23,10 @@ export const packlistState = ({
   const stringSkippedItems = create<string[]>('skippedItems', []);
   const collapsedCategories = create<string[]>('collapsedCategories', []);
   const answersLocked = create('answersLocked', false);
+  const weightStatsVisible = createSessionStorageSignalState(
+    'weightStatsVisible',
+    false,
+  );
 
   const refactor = inject(Refactor);
   const active = computed(() =>
@@ -171,6 +178,8 @@ export const packlistState = ({
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
       answersLocked,
+      /** session: whether to show the weight stats */
+      weightStatsVisible,
       /** reset the packlist sub state */
       reset: () => {
         answers.set({});
@@ -178,6 +187,7 @@ export const packlistState = ({
         stringSkippedItems.set([]);
         collapsedCategories.set([]);
         answersLocked.set(false);
+        weightStatsVisible.set(false);
       },
     },
   };
