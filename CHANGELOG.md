@@ -1,3 +1,5 @@
+## [0.7.0-auto-release3](https://github.com/dhhyi/travel-packlist/compare/v0.7.0-auto-release2...v0.7.0-auto-release3) (2025-02-08)
+
 ## [0.7.0-auto-release2](https://github.com/dhhyi/travel-packlist/compare/v0.7.0-auto-release1...v0.7.0-auto-release2) (2025-02-08)
 
 ## [0.7.0-auto-release1](https://github.com/dhhyi/travel-packlist/compare/v0.7.0...v0.7.0-auto-release1) (2025-02-08)
