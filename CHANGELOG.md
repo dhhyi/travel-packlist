@@ -1,3 +1,9 @@
+## [0.7.0](https://github.com/dhhyi/travel-packlist/compare/v0.6.8...v0.7.0) (2025-02-08)
+
+### Features
+
+- allow skipping items by long touch or double click ([061a326](https://github.com/dhhyi/travel-packlist/commit/061a3263082a69178ed0022dc0a5f9004e295d2b)), closes [#9](https://github.com/dhhyi/travel-packlist/issues/9)
+
 ## [0.6.8](https://github.com/dhhyi/travel-packlist/compare/v0.6.7...v0.6.8) (2025-02-05)
 
 ### Bug Fixes
