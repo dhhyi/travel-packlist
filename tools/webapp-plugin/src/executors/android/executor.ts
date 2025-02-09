@@ -46,7 +46,8 @@ async function prepareAndroidProject(
       const versionCode = getVersionCode();
       return content
         .replace(/versionName ".*"/, `versionName "${versionName}"`)
-        .replace(/versionCode \d+/, `versionCode ${versionCode.toString()}`);
+        .replace(/versionCode \d+/, `versionCode ${versionCode.toString()}`)
+        .replace('minifyEnabled false', 'minifyEnabled true');
     });
 
     const targetSdkVersion = options.targetSdkVersion;
@@ -67,7 +68,15 @@ async function prepareAndroidProject(
       `${options.outputPath}/app/proguard-rules.pro`,
       (content) =>
         content +
-        '\n\n# https://developer.android.com/build/shrink-code#retracing\n-keepattributes LineNumberTable,SourceFile\n-renamesourcefileattribute SourceFile\n',
+        `\n
+# https://developer.android.com/build/shrink-code#retracing
+-keepattributes LineNumberTable,SourceFile
+-renamesourcefileattribute SourceFile
+
+# https://capacitorjs.com/docs/android/troubleshooting#using-proguard
+-keep public class * extends com.getcapacitor.Plugin
+
+`,
     );
   }
 
