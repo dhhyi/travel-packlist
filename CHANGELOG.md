@@ -1,3 +1,13 @@
+## [0.8.0](https://github.com/dhhyi/travel-packlist/compare/v0.7.0-auto-release3...v0.8.0) (2025-02-09)
+
+### Features
+
+- display weight distribution pie chart ([6967d23](https://github.com/dhhyi/travel-packlist/commit/6967d2317deea7de72a78a5bc763f5fe23b5d135)), closes [#8](https://github.com/dhhyi/travel-packlist/issues/8)
+
+### Bug Fixes
+
+- break skipping items when scrolling ([06f2766](https://github.com/dhhyi/travel-packlist/commit/06f2766c7662b8fb25ad3dc166f90a324584de5b))
+
 ## [0.7.0-auto-release3](https://github.com/dhhyi/travel-packlist/compare/v0.7.0-auto-release2...v0.7.0-auto-release3) (2025-02-08)
 
 ## [0.7.0-auto-release2](https://github.com/dhhyi/travel-packlist/compare/v0.7.0-auto-release1...v0.7.0-auto-release2) (2025-02-08)
