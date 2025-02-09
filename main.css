@@ -1039,6 +1039,9 @@ select {
 .max-w-\[10rem\] {
   max-width: 10rem;
 }
+.max-w-\[300px\] {
+  max-width: 300px;
+}
 .max-w-\[5rem\] {
   max-width: 5rem;
 }
