@@ -11,24 +11,15 @@ export class EditorPage extends Banner {
     const fn = function () {
       return toolbar;
     };
-    fn.mode = (mode: RuleModes) => {
-      return this.page.getByRole('radio', {
+    fn.mode = (mode: RuleModes) =>
+      this.page.getByRole('radio', {
         name: new RegExp(mode.replace(/[^a-z]/g, '.*'), 'i'),
       });
-    };
-    fn.searchBox = () => {
-      return toolbar.locator(this.page.getByRole('searchbox'));
-    };
-    fn.clearSearchButton = () => {
-      return toolbar.locator(
-        this.page.getByRole('button', { name: 'clear search' }),
-      );
-    };
-    fn.clipboard = () => {
-      return this.page
-        .getByRole('status')
-        .and(this.page.getByLabel('clipboard'));
-    };
+    fn.searchBox = () => toolbar.locator(this.page.getByRole('searchbox'));
+    fn.clearSearchButton = () =>
+      toolbar.locator(this.page.getByRole('button', { name: 'clear search' }));
+    fn.clipboard = () =>
+      this.page.getByRole('status').and(this.page.getByLabel('clipboard'));
     return fn;
   }
 

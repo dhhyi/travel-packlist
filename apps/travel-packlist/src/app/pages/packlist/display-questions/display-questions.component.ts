@@ -53,9 +53,8 @@ export class DisplayQuestionsComponent {
 
   questions = this.state.active.questions;
 
-  isQuestionActive = (question: Question): boolean => {
-    return this.state.packlist.answers()[question.variable];
-  };
+  isQuestionActive = (question: Question): boolean =>
+    this.state.packlist.answers()[question.variable];
 
   isAnswersLockActive = this.state.packlist.answersLocked;
 

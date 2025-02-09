@@ -320,13 +320,12 @@ function sortObject(obj: Record<string, unknown>) {
 function isSorted(obj: Record<string, unknown>) {
   const keys = Object.keys(obj);
   const allKeysSorted = keys.join() === keys.sort().join();
-  const allValuesSorted = Object.values(obj).every((value): boolean => {
-    return (
+  const allValuesSorted = Object.values(obj).every(
+    (value): boolean =>
       typeof value !== 'object' ||
       (Array.isArray(value) && value.toSorted().join() === value.join()) ||
-      (!Array.isArray(value) && isSorted(value as Record<string, unknown>))
-    );
-  });
+      (!Array.isArray(value) && isSorted(value as Record<string, unknown>)),
+  );
   return allKeysSorted && allValuesSorted;
 }
 

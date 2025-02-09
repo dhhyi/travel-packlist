@@ -162,8 +162,8 @@ export class Refactor {
 
   countItemsAndWeights(rules: Rule[]): { items: number; weights: number } {
     return rules.reduce(
-      (old, rule) => {
-        return rule.items.reduce((acc, item) => {
+      (old, rule) =>
+        rule.items.reduce((acc, item) => {
           let itemHasWeight: number;
           if (this.parser.isTrackWeight()) {
             itemHasWeight = item.weight ? 1 : 0;
@@ -175,8 +175,7 @@ export class Refactor {
             items: acc.items + 1,
             weights: acc.weights + itemHasWeight,
           };
-        }, old);
-      },
+        }, old),
       { items: 0, weights: 0 },
     );
   }

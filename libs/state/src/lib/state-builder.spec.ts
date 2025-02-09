@@ -28,8 +28,8 @@ describe('state builder', () => {
   });
 
   it('should extend the state', async () => {
-    const state = runInInjectionContext(injector, () => {
-      return StateBuilder.builder().extend(() => {
+    const state = runInInjectionContext(injector, () =>
+      StateBuilder.builder().extend(() => {
         const a = signal(1);
         const reset = inject(RESET_SIGNAL);
         effect(() => {
@@ -41,8 +41,8 @@ describe('state builder', () => {
         return {
           group: { a },
         };
-      });
-    }).build();
+      }),
+    ).build();
 
     expect(state.group.a).toBeTruthy();
     expect(state.group.a()).toBe(1);
@@ -51,8 +51,8 @@ describe('state builder', () => {
 
     expect(state.group.a()).toBe(2);
 
-    await runInInjectionContext(injector, () => {
-      return StateBuilder.builder().extend(() => {
+    await runInInjectionContext(injector, () =>
+      StateBuilder.builder().extend(() => {
         const a = signal(1);
         const reset = inject(RESET_SIGNAL);
         effect(() => {
@@ -64,8 +64,8 @@ describe('state builder', () => {
         return {
           group: { a },
         };
-      });
-    }).reset();
+      }),
+    ).reset();
 
     expect(state.group.a()).toBe(0);
   });

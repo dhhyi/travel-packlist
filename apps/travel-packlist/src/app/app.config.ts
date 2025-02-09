@@ -29,9 +29,7 @@ import { RulesExportReminder } from './services/rules.export-reminder';
 
 function initParserConfig(injector: Injector): ParserConfig {
   return {
-    isTrackWeight: () => {
-      return injector.get(GLOBAL_STATE).config.trackWeight();
-    },
+    isTrackWeight: () => injector.get(GLOBAL_STATE).config.trackWeight(),
   };
 }
 

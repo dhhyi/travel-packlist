@@ -5,14 +5,13 @@ import { join } from 'path';
 
 export const createNodesV2: CreateNodesV2<object> = [
   '**/schema.json',
-  async (schemaFiles, options, context) => {
-    return await createNodesFromFiles(
+  async (schemaFiles, options, context) =>
+    await createNodesFromFiles(
       (schemaFile) => createNodesInternal(schemaFile),
       schemaFiles,
       options,
       context,
-    );
-  },
+    ),
 ];
 
 // eslint-disable-next-line @typescript-eslint/require-await

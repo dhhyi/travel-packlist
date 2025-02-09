@@ -42,9 +42,9 @@ export class EditRulesRawComponent {
   private readonly rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
-  private readonly rulesPending = computed(() => {
-    return this.rulesText() !== this.state.rules.raw();
-  });
+  private readonly rulesPending = computed(
+    () => this.rulesText() !== this.state.rules.raw(),
+  );
 
   readonly parserState = computed<ParserState>(() => {
     if (this.rulesPending()) {

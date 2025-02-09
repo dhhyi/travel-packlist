@@ -166,9 +166,9 @@ function analyzeComponent(this: Context, componentNode: ClassDeclaration) {
         );
         if (hostValue) {
           const nameMatchPattern = new RegExp(`\\b${name}\\b`);
-          return hostValue.getProperties().some((property) => {
-            return nameMatchPattern.test(property.getText());
-          });
+          return hostValue
+            .getProperties()
+            .some((property) => nameMatchPattern.test(property.getText()));
         }
         return false;
       };
@@ -183,9 +183,9 @@ function analyzeComponent(this: Context, componentNode: ClassDeclaration) {
     const init = node.getInitializerIfKind(SyntaxKind.CallExpression);
     return (
       init &&
-      ['input', 'input.required', 'output'].some((name) => {
-        return init.getExpression().getText() === name;
-      })
+      ['input', 'input.required', 'output'].some(
+        (name) => init.getExpression().getText() === name,
+      )
     );
   };
 
@@ -275,11 +275,10 @@ function traverseProject(this: Context) {
   );
   this.project
     .getSourceFiles(`${this.projectRootPath()}/**/*.ts`)
-    .filter((sourceFile) => {
-      return !excludes.some((exclude) => {
-        return exclude.match(sourceFile.getFilePath());
-      });
-    })
+    .filter(
+      (sourceFile) =>
+        !excludes.some((exclude) => exclude.match(sourceFile.getFilePath())),
+    )
     .forEach((sourceFile) => {
       const path = sourceFile.getFilePath();
       this.logTrace('Analyzing', path);
@@ -423,8 +422,8 @@ function writeImportReport(this: Context) {
     >;
     const projectFiles = this.projectFilePaths();
     return projectFiles
-      .flatMap((file) => {
-        return this.project
+      .flatMap((file) =>
+        this.project
           .getSourceFileOrThrow(file)
           .getImportDeclarations()
           .flatMap((node) => {
@@ -437,8 +436,8 @@ function writeImportReport(this: Context) {
             }
             return undefined;
           })
-          .filter((x) => !!x);
-      })
+          .filter((x) => !!x),
+      )
       .reduce<ImportReport>((acc, [m, name]) => {
         acc[m] = [...(acc[m] ?? []), name].filter(
           (v, i, a) => a.indexOf(v) === i,

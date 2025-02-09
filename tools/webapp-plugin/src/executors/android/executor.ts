@@ -55,20 +55,20 @@ async function prepareAndroidProject(
       if (!existsSync(variablesGradlePath)) {
         throw new Error('variables.gradle not found in the output path');
       }
-      updateFile(variablesGradlePath, (content) => {
-        return content.replace(
+      updateFile(variablesGradlePath, (content) =>
+        content.replace(
           /targetSdkVersion = \d+/,
           `targetSdkVersion = ${targetSdkVersion.toString()}`,
-        );
-      });
+        ),
+      );
     }
 
-    updateFile(`${options.outputPath}/app/proguard-rules.pro`, (content) => {
-      return (
+    updateFile(
+      `${options.outputPath}/app/proguard-rules.pro`,
+      (content) =>
         content +
-        '\n\n# https://developer.android.com/build/shrink-code#retracing\n-keepattributes LineNumberTable,SourceFile\n-renamesourcefileattribute SourceFile\n'
-      );
-    });
+        '\n\n# https://developer.android.com/build/shrink-code#retracing\n-keepattributes LineNumberTable,SourceFile\n-renamesourcefileattribute SourceFile\n',
+    );
   }
 
   execSync('pnpm cap sync', { stdio: 'inherit' });

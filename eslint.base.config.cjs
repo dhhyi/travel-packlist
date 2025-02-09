@@ -61,6 +61,7 @@ module.exports = [
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.mjs'],
     plugins: { perfectionist },
     rules: {
+      'arrow-body-style': ['error', 'as-needed'],
       curly: 'error',
       'no-duplicate-imports': 'error',
       'object-shorthand': 'error',

@@ -152,9 +152,9 @@ export const packlistState = ({
       categories: computed(() => refactor.extractCategories(parsedRules())),
       /** derived: all variables extracted from parsed rules */
       variables: computed(() => refactor.extractVariables(parsedRules())),
-      /** derived: currently active rules */
     },
     active: {
+      /** derived: currently active rules */
       rules: activeRules,
       /** derived: currently active answers */
       answers: computed(() => active().model),

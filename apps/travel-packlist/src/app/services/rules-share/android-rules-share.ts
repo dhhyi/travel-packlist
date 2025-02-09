@@ -17,18 +17,18 @@ export class AndroidRulesShare extends RulesShare {
       directory: Directory.Cache,
       encoding: Encoding.UTF8,
     })
-      .then(() => {
-        return Filesystem.getUri({
+      .then(() =>
+        Filesystem.getUri({
           directory: Directory.Cache,
           path,
-        });
-      })
-      .then((uriResult) => {
-        return Share.share({
+        }),
+      )
+      .then((uriResult) =>
+        Share.share({
           title: path,
           text: path,
           url: uriResult.uri,
-        });
-      });
+        }),
+      );
   }
 }

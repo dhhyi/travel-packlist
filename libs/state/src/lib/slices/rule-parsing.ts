@@ -57,9 +57,7 @@ export const ruleParsing = () => {
       /** derived: hash of current rules */
       hash: rulesHash,
       /** derived: true if rules have changed since last export */
-      exportNeeded: computed(() => {
-        return customized() && rulesHash() !== lastHash();
-      }),
+      exportNeeded: computed(() => customized() && rulesHash() !== lastHash()),
     },
     export: {
       /** storage: the hash of the last exported rules */

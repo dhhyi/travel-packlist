@@ -32,9 +32,7 @@ const STATE_BUILDER = new InjectionToken<ReturnType<typeof buildState>>(
 
 export const GLOBAL_STATE = new InjectionToken<GlobalState>('GLOBAL_STATE', {
   providedIn: 'root',
-  factory: () => {
-    return inject(STATE_BUILDER).build();
-  },
+  factory: () => inject(STATE_BUILDER).build(),
 });
 
 export const RESET_SWITCH = new InjectionToken<() => Promise<void>>(
