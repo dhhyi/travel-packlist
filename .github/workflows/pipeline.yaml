@@ -51,7 +51,7 @@ jobs:
       - name: Install Production Dependencies 📦
         run: pnpm install --frozen-lockfile --prod
 
-      - name: Get Git Hashes
+      - name: Get Git Hashes 🔍
         id: git
         run: |
           echo "hash0=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
@@ -62,7 +62,7 @@ jobs:
           echo "hash5=$(git rev-parse HEAD~5)" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
 
-      - name: Nx Cache
+      - name: Nx Cache 📦
         uses: actions/cache@v4
         with:
           key: nx-${{ runner.os }}-${{ steps.git.outputs.hash0 }}
@@ -75,6 +75,7 @@ jobs:
             nx-${{ runner.os }}-${{ steps.git.outputs.hash5 }}
 
       - name: Build Applications 🔧
+        id: build_apps
         run: |
           pnpm exec nx run-many \
             --configuration ci \
@@ -86,6 +87,12 @@ jobs:
           RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
           RELEASE_KEYSTORE_ALIAS: ${{ secrets.RELEASE_KEYSTORE_ALIAS }}
           RELEASE_KEYSTORE_ALIAS_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_ALIAS_PASSWORD }}
+
+      - name: Find mapping.txt 🔍
+        id: mapping_txt
+        run: |
+          find dist -name mapping.txt | grep mapping.txt
+          echo "file=$(find dist -name mapping.txt)" >> $GITHUB_OUTPUT
 
       - name: Install All Dependencies 📦
         run: pnpm install --frozen-lockfile
@@ -126,7 +133,7 @@ jobs:
       - name: Set up Docker Buildx 🐳
         uses: docker/setup-buildx-action@v3
 
-      - name: Log in to the Container registry
+      - name: Log in to the Container registry 🐳
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -197,6 +204,7 @@ jobs:
         # for adding a reference in the commit just use the #number without
         # anything that automatically closes the issue
         # (https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword)
+
       - name: Publish to Play Store 🚀
         if: steps.check_release.outputs.do_release == 'true'
         uses: r0adkll/upload-google-play@v1
@@ -204,4 +212,5 @@ jobs:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: dev.dhhyi
           releaseFiles: ${{ steps.release.outputs.aab }}
+          mappingFile: ${{ steps.mapping_txt.outputs.file }}
           track: internal
