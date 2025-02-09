@@ -132,7 +132,7 @@ export class DisplayItemsComponent {
 
   private touchAction: unknown;
 
-  touchStart(item: Item) {
+  tapStart(item: Item) {
     if (this.state.browser.isMobile()) {
       this.touchAction = setTimeout(() => {
         this.state.packlist.toggleSkippedItem(item);
@@ -140,7 +140,7 @@ export class DisplayItemsComponent {
     }
   }
 
-  touchEnd() {
+  tapEnd() {
     if (this.touchAction) {
       clearTimeout(this.touchAction as number);
     }

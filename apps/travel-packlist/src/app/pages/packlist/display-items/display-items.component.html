@@ -61,8 +61,9 @@
               (click)="toggleCheckedItem(item)"
               (keypress)="toggleCheckedItem(item)"
               (dblclick)="dblclick(item)"
-              (touchstart)="touchStart(item)"
-              (touchend)="touchEnd()"
+              (touchstart)="tapStart(item)"
+              (touchmove)="tapEnd()"
+              (touchend)="tapEnd()"
             >
               {{ item.name }}
               @if (item.weight && trackWeight()) {
