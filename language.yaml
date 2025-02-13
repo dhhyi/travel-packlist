@@ -2,17 +2,7 @@
 extends: dcc://javascript-pnpm
 devcontainer:
   build:
-    packages:
-      - tmux
     files:
-      - type: script
-        path: /tmux-or-else.sh
-        content: |
-          #!/bin/bash
-          if [ -z "$*" ]; then
-            tmux new-session -A -s tmux
-          fi
-          exec sh "$@"
       - type: script
         path: /usr/bin/nx
         content: |
@@ -27,6 +17,7 @@ devcontainer:
     - 4200
 extras:
   - named-volumes
+  - tmux
 namedVolumes:
   node_modules: travel-packlist-node-modules
   /home/pnpm: travel-packlist-pnpm-store
@@ -50,10 +41,6 @@ vscode:
     - peakchen90.open-html-in-browser
   settings:
     editor.defaultFormatter: esbenp.prettier-vscode
-    terminal.integrated.profiles.linux:
-      tmux:
-        path: /tmux-or-else.sh
-    terminal.integrated.defaultProfile.linux: tmux
     tailwindCSS.classAttributes:
       - class
       - ngClass
