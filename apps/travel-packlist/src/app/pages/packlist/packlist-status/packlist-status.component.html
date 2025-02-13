@@ -23,10 +23,21 @@
         type="button"
         class="link"
         role="button"
-        aria-label="Display statistics"
+        aria-label="Display weight distribution"
         i18n-aria-label
-        [attr.aria-pressed]="statsVisible()"
-        (click)="statsVisible.set(!statsVisible())"
+        [attr.aria-pressed]="statsVisible() === 'distribution'"
+        (click)="toggleStats('distribution')"
+      ></button>
+      <button
+        iconBarChart
+        iconClass="h-6 w-6 rotate-90"
+        type="button"
+        class="link"
+        role="button"
+        aria-label="Display heaviest items"
+        i18n-aria-label
+        [attr.aria-pressed]="statsVisible() === 'heaviestItems'"
+        (click)="toggleStats('heaviestItems')"
       ></button>
     }
   </div>
@@ -36,9 +47,14 @@
   [@animateDiagram]="statsVisible()"
   [@.disabled]="animationsDisabled()"
 >
-  @if (statsVisible()) {
+  @if (statsVisible() === 'distribution') {
     <div class="card mb-1">
       <cmp-pie-chart chartClass="max-w-[300px]" [segments]="weightStats()" />
+    </div>
+  }
+  @if (statsVisible() === 'heaviestItems') {
+    <div class="card mb-1 flex flex-col items-center">
+      <app-heaviest-items />
     </div>
   }
 </div>

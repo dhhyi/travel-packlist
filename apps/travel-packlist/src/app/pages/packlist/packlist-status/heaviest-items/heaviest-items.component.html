@@ -1,0 +1,31 @@
+<div class="flex flex-col justify-between">
+  <button
+    iconArrowUpward
+    iconClass="h-6 w-6"
+    type="button"
+    class="link px-1"
+    role="button"
+    aria-label="Previous page"
+    i18n-aria-label
+    [disabled]="currentPage() <= 0"
+    (click)="previousPage()"
+  ></button>
+  <button
+    iconArrowDownward
+    iconClass="h-6 w-6"
+    type="button"
+    class="link px-1"
+    role="button"
+    aria-label="Next page"
+    i18n-aria-label
+    [disabled]="currentPage() >= lastPage()"
+    (click)="nextPage()"
+  ></button>
+</div>
+<div class="flex-grow overflow-hidden" [@animatePages]="currentPage()">
+  @for (page of heaviestItems(); track $index) {
+    @if ($index === currentPage()) {
+      <cmp-bar-chart [bars]="page" />
+    }
+  }
+</div>

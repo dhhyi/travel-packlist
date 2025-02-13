@@ -18,6 +18,7 @@ import {
   ProgressComponent,
 } from '@travel-packlist/components';
 import {
+  IconBarChartComponent,
   IconLockComponent,
   IconLockOpenComponent,
   IconPieChartComponent,
@@ -26,12 +27,13 @@ import {
   serializeWeight,
   serializeWeightPartition,
 } from '@travel-packlist/model';
-import { GLOBAL_STATE } from '@travel-packlist/state';
+import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 
 import {
   staggerInCard,
   staggerOutCard,
 } from '../../../animations/card.animations';
+import { HeaviestItemsComponent } from './heaviest-items/heaviest-items.component';
 
 const animateDiagram = trigger('animateDiagram', [
   transition('* <=> *', [
@@ -47,6 +49,8 @@ const animateDiagram = trigger('animateDiagram', [
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
   imports: [
+    HeaviestItemsComponent,
+    IconBarChartComponent,
     IconLockOpenComponent,
     IconLockComponent,
     IconPieChartComponent,
@@ -85,7 +89,17 @@ export class PacklistStatusComponent {
 
   readonly animationDuration = signal(0);
 
-  readonly statsVisible = this.state.packlist.weightStatsVisible;
+  readonly statsVisible = this.state.packlist.statsVisible;
+
+  toggleStats(stat: ItemStats) {
+    this.state.packlist.statsVisible.update((visible) => {
+      if (visible === stat) {
+        return undefined;
+      } else {
+        return stat;
+      }
+    });
+  }
 
   readonly weightStats = computed(() => {
     const totalWeight = this.stats().totalWeight;

@@ -37,9 +37,15 @@ test('weight tracking', async ({ page }) => {
   `);
   await expect(page).toHaveScreenshot();
 
-  await expect(packlist.displayStatisticsButton()).toBeVisible();
+  await expect(packlist.displayWeightDistributionButton()).toBeVisible();
 
-  await packlist.displayStatisticsButton().click();
+  await packlist.displayWeightDistributionButton().click();
+
+  await expect(page).toHaveScreenshot();
+
+  await expect(packlist.displayHeaviestItemsButton()).toBeVisible();
+
+  await packlist.displayHeaviestItemsButton().click();
 
   await expect(page).toHaveScreenshot();
 });

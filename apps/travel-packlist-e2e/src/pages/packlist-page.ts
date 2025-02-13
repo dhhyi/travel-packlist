@@ -19,8 +19,14 @@ export class PacklistPage extends Banner {
     return this.page.getByRole('button', { name: 'Lock answers' });
   }
 
-  displayStatisticsButton() {
-    return this.page.getByRole('button', { name: 'Display statistics' });
+  displayWeightDistributionButton() {
+    return this.page.getByRole('button', {
+      name: 'Display weight distribution',
+    });
+  }
+
+  displayHeaviestItemsButton() {
+    return this.page.getByRole('button', { name: 'Display heaviest items' });
   }
 
   item(name: string, checked: boolean | undefined = undefined) {

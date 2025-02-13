@@ -14,6 +14,8 @@ function serialize(item: Pick<Item, 'category' | 'name'>): string {
   return `${item.category}-${item.name}`;
 }
 
+export type ItemStats = 'distribution' | 'heaviestItems';
+
 export const packlistState = ({
   rules: { parsed: parsedRules },
   config: { categorySorting, skipItems },
@@ -23,9 +25,9 @@ export const packlistState = ({
   const stringSkippedItems = create<string[]>('skippedItems', []);
   const collapsedCategories = create<string[]>('collapsedCategories', []);
   const answersLocked = create('answersLocked', false);
-  const weightStatsVisible = createSessionStorageSignalState(
-    'weightStatsVisible',
-    false,
+  const statsVisible = createSessionStorageSignalState<ItemStats | undefined>(
+    'statsVisible',
+    undefined,
   );
 
   const refactor = inject(Refactor);
@@ -178,8 +180,8 @@ export const packlistState = ({
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
       answersLocked,
-      /** session: whether to show the weight stats */
-      weightStatsVisible,
+      /** session: which stats to show */
+      statsVisible,
       /** reset the packlist sub state */
       reset: () => {
         answers.set({});
@@ -187,7 +189,7 @@ export const packlistState = ({
         stringSkippedItems.set([]);
         collapsedCategories.set([]);
         answersLocked.set(false);
-        weightStatsVisible.set(false);
+        statsVisible.set(undefined);
       },
     },
   };
