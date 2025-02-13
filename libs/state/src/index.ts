@@ -7,3 +7,5 @@ export {
 } from './lib/slices/config-state';
 
 export { RuleModes } from './lib/slices/router-state';
+
+export { ItemStats } from './lib/slices/packlist-state';

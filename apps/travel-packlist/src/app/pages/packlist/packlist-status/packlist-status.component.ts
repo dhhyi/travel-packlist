@@ -14,10 +14,12 @@ import {
   signal,
 } from '@angular/core';
 import {
+  BarChartComponent,
   PieChartComponent,
   ProgressComponent,
 } from '@travel-packlist/components';
 import {
+  IconBarChartComponent,
   IconLockComponent,
   IconLockOpenComponent,
   IconPieChartComponent,
@@ -26,7 +28,7 @@ import {
   serializeWeight,
   serializeWeightPartition,
 } from '@travel-packlist/model';
-import { GLOBAL_STATE } from '@travel-packlist/state';
+import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 
 import {
   staggerInCard,
@@ -47,6 +49,8 @@ const animateDiagram = trigger('animateDiagram', [
   selector: 'app-packlist-status',
   templateUrl: './packlist-status.component.html',
   imports: [
+    BarChartComponent,
+    IconBarChartComponent,
     IconLockOpenComponent,
     IconLockComponent,
     IconPieChartComponent,
@@ -85,7 +89,17 @@ export class PacklistStatusComponent {
 
   readonly animationDuration = signal(0);
 
-  readonly statsVisible = this.state.packlist.weightStatsVisible;
+  readonly statsVisible = this.state.packlist.statsVisible;
+
+  toggleStats(stat: ItemStats) {
+    this.state.packlist.statsVisible.update((visible) => {
+      if (visible === stat) {
+        return undefined;
+      } else {
+        return stat;
+      }
+    });
+  }
 
   readonly weightStats = computed(() => {
     const totalWeight = this.stats().totalWeight;
@@ -97,6 +111,28 @@ export class PacklistStatusComponent {
       }))
       .filter((category) => category.value > 0);
   });
+
+  readonly heaviestItems = computed(
+    () =>
+      this.state.packlist
+        .model()
+        .flatMap((category) => category.items)
+        .filter((i) => i.weight && !i.skipped && i.weight > 0)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        .toSorted((l, r) => r.weight! - l.weight!)
+        .slice(0, 10)
+        .reduce(
+          (acc, i) => {
+            const max = (acc.max || i.weight) ?? 0;
+            const item = {
+              name: `${i.name} (${serializeWeight(i.weight)})`,
+              value: (i.weight ?? 0) / max,
+            };
+            return { max, items: [...acc.items, item] };
+          },
+          { max: NaN, items: [] as { name: string; value: number }[] },
+        ).items,
+  );
 
   readonly animationsDisabled = signal(true);
 

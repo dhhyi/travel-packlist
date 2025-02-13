@@ -6,6 +6,8 @@ import {
   input,
 } from '@angular/core';
 
+import { colorFromString } from '../colors';
+
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-pie-chart',
@@ -49,16 +51,6 @@ export class PieChartComponent {
   });
 
   color(category: string): string {
-    return `hsl(${(hashStringToNumber(category, 400) * 360) / 400}, 50%, 50%)`;
+    return colorFromString(category);
   }
-}
-
-function hashStringToNumber(str: string, max: number): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char; // Simple hash algorithm
-    hash |= 0; // Convert to 32-bit integer
-  }
-  return (Math.abs(hash) % max) + 1;
 }
