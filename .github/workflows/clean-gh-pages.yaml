@@ -1,0 +1,26 @@
+name: Clean GH Pages
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  clean-gh-pages:
+    runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+          clean: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 'latest'
+
+      - name: Clean GH Pages 🧹
+        run: git show origin/main:util/clean-gh-pages.mjs | node -
+
+      - uses: stefanzweifel/git-auto-commit-action@v5

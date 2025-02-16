@@ -10,27 +10,7 @@ permissions:
 env:
   NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
 jobs:
-  clean-gh-pages:
-    runs-on: ubuntu-latest
-    concurrency: ci-${{ github.ref }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          fetch-depth: 0
-          clean: false
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 'latest'
-
-      - name: Clean GH Pages 🧹
-        run: git show origin/main:util/clean-gh-pages.mjs | node -
-
-      - uses: stefanzweifel/git-auto-commit-action@v5
-
   build-and-deploy:
-    needs: clean-gh-pages
     environment:
       # this environment is added here to provide a link to the design system on the GitHub project page
       name: design-system
