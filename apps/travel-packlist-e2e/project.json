@@ -23,7 +23,7 @@
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm playwright test -j 1 -c {projectRoot}/playwright.config.ts"
+        "command": "pnpm playwright test -c {projectRoot}/playwright.config.ts"
       },
       "inputs": [
         "default",
@@ -35,7 +35,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "pnpm playwright test -j 1 -c {projectRoot}/playwright.config.ts --update-snapshots",
+          "pnpm playwright test -c {projectRoot}/playwright.config.ts --update-snapshots",
           "git apply dist/.playwright/{projectRoot}/test-output/rebaselines.patch"
         ],
         "parallel": false
