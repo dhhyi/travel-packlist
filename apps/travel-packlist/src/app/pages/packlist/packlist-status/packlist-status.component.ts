@@ -13,14 +13,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import {
-  PieChartComponent,
-  ProgressComponent,
-} from '@travel-packlist/components';
-import {
-  serializeWeight,
-  serializeWeightPartition,
-} from '@travel-packlist/model';
+import { PieChartComponent } from '@travel-packlist/components';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import {
@@ -28,6 +21,7 @@ import {
   staggerOutCard,
 } from '../../../animations/card.animations';
 import { HeaviestItemsComponent } from './heaviest-items/heaviest-items.component';
+import { PacklistProgressComponent } from './packlist-progress/packlist-progress.component';
 import { PacklistToolbarComponent } from './packlist-toolbar/packlist-toolbar.component';
 
 const animateDiagram = trigger('animateDiagram', [
@@ -45,33 +39,15 @@ const animateDiagram = trigger('animateDiagram', [
   templateUrl: './packlist-status.component.html',
   imports: [
     HeaviestItemsComponent,
-    ProgressComponent,
     PieChartComponent,
     PacklistToolbarComponent,
+    PacklistProgressComponent,
   ],
   animations: [animateDiagram],
 })
 export class PacklistStatusComponent {
   private state = inject(GLOBAL_STATE);
-  trackWeight = this.state.config.trackWeight;
-  stats = this.state.packlist.stats;
-
-  serializeWeightPartition = serializeWeightPartition;
-
-  readonly statusLabelText = computed(() => {
-    const totalWeight = this.stats().totalWeight;
-    const checkedWeight = this.stats().checkedWeight;
-    const checkedItems = this.stats().checkedItems.toString();
-    const totalItems = this.stats().totalItems.toString();
-
-    if (this.trackWeight()) {
-      return $localize`You have packed ${serializeWeight(checkedWeight, undefined, 1)}:CHECKED_WEIGHT: out of ${serializeWeight(totalWeight, undefined, 1)}:TOTAL_WEIGHT: by packing ${checkedItems}:CHECKED_ITEMS: out of ${totalItems}:TOTAL_ITEMS: items.`;
-    } else {
-      return $localize`You have packed ${checkedItems}:CHECKED_ITEMS: out of ${totalItems}:TOTAL_ITEMS: items.`;
-    }
-  });
-
-  readonly animationDuration = signal(0);
+  private stats = this.state.packlist.stats;
 
   readonly statsVisible = this.state.packlist.statsVisible;
 
@@ -91,7 +67,6 @@ export class PacklistStatusComponent {
   constructor() {
     afterRender(() => {
       this.animationsDisabled.set(!this.state.config.animations());
-      this.animationDuration.set(this.state.config.animations() ? 500 : 0);
     });
   }
 }

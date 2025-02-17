@@ -15,38 +15,4 @@
     </div>
   }
 </div>
-<div class="card mb-1">
-  <div class="mb-1 flex">
-    @if (trackWeight()) {
-      <cmp-progress
-        class="grow"
-        title="weight packing progress"
-        i18n-title
-        aria-live="polite"
-        [attr.aria-label]="statusLabelText()"
-        [value]="stats().checkedWeight"
-        [max]="stats().totalWeight"
-        [animationDuration]="animationDuration()"
-      />
-    } @else {
-      <cmp-progress
-        class="grow"
-        title="item packing progress"
-        i18n-title
-        aria-live="polite"
-        [attr.aria-label]="statusLabelText()"
-        [value]="stats().checkedItems"
-        [max]="stats().totalItems"
-        [animationDuration]="animationDuration()"
-      />
-    }
-  </div>
-  <div class="flex flex-col items-center" aria-hidden="true">
-    <span>{{ stats().checkedItems }} / {{ stats().totalItems }}</span>
-    @if (trackWeight()) {
-      <span>{{
-        serializeWeightPartition(stats().checkedWeight, stats().totalWeight)
-      }}</span>
-    }
-  </div>
-</div>
+<app-packlist-progress />
