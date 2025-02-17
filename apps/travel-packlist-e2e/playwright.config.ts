@@ -45,4 +45,5 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
     url: 'http://localhost:4200',
   },
+  workers: '25%',
 });
