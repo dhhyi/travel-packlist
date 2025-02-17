@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { RuleModes } from '@travel-packlist/state';
 
 import { Banner } from './banner';
@@ -6,6 +7,8 @@ import { PacklistPage } from './packlist-page';
 import { RulesRawPage } from './rules-raw-page';
 
 export class EditorPage extends Banner {
+  private readonly identifier = this.page.locator('app-rules');
+
   get toolbar() {
     const toolbar = this.page.getByRole('toolbar');
     const fn = function () {
@@ -181,11 +184,13 @@ export class EditorPage extends Banner {
 
   async toPacklistPage() {
     await this.banner().click();
+    await expect(this.identifier).toBeHidden();
     return new PacklistPage(this.page);
   }
 
   async toConfigPage() {
     await this.configLink().click();
+    await expect(this.identifier).toBeHidden();
     return new ConfigPage(this.page);
   }
 }

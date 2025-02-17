@@ -1,9 +1,14 @@
+import { expect } from '@playwright/test';
+
 import { Banner } from './banner';
 import { ConfigPage } from './config-page';
 
 export class PacklistPage extends Banner {
+  private readonly identifier = this.page.locator('app-packlist');
+
   async toConfigPage() {
     await this.configLink().click();
+    await expect(this.identifier).toBeHidden();
     return new ConfigPage(this.page);
   }
 

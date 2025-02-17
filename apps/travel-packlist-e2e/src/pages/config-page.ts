@@ -1,11 +1,16 @@
+import { expect } from '@playwright/test';
+
 import { Banner } from './banner';
 import { EditorPage } from './editor-page';
 import { PacklistPage } from './packlist-page';
 import { RulesRawPage } from './rules-raw-page';
 
 export class ConfigPage extends Banner {
+  private readonly identifier = this.page.locator('app-config');
+
   async toPacklistPage() {
     await this.banner().click();
+    await expect(this.identifier).toBeHidden();
     return new PacklistPage(this.page);
   }
 
@@ -15,6 +20,7 @@ export class ConfigPage extends Banner {
 
   async toRulesRawPage() {
     await this.editRulesWithCodeButton().click();
+    await expect(this.identifier).toBeHidden();
     return new RulesRawPage(this.page);
   }
 
@@ -24,6 +30,7 @@ export class ConfigPage extends Banner {
 
   async toEditorPage() {
     await this.editRulesButton().click();
+    await expect(this.identifier).toBeHidden();
     return new EditorPage(this.page);
   }
 
