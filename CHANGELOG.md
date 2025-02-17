@@ -1,3 +1,9 @@
+## [0.9.0](https://github.com/dhhyi/travel-packlist/compare/v0.8.0...v0.9.0) (2025-02-17)
+
+### Features
+
+- display heaviest items in a bar chart ([850d0bc](https://github.com/dhhyi/travel-packlist/commit/850d0bc54b394413380ab45ca567c1b61717cefc))
+
 ## [0.8.0](https://github.com/dhhyi/travel-packlist/compare/v0.7.0-auto-release3...v0.8.0) (2025-02-09)
 
 ### Features
