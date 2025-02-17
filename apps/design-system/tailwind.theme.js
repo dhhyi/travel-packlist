@@ -41,6 +41,9 @@ const theme = {
         '50%': { opacity: 0.1 },
       },
     },
+    boxShadow: {
+      'inner-lg': `inset 0 0 10px rgba(128, 128, 128, 0.5)`,
+    },
   },
   fontFamily: {
     mono: ['Courier New', 'monospace'],

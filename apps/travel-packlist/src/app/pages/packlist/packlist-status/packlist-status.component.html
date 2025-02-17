@@ -1,47 +1,4 @@
-@if (questionsAvailable()) {
-  <div class="flex justify-center gap-x-4">
-    <button
-      type="button"
-      class="link"
-      role="button"
-      aria-label="Lock answers"
-      i18n-aria-label
-      [attr.aria-pressed]="isAnswersLockActive()"
-      (click)="toggleAnswersLock()"
-      (keypress)="toggleAnswersLock()"
-    >
-      @if (isAnswersLockActive()) {
-        <app-icon-lock class="h-6 w-6" />
-      } @else {
-        <app-icon-lock-open class="h-6 w-6" />
-      }
-    </button>
-    @if (trackWeight()) {
-      <button
-        iconPieChart
-        iconClass="h-6 w-6"
-        type="button"
-        class="link"
-        role="button"
-        aria-label="Display weight distribution"
-        i18n-aria-label
-        [attr.aria-pressed]="statsVisible() === 'distribution'"
-        (click)="toggleStats('distribution')"
-      ></button>
-      <button
-        iconBarChart
-        iconClass="h-6 w-6 rotate-90"
-        type="button"
-        class="link"
-        role="button"
-        aria-label="Display heaviest items"
-        i18n-aria-label
-        [attr.aria-pressed]="statsVisible() === 'heaviestItems'"
-        (click)="toggleStats('heaviestItems')"
-      ></button>
-    }
-  </div>
-}
+<app-packlist-toolbar />
 <div
   class="contents"
   [@animateDiagram]="statsVisible()"

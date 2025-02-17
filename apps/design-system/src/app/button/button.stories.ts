@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { IconCogComponent } from '@travel-packlist/icons';
 
 @Component({
@@ -25,6 +25,8 @@ import { IconCogComponent } from '@travel-packlist/icons';
 })
 class Button {
   text: string | undefined = undefined;
+  readonly pressed = signal(true);
+  readonly active = signal(true);
 }
 
 const meta: Meta<Button> = {

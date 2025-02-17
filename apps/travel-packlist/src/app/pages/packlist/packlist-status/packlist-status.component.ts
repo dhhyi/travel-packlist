@@ -18,22 +18,17 @@ import {
   ProgressComponent,
 } from '@travel-packlist/components';
 import {
-  IconBarChartComponent,
-  IconLockComponent,
-  IconLockOpenComponent,
-  IconPieChartComponent,
-} from '@travel-packlist/icons';
-import {
   serializeWeight,
   serializeWeightPartition,
 } from '@travel-packlist/model';
-import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import {
   staggerInCard,
   staggerOutCard,
 } from '../../../animations/card.animations';
 import { HeaviestItemsComponent } from './heaviest-items/heaviest-items.component';
+import { PacklistToolbarComponent } from './packlist-toolbar/packlist-toolbar.component';
 
 const animateDiagram = trigger('animateDiagram', [
   transition('* <=> *', [
@@ -50,27 +45,16 @@ const animateDiagram = trigger('animateDiagram', [
   templateUrl: './packlist-status.component.html',
   imports: [
     HeaviestItemsComponent,
-    IconBarChartComponent,
-    IconLockOpenComponent,
-    IconLockComponent,
-    IconPieChartComponent,
     ProgressComponent,
     PieChartComponent,
+    PacklistToolbarComponent,
   ],
   animations: [animateDiagram],
 })
 export class PacklistStatusComponent {
   private state = inject(GLOBAL_STATE);
-  readonly questionsAvailable = computed(
-    () => this.state.active.questions().length > 0,
-  );
-  isAnswersLockActive = this.state.packlist.answersLocked;
   trackWeight = this.state.config.trackWeight;
   stats = this.state.packlist.stats;
-
-  toggleAnswersLock() {
-    this.state.packlist.answersLocked.update((lock) => !lock);
-  }
 
   serializeWeightPartition = serializeWeightPartition;
 
@@ -90,16 +74,6 @@ export class PacklistStatusComponent {
   readonly animationDuration = signal(0);
 
   readonly statsVisible = this.state.packlist.statsVisible;
-
-  toggleStats(stat: ItemStats) {
-    this.state.packlist.statsVisible.update((visible) => {
-      if (visible === stat) {
-        return undefined;
-      } else {
-        return stat;
-      }
-    });
-  }
 
   readonly weightStats = computed(() => {
     const totalWeight = this.stats().totalWeight;

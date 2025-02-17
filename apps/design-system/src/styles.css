@@ -78,6 +78,12 @@
       @apply ring ring-slate-800 dark:ring-slate-200;
     }
 
+    &.pressed {
+      @apply shadow-inner-lg;
+
+      filter: blur(0.5px);
+    }
+
     &.highlighted {
       @apply bg-green-light animate-pulse;
     }

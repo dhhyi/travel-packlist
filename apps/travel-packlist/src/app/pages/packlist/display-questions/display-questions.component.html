@@ -19,13 +19,14 @@
   >
     @for (question of displayQuestions(); track question.question) {
       <div
-        class="card mb-1 flex flex-row items-center justify-between overflow-hidden"
+        class="card flex flex-row items-center justify-between overflow-hidden"
         role="checkbox"
         tabindex="0"
         [attr.aria-checked]="isQuestionActive(question)"
         [attr.aria-disabled]="isAnswersLockActive()"
         [attr.aria-label]="question.question"
         [class.disabled]="isAnswersLockActive()"
+        [class.mb-1]="!$last"
         (click)="toggleQuestion(question)"
         (keypress)="toggleQuestion(question)"
       >

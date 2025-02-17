@@ -16,17 +16,27 @@
 </div>
 
 <div class="grid grid-cols-3 gap-4">
-  <button type="button" class="link">{{ text || 'link' }}</button>
-  <button type="button" class="link" disabled>{{ text || 'link' }}</button>
-  <button type="button" class="link active">{{ text || 'link' }}</button>
+  <span>toggle</span>
+  <span>disabled</span>
+  <span>check</span>
 
-  <button type="button" class="link">
+  <button
+    type="button"
+    class="link"
+    [class.pressed]="pressed()"
+    (click)="pressed.set(!pressed())"
+  >
     <app-icon-cog />
   </button>
   <button type="button" class="link" disabled>
     <app-icon-cog />
   </button>
-  <button type="button" class="link active">
+  <button
+    type="button"
+    class="link"
+    [class.active]="active()"
+    (click)="active.set(!active())"
+  >
     <app-icon-cog />
   </button>
 </div>
