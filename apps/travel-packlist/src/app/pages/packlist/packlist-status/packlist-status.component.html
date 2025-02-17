@@ -6,7 +6,7 @@
 >
   @if (statsVisible() === 'distribution') {
     <div class="card mb-1">
-      <cmp-pie-chart chartClass="max-w-[300px]" [segments]="weightStats()" />
+      <app-weight-distribution />
     </div>
   }
   @if (statsVisible() === 'heaviestItems') {
