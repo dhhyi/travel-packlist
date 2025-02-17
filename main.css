@@ -735,6 +735,17 @@ button {
     --tw-ring-color: rgb(226 232 240 / var(--tw-ring-opacity, 1));
   }
 
+    &.pressed {
+    --tw-shadow: inset 0 0 10px rgba(128, 128, 128, 0.5);
+    --tw-shadow-colored: inset 0 0 10px var(--tw-shadow-color);
+    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  }
+
+    &.pressed {
+
+      filter: blur(0.5px);
+    }
+
     @keyframes pulse {
 
     50% {
@@ -841,6 +852,9 @@ select {
   }
 .pointer-events-none {
   pointer-events: none;
+}
+.visible {
+  visibility: visible;
 }
 .static {
   position: static;
@@ -1042,17 +1056,27 @@ select {
 .max-w-\[300px\] {
   max-width: 300px;
 }
+.max-w-\[350px\] {
+  max-width: 350px;
+}
 .max-w-\[5rem\] {
   max-width: 5rem;
 }
 .flex-1 {
   flex: 1 1 0%;
 }
+.flex-grow {
+  flex-grow: 1;
+}
 .grow {
   flex-grow: 1;
 }
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.rotate-90 {
+  --tw-rotate: 90deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 .transform {
