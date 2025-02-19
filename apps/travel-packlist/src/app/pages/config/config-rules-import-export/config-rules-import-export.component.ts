@@ -90,18 +90,13 @@ export class ConfigRulesImportExportComponent {
     return 0;
   });
 
-  private resetHash() {
-    this.state.export.lastHash.set(this.state.rules.hash());
-    this.state.export.lastDate.set(new Date().getTime());
-  }
-
   isExportAvailable(): boolean {
     return !!this.state.rules.customized();
   }
 
   async exportRules() {
     await this.rulesShare.exportRules();
-    this.resetHash();
+    this.state.rules.markAsCurrent();
   }
 
   private async triggerImportRules() {
@@ -128,8 +123,8 @@ export class ConfigRulesImportExportComponent {
           return;
         }
         const text = await file.text();
-        this.state.rules.raw.set(text);
-        this.resetHash();
+        this.state.localRules.updateRules(text);
+        this.state.rules.markAsCurrent();
 
         setTimeout(() => {
           void this.promptEnableWeightTracking();

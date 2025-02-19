@@ -6,6 +6,10 @@ import { ConfigPage } from './config-page';
 export class PacklistPage extends Banner {
   private readonly identifier = this.page.locator('app-packlist');
 
+  error() {
+    return this.page.getByRole('alert');
+  }
+
   async toConfigPage() {
     await this.configLink().click();
     await expect(this.identifier).toBeHidden();

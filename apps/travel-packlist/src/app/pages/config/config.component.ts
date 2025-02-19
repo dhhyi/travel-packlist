@@ -1,10 +1,14 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { ConfigAppearanceComponent } from './config-appearance/config-appearance.component';
 import { ConfigChecklistComponent } from './config-checklist/config-checklist.component';
 import { ConfigDangerzoneComponent } from './config-dangerzone/config-dangerzone.component';
 import { ConfigRulesEditorComponent } from './config-rules-editor/config-rules-editor.component';
 import { ConfigRulesImportExportComponent } from './config-rules-import-export/config-rules-import-export.component';
+import { ConfigRulesModeComponent } from './config-rules-mode/config-rules-mode.component';
+import { ConfigRulesRemoteComponent } from './config-rules-remote/config-rules-remote.component';
+import { ConfigRulesViewerComponent } from './config-rules-viewer/config-rules-viewer.component';
 import { ConfigSupportComponent } from './config-support/config-support.component';
 import { ConfigVersionComponent } from './config-version/config-version.component';
 
@@ -19,8 +23,13 @@ import { ConfigVersionComponent } from './config-version/config-version.componen
     ConfigVersionComponent,
     ConfigSupportComponent,
     ConfigDangerzoneComponent,
+    ConfigRulesModeComponent,
+    ConfigRulesRemoteComponent,
+    ConfigRulesViewerComponent,
   ],
   templateUrl: './config.component.html',
 })
-// eslint-disable-next-line @typescript-eslint/no-extraneous-class
-export class ConfigComponent {}
+export class ConfigComponent {
+  private state = inject(GLOBAL_STATE);
+  rulesMode = this.state.rules.mode;
+}

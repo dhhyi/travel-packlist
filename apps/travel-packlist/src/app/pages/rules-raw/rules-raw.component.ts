@@ -1,9 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
-  ChangeDetectionStrategy,
   effect,
+  inject,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -69,7 +69,15 @@ export class EditRulesRawComponent {
     effect(() => {
       const value = ruleUpdates();
       if (typeof value === 'string' && value !== this.state.rules.raw()) {
-        this.state.rules.raw.set(value);
+        this.state.localRules.updateRules(value);
+      }
+    });
+    effect(() => {
+      const editable = this.state.rules.mode() === 'local';
+      if (!editable) {
+        this.rulesControl.disable();
+      } else {
+        this.rulesControl.enable();
       }
     });
   }

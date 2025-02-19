@@ -1,6 +1,17 @@
 <app-config-checklist />
-<app-config-rules-editor />
-<app-config-rules-import-export />
+
+<app-config-rules-mode />
+
+<div [class.hidden]="rulesMode() === 'remote'">
+  <app-config-rules-editor />
+  <app-config-rules-import-export />
+</div>
+
+<div [class.hidden]="rulesMode() === 'local'">
+  <app-config-rules-remote />
+  <app-config-rules-viewer />
+</div>
+
 <app-config-appearance />
 <app-config-version />
 <app-config-support />

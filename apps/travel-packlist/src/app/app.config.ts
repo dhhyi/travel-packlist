@@ -1,11 +1,11 @@
 import {
   ApplicationConfig,
-  provideExperimentalZonelessChangeDetection,
-  isDevMode,
   inject,
-  provideAppInitializer,
   // eslint-disable-next-line no-restricted-imports
   Injector,
+  isDevMode,
+  provideAppInitializer,
+  provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
@@ -17,7 +17,10 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
 import { provideRulesDocumentation } from '@travel-packlist/rules-documentation';
 import { provideRulesTemplate } from '@travel-packlist/rules-template';
-import { GLOBAL_STATE } from '@travel-packlist/state';
+import {
+  CAPACITOR_HTTP_REQUEST_MODE,
+  GLOBAL_STATE,
+} from '@travel-packlist/state';
 
 import { routes } from './pages/app.routes';
 import { AppInit } from './services/app.init';
@@ -62,5 +65,9 @@ export const appConfig: ApplicationConfig = {
     },
     provideRulesDocumentation(),
     provideRulesTemplate(),
+    {
+      provide: CAPACITOR_HTTP_REQUEST_MODE,
+      useValue: ANDROID ? 'no-cors' : 'cors',
+    },
   ],
 };

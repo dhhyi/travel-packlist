@@ -17,7 +17,7 @@
       type="edit"
       label="Edit"
       i18n-label
-      [disabled]="!noOfVisibleRules() && !!searchTerm()"
+      [disabled]="!editable() || (!noOfVisibleRules() && !!searchTerm())"
     >
       <app-icon-edit class="my-auto h-6 w-6" />
     </app-toolbar-button>
@@ -25,7 +25,7 @@
       type="delete"
       label="Delete"
       i18n-label
-      [disabled]="!noOfVisibleRules()"
+      [disabled]="!editable() || !noOfVisibleRules()"
     >
       <app-icon-delete class="my-auto h-6 w-6" />
     </app-toolbar-button>
@@ -34,7 +34,8 @@
       label="Cut/Paste"
       i18n-label
       [disabled]="
-        noOfVisibleRules() < 2 && !clipboardItems() && !clipboardQuestions()
+        !editable() ||
+        (noOfVisibleRules() < 2 && !clipboardItems() && !clipboardQuestions())
       "
     >
       <app-icon-reorder class="my-auto h-6 w-6" />
@@ -43,7 +44,7 @@
       type="swap"
       label="Swap"
       i18n-label
-      [disabled]="!noOfVisibleRules()"
+      [disabled]="!editable() || !noOfVisibleRules()"
     >
       <app-icon-swap class="my-auto h-6 w-6" />
     </app-toolbar-button>

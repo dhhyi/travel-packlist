@@ -27,6 +27,8 @@ export class PacklistComponent {
     () => this.state.rules.parsed().length > 0,
   );
 
+  rulesMode = this.state.rules.mode;
+
   goToRulesEdit() {
     this.state.router.go('rules->edit');
   }

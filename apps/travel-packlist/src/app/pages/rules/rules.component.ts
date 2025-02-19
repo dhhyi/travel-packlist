@@ -1,16 +1,16 @@
 import {
-  Component,
-  inject,
   ChangeDetectionStrategy,
+  Component,
   computed,
+  inject,
   signal,
 } from '@angular/core';
 import { IconSwapComponent } from '@travel-packlist/icons';
 import {
-  Refactor,
   PleaseSelect,
-  serializeRules,
+  Refactor,
   Rule,
+  serializeRules,
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
@@ -57,7 +57,7 @@ export class RulesComponent {
 
   private updateRules(rules: Rule[]) {
     const serializedRules = serializeRules(rules);
-    this.state.rules.raw.set(serializedRules);
+    this.state.localRules.updateRules(serializedRules);
   }
 
   updateRule(index: number, rule: Rule) {

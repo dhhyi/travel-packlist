@@ -1,0 +1,70 @@
+<h2 i18n>Remote Source</h2>
+<textarea
+  aria-label="remote rules source"
+  i18n-aria-label
+  rows="4"
+  placeholder="insert URL here"
+  i18n-placeholder
+  [formControl]="control"
+></textarea>
+<div class="flex flex-row items-center">
+  <button
+    iconHistory
+    iconClass="h-6 w-6"
+    type="button"
+    class="link"
+    aria-label="Load source from history"
+    i18n-aria-label
+    [disabled]="!remoteHistory().length"
+    (click)="remoteHistoryVisible.set(!remoteHistoryVisible())"
+  ></button>
+  <div
+    class="grow text-center font-mono"
+    aria-label="remote source status"
+    role="status"
+    i18n-aria-label
+  >
+    {{ remoteStatus().i18n }}
+  </div>
+  <button
+    iconRefresh
+    iconClass="h-6 w-6"
+    type="button"
+    class="link"
+    aria-label="Reload source"
+    i18n-aria-label
+    [disabled]="!control.value"
+    (click)="reloadRemote()"
+  ></button>
+</div>
+@if (remoteHistoryVisible()) {
+  <ul>
+    @for (item of remoteHistory(); track $index) {
+      <li class="flex cursor-pointer items-center p-2 text-sm">
+        <span
+          tabindex="0"
+          (click)="loadRemote(item)"
+          (keypress)="loadRemote(item)"
+        >
+          {{ item }}
+        </span>
+        <button
+          iconDelete
+          type="button"
+          class="link"
+          aria-label="remove entry from history"
+          i18n-aria-label
+          (click)="removeFromHistory(item)"
+        ></button>
+      </li>
+    }
+  </ul>
+}
+<button
+  i18n
+  type="button"
+  [disabled]="remoteStatus().state !== 'loaded'"
+  (click)="copyRulesLocally()"
+>
+  Copy rules locally
+</button>

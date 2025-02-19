@@ -1,0 +1,24 @@
+<h2 i18n>Rules Viewer</h2>
+<button i18n type="button" [disabled]="!rulesLoaded()" (click)="go('rules')">
+  View Rules
+</button>
+<cmp-checkbox
+  id="rules-debug-mode"
+  label="Fade out disabled rules"
+  i18n-label
+  [(ngModel)]="fadeOutDisabledRules"
+/>
+<cmp-checkbox
+  id="variables-debug-mode"
+  label="Highlight variable status"
+  i18n-label
+  [(ngModel)]="highlightVariableStatus"
+/>
+<button
+  i18n
+  type="button"
+  [disabled]="!rulesLoaded() && !rulesError()"
+  (click)="go('rules-raw')"
+>
+  View Rules Code
+</button>

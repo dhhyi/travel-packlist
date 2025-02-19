@@ -32,6 +32,13 @@ export const rulesParsingState = ({
   const rulesHash = computed(() => cyrb53(raw()).toString(16));
   const lastHash = createLocalStorageSignalState('lastExportHash', '');
 
+  const lastDate = createLocalStorageSignalState('lastExportDate', 0);
+
+  const markAsCurrent = () => {
+    lastHash.set(rulesHash());
+    lastDate.set(new Date().getTime());
+  };
+
   return {
     rules: {
       /** derived: parsed rules (check ruleParserError for errors) */
@@ -39,17 +46,17 @@ export const rulesParsingState = ({
       /** derived: error message if parsing failed */
       parserError: computed(() => ruleParsing().ruleParserError),
       /** derived: timestamp of last rules action */
-      lastAction: lastRulesAction,
+      lastAction: lastRulesAction.asReadonly(),
       /** derived: hash of current rules */
       hash: rulesHash,
       /** derived: true if rules have changed since last export */
       exportNeeded: computed(() => customized() && rulesHash() !== lastHash()),
+      /** storage: mark current rules as exported/imported */
+      markAsCurrent,
     },
     export: {
-      /** storage: the hash of the last exported rules */
-      lastHash,
       /** storage: the date of the last export */
-      lastDate: createLocalStorageSignalState('lastExportDate', 0),
+      lastDate: lastDate.asReadonly(),
     },
   };
 };

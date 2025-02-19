@@ -1,17 +1,19 @@
 @if (!questions().length) {
-  <div class="flex flex-col items-center">
-    <p class="text-center" i18n>
-      No questions available, please
-      <button
-        type="button"
-        class="link inline p-0 underline"
-        (click)="goToRulesEdit()"
-      >
-        create
-      </button>
-      some.
-    </p>
-  </div>
+  @if (rulesMode() === 'local') {
+    <div class="flex flex-col items-center">
+      <p class="text-center" i18n>
+        No questions available, please
+        <button
+          type="button"
+          class="link inline p-0 underline"
+          (click)="goToRulesEdit()"
+        >
+          create
+        </button>
+        some.
+      </p>
+    </div>
+  }
 } @else {
   <div
     [@.disabled]="animationsDisabled()"

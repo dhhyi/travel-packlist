@@ -1,13 +1,13 @@
 import {
-  Component,
-  inject,
   ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
   ElementRef,
+  inject,
   input,
   viewChild,
-  computed,
   viewChildren,
-  effect,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
@@ -47,6 +47,7 @@ export class ToolbarComponent {
 
   private state = inject(GLOBAL_STATE);
   mode = this.state.router.rulesMode;
+  readonly editable = computed(() => this.state.rules.mode() === 'local');
   searchTerm = this.state.router.filterRulesQuery;
   private clipboard = inject(RulesClipboard);
   clipboardItems = this.clipboard.itemsCount;

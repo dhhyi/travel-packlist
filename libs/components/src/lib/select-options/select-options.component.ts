@@ -41,7 +41,8 @@ export class SelectOptionDirective<V extends string> {
 export class SelectOptionsComponent<T extends string>
   implements ControlValueAccessor
 {
-  readonly label = input.required<string>();
+  readonly label = input<string>('');
+  readonly legendHidden = input<boolean>(false);
   readonly model = signal<T | undefined>(undefined);
   readonly children = contentChildren(SelectOptionDirective<T>);
 

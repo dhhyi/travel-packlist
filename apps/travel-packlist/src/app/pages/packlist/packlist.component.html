@@ -2,7 +2,7 @@
   <app-display-questions />
   <app-packlist-status />
   <app-display-items />
-} @else {
+} @else if (rulesMode() === 'local') {
   <div class="flex flex-col items-center">
     <p class="text-center" i18n>
       No rules available, please

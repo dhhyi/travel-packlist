@@ -1,9 +1,12 @@
 <fieldset
   role="radiogroup"
   class="flex flex-wrap justify-evenly gap-2 gap-y-4 pb-4"
+  [class.pt-4]="!label() || legendHidden()"
   [attr.aria-label]="label()"
 >
-  <legend>{{ label() }}</legend>
+  @if (label() && !legendHidden()) {
+    <legend>{{ label() }}</legend>
+  }
   @for (child of children(); track child.value()) {
     @let option = child.value();
     <div

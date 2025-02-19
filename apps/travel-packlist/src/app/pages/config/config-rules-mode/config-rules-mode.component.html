@@ -1,0 +1,10 @@
+<h2 i18n>Rules Mode</h2>
+<cmp-select-options
+  label="Rules Mode"
+  i18n-label
+  [legendHidden]="true"
+  [(ngModel)]="rulesMode"
+>
+  <ng-template value="local" i18n>local</ng-template>
+  <ng-template value="remote" i18n>remote</ng-template>
+</cmp-select-options>

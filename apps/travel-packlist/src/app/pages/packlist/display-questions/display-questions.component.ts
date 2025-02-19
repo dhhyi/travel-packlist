@@ -64,6 +64,8 @@ export class DisplayQuestionsComponent {
     ),
   );
 
+  rulesMode = this.state.rules.mode;
+
   toggleQuestion = (question: Question): void => {
     if (this.isAnswersLockActive()) {
       return;

@@ -16,10 +16,14 @@ test('config', async ({ page }) => {
     - radiogroup "Sort categories":
       - radio "alphabetically" [checked]
       - radio "order of definition"
+    - heading "Rules Mode" [level=2]
+    - radiogroup:
+      - radio "local" [checked]
+      - radio "remote"
     - heading "Rules Editor" [level=2]
     - button "Edit Rules"
-    - checkbox "Fade out disabled rules in editor"
-    - checkbox "Highlight variable status in editor"
+    - checkbox "Fade out disabled rules"
+    - checkbox "Highlight variable status"
     - checkbox "Rename all occurrences when renaming variables" [checked]
     - button "Edit Rules with Code"
     - button "Export Rules" [disabled]
