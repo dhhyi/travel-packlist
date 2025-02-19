@@ -6,7 +6,7 @@ import {
   createSessionStorageSignalState,
 } from '../persistence/storage-signal';
 import { ConfigState } from './config-state';
-import { RuleParsing } from './rule-parsing';
+import { RulesParsingState } from './rules-parsing-state';
 
 const create = createLocalStorageSignalState;
 
@@ -19,7 +19,7 @@ export type ItemStats = 'distribution' | 'heaviestItems';
 export const packlistState = ({
   rules: { parsed: parsedRules },
   config: { categorySorting, skipItems },
-}: RuleParsing & ConfigState) => {
+}: RulesParsingState & ConfigState) => {
   const answers = create<Record<string, VariableType>>('answers', {});
   const stringCheckedItems = create<string[]>('checkedItems', []);
   const stringSkippedItems = create<string[]>('skippedItems', []);

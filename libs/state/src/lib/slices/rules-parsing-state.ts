@@ -1,22 +1,12 @@
-import { computed, effect, inject, linkedSignal, signal } from '@angular/core';
+import { computed, effect, inject, signal } from '@angular/core';
 import { Parser } from '@travel-packlist/model';
-import { RULES_TEMPLATE } from '@travel-packlist/rules-template';
 
 import { createLocalStorageSignalState } from '../persistence/storage-signal';
+import { RulesSourceState } from './rules-source-state';
 
-export const ruleParsing = () => {
-  const template = inject(RULES_TEMPLATE);
-  const rawRules = createLocalStorageSignalState<string | undefined>(
-    'rules',
-    undefined,
-  );
-  const raw = linkedSignal(() => rawRules() ?? template);
-  effect(() => {
-    const newRules = raw();
-    rawRules.set(newRules === template ? undefined : newRules);
-  });
-  const customized = computed(() => !!rawRules());
-
+export const rulesParsingState = ({
+  rules: { raw, customized },
+}: RulesSourceState) => {
   const parser = inject(Parser);
   const ruleParsing = computed(() => {
     try {
@@ -44,10 +34,6 @@ export const ruleParsing = () => {
 
   return {
     rules: {
-      /** storage: raw rules or default template */
-      raw,
-      /** derived: rules are not the default template */
-      customized,
       /** derived: parsed rules (check ruleParserError for errors) */
       parsed: computed(() => ruleParsing().parsedRules),
       /** derived: error message if parsing failed */
@@ -68,7 +54,7 @@ export const ruleParsing = () => {
   };
 };
 
-export type RuleParsing = ReturnType<typeof ruleParsing>;
+export type RulesParsingState = ReturnType<typeof rulesParsingState>;
 
 /*
   cspell:ignore cyrb bryc

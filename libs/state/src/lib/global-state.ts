@@ -5,7 +5,8 @@ import { clipboardState } from './slices/clipboard-state';
 import { configState } from './slices/config-state';
 import { packlistState } from './slices/packlist-state';
 import { routerState } from './slices/router-state';
-import { ruleParsing } from './slices/rule-parsing';
+import { rulesParsingState } from './slices/rules-parsing-state';
+import { rulesSourceState } from './slices/rules-source-state';
 import { serviceWorkerState } from './slices/service-worker-state';
 import { StateBuilder } from './state-builder';
 
@@ -18,7 +19,8 @@ function buildState() {
     .extend(serviceWorkerState)
     .extend(configState)
     .extend(browserState)
-    .extend(ruleParsing)
+    .extend(rulesSourceState)
+    .extend(rulesParsingState)
     .extend(packlistState);
 }
 
