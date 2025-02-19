@@ -1,8 +1,8 @@
 import {
-  Component,
-  input,
   ChangeDetectionStrategy,
+  Component,
   inject,
+  input,
 } from '@angular/core';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
@@ -15,6 +15,8 @@ export class RulesErrorComponent {
   readonly error = input<string>();
 
   private state = inject(GLOBAL_STATE);
+
+  rulesMode = this.state.rules.mode;
 
   goToRawEditor() {
     this.state.router.go('rules-raw');

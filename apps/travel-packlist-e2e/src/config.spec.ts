@@ -16,6 +16,10 @@ test('config', async ({ page }) => {
     - radiogroup "Sort categories":
       - radio "alphabetically" [checked]
       - radio "order of definition"
+    - heading "Rules Mode" [level=2]
+    - radiogroup:
+      - radio "local" [checked]
+      - radio "remote"
     - heading "Rules Editor" [level=2]
     - button "Edit Rules"
     - checkbox "Fade out disabled rules in editor"

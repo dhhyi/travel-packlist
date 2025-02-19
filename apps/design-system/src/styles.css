@@ -98,12 +98,18 @@
   }
 
   input,
-  select {
-    @apply h-8 rounded-md border border-slate-300 bg-transparent p-1;
+  select,
+  textarea {
+    @apply rounded-md border border-slate-300 bg-transparent p-1;
 
     &[disabled] {
       @apply border border-transparent bg-transparent;
     }
+  }
+
+  input,
+  select {
+    @apply h-8;
   }
 
   select {

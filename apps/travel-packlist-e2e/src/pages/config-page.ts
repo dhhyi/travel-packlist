@@ -14,6 +14,44 @@ export class ConfigPage extends Banner {
     return new PacklistPage(this.page);
   }
 
+  trackItemWeight() {
+    return this.page.getByRole('checkbox', {
+      name: 'Track item weight',
+    });
+  }
+
+  skipItems() {
+    return this.page.getByRole('checkbox', {
+      name: 'Allow skipping items',
+    });
+  }
+
+  get rulesMode() {
+    const rulesMode = this.page.getByRole('radiogroup', {
+      name: 'Rules mode',
+    });
+    const fn = function () {
+      return rulesMode;
+    };
+    fn.remote = () =>
+      rulesMode.locator(this.page.getByRole('radio', { name: 'remote' }));
+    fn.local = () =>
+      rulesMode.locator(this.page.getByRole('radio', { name: 'local' }));
+    return fn;
+  }
+
+  remoteRulesURL() {
+    return this.page.getByRole('textbox', {
+      name: 'Remote rules source',
+    });
+  }
+
+  remoteSourceStatus() {
+    return this.page.getByRole('status', {
+      name: 'Remote source status',
+    });
+  }
+
   private editRulesWithCodeButton() {
     return this.page.getByRole('button', { name: 'Edit rules with code' });
   }
@@ -32,18 +70,6 @@ export class ConfigPage extends Banner {
     await this.editRulesButton().click();
     await expect(this.identifier).toBeHidden();
     return new EditorPage(this.page);
-  }
-
-  trackItemWeight() {
-    return this.page.getByRole('checkbox', {
-      name: 'Track item weight',
-    });
-  }
-
-  skipItems() {
-    return this.page.getByRole('checkbox', {
-      name: 'Allow skipping items',
-    });
   }
 
   exportNeededAlert() {

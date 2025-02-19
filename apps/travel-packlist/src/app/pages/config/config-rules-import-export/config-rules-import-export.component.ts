@@ -128,7 +128,7 @@ export class ConfigRulesImportExportComponent {
           return;
         }
         const text = await file.text();
-        this.state.rules.raw.set(text);
+        this.state.rules.updateRules(text);
         this.resetHash();
 
         setTimeout(() => {
