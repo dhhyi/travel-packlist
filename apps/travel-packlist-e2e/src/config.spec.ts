@@ -21,7 +21,6 @@ test('config', async ({ page }) => {
     - checkbox "Fade out disabled rules in editor"
     - checkbox "Highlight variable status in editor"
     - checkbox "Rename all occurrences when renaming variables" [checked]
-    - button "Documentation"
     - button "Edit Rules with Code"
     - button "Export Rules" [disabled]
     - button "Import Rules"

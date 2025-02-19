@@ -35,6 +35,9 @@ const navigation = {
       this.rulesMode.set('edit');
     });
   },
+  config(this: NavThis) {
+    void this.router.navigate(['/config']);
+  },
   'config#import'(this: NavThis) {
     void this.router.navigate(['/config'], { fragment: 'import' });
   },

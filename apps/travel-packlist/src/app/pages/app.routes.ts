@@ -1,16 +1,22 @@
-import { Routes } from '@angular/router';
+import { Route } from '@angular/router';
 
 import { rulesContainNoComments } from './rules-contain-no-comments.guard';
 import { rulesValid } from './rules-valid.guard';
 
-export const routes: Routes = [
+export interface RouteData {
+  hierarchy: number;
+  ruleHelp?: boolean;
+  config?: boolean;
+}
+
+export const routes: (Route & { data?: RouteData })[] = [
   { path: '', redirectTo: '/packlist', pathMatch: 'full' },
   {
     path: 'packlist',
     loadComponent: () =>
       import('./packlist/packlist.component').then((m) => m.PacklistComponent),
     canActivate: [rulesValid],
-    data: { hierarchy: 0 },
+    data: { hierarchy: 0, config: true },
   },
   {
     path: 'config',
@@ -23,7 +29,7 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./rules/rules.component').then((m) => m.RulesComponent),
     canActivate: [rulesValid, rulesContainNoComments],
-    data: { hierarchy: 2 },
+    data: { hierarchy: 2, config: true },
   },
   {
     path: 'rules-raw',
@@ -31,7 +37,7 @@ export const routes: Routes = [
       import('./rules-raw/rules-raw.component').then(
         (m) => m.EditRulesRawComponent,
       ),
-    data: { hierarchy: 2 },
+    data: { hierarchy: 2, config: true, ruleHelp: true },
   },
   {
     path: 'rules-error',
@@ -39,7 +45,7 @@ export const routes: Routes = [
       import('./rules-error/rules-error.component').then(
         (m) => m.RulesErrorComponent,
       ),
-    data: { hierarchy: 2 },
+    data: { hierarchy: 2, config: true },
   },
   {
     path: 'documentation',
@@ -47,7 +53,7 @@ export const routes: Routes = [
       import('./documentation/documentation.component').then(
         (m) => m.DocumentationComponent,
       ),
-    data: { hierarchy: 2 },
+    data: { hierarchy: 2, config: true },
   },
   { path: '**', redirectTo: '/packlist' },
 ];
