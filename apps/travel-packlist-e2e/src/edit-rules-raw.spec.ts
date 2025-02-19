@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 import { start } from './pages';
 
@@ -65,6 +65,15 @@ test('edit rules raw with error', async ({ page }) => {
   await expect(rulesRaw.parserState()).toContainText(
     'Error parsing rules at line 1 column 1',
   );
+
+  await expect(page).toHaveScreenshot();
+});
+
+test('visit rules documentation', async ({ page }) => {
+  await start(page)
+    .then((p) => p.toConfigPage())
+    .then((p) => p.toRulesRawPage())
+    .then((p) => p.toRulesDocumentationPage());
 
   await expect(page).toHaveScreenshot();
 });

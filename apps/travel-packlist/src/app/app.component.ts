@@ -9,23 +9,26 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
-  Component,
-  ChangeDetectionStrategy,
-  inject,
-  computed,
-  signal,
   afterRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import {
+  IconArrowBackComponent,
   IconArrowUpwardComponent,
   IconCogComponent,
+  IconHelpComponent,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter, map } from 'rxjs';
 
 import { DialogComponent } from './dialog/dialog.component';
+import { RouteData } from './pages/app.routes';
 
 const slideTransition = animation(
   [
@@ -98,6 +101,8 @@ const routeTransition = trigger('routeTransition', [
     IconCogComponent,
     DialogComponent,
     IconArrowUpwardComponent,
+    IconArrowBackComponent,
+    IconHelpComponent,
   ],
   templateUrl: './app.component.html',
   animations: [routeTransition],
@@ -112,9 +117,7 @@ export class AppComponent {
   readonly overlayVisible = signal<boolean>(false);
 
   private router = inject(Router);
-  private readonly routeData = toSignal<
-    Partial<{ hierarchy: number }> | undefined
-  >(
+  private readonly routeData = toSignal<Partial<RouteData> | undefined>(
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       map(() => this.router.routerState.root.snapshot.firstChild?.data),
@@ -129,6 +132,14 @@ export class AppComponent {
 
   readonly disableAnimations = signal(true);
 
+  readonly displayRuleHelpLink = computed(() => this.routeData()?.ruleHelp);
+
+  readonly displayConfigLink = computed(() => this.routeData()?.config);
+
+  readonly displayHistoryBackLink = computed(
+    () => this.routeData()?.historyBack,
+  );
+
   constructor() {
     afterRender(() => {
       this.disableAnimations.set(!this.state.config.animations());
@@ -138,4 +149,6 @@ export class AppComponent {
   scrollTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  go = this.state.router.go;
 }

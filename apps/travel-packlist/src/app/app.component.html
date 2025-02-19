@@ -15,17 +15,42 @@
     <img aria-hidden="true" src="icon.svg" class="h-8" />
     <h1 i18n class="text-xl font-bold">TravelPacklist</h1>
   </button>
-  <button
-    iconCog
-    iconClass="h-6 w-6"
-    type="button"
-    role="link"
-    class="link pr-2"
-    routerLink="/config"
-    routerLinkActive="hidden"
-    aria-label="Go to configuration"
-    i18n-aria-label
-  ></button>
+  @if (displayRuleHelpLink()) {
+    <button
+      iconHelp
+      iconClass="h-6 w-6"
+      type="button"
+      role="link"
+      class="link pr-2"
+      aria-label="Go to rules format help"
+      i18n-aria-label
+      (click)="go('documentation')"
+    ></button>
+  }
+  @if (displayHistoryBackLink()) {
+    <button
+      iconArrowBack
+      iconClass="h-6 w-6"
+      type="button"
+      role="link"
+      class="link pr-2"
+      aria-label="Go back"
+      i18n-aria-label
+      (click)="go('back')"
+    ></button>
+  }
+  @if (displayConfigLink()) {
+    <button
+      iconCog
+      iconClass="h-6 w-6"
+      type="button"
+      role="link"
+      class="link pr-2"
+      aria-label="Go to configuration"
+      i18n-aria-label
+      (click)="go('config')"
+    ></button>
+  }
 </nav>
 
 <div

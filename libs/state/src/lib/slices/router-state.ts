@@ -18,6 +18,9 @@ interface NavThis {
 }
 
 const navigation = {
+  back() {
+    window.history.back();
+  },
   packlist(this: NavThis) {
     void this.router.navigate(['/packlist']);
   },
@@ -34,6 +37,9 @@ const navigation = {
     void this.router.navigate(['/rules']).then(() => {
       this.rulesMode.set('edit');
     });
+  },
+  config(this: NavThis) {
+    void this.router.navigate(['/config']);
   },
   'config#import'(this: NavThis) {
     void this.router.navigate(['/config'], { fragment: 'import' });
