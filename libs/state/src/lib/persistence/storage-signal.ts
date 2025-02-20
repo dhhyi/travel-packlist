@@ -30,7 +30,11 @@ function save<K>(this: Storage, key: string, value: K, defaultValue: K) {
     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete parsed[key];
   } else {
-    parsed[key] = value;
+    if (value === null) {
+      parsed[key] = undefined as K;
+    } else {
+      parsed[key] = value;
+    }
   }
   this.setItem('state', JSON.stringify(parsed));
 }
