@@ -27,7 +27,6 @@ export class PacklistToolbarComponent {
   private state = inject(GLOBAL_STATE);
 
   isAnswersLockActive = this.state.packlist.answersLocked;
-  trackWeight = this.state.config.trackWeight;
 
   readonly questionsAvailable = computed(
     () => this.state.active.questions().length > 0,
@@ -36,6 +35,12 @@ export class PacklistToolbarComponent {
   toggleAnswersLock() {
     this.state.packlist.answersLocked.update((lock) => !lock);
   }
+
+  readonly displayWeightStatsButtons = computed(
+    () =>
+      this.state.config.trackWeight() &&
+      this.state.packlist.stats().totalWeight > 0,
+  );
 
   readonly statsVisible = this.state.packlist.statsVisible;
 
