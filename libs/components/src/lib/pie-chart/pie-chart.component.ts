@@ -25,9 +25,12 @@ export class PieChartComponent {
   readonly segments = input.required<{ name: string; value: number }[]>();
   readonly chartClass = input<string>('');
 
-  readonly sortedSegments = computed(() =>
-    this.segments().toSorted((a, b) => b.value - a.value),
-  );
+  readonly sortedSegments = computed(() => {
+    if (this.segments().length === 1 && this.segments()[0].value === 1) {
+      return this.segments().map((segment) => ({ ...segment, value: 0.999 }));
+    }
+    return this.segments().toSorted((a, b) => b.value - a.value);
+  });
 
   readonly paths = computed(() => {
     const r = 50;
