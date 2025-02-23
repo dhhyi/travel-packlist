@@ -40,8 +40,9 @@
 @if (remoteHistoryVisible()) {
   <ul>
     @for (item of remoteHistory(); track $index) {
-      <li class="flex cursor-pointer items-center p-2 text-sm">
+      <li class="flex cursor-pointer items-center p-1 text-sm">
         <span
+          class="grow break-all"
           tabindex="0"
           (click)="loadRemote(item)"
           (keypress)="loadRemote(item)"
@@ -50,8 +51,9 @@
         </span>
         <button
           iconDelete
+          iconClass="min-h-4 min-w-4"
           type="button"
-          class="link"
+          class="link pr-0"
           aria-label="remove entry from history"
           i18n-aria-label
           (click)="removeFromHistory(item)"
