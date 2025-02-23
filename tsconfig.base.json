@@ -39,6 +39,9 @@
       "@travel-packlist/components": [
         "libs/components/src/index.ts"
       ],
+      "@travel-packlist/documentation": [
+        "libs/documentation/src/index.ts"
+      ],
       "@travel-packlist/generate-plugin": [
         "tools/generate-plugin/src/index.ts"
       ],
@@ -50,9 +53,6 @@
       ],
       "@travel-packlist/model": [
         "libs/model/src/index.ts"
-      ],
-      "@travel-packlist/rules-documentation": [
-        "libs/rules-documentation/src/index.ts"
       ],
       "@travel-packlist/rules-template": [
         "libs/rules-template/src/index.ts"

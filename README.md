@@ -21,7 +21,7 @@ This app is a tool for creating conditional checklists.
 I use it for creating a pack list for my travels, depending on the duration, the activities, the expected weather, etc.
 It should be flexible enough to be used for other purposes as well.
 
-Custom rules can be defined either with free text in a [specific grammar](./libs/rules-documentation/src/doc/documentation.md) or a graphical editor.
+Custom rules can be defined either with free text in a [specific grammar](./libs/documentation/src/doc/documentation.md) or a graphical editor.
 
 Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app deployed on GitHub Pages.
 

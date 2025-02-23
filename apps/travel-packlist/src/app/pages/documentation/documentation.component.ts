@@ -1,18 +1,18 @@
 /* eslint-disable @angular-eslint/component-max-inline-declarations */
 import {
-  Component,
   ChangeDetectionStrategy,
+  Component,
   inject,
   ViewEncapsulation,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RULES_DOCUMENTATION } from '@travel-packlist/rules-documentation';
+import { RULES_DOCUMENTATION } from '@travel-packlist/documentation';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-documentation',
   standalone: true,
-  template: '<div class="rules-documentation" [innerHTML]="safeHtml"></div>',
+  template: '<div [innerHTML]="safeHtml"></div>',
   // disable encapsulation to allow styling the injected HTML
   // eslint-disable-next-line @angular-eslint/use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,

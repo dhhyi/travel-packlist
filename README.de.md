@@ -23,7 +23,7 @@ Diese App ist ein Werkzeug zum Erstellen von bedingten Checklisten.
 Ich benutze sie, um eine Packliste für meine Reisen - abhängig von der Dauer, den Aktivitäten, dem erwarteten Wetter usw. - zu erstellen.
 Sie sollte flexibel genug sein, um auch für andere Zwecke verwendet zu werden.
 
-Benutzerdefinierte Regeln können entweder in Freitext in einer [spezifischen Grammatik](./libs/rules-documentation/src/doc/documentation.de.md) oder mit einem grafischen Editor definiert werden.
+Benutzerdefinierte Regeln können entweder in Freitext in einer [spezifischen Grammatik](./libs/documentation/src/doc/documentation.de.md) oder mit einem grafischen Editor definiert werden.
 
 Verwende [diesen Link](https://dhhyi.github.io/travel-packlist/), um die auf GitHub Pages bereitgestellte App zu öffnen.
 

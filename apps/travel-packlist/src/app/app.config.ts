@@ -14,8 +14,8 @@ import {
   withHashLocation,
 } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
+import { provideRulesDocumentation } from '@travel-packlist/documentation';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
-import { provideRulesDocumentation } from '@travel-packlist/rules-documentation';
 import { provideRulesTemplate } from '@travel-packlist/rules-template';
 import {
   CAPACITOR_HTTP_REQUEST_MODE,
