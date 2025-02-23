@@ -5,7 +5,7 @@ import { createLocalStorageSignalState } from '../persistence/storage-signal';
 import { RulesSourceState } from './rules-source-state';
 
 export const rulesParsingState = ({
-  rules: { raw, customized },
+  rules: { raw, customized, mode },
 }: RulesSourceState) => {
   const parser = inject(Parser);
   const ruleParsing = computed(() => {
@@ -50,7 +50,9 @@ export const rulesParsingState = ({
       /** derived: hash of current rules */
       hash: rulesHash,
       /** derived: true if rules have changed since last export */
-      exportNeeded: computed(() => customized() && rulesHash() !== lastHash()),
+      exportNeeded: computed(
+        () => mode() === 'local' && customized() && rulesHash() !== lastHash(),
+      ),
       /** storage: mark current rules as exported/imported */
       markAsCurrent,
     },
