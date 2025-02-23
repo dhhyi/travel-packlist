@@ -1,3 +1,15 @@
+## [0.10.0](https://github.com/dhhyi/travel-packlist/compare/v0.9.0...v0.10.0) (2025-02-23)
+
+### Features
+
+- allow loading of remote rules ([2e2f9bf](https://github.com/dhhyi/travel-packlist/commit/2e2f9bf3df7adecbc1a9c7f31fbe42a2b88a0bb8)), closes [#11](https://github.com/dhhyi/travel-packlist/issues/11)
+- display rule documentation as header link in raw editor ([6aa22b7](https://github.com/dhhyi/travel-packlist/commit/6aa22b70ec4af4d1ab51190653ba621b25d7ce75))
+
+### Bug Fixes
+
+- display pie chart with only one full segment properly ([8e4dd4a](https://github.com/dhhyi/travel-packlist/commit/8e4dd4a4b71a39116288548afa2268449e40d760))
+- hide weight diagram buttons when no weight is registered ([85531fa](https://github.com/dhhyi/travel-packlist/commit/85531fae3ed26ee2c2143147cd37962f0f10e465))
+
 ## [0.9.0](https://github.com/dhhyi/travel-packlist/compare/v0.8.0...v0.9.0) (2025-02-17)
 
 ### Features
