@@ -1,3 +1,9 @@
+## [0.10.2](https://github.com/dhhyi/travel-packlist/compare/v0.10.1...v0.10.2) (2025-02-23)
+
+### Bug Fixes
+
+- deactivate export reminder when using remote rules ([50e5310](https://github.com/dhhyi/travel-packlist/commit/50e5310136ff0568fa03cbcfb3ef395b4d81630d)), closes [#11](https://github.com/dhhyi/travel-packlist/issues/11)
+
 ## [0.10.1](https://github.com/dhhyi/travel-packlist/compare/v0.10.0...v0.10.1) (2025-02-23)
 
 ### Bug Fixes
