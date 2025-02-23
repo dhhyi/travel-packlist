@@ -1018,6 +1018,9 @@ select {
 .h-svh {
   height: 100svh;
 }
+.min-h-4 {
+  min-height: 1rem;
+}
 .min-h-6 {
   min-height: 1.5rem;
 }
@@ -1050,6 +1053,9 @@ select {
 }
 .w-full {
   width: 100%;
+}
+.min-w-4 {
+  min-width: 1rem;
 }
 .min-w-6 {
   min-width: 1.5rem;
@@ -1194,6 +1200,9 @@ select {
 }
 .text-nowrap {
   text-wrap: nowrap;
+}
+.break-all {
+  word-break: break-all;
 }
 .rounded {
   border-radius: 0.25rem;
@@ -1351,6 +1360,9 @@ select {
 }
 .pl-0 {
   padding-left: 0;
+}
+.pr-0 {
+  padding-right: 0;
 }
 .pr-2 {
   padding-right: 0.5rem;
