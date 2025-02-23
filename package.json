@@ -46,7 +46,7 @@
         },
         "inputs": [
           "{workspaceRoot}/util/create-prettierignore.mjs",
-          "{workspaceRoot}/**/.gitingore"
+          "{workspaceRoot}/**/.gitignore"
         ],
         "outputs": [
           "{workspaceRoot}/.prettierignore"
