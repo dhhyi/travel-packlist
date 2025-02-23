@@ -2,7 +2,7 @@
 
 The app uses a custom data model for representing the rules to create conditional checklists.
 Each rule is bound to a certain condition which activates items for the packlist and questions for activation of other rules.
-More on this can be found in the [rules documentation](./../documentation/src/doc/documentation.md).
+More on this can be found in the [rules documentation](./../documentation/src/doc/rules-documentation.md).
 
 When creating the application, I decided to use a text base format for storing those rules.
 This also means, that the data entered in the UI is repeatedly parsed and serialized from a string representation to an object graph and vice versa.

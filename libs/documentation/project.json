@@ -31,10 +31,10 @@
       "options": {
         "command": "nx g @travel-packlist/generate-plugin:documentation",
         "path": "{projectRoot}/src",
-        "pattern": "{projectRoot}/src/doc/documentation*.md"
+        "pattern": "{projectRoot}/src/doc/*.md"
       },
       "inputs": [
-        "{projectRoot}/src/doc/documentation*.md"
+        "{projectRoot}/src/doc/*.md"
       ],
       "outputs": [
         "{projectRoot}/src/lib/*.ts",

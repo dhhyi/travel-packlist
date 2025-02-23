@@ -2,11 +2,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   ViewEncapsulation,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RULES_DOCUMENTATION } from '@travel-packlist/documentation';
+import { ActivatedRoute } from '@angular/router';
+import {
+  AvailableDocumentationTopic,
+  availableDocumentationTopics,
+} from '@travel-packlist/documentation';
+import { map } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,7 +55,16 @@ import { RULES_DOCUMENTATION } from '@travel-packlist/documentation';
   `,
 })
 export class DocumentationComponent {
-  private documentationHtml = inject(RULES_DOCUMENTATION);
+  private readonly topic = toSignal(
+    inject(ActivatedRoute).params.pipe(
+      map((params) => params['topic'] as AvailableDocumentationTopic),
+    ),
+    { requireSync: true },
+  );
+  private readonly documentationHtml = computed(() => {
+    const topic = this.topic();
+    return inject(availableDocumentationTopics[topic]);
+  });
   private bypass = inject(DomSanitizer);
-  safeHtml = this.bypass.bypassSecurityTrustHtml(this.documentationHtml);
+  safeHtml = this.bypass.bypassSecurityTrustHtml(this.documentationHtml());
 }

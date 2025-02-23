@@ -27,8 +27,8 @@ const navigation = {
   rules(this: NavThis) {
     void this.router.navigate(['/rules']);
   },
-  documentation(this: NavThis) {
-    void this.router.navigate(['/documentation']);
+  'rules-documentation'(this: NavThis) {
+    void this.router.navigateByUrl('/documentation/rules');
   },
   'rules-raw'(this: NavThis) {
     void this.router.navigate(['/rules-raw']);

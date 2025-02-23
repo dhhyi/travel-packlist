@@ -5,28 +5,40 @@ import {
   makeEnvironmentProviders,
 } from '@angular/core';
 
-<% for (const lang of languages) {
-%>import documentation_<%= lang %> from './<%= lang %>';
-<% } %>
+<% for (const [group, languages] of documentations) {
+  for (const lang of languages) {
+%>import <%= camelize(group + '-' + lang) %> from './<%= group %>.<%= lang %>';
+<% } } %>
 
-export const RULES_DOCUMENTATION = new InjectionToken<string>(
-  'RULES_DOCUMENTATION',
+<% for (const [group, languages] of documentations) { %>
+export const <%= shout(group) %> = new InjectionToken<string>(
+  '<%= shout(group) %>',
 );
 
-function getRulesDocumentation(locale: string): string {
+function get<%= pascalize(group) %>(locale: string): string {
 <% for (const lang of languages.filter(l => l !== 'default')) { %>
   if (locale.startsWith('<%= lang %>')) {
-    return documentation_<%= lang %>;
+    return <%= camelize(group + '-' + lang) %>;
   }<% } %>
-  return documentation_default;
+  return <%= camelize(group + '-default') %>;
 }
 
-export function provideRulesDocumentation(): EnvironmentProviders {
+export function provide<%= pascalize(group) %>(): EnvironmentProviders {
   return makeEnvironmentProviders([
     {
-      provide: RULES_DOCUMENTATION,
-      useFactory: getRulesDocumentation,
+      provide: <%= shout(group) %>,
+      useFactory: get<%= pascalize(group) %>,
       deps: [LOCALE_ID],
     },
   ]);
 }
+
+<% } %>
+
+export const availableDocumentationTopics = {
+<% for (const [group] of documentations) { %>
+  '<%= group.replace('-documentation', '') %>': <%= shout(group) %>,
+<% } %>
+}
+
+export type AvailableDocumentationTopic = keyof typeof availableDocumentationTopics;

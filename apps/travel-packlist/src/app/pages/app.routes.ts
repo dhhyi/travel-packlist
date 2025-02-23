@@ -49,7 +49,7 @@ export const routes: (Route & { data?: RouteData })[] = [
     data: { hierarchy: 2, config: true },
   },
   {
-    path: 'documentation',
+    path: 'documentation/:topic',
     loadComponent: () =>
       import('./documentation/documentation.component').then(
         (m) => m.DocumentationComponent,
