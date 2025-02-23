@@ -1,3 +1,9 @@
+## [0.10.1](https://github.com/dhhyi/travel-packlist/compare/v0.10.0...v0.10.1) (2025-02-23)
+
+### Bug Fixes
+
+- prevent overflowing remote history display ([57f9cc5](https://github.com/dhhyi/travel-packlist/commit/57f9cc542294b4371f7f2f93209266fb648b150a)), closes [#11](https://github.com/dhhyi/travel-packlist/issues/11)
+
 ## [0.10.0](https://github.com/dhhyi/travel-packlist/compare/v0.9.0...v0.10.0) (2025-02-23)
 
 ### Features
