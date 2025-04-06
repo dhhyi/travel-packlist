@@ -14,7 +14,7 @@ import {
   withHashLocation,
 } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideRulesDocumentation } from '@travel-packlist/documentation';
+import { provideDocumentationTopics } from '@travel-packlist/documentation';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
 import { provideRulesTemplate } from '@travel-packlist/rules-template';
 import {
@@ -63,7 +63,7 @@ export const appConfig: ApplicationConfig = {
       provide: RulesShare,
       useClass: ANDROID ? AndroidRulesShare : WebRulesShare,
     },
-    provideRulesDocumentation(),
+    provideDocumentationTopics(),
     provideRulesTemplate(),
     {
       provide: CAPACITOR_HTTP_REQUEST_MODE,

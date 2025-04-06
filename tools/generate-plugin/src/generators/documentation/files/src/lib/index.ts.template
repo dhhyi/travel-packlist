@@ -11,7 +11,7 @@ import {
 <% } } %>
 
 <% for (const [group, languages] of documentations) { %>
-export const <%= shout(group) %> = new InjectionToken<string>(
+const <%= shout(group) %> = new InjectionToken<string>(
   '<%= shout(group) %>',
 );
 
@@ -23,17 +23,19 @@ function get<%= pascalize(group) %>(locale: string): string {
   return <%= camelize(group + '-default') %>;
 }
 
-export function provide<%= pascalize(group) %>(): EnvironmentProviders {
+<% } %>
+
+export function provideDocumentationTopics(): EnvironmentProviders {
   return makeEnvironmentProviders([
+<% for (const [group] of documentations) { %>
     {
       provide: <%= shout(group) %>,
       useFactory: get<%= pascalize(group) %>,
       deps: [LOCALE_ID],
     },
+<% } %>
   ]);
 }
-
-<% } %>
 
 export const availableDocumentationTopics = {
 <% for (const [group] of documentations) { %>
