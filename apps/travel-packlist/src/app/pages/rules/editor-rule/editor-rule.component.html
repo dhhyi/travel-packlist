@@ -24,8 +24,8 @@
 
 @for (question of rule().questions; track $index) {
   <div class="mb-1 flex items-center">
-    @if (mode() === 'swap' && rule().questions.length > 1) {
-      @if ($index < rule().questions.length - 1) {
+    @if (mode() === 'swap' && $count > 1) {
+      @if (!$last) {
         <button
           iconArrowDownward
           class="link p-1"
@@ -62,7 +62,7 @@
         i18n-aria-label
         (click)="cutQuestion($index)"
       ></button>
-    } @else if (mode() === 'swap' && $index > 0) {
+    } @else if (mode() === 'swap' && !$first) {
       <button
         iconArrowUpward
         class="link p-1"
@@ -77,8 +77,8 @@
 
 @for (item of rule().items; track $index) {
   <div class="mb-1 flex items-center">
-    @if (mode() === 'swap' && rule().items.length > 1) {
-      @if ($index < rule().items.length - 1) {
+    @if (mode() === 'swap' && $count > 1) {
+      @if (!$last) {
         <button
           iconArrowDownward
           class="link p-1"
@@ -114,7 +114,7 @@
         i18n-aria-label
         (click)="cutItem($index)"
       ></button>
-    } @else if (mode() === 'swap' && $index > 0) {
+    } @else if (mode() === 'swap' && !$first) {
       <button
         iconArrowUpward
         type="button"

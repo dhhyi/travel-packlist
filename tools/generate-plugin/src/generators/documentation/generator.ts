@@ -52,9 +52,7 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
   const documentations = documentationFiles.reduce<
     Record<string, string[] | undefined>
   >((acc, { group, lang }) => {
-    if (!acc[group]) {
-      acc[group] = [];
-    }
+    acc[group] ??= [];
     acc[group].push(lang);
     return acc;
   }, {});

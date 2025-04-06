@@ -1,23 +1,22 @@
+@let height = bars().length * (barHeight + barPadding) + padding * 2;
 <svg
   xmlns="http://www.w3.org/2000/svg"
   [class]="chartClass()"
-  [attr.viewBox]="
-    '0 0 120 ' + (bars().length * (height + barPadding) + padding * 2)
-  "
+  [attr.viewBox]="`0 0 120 ${height}`"
 >
   @for (bar of bars(); track $index) {
     <rect
       rx="2"
       [attr.fill]="color(bar.name)"
       [attr.x]="padding"
-      [attr.y]="padding + $index * (height + barPadding)"
+      [attr.y]="padding + $index * (barHeight + barPadding)"
       [attr.width]="100 * bar.value"
-      [attr.height]="height"
+      [attr.height]="barHeight"
     />
     <text
       font-size="6"
       [attr.x]="barPadding + padding"
-      [attr.y]="padding + $index * (height + barPadding)"
+      [attr.y]="padding + $index * (barHeight + barPadding)"
     >
       <tspan dy="1.2em">{{ bar.name }}</tspan>
     </text>

@@ -62,31 +62,25 @@ class Context {
 
   private pathLookupCache: Record<string, string> | undefined;
   pathLookup() {
-    if (!this.pathLookupCache) {
-      this.pathLookupCache = Object.entries(
-        this.project.getCompilerOptions().paths!,
-      ).reduce<Record<string, string>>((acc, [short, entries]) => {
-        entries.forEach((entry) => {
-          acc[entry] = short;
-        });
-        return acc;
-      }, {});
-    }
-    return this.pathLookupCache;
+    return (this.pathLookupCache ??= Object.entries(
+      this.project.getCompilerOptions().paths!,
+    ).reduce<Record<string, string>>((acc, [short, entries]) => {
+      entries.forEach((entry) => {
+        acc[entry] = short;
+      });
+      return acc;
+    }, {}));
   }
 
   private projectFilePathsCache: string[] | undefined;
   projectFilePaths() {
-    if (!this.projectFilePathsCache) {
-      this.projectFilePathsCache = this.project
-        .getSourceFiles()
-        .map((source) =>
-          source
-            .getFilePath()
-            .substring(this.project.getCompilerOptions().baseUrl!.length + 1),
-        );
-    }
-    return this.projectFilePathsCache;
+    return (this.projectFilePathsCache ??= this.project
+      .getSourceFiles()
+      .map((source) =>
+        source
+          .getFilePath()
+          .substring(this.project.getCompilerOptions().baseUrl!.length + 1),
+      ));
   }
 }
 

@@ -34,7 +34,7 @@
     role="group"
     tabindex="0"
     [attr.aria-label]="ruleLabel(item.index)"
-    [id]="'rule-' + item.index"
+    [id]="`rule-${item.index}`"
     [class]="{
       disabled: showAsDisabled(item.rule),
       'animate-pulse': highlightRule() === item.index,

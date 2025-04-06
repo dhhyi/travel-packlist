@@ -1,6 +1,6 @@
 import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { execSync } from 'child_process';
-import { readFileSync, writeFileSync, globSync, existsSync } from 'fs';
+import { existsSync, globSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, normalize, relative } from 'path/posix';
 
 import { ExecutorSchema } from './schema';
@@ -197,9 +197,7 @@ function check(this: Context, tsConfigPath: string) {
       { cwd: dirname(tsConfigPath) },
     );
     if (testFilePatterns.length > 0) {
-      if (!tsConfig.exclude) {
-        tsConfig.exclude = [];
-      }
+      tsConfig.exclude ??= [];
       if (!tsConfig.exclude.includes('src/**/*.spec.ts')) {
         console.error('exclude should include src/**/*.spec.ts');
         this.fixableErrors++;

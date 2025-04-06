@@ -1,7 +1,8 @@
+@let height = 120 + 8 * segments().length;
 <svg
   xmlns="http://www.w3.org/2000/svg"
   [class]="chartClass()"
-  [attr.viewBox]="'0 0 120 ' + (120 + 8 * segments().length)"
+  [attr.viewBox]="`0 0 120 ${height}`"
 >
   @for (path of paths(); track $index) {
     <path

@@ -14,7 +14,7 @@ import { colorFromString } from '../colors';
 })
 export class BarChartComponent {
   readonly padding = 10;
-  readonly height = 10;
+  readonly barHeight = 10;
   readonly barPadding = 2;
 
   readonly bars = input.required<{ name: string; value: number }[]>();

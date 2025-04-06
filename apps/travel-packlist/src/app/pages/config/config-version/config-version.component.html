@@ -3,7 +3,7 @@
   <a
     class="accessible-content inline-block content-center"
     [attr.aria-label]="currentVersionLabel"
-    [href]="'https://github.com/dhhyi/travel-packlist/releases/tag/v' + version"
+    [href]="`https://github.com/dhhyi/travel-packlist/releases/tag/v${version}`"
   >
     @if (displayVersionCode) {
       {{ versionCode }} ({{ version }})
@@ -19,7 +19,7 @@
   ><a
     class="accessible-content inline-block content-center"
     [attr.aria-label]="gitHashLabel"
-    [href]="'https://github.com/dhhyi/travel-packlist/commit/' + gitHash"
+    [href]="`https://github.com/dhhyi/travel-packlist/commit/${gitHash}`"
     ><span aria-hidden="true">{{ gitHash }}</span></a
   ></span
 >
