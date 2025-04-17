@@ -18,6 +18,12 @@
   i18n-label
   [(ngModel)]="refactorVariables"
 />
+<cmp-checkbox
+  id="confirm-rule-deletion"
+  label="Confirm before deleting rules"
+  i18n-label
+  [(ngModel)]="confirmRuleDeletion"
+/>
 <button i18n type="button" (click)="go('rules-raw')">
   Edit Rules with Code
 </button>

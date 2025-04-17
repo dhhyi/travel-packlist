@@ -1,10 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
   input,
   output,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   IconArrowDownwardComponent,
@@ -23,6 +23,7 @@ import {
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
+import { confirm } from '../../../dialog';
 import { RulesClipboard } from '../rules.clipboard';
 import { EditorConditionComponent } from './editor-condition/editor-condition.component';
 import { EditorItemComponent } from './editor-item/editor-item.component';
@@ -58,6 +59,7 @@ export class EditorRuleComponent {
     const allVariables = this.state.rules.variables();
     return allVariables.filter((v) => !ruleVariables.includes(v));
   });
+  private confirmRuleDeletion = this.state.config.confirmRuleDeletion;
 
   private clipboard = inject(RulesClipboard);
 
@@ -169,5 +171,14 @@ export class EditorRuleComponent {
 
   variableChanged([oldVariable, newVariable]: [string, string]) {
     this.renameVariable.emit([oldVariable, newVariable]);
+  }
+
+  async delete() {
+    if (
+      !this.confirmRuleDeletion() ||
+      (await confirm($localize`Do you really want to delete this rule?`))
+    ) {
+      this.deleteRule.emit();
+    }
   }
 }

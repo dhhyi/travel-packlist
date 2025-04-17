@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 import { start, startWithRules } from './pages';
 
@@ -11,6 +11,7 @@ test('export status - default rules', async ({ page }) => {
 
   await editor.toolbar.mode('delete').click();
   await editor.rule(1).deleteButton().click();
+  await editor.dialog.confirm().click();
 
   await editor.toConfigPage();
 

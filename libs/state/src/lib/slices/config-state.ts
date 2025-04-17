@@ -26,6 +26,8 @@ export const configState = () => ({
     highlightVariableStatus: create('highlightVariableStatus', false),
     /** storage: whether to rename all variables when renaming one in editor */
     refactorVariables: create('refactorVariables', true),
+    /** storage: if deleting rules needs confirmation */
+    confirmRuleDeletion: create('confirmRuleDeletion', true),
     /** storage: the theme of the app */
     theme: create<Themes>('theme', 'system'),
     /** storage: the font size of the app */

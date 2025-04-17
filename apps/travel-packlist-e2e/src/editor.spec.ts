@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 import { startWithRules } from './pages';
 
@@ -176,6 +176,10 @@ test('rule editor - delete', async ({ page }) => {
   await expect(page).toHaveScreenshot();
 
   await editor.rule(1).deleteButton().click();
+
+  await expect(editor.dialog()).toBeVisible();
+
+  await editor.dialog.confirm().click();
 
   await expect(editor.rule(1)()).toBeHidden();
   await expect(page).toHaveScreenshot();

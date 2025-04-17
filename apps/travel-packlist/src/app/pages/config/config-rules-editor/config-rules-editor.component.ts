@@ -15,5 +15,6 @@ export class ConfigRulesEditorComponent {
   fadeOutDisabledRules = this.state.config.fadeOutDisabledRules;
   highlightVariableStatus = this.state.config.highlightVariableStatus;
   refactorVariables = this.state.config.refactorVariables;
+  confirmRuleDeletion = this.state.config.confirmRuleDeletion;
   go = this.state.router.go;
 }
