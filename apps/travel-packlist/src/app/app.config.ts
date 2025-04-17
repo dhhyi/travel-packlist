@@ -8,11 +8,6 @@ import {
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {
-  provideRouter,
-  withComponentInputBinding,
-  withHashLocation,
-} from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideDocumentationTopics } from '@travel-packlist/documentation';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
@@ -22,7 +17,7 @@ import {
   GLOBAL_STATE,
 } from '@travel-packlist/state';
 
-import { routes } from './pages/app.routes';
+import { provideRouting } from './pages/app.routes';
 import { AppInit } from './services/app.init';
 import { AppUpdate } from './services/app.update';
 import { AndroidRulesShare } from './services/rules-share/android-rules-share';
@@ -39,7 +34,7 @@ function initParserConfig(injector: Injector): ParserConfig {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalZonelessChangeDetection(),
-    provideRouter(routes, withHashLocation(), withComponentInputBinding()),
+    provideRouting(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode() && !ANDROID,
       registrationStrategy: 'registerImmediately',

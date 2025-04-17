@@ -1,4 +1,9 @@
-import { Route } from '@angular/router';
+import {
+  provideRouter,
+  Route,
+  withComponentInputBinding,
+  withHashLocation,
+} from '@angular/router';
 
 import { rulesContainNoComments } from './rules-contain-no-comments.guard';
 import { rulesValid } from './rules-valid.guard';
@@ -10,7 +15,7 @@ export interface RouteData {
   historyBack?: boolean;
 }
 
-export const routes: (Route & { data?: RouteData })[] = [
+const routes: (Route & { data?: RouteData })[] = [
   { path: '', redirectTo: '/packlist', pathMatch: 'full' },
   {
     path: 'packlist',
@@ -58,3 +63,6 @@ export const routes: (Route & { data?: RouteData })[] = [
   },
   { path: '**', redirectTo: '/packlist' },
 ];
+
+export const provideRouting = () =>
+  provideRouter(routes, withHashLocation(), withComponentInputBinding());
