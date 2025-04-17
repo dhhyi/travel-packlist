@@ -33,9 +33,19 @@ import { confirm } from '../../../dialog';
 export class ConfigRulesRemoteComponent {
   private state = inject(GLOBAL_STATE);
 
-  readonly remoteStatus = this.state.remoteRules.status;
   private readonly currentURL = computed(
     () => this.state.remoteRules.history()[0],
+  );
+
+  readonly remoteStatus = this.state.remoteRules.status;
+  readonly stateColor = computed(() =>
+    this.state.remoteRules.status().state === 'idle'
+      ? 'text-gray-500'
+      : this.state.remoteRules.status().state === 'loading'
+        ? 'text-yellow-normal'
+        : this.state.remoteRules.status().state === 'loaded'
+          ? 'text-green'
+          : 'text-red',
   );
 
   readonly remoteHistory = computed(() =>
