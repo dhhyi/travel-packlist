@@ -26,6 +26,23 @@ export const CAPACITOR_HTTP_REQUEST_MODE = new InjectionToken<RequestMode>(
   'CAPACITOR_HTTP_REQUEST_MODE',
 );
 
+function translateHttpStatus(status: number): string | undefined {
+  switch (status) {
+    case 400:
+      return $localize`Bad Request`;
+    case 401:
+      return $localize`Unauthorized`;
+    case 403:
+      return $localize`Forbidden`;
+    case 404:
+      return $localize`Not Found`;
+    case 500:
+      return $localize`Internal Server Error`;
+    default:
+      return undefined;
+  }
+}
+
 export const rulesSourceState = () => {
   const mode = createLocalStorageSignalState<'local' | 'remote'>(
     'rulesMode',
@@ -57,41 +74,51 @@ export const rulesSourceState = () => {
         ? CapacitorHttp.get({
             url: request,
             webFetchExtra: { mode: requestMode },
+          }).then((response) => {
+            if (response.status >= 200 && response.status < 300) {
+              return response.data as string;
+            } else {
+              const message = [
+                [$localize`HTTP Error`, response.status.toString()].join(' '),
+                translateHttpStatus(response.status),
+              ].join(': ');
+              throw new Error(message);
+            }
           })
         : Promise.resolve(undefined),
   });
   const reloadRemote = function () {
     remoteRulesResource.reload();
   };
-  const remoteStatus = linkedSignal<{ state: RemoteRulesState; i18n: string }>(
-    () => {
-      if (mode() !== 'remote') {
+  const remoteStatus = linkedSignal<{
+    state: RemoteRulesState;
+    i18n: string;
+    message?: unknown;
+  }>(() => {
+    if (mode() !== 'remote') {
+      return { state: 'idle', i18n: $localize`idle` };
+    }
+
+    switch (remoteRulesResource.status()) {
+      case ResourceStatus.Idle:
         return { state: 'idle', i18n: $localize`idle` };
-      }
-      const status = remoteRulesResource.status();
-      const rules = remoteRulesResource.value()?.data as string | undefined;
-      const httpStatus = remoteRulesResource.value()?.status;
-      if (status === ResourceStatus.Idle) {
-        return { state: 'idle', i18n: $localize`idle` };
-      } else if (
-        status === ResourceStatus.Loading ||
-        status === ResourceStatus.Reloading
-      ) {
+      case ResourceStatus.Loading:
+      case ResourceStatus.Reloading:
         return { state: 'loading', i18n: $localize`loading` };
-      } else if (status === ResourceStatus.Error) {
-        return { state: 'error', i18n: $localize`error` };
-      } else if (status === ResourceStatus.Resolved) {
-        if (httpStatus && httpStatus >= 200 && httpStatus < 300) {
-          return rules
-            ? { state: 'loaded', i18n: $localize`loaded` }
-            : { state: 'no content', i18n: $localize`no content` };
-        } else {
-          return { state: 'error', i18n: $localize`error` };
-        }
-      }
-      return { state: 'unknown', i18n: $localize`unknown` };
-    },
-  );
+      case ResourceStatus.Error:
+        return {
+          state: 'error',
+          i18n: $localize`error`,
+          message: remoteRulesResource.error(),
+        };
+      case ResourceStatus.Resolved:
+        return remoteRulesResource.value()
+          ? { state: 'loaded', i18n: $localize`loaded` }
+          : { state: 'no content', i18n: $localize`no content` };
+    }
+    return { state: 'unknown', i18n: $localize`unknown` };
+  });
+
   const loadRemote = function (url: string) {
     if (!url.startsWith('http')) {
       remoteStatus.set({ state: 'invalid url', i18n: $localize`invalid url` });
@@ -102,9 +129,7 @@ export const rulesSourceState = () => {
       ...history.filter((u) => u !== url),
     ]);
   };
-  const remoteRules = computed(
-    () => (remoteRulesResource.value()?.data as string) || undefined,
-  );
+  const remoteRules = computed(() => remoteRulesResource.value());
 
   const raw = computed(() =>
     mode() === 'local' ? (rawRules() ?? template) : (remoteRules() ?? ''),

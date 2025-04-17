@@ -97,13 +97,6 @@ test('remote rules error', async ({ page }) => {
   await expect(packlist.error()).toBeVisible();
 
   await expect(page).toHaveScreenshot();
-
-  const rawRules = await packlist
-    .toConfigPage()
-    .then((page) => page.toRulesRawPage());
-
-  await expect(rawRules.parserState()).toContainText('Error parsing rules');
-  await expect(page).toHaveScreenshot();
 });
 
 test('remote rules copy', async ({ page }) => {
