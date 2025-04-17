@@ -1,12 +1,23 @@
 <h2 i18n>Remote Source</h2>
-<textarea
-  aria-label="remote rules source"
-  i18n-aria-label
-  rows="4"
-  placeholder="insert URL here"
-  i18n-placeholder
-  [formControl]="control"
-></textarea>
+<div class="relative">
+  <textarea
+    class="w-full"
+    aria-label="remote rules source"
+    i18n-aria-label
+    rows="4"
+    placeholder="insert URL here"
+    i18n-placeholder
+    [formControl]="control"
+  ></textarea>
+  <button
+    class="absolute right-1 top-1 bg-white bg-opacity-50 hover:bg-opacity-50 dark:bg-slate-900 dark:bg-opacity-50"
+    type="button"
+    [class.hidden]="!control.value"
+    (click)="clearRemote()"
+  >
+    <app-icon-close class="h-4 w-4" />
+  </button>
+</div>
 <div class="flex flex-row items-center">
   <button
     iconHistory

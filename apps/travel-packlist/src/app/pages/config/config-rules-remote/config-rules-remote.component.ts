@@ -9,7 +9,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
-  IconDeleteComponent,
+  IconCloseComponent,
   IconHistoryComponent,
   IconRefreshComponent,
 } from '@travel-packlist/icons';
@@ -27,7 +27,7 @@ import { confirm } from '../../../dialog';
     ReactiveFormsModule,
     IconHistoryComponent,
     IconRefreshComponent,
-    IconDeleteComponent,
+    IconCloseComponent,
   ],
 })
 export class ConfigRulesRemoteComponent {
@@ -58,6 +58,10 @@ export class ConfigRulesRemoteComponent {
         this.state.remoteRules.load(newUrl);
       }
     });
+  }
+
+  clearRemote() {
+    this.control.setValue('');
   }
 
   reloadRemote() {
