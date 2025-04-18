@@ -13,3 +13,23 @@
     @apply transition-colors;
   }
 }
+
+.element {
+  @apply ml-[3px] rounded-sm border-2 border-white;
+  box-shadow: 0 0 0 3px theme('colors.slate.300');
+
+  &.selected {
+    @apply bg-slate-300;
+  }
+}
+
+:host-context(.dark) {
+  .element {
+    @apply border-slate-900;
+    box-shadow: 0 0 0 3px theme('colors.slate.700');
+
+    &.selected {
+      @apply bg-slate-700;
+    }
+  }
+}

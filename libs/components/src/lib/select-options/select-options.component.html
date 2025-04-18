@@ -18,11 +18,8 @@
       (keypress)="model.set(option)"
     >
       <div
-        class="mr-2 h-6 min-h-6 w-6 min-w-6 rounded-full border-4 border-slate-300 dark:border-slate-700"
-        [class]="{
-          'bg-slate-300': model() === option,
-          'dark:bg-slate-700': model() === option,
-        }"
+        class="element mr-2 h-6 min-h-6 w-6 min-w-6 rounded-full"
+        [class.selected]="model() === option"
       ></div>
       <ng-container *ngTemplateOutlet="template(option)" />
     </div>
