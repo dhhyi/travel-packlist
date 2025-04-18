@@ -27,7 +27,7 @@ export class RulesComponent {
   private refactor = inject(Refactor);
 
   private state = inject(GLOBAL_STATE);
-  private parsedRules = this.state.rules.parsed;
+  private parsedRules = this.state.rules.parsed.value;
   private activeRules = this.state.active.rules;
   mode = this.state.router.rulesMode;
   accessibility = this.state.config.accessibility;

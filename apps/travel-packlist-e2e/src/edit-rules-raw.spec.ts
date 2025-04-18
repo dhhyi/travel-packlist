@@ -1,15 +1,13 @@
 import { expect, test } from '@playwright/test';
 
-import { start } from './pages';
+import { start, startWithRules } from './pages';
 
 test('edit rules raw', async ({ page }) => {
-  const rulesRaw = await start(page)
+  const rulesRaw = await startWithRules(page, '')
     .then((p) => p.toConfigPage())
     .then((p) => p.toRulesRawPage());
 
   await expect(rulesRaw.rawRules()).toBeVisible();
-
-  await rulesRaw.rawRules().fill('');
 
   await expect(rulesRaw.parserState()).toHaveText(
     'Parsed 0 rules successfully!',
@@ -48,7 +46,7 @@ test('edit rules raw', async ({ page }) => {
 });
 
 test('edit rules raw with error', async ({ page }) => {
-  const rulesRaw = await start(page)
+  const rulesRaw = await startWithRules(page, '')
     .then((p) => p.toConfigPage())
     .then((p) => p.toRulesRawPage());
 

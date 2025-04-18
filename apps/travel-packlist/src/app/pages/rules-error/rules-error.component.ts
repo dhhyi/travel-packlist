@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  ResourceStatus,
 } from '@angular/core';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
@@ -18,16 +19,14 @@ export class RulesErrorComponent {
 
   readonly error = computed<{ type: 'parsing' | 'fetching'; message: unknown }>(
     () =>
-      this.state.remoteRules.status().state === 'error'
+      this.state.rules.raw.status() === ResourceStatus.Error
         ? {
             type: 'fetching',
-            message: extractErrorMessage(
-              this.state.remoteRules.status().message,
-            ),
+            message: extractErrorMessage(this.state.rules.raw.error()),
           }
         : {
             type: 'parsing',
-            message: this.state.rules.parserError(),
+            message: extractErrorMessage(this.state.rules.parsed.error()),
           },
   );
 

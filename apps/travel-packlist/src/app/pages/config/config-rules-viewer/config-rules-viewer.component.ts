@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  ResourceStatus,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxComponent } from '@travel-packlist/components';
@@ -20,10 +21,8 @@ export class ConfigRulesViewerComponent {
   fadeOutDisabledRules = this.state.config.fadeOutDisabledRules;
   highlightVariableStatus = this.state.config.highlightVariableStatus;
   go = this.state.router.go;
-  readonly rulesLoaded = computed(
-    () => this.state.remoteRules.status().state === 'loaded',
-  );
+  readonly rulesLoaded = computed(() => this.state.rules.raw.hasValue());
   readonly rulesError = computed(
-    () => this.state.remoteRules.status().state === 'error',
+    () => this.state.rules.raw.status() === ResourceStatus.Error,
   );
 }

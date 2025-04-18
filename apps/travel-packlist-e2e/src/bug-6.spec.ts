@@ -1,12 +1,12 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-import { start } from './pages';
+import { startWithRules } from './pages';
 
 /**
  * https://github.com/dhhyi/travel-packlist/issues/6
  */
 test('bug #6', async ({ page }) => {
-  const editRaw = await start(page)
+  const editRaw = await startWithRules(page, '')
     .then((packlist) => packlist.toConfigPage())
     .then((configPage) => configPage.toRulesRawPage());
 

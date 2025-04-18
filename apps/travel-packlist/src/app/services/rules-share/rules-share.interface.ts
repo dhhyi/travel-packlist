@@ -10,7 +10,7 @@ export abstract class RulesShare {
       .replace(/\..*$/, '')
       .replace(/[T:]/g, '-');
     const hash = this.state.rules.hash();
-    return `travel-packlist-rules-${dateTime}-${hash}.txt`;
+    return `travel-packlist-rules-${dateTime}-${hash ?? 'UNDEF'}.txt`;
   });
 
   abstract exportRules(): Promise<void>;

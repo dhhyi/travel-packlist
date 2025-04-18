@@ -24,7 +24,7 @@ export class PacklistComponent {
   private state = inject(GLOBAL_STATE);
 
   readonly rulesAvailable = computed(
-    () => this.state.rules.parsed().length > 0,
+    () => this.state.rules.parsed.value().length > 0,
   );
 
   rulesMode = this.state.rules.mode;

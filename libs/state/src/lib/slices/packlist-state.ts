@@ -33,7 +33,7 @@ export const packlistState = ({
   const refactor = inject(Refactor);
   const active = computed(() =>
     refactor.filterActive({
-      rules: parsedRules(),
+      rules: parsedRules.value(),
       model: answers(),
     }),
   );
@@ -151,9 +151,11 @@ export const packlistState = ({
   return {
     rules: {
       /** derived: all categories extracted from parsed rules */
-      categories: computed(() => refactor.extractCategories(parsedRules())),
+      categories: computed(() =>
+        refactor.extractCategories(parsedRules.value()),
+      ),
       /** derived: all variables extracted from parsed rules */
-      variables: computed(() => refactor.extractVariables(parsedRules())),
+      variables: computed(() => refactor.extractVariables(parsedRules.value())),
     },
     active: {
       /** derived: currently active rules */

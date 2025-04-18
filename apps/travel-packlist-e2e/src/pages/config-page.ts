@@ -37,6 +37,8 @@ export class ConfigPage extends Banner {
       rulesMode.locator(this.page.getByRole('radio', { name: 'remote' }));
     fn.local = () =>
       rulesMode.locator(this.page.getByRole('radio', { name: 'local' }));
+    fn.template = () =>
+      rulesMode.locator(this.page.getByRole('radio', { name: 'template' }));
     return fn;
   }
 

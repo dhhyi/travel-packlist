@@ -13,7 +13,10 @@ export async function start(page: Page) {
 export async function startWithRules(page: Page, rules: string) {
   await page.goto('/');
   await page.evaluate((rules) => {
-    localStorage.setItem('state', JSON.stringify({ rules }));
+    localStorage.setItem(
+      'state',
+      JSON.stringify({ rules, rulesMode: 'local' }),
+    );
   }, rules);
   return start(page);
 }

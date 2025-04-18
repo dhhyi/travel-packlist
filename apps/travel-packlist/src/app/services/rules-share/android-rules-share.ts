@@ -1,4 +1,4 @@
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Directory, Encoding, Filesystem } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 
 import { RulesShare } from './rules-share.interface';
@@ -6,7 +6,7 @@ import { RulesShare } from './rules-share.interface';
 export class AndroidRulesShare extends RulesShare {
   async exportRules() {
     const path = this.exportFileName();
-    const rules = this.state.rules.raw();
+    const rules = this.state.rules.raw.value();
     if (!rules) {
       console.error('No rules available');
       return;

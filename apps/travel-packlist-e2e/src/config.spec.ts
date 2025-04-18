@@ -18,17 +18,9 @@ test('config', async ({ page }) => {
       - radio "order of definition"
     - heading "Rules Mode" [level=2]
     - radiogroup:
-      - radio "local" [checked]
+      - radio "local"
       - radio "remote"
-    - heading "Rules Editor" [level=2]
-    - button "Edit Rules"
-    - checkbox "Fade out disabled rules"
-    - checkbox "Highlight variable status"
-    - checkbox "Rename all occurrences when renaming variables" [checked]
-    - button "Edit Rules with Code"
-    - button "Export Rules" [disabled]
-    - button "Import Rules"
-    - checkbox "Remind me to regularly export rules"
+      - radio "template"
     - heading "Appearance" [level=2]
     - radiogroup "Language":
       - radio "auto" [checked]

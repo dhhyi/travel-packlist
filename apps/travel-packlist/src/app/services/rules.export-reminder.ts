@@ -9,7 +9,7 @@ export class RulesExportReminder {
   private state = inject(GLOBAL_STATE);
   private exportNeeded = this.state.rules.exportNeeded;
   private reminderActive = this.state.config.exportReminder;
-  private lastAskedHash: string[] = [];
+  private lastAskedHash: (string | undefined)[] = [];
 
   init() {
     interval(30000)
@@ -41,7 +41,7 @@ export class RulesExportReminder {
   private exportOverdue() {
     const lastExportDate = this.state.export.lastDate();
     const now = new Date().getTime();
-    return now - lastExportDate > minutesInMilliseconds(10);
+    return now - (lastExportDate ?? 0) > minutesInMilliseconds(10);
   }
 
   private enoughTimeSinceLastEditPassed() {

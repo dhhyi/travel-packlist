@@ -86,7 +86,7 @@ test('remote rules error', async ({ page }) => {
 
   await config.remoteRulesURL().blur();
 
-  await expect(config.remoteSourceStatus()).toHaveText('error');
+  await expect(config.remoteSourceStatus()).toContainText('404');
 
   await config.remoteSourceStatus().scrollIntoViewIfNeeded();
 

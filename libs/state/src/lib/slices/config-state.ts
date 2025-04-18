@@ -28,6 +28,8 @@ export const configState = () => ({
     refactorVariables: create('refactorVariables', true),
     /** storage: if deleting rules needs confirmation */
     confirmRuleDeletion: create('confirmRuleDeletion', true),
+    /** storage: id of the current rules template */
+    rulesTemplate: create<'default' | 'empty'>('rulesTemplate', 'default'),
     /** storage: the theme of the app */
     theme: create<Themes>('theme', 'system'),
     /** storage: the font size of the app */

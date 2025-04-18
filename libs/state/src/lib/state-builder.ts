@@ -1,6 +1,7 @@
 import {
   inject,
   InjectionToken,
+  Resource,
   signal,
   Signal,
   WritableSignal,
@@ -9,7 +10,7 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Dispatch = (...args: any[]) => unknown;
 
-type Structured<T = Dispatch | Signal<unknown>> = Record<
+type Structured<T = Dispatch | Signal<unknown> | Resource<unknown>> = Record<
   string,
   Record<string, T>
 >;

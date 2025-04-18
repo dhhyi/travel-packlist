@@ -81,9 +81,9 @@ export class ConfigRulesImportExportComponent {
   private refactor = inject(Refactor);
 
   private readonly percentageOfItemsWithWeights = computed(() => {
-    if (!this.state.rules.parserError()) {
+    if (this.state.rules.parsed.hasValue()) {
       const { items, weights } = this.refactor.countItemsAndWeights(
-        this.state.rules.parsed(),
+        this.state.rules.parsed.value(),
       );
       return weights / items;
     }
@@ -91,7 +91,7 @@ export class ConfigRulesImportExportComponent {
   });
 
   isExportAvailable(): boolean {
-    return !!this.state.rules.customized();
+    return !!this.state.rules.localRulesAvailable();
   }
 
   async exportRules() {

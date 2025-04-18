@@ -8,6 +8,7 @@ import { ConfigRulesEditorComponent } from './config-rules-editor/config-rules-e
 import { ConfigRulesImportExportComponent } from './config-rules-import-export/config-rules-import-export.component';
 import { ConfigRulesModeComponent } from './config-rules-mode/config-rules-mode.component';
 import { ConfigRulesRemoteComponent } from './config-rules-remote/config-rules-remote.component';
+import { ConfigRulesTemplateComponent } from './config-rules-template/config-rules-template.component';
 import { ConfigRulesViewerComponent } from './config-rules-viewer/config-rules-viewer.component';
 import { ConfigSupportComponent } from './config-support/config-support.component';
 import { ConfigVersionComponent } from './config-version/config-version.component';
@@ -26,6 +27,7 @@ import { ConfigVersionComponent } from './config-version/config-version.componen
     ConfigRulesModeComponent,
     ConfigRulesRemoteComponent,
     ConfigRulesViewerComponent,
+    ConfigRulesTemplateComponent,
   ],
   templateUrl: './config.component.html',
 })

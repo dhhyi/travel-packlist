@@ -4,11 +4,14 @@ import {
   computed,
   effect,
   inject,
+  ResourceStatus,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { debounceTime, startWith } from 'rxjs';
+
+import { extractErrorMessage } from '../../util/extract-error-message';
 
 type ParserState =
   | {
@@ -38,25 +41,27 @@ export class EditRulesRawComponent {
   private state = inject(GLOBAL_STATE);
 
   private fb = inject(FormBuilder).nonNullable;
-  rulesControl = this.fb.control(this.state.rules.raw());
+  rulesControl = this.fb.control(this.state.rules.raw.value());
   private readonly rulesText = toSignal(
     this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
   );
   private readonly rulesPending = computed(
-    () => this.rulesText() !== this.state.rules.raw(),
+    () => this.rulesText() !== this.state.rules.raw.value(),
   );
 
   readonly parserState = computed<ParserState>(() => {
     if (this.rulesPending()) {
       return { type: 'pending' };
     } else {
-      const parserError = this.state.rules.parserError;
-      if (parserError()) {
-        return { type: 'error', error: parserError() };
+      if (this.state.rules.parsed.status() === ResourceStatus.Error) {
+        return {
+          type: 'error',
+          error: extractErrorMessage(this.state.rules.parsed.error()),
+        };
       } else {
         return {
           type: 'success',
-          rules: this.state.rules.parsed().length,
+          rules: this.state.rules.parsed.value().length,
         };
       }
     }
@@ -68,7 +73,7 @@ export class EditRulesRawComponent {
     );
     effect(() => {
       const value = ruleUpdates();
-      if (typeof value === 'string' && value !== this.state.rules.raw()) {
+      if (typeof value === 'string' && value !== this.state.rules.raw.value()) {
         this.state.localRules.updateRules(value);
       }
     });

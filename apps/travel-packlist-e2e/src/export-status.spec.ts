@@ -5,6 +5,8 @@ import { start, startWithRules } from './pages';
 test('export status - default rules', async ({ page }) => {
   const config = await start(page).then((page) => page.toConfigPage());
 
+  await config.copyRulesLocallyButton().click();
+
   await expect(config.exportNeededAlert()).toBeHidden();
 
   const editor = await config.toEditorPage();

@@ -36,7 +36,7 @@
     i18n-aria-label
     [class]="stateColor()"
   >
-    {{ remoteStatus().i18n }}
+    {{ i18nStatus() }}
   </div>
   <button
     iconRefresh
@@ -77,7 +77,7 @@
 <button
   i18n
   type="button"
-  [disabled]="remoteStatus().state !== 'loaded'"
+  [disabled]="!rulesLoaded()"
   (click)="copyRulesLocally()"
 >
   Copy rules locally

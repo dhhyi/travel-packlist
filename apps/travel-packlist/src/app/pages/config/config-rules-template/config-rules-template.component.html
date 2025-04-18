@@ -1,0 +1,17 @@
+<h2 i18n>Rule Templates</h2>
+<cmp-select-options
+  label="Rules Template"
+  i18n-label
+  [legendHidden]="true"
+  [(ngModel)]="rulesTemplate"
+>
+  <ng-template value="default" i18n
+    >Example template with some existing rules.</ng-template
+  >
+  <ng-template value="empty" i18n
+    >Empty template for starting your own rules.</ng-template
+  >
+</cmp-select-options>
+<button i18n type="button" (click)="copyRulesLocally()">
+  Copy rules locally
+</button>

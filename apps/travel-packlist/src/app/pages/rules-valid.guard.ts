@@ -5,10 +5,7 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 export const rulesValid: CanActivateFn = () => {
   const state = inject(GLOBAL_STATE);
 
-  if (
-    state.rules.parserError() ||
-    state.remoteRules.status().state === 'error'
-  ) {
+  if (state.rules.hasError()) {
     const router = inject(Router);
     const targetUrl = router.getCurrentNavigation()?.finalUrl;
     return router.navigate(['/rules-error'], {
