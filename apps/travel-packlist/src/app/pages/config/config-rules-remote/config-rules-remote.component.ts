@@ -11,6 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   IconCloseComponent,
+  IconDeleteComponent,
   IconHistoryComponent,
   IconRefreshComponent,
 } from '@travel-packlist/icons';
@@ -30,6 +31,7 @@ import { extractErrorMessage } from '../../../util/extract-error-message';
     IconHistoryComponent,
     IconRefreshComponent,
     IconCloseComponent,
+    IconDeleteComponent,
   ],
 })
 export class ConfigRulesRemoteComponent {
