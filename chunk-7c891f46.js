@@ -1,0 +1,2 @@
+import{s}from"./chunk-cb7c8e75.js";import{ca as t,wc as e}from"./chunk-8a02f8fd.js";var r=class{state=t(s);exportFileName=e(()=>{let a=new Date(this.state.rules.lastAction()).toISOString().replace(/\..*$/,"").replace(/[T:]/g,"-"),o=this.state.rules.hash();return`travel-packlist-rules-${a}-${o??"UNDEF"}.txt`})};export{r as a};
+/**i18n:e347161579cdf7823cf79475d305275cd962b26b6c63283454da043ebf1dcaa5*/
