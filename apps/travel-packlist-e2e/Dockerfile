@@ -9,8 +9,7 @@ WORKDIR /ws
 
 COPY package.json pnpm-lock.yaml .
 RUN pnpm install --frozen-lockfile
-RUN pnpm playwright install-deps chromium
-RUN pnpm playwright install chromium
+RUN pnpm playwright install chromium --with-deps
 
 COPY . .
 
