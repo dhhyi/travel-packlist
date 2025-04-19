@@ -8,6 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { CapacitorHttp } from '@capacitor/core';
+import { enhanceRemoteRulesURL } from '@travel-packlist/enhance-remote-url';
 import { RULES_TEMPLATE } from '@travel-packlist/rules-template';
 
 import { createLocalStorageSignalState } from '../persistence/storage-signal';
@@ -31,6 +32,8 @@ function translateHttpStatus(status: number): string | undefined {
       return $localize`Not Found`;
     case 500:
       return $localize`Internal Server Error`;
+    case 504:
+      return $localize`Gateway Timeout`;
     default:
       return undefined;
   }
@@ -115,25 +118,42 @@ export const rulesSourceState = ({
             if (!request.remote.startsWith('http')) {
               throw new Error('Invalid URL');
             }
+            const url = enhanceRemoteRulesURL(request.remote);
             return CapacitorHttp.get({
-              url: request.remote,
+              url,
               webFetchExtra: { mode: requestMode },
-            }).then((response) => {
-              if (response.status >= 200 && response.status < 300) {
-                remoteHistory.update((history) => [
-                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  request.remote!,
-                  ...history.filter((u) => u !== request.remote),
-                ]);
-                return response.data as string;
-              } else {
-                const message = [
-                  [$localize`HTTP Error`, response.status.toString()].join(' '),
-                  translateHttpStatus(response.status),
-                ].join(': ');
-                throw new Error(message);
-              }
-            });
+            })
+              .catch((error: unknown) => {
+                if (
+                  requestMode === 'cors' &&
+                  error instanceof TypeError &&
+                  error.message === 'Failed to fetch'
+                ) {
+                  return CapacitorHttp.get({
+                    url: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                    webFetchExtra: { mode: requestMode },
+                  });
+                }
+                throw error;
+              })
+              .then((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                  remoteHistory.update((history) => [
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    request.remote!,
+                    ...history.filter((u) => u !== request.remote),
+                  ]);
+                  return response.data as string;
+                } else {
+                  const message = [
+                    [$localize`HTTP Error`, response.status.toString()].join(
+                      ' ',
+                    ),
+                    translateHttpStatus(response.status),
+                  ].join(': ');
+                  throw new Error(message);
+                }
+              });
           } else {
             return Promise.resolve(undefined);
           }

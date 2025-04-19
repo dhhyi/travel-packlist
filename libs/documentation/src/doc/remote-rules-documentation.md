@@ -10,6 +10,7 @@ The downside of using remote rules is that you cannot edit the rules from the re
 
 On the settings page, you can enter an URL to a remote rules file.
 The server behind the URL must answer to the request with a plain text file containing the rules.
+This is sometimes also called a "raw" link, that is often undocumented or hard to find.
 
 ## Suggested Sources
 
@@ -27,15 +28,9 @@ Once you are done creating the paste, you will get a link similar to this one:
 https://pastebin.com/LwSHKuGY
 ```
 
-To make it usable in this application, you need to change the URL to point to the raw paste.
-You can do this by replacing `pastebin.com` with `pastebin.com/raw/` in the URL.
-The final URL will look like this:
+You can add this link directly in the App and it will find the way to the raw content.
 
-```text
-https://pastebin.com/raw/LwSHKuGY
-```
-
-There is also a link to the raw paste on the page.
+There is also a link to the raw paste on the page if the app somehow fails to transform the URL automatically.
 
 ### [GitHub Gist](https://gist.github.com/)
 
@@ -51,15 +46,17 @@ The URL will look like this:
 https://gist.github.com/username/1234567890abcdef1234567890abcdef
 ```
 
-To get the raw URL, click on the "Raw" button on the gist page.
-You can also manually change the URL to point to the raw gist by replacing `gist.github.com` with `gist.githubusercontent.com` and adding `/raw/` after the username.
-The final URL will look like this:
+Enter this URL in the App and it will automatically find the raw content.
 
-```text
-https://gist.githubusercontent.com/username/1234567890abcdef1234567890abcdef/raw
-```
+Alternatively, to get the raw URL, click on the "Raw" button on the gist page.
 
 Gists are also version controlled, so you can easily see previous revisions and revert to them if you want to.
+
+A GitHub Gist also supports multiple files.
+To use this feature with short links, you can supply the anchor-link to the file you want to use.
+The anchor will look like this: `#file-my-file-name`.
+Supplying the short link only works if the anchor is the same as the original filename (without 'file-').
+You can alternatively supply the raw link yourself.
 
 ### [GitHub](https://github.com)
 
@@ -75,3 +72,13 @@ It will look like this:
 ```text
 https://raw.githubusercontent.com/username/repository/branch/file
 ```
+
+### [Google Drive](https://drive.google.com)
+
+Google Drive is probably the easiest way to host your rules.
+You will not have any overhead and you can easily edit the file in your drive.
+
+To use Google Drive, you need to create a file in your drive and share it publicly.
+Insert the link to the file in the App and it will automatically find the raw content.
+
+This will only work in the Android App, as the browser application will encounter a CORS error.

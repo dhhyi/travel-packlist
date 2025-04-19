@@ -42,6 +42,9 @@
       "@travel-packlist/documentation": [
         "libs/documentation/src/index.ts"
       ],
+      "@travel-packlist/enhance-remote-url": [
+        "libs/enhance-remote-url/src/index.ts"
+      ],
       "@travel-packlist/generate-plugin": [
         "tools/generate-plugin/src/index.ts"
       ],

@@ -134,3 +134,83 @@ test('remote rules copy', async ({ page }) => {
         - textbox "item name" [disabled]: Test item
   `);
 });
+
+test('remote rules from Google Drive', async ({ page }) => {
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.rulesMode.remote().click();
+
+  await expect(config.remoteRulesURL()).toBeVisible();
+
+  await config
+    .remoteRulesURL()
+    .fill(
+      'https://drive.google.com/file/d/1h4RWKrcL-glkQtc03AdLjPb3VNaUCs6T/view',
+    );
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  const packlist = await config.toPacklistPage();
+
+  await expect(packlist.item('Hello from Google Drive', false)).toBeVisible();
+});
+
+test('remote rules from Pastebin', async ({ page }) => {
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.rulesMode.remote().click();
+
+  await expect(config.remoteRulesURL()).toBeVisible();
+
+  await config.remoteRulesURL().fill('https://pastebin.com/raw/ebFBBQZh');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  const packlist = await config.toPacklistPage();
+
+  await expect(packlist.item('Hello from Pastebin', false)).toBeVisible();
+});
+
+test('remote rules from GitHub Gist', async ({ page }) => {
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.rulesMode.remote().click();
+
+  await expect(config.remoteRulesURL()).toBeVisible();
+
+  await config
+    .remoteRulesURL()
+    .fill(
+      'https://gist.github.com/dhhyi/e02a99c3abae52f9ee55e31f75bdbd20#file-simple',
+    );
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  const packlist = await config.toPacklistPage();
+
+  await expect(packlist.item('Hello from GitHub Gist', false)).toBeVisible();
+});
+
+test('remote rules from GitHub Repository', async ({ page }) => {
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.rulesMode.remote().click();
+
+  await expect(config.remoteRulesURL()).toBeVisible();
+
+  await config
+    .remoteRulesURL()
+    .fill(
+      'https://github.com/dhhyi/travel-packlist-rules/blob/main/test-rules.txt',
+    );
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  const packlist = await config.toPacklistPage();
+
+  await expect(packlist.item('Hello from GitHub Repo', false)).toBeVisible();
+});

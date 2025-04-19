@@ -14,6 +14,11 @@
       "factory": "./src/generators/documentation/generator",
       "schema": "./src/generators/documentation/schema.json",
       "description": "documentation generator"
+    },
+    "enhance-remote-url": {
+      "factory": "./src/generators/enhance-remote-url/generator",
+      "schema": "./src/generators/enhance-remote-url/schema.json",
+      "description": "enhance remote url generator"
     }
   }
 }

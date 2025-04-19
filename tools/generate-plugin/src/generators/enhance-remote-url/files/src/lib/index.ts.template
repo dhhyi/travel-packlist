@@ -1,0 +1,16 @@
+import { Transformer } from './transformer.interface';
+
+<% for (const transformer of transformers) { %>
+import <%= camelize(transformer) %> from './transformers/<%= transformer %>';<% } %>
+
+const transformers: Transformer[] = [<%= transformers.map(t => camelize(t)).join(', ') %>]
+
+export function enhanceRemoteRulesURL(url: string): string {
+  if (url) {
+    const transformer = transformers.find(t => t.test(url));
+    if (transformer) {
+      return transformer.transform(url);
+    }
+  }
+  return url;
+}
