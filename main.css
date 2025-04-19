@@ -866,6 +866,12 @@ select {
 .fixed {
   position: fixed;
 }
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
 .sticky {
   position: sticky;
 }
@@ -881,11 +887,17 @@ select {
 .left-1\/2 {
   left: 50%;
 }
+.right-1 {
+  right: 0.25rem;
+}
 .right-2 {
   right: 0.5rem;
 }
 .top-0 {
   top: 0;
+}
+.top-1 {
+  top: 0.25rem;
 }
 .z-30 {
   z-index: 30;
@@ -1032,6 +1044,9 @@ select {
 }
 .w-0 {
   width: 0;
+}
+.w-4 {
+  width: 1rem;
 }
 .w-6 {
   width: 1.5rem;
@@ -1198,9 +1213,6 @@ select {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.text-nowrap {
-  text-wrap: nowrap;
-}
 .break-all {
   word-break: break-all;
 }
@@ -1213,14 +1225,8 @@ select {
 .rounded-full {
   border-radius: 9999px;
 }
-.rounded-sm {
-  border-radius: 0.125rem;
-}
 .border {
   border-width: 1px;
-}
-.border-4 {
-  border-width: 4px;
 }
 .border-l-4 {
   border-left-width: 4px;
@@ -1228,10 +1234,6 @@ select {
 .border-gray-300 {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-}
-.border-slate-300 {
-  --tw-border-opacity: 1;
-  border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
 }
 .border-slate-700 {
   --tw-border-opacity: 1;
@@ -1320,6 +1322,9 @@ select {
 .bg-yellow-normal {
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity, 1));
+}
+.bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
 }
 .p-0 {
   padding: 0;
@@ -1412,6 +1417,10 @@ select {
 }
 .leading-tight {
   line-height: 1.25;
+}
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity, 1));
 }
 .text-gray-700 {
   --tw-text-opacity: 1;
@@ -1513,6 +1522,9 @@ select {
     /* stylelint-disable-next-line */
     text-shadow: 0 0 4px #64748b;
 }
+.hover\:bg-opacity-50:hover {
+  --tw-bg-opacity: 0.5;
+}
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1521,17 +1533,16 @@ select {
   --tw-border-opacity: 1;
   border-color: rgb(203 213 225 / var(--tw-border-opacity, 1));
 }
-.dark\:border-slate-700:where(.dark, .dark *) {
-  --tw-border-opacity: 1;
-  border-color: rgb(51 65 85 / var(--tw-border-opacity, 1));
-}
 .dark\:bg-gray-900:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }
-.dark\:bg-slate-700:where(.dark, .dark *) {
+.dark\:bg-slate-900:where(.dark, .dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity, 1));
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity, 1));
+}
+.dark\:bg-opacity-50:where(.dark, .dark *) {
+  --tw-bg-opacity: 0.5;
 }
 .dark\:text-gray-300:where(.dark, .dark *) {
   --tw-text-opacity: 1;
