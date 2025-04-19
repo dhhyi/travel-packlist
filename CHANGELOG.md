@@ -1,3 +1,20 @@
+## [0.11.0](https://github.com/dhhyi/travel-packlist/compare/v0.10.2...v0.11.0) (2025-04-19)
+
+### Features
+
+- add button for clearing remote rules url field ([2b23fb6](https://github.com/dhhyi/travel-packlist/commit/2b23fb647abef3b2932226dd894988e382e0f3c0)), closes [#12](https://github.com/dhhyi/travel-packlist/issues/12)
+- automatically transform URLs for some remote file suppliers ([8079d9c](https://github.com/dhhyi/travel-packlist/commit/8079d9c9f7b3348ec02d50eefc112d9e2a61f3f9)), closes [#12](https://github.com/dhhyi/travel-packlist/issues/12)
+- colored remote rules status ([ea9527c](https://github.com/dhhyi/travel-packlist/commit/ea9527cf54fa09a0639fdc67a74610481ed8c71c)), closes [#12](https://github.com/dhhyi/travel-packlist/issues/12)
+- documentation for remote rules ([94a001f](https://github.com/dhhyi/travel-packlist/commit/94a001f2a73b329dfa058ae0a891777088a23cd5)), closes [#12](https://github.com/dhhyi/travel-packlist/issues/12)
+- improve remote error display ([5719662](https://github.com/dhhyi/travel-packlist/commit/5719662c4bb3bdbd30d4126d361a27fddfac9810)), closes [#12](https://github.com/dhhyi/travel-packlist/issues/12)
+- make checkbox and radio button selection more intuitive ([ac1e354](https://github.com/dhhyi/travel-packlist/commit/ac1e354ee54c8493af9f1dee9b7051a1cad6637d))
+- make it possible to start from templates ([675a044](https://github.com/dhhyi/travel-packlist/commit/675a044437c3c396ef60928fb7674dbd758e9381))
+- request confirmation before deleting rules ([9bbad52](https://github.com/dhhyi/travel-packlist/commit/9bbad5215a6af60941bfbcccbe2525aa484abe97))
+
+### Bug Fixes
+
+- display missing delete icon in remote history ([194422d](https://github.com/dhhyi/travel-packlist/commit/194422deeebdfb83a3c99fc25c807d40380e7d10))
+
 ## [0.10.2](https://github.com/dhhyi/travel-packlist/compare/v0.10.1...v0.10.2) (2025-02-23)
 
 ### Bug Fixes
