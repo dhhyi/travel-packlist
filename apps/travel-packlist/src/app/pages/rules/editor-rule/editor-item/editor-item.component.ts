@@ -1,10 +1,10 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   input,
   output,
-  ChangeDetectionStrategy,
-  effect,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -15,10 +15,10 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  SyntaxError,
-  Parser,
   Item,
+  Parser,
   serializeWeight,
+  SyntaxError,
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter } from 'rxjs';
@@ -128,7 +128,6 @@ export class EditorItemComponent {
             $localize`Category name cannot contain '${pattern}:INTERPOLATION:'`,
           );
         } else {
-          console.error(error);
           await alert($localize`Invalid category name`);
         }
         void this.addNewCategory(newCategory);

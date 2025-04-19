@@ -9,4 +9,10 @@ module.exports = [
   includeIgnoreFile(require.resolve('./.gitignore')),
   ...typescriptRules(__dirname),
   ...angularRules(__dirname),
+  {
+    files: ['**/*.ts'],
+    rules: {
+      'no-console': 'error',
+    },
+  },
 ];

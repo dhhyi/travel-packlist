@@ -75,8 +75,8 @@ export class Parser {
         const column = error.location.start.column.toString();
         message.push(' at line ', line, ' column ', column);
         message.push(':', '\n', error.message);
-      } else {
-        console.error(error);
+      } else if (error instanceof Error) {
+        message.push(error.message);
       }
       throw new Error(message.join(''));
     }

@@ -42,6 +42,7 @@ export class AppInit {
   private applyLanguage(lang: SupportedLanguage | undefined) {
     if (lang && this.document.documentElement.lang !== lang) {
       if (isDevMode()) {
+        // eslint-disable-next-line no-console
         console.warn('Language switching is disabled in dev mode');
         return;
       }

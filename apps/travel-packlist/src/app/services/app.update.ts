@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 import { inject, Injectable } from '@angular/core';
 import { SwUpdate, UnrecoverableStateEvent } from '@angular/service-worker';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { tap, filter, interval, switchMap, identity, merge } from 'rxjs';
+import { filter, identity, interval, merge, switchMap, tap } from 'rxjs';
 
 import { confirm } from '../dialog';
 

@@ -6,4 +6,10 @@ module.exports = [
   ...baseConfig,
   ...typescriptRules(__dirname),
   ...angularRules(__dirname),
+  {
+    files: ['**/*.ts'],
+    rules: {
+      'no-console': 'error',
+    },
+  },
 ];
