@@ -30,6 +30,9 @@ const navigation = {
   'rules-documentation'(this: NavThis) {
     void this.router.navigateByUrl('/documentation/rules');
   },
+  'remote-rules-documentation'(this: NavThis) {
+    void this.router.navigateByUrl('/documentation/remote-rules');
+  },
   'rules-raw'(this: NavThis) {
     void this.router.navigate(['/rules-raw']);
   },

@@ -12,6 +12,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
   IconCloseComponent,
   IconDeleteComponent,
+  IconHelpComponent,
   IconHistoryComponent,
   IconRefreshComponent,
 } from '@travel-packlist/icons';
@@ -32,10 +33,15 @@ import { extractErrorMessage } from '../../../util/extract-error-message';
     IconRefreshComponent,
     IconCloseComponent,
     IconDeleteComponent,
+    IconHelpComponent,
   ],
 })
 export class ConfigRulesRemoteComponent {
   private state = inject(GLOBAL_STATE);
+
+  goToDocumentation() {
+    this.state.router.go('remote-rules-documentation');
+  }
 
   private readonly currentURL = computed(
     () => this.state.remoteRules.history()[0],

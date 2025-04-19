@@ -47,10 +47,15 @@ import { map } from 'rxjs';
     code {
       @apply bg-gray-300 px-1 font-bold dark:bg-gray-700;
       white-space: pre-wrap;
+      overflow-wrap: break-word;
     }
 
     blockquote {
       @apply mx-2 my-0 mb-2 border-l-4 border-gray-300 p-2 dark:border-gray-700;
+    }
+
+    a[href] {
+      @apply underline;
     }
   `,
 })

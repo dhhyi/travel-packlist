@@ -1,4 +1,15 @@
-<h2 i18n>Remote Source</h2>
+<div class="flex items-center justify-between">
+  <h2 i18n>Remote Source</h2>
+  <button
+    iconHelp
+    iconClass="h-6 w-6"
+    type="button"
+    class="link"
+    aria-label="Help for remote sources"
+    i18n-aria-label
+    (click)="goToDocumentation()"
+  ></button>
+</div>
 <div class="relative">
   <textarea
     class="w-full"
