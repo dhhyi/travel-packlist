@@ -1,4 +1,4 @@
-import { computed, inject, Signal } from '@angular/core';
+import { computed, effect, inject, Signal } from '@angular/core';
 import { Item, Refactor, VariableType } from '@travel-packlist/model';
 
 import {
@@ -147,6 +147,13 @@ export const packlistState = ({
       { totalItems: 0, checkedItems: 0, totalWeight: 0, checkedWeight: 0 },
     ),
   );
+
+  effect(() => {
+    parsedRules.value();
+    // reset packlist view modifications on rules change
+    answersLocked.set(false);
+    statsVisible.set(undefined);
+  });
 
   return {
     rules: {
