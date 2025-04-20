@@ -2,6 +2,7 @@ import { Transformer } from '../transformer.interface';
 
 const transformer: Transformer = {
   name: 'Pastebin',
+  needsCORS: true,
   test: (url) =>
     url.startsWith('https://pastebin.com/') && !url.includes('/raw/'),
 

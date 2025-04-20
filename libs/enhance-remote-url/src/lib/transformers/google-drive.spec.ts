@@ -1,6 +1,6 @@
 import transformer from './google-drive';
 
-describe('pastebin Transformer', () => {
+describe('google Drive Transformer', () => {
   const positives = [
     [
       'https://drive.google.com/file/d/1h4RWKrcL-glkQtc03AdLjPb3VNaUCs6T/view?usp=sharing',

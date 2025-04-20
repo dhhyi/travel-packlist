@@ -5,6 +5,7 @@ const googleDriveRegex =
 
 const transformer: Transformer = {
   name: 'Google Drive',
+  needsCORS: true,
   test: (url) => googleDriveRegex.test(url),
   transform: (url) => {
     const match = googleDriveRegex.exec(url);

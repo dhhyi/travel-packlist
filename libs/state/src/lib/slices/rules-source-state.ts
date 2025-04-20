@@ -118,42 +118,29 @@ export const rulesSourceState = ({
             if (!request.remote.startsWith('http')) {
               throw new Error('Invalid URL');
             }
-            const url = enhanceRemoteRulesURL(request.remote);
+            const url = enhanceRemoteRulesURL(
+              request.remote,
+              requestMode === 'cors',
+            );
             return CapacitorHttp.get({
               url,
               webFetchExtra: { mode: requestMode },
-            })
-              .catch((error: unknown) => {
-                if (
-                  requestMode === 'cors' &&
-                  error instanceof TypeError &&
-                  error.message === 'Failed to fetch'
-                ) {
-                  return CapacitorHttp.get({
-                    url: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-                    webFetchExtra: { mode: requestMode },
-                  });
-                }
-                throw error;
-              })
-              .then((response) => {
-                if (response.status >= 200 && response.status < 300) {
-                  remoteHistory.update((history) => [
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    request.remote!,
-                    ...history.filter((u) => u !== request.remote),
-                  ]);
-                  return response.data as string;
-                } else {
-                  const message = [
-                    [$localize`HTTP Error`, response.status.toString()].join(
-                      ' ',
-                    ),
-                    translateHttpStatus(response.status),
-                  ].join(': ');
-                  throw new Error(message);
-                }
-              });
+            }).then((response) => {
+              if (response.status >= 200 && response.status < 300) {
+                remoteHistory.update((history) => [
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                  request.remote!,
+                  ...history.filter((u) => u !== request.remote),
+                ]);
+                return response.data as string;
+              } else {
+                const message = [
+                  [$localize`HTTP Error`, response.status.toString()].join(' '),
+                  translateHttpStatus(response.status),
+                ].join(': ');
+                throw new Error(message);
+              }
+            });
           } else {
             return Promise.resolve(undefined);
           }

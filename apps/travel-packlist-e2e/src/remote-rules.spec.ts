@@ -150,7 +150,7 @@ test.describe(() => {
 
     await expect(config.remoteRulesURL()).toBeVisible();
 
-    await config.remoteRulesURL().fill('https://pastebin.com/raw/ebFBBQZh');
+    await config.remoteRulesURL().fill('https://pastebin.com/ebFBBQZh');
     await config.remoteRulesURL().blur();
 
     await expect(config.remoteSourceStatus()).toHaveText('loaded');

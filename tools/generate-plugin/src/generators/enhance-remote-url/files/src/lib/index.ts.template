@@ -5,11 +5,17 @@ import <%= camelize(transformer) %> from './transformers/<%= transformer %>';<% 
 
 const transformers: Transformer[] = [<%= transformers.map(t => camelize(t)).join(', ') %>]
 
-export function enhanceRemoteRulesURL(url: string): string {
+export function enhanceRemoteRulesURL(url: string, cors?: boolean): string {
   if (url) {
     const transformer = transformers.find(t => t.test(url));
     if (transformer) {
-      return transformer.transform(url);
+      const transformed = transformer.transform(url);
+      if (cors && transformer.needsCORS) {
+        const escaped = encodeURIComponent(transformed);
+        return 'https://api.allorigins.win/raw?url=' + escaped;
+      } else {
+        return transformed;
+      }
     }
   }
   return url;
