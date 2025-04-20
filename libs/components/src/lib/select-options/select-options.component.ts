@@ -51,8 +51,10 @@ export class SelectOptionsComponent<T extends string>
 
   constructor() {
     effect(() => {
-      this.onChanged(this.model());
-      this.onTouched();
+      if (this.model()) {
+        this.onChanged(this.model());
+        this.onTouched();
+      }
     });
   }
 
@@ -65,6 +67,10 @@ export class SelectOptionsComponent<T extends string>
   }
 
   writeValue(value: T) {
+    // this soft equal is intentional to avoid triggering on falsy values
+    if (value == this.model()) {
+      return;
+    }
     this.model.set(value);
   }
 

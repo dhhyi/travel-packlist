@@ -17,7 +17,7 @@ import {
   IconRefreshComponent,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { debounceTime } from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 
 import { confirm } from '../../../dialog';
 import { extractErrorMessage } from '../../../util/extract-error-message';
@@ -51,7 +51,7 @@ export class ConfigRulesRemoteComponent {
 
   readonly stateColor = computed(() =>
     this.state.rules.raw.status() === ResourceStatus.Idle ||
-    !this.controlValue()
+    !this.controlValue().value
       ? 'text-gray-500'
       : this.state.rules.isLoading()
         ? 'text-yellow-normal'
@@ -63,7 +63,7 @@ export class ConfigRulesRemoteComponent {
   readonly i18nStatus = computed(() => {
     if (
       this.state.rules.raw.status() === ResourceStatus.Idle ||
-      !this.controlValue()
+      !this.controlValue().value
     ) {
       return $localize`idle`;
     }
@@ -95,14 +95,18 @@ export class ConfigRulesRemoteComponent {
   });
 
   private readonly controlValue = toSignal(
-    this.control.valueChanges.pipe(debounceTime(500)),
+    this.control.valueChanges.pipe(
+      debounceTime(0),
+      map((value) => ({ value, initial: false })),
+    ),
+    { initialValue: { value: this.control.value, initial: true } },
   );
 
   constructor() {
     effect(() => {
       const newUrl = this.controlValue();
-      if (newUrl) {
-        this.state.remoteRules.load(newUrl);
+      if (!newUrl.initial && newUrl.value) {
+        this.state.remoteRules.load(newUrl.value);
       }
     });
   }

@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { start } from './pages';
 
-test('remote rules', async ({ page }) => {
+test('remote rules with copy', async ({ page }) => {
   await page.route('**/mocked-rules.txt', async (route) => {
     await route.fulfill({
       status: 200,
@@ -64,6 +64,23 @@ test('remote rules', async ({ page }) => {
   const packlist = await config.toPacklistPage();
 
   await expect(packlist.item('Test item', false)).toBeVisible();
+
+  await packlist.toConfigPage();
+  await config.copyRulesLocallyButton().click();
+
+  await expect(config.rulesMode.local()).toBeEnabled();
+
+  const editor = await config.toEditorPage();
+
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
+    - 'group "Rule #1"':
+      - group "condition": IF always
+      - group "item":
+        - combobox "category" [disabled]:
+          - option "Test" [selected]
+          - option "+"
+        - textbox "item name" [disabled]: Test item
+  `);
 });
 
 test('remote rules error', async ({ page }) => {
@@ -97,42 +114,6 @@ test('remote rules error', async ({ page }) => {
   await expect(packlist.error()).toBeVisible();
 
   await expect(page).toHaveScreenshot();
-});
-
-test('remote rules copy', async ({ page }) => {
-  await page.route('**/mocked-rules.txt', async (route) => {
-    await route.fulfill({
-      status: 200,
-      contentType: 'text/plain',
-      body: ':- [Test] Test item',
-    });
-  });
-
-  const config = await start(page).then((page) => page.toConfigPage());
-
-  await config.rulesMode.remote().click();
-
-  await expect(config.remoteRulesURL()).toBeVisible();
-  await expect(config.remoteSourceStatus()).toHaveText('idle');
-
-  await config.remoteRulesURL().fill('http://localhost:4200/mocked-rules.txt');
-  await config.remoteRulesURL().blur();
-
-  await expect(config.remoteSourceStatus()).toHaveText('loaded');
-
-  await config.copyRulesLocallyButton().click();
-
-  const editor = await config.toEditorPage();
-
-  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
-    - 'group "Rule #1"':
-      - group "condition": IF always
-      - group "item":
-        - combobox "category" [disabled]:
-          - option "Test" [selected]
-          - option "+"
-        - textbox "item name" [disabled]: Test item
-  `);
 });
 
 test('remote rules from Google Drive', async ({ page }) => {

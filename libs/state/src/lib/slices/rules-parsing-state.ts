@@ -30,11 +30,7 @@ export const rulesParsingState = ({
           parsed.status() === ResourceStatus.Error ||
           raw.status() === ResourceStatus.Error,
       ),
-      isLoading: computed(
-        () =>
-          parsed.status() === ResourceStatus.Loading ||
-          raw.status() === ResourceStatus.Loading,
-      ),
+      isLoading: computed(() => parsed.isLoading() || raw.isLoading()),
     },
   };
 };

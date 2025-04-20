@@ -162,8 +162,10 @@ export const rulesSourceState = ({
   });
 
   const loadRemote = function (url: string) {
-    mode.set('remote');
-    remote.set(url);
+    if (remote() !== url) {
+      mode.set('remote');
+      remote.set(url);
+    }
   };
 
   const updateRules = function (newRules: string | undefined) {
