@@ -1,3 +1,11 @@
+## [0.11.1](https://github.com/dhhyi/travel-packlist/compare/v0.11.0...v0.11.1) (2025-04-20)
+
+### Bug Fixes
+
+- improve handling of remote rules status ([4787dc3](https://github.com/dhhyi/travel-packlist/commit/4787dc33c281648d5b945e1ff3cbe46dbca5afa4))
+- prevent accidentally overwriting local rules from empty template view ([c44ef77](https://github.com/dhhyi/travel-packlist/commit/c44ef7716674f8c827b30cf2cf88ae1fe250554a))
+- reset packlist lock and stats view when rules change ([e157632](https://github.com/dhhyi/travel-packlist/commit/e1576326b11fa17cb9bdf46c261c6ee982fc1f86))
+
 ## [0.11.0](https://github.com/dhhyi/travel-packlist/compare/v0.10.2...v0.11.0) (2025-04-19)
 
 ### Features
