@@ -34,6 +34,7 @@ export class RulesComponent {
   filter = this.state.router.filterRulesQuery;
   readonly highlightRule = signal<number | undefined>(undefined);
 
+  readonly editable = computed(() => this.state.rules.mode() === 'local');
   readonly visibleRules = computed(() => {
     const filter = this.filter();
     if (filter === '') {

@@ -3,16 +3,18 @@
 @if (!visibleRules().length && !filter()) {
   <div class="flex h-[calc(100vh-4rem)] items-center justify-center">
     <div class="flex flex-col items-center gap-6">
-      <p i18n>There are no rules defined yet.</p>
-      <button
-        i18n
-        aria-label="Add rule"
-        i18n-aria-label
-        type="button"
-        (click)="addRuleAndEdit()"
-      >
-        + Rule
-      </button>
+      <p i18n>There are no rules defined.</p>
+      @if (editable()) {
+        <button
+          i18n
+          aria-label="Add rule"
+          i18n-aria-label
+          type="button"
+          (click)="addRuleAndEdit()"
+        >
+          + Rule
+        </button>
+      }
     </div>
   </div>
 }
