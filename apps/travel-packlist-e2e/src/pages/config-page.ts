@@ -54,6 +54,12 @@ export class ConfigPage extends Banner {
     });
   }
 
+  template(name: string) {
+    return this.page
+      .getByRole('radiogroup', { name: 'Rules Template' })
+      .locator(this.page.getByRole('radio', { name, exact: false }));
+  }
+
   copyRulesLocallyButton() {
     return this.page.getByRole('button', {
       name: 'Copy rules locally',

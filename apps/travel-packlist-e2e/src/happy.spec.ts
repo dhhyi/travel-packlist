@@ -1,11 +1,17 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-import { startWithRules } from './pages';
+import { start } from './pages';
 
 test('happy path editor to packlist', async ({ page }) => {
-  const editor = await startWithRules(page, '')
-    .then((page) => page.toConfigPage())
-    .then((page) => page.toEditorPage());
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.rulesMode.template().click();
+  await config.template('empty').click();
+  await config.copyRulesLocallyButton().click();
+
+  await expect(config.rulesMode.local()).toBeEnabled();
+
+  const editor = await config.toEditorPage();
 
   await editor.addRuleButton.click();
   const rule1 = editor.rule(1);
