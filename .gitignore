@@ -1,5 +1,5 @@
 # compiled and generated output
-dist
+/dist
 tmp
 out-tsc
 .nx/cache
