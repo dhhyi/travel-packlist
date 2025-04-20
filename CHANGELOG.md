@@ -1,3 +1,9 @@
+## [0.11.2](https://github.com/dhhyi/travel-packlist/compare/v0.11.1...v0.11.2) (2025-04-20)
+
+### Features
+
+- German remote rules documentation ([2b44a1c](https://github.com/dhhyi/travel-packlist/commit/2b44a1cc69b763049d9867051b7dadd895a93d74))
+
 ## [0.11.1](https://github.com/dhhyi/travel-packlist/compare/v0.11.0...v0.11.1) (2025-04-20)
 
 ### Bug Fixes
