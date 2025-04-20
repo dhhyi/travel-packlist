@@ -42,7 +42,7 @@ export default defineConfig({
   webServer: {
     command: 'pnpm exec nx run travel-packlist-web:serve:e2e',
     cwd: workspaceRoot,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !process.env['CI'],
     url: 'http://localhost:4200',
   },
   workers: '25%',
