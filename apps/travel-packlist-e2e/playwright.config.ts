@@ -5,6 +5,8 @@ import { defineConfig, devices } from '@playwright/test';
 // For CI, you may want to set BASE_URL to the deployed application.
 const baseURL = process.env['BASE_URL'] ?? 'http://localhost:4200';
 
+const runningFromGit = !!process.env['GIT_EXEC_PATH'];
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -29,7 +31,17 @@ export default defineConfig({
       },
     },
   ],
-  reporter: [['list'], ['html', { host: '0.0.0.0', outputFolder: 'dist' }]],
+  reporter: [
+    ['list'],
+    [
+      'html',
+      {
+        host: '0.0.0.0',
+        open: runningFromGit ? 'never' : 'on-failure',
+        outputFolder: 'dist',
+      },
+    ],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL,
