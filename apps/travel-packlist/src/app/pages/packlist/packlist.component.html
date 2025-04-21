@@ -1,4 +1,8 @@
-@if (rulesAvailable()) {
+@if (isLoading()) {
+  <div class="flex flex-col items-center">
+    <app-icon-progress-activity class="h-8 w-8 animate-spin" />
+  </div>
+} @else if (rulesAvailable()) {
   <app-display-questions />
   <app-packlist-status />
   <app-display-items />

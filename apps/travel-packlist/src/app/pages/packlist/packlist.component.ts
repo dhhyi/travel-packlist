@@ -4,6 +4,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
+import { IconProgressActivityComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { DisplayItemsComponent } from './display-items/display-items.component';
@@ -17,6 +18,7 @@ import { PacklistStatusComponent } from './packlist-status/packlist-status.compo
     DisplayItemsComponent,
     DisplayQuestionsComponent,
     PacklistStatusComponent,
+    IconProgressActivityComponent,
   ],
   templateUrl: './packlist.component.html',
 })
@@ -28,6 +30,7 @@ export class PacklistComponent {
   );
 
   rulesMode = this.state.rules.mode;
+  isLoading = this.state.rules.isLoading;
 
   goToRulesEdit() {
     this.state.router.go('rules->edit');
