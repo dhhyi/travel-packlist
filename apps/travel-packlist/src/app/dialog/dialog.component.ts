@@ -52,7 +52,7 @@ function focusPrompt(prefill: string): void {
 }
 
 function focusOkButton() {
-  const button = document.querySelector<HTMLButtonElement>('#ok-button');
+  const button = document.querySelector<HTMLButtonElement>('#okbutton');
   if (!button) {
     throw new Error('Ok button not found');
   }
@@ -63,7 +63,7 @@ export function confirm(message: string): Promise<boolean> {
   DialogComponent.dialogMessage.set(message);
   setTimeout(() => {
     focusOkButton();
-  }, 0);
+  }, 100);
   showDialog();
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {
@@ -81,7 +81,7 @@ export function prompt(message: string, prefill = ''): Promise<string | null> {
   DialogComponent.dialogMessage.set(message);
   setTimeout(() => {
     focusPrompt(prefill);
-  }, 0);
+  }, 100);
   showDialog(true, true);
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set((value: string) => {
