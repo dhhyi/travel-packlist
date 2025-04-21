@@ -12,7 +12,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { CheckboxComponent } from '@travel-packlist/components';
 import { IconDownloadComponent } from '@travel-packlist/icons';
-import { Refactor } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { confirm } from '../../../dialog';
@@ -78,17 +77,6 @@ export class ConfigRulesImportExportComponent {
   }
 
   private rulesShare = inject(RulesShare);
-  private refactor = inject(Refactor);
-
-  private readonly percentageOfItemsWithWeights = computed(() => {
-    if (this.state.rules.parsed.hasValue()) {
-      const { items, weights } = this.refactor.countItemsAndWeights(
-        this.state.rules.parsed.value(),
-      );
-      return weights / items;
-    }
-    return 0;
-  });
 
   isExportAvailable(): boolean {
     return !!this.state.rules.localRulesAvailable();
@@ -125,30 +113,10 @@ export class ConfigRulesImportExportComponent {
         const text = await file.text();
         this.state.localRules.updateRules(text);
         this.state.rules.markAsCurrent();
-
-        setTimeout(() => {
-          void this.promptEnableWeightTracking();
-        }, 2000);
-
         this.state.packlist.reset();
         resolve(true);
       };
       input.click();
     });
-  }
-
-  private async promptEnableWeightTracking() {
-    if (
-      !this.state.config.trackWeight() &&
-      this.percentageOfItemsWithWeights() > 0.1
-    ) {
-      if (
-        await confirm(
-          $localize`It seems that the imported rules contain items with weights. Shall we enable the weight tracking?`,
-        )
-      ) {
-        this.state.config.trackWeight.set(true);
-      }
-    }
   }
 }

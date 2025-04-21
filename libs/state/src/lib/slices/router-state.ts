@@ -1,6 +1,8 @@
-import { inject, Signal, WritableSignal } from '@angular/core';
+import { Location } from '@angular/common';
+import { inject, signal, Signal, WritableSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 import { createRouterSignalState } from '../persistence/router-signal';
 
@@ -56,6 +58,17 @@ export const routerState = () => {
   const router = inject(Router);
   const route = inject(ActivatedRoute);
   const rulesMode = createRouterSignalState<RuleModes>('rulesMode', 'view');
+
+  const location = inject(Location);
+  const path = signal(location.path());
+  router.events
+    .pipe(filter((event) => event instanceof NavigationEnd))
+    .subscribe(() => {
+      if (location.path() !== path()) {
+        path.set(location.path());
+      }
+    });
+
   return {
     router: {
       /** router: mode of the editor */
@@ -65,6 +78,8 @@ export const routerState = () => {
         'filterRulesQuery',
         undefined,
       ),
+      /** router read-only: current path */
+      path: path.asReadonly(),
       /** router read-only: current fragment */
       fragment: toSignal(route.fragment) as Signal<string | undefined>,
       /** router: navigate to a page */

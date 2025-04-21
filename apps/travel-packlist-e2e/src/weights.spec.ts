@@ -2,14 +2,13 @@ import { expect, test } from '@playwright/test';
 
 import { startWithRules } from './pages';
 
-test('weight tracking', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `:- [tool] umbrella 150, [tool] backpack 1kg;
+const rulesWithWeights = `:- [tool] umbrella 150, [tool] backpack 1kg;
     :- Will it rain? $rainy;
     :- [clothes] raincoat 500g, [clothes] t-shirt 200g, [clothes] shorts 300g;
-    :- [food] sandwich 200g, [food] apple 100g, [food] water 590g;`,
-  );
+    :- [food] sandwich 200g, [food] apple 100g, [food] water 590g;`;
+
+test('weight tracking', async ({ page }) => {
+  const packlist = await startWithRules(page, rulesWithWeights);
 
   await expect(packlist.weightPackingProgress()).toBeHidden();
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
@@ -48,4 +47,19 @@ test('weight tracking', async ({ page }) => {
   await packlist.displayHeaviestItemsButton().click();
 
   await expect(page).toHaveScreenshot();
+});
+
+test('weight tracking activation', async ({ page }) => {
+  test.slow();
+
+  const packlist = await startWithRules(page, rulesWithWeights);
+
+  await expect(packlist.weightPackingProgress()).toBeHidden();
+
+  await expect(packlist.dialog()).toBeVisible();
+  await expect(packlist.dialog()).toContainText('enable weight tracking');
+
+  await packlist.dialog.confirm().click();
+
+  await expect(packlist.weightPackingProgress()).toBeVisible();
 });

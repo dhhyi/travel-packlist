@@ -29,6 +29,9 @@ export const packlistState = ({
     'statsVisible',
     undefined,
   );
+  const askedWeightTracking = createSessionStorageSignalState<
+    'activation' | 'deactivation' | undefined
+  >('askedWeightTracking', undefined);
 
   const refactor = inject(Refactor);
   const active = computed(() =>
@@ -191,6 +194,8 @@ export const packlistState = ({
       answersLocked,
       /** session: which stats to show */
       statsVisible,
+      /** storage: if already asked for weight tracking */
+      askedWeightTracking,
       /** reset the packlist sub state */
       reset: () => {
         answers.set({});
