@@ -17,11 +17,11 @@
       "options": {
         "command": "nx g @travel-packlist/generate-plugin:templates",
         "path": "{projectRoot}/src",
-        "pattern": "{projectRoot}/src/txt/template*.txt"
+        "pattern": "{projectRoot}/src/txt/*.txt"
       },
       "inputs": [
         "^production",
-        "{projectRoot}/src/txt/template*.txt"
+        "{projectRoot}/src/txt/*.txt"
       ],
       "outputs": [
         "{projectRoot}/src/lib/*.ts",

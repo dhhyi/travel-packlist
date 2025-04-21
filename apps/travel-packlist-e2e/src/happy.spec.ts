@@ -13,6 +13,14 @@ test('happy path editor to packlist', async ({ page }) => {
 
   const editor = await config.toEditorPage();
 
+  // finds example rule
+  await expect(editor.toolbar.mode('view')).toBeChecked();
+
+  // delete example rule
+  await editor.toolbar.mode('delete').click();
+  await editor.rule(1).deleteButton().click();
+  await editor.dialog.confirm().click();
+
   await editor.addRuleButton.click();
   const rule1 = editor.rule(1);
 

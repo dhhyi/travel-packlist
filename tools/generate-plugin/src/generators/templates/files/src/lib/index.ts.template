@@ -5,28 +5,35 @@ import {
   makeEnvironmentProviders,
 } from '@angular/core';
 
-<% for (const lang of languages) {
-%>import template_<%= lang %> from './<%= lang %>';
-<% } %>
+<% for (const [name, languages] of templates) {
+  for (const lang of languages) { %>
+import <%= name %>_template_<%= lang %> from './<%= name + '.' + lang %>';
+<% } } %>
 
-export const RULES_TEMPLATE = new InjectionToken<string>(
-  'RULES_TEMPLATE',
+<% for (const [name, languages] of templates) { %>
+export const <%= shout(name) %>_RULES_TEMPLATE = new InjectionToken<string>(
+  '<%= shout(name) %>_RULES_TEMPLATE',
 );
 
-function getRulesTemplate(locale: string): string {
+function get<%= pascalize(name) %>Template(<% if (languages.length > 1) { %>locale: string<% } %>): string {
 <% for (const lang of languages.filter(l => l !== 'default')) { %>
   if (locale.startsWith('<%= lang %>')) {
-    return template_<%= lang %>;
+    return <%= name %>_template_<%= lang %>;
   }<% } %>
-  return template_default;
+  return <%= name %>_template_default;
 }
+<% } %>
 
-export function provideRulesTemplate(): EnvironmentProviders {
+const rulesTemplateNames = [<%- templates.map(t => `'${t[0]}'`).join(', ') %>] as const;
+export type RulesTemplateName = (typeof rulesTemplateNames)[number];
+
+export function provideRulesTemplates(): EnvironmentProviders {
   return makeEnvironmentProviders([
+<% for (const [name] of templates) { %>
     {
-      provide: RULES_TEMPLATE,
-      useFactory: getRulesTemplate,
+      provide: <%= shout(name) %>_RULES_TEMPLATE,
+      useFactory: get<%= pascalize(name) %>Template,
       deps: [LOCALE_ID],
-    },
+    },<% } %>
   ]);
 }

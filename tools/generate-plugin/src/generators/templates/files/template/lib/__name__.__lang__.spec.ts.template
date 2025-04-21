@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { Parser } from '@travel-packlist/model';
 
-import template from './<%= lang %>';
+import template from './<%= name + '.' + lang %>';
 
-describe('<%= lang %> template', () => {
+describe('<%= name %> (<%= lang %>) template', () => {
   it('should parse', () => {
     const parser = TestBed.inject(Parser);
     const result = parser.parseRules(template);

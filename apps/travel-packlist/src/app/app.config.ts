@@ -11,7 +11,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideDocumentationTopics } from '@travel-packlist/documentation';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
-import { provideRulesTemplate } from '@travel-packlist/rules-template';
+import { provideRulesTemplates } from '@travel-packlist/rules-template';
 import {
   CAPACITOR_HTTP_REQUEST_MODE,
   GLOBAL_STATE,
@@ -63,7 +63,7 @@ export const appConfig: ApplicationConfig = {
       useClass: ANDROID ? AndroidRulesShare : WebRulesShare,
     },
     provideDocumentationTopics(),
-    provideRulesTemplate(),
+    provideRulesTemplates(),
     {
       provide: CAPACITOR_HTTP_REQUEST_MODE,
       useValue: ANDROID ? 'no-cors' : 'cors',

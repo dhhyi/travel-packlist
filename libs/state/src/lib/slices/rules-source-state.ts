@@ -9,7 +9,10 @@ import {
 } from '@angular/core';
 import { CapacitorHttp } from '@capacitor/core';
 import { enhanceRemoteRulesURL } from '@travel-packlist/enhance-remote-url';
-import { RULES_TEMPLATE } from '@travel-packlist/rules-template';
+import {
+  DEFAULT_RULES_TEMPLATE,
+  EMPTY_RULES_TEMPLATE,
+} from '@travel-packlist/rules-template';
 
 import { createLocalStorageSignalState } from '../persistence/storage-signal';
 import { ConfigState } from './config-state';
@@ -81,11 +84,17 @@ export const rulesSourceState = ({
     lastRulesAction.set(new Date().getTime());
   });
 
-  const defaultTemplate = inject(RULES_TEMPLATE);
+  const defaultTemplate = inject(DEFAULT_RULES_TEMPLATE);
+  const emptyTemplate = inject(EMPTY_RULES_TEMPLATE);
 
-  const template = computed(() =>
-    rulesTemplate() === 'default' ? defaultTemplate : '',
-  );
+  const template = computed(() => {
+    switch (rulesTemplate()) {
+      case 'empty':
+        return emptyTemplate;
+      default:
+        return defaultTemplate;
+    }
+  });
 
   const remoteHistory = createLocalStorageSignalState<string[]>(
     'remoteHistory',
