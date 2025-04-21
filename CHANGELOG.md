@@ -1,3 +1,13 @@
+## [0.11.4](https://github.com/dhhyi/travel-packlist/compare/v0.11.3...v0.11.4) (2025-04-21)
+
+### Features
+
+- add template portraying logic ([9fa7229](https://github.com/dhhyi/travel-packlist/commit/9fa72290a1bf14747bbf414f0d5d6e38122702fa))
+
+### Bug Fixes
+
+- display loading spinner when rules are loading ([e73b9cf](https://github.com/dhhyi/travel-packlist/commit/e73b9cf08c17a695b402823401accec00f14cff2))
+
 ## [0.11.3](https://github.com/dhhyi/travel-packlist/compare/v0.11.2...v0.11.3) (2025-04-21)
 
 ### Bug Fixes
