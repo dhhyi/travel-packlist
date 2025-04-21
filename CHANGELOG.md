@@ -1,3 +1,10 @@
+## [0.11.3](https://github.com/dhhyi/travel-packlist/compare/v0.11.2...v0.11.3) (2025-04-21)
+
+### Bug Fixes
+
+- focus ok button for dialog correctly ([a8cec19](https://github.com/dhhyi/travel-packlist/commit/a8cec199d8c7b4b884c1e8937efb4bcd221383bb))
+- suggest weight tracking activation and deactivation also for remote rules ([0415792](https://github.com/dhhyi/travel-packlist/commit/041579219e1acc30d2e5559ac91bf92197424295))
+
 ## [0.11.2](https://github.com/dhhyi/travel-packlist/compare/v0.11.1...v0.11.2) (2025-04-20)
 
 ### Features
