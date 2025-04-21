@@ -130,7 +130,7 @@ export class DisplayItemsComponent {
     }
   }
 
-  private touchAction: unknown;
+  private touchAction: number | undefined;
 
   tapStart(item: Item) {
     if (this.state.browser.isMobile()) {
@@ -142,7 +142,7 @@ export class DisplayItemsComponent {
 
   tapEnd() {
     if (this.touchAction) {
-      clearTimeout(this.touchAction as number);
+      clearTimeout(this.touchAction);
     }
   }
 }
