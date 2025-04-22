@@ -1,3 +1,12 @@
+## [0.12.0](https://github.com/dhhyi/travel-packlist/compare/v0.11.4...v0.12.0) (2025-04-22)
+
+### Features
+
+- add example template for backpacking trip ([2cc28b2](https://github.com/dhhyi/travel-packlist/commit/2cc28b2a0a8af1d774e061bad457c5ecfcaa57d0))
+- allow sorting categories by weight ([5d3e65c](https://github.com/dhhyi/travel-packlist/commit/5d3e65c61d63c313c6e1556fd6916d24bf00293d))
+- make heaviest items diagram more useful ([d76cb4e](https://github.com/dhhyi/travel-packlist/commit/d76cb4ef313ae26c41effa4bf6e34d61626ae066))
+- make weight distribution diagram more useful ([d2755bb](https://github.com/dhhyi/travel-packlist/commit/d2755bb00ef02316cfe2f18f4e4e3f60f545eb23))
+
 ## [0.11.4](https://github.com/dhhyi/travel-packlist/compare/v0.11.3...v0.11.4) (2025-04-21)
 
 ### Features
