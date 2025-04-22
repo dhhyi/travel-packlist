@@ -24,6 +24,7 @@ import { AndroidRulesShare } from './services/rules-share/android-rules-share';
 import { RulesShare } from './services/rules-share/rules-share.interface';
 import { WebRulesShare } from './services/rules-share/web-rules-share';
 import { RulesExportReminder } from './services/rules.export-reminder';
+import { ScrollIntoView } from './services/scroll-into-view';
 import { WeightTrackingCheck } from './services/weight-tracking';
 
 function initParserConfig(injector: Injector): ParserConfig {
@@ -52,6 +53,9 @@ export const appConfig: ApplicationConfig = {
     }),
     provideAppInitializer(() => {
       inject(WeightTrackingCheck).init();
+    }),
+    provideAppInitializer(() => {
+      inject(ScrollIntoView).init();
     }),
     {
       deps: [Injector],

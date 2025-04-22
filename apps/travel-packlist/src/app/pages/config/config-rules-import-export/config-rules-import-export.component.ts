@@ -2,12 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
-  ElementRef,
   inject,
-  Signal,
   signal,
-  viewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CheckboxComponent } from '@travel-packlist/components';
@@ -29,44 +25,11 @@ export class ConfigRulesImportExportComponent {
 
   exportReminder = this.state.config.exportReminder;
   exportNeeded = this.state.rules.exportNeeded;
-  readonly highlightExport: Signal<boolean>;
-  private readonly exportButton =
-    viewChild.required<ElementRef<HTMLButtonElement>>('exportButton');
-  readonly highlightImport: Signal<boolean>;
-  private readonly importButton =
-    viewChild.required<ElementRef<HTMLButtonElement>>('importButton');
+  private fragment = this.state.router.fragment;
+  readonly highlightExport = computed(() => this.fragment() === 'export-now');
+  readonly highlightImport = computed(() => this.fragment() === 'import');
 
   readonly loading = signal(false);
-
-  constructor() {
-    const fragment = this.state.router.fragment;
-    this.highlightExport = computed(() => fragment() === 'export-now');
-    this.highlightImport = computed(() => fragment() === 'import');
-    effect(() => {
-      const fragmentValue = fragment();
-      if (fragmentValue === 'export-now') {
-        const buttonVerticalPosition =
-          this.exportButton().nativeElement.getBoundingClientRect().top;
-        if (buttonVerticalPosition > window.innerHeight) {
-          setTimeout(() => {
-            this.exportButton().nativeElement.scrollIntoView({
-              behavior: 'smooth',
-            });
-          }, 2000);
-        }
-      } else if (fragmentValue === 'import') {
-        const buttonVerticalPosition =
-          this.importButton().nativeElement.getBoundingClientRect().top;
-        if (buttonVerticalPosition > window.innerHeight) {
-          setTimeout(() => {
-            this.importButton().nativeElement.scrollIntoView({
-              behavior: 'smooth',
-            });
-          }, 2000);
-        }
-      }
-    });
-  }
 
   async importRules() {
     this.loading.set(true);
