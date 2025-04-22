@@ -17,7 +17,7 @@ import {
   signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import {
   IconArrowBackComponent,
   IconArrowUpwardComponent,
@@ -97,7 +97,7 @@ const routeTransition = trigger('routeTransition', [
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
   imports: [
-    RouterModule,
+    RouterOutlet,
     IconCogComponent,
     DialogComponent,
     IconArrowUpwardComponent,
