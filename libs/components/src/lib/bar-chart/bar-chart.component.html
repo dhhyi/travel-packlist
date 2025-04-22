@@ -5,20 +5,22 @@
   [attr.viewBox]="`0 0 120 ${height}`"
 >
   @for (bar of bars(); track $index) {
-    <rect
-      rx="2"
-      [attr.fill]="bar.color"
-      [attr.x]="padding"
-      [attr.y]="padding + $index * (barHeight + barPadding)"
-      [attr.width]="100 * bar.value"
-      [attr.height]="barHeight"
-    />
-    <text
-      font-size="6"
-      [attr.x]="barPadding + padding"
-      [attr.y]="padding + $index * (barHeight + barPadding)"
-    >
-      <tspan dy="1.2em">{{ bar.name }}</tspan>
-    </text>
+    <g (click)="clicked.emit(bar)">
+      <rect
+        rx="2"
+        [attr.fill]="bar.color"
+        [attr.x]="padding"
+        [attr.y]="padding + $index * (barHeight + barPadding)"
+        [attr.width]="100 * bar.value"
+        [attr.height]="barHeight"
+      />
+      <text
+        font-size="6"
+        [attr.x]="barPadding + padding"
+        [attr.y]="padding + $index * (barHeight + barPadding)"
+      >
+        <tspan dy="1.2em">{{ bar.name }}</tspan>
+      </text>
+    </g>
   }
 </svg>

@@ -49,7 +49,15 @@
       </div>
       @if (!category.collapsed) {
         @for (item of category.items; track item.name) {
-          <div role="listitem">
+          @let bgColor = backgroundColor(item);
+          <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+          <div
+            role="listitem"
+            class="rounded-sm px-1"
+            [id]="item.id()"
+            [class.animate-pulse]="item.id() === fragment()"
+            [style.background-color]="bgColor"
+          >
             <div
               role="checkbox"
               tabindex="0"

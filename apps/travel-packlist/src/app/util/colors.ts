@@ -1,9 +1,11 @@
+const max = 400;
+
 export function colorFromString(str: string): string {
-  const num = (hashStringToNumber(str, 400) * 360) / 400;
+  const num = (hashStringToNumber(str) * 360) / max;
   return `hsl(${num.toString()}, 50%, 50%)`;
 }
 
-function hashStringToNumber(str: string, max: number): number {
+function hashStringToNumber(str: string): number {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
     const char = str.charCodeAt(i);

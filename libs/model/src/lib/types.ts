@@ -49,6 +49,18 @@ export class Question {
   }
 }
 
+function sanitize(input: string): string {
+  if (!input) {
+    return '';
+  }
+  return input
+    .trim()
+    .replace(/[^\w]/g, '_')
+    .replace(/__+/g, '_')
+    .replace(/^_+/, '')
+    .replace(/_+$/, '');
+}
+
 export class Item {
   static NEW_ITEM_NAME = $localize`New Item`;
   static NEW_CATEGORY_NAME = $localize`New`;
@@ -57,6 +69,10 @@ export class Item {
     public readonly name: string,
     public readonly weight?: number,
   ) {}
+
+  id(): string {
+    return `${sanitize(this.category)}-${sanitize(this.name)}`;
+  }
 
   toString(): string {
     let item = `[${this.category}] ${this.name}`.trim();

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output,
+} from '@angular/core';
 
 @Component({
   selector: 'cmp-bar-chart',
@@ -19,4 +24,6 @@ export class BarChartComponent<
 
   readonly bars = input.required<Item[]>();
   readonly chartClass = input<string>('');
+
+  readonly clicked = output<Item>();
 }

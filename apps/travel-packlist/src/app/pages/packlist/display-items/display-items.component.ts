@@ -14,7 +14,9 @@ import {
   afterRender,
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
+  linkedSignal,
   signal,
 } from '@angular/core';
 import { IconKeyRightComponent } from '@travel-packlist/icons';
@@ -29,6 +31,7 @@ import {
   staggerInCard,
   staggerOutCard,
 } from '../../../animations/card.animations';
+import { colorFromString } from '../../../util/colors';
 import { ItemsStatusComponent } from './items-status/items-status.component';
 
 const animateCategory = trigger('animateCategory', [
@@ -112,6 +115,8 @@ export class DisplayItemsComponent {
   toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
   toggleCheckedItem = this.state.packlist.toggleCheckedItem;
 
+  readonly fragment = linkedSignal(() => this.state.router.fragment());
+
   serializeWeight = serializeWeight;
 
   serializeWeightPartition = serializeWeightPartition;
@@ -121,6 +126,13 @@ export class DisplayItemsComponent {
   constructor() {
     afterRender(() => {
       this.animationsDisabled.set(!this.state.config.animations());
+    });
+    effect(() => {
+      if (this.fragment()) {
+        setTimeout(() => {
+          this.fragment.set(undefined);
+        }, 5000);
+      }
     });
   }
 
@@ -144,5 +156,12 @@ export class DisplayItemsComponent {
     if (this.touchAction) {
       clearTimeout(this.touchAction);
     }
+  }
+
+  backgroundColor(item: { id: () => string; colored: boolean }) {
+    if (item.colored) {
+      return colorFromString(item.id());
+    }
+    return undefined;
   }
 }

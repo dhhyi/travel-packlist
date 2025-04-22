@@ -12,6 +12,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   signal,
 } from '@angular/core';
@@ -85,7 +86,7 @@ export class HeaviestItemsComponent {
       .toSorted((l, r) => r.weight! - l.weight!)
       .reduce<{
         max: number;
-        items: { name: string; value: number; color: string }[];
+        items: { name: string; value: number; color: string; id: string }[];
       }>(
         (acc, i) => {
           const max = (acc.max || i.weight) ?? 0;
@@ -93,25 +94,34 @@ export class HeaviestItemsComponent {
           const item = {
             name,
             value: (i.weight ?? 0) / max,
-            color: colorFromString(name),
+            color: colorFromString(i.id()),
+            id: i.id(),
           };
           return { max, items: [...acc.items, item] };
         },
         { max: NaN, items: [] },
       )
-      .items.reduce<{ name: string; value: number; color: string }[][]>(
-        (acc, item, index) => {
-          const page = Math.floor(index / this.pageSize);
-          acc[page] = [...(acc[page] || []), item];
-          return acc;
-        },
-        [],
-      ),
+      .items.reduce<
+        { name: string; value: number; color: string; id: string }[][]
+      >((acc, item, index) => {
+        const page = Math.floor(index / this.pageSize);
+        acc[page] = [...(acc[page] || []), item];
+        return acc;
+      }, []),
   );
 
   readonly currentPage = signal(0);
 
   readonly lastPage = computed(() => this.heaviestItems().length - 1);
+
+  constructor() {
+    effect(() => {
+      const ids = this.heaviestItems()[this.currentPage()].map(
+        (item) => item.id,
+      );
+      this.state.packlist.colorItems(ids);
+    });
+  }
 
   previousPage() {
     this.currentPage.update((page) => Math.max(0, page - 1));
@@ -119,5 +129,9 @@ export class HeaviestItemsComponent {
 
   nextPage() {
     this.currentPage.update((page) => Math.min(this.lastPage(), page + 1));
+  }
+
+  barClicked(item: { id: string }) {
+    this.state.router.fragment.set(item.id);
   }
 }

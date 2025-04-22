@@ -1,4 +1,4 @@
-import { computed, effect, inject, Signal } from '@angular/core';
+import { computed, effect, inject, signal, Signal } from '@angular/core';
 import { Item, Refactor, VariableType } from '@travel-packlist/model';
 
 import {
@@ -10,11 +10,18 @@ import { RulesParsingState } from './rules-parsing-state';
 
 const create = createLocalStorageSignalState;
 
-function serialize(item: Pick<Item, 'category' | 'name'>): string {
-  return `${item.category}-${item.name}`;
-}
-
 export type ItemStats = 'distribution' | 'heaviestItems';
+
+class PacklistItem extends Item {
+  constructor(
+    readonly original: Item,
+    public readonly checked: boolean,
+    public readonly skipped: boolean,
+    public readonly colored: boolean,
+  ) {
+    super(original.category, original.name, original.weight);
+  }
+}
 
 export const packlistState = ({
   rules: { parsed: parsedRules },
@@ -45,30 +52,26 @@ export const packlistState = ({
   const items = computed(() => activeRules().flatMap((rule) => rule.items));
 
   const checkedItems = computed(() =>
-    items().filter((item) => stringCheckedItems().includes(serialize(item))),
+    items().filter((item) => stringCheckedItems().includes(item.id())),
   );
   const toggleCheckedItem = (item: Item) => {
-    if (stringCheckedItems().includes(serialize(item))) {
-      stringCheckedItems.update((old) =>
-        old.filter((i) => i !== serialize(item)),
-      );
+    if (stringCheckedItems().includes(item.id())) {
+      stringCheckedItems.update((old) => old.filter((i) => i !== item.id()));
     } else {
-      stringCheckedItems.update((old) => [...old, serialize(item)]);
+      stringCheckedItems.update((old) => [...old, item.id()]);
     }
   };
   const skippedItems = computed(() =>
-    items().filter((item) => stringSkippedItems().includes(serialize(item))),
+    items().filter((item) => stringSkippedItems().includes(item.id())),
   );
   const toggleSkippedItem = (item: Item) => {
     if (!skipItems()) {
       return;
     }
-    if (stringSkippedItems().includes(serialize(item))) {
-      stringSkippedItems.update((old) =>
-        old.filter((i) => i !== serialize(item)),
-      );
+    if (stringSkippedItems().includes(item.id())) {
+      stringSkippedItems.update((old) => old.filter((i) => i !== item.id()));
     } else {
-      stringSkippedItems.update((old) => [...old, serialize(item)]);
+      stringSkippedItems.update((old) => [...old, item.id()]);
     }
   };
 
@@ -92,11 +95,22 @@ export const packlistState = ({
         : (left, right) => left.localeCompare(right);
     });
 
+  const coloredItems = signal<string[]>([]);
+  const colorItems = (ids: string[]) => {
+    // equality check to prevent recursive updates
+    if (
+      coloredItems().length !== ids.length ||
+      !ids.every((id) => coloredItems().includes(id))
+    ) {
+      coloredItems.set(ids);
+    }
+  };
+
   const model = computed(() => {
     function initialize(item: Pick<Item, 'category'>) {
       return {
         name: item.category,
-        items: [] as (Item & { checked: boolean; skipped: boolean })[],
+        items: [] as PacklistItem[],
         totalItems: 0,
         checkedItems: 0,
         totalWeight: 0,
@@ -113,13 +127,12 @@ export const packlistState = ({
       }
       const skipped = skipItems() && skippedItems().includes(item);
       const checked = !skipped && checkedItems().includes(item);
-      groups[item.category].items.push({
-        category: item.category,
-        name: item.name,
-        weight: item.weight,
-        checked,
-        skipped,
-      });
+      const colored =
+        statsVisible() === 'heaviestItems' &&
+        coloredItems().includes(item.id());
+      groups[item.category].items.push(
+        new PacklistItem(item, checked, skipped, colored),
+      );
       if (checked) {
         groups[item.category].checkedItems++;
         groups[item.category].checkedWeight += item.weight ?? 0;
@@ -188,6 +201,8 @@ export const packlistState = ({
       toggleCheckedItem,
       /** toggle the skipped state of an item */
       toggleSkippedItem,
+      /** activate color for items */
+      colorItems,
       /** toggle the collapsed state of a category */
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
