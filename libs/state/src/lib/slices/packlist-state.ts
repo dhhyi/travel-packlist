@@ -10,6 +10,19 @@ import { RulesParsingState } from './rules-parsing-state';
 
 const create = createLocalStorageSignalState;
 
+function generateCategoryId(input: string): string {
+  return (
+    'cat-' +
+    input
+      .trim()
+      .toLowerCase()
+      .replace(/[^\w]+/g, '_')
+      .replace(/__+$/, '_')
+      .replace(/^_+/, '')
+      .replace(/_+$/, '')
+  );
+}
+
 export type ItemStats = 'distribution' | 'heaviestItems';
 
 class PacklistItem extends Item {
@@ -83,10 +96,6 @@ export const packlistState = ({
     }
   };
 
-  function isCategoryCollapsed(category: string): boolean {
-    return collapsedCategories().includes(category);
-  }
-
   const categoriesOrderBy: Signal<(left: string, right: string) => number> =
     computed(() => {
       const sorting = categorySorting();
@@ -108,14 +117,17 @@ export const packlistState = ({
 
   const model = computed(() => {
     function initialize(item: Pick<Item, 'category'>) {
+      const id = generateCategoryId(item.category);
       return {
+        id,
         name: item.category,
         items: [] as PacklistItem[],
         totalItems: 0,
         checkedItems: 0,
         totalWeight: 0,
         checkedWeight: 0,
-        collapsed: isCategoryCollapsed(item.category),
+        collapsed: collapsedCategories().includes(item.category),
+        colored: statsVisible() === 'distribution',
       };
     }
     const unorderedCategories = items().reduce<

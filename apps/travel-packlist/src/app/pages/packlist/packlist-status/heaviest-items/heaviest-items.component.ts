@@ -90,9 +90,8 @@ export class HeaviestItemsComponent {
       }>(
         (acc, i) => {
           const max = (acc.max || i.weight) ?? 0;
-          const name = `${i.name} (${serializeWeight(i.weight)})`;
           const item = {
-            name,
+            name: `${i.name} (${serializeWeight(i.weight)})`,
             value: (i.weight ?? 0) / max,
             color: colorFromString(i.id()),
             id: i.id(),

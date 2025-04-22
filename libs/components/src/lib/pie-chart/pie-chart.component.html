@@ -4,12 +4,13 @@
   [class]="chartClass()"
   [attr.viewBox]="`0 0 120 ${height}`"
 >
-  @for (path of paths(); track $index) {
+  @for (segment of paths(); track $index) {
     <path
       stroke="white"
       stroke-width="0.5"
-      [attr.d]="path.path"
-      [attr.fill]="path.color"
+      [attr.d]="segment.path"
+      [attr.fill]="segment.color"
+      (click)="clicked.emit(segment)"
     />
   }
   @for (l of sortedSegments(); track $index) {
@@ -18,6 +19,7 @@
       [attr.x]="padding"
       [attr.y]="115 + 8 * $index"
       [attr.fill]="l.color"
+      (click)="clicked.emit(l)"
     >
       <tspan dy="1.2em" [attr.x]="padding">
         {{ l.name }} ({{ l.value | percent }})

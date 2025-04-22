@@ -22,10 +22,15 @@ export class WeightDistributionComponent {
     this.state.packlist
       .model()
       .map((category) => ({
+        id: category.id,
         name: category.name,
         value: category.totalWeight / this.state.packlist.stats().totalWeight,
-        color: colorFromString(category.name),
+        color: colorFromString(category.id),
       }))
       .filter((category) => category.value > 0),
   );
+
+  segmentClicked(category: { id: string }) {
+    this.state.router.fragment.set(category.id);
+  }
 }

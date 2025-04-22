@@ -158,9 +158,10 @@ export class DisplayItemsComponent {
     }
   }
 
-  backgroundColor(item: { id: () => string; colored: boolean }) {
+  backgroundColor(item: { id: (() => string) | string; colored: boolean }) {
     if (item.colored) {
-      return colorFromString(item.id());
+      const id = typeof item.id === 'function' ? item.id() : item.id;
+      return colorFromString(id);
     }
     return undefined;
   }

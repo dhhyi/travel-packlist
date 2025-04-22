@@ -4,6 +4,7 @@ import {
   Component,
   computed,
   input,
+  output,
 } from '@angular/core';
 
 @Component({
@@ -24,6 +25,8 @@ export class PieChartComponent<
   readonly padding = 10;
   readonly segments = input.required<Item[]>();
   readonly chartClass = input<string>('');
+
+  readonly clicked = output<Item>();
 
   readonly sortedSegments = computed(() => {
     if (this.segments().length === 1 && this.segments()[0].value === 1) {
@@ -48,12 +51,12 @@ export class PieChartComponent<
           A ${r} ${r} 0 ${item.value > 0.5 ? 1 : 0} 1 ${point(end)}
           Z`;
         return {
-          paths: [...paths, { name: item.name, path, color: item.color }],
+          paths: [...paths, { path, ...item }],
           start: end,
         };
       },
       {
-        paths: [] as { name: string; path: string; color: string }[],
+        paths: [] as ({ path: string } & Item)[],
         start: 0,
       },
     ).paths;

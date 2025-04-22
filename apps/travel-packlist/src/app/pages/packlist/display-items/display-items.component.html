@@ -13,12 +13,16 @@
     <div
       class="card mb-1 overflow-hidden"
       role="list"
+      [id]="category.id"
+      [class.animate-pulse]="category.id === fragment()"
       [attr.aria-label]="category.name"
       [@animateItems]="category"
     >
+      <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
       <div
         aria-hidden="true"
-        class="accessible-content flex items-center justify-between"
+        class="accessible-content flex items-center justify-between rounded-sm pr-1"
+        [style.background-color]="backgroundColor(category)"
         (click)="toggleCategoryCollapse(category.name)"
       >
         <div class="flex items-center gap-1">
