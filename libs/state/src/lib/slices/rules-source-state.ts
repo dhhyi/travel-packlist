@@ -10,6 +10,7 @@ import {
 import { CapacitorHttp } from '@capacitor/core';
 import { enhanceRemoteRulesURL } from '@travel-packlist/enhance-remote-url';
 import {
+  BACKPACKING_RULES_TEMPLATE,
   DEFAULT_RULES_TEMPLATE,
   EMPTY_RULES_TEMPLATE,
   LOGIC_RULES_TEMPLATE,
@@ -88,6 +89,7 @@ export const rulesSourceState = ({
   const defaultTemplate = inject(DEFAULT_RULES_TEMPLATE);
   const emptyTemplate = inject(EMPTY_RULES_TEMPLATE);
   const logicTemplate = inject(LOGIC_RULES_TEMPLATE);
+  const backpackingTemplate = inject(BACKPACKING_RULES_TEMPLATE);
 
   const template = computed(() => {
     switch (rulesTemplate()) {
@@ -95,6 +97,8 @@ export const rulesSourceState = ({
         return emptyTemplate;
       case 'logic':
         return logicTemplate;
+      case 'backpacking':
+        return backpackingTemplate;
       default:
         return defaultTemplate;
     }
