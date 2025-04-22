@@ -6,8 +6,6 @@ import {
   input,
 } from '@angular/core';
 
-import { colorFromString } from '../colors';
-
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-pie-chart',
@@ -20,9 +18,11 @@ import { colorFromString } from '../colors';
   `,
 })
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-export class PieChartComponent {
+export class PieChartComponent<
+  Item extends { name: string; value: number; color: string },
+> {
   readonly padding = 10;
-  readonly segments = input.required<{ name: string; value: number }[]>();
+  readonly segments = input.required<Item[]>();
   readonly chartClass = input<string>('');
 
   readonly sortedSegments = computed(() => {
@@ -40,20 +40,22 @@ export class PieChartComponent {
       return `${x} ${y}`;
     };
     return this.sortedSegments().reduce(
-      ({ paths, start }, segment) => {
-        const end = start + segment.value;
+      ({ paths, start }, item) => {
+        const end = start + item.value;
         const path = `
           M ${this.padding + r} ${this.padding + r}
           L ${point(start)}
-          A ${r} ${r} 0 ${segment.value > 0.5 ? 1 : 0} 1 ${point(end)}
+          A ${r} ${r} 0 ${item.value > 0.5 ? 1 : 0} 1 ${point(end)}
           Z`;
-        return { paths: [...paths, { name: segment.name, path }], start: end };
+        return {
+          paths: [...paths, { name: item.name, path, color: item.color }],
+          start: end,
+        };
       },
-      { paths: [] as { name: string; path: string }[], start: 0 },
+      {
+        paths: [] as { name: string; path: string; color: string }[],
+        start: 0,
+      },
     ).paths;
   });
-
-  color(category: string): string {
-    return colorFromString(category);
-  }
 }

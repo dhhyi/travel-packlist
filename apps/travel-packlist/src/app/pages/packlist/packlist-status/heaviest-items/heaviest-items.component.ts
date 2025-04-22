@@ -23,6 +23,8 @@ import {
 import { serializeWeight } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
+import { colorFromString } from '../../../../util/colors';
+
 const paging = animation([
   query(':enter', style({ transform: 'translateY({{ from }})', height: '0' })),
   group([
@@ -81,22 +83,30 @@ export class HeaviestItemsComponent {
       .filter((i) => i.weight && !i.skipped && i.weight > 0)
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       .toSorted((l, r) => r.weight! - l.weight!)
-      .reduce(
+      .reduce<{
+        max: number;
+        items: { name: string; value: number; color: string }[];
+      }>(
         (acc, i) => {
           const max = (acc.max || i.weight) ?? 0;
+          const name = `${i.name} (${serializeWeight(i.weight)})`;
           const item = {
-            name: `${i.name} (${serializeWeight(i.weight)})`,
+            name,
             value: (i.weight ?? 0) / max,
+            color: colorFromString(name),
           };
           return { max, items: [...acc.items, item] };
         },
-        { max: NaN, items: [] as { name: string; value: number }[] },
+        { max: NaN, items: [] },
       )
-      .items.reduce<{ name: string; value: number }[][]>((acc, item, index) => {
-        const page = Math.floor(index / this.pageSize);
-        acc[page] = [...(acc[page] || []), item];
-        return acc;
-      }, []),
+      .items.reduce<{ name: string; value: number; color: string }[][]>(
+        (acc, item, index) => {
+          const page = Math.floor(index / this.pageSize);
+          acc[page] = [...(acc[page] || []), item];
+          return acc;
+        },
+        [],
+      ),
   );
 
   readonly currentPage = signal(0);

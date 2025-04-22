@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-import { colorFromString } from '../colors';
-
 @Component({
   selector: 'cmp-bar-chart',
   templateUrl: './bar-chart.component.html',
@@ -12,15 +10,13 @@ import { colorFromString } from '../colors';
     }
   `,
 })
-export class BarChartComponent {
+export class BarChartComponent<
+  Item extends { name: string; value: number; color: string },
+> {
   readonly padding = 10;
   readonly barHeight = 10;
   readonly barPadding = 2;
 
-  readonly bars = input.required<{ name: string; value: number }[]>();
+  readonly bars = input.required<Item[]>();
   readonly chartClass = input<string>('');
-
-  color(name: string) {
-    return colorFromString(name);
-  }
 }

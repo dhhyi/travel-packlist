@@ -9,7 +9,7 @@
       stroke="white"
       stroke-width="0.5"
       [attr.d]="path.path"
-      [attr.fill]="color(path.name)"
+      [attr.fill]="path.color"
     />
   }
   @for (l of sortedSegments(); track $index) {
@@ -17,7 +17,7 @@
       font-size="6"
       [attr.x]="padding"
       [attr.y]="115 + 8 * $index"
-      [attr.fill]="color(l.name)"
+      [attr.fill]="l.color"
     >
       <tspan dy="1.2em" [attr.x]="padding">
         {{ l.name }} ({{ l.value | percent }})
