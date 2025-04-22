@@ -1,5 +1,11 @@
 import { Location } from '@angular/common';
-import { inject, signal, Signal, WritableSignal } from '@angular/core';
+import {
+  effect,
+  inject,
+  linkedSignal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
@@ -59,6 +65,18 @@ export const routerState = () => {
   const route = inject(ActivatedRoute);
   const rulesMode = createRouterSignalState<RuleModes>('rulesMode', 'view');
 
+  const fragmentFromRouting = toSignal(route.fragment, { requireSync: true });
+  const fragment = linkedSignal(() => fragmentFromRouting() ?? undefined);
+  effect(() => {
+    const fragmentValue = fragment();
+    if (fragmentValue !== fragmentFromRouting()) {
+      void router.navigate([], {
+        fragment: fragmentValue,
+        relativeTo: route,
+      });
+    }
+  });
+
   const location = inject(Location);
   const path = signal(location.path());
   router.events
@@ -80,8 +98,8 @@ export const routerState = () => {
       ),
       /** router read-only: current path */
       path: path.asReadonly(),
-      /** router read-only: current fragment */
-      fragment: toSignal(route.fragment) as Signal<string | undefined>,
+      /** router: current fragment */
+      fragment,
       /** router: navigate to a page */
       go: (page: keyof typeof navigation) => {
         navigation[page].call({ router, rulesMode });
