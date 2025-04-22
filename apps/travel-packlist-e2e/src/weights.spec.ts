@@ -19,6 +19,7 @@ test('weight tracking', async ({ page }) => {
   const config = await packlist.toConfigPage();
 
   await config.trackItemWeight().check();
+  await config.sortCategories.weight().check();
   await config.accessibility.compact().check();
 
   await expect(config.trackItemWeight()).toBeChecked();

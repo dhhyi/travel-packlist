@@ -34,6 +34,7 @@ export class WeightTrackingCheck {
         )
       ) {
         this.state.config.trackWeight.set(true);
+        this.state.config.categorySorting.set('weight');
       }
     }
   }

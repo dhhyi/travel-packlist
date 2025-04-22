@@ -22,4 +22,7 @@
 >
   <ng-template value="alphabetically" i18n>alphabetically</ng-template>
   <ng-template value="definition" i18n>order of definition</ng-template>
+  @if (trackWeight()) {
+    <ng-template value="weight" i18n>by weight</ng-template>
+  }
 </cmp-select-options>

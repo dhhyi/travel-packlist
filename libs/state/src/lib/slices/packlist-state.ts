@@ -96,14 +96,6 @@ export const packlistState = ({
     }
   };
 
-  const categoriesOrderBy: Signal<(left: string, right: string) => number> =
-    computed(() => {
-      const sorting = categorySorting();
-      return sorting === 'definition'
-        ? () => 0
-        : (left, right) => left.localeCompare(right);
-    });
-
   const coloredItems = signal<string[]>([]);
   const colorItems = (ids: string[]) => {
     // equality check to prevent recursive updates
@@ -130,37 +122,50 @@ export const packlistState = ({
         colored: statsVisible() === 'distribution',
       };
     }
-    const unorderedCategories = items().reduce<
-      Record<string, ReturnType<typeof initialize>>
-    >((groups, item) => {
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-      if (!groups[item.category]) {
-        groups[item.category] = initialize(item);
-      }
-      const skipped = skipItems() && skippedItems().includes(item);
-      const checked = !skipped && checkedItems().includes(item);
-      const colored =
-        statsVisible() === 'heaviestItems' &&
-        coloredItems().includes(item.id());
-      groups[item.category].items.push(
-        new PacklistItem(item, checked, skipped, colored),
-      );
-      if (checked) {
-        groups[item.category].checkedItems++;
-        groups[item.category].checkedWeight += item.weight ?? 0;
-      }
-      if (!skipped) {
-        groups[item.category].totalItems++;
-        groups[item.category].totalWeight += item.weight ?? 0;
-      }
-      return groups;
-    }, {});
+    type Category = ReturnType<typeof initialize>;
+    const unorderedCategories = items().reduce<Record<string, Category>>(
+      (groups, item) => {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (!groups[item.category]) {
+          groups[item.category] = initialize(item);
+        }
+        const skipped = skipItems() && skippedItems().includes(item);
+        const checked = !skipped && checkedItems().includes(item);
+        const colored =
+          statsVisible() === 'heaviestItems' &&
+          coloredItems().includes(item.id());
+        groups[item.category].items.push(
+          new PacklistItem(item, checked, skipped, colored),
+        );
+        if (checked) {
+          groups[item.category].checkedItems++;
+          groups[item.category].checkedWeight += item.weight ?? 0;
+        }
+        if (!skipped) {
+          groups[item.category].totalItems++;
+          groups[item.category].totalWeight += item.weight ?? 0;
+        }
+        return groups;
+      },
+      {},
+    );
+
+    const categoriesOrderBy: Signal<
+      (left: Category, right: Category) => number
+    > = computed(() => {
+      const sorting = categorySorting();
+      return sorting === 'alphabetically'
+        ? (left, right) => left.name.localeCompare(right.name)
+        : sorting === 'weight'
+          ? (left, right) => right.totalWeight - left.totalWeight
+          : () => 0;
+    });
 
     const sorter = categoriesOrderBy();
 
     return Object.entries(unorderedCategories)
       .map((e) => e[1])
-      .toSorted((l, r) => sorter(l.name, r.name));
+      .toSorted((l, r) => sorter(l, r));
   });
 
   const stats = computed(() =>

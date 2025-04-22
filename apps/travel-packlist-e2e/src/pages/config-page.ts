@@ -26,6 +26,28 @@ export class ConfigPage extends Banner {
     });
   }
 
+  get sortCategories() {
+    const sortCategories = this.page.getByRole('radiogroup', {
+      name: 'Sort categories',
+    });
+    const fn = function () {
+      return sortCategories;
+    };
+    fn.alphabetical = () =>
+      sortCategories.locator(
+        this.page.getByRole('radio', { name: 'alphabetically' }),
+      );
+    fn.definition = () =>
+      sortCategories.locator(
+        this.page.getByRole('radio', { name: 'by definition' }),
+      );
+    fn.weight = () =>
+      sortCategories.locator(
+        this.page.getByRole('radio', { name: 'by weight' }),
+      );
+    return fn;
+  }
+
   get rulesMode() {
     const rulesMode = this.page.getByRole('radiogroup', {
       name: 'Rules mode',
