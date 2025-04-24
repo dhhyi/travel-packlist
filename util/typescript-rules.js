@@ -47,6 +47,7 @@ const rules = (tsConfigOrFolder) => {
             varsIgnorePattern: '^_',
           },
         ],
+        eqeqeq: 'error',
         'perfectionist/sort-imports': 'error',
       },
     },

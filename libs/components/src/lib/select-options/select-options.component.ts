@@ -68,6 +68,7 @@ export class SelectOptionsComponent<T extends string>
 
   writeValue(value: T) {
     // this soft equal is intentional to avoid triggering on falsy values
+    // eslint-disable-next-line eqeqeq
     if (value == this.model()) {
       return;
     }
