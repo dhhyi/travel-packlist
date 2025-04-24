@@ -12,10 +12,18 @@ function enforceNewlinesInFile(file: string, options: ExecutorSchema): void {
   const newContent = fileContent
     .split('\n')
     .map((line) => {
-      if (/^(>|#|\||\s*-|\s*[0-9]+\.)/.test(line)) {
-        return line;
-      } else {
+      function split(line: string): string {
         return line.replace(/((?<!i\.e|e\.g)[.?]) ([A-Z0-9])/g, '$1\n$2');
+      }
+      if (/^(#|\||\s*-|\s*[0-9]+\.)/.test(line)) {
+        return line;
+      } else if (/^>.*/.test(line)) {
+        return split(line.substring(1).trim())
+          .split('\n')
+          .map((l: string) => '> ' + l)
+          .join('\n');
+      } else {
+        return split(line);
       }
     })
     .join('\n');

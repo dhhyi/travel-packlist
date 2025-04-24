@@ -15,7 +15,8 @@ cold_weather :- [Clothing] Coat,
   Do you expect snow? $snow ;
 ```
 
-> This rule can mean something like "If the weather is cold, you should bring a coat. Also, you should answer the question if you expect snow."
+> This rule can mean something like "If the weather is cold, you should bring a coat.
+> Also, you should answer the question if you expect snow."
 
 ### Effects
 

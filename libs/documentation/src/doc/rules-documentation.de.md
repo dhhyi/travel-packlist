@@ -15,7 +15,8 @@ kaltes_wetter :- [Kleidung] Mantel,
   Erwartest du Schnee? $snow ;
 ```
 
-> Diese Regel kann so etwas bedeuten wie "Wenn das Wetter kalt ist, solltest du einen Mantel mitbringen. Außerdem solltest du die Frage beantworten, ob du Schnee erwartest."
+> Diese Regel kann so etwas bedeuten wie "Wenn das Wetter kalt ist, solltest du einen Mantel mitbringen.
+> Außerdem solltest du die Frage beantworten, ob du Schnee erwartest."
 
 ### Effekte
 
