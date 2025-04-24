@@ -1,5 +1,12 @@
-import { computed, inject, resource, ResourceStatus } from '@angular/core';
-import { Parser } from '@travel-packlist/model';
+import {
+  computed,
+  effect,
+  inject,
+  resource,
+  ResourceStatus,
+  signal,
+} from '@angular/core';
+import { Parser, Rule } from '@travel-packlist/model';
 
 import { ConfigState } from './config-state';
 import { RulesSourceState } from './rules-source-state';
@@ -10,27 +17,40 @@ export const rulesParsingState = ({
 }: RulesSourceState & ConfigState) => {
   const parser = inject(Parser);
 
-  const parsed = resource({
+  const parsedResource = resource({
     request: () => {
       trackWeight();
       return raw.value();
     },
     loader: ({ request }) =>
       Promise.resolve(request ? parser.parseRules(request) : []),
-    defaultValue: [],
+  });
+
+  // debounce rule updates to switch from correctly parsed state
+  // to the next without 'undefined' in between
+  const parsedRules = signal<Rule[]>([]);
+  effect(() => {
+    const rules = parsedResource.value();
+    if (rules) {
+      parsedRules.set(rules);
+    }
   });
 
   return {
     rules: {
       /** derived: parsed rules */
-      parsed,
+      parsed: {
+        value: parsedRules.asReadonly(),
+        status: parsedResource.status,
+        error: parsedResource.error,
+      },
       /** derived: rules source and parser error */
       hasError: computed(
         () =>
-          parsed.status() === ResourceStatus.Error ||
+          parsedResource.status() === ResourceStatus.Error ||
           raw.status() === ResourceStatus.Error,
       ),
-      isLoading: computed(() => parsed.isLoading() || raw.isLoading()),
+      isLoading: computed(() => parsedResource.isLoading() || raw.isLoading()),
     },
   };
 };
