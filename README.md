@@ -130,6 +130,7 @@ This in turn makes the expression bigger and harder to read, but still implement
 ### Can I customize the display order of the categories?
 
 > The categories on the pack list are either displayed in alphabetical order or in the order they were defined by the rules.
+> If weight tracking is enabled, you can also sort the categories by weight.
 > Would it be possible to define a custom order?
 
 Yes, it would totally be possible to add a user interface for defining a custom order, but this functionality will also add more complexity and error cases.
