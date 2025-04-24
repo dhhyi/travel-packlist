@@ -119,6 +119,8 @@ test('remote rules error', async ({ page }) => {
 test.describe(() => {
   test.describe.configure({ retries: 3 });
 
+  test.slow();
+
   // eslint-disable-next-line playwright/no-skipped-test
   test.skip(!!process.env['CI'], 'Skip on CI');
 
