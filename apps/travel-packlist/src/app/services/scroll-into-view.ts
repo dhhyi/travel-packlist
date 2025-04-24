@@ -23,7 +23,7 @@ export class ScrollIntoView {
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
               }
             }
-          }, 0);
+          }, 100);
         }
       });
   }
