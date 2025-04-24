@@ -21,7 +21,7 @@
       <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
       <div
         aria-hidden="true"
-        class="accessible-content flex items-center justify-between rounded-sm pr-1"
+        class="accessible-content flex items-center justify-between rounded-sm pr-1 transition-colors duration-300"
         [style.background-color]="backgroundColor(category)"
         (click)="toggleCategoryCollapse(category.name)"
       >
@@ -57,7 +57,7 @@
           <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
           <div
             role="listitem"
-            class="rounded-sm px-1"
+            class="rounded-sm px-1 transition-colors duration-300"
             [id]="item.id()"
             [class.animate-pulse]="item.id() === fragment()"
             [style.background-color]="bgColor"
