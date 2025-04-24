@@ -10,7 +10,7 @@ export class WeightTrackingCheck {
   private refactor = inject(Refactor);
 
   private readonly percentageOfItemsWithWeights = () => {
-    if (this.state.rules.parsed.hasValue()) {
+    if (this.state.rules.parsed.value().length > 0) {
       const { items, weights } = this.refactor.countItemsAndWeights(
         this.state.rules.parsed.value(),
       );
