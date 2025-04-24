@@ -1,3 +1,10 @@
+## [0.12.1](https://github.com/dhhyi/travel-packlist/compare/v0.12.0...v0.12.1) (2025-04-24)
+
+### Bug Fixes
+
+- expand category of highlighted item ([95823a5](https://github.com/dhhyi/travel-packlist/commit/95823a560589392be42f4ce43544a8cda26a55f1))
+- transition colors for items list ([93caa0f](https://github.com/dhhyi/travel-packlist/commit/93caa0f299ca46b114c280415de6f26c59027159))
+
 ## [0.12.0](https://github.com/dhhyi/travel-packlist/compare/v0.11.4...v0.12.0) (2025-04-22)
 
 ### Features
