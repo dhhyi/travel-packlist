@@ -1,3 +1,9 @@
+## [0.12.2](https://github.com/dhhyi/travel-packlist/compare/v0.12.1...v0.12.2) (2025-04-24)
+
+### Bug Fixes
+
+- prevent flickering of rules in editor ([727d403](https://github.com/dhhyi/travel-packlist/commit/727d403b47790a33eb78df6648dc40126ea655ad))
+
 ## [0.12.1](https://github.com/dhhyi/travel-packlist/compare/v0.12.0...v0.12.1) (2025-04-24)
 
 ### Bug Fixes
