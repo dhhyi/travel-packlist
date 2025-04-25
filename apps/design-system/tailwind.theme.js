@@ -59,7 +59,7 @@ const theme = {
     normal: 400,
   },
   screens: {
-    mobile: '600px',
+    big: '600px',
   },
   spacing: {
     0: '0',
