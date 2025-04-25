@@ -1,3 +1,10 @@
+## [0.13.0](https://github.com/dhhyi/travel-packlist/compare/v0.12.2...v0.13.0) (2025-04-25)
+
+### Features
+
+- highlight newly added items in editor ([dd45c77](https://github.com/dhhyi/travel-packlist/commit/dd45c7767ee6a7b21c86a93f7dd870b2e8465e0b))
+- rule sets can have titles now ([68d4c36](https://github.com/dhhyi/travel-packlist/commit/68d4c36b32e968ea869d32da51e039e5d2d0ef4d))
+
 ## [0.12.2](https://github.com/dhhyi/travel-packlist/compare/v0.12.1...v0.12.2) (2025-04-24)
 
 ### Bug Fixes
