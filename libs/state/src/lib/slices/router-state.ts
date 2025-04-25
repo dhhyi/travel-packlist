@@ -73,6 +73,8 @@ export const routerState = () => {
       void router.navigate([], {
         fragment: fragmentValue,
         relativeTo: route,
+        replaceUrl: true,
+        queryParamsHandling: 'merge',
       });
     }
   });
