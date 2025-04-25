@@ -16,14 +16,29 @@
   }
 }}
 
+{
+  let rulesContainComments = false;
+}
+
 Rules
-  = _ @Rule|.., RuleDelimiter| RuleDelimiter? _ EOF
+  = _ rules:Rule|.., RuleDelimiter| RuleDelimiter? _ EOF {
+    rules.rulesContainComments = rulesContainComments;
+    return rules;
+  }
+
+Comment "comment"
+  = "#" comment:$[^\n\r]+ _ {
+    if (comment.trim().length) {
+      rulesContainComments = true;
+      return comment.trim();
+    }
+  }
 
 RuleDelimiter "rule end"
-  = _ ";" _
+  = _ ";" _ Comment* _
 
 Rule "rule"
-  = condition: Condition? _ ":-" _ effects:Effects {
+  = Comment* _ condition: Condition? _ ":-" _ effects:Effects {
     return createRule(condition, effects);
   }
 
@@ -53,7 +68,7 @@ Variable
   }
 
 Effects
-  = @(Question / Item)|.., _ "," _|
+  = @(Question / Item)|.., _ "," _ Comment* _|
 
 Question "question"
   = question:QuestionString "$" variable:VariableName {

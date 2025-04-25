@@ -6,7 +6,7 @@ import {
   StartRuleNames,
   SyntaxError,
 } from '../generated/rules';
-import { Condition, Item, Question, Rule } from './types';
+import { Condition, Item, Question, Rule, Rules } from './types';
 
 const defaultConfig = {
   isTrackWeight: () => false,
@@ -60,13 +60,8 @@ export class Parser {
   }
 
   parseRules(input: string) {
-    const inputWOComments = input
-      .split(/\r?\n/g)
-      .map((line) => line.replace(/#.*/, ''))
-      .join('\n');
-
     try {
-      return parse(inputWOComments, this.makeOptions('Rules')) as Rule[];
+      return parse(input, this.makeOptions('Rules')) as Rules;
     } catch (error) {
       const message: string[] = [];
       message.push($localize`Error parsing rules`);

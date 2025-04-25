@@ -2,11 +2,12 @@ import {
   computed,
   effect,
   inject,
+  Resource,
   resource,
   ResourceStatus,
   signal,
 } from '@angular/core';
-import { Parser, Rule } from '@travel-packlist/model';
+import { Parser } from '@travel-packlist/model';
 
 import { ConfigState } from './config-state';
 import { RulesSourceState } from './rules-source-state';
@@ -28,7 +29,8 @@ export const rulesParsingState = ({
 
   // debounce rule updates to switch from correctly parsed state
   // to the next without 'undefined' in between
-  const parsedRules = signal<Rule[]>([]);
+  type InferResource<T> = T extends Resource<infer U> ? NonNullable<U> : never;
+  const parsedRules = signal<InferResource<typeof parsedResource>>([]);
   effect(() => {
     const rules = parsedResource.value();
     if (rules) {

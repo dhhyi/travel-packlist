@@ -1,6 +1,8 @@
+/* eslint-disable @angular-eslint/runtime-localize */
 import { serializeWeight } from './serializer';
 
-/* eslint-disable @angular-eslint/runtime-localize */
+export type Rules = Rule[] & Partial<{ rulesContainComments: boolean }>;
+
 export class Rule {
   constructor(
     public readonly condition: Condition,

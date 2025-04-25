@@ -256,14 +256,28 @@ describe('parser', () => {
   });
 
   describe('parseRules', () => {
-    it('should parse rules and ignore comments', () => {
+    it('should parse rules and ignore other comments', () => {
       const rules = parser.parseRules(`
         # Weather rules
+        # This is a comment
+        # This is another comment
         :- Is it sunny? $sunny, # always ask
+           # utility
            [utility] Umbrella; # always bring it
+        # This is another comment
       `);
 
       expect(rules).toHaveLength(1);
+      expect(rules).toHaveProperty('rulesContainComments', true);
+    });
+
+    it('should parse rules without comments', () => {
+      const rules = parser.parseRules(`
+        :- Is it sunny? $sunny, [utility] Umbrella;
+      `);
+
+      expect(rules).toHaveLength(1);
+      expect(rules).toHaveProperty('rulesContainComments', false);
     });
   });
 
