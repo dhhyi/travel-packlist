@@ -21,9 +21,17 @@
 }
 
 Rules
-  = _ rules:Rule|.., RuleDelimiter| RuleDelimiter? _ EOF {
+  = _ title:Title? _ rules:Rule|.., RuleDelimiter| RuleDelimiter? _ EOF {
+    rules.title = title?.trim();
     rules.rulesContainComments = rulesContainComments;
     return rules;
+  }
+
+Title "title"
+  = "#" _ title:$[^\n\r]+ _ {
+    if (title.trim().length) {
+      return title.trim();
+    }
   }
 
 Comment "comment"

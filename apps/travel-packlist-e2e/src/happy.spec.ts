@@ -22,6 +22,13 @@ test('happy path editor to packlist', async ({ page }) => {
   await editor.dialog.confirm().click();
 
   await editor.addRuleButton.click();
+
+  await expect(editor.toolbar.mode('edit')).toBeChecked();
+
+  await expect(editor.rulesTitle()).toBeVisible();
+
+  await editor.rulesTitle().fill('My Rules');
+
   const rule1 = editor.rule(1);
 
   await expect(rule1()).toBeVisible();
@@ -97,6 +104,7 @@ test('happy path editor to packlist', async ({ page }) => {
   const packlist = await editor.toPacklistPage();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
+    - heading "My Rules"
     - checkbox "Will it be sunny?"
     - checkbox "Will it be rainy?"
     - button "Lock answers"
@@ -112,6 +120,7 @@ test('happy path editor to packlist', async ({ page }) => {
   await packlist.item('Sunscreen', false).check();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
+    - heading "My Rules"
     - checkbox "Will it be sunny?" [checked] [disabled]
     - button "Lock answers" [pressed]
     - progressbar "You have packed 1 out of 1 items."

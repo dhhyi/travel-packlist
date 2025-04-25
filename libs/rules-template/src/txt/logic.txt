@@ -1,3 +1,5 @@
+# Example Logic Demonstration
+
 :-
    a $a,
    b $b,

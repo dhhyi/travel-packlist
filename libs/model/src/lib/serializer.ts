@@ -1,10 +1,15 @@
-import { Rule } from './types';
+import { Rules } from './types';
 
-export function serializeRules(rules: Rule[]): string {
-  return rules
-    .map((rule) => rule.toString())
-    .map((rule) => rule + ';')
-    .join('\n\n');
+export function serializeRules(rules: Rules): string {
+  const title = rules.title?.trim();
+  const titleLine = title ? `# ${title}\n\n` : '';
+  return (
+    titleLine +
+    rules
+      .map((rule) => rule.toString())
+      .map((rule) => rule + ';')
+      .join('\n\n')
+  );
 }
 
 export function serializeWeight(

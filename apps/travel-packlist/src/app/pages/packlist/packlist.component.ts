@@ -9,6 +9,7 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { DisplayItemsComponent } from './display-items/display-items.component';
 import { DisplayQuestionsComponent } from './display-questions/display-questions.component';
+import { DisplayTitleComponent } from './display-title/display-title.component';
 import { PacklistStatusComponent } from './packlist-status/packlist-status.component';
 
 @Component({
@@ -19,6 +20,7 @@ import { PacklistStatusComponent } from './packlist-status/packlist-status.compo
     DisplayQuestionsComponent,
     PacklistStatusComponent,
     IconProgressActivityComponent,
+    DisplayTitleComponent,
   ],
   templateUrl: './packlist.component.html',
 })

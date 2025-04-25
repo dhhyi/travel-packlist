@@ -1,3 +1,5 @@
+# Packlist for a Multi-Day Backpacking Adventure
+
 :-
   Expecting a lot of rain? $rain,
   Add food and water weight? $food,

@@ -1,3 +1,5 @@
+# Beispiel Packliste
+
 :-
    [Nützliches] Papiertaschentücher,
    [Nützliches] Rucksack;

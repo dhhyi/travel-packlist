@@ -10,17 +10,24 @@ import {
   PleaseSelect,
   Refactor,
   Rule,
+  Rules,
   serializeRules,
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
+import { EditorTitleComponent } from './editor-title/editor-title.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
-  imports: [EditorRuleComponent, ToolbarComponent, IconSwapComponent],
+  imports: [
+    EditorRuleComponent,
+    ToolbarComponent,
+    IconSwapComponent,
+    EditorTitleComponent,
+  ],
   templateUrl: './rules.component.html',
 })
 export class RulesComponent {
@@ -29,6 +36,7 @@ export class RulesComponent {
   private state = inject(GLOBAL_STATE);
   private parsedRules = this.state.rules.parsed.value;
   private activeRules = this.state.active.rules;
+  private readonly rulesTitle = computed(() => this.parsedRules().title);
   mode = this.state.router.rulesMode;
   accessibility = this.state.config.accessibility;
   filter = this.state.router.filterRulesQuery;
@@ -56,21 +64,26 @@ export class RulesComponent {
     return $localize`Rule #${(index + 1).toString()}:NUMBER:`;
   }
 
-  private updateRules(rules: Rule[]) {
+  private updateRules(rules: Rule[], title: string | undefined) {
+    (rules as Rules).title = title;
     const serializedRules = serializeRules(rules);
     this.state.localRules.updateRules(serializedRules);
+  }
+
+  updateTitle(title: string | undefined) {
+    this.updateRules(this.parsedRules(), title);
   }
 
   updateRule(index: number, rule: Rule) {
     const rules = this.parsedRules();
     rules[index] = rule;
-    this.updateRules([...rules]);
+    this.updateRules([...rules], this.rulesTitle());
   }
 
   deleteRule(index: number) {
     const rules = this.parsedRules();
     rules.splice(index, 1);
-    this.updateRules([...rules]);
+    this.updateRules([...rules], this.rulesTitle());
   }
 
   addRule() {
@@ -97,7 +110,7 @@ export class RulesComponent {
     const rules = this.parsedRules();
     rules.splice(insertAt, 0, newRule);
 
-    this.updateRules([...rules]);
+    this.updateRules([...rules], this.rulesTitle());
 
     this.highlightRule.set(insertAt);
     setTimeout(() => {
@@ -116,7 +129,7 @@ export class RulesComponent {
     rules[index1] = rules[index2];
     rules[index2] = temp;
 
-    this.updateRules([...rules]);
+    this.updateRules([...rules], this.rulesTitle());
   }
 
   showAsDisabled(rule: Rule): boolean {
@@ -133,7 +146,7 @@ export class RulesComponent {
       this.parsedRules(),
     );
 
-    this.updateRules(rules);
+    this.updateRules([...rules], this.rulesTitle());
   }
 
   goToPacklist() {

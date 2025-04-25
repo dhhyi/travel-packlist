@@ -1,0 +1,15 @@
+@if (visible()) {
+  <input
+    #title
+    class="card my-1 w-full outline-none"
+    type="text"
+    id="rules-title"
+    placeholder="title"
+    i18n-placeholder
+    aria-label="Rules Title"
+    i18n-aria-label
+    [disabled]="!isEditMode()"
+    [value]="currentTitle() ?? ''"
+    (input)="changed(title.value)"
+  />
+}

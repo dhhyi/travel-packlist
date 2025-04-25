@@ -256,6 +256,17 @@ describe('parser', () => {
   });
 
   describe('parseRules', () => {
+    it('should parse rules with title', () => {
+      const rules = parser.parseRules(`
+        # Weather rules
+        :- Is it sunny? $sunny, [utility] Umbrella;
+      `);
+
+      expect(rules).toHaveLength(1);
+      expect(rules).toHaveProperty('title', 'Weather rules');
+      expect(rules).toHaveProperty('rulesContainComments', false);
+    });
+
     it('should parse rules and ignore other comments', () => {
       const rules = parser.parseRules(`
         # Weather rules
@@ -268,6 +279,7 @@ describe('parser', () => {
       `);
 
       expect(rules).toHaveLength(1);
+      expect(rules).toHaveProperty('title', 'Weather rules');
       expect(rules).toHaveProperty('rulesContainComments', true);
     });
 

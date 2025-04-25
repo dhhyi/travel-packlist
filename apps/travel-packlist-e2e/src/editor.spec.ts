@@ -62,6 +62,22 @@ test('rule editor - view', async ({ page }) => {
   await expect(page).toHaveScreenshot();
 });
 
+test('rule editor - view with title', async ({ page }) => {
+  const packlist = await startWithRules(
+    page,
+    `# My Rules
+    :- [utility] sunscreen, [tool] umbrella;`,
+  );
+
+  const editor = await packlist
+    .toConfigPage()
+    .then((page) => page.toEditorPage());
+
+  await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
+    - textbox "Rules Title" [disabled]: "My Rules"
+  `);
+});
+
 test('rule editor - edit', async ({ page }) => {
   const packlist = await startWithRules(
     page,
@@ -111,6 +127,32 @@ test('rule editor - edit', async ({ page }) => {
       - textbox "item name": umbrella
   `);
   await expect(page).toHaveScreenshot();
+});
+
+test('rule editor - edit with title', async ({ page }) => {
+  const packlist = await startWithRules(
+    page,
+    `# My Rules
+    :- [utility] sunscreen, [tool] umbrella;`,
+  );
+
+  const editor = await packlist
+    .toConfigPage()
+    .then((page) => page.toEditorPage());
+
+  await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
+    - textbox "Rules Title" [disabled]: "My Rules"
+  `);
+
+  await editor.toolbar.mode('edit').click();
+
+  await expect(editor.rulesTitle()).toBeEditable();
+
+  await editor.rulesTitle().fill('My New Rules');
+
+  await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
+    - textbox "Rules Title": "My New Rules"
+  `);
 });
 
 test('rule editor - delete', async ({ page }) => {

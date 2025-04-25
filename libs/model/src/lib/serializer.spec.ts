@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { Parser } from './parser';
 import { serializeRules, serializeWeight } from './serializer';
+import { Rules } from './types';
 
 describe('serializer', () => {
   let parser: Parser;
@@ -50,6 +51,17 @@ describe('serializer', () => {
 
 sunny :-
    [Weather] Sunglasses;"
+`);
+  });
+
+  it('should serialize a rule with a title', () => {
+    const rules = [parser.parseRule(':- [Weather] Sunglasses')] as Rules;
+    rules.title = 'Test Title';
+
+    expect(serializeRules(rules)).toMatchInlineSnapshot(`
+"# Test Title
+
+:- [Weather] Sunglasses;"
 `);
   });
 
