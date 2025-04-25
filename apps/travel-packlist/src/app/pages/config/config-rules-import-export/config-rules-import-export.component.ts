@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -25,9 +24,6 @@ export class ConfigRulesImportExportComponent {
 
   exportReminder = this.state.config.exportReminder;
   exportNeeded = this.state.rules.exportNeeded;
-  private fragment = this.state.router.fragment;
-  readonly highlightExport = computed(() => this.fragment() === 'export-now');
-  readonly highlightImport = computed(() => this.fragment() === 'import');
 
   readonly loading = signal(false);
 

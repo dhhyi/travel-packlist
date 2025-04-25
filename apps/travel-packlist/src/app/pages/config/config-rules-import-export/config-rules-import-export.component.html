@@ -2,7 +2,6 @@
   id="export-now"
   i18n
   type="button"
-  [class.highlighted]="highlightExport() && exportNeeded()"
   [disabled]="!isExportAvailable()"
   (click)="exportRules()"
 >
@@ -20,13 +19,7 @@
     Current rules are not backed up!
   </div>
 }
-<button
-  id="import"
-  i18n
-  type="button"
-  [class.highlighted]="highlightImport()"
-  (click)="importRules()"
->
+<button id="import" i18n type="button" (click)="importRules()">
   Import Rules
 </button>
 <cmp-checkbox

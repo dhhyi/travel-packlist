@@ -14,7 +14,6 @@
       class="card mb-1 overflow-hidden"
       role="list"
       [id]="category.id"
-      [class.animate-pulse]="category.id === highlightedItemId()"
       [attr.aria-label]="category.name"
       [@animateItems]="category"
     >
@@ -59,7 +58,6 @@
             role="listitem"
             class="rounded-sm px-1 transition-colors duration-300"
             [id]="item.id()"
-            [class.animate-pulse]="item.id() === highlightedItemId()"
             [style.background-color]="bgColor"
           >
             <div

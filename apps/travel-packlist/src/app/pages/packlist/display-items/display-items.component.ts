@@ -115,8 +115,6 @@ export class DisplayItemsComponent {
   toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
   toggleCheckedItem = this.state.packlist.toggleCheckedItem;
 
-  readonly highlightedItemId = linkedSignal(() => this.state.router.fragment());
-
   serializeWeight = serializeWeight;
 
   serializeWeightPartition = serializeWeightPartition;
@@ -128,27 +126,19 @@ export class DisplayItemsComponent {
       this.animationsDisabled.set(!this.state.config.animations());
     });
 
-    let highlightTimeout: number | undefined;
+    const highlightedItemId = linkedSignal(() => this.state.router.fragment());
     effect(() => {
-      if (typeof highlightTimeout === 'number') {
-        clearTimeout(highlightTimeout);
-      }
-      if (this.highlightedItemId()) {
-        // reset pulsating by resetting local state
-        highlightTimeout = setTimeout(() => {
-          this.highlightedItemId.set(undefined);
-        }, 5000);
-      }
-    });
-    effect(() => {
-      // expand category if items are highlighted
-      const category = this.state.packlist
-        .model()
-        .find((category) =>
-          category.items.some((item) => item.id() === this.highlightedItemId()),
-        );
-      if (category?.collapsed) {
-        this.state.packlist.toggleCategoryCollapse(category.name);
+      if (highlightedItemId()) {
+        // expand category if items are highlighted
+        const category = this.state.packlist
+          .model()
+          .find((category) =>
+            category.items.some((item) => item.id() === highlightedItemId()),
+          );
+        highlightedItemId.set(undefined);
+        if (category?.collapsed) {
+          this.state.packlist.toggleCategoryCollapse(category.name);
+        }
       }
     });
   }
