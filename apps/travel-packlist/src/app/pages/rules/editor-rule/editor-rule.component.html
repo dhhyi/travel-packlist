@@ -40,6 +40,7 @@
     }
     <app-editor-question
       class="w-0 grow"
+      [id]="`r${index()}q${$index}`"
       [question]="question"
       (questionChanged)="updateQuestion($index, $event)"
       (variableChanged)="variableChanged($event)"
@@ -93,6 +94,7 @@
     }
     <app-editor-item
       class="grow"
+      [id]="`r${index()}i${$index}`"
       [item]="item"
       (itemChanged)="updateItem($index, $event)"
     />

@@ -40,7 +40,6 @@
     [id]="`rule-${item.index}`"
     [class]="{
       disabled: showAsDisabled(item.rule),
-      'animate-pulse': highlightRule() === item.index,
       'mb-[2.25rem]':
         (mode() === 'view' || mode() === 'search') &&
         accessibility() === 'compact',
@@ -50,6 +49,7 @@
     }"
   >
     <app-editor-rule
+      [index]="item.index"
       [rule]="item.rule"
       (ruleChanged)="updateRule(item.index, $event)"
       (deleteRule)="deleteRule(item.index)"

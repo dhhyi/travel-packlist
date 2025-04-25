@@ -3,7 +3,6 @@ import {
   Component,
   computed,
   inject,
-  signal,
 } from '@angular/core';
 import { IconSwapComponent } from '@travel-packlist/icons';
 import {
@@ -40,7 +39,6 @@ export class RulesComponent {
   mode = this.state.router.rulesMode;
   accessibility = this.state.config.accessibility;
   filter = this.state.router.filterRulesQuery;
-  readonly highlightRule = signal<number | undefined>(undefined);
 
   readonly editable = computed(() => this.state.rules.mode() === 'local');
   readonly visibleRules = computed(() => {
@@ -112,10 +110,7 @@ export class RulesComponent {
 
     this.updateRules([...rules], this.rulesTitle());
 
-    this.highlightRule.set(insertAt);
-    setTimeout(() => {
-      this.highlightRule.set(undefined);
-    }, 4000);
+    this.state.router.fragment.set(`rule-${(insertAt || 0).toString()}`);
   }
 
   addRuleAndEdit() {

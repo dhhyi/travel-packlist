@@ -46,6 +46,7 @@ import { EditorQuestionComponent } from './editor-question/editor-question.compo
   templateUrl: './editor-rule.component.html',
 })
 export class EditorRuleComponent {
+  readonly index = input.required<number>();
   readonly rule = input.required<Rule>();
 
   readonly ruleChanged = output<Rule>();
@@ -96,7 +97,11 @@ export class EditorRuleComponent {
       Question.NEW_QUESTION_NAME,
       Question.NEW_VARIABLE_NAME,
     );
-    this.updateQuestion(this.rule().questions.length, newQuestion);
+    const position = this.rule().questions.length;
+    this.updateQuestion(position, newQuestion);
+    this.state.router.fragment.set(
+      `r${this.index().toString()}q${position.toString()}`,
+    );
   }
 
   deleteQuestion(index: number) {
@@ -136,7 +141,11 @@ export class EditorRuleComponent {
 
   addItem() {
     const newItem: Item = new Item(Item.NEW_CATEGORY_NAME, Item.NEW_ITEM_NAME);
-    this.updateItem(this.rule().items.length, newItem);
+    const position = this.rule().items.length;
+    this.updateItem(position, newItem);
+    this.state.router.fragment.set(
+      `r${this.index().toString()}i${position.toString()}`,
+    );
   }
 
   deleteItem(index: number) {
