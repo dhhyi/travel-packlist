@@ -159,6 +159,7 @@ const rules = (tsConfigOrFolder, options) => {
               'aria-orientation',
               'iconClass',
               'chartClass',
+              'fieldSetClass',
             ],
             ignoreTags: ['meta', 'link', 'noscript'],
           },

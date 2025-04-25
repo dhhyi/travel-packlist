@@ -43,6 +43,7 @@ export class SelectOptionsComponent<T extends string>
 {
   readonly label = input<string>('');
   readonly legendHidden = input<boolean>(false);
+  readonly fieldSetClass = input<string>('');
   readonly model = signal<T | undefined>(undefined);
   readonly children = contentChildren(SelectOptionDirective<T>);
 

@@ -1,6 +1,8 @@
 <fieldset
   role="radiogroup"
-  class="flex flex-wrap justify-evenly gap-2 gap-y-4 pb-4"
+  class="flex flex-wrap gap-2 gap-y-4 pb-4"
+  [class]="fieldSetClass()"
+  [class.justify-evenly]="!fieldSetClass().includes('justify-')"
   [class.pt-4]="!label() || legendHidden()"
   [attr.aria-label]="label()"
 >
