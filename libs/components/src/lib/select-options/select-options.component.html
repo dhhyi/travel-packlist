@@ -20,8 +20,11 @@
       (keypress)="model.set(option)"
     >
       <div
-        class="element mr-2 h-6 min-h-6 w-6 min-w-6 rounded-full"
-        [class.selected]="model() === option"
+        class="accessible:h-8 accessible:min-h-8 accessible:w-8 accessible:min-w-8 accessible:border-[6px] animations:transition-colors mr-2 h-6 min-h-6 w-6 min-w-6 rounded-full border-2 border-white shadow-[0_0_0_3px_var(--tw-shadow-color)] shadow-slate-300 dark:border-slate-900 dark:shadow-slate-700"
+        [class]="{
+          'bg-slate-300': model() === option,
+          'dark:bg-slate-700': model() === option,
+        }"
       ></div>
       <ng-container *ngTemplateOutlet="template(option)" />
     </div>

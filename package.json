@@ -9,13 +9,11 @@
     "create-prettierignore": "node util/create-prettierignore.mjs",
     "prepare": "husky",
     "dev": "nx serve travel-packlist",
-    "design": "nx storybook design-system",
     "start": "nx serve travel-packlist-web"
   },
   "nx": {
     "includedScripts": [
       "dev",
-      "design",
       "start"
     ],
     "implicitDependencies": [
@@ -24,6 +22,16 @@
       "apps/*"
     ],
     "targets": {
+      "design": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "nx storybook design-system",
+            "nx run design-system:compile-styles:watch"
+          ],
+          "parallel": true
+        }
+      },
       "lint": {
         "executor": "@nx/eslint:lint",
         "options": {
@@ -112,12 +120,13 @@
     "@capacitor/share": "^7.0.1",
     "@nx/angular": "20.8.1",
     "@nx/devkit": "20.8.1",
+    "@tailwindcss/postcss": "^4.1.5",
     "husky": "^9.1.7",
     "nx": "20.8.1",
     "peggy": "^5.0.0",
     "rxjs": "~7.8.2",
     "showdown": "^2.1.0",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.1.5",
     "tslib": "^2.8.1",
     "typescript": "~5.8.3"
   },
@@ -143,6 +152,7 @@
     "@storybook/addon-viewport": "8.6.12",
     "@storybook/angular": "8.6.12",
     "@storybook/core-server": "8.6.12",
+    "@tailwindcss/cli": "^4.1.5",
     "@types/jest": "^29.5.14",
     "@types/minimatch": "^5.1.2",
     "@types/node": "22.15.3",

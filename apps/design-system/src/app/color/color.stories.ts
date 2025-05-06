@@ -12,7 +12,7 @@ const selectedColor = signal<string | undefined>(undefined);
 
 @Directive({
   // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: 'div.color',
+  selector: 'div[role="button"]',
 })
 class ColorDirective {
   constructor(element: ElementRef<HTMLDivElement>) {
@@ -40,11 +40,11 @@ class ColorDirective {
   selector: 'ds-color',
   templateUrl: './color.html',
   styles: `
-    .color {
-      @apply min-h-8 min-w-12 rounded-md;
-    }
-    fieldset {
-      @apply flex flex-row gap-1;
+    [role='button'] {
+      cursor: pointer;
+      min-height: var(--spacing-8);
+      min-width: var(--spacing-12);
+      border-radius: var(--radius-sm);
     }
   `,
 })

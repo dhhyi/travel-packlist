@@ -65,11 +65,9 @@ const animatePages = trigger('animatePages', [
     IconArrowDownwardComponent,
     IconArrowUpwardComponent,
   ],
-  styles: `
-    :host {
-      @apply flex w-full max-w-[350px] flex-row gap-1;
-    }
-  `,
+  host: {
+    class: 'flex w-full max-w-[350px] flex-row gap-1',
+  },
   animations: [animatePages],
 })
 export class HeaviestItemsComponent {

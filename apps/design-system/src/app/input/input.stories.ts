@@ -23,13 +23,6 @@ import { IconHelpComponent } from '@travel-packlist/icons';
     ReactiveFormsModule,
     JsonPipe,
   ],
-  styles: `
-    :host {
-      @apply flex flex-col gap-y-4;
-    }
-    :host > * {
-    }
-  `,
 })
 class Input {
   form = new FormGroup({

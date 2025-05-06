@@ -7,11 +7,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   selector: 'ds-font',
   templateUrl: './font.html',
-  styles: `
-    :host > fieldset {
-      @apply mb-4 flex flex-row items-center gap-x-4;
-    }
-  `,
+  host: {
+    class: '*:mb-4 *:flex *:flex-row *:items-center *:gap-x-4',
+  },
 })
 class Font {}
 

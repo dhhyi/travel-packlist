@@ -19,8 +19,8 @@ import { noop } from 'rxjs';
   selector: 'cmp-checkbox',
   imports: [FormsModule, IconHelpComponent],
   templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.css',
   host: {
+    class: 'flex items-center gap-x-2',
     '(click)': 'toggle()',
     '(keypress)': 'toggle()',
     '[attr.aria-checked]': 'model()',

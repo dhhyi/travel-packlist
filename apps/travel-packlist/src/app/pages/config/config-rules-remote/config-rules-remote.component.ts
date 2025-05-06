@@ -26,7 +26,6 @@ import { extractErrorMessage } from '../../../util/extract-error-message';
   selector: 'app-config-rules-remote',
   templateUrl: './config-rules-remote.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: '../config-section.css',
   imports: [
     ReactiveFormsModule,
     IconHistoryComponent,

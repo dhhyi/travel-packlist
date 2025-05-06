@@ -2,20 +2,20 @@
 
 <app-config-rules-mode />
 
-<div [class.hidden]="rulesMode() !== 'local'">
-  <app-config-rules-editor />
-  <app-config-rules-import-export />
-</div>
-
-<div [class.hidden]="rulesMode() !== 'remote'">
-  <app-config-rules-remote />
-  <app-config-rules-viewer />
-</div>
-
-<div [class.hidden]="rulesMode() !== 'template'">
-  <app-config-rules-template />
-  <app-config-rules-viewer />
-</div>
+@switch (rulesMode()) {
+  @case ('local') {
+    <app-config-rules-editor />
+    <app-config-rules-import-export />
+  }
+  @case ('remote') {
+    <app-config-rules-remote />
+    <app-config-rules-viewer />
+  }
+  @case ('template') {
+    <app-config-rules-template />
+    <app-config-rules-viewer />
+  }
+}
 
 <app-config-appearance />
 <app-config-version />

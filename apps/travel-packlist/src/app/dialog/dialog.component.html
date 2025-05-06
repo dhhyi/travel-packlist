@@ -1,8 +1,8 @@
 @if (self.dialogVisible()) {
   <div
-    class="bg-disabled pointer-events-none fixed left-0 top-0 z-40 h-full w-full opacity-50"
+    class="bg-disabled pointer-events-none fixed top-0 left-0 z-40 h-full w-full opacity-50"
   ></div>
-  <div class="fixed left-0 top-0 z-50 flex h-full w-full">
+  <div class="fixed top-0 left-0 z-50 flex h-full w-full">
     <div
       class="card bg-disabled m-auto w-[300px]"
       role="dialog"
@@ -22,7 +22,6 @@
           <button
             i18n
             type="button"
-            role="button"
             class="secondary"
             [class.hidden]="!self.dialogCancelVisible()"
             (click)="self.dialogCancel()()"
@@ -33,7 +32,6 @@
             id="okbutton"
             i18n
             type="submit"
-            role="button"
             (click)="self.dialogOk()(prompt.value)"
           >
             OK

@@ -9,12 +9,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './spacing.html',
   styles: `
     .b {
-      @apply h-8 w-8 bg-gray-500;
-    }
-    :host > fieldset {
-      @apply mb-4 flex flex-row;
+      height: var(--spacing-8);
+      width: var(--spacing-8);
+      background-color: var(--color-gray-500);
     }
   `,
+  host: {
+    class: '*:mb-4 *:flex *:flex-row',
+  },
 })
 class Spacing {}
 

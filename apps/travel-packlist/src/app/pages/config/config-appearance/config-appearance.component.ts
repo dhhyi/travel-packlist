@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  SelectOptionsComponent,
-  SelectOptionDirective,
   CheckboxComponent,
+  SelectOptionDirective,
+  SelectOptionsComponent,
 } from '@travel-packlist/components';
 import { FlagGermanyComponent, FlagUkComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
@@ -12,7 +12,6 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-appearance',
   templateUrl: './config-appearance.component.html',
-  styleUrl: '../config-section.css',
   imports: [
     FormsModule,
     SelectOptionsComponent,

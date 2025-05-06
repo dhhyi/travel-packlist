@@ -1,14 +1,14 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   output,
-  ChangeDetectionStrategy,
   TemplateRef,
   viewChild,
   ViewContainerRef,
-  effect,
 } from '@angular/core';
 import {
   Always,
@@ -30,11 +30,9 @@ export const REMOVE = 'REMOVE';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
   templateUrl: './editor-condition.component.html',
-  styles: `
-    :host {
-      @apply flex min-h-8 flex-row flex-wrap items-center justify-start gap-2;
-    }
-  `,
+  host: {
+    class: 'flex flex-row flex-wrap items-center justify-start gap-2',
+  },
 })
 export class EditorConditionComponent {
   readonly condition = input.required<Condition>();

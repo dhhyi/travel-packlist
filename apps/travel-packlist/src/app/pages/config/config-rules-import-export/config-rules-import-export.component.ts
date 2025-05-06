@@ -16,7 +16,6 @@ import { RulesShare } from '../../../services/rules-share/rules-share.interface'
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-import-export',
   templateUrl: './config-rules-import-export.component.html',
-  styleUrl: '../config-section.css',
   imports: [FormsModule, CheckboxComponent, IconDownloadComponent],
 })
 export class ConfigRulesImportExportComponent {

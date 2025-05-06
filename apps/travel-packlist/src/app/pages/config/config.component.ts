@@ -30,6 +30,9 @@ import { ConfigVersionComponent } from './config-version/config-version.componen
     ConfigRulesTemplateComponent,
   ],
   templateUrl: './config.component.html',
+  host: {
+    class: '*:mb-2 *:flex *:flex-col *:gap-2 *:border-b *:pb-2',
+  },
 })
 export class ConfigComponent {
   private state = inject(GLOBAL_STATE);

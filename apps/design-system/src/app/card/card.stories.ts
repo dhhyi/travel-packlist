@@ -7,14 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: true,
   selector: 'ds-card',
   templateUrl: './card.html',
-  styles: `
-    :host {
-      @apply flex flex-col gap-y-4;
-    }
-    :host > * {
-      @apply flex h-[5em] items-center justify-center;
-    }
-  `,
 })
 class Card {}
 

@@ -7,7 +7,6 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-editor',
   templateUrl: './config-rules-editor.component.html',
-  styleUrl: '../config-section.css',
   imports: [CheckboxComponent, FormsModule],
 })
 export class ConfigRulesEditorComponent {

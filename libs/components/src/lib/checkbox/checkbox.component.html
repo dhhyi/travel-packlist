@@ -1,8 +1,11 @@
 <div
-  class="element my-2 h-6 min-h-6 w-6 min-w-6 appearance-none"
+  class="element animations:transition-colors accessible:h-8 accessible:min-h-8 accessible:min-w-8 accessible:w-8 accessible:border-[6px] my-2 ml-[3px] h-6 min-h-6 w-6 min-w-6 appearance-none rounded-sm border border-white shadow-[0_0_0_3px_var(--tw-shadow-color)] shadow-slate-300 dark:border-slate-900 dark:shadow-slate-700"
   tabindex="-1"
-  [class.selected]="model()"
   [id]="id()"
+  [class]="{
+    'bg-slate-300': model(),
+    'dark:bg-slate-700': model(),
+  }"
 ></div>
 <label class="grow" [htmlFor]="id()">{{ label() }}</label>
 @if (help()) {
@@ -17,7 +20,7 @@
   ></button>
   @if (helpVisible()) {
     <legend
-      class="help"
+      class="absolute m-2 translate-y-[3rem] rounded-lg border border-slate-300 bg-slate-100 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300"
       role="contentinfo"
       (click)="toggleHelp($event)"
       (keypress)="toggleHelp($event)"

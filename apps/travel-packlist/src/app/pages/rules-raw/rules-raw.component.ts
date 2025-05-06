@@ -31,11 +31,9 @@ type ParserState =
   selector: 'app-edit-rules-raw',
   imports: [ReactiveFormsModule],
   templateUrl: './rules-raw.component.html',
-  styles: `
-    :host {
-      @apply flex grow flex-col;
-    }
-  `,
+  host: {
+    class: 'flex grow flex-col',
+  },
 })
 export class EditRulesRawComponent {
   private state = inject(GLOBAL_STATE);

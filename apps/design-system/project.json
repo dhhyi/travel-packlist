@@ -5,6 +5,9 @@
   "tags": [
     "scope:design"
   ],
+  "implicitDependencies": [
+    "icons"
+  ],
   "targets": {
     "storybook": {
       "executor": "@storybook/angular:start-storybook",
@@ -15,9 +18,14 @@
         "browserTarget": "design-system:build",
         "compodoc": false,
         "styles": [
-          "{projectRoot}/src/styles.css"
+          "{projectRoot}/storybook/styles.compiled.css"
         ]
-      }
+      },
+      "dependsOn": [
+        "compile-styles",
+        "^generate",
+        "^build"
+      ]
     },
     "build": {
       "executor": "@storybook/angular:build-storybook",
@@ -27,7 +35,7 @@
         "browserTarget": "design-system:build",
         "compodoc": false,
         "styles": [
-          "{projectRoot}/src/styles.css"
+          "{projectRoot}/storybook/styles.compiled.css"
         ]
       },
       "configurations": {
@@ -35,6 +43,11 @@
           "quiet": true
         }
       },
+      "dependsOn": [
+        "compile-styles",
+        "^generate",
+        "^build"
+      ],
       "inputs": [
         "default"
       ],
@@ -61,8 +74,37 @@
         }
       }
     },
+    "compile-styles": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx tailwindcss",
+        "input": "{projectRoot}/src/styles.css",
+        "output": "{projectRoot}/storybook/styles.compiled.css"
+      },
+      "configurations": {
+        "ci": {
+          "minify": true
+        },
+        "watch": {
+          "watch": true
+        }
+      },
+      "inputs": [
+        "default",
+        "{projectRoot}/src/styles.css"
+      ],
+      "outputs": [
+        "{options.output}"
+      ],
+      "cache": true
+    },
     "stylelint": {
-      "executor": "nx-stylelint:lint"
+      "executor": "nx-stylelint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/src/**/*.css"
+        ]
+      }
     },
     "doc-markdownlint": {
       "executor": "@travel-packlist/check-plugin:markdown",

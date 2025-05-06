@@ -94,6 +94,8 @@ test('happy path editor to packlist', async ({ page }) => {
   await expect(editor.dialog()).toBeHidden();
   expect(await rule2.item(1).noErrors()).toBe(true);
 
+  await expect(rule2.item(1).category()).toHaveValue('Toiletries');
+
   await expect(page).toHaveScreenshot();
 
   await rule2().hover();

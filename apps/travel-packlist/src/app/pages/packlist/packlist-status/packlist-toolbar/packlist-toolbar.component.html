@@ -3,7 +3,6 @@
     <button
       type="button"
       class="link"
-      role="button"
       aria-label="Lock answers"
       i18n-aria-label
       [attr.aria-pressed]="isAnswersLockActive()"
@@ -23,7 +22,6 @@
         iconClass="h-6 w-6"
         type="button"
         class="link"
-        role="button"
         aria-label="Display weight distribution"
         i18n-aria-label
         [attr.aria-pressed]="statsVisible() === 'distribution'"
@@ -35,7 +33,6 @@
         iconClass="h-6 w-6 rotate-90"
         type="button"
         class="link"
-        role="button"
         aria-label="Display heaviest items"
         i18n-aria-label
         [attr.aria-pressed]="statsVisible() === 'heaviestItems'"

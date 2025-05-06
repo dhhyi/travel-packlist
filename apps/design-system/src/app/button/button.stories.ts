@@ -10,18 +10,9 @@ import { IconCogComponent } from '@travel-packlist/icons';
   imports: [NgTemplateOutlet, IconCogComponent],
   selector: 'ds-button',
   templateUrl: './button.html',
-  styles: `
-    .unused {
-      @apply italic text-slate-500;
-    }
-    div {
-      @apply content-center text-center;
-    }
-
-    :host > div {
-      @apply mb-8;
-    }
-  `,
+  host: {
+    class: 'flex flex-col gap-8',
+  },
 })
 class Button {
   text: string | undefined = undefined;

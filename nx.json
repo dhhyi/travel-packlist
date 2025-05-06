@@ -6,8 +6,7 @@
       "sharedGlobals"
     ],
     "design": [
-      "{workspaceRoot}/apps/design-system/src/**/*.css",
-      "{workspaceRoot}/apps/design-system/tailwind.*.js"
+      "{workspaceRoot}/apps/design-system/src/**/*.css"
     ],
     "production": [
       "default",

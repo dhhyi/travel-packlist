@@ -4,7 +4,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-support',
   templateUrl: './config-support.component.html',
-  styleUrl: '../config-section.css',
 })
 export class ConfigSupportComponent {
   displayKoFi = !ANDROID;

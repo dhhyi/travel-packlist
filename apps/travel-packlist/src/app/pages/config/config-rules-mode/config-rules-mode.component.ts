@@ -10,7 +10,6 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-mode',
   templateUrl: './config-rules-mode.component.html',
-  styleUrl: '../config-section.css',
   imports: [FormsModule, SelectOptionsComponent, SelectOptionDirective],
 })
 export class ConfigRulesModeComponent {

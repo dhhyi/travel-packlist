@@ -9,11 +9,9 @@ import {
   selector: 'cmp-bar-chart',
   templateUrl: './bar-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: `
-    :host {
-      @apply flex flex-col items-center justify-center;
-    }
-  `,
+  host: {
+    class: 'flex flex-col items-center justify-center',
+  },
 })
 export class BarChartComponent<
   Item extends { name: string; value: number; color: string },

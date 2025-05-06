@@ -12,11 +12,9 @@ import {
   selector: 'cmp-pie-chart',
   templateUrl: './pie-chart.component.html',
   imports: [PercentPipe],
-  styles: `
-    :host {
-      @apply flex flex-col items-center justify-center;
-    }
-  `,
+  host: {
+    class: 'flex flex-col items-center justify-center',
+  },
 })
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 export class PieChartComponent<

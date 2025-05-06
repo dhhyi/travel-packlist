@@ -1,6 +1,106 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* stylelint-disable-next-line import-notation */
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant animations (&:where(.animations, .animations *));
+@custom-variant accessible (&:where(.accessible, .accessible *));
+
+@theme {
+  /* stylelint-disable custom-property-pattern */
+  --font-display: sans-serif;
+  --breakpoint-*: initial;
+  --breakpoint-big: 600px;
+  --font-weight-*: initial;
+  --font-weight-bold: 700;
+  --font-weight-normal: 400;
+  --text-*: initial;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 2rem;
+  --color-*: initial;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-white: #fff;
+  --color-gray-100: #f9fafb;
+  --color-gray-300: #d1d5db;
+  --color-gray-500: #6b7280;
+  --color-gray-700: #374151;
+  --color-gray-900: #111827;
+  --color-black: #000;
+  --color-green-light: #22c55e;
+  --color-green-normal: #15803d;
+  --color-red-light: #ef4444;
+  --color-red-normal: #b91c1c;
+  --color-yellow-normal: #ca8a04;
+  --color-transparent: transparent;
+  --spacing-*: initial;
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-4: 1rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-12: 3rem;
+  --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.1;
+    }
+  }
+  /* stylelint-enable custom-property-pattern */
+}
+
+@utility bg-active {
+  @apply bg-white dark:bg-slate-900;
+}
+
+@utility bg-disabled {
+  @apply bg-slate-100 dark:bg-slate-800;
+}
+
+@utility text-green {
+  @apply text-green-normal dark:text-green-light;
+}
+
+@utility text-red {
+  @apply text-red-normal dark:text-red-light;
+}
+
+@utility text-checked-item {
+  @apply text-slate-600 line-through dark:text-slate-400;
+}
+
+@utility text-skipped-item {
+  @apply italic opacity-30;
+
+  text-shadow: 0 0 4px var(--color-slate-500);
+}
+
+@utility shadow-inner-lg {
+  box-shadow: inset 0 0 10px rgb(128 128 128 / 50%);
+}
+
+@utility accessible-content {
+  @apply accessible:min-h-[49px] accessible:min-w-[49px];
+}
 
 @layer base {
   html {
@@ -17,14 +117,6 @@
     @apply h-full;
   }
 
-  .bg-active {
-    @apply bg-white dark:bg-slate-900;
-  }
-
-  .bg-disabled {
-    @apply bg-slate-100 dark:bg-slate-800;
-  }
-
   .animations {
     body,
     .bg-active,
@@ -32,19 +124,52 @@
       @apply transition-colors;
     }
   }
+
+  .markdown {
+    h1 {
+      @apply m-0 py-2 text-xl font-bold;
+    }
+
+    h2 {
+      @apply m-0 py-2 text-lg font-bold;
+    }
+
+    h3 {
+      @apply m-0 py-2 text-base font-bold;
+    }
+
+    p {
+      @apply mx-2 my-0 py-1 text-base;
+    }
+
+    pre {
+      @apply mx-2 my-0 rounded-sm bg-gray-300 p-2 font-mono dark:bg-gray-700;
+    }
+
+    code {
+      @apply bg-gray-300 px-1 font-bold dark:bg-gray-700;
+
+      white-space: pre-wrap;
+      overflow-wrap: break-word;
+    }
+
+    blockquote {
+      @apply mx-2 my-0 mb-2 border-l-4 border-gray-300 p-2 dark:border-gray-700;
+    }
+
+    a[href] {
+      @apply underline;
+    }
+  }
 }
 
 @layer components {
   .card {
-    @apply rounded-md border-2 border-slate-300 p-2 shadow-inner;
+    @apply animations:transition-opacity rounded-md border-2 border-slate-300 p-2 shadow-inner;
 
     &.disabled {
       @apply bg-disabled opacity-50;
     }
-  }
-
-  .help {
-    @apply absolute m-2 translate-y-[3rem] rounded-lg border border-slate-300 bg-slate-100 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300;
   }
 
   svg {
@@ -52,7 +177,7 @@
   }
 
   button {
-    @apply flex items-center justify-center rounded bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
+    @apply animations:transition-colors accessible:min-h-[49px] accessible:min-w-[49px] flex items-center justify-center rounded-sm bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
 
     &[disabled] {
       @apply bg-disabled cursor-not-allowed text-gray-500;
@@ -75,7 +200,7 @@
     }
 
     &.active {
-      @apply ring ring-slate-800 dark:ring-slate-200;
+      @apply ring-3 ring-slate-800 dark:ring-slate-200;
     }
 
     &.pressed {
@@ -100,7 +225,7 @@
   input,
   select,
   textarea {
-    @apply rounded-md border border-slate-300 bg-transparent p-1;
+    @apply rounded-md border border-slate-300 bg-transparent p-1 placeholder:text-slate-500;
 
     &[disabled] {
       @apply border border-transparent bg-transparent;
@@ -109,14 +234,14 @@
 
   input,
   select {
-    @apply h-8;
+    @apply accessible:min-h-[49px] h-8;
   }
 
   select {
     @apply pl-0;
 
     &[disabled] {
-      @apply appearance-none pl-1 pr-4;
+      @apply appearance-none pr-4 pl-1;
     }
   }
 
@@ -125,49 +250,8 @@
     @apply border-red-normal bg-red-light outline-red-normal;
   }
 
-  .accessible {
-    button,
-    [role='button'],
-    [role='checkbox'],
-    [role='radio'],
-    .accessible-content {
-      @apply min-h-[49px] min-w-[49px];
-    }
-
-    input,
-    select {
-      @apply min-h-[49px];
-    }
-  }
-
-  .animations {
-    button,
-    [role='button'] {
-      @apply transition-colors;
-    }
-
-    .card {
-      @apply transition-opacity;
-    }
-  }
-}
-
-@layer utilities {
-  .text-green {
-    @apply text-green-normal dark:text-green-light;
-  }
-
-  .text-red {
-    @apply text-red-normal dark:text-red-light;
-  }
-
-  .text-checked-item {
-    @apply text-slate-600 line-through dark:text-slate-400;
-  }
-
-  .text-skipped-item {
-    @apply italic opacity-30;
-    /* stylelint-disable-next-line */
-    text-shadow: 0 0 4px theme(colors.slate.500);
+  [role='checkbox'],
+  [role='radio'] {
+    @apply accessible:min-h-[49px] accessible:min-w-[49px];
   }
 }

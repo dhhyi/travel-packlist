@@ -37,7 +37,12 @@ const rules = (tsConfigOrFolder, options) => {
         },
       },
       rules: {
-        '@angular-eslint/component-max-inline-declarations': 'error',
+        '@angular-eslint/component-max-inline-declarations': [
+          'error',
+          {
+            styles: 0,
+          },
+        ],
         '@angular-eslint/component-selector': [
           'error',
           {

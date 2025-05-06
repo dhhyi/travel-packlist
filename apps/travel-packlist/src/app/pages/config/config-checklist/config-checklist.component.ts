@@ -17,7 +17,6 @@ import { confirm } from '../../../dialog';
 @Component({
   selector: 'app-config-checklist',
   templateUrl: './config-checklist.component.html',
-  styleUrl: '../config-section.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,

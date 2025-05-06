@@ -12,7 +12,6 @@ import { confirm } from '../../../dialog';
   selector: 'app-config-rules-template',
   templateUrl: './config-rules-template.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: '../config-section.css',
   imports: [SelectOptionsComponent, SelectOptionDirective, FormsModule],
 })
 export class ConfigRulesTemplateComponent {

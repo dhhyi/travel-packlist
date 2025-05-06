@@ -106,11 +106,9 @@ const routeTransition = trigger('routeTransition', [
   ],
   templateUrl: './app.component.html',
   animations: [routeTransition],
-  styles: `
-    :host {
-      @apply flex h-full flex-col;
-    }
-  `,
+  host: {
+    class: 'flex h-full flex-col',
+  },
 })
 export class AppComponent {
   private state = inject(GLOBAL_STATE);
