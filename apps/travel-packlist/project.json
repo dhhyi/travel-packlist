@@ -4,15 +4,15 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "{projectRoot}/src",
-  "tags": [
-    "scope:main"
-  ],
   "i18n": {
     "sourceLocale": "en",
     "locales": {
       "de": "libs/locale/src/messages.de.json"
     }
   },
+  "tags": [
+    "scope:main"
+  ],
   "implicitDependencies": [
     "!design-system",
     "capacitor-assets"
@@ -133,7 +133,8 @@
           "buildTarget": "travel-packlist:build:android"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@nx/angular:extract-i18n",
