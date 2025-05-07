@@ -15,6 +15,7 @@ import { RulesSourceState } from './rules-source-state';
 export const rulesParsingState = ({
   config: { trackWeight },
   rules: { raw },
+  remoteRules: { setCurrentTitle },
 }: RulesSourceState & ConfigState) => {
   const parser = inject(Parser);
 
@@ -35,6 +36,9 @@ export const rulesParsingState = ({
     const rules = parsedResource.value();
     if (rules) {
       parsedRules.set(rules);
+      if (rules.title) {
+        setCurrentTitle(rules.title);
+      }
     }
   });
 

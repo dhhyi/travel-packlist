@@ -76,6 +76,24 @@ export class ConfigPage extends Banner {
     });
   }
 
+  remoteHistoryButton() {
+    return this.page.getByRole('button', {
+      name: 'Load source from history',
+    });
+  }
+
+  get remoteHistory() {
+    const history = this.page.getByRole('list', {
+      name: 'Remote source history',
+    });
+    const fn = function () {
+      return history;
+    };
+    fn.item = (idx: number) =>
+      history.locator(this.page.getByRole('listitem').nth(idx));
+    return fn;
+  }
+
   template(name: string) {
     return this.page
       .getByRole('radiogroup', { name: 'Rules Template' })

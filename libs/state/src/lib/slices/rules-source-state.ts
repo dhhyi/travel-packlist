@@ -108,8 +108,18 @@ export const rulesSourceState = ({
     'remoteHistory',
     [],
   );
+  const historyTitles = createLocalStorageSignalState<Record<string, string>>(
+    'remoteHistoryTitle',
+    {},
+  );
   const removeFromHistory = function (url: string) {
     remoteHistory.update((history) => history.filter((u) => u !== url));
+    historyTitles.update((titles) => {
+      const newTitles = { ...titles };
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete newTitles[url];
+      return newTitles;
+    });
   };
   const remote = linkedSignal(() =>
     mode() === 'remote' ? remoteHistory()[0] : undefined,
@@ -172,6 +182,16 @@ export const rulesSourceState = ({
     }
   };
 
+  const setCurrentTitle = function (title: string) {
+    const url = remote();
+    if (mode() === 'remote' && url) {
+      historyTitles.update((titles) => ({
+        ...titles,
+        [url]: title,
+      }));
+    }
+  };
+
   const updateRules = function (newRules: string | undefined) {
     mode.set('local');
     rawLocalRules.set(newRules);
@@ -215,8 +235,12 @@ export const rulesSourceState = ({
     remoteRules: {
       /** load remote rules */
       load: loadRemote,
+      /** set title of current rules for remote history, only use in parser */
+      setCurrentTitle,
       /** remote rules history */
-      history: remoteHistory.asReadonly(),
+      history: computed(() =>
+        remoteHistory().map((url) => ({ url, title: historyTitles()[url] })),
+      ),
       /** remove entry from history */
       removeFromHistory,
     },

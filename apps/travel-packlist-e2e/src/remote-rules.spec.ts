@@ -204,3 +204,116 @@ test.describe(() => {
     await expect(packlist.item('Hello from GitHub Repo', false)).toBeVisible();
   });
 });
+
+test('remote rules history', async ({ page }) => {
+  await page.route('**/test-rules.txt', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: `# Test Rules
+      :- [Test] Test item`,
+    });
+  });
+
+  await page.route('**/test-rules-2.txt', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: `# Second Rules
+      :- [Test] Test item`,
+    });
+  });
+
+  await page.route('**/test-rules-3.txt', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: `:- [Test] Test item`,
+    });
+  });
+
+  await page.route('**/test-rules-4.txt', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: `:- [Test] Test item`,
+    });
+  });
+
+  await page.route('**/test-rules-error.txt', async (route) => {
+    await route.fulfill({
+      status: 404,
+      contentType: 'text/plain',
+      body: 'Not found',
+    });
+  });
+
+  await page.route('**/test-rules-parser-error.txt', async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: 'text/plain',
+      body: `invalid rules`,
+    });
+  });
+
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.rulesMode.remote().click();
+
+  await expect(config.remoteRulesURL()).toBeVisible();
+  await expect(config.remoteSourceStatus()).toHaveText('idle');
+
+  await config.remoteSourceStatus().scrollIntoViewIfNeeded();
+
+  await config.remoteRulesURL().fill('http://localhost:4200/test-rules.txt');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  await config
+    .remoteRulesURL()
+    .fill('http://localhost:4200/test-rules-error.txt');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toContainText('HTTP Error');
+
+  await config.remoteRulesURL().fill('http://localhost:4200/test-rules-2.txt');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  await config
+    .remoteRulesURL()
+    .fill('http://localhost:4200/test-rules-parser-error.txt');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toContainText('Parser Error', {
+    ignoreCase: true,
+  });
+
+  await config.remoteRulesURL().fill('http://localhost:4200/test-rules-3.txt');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  await config.remoteRulesURL().fill('http://localhost:4200/test-rules-4.txt');
+  await config.remoteRulesURL().blur();
+
+  await expect(config.remoteSourceStatus()).toHaveText('loaded');
+
+  await config.remoteHistoryButton().click();
+
+  await expect(config.remoteHistory()).toBeVisible();
+  await expect(config.remoteHistory.item(0)).toContainText('test-rules-3.txt');
+  await expect(config.remoteHistory.item(1)).toContainText(
+    'test-rules-parser-error.txt',
+  );
+  await expect(config.remoteHistory.item(2)).toContainText('test-rules-2.txt');
+  await expect(config.remoteHistory.item(2)).toContainText('Second Rules');
+  await expect(config.remoteHistory.item(3)).toContainText('test-rules.txt');
+  await expect(config.remoteHistory.item(3)).toContainText('Test Rules');
+
+  await config.remoteHistory().scrollIntoViewIfNeeded();
+
+  await expect(page).toHaveScreenshot();
+});

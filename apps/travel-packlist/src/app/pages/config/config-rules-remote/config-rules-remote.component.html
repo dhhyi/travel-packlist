@@ -61,16 +61,19 @@
   ></button>
 </div>
 @if (remoteHistoryVisible()) {
-  <ul>
+  <ul aria-label="Remote source history" i18n-aria-label>
     @for (item of remoteHistory(); track $index) {
       <li class="flex cursor-pointer items-center p-1 text-sm">
         <span
           class="grow break-all"
           tabindex="0"
-          (click)="loadRemote(item)"
-          (keypress)="loadRemote(item)"
+          (click)="loadRemote(item.url)"
+          (keypress)="loadRemote(item.url)"
         >
-          {{ item }}
+          @if (item.title) {
+            <h3 class="text-base font-bold">{{ item.title }}</h3>
+          }
+          {{ item.url }}
         </span>
         <button
           iconDelete
@@ -79,7 +82,7 @@
           class="link pr-0"
           aria-label="remove entry from history"
           i18n-aria-label
-          (click)="removeFromHistory(item)"
+          (click)="removeFromHistory(item.url)"
         ></button>
       </li>
     }

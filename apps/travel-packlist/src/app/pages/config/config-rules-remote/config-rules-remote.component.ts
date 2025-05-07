@@ -43,7 +43,7 @@ export class ConfigRulesRemoteComponent {
   }
 
   private readonly currentURL = computed(
-    () => this.state.remoteRules.history()[0],
+    () => this.state.remoteRules.history()[0]?.url,
   );
 
   readonly rulesLoaded = computed(() => this.state.rules.raw.hasValue());
