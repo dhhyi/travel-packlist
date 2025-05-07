@@ -17,6 +17,7 @@ extras:
 namedVolumes:
   node_modules: travel-packlist-node-modules
   /home/pnpm: travel-packlist-pnpm-store
+  /home/vscode/.local/state/lazygit: travel-packlist-lazygit-history
 vscode:
   extensions:
     - angular.ng-template

@@ -1,9 +1,10 @@
 {
   "mounts": [
     "type=volume,target=${containerWorkspaceFolder}/node_modules,source=travel-packlist-node-modules",
-    "type=volume,target=/home/pnpm,source=travel-packlist-pnpm-store"
+    "type=volume,target=/home/pnpm,source=travel-packlist-pnpm-store",
+    "type=volume,target=/home/vscode/.local/state/lazygit,source=travel-packlist-lazygit-history"
   ],
-  "postStartCommand": "sudo chown vscode node_modules /home/pnpm",
+  "postStartCommand": "sudo chown vscode node_modules /home/pnpm /home/vscode/.local/state/lazygit",
   "build": {
     "dockerfile": "Dockerfile"
   },
