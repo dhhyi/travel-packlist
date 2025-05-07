@@ -165,7 +165,7 @@
 
 @layer components {
   .card {
-    @apply animations:transition-opacity rounded-md border-2 border-slate-300 p-2 shadow-inner;
+    @apply animations:transition-opacity rounded-md border-2! border-slate-300! p-2 shadow-inner;
 
     &.disabled {
       @apply bg-disabled opacity-50;

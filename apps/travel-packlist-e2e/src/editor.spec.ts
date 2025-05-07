@@ -76,6 +76,7 @@ test('rule editor - view with title', async ({ page }) => {
   await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
     - textbox "Rules Title" [disabled]: "My Rules"
   `);
+  await expect(page).toHaveScreenshot();
 });
 
 test('rule editor - edit', async ({ page }) => {
@@ -153,6 +154,7 @@ test('rule editor - edit with title', async ({ page }) => {
   await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
     - textbox "Rules Title": "My New Rules"
   `);
+  await expect(page).toHaveScreenshot();
 });
 
 test('rule editor - delete', async ({ page }) => {
