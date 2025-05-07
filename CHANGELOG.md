@@ -1,3 +1,13 @@
+## [0.13.1](https://github.com/dhhyi/travel-packlist/compare/v0.13.0...v0.13.1) (2025-05-07)
+
+### Features
+
+- use title in remote history ([d35bc41](https://github.com/dhhyi/travel-packlist/commit/d35bc4151f80e4d76e7ebe0df9af89dc41151af0))
+
+### Bug Fixes
+
+- title input card always has border ([79ee9f4](https://github.com/dhhyi/travel-packlist/commit/79ee9f48954f25c8777dfba7fb982a63657a4075))
+
 ## [0.13.0](https://github.com/dhhyi/travel-packlist/compare/v0.12.2...v0.13.0) (2025-04-25)
 
 ### Features
