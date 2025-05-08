@@ -2,12 +2,13 @@
 extends: dcc://javascript-pnpm
 devcontainer:
   build:
+    user:
+      - ENV NX_TUI=false NX_NO_CLOUD=true
     files:
       - type: script
         path: /usr/bin/nx
         content: |
           #!/bin/bash
-          export NX_TUI=false
           exec pnpm exec nx "$@"
   ports:
     - 4200
