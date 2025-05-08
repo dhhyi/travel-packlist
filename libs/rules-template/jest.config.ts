@@ -16,6 +16,7 @@ export default {
         tsconfig: '<rootDir>/tsconfig.spec.json',
       },
     ],
+    '^.+\\.txt$': 'jest-text-transformer',
   },
   transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
 };

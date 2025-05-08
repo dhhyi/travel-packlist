@@ -15,6 +15,10 @@ function pascalize(str: string) {
     .join('');
 }
 
+function importName(name: string, lang: string) {
+  return `../txt/${name}${lang === 'default' ? '' : `.${lang}`}.txt`;
+}
+
 export async function generator(tree: Tree, options: GeneratorSchema) {
   const files = globSync(options.pattern);
 
@@ -24,14 +28,12 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
       const lang = path.extname(name).substring(1) || 'default';
       name = name.replace(`.${lang}`, '');
 
-      const content = tree.read(file)?.toString('utf-8');
-
       const folder = path.join(options.path);
 
       generateFiles(tree, path.join(__dirname, 'files', 'template'), folder, {
         lang,
         name,
-        content,
+        importName,
       });
 
       return { name, lang };
@@ -45,6 +47,7 @@ export async function generator(tree: Tree, options: GeneratorSchema) {
     templates: Object.entries(templates),
     shout,
     pascalize,
+    importName,
   });
 
   await formatFiles(tree);

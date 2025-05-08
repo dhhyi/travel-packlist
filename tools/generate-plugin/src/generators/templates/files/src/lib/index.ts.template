@@ -7,7 +7,7 @@ import {
 
 <% for (const [name, languages] of templates) {
   for (const lang of languages) { %>
-import <%= name %>_template_<%= lang %> from './<%= name + '.' + lang %>';
+import <%= name %>_template_<%= lang %> from '<%= importName(name, lang) %>';
 <% } } %>
 
 <% for (const [name, languages] of templates) { %>

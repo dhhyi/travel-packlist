@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Parser } from '@travel-packlist/model';
 
-import template from './<%= name + '.' + lang %>';
+const template = require('<%= importName(name, lang) %>');
 
 describe('<%= name %> (<%= lang %>) template', () => {
   it('should parse', () => {
