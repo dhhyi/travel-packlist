@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Build Info Schema",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "The schema version"
+    },
+    "buildTime": {
+      "type": "number",
+      "description": "Build time in seconds since epoch"
+    },
+    "version": {
+      "type": "string",
+      "description": "The version from package.json"
+    },
+    "gitHash": {
+      "type": "string",
+      "description": "The git hash of the current commit"
+    },
+    "versionCode": {
+      "type": "number",
+      "description": "The version code for the Android application"
+    }
+  },
+  "required": [
+    "buildTime",
+    "version",
+    "gitHash"
+  ],
+  "additionalProperties": false
+}

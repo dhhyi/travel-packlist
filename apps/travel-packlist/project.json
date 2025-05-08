@@ -48,8 +48,7 @@
       "inputs": [
         "default",
         "^production",
-        "design",
-        "version"
+        "design"
       ],
       "outputs": [
         "{options.outputPath}"
@@ -76,10 +75,7 @@
         "scripts": [],
         "define": {
           "ANDROID": "false"
-        },
-        "plugins": [
-          "@travel-packlist/versioning/esbuild-plugin"
-        ]
+        }
       },
       "configurations": {
         "production": {

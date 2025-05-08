@@ -1,10 +1,10 @@
 import {
-  writeFileSync,
-  readFileSync,
-  unlinkSync,
   readdirSync,
-  statSync,
+  readFileSync,
   rmdirSync,
+  statSync,
+  unlinkSync,
+  writeFileSync,
 } from 'fs';
 
 export const moveFile = (
@@ -12,8 +12,16 @@ export const moveFile = (
   to: string,
   modify?: (content: string) => string,
 ) => {
-  let content = readFileSync(from, modify ? { encoding: 'utf-8' } : undefined);
+  copyFile(from, to, modify);
   unlinkSync(from);
+};
+
+export const copyFile = (
+  from: string,
+  to: string,
+  modify?: (content: string) => string,
+) => {
+  let content = readFileSync(from, modify ? { encoding: 'utf-8' } : undefined);
   if (modify) {
     content = modify(content as string);
   }

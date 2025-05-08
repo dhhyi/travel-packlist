@@ -4,11 +4,17 @@
   "sourceRoot": "{projectRoot}/src",
   "projectType": "library",
   "tags": [
-    "utility"
+    "utility",
+    "scope:generated"
   ],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc"
+    },
+    "generate": {
+      "dependsOn": [
+        "schema2ts-*"
+      ]
     }
   }
 }
