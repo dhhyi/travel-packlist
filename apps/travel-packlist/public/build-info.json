@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../tools/versioning/src/lib/build-info.schema.json",
+  "buildTime": 0,
+  "version": "local",
+  "gitHash": "0123456789abcdef0123456789abcdef01234567"
+}

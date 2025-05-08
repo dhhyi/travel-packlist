@@ -10,6 +10,7 @@
         "files": [
           "/index*.html",
           "/manifest.json",
+          "/build-info.json",
           "/*.css",
           "/(main|polyfills|chunk)*.js",
           "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"

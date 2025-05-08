@@ -4,7 +4,7 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 
 export const createNodesV2: CreateNodesV2<object> = [
-  '**/schema.json',
+  '**/*schema.json',
   async (schemaFiles, options, context) =>
     await createNodesFromFiles(
       (schemaFile) => createNodesInternal(schemaFile),
@@ -54,6 +54,9 @@ async function createNodesInternal(schemaInput: string) {
             inputs: [schemaInputWithRoot],
             outputs: [schemaOutputWithRoot],
             cache: true,
+          },
+          generate: {
+            dependsOn: ['schema2ts-*'],
           },
         },
       },

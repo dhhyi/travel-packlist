@@ -80,6 +80,9 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      json-schema-to-typescript:
+        specifier: ^15.0.4
+        version: 15.0.4
       nx:
         specifier: 21.0.0
         version: 21.0.0(@swc-node/register@1.9.2(@swc/core@1.5.29(@swc/helpers@0.5.15))(@swc/types@0.1.21)(typescript@5.8.3))(@swc/core@1.5.29(@swc/helpers@0.5.15))
@@ -231,9 +234,6 @@ importers:
       jest-text-transformer:
         specifier: ^1.0.4
         version: 1.0.4
-      json-schema-to-typescript:
-        specifier: ^15.0.4
-        version: 15.0.4
       markdownlint-cli:
         specifier: ^0.44.0
         version: 0.44.0

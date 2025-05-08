@@ -1,23 +1,28 @@
 import {
   ExecutorContext,
-  PromiseExecutor,
-  runExecutor,
   parseTargetString,
+  PromiseExecutor,
 } from '@nx/devkit';
+import {
+  getGitCommitHash,
+  getPackageJsonVersion,
+  getVersionCode,
+} from '@travel-packlist/versioning';
+import { BuildInfoSchema } from '@travel-packlist/versioning/build-info';
 import { execSync } from 'child_process';
 import { createHash } from 'crypto';
 import {
-  readdirSync,
-  statSync,
-  readFileSync,
-  writeFileSync,
-  unlinkSync,
-  rmdirSync,
   existsSync,
+  mkdirSync,
+  readdirSync,
+  readFileSync,
+  statSync,
+  unlinkSync,
+  writeFileSync,
 } from 'fs';
 
 import {
-  moveFile,
+  copyFile,
   removeDirectoryRecursive,
   updateFile,
 } from '../../file-operations';
@@ -43,27 +48,24 @@ function consolidateOptions(
 /**
  * Runs Angular build for the specified target with localization enabled to the new output path
  */
-async function runAngularBuild(
-  options: ConsolidatedOptions,
-  context: ExecutorContext,
-) {
+function runAngularBuild(options: ConsolidatedOptions) {
   console.log(
     `Running assemble for ${options.buildTarget} with baseHref ${options.baseHref}`,
   );
 
-  for await (const s of await runExecutor(
-    parseTargetString(options.buildTarget, context.projectGraph),
+  execSync(
+    [
+      'npx nx run',
+      '--no-cloud',
+      options.buildTarget,
+      '--localize',
+      `--output-path=${options.outputPath}-build`,
+      `--base-href=${options.baseHref}`,
+    ].join(' '),
     {
-      localize: true,
-      outputPath: options.outputPath,
-      baseHref: options.baseHref,
+      stdio: 'inherit',
     },
-    context,
-  )) {
-    if (!s.success) {
-      throw new Error(`Failed to build ${options.buildTarget}`);
-    }
-  }
+  );
 }
 
 /**
@@ -143,7 +145,7 @@ function fixFileHashes(folder: string) {
   const files = readdirSync(folder)
     .map((file) => {
       const match = hashRegex.exec(file);
-      if (file !== 'index.html' && !match) {
+      if (!file.endsWith('.html') && !match) {
         return null;
       }
       const oldHash = match?.[1];
@@ -189,13 +191,16 @@ function fixFileHashes(folder: string) {
  * merges multiple Angular apps into the same folder
  */
 function mergeAngularApps(options: ConsolidatedOptions) {
-  const folder = `${options.outputPath}/browser`;
+  const folder = `${options.outputPath}-build/browser`;
+  mkdirSync(options.outputPath, { recursive: true });
   readdirSync(folder).forEach((lang) => {
     if (statSync(`${folder}/${lang}`).isDirectory()) {
-      fixFileHashes(`${folder}/${lang}`);
+      readdirSync(`${folder}/${lang}`).forEach((file) => {
+        copyFile(`${folder}/${lang}/${file}`, `${options.outputPath}/${file}`);
+      });
 
       const target = lang === 'en' ? 'index.html' : `index.${lang}.html`;
-      moveFile(
+      copyFile(
         `${folder}/${lang}/index.html`,
         `${options.outputPath}/${target}`,
         (content) =>
@@ -205,13 +210,9 @@ function mergeAngularApps(options: ConsolidatedOptions) {
           ),
       );
 
-      readdirSync(`${folder}/${lang}`).forEach((file) => {
-        moveFile(`${folder}/${lang}/${file}`, `${options.outputPath}/${file}`);
-      });
-      rmdirSync(`${folder}/${lang}`);
+      fixFileHashes(options.outputPath);
     }
   });
-  rmdirSync(folder);
 
   updateFile(`${options.outputPath}/manifest.json`, (content) => {
     const manifest = JSON.parse(content) as { start_url: string };
@@ -245,19 +246,31 @@ function cleanOutputPath(outputPath: string) {
   }
 }
 
-async function assemble(
-  options: ConsolidatedOptions,
-  context: ExecutorContext,
-) {
+function writeBuildInfo(outputPath: string) {
+  const buildInfo: BuildInfoSchema = {
+    buildTime: Math.trunc(Date.now()),
+    version: getPackageJsonVersion(),
+    gitHash: getGitCommitHash(),
+    versionCode: getVersionCode(),
+  };
+  writeFileSync(
+    `${outputPath}/build-info.json`,
+    JSON.stringify(buildInfo, null, 2),
+  );
+}
+
+function assemble(options: ConsolidatedOptions, context: ExecutorContext) {
   cleanOutputPath(options.outputPath);
-  await runAngularBuild(options, context);
+  runAngularBuild(options);
   mergeAngularApps(options);
+  writeBuildInfo(options.outputPath);
   recreateServiceWorkerConfig(context, options);
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
   try {
-    await assemble(consolidateOptions(options, context), context);
+    assemble(consolidateOptions(options, context), context);
     return { success: true };
   } catch (error) {
     console.error((error as Error).message);
