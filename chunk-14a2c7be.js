@@ -1,2 +1,0 @@
-function n(e){return e instanceof Error?e.message:typeof e=="string"?e:"Unknown error"}export{n as a};
-/**i18n:23f0d14f3ae719cb1264510a102962ddde538b134ce7f5438660b98bca748f67*/
