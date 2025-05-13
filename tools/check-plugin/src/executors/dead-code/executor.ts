@@ -101,6 +101,40 @@ function analyzeReferences(node: ReferenceFindableNode & Node) {
     );
 }
 
+function isUsedOnTemplate(template: string, name: string) {
+  const pattern = `\\b${name.replace(/\$$/, '')}\\b`;
+  return new RegExp(pattern).test(template);
+}
+
+function isUsedInHostBinding(host: Node | undefined, name: string) {
+  if (Node.isPropertyAssignment(host)) {
+    const hostValue = host.getInitializerIfKind(
+      SyntaxKind.ObjectLiteralExpression,
+    );
+    if (hostValue) {
+      const nameMatchPattern = new RegExp(`\\b${name}\\b`);
+      return hostValue
+        .getProperties()
+        .some((property) => nameMatchPattern.test(property.getText()));
+    }
+    return false;
+  }
+  return false;
+}
+
+function isInputOrOutputOrModel(node: Node) {
+  if (!Node.isPropertyDeclaration(node)) {
+    return false;
+  }
+  const init = node.getInitializerIfKind(SyntaxKind.CallExpression);
+  return (
+    init &&
+    ['input', 'input.required', 'output'].some(
+      (name) => init.getExpression().getText() === name,
+    )
+  );
+}
+
 function analyzeComponent(this: Context, componentNode: ClassDeclaration) {
   const componentDecorator = componentNode.getDecorator('Component');
   if (!componentDecorator) {
@@ -146,49 +180,43 @@ function analyzeComponent(this: Context, componentNode: ClassDeclaration) {
     );
   }
 
-  const isUsedOnTemplate = (name: string) => {
-    const pattern = `\\b${name.replace(/\$$/, '')}\\b`;
-    return new RegExp(pattern).test(template);
-  };
-
-  const isUsedInHostBinding = (() => {
-    const host = componentMetadata.getProperty('host');
-    if (Node.isPropertyAssignment(host)) {
-      return (name: string) => {
-        const hostValue = host.getInitializerIfKind(
-          SyntaxKind.ObjectLiteralExpression,
-        );
-        if (hostValue) {
-          const nameMatchPattern = new RegExp(`\\b${name}\\b`);
-          return hostValue
-            .getProperties()
-            .some((property) => nameMatchPattern.test(property.getText()));
-        }
-        return false;
-      };
-    }
-    return () => false;
-  })();
-
-  const isInputOrOutputOrModel = (node: Node) => {
-    if (!Node.isPropertyDeclaration(node)) {
-      return false;
-    }
-    const init = node.getInitializerIfKind(SyntaxKind.CallExpression);
-    return (
-      init &&
-      ['input', 'input.required', 'output'].some(
-        (name) => init.getExpression().getText() === name,
-      )
-    );
-  };
-
   componentNode.forEachChild((node) => {
     if (
       (Node.isMethodDeclaration(node) || Node.isPropertyDeclaration(node)) &&
       !node.getFirstModifierByKind(SyntaxKind.PrivateKeyword) &&
-      !isUsedOnTemplate(getSimpleName(node)) &&
-      !isUsedInHostBinding(getSimpleName(node)) &&
+      !isUsedOnTemplate(template, getSimpleName(node)) &&
+      !isUsedInHostBinding(
+        componentMetadata.getProperty('host'),
+        getSimpleName(node),
+      ) &&
+      !isInputOrOutputOrModel(node)
+    ) {
+      this.analyzeList.push(node);
+    }
+  });
+}
+
+function analyzeDirective(this: Context, directiveNode: ClassDeclaration) {
+  const directiveDecorator = directiveNode.getDecorator('Directive');
+  if (!directiveDecorator) {
+    throw new Error(
+      `Expected ${getSimpleName(directiveNode)} to have a @Directive decorator`,
+    );
+  }
+  this.logTrace('Analyzing directive', getSimpleName(directiveNode));
+  const directiveMetadata = directiveDecorator.getArguments()[0];
+  if (!Node.isObjectLiteralExpression(directiveMetadata)) {
+    throw new Error('Expected component metadata to be an object literal');
+  }
+
+  directiveNode.forEachChild((node) => {
+    if (
+      (Node.isMethodDeclaration(node) || Node.isPropertyDeclaration(node)) &&
+      !node.getFirstModifierByKind(SyntaxKind.PrivateKeyword) &&
+      !isUsedInHostBinding(
+        directiveMetadata.getProperty('host'),
+        getSimpleName(node),
+      ) &&
       !isInputOrOutputOrModel(node)
     ) {
       this.analyzeList.push(node);
@@ -214,6 +242,10 @@ function traverse(this: Context, node: Node) {
       analyzeComponent.bind(this)(node);
     }
 
+    if (Node.isClassDeclaration(node) && node.getDecorator('Directive')) {
+      analyzeDirective.bind(this)(node);
+    }
+
     if (isExported.bind(this)(node)) {
       return;
     }
@@ -229,7 +261,7 @@ function traverse(this: Context, node: Node) {
 
     if (Node.isClassDeclaration(node) && node.isExported()) {
       this.analyzeList.push(node);
-      if (!node.getDecorator('Component')) {
+      if (!node.getDecorator('Component') && !node.getDecorator('Directive')) {
         traverse.bind(this)(node);
       }
     } else if (
