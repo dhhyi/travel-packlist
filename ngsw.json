@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1747137562801,
+  "timestamp": 1747139321359,
   "index": "/travel-packlist/index.html",
   "assetGroups": [
     {
@@ -11,6 +11,7 @@
         "ignoreVary": true
       },
       "urls": [
+        "/travel-packlist/build-info.json",
         "/travel-packlist/chunk-0b11cfc4.js",
         "/travel-packlist/chunk-0e95d309.js",
         "/travel-packlist/chunk-1edbf0ad.js",
@@ -65,6 +66,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "/travel-packlist/build-info.json": "65651b5c8b7efdcbad972ed859a865942820f178",
     "/travel-packlist/chunk-0b11cfc4.js": "0b11cfc40a9da0154b47a0b59b8bc1e82dd3fbe6",
     "/travel-packlist/chunk-0e95d309.js": "0e95d309a04b717d33b89a8cce9c351f635f95b3",
     "/travel-packlist/chunk-1edbf0ad.js": "1edbf0ad39087621793130873bc0f7e8b6084f76",
