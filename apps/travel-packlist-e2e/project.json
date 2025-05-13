@@ -16,14 +16,14 @@
     },
     "install": {
       "commands": [
-        "pnpm playwright install-deps chromium",
-        "pnpm playwright install chromium"
+        "playwright install-deps chromium",
+        "playwright install chromium"
       ]
     },
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm playwright test -c {projectRoot}/playwright.config.ts"
+        "command": "playwright test -c {projectRoot}/playwright.config.ts"
       },
       "inputs": [
         "default",
@@ -35,7 +35,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "pnpm playwright test -c {projectRoot}/playwright.config.ts --update-snapshots",
+          "playwright test -c {projectRoot}/playwright.config.ts --update-snapshots",
           "git apply dist/.playwright/{projectRoot}/test-output/rebaselines.patch"
         ],
         "parallel": false

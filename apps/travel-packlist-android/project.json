@@ -52,7 +52,7 @@
       ],
       "options": {
         "commands": [
-          "pnpm cap run android"
+          "cap run android"
         ]
       }
     }

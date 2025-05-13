@@ -140,7 +140,7 @@ function buildAAB(options: ExecutorSchema) {
   );
 
   const command = [
-    'npx cap build android',
+    'pnpm cap build android',
     `--keystorepath "release.jks"`,
     `--keystorepass ${process.env['RELEASE_KEYSTORE_PASSWORD']}`,
     `--keystorealias ${process.env['RELEASE_KEYSTORE_ALIAS']}`,

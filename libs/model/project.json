@@ -14,7 +14,7 @@
       "executor": "nx:run-commands",
       "cache": true,
       "options": {
-        "command": "npx peggy -c peggy.config.js",
+        "command": "peggy -c peggy.config.js",
         "cwd": "{projectRoot}"
       },
       "inputs": [

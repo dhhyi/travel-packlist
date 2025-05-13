@@ -55,7 +55,7 @@ function runAngularBuild(options: ConsolidatedOptions) {
 
   execSync(
     [
-      'npx nx run',
+      'pnpm nx run',
       '--no-cloud',
       options.buildTarget,
       '--localize',
@@ -235,7 +235,7 @@ function recreateServiceWorkerConfig(
         parseTargetString(options.buildTarget, context.projectGraph).project
       ].root;
     execSync(
-      `npx ngsw-config ${options.outputPath} ${buildTargetProjectRoot}/ngsw-config.json ${options.baseHref}`,
+      `pnpm ngsw-config ${options.outputPath} ${buildTargetProjectRoot}/ngsw-config.json ${options.baseHref}`,
     );
   }
 }

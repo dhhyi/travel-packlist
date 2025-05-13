@@ -77,7 +77,7 @@
     "compile-styles": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx tailwindcss",
+        "command": "tailwindcss",
         "input": "{projectRoot}/src/styles.css",
         "output": "{projectRoot}/storybook/styles.compiled.css"
       },

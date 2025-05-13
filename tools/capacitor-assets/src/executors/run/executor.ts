@@ -14,7 +14,7 @@ import { ExecutorSchema } from './schema';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 const runExecutor: Executor<ExecutorSchema> = async (options) => {
-  const capacitorAssetsCommand = ['npx', '@capacitor/assets', 'generate'];
+  const capacitorAssetsCommand = ['pnpm', 'capacitor-assets', 'generate'];
 
   if (options.lightColor) {
     const lightColor = options.lightColor;
