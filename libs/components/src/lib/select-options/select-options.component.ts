@@ -3,25 +3,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChildren,
-  Directive,
   effect,
   forwardRef,
-  inject,
   input,
   signal,
-  TemplateRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 
-@Directive({
-  // eslint-disable-next-line @angular-eslint/directive-selector
-  selector: 'ng-template[value]',
-})
-export class SelectOptionDirective<V extends string> {
-  readonly value = input.required<V>();
-  readonly template = inject(TemplateRef<unknown>);
-}
+import { SelectOptionDirective } from './select-option.directive';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
