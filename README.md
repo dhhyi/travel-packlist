@@ -24,10 +24,10 @@ It should be flexible enough to be used for other purposes as well.
 Custom rules can be defined either with free text in a [specific grammar](./libs/documentation/src/doc/rules-documentation.md) or a graphical editor.
 
 Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app deployed on GitHub Pages.
-
 As it is a PWA, you can also install it on your home screen for easy access.
-There is also an Android App available in the Play Store, which is currently in testing and not yet publicly available.
-However, you can [become a tester](mailto:danilo.hoffmann1+travel-packlist@googlemail.com?subject=Requesting%20Access%20to%20TravelPacklist%20Testing&body=Hi,%0A%0AI%20would%20like%20to%20get%20access%20to%20the%20Testing%20version%20of%20TravelPacklist.%0A%0AMy%20Google%20Account%20EMail%20for%20my%20Android%20Phone%20is:).
+
+There is also an Android App available in the Play Store, which is currently in testing.
+If you want, you can [become a tester](https://play.google.com/store/apps/details?id=dev.dhhyi).
 
 Data is stored in your browser's local storage and not shared with any server.
 The app has an export and import feature to backup and restore your data wherever you like.
