@@ -10,10 +10,10 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Dispatch = (...args: any[]) => unknown;
 
-type ResourceLike<T> = Pick<Resource<T>, 'value' | 'status' | 'error'>;
-
-type Structured<T = Dispatch | Signal<unknown> | ResourceLike<unknown>> =
-  Record<string, Record<string, T>>;
+type Structured<T = Dispatch | Signal<unknown> | Resource<unknown>> = Record<
+  string,
+  Record<string, T>
+>;
 
 type OverwriteRedeclarations<
   A extends Record<string, unknown>,
