@@ -48,7 +48,8 @@
       "inputs": [
         "default",
         "^production",
-        "design"
+        "design",
+        "version"
       ],
       "outputs": [
         "{options.outputPath}"
