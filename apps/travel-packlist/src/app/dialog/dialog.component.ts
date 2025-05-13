@@ -7,19 +7,24 @@ import {
 } from '@angular/core';
 import { noop } from 'rxjs';
 
+import { FocusThisDirective } from './focus-this.directive';
+
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FocusThisDirective],
 })
 export class DialogComponent {
   self = DialogComponent;
   static readonly dialogVisible = signal<boolean>(false);
   static readonly dialogPromptVisible = signal<boolean>(false);
+  static readonly dialogPrefill = signal<string>('');
   static readonly dialogCancelVisible = signal<boolean>(true);
   static readonly dialogMessage = signal<string>('');
   static readonly dialogOk = signal<(prompt: string) => void>(noop);
   static readonly dialogCancel = signal<() => void>(noop);
+  static readonly focus = signal<'prompt' | 'ok' | undefined>(undefined);
 
   readonly overlayVisible = output<boolean>();
 
@@ -27,43 +32,34 @@ export class DialogComponent {
     effect(() => {
       this.overlayVisible.emit(DialogComponent.dialogVisible());
     });
+    effect(() => {
+      DialogComponent.focus();
+      setTimeout(() => {
+        DialogComponent.focus.set(undefined);
+      }, 500);
+    });
   }
 }
 
-function showDialog(cancel = true, prompt = false) {
+function showDialog(cancel = true, prompt: string | boolean = false) {
   DialogComponent.dialogCancelVisible.set(cancel);
-  DialogComponent.dialogPromptVisible.set(prompt);
+  DialogComponent.dialogPromptVisible.set(prompt !== false);
+  if (typeof prompt === 'string') {
+    DialogComponent.dialogPrefill.set(prompt);
+  }
+  DialogComponent.focus.set(typeof prompt === 'string' ? 'prompt' : 'ok');
   DialogComponent.dialogVisible.set(true);
 }
 
 function hideDialog() {
   DialogComponent.dialogVisible.set(false);
   DialogComponent.dialogPromptVisible.set(false);
+  DialogComponent.dialogPrefill.set('');
   DialogComponent.dialogCancelVisible.set(true);
-}
-
-function focusPrompt(prefill: string): void {
-  const input = document.querySelector<HTMLInputElement>('#prompt');
-  if (!input) {
-    throw new Error('Prompt input not found');
-  }
-  input.value = prefill;
-  input.focus();
-}
-
-function focusOkButton() {
-  const button = document.querySelector<HTMLButtonElement>('#okbutton');
-  if (!button) {
-    throw new Error('Ok button not found');
-  }
-  button.focus();
 }
 
 export function confirm(message: string): Promise<boolean> {
   DialogComponent.dialogMessage.set(message);
-  setTimeout(() => {
-    focusOkButton();
-  }, 100);
   showDialog();
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {
@@ -79,10 +75,7 @@ export function confirm(message: string): Promise<boolean> {
 
 export function prompt(message: string, prefill = ''): Promise<string | null> {
   DialogComponent.dialogMessage.set(message);
-  setTimeout(() => {
-    focusPrompt(prefill);
-  }, 100);
-  showDialog(true, true);
+  showDialog(true, prefill);
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set((value: string) => {
       hideDialog();
@@ -97,9 +90,6 @@ export function prompt(message: string, prefill = ''): Promise<string | null> {
 
 export function alert(message: string): Promise<void> {
   DialogComponent.dialogMessage.set(message);
-  setTimeout(() => {
-    focusOkButton();
-  }, 0);
   showDialog(false);
   return new Promise((resolve) => {
     DialogComponent.dialogOk.set(() => {

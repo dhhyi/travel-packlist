@@ -12,9 +12,10 @@
         <div id="dialog-message">{{ self.dialogMessage() }}</div>
         <input
           #prompt
-          id="prompt"
           type="text"
           role="textbox"
+          [appFocusThis]="self.focus() === 'prompt'"
+          [value]="self.dialogPrefill()"
           [class.hidden]="!self.dialogPromptVisible()"
           (keydown.enter)="self.dialogOk()(prompt.value)"
         />
@@ -29,9 +30,9 @@
             Cancel
           </button>
           <button
-            id="okbutton"
             i18n
             type="submit"
+            [appFocusThis]="self.focus() === 'ok'"
             (click)="self.dialogOk()(prompt.value)"
           >
             OK
