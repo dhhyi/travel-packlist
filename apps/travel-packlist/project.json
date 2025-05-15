@@ -48,8 +48,7 @@
       "inputs": [
         "default",
         "^production",
-        "design",
-        "version"
+        "design"
       ],
       "outputs": [
         "{options.outputPath}"
@@ -74,39 +73,50 @@
           "apps/design-system/src/styles.css"
         ],
         "scripts": [],
+        "budgets": [
+          {
+            "type": "initial",
+            "maximumWarning": "500kb",
+            "maximumError": "1mb"
+          },
+          {
+            "type": "anyComponentStyle",
+            "maximumWarning": "4kb",
+            "maximumError": "8kb"
+          }
+        ],
         "define": {
           "ANDROID": "false"
-        }
+        },
+        "i18nMissingTranslation": "error",
+        "i18nDuplicateTranslation": "error"
       },
       "configurations": {
         "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
-            }
-          ],
+          "outputPath": "dist/apps/travel-packlist-production",
           "outputHashing": "all",
           "serviceWorker": "{projectRoot}/ngsw-config.json",
-          "i18nMissingTranslation": "error",
-          "i18nDuplicateTranslation": "error"
+          "localize": true
+        },
+        "gh-pages": {
+          "outputPath": "dist/apps/travel-packlist-gh-pages",
+          "baseHref": "/travel-packlist/",
+          "outputHashing": "all",
+          "serviceWorker": "{projectRoot}/ngsw-config.json",
+          "localize": true
+        },
+        "android": {
+          "outputPath": "dist/apps/travel-packlist-android",
+          "define": {
+            "ANDROID": "true"
+          },
+          "outputHashing": "all",
+          "localize": true
         },
         "development": {
           "optimization": false,
           "extractLicenses": false,
           "sourceMap": true
-        },
-        "android": {
-          "define": {
-            "ANDROID": "true"
-          },
-          "outputHashing": "all"
         }
       },
       "defaultConfiguration": "production"

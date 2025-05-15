@@ -33,15 +33,20 @@ type ConsolidatedOptions = ReturnType<typeof consolidateOptions>;
 function consolidateOptions(
   options: ExecutorSchema,
   context: ExecutorContext,
-): Required<ExecutorSchema> {
+): Required<ExecutorSchema> & { buildResultPath: string } {
   const outputPath =
     options.outputPath ??
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     `dist/${context.projectsConfigurations.projects[context.projectName!].root}`;
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const buildConfig = options.buildTarget.split(':').pop()!;
+  const buildResultPath = `dist/apps/travel-packlist-${buildConfig}/browser`;
+
   return {
     ...options,
     outputPath,
+    buildResultPath,
   };
 }
 
@@ -53,19 +58,9 @@ function runAngularBuild(options: ConsolidatedOptions) {
     `Running assemble for ${options.buildTarget} with baseHref ${options.baseHref}`,
   );
 
-  execSync(
-    [
-      'pnpm nx run',
-      '--no-cloud',
-      options.buildTarget,
-      '--localize',
-      `--output-path=${options.outputPath}-build`,
-      `--base-href=${options.baseHref}`,
-    ].join(' '),
-    {
-      stdio: 'inherit',
-    },
-  );
+  execSync(['pnpm nx run', '--no-cloud', options.buildTarget].join(' '), {
+    stdio: 'inherit',
+  });
 }
 
 /**
@@ -191,7 +186,7 @@ function fixFileHashes(folder: string) {
  * merges multiple Angular apps into the same folder
  */
 function mergeAngularApps(options: ConsolidatedOptions) {
-  const folder = `${options.outputPath}-build/browser`;
+  const folder = options.buildResultPath;
   mkdirSync(options.outputPath, { recursive: true });
   readdirSync(folder).forEach((lang) => {
     if (statSync(`${folder}/${lang}`).isDirectory()) {
