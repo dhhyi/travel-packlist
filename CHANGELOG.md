@@ -1,3 +1,9 @@
+## [0.13.3](https://github.com/dhhyi/travel-packlist/compare/v0.13.2...v0.13.3) (2025-05-15)
+
+### Bug Fixes
+
+- consistent styling for radio and check boxes ([0bc9d2b](https://github.com/dhhyi/travel-packlist/commit/0bc9d2b34eb358e01cb0da36598b74736ad65a12))
+
 ## [0.13.2](https://github.com/dhhyi/travel-packlist/compare/v0.13.1...v0.13.2) (2025-05-13)
 
 ## [0.13.1](https://github.com/dhhyi/travel-packlist/compare/v0.13.0...v0.13.1) (2025-05-07)
