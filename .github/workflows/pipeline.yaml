@@ -188,6 +188,16 @@ jobs:
           if-no-files-found: warn
           include-hidden-files: true
 
+      - name: Undo GH Pages Deployment 🗑️
+        if: failure() && steps.deploy-gh-pages.outputs.deployment-status == 'success'
+        run: |
+          echo "Undoing GitHub Pages deployment"
+          git fetch origin gh-pages
+          git checkout gh-pages
+          git pull
+          git reset --hard origin/gh-pages~
+          git push origin gh-pages --force
+
       - name: Check for Release 🧐
         id: check_release
         run: |
