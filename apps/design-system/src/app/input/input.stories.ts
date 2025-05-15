@@ -33,7 +33,7 @@ class Input {
     }),
     select: new FormControl('1'),
     checkbox: new FormControl(false),
-    checkbox_help: new FormControl(false),
+    checkbox_help: new FormControl(true),
     radio: new FormControl('option 1'),
   });
 

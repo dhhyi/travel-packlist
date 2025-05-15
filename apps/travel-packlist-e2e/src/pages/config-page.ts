@@ -165,4 +165,10 @@ export class ConfigPage extends Banner {
       accessibility.locator(this.page.getByRole('radio', { name: 'compact' }));
     return fn;
   }
+
+  animations() {
+    return this.page.getByRole('checkbox', {
+      name: 'Animations',
+    });
+  }
 }

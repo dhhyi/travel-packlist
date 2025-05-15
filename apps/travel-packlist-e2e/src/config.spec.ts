@@ -3,7 +3,9 @@ import { expect, test } from '@playwright/test';
 import { start } from './pages';
 
 test('config', async ({ page }) => {
-  await start(page).then((page) => page.toConfigPage());
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.animations().check();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation:
@@ -37,7 +39,7 @@ test('config', async ({ page }) => {
     - radiogroup "Accessibility":
       - radio "accessible" [checked]
       - radio "compact"
-    - checkbox "Animations" [checked=false]
+    - checkbox "Animations" [checked]
     - heading "App Version" [level=2]
     - link /Current version is .+/
     - text: /built on .+/
@@ -57,5 +59,14 @@ test('config', async ({ page }) => {
     - button "Reset Application"
   `);
 
-  await expect(page).toHaveScreenshot({ fullPage: true });
+  await expect(page).toHaveScreenshot({ fullPage: true, threshold: 0.01 });
+});
+
+test('config - no accessibility', async ({ page }) => {
+  const config = await start(page).then((page) => page.toConfigPage());
+
+  await config.accessibility.compact().check();
+  await config.animations().check();
+
+  await expect(page).toHaveScreenshot({ fullPage: true, threshold: 0.01 });
 });
