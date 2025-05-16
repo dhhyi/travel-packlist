@@ -25,7 +25,9 @@ export class ConfigVersionComponent {
   versionCode = VERSION_CODE;
 
   readonly currentVersionLabel = $localize`Current version is ${this.version}:VERSION:`;
-  readonly gitHashLabel = $localize`Current git hash starts with ${this.gitHash.substring(0, 8)}:GIT_HASH:`;
+  readonly gitHashLabel = this.gitHash
+    ? $localize`Current git hash starts with ${this.gitHash.substring(0, 8)}:GIT_HASH:`
+    : undefined;
 
   readonly serviceWorkerStatus = computed((): string => {
     switch (this.state.serviceWorker.status()) {

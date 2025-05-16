@@ -28,8 +28,7 @@
   },
   "required": [
     "buildTime",
-    "version",
-    "gitHash"
+    "version"
   ],
   "additionalProperties": false
 }
