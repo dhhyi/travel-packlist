@@ -10,6 +10,26 @@ export function getPackageJsonVersion() {
   return version || 'unavailable';
 }
 
+export function getCommitsSinceVersion() {
+  try {
+    const version = getPackageJsonVersion();
+    if (!version || version === 'unavailable') {
+      return 0;
+    }
+    // npm version always creates tags like v1.2.3
+    const tag = `v${version}`;
+    // Count commits since the tag
+    const count = cp
+      .execSync(`git rev-list ${tag}..HEAD --count`)
+      .toString()
+      .trim();
+    return parseInt(count, 10);
+  } catch (error) {
+    console.error('Error getting commits since version:', error);
+    return 0;
+  }
+}
+
 export function getGitCommitHash() {
   try {
     return cp.execSync('git rev-parse HEAD').toString().trim();

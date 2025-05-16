@@ -21,6 +21,7 @@ export class ConfigVersionComponent {
 
   buildTime = BUILD_TIME;
   version = VERSION;
+  commitsSince = COMMITS_SINCE;
   gitHash = GIT_HASH;
   versionCode = VERSION_CODE;
 

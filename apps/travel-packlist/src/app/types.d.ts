@@ -4,6 +4,7 @@ type BuildInfo =
 declare const ANDROID: boolean;
 declare const BUILD_TIME: BuildInfo['buildTime'];
 declare const VERSION: BuildInfo['version'];
+declare const COMMITS_SINCE: BuildInfo['commitsSince'];
 declare const GIT_HASH: BuildInfo['gitHash'];
 declare const VERSION_CODE: BuildInfo['versionCode'];
 

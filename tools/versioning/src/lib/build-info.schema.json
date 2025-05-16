@@ -17,6 +17,10 @@
       "type": "string",
       "description": "The version from package.json"
     },
+    "commitsSince": {
+      "type": "number",
+      "description": "The number of commits since the last tag"
+    },
     "gitHash": {
       "type": "string",
       "description": "The git hash of the current commit"

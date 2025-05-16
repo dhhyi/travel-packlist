@@ -13,6 +13,7 @@ bootstrapApplication(AppComponent, appConfig)
     const w = window as any;
     w.BUILD_TIME = data.buildTime;
     w.VERSION = data.version;
+    w.COMMITS_SINCE = data.commitsSince;
     w.GIT_HASH = data.gitHash;
     w.VERSION_CODE = data.versionCode;
     /* eslint-enable */

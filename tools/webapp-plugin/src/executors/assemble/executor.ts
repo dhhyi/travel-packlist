@@ -4,6 +4,7 @@ import {
   PromiseExecutor,
 } from '@nx/devkit';
 import {
+  getCommitsSinceVersion,
   getGitCommitHash,
   getPackageJsonVersion,
   getVersionCode,
@@ -254,6 +255,7 @@ function writeBuildInfo(outputPath: string) {
   const buildInfo: BuildInfoSchema = {
     buildTime: Math.trunc(Date.now()),
     version: getPackageJsonVersion(),
+    commitsSince: getCommitsSinceVersion(),
     gitHash: getGitCommitHash(),
     versionCode: getVersionCode(),
   };
