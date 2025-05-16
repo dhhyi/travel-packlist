@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/dhhyi/travel-packlist/compare/v1.0.0...v1.0.1) (2025-05-16)
+
+### Bug Fixes
+
+- stop pulsing when input is focused ([76e1ff3](https://github.com/dhhyi/travel-packlist/commit/76e1ff3bce864d1faf2a69865d8b1131c7f777ce))
+
 ## [1.0.0](https://github.com/dhhyi/travel-packlist/compare/v0.13.3...v1.0.0) (2025-05-15)
 
 ## [0.13.3](https://github.com/dhhyi/travel-packlist/compare/v0.13.2...v0.13.3) (2025-05-15)
