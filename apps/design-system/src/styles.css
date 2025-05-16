@@ -255,3 +255,7 @@
     @apply accessible:min-h-[49px] accessible:min-w-[49px];
   }
 }
+
+.animate-pulse:has(:focus) {
+  animation: none !important;
+}
