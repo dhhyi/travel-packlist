@@ -58,9 +58,18 @@ function runAngularBuild(options: ConsolidatedOptions) {
     `Running assemble for ${options.buildTarget} with baseHref ${options.baseHref}`,
   );
 
-  execSync(['pnpm nx run', '--no-cloud', options.buildTarget].join(' '), {
-    stdio: 'inherit',
-  });
+  let output: string | undefined;
+  try {
+    output = execSync(
+      ['pnpm nx run', '--no-cloud', options.buildTarget].join(' '),
+      { encoding: 'utf-8' },
+    );
+  } catch (error) {
+    if (output) {
+      console.log(output);
+    }
+    console.error(error instanceof Error ? error.message : error);
+  }
 }
 
 /**
