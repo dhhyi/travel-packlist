@@ -64,6 +64,7 @@ module.exports = [
       'arrow-body-style': ['error', 'as-needed'],
       curly: 'error',
       'no-duplicate-imports': 'error',
+      'no-implicit-coercion': ['error', { allow: ['!!'] }],
       'object-shorthand': 'error',
       'perfectionist/sort-imports': 'error',
     },

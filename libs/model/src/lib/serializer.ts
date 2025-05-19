@@ -25,7 +25,7 @@ export function serializeWeight(
       ? weight / 1000.0
       : (weight / 1000.0).toFixed(roundDigits)
     ).toString() + 'kg';
-  const weightInGrams = (weight * 1.0).toString() + 'g';
+  const weightInGrams = weight.toString() + 'g';
 
   if (!prefer) {
     return weightInKilos.length <= weightInGrams.length

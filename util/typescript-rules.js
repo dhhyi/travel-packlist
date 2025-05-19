@@ -35,6 +35,7 @@ const rules = (tsConfigOrFolder) => {
           'error',
         '@typescript-eslint/no-unnecessary-qualifier': 'error',
         '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+        '@typescript-eslint/no-unnecessary-type-conversion': 'error',
         '@typescript-eslint/no-unused-vars': [
           'error',
           {

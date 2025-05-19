@@ -37,7 +37,7 @@ export class ConfigRulesImportExportComponent {
   private rulesShare = inject(RulesShare);
 
   isExportAvailable(): boolean {
-    return !!this.state.rules.localRulesAvailable();
+    return this.state.rules.localRulesAvailable();
   }
 
   async exportRules() {
