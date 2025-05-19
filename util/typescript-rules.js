@@ -48,6 +48,7 @@ const rules = (tsConfigOrFolder) => {
             varsIgnorePattern: '^_',
           },
         ],
+        '@typescript-eslint/require-array-sort-compare': 'error',
         eqeqeq: 'error',
         'perfectionist/sort-imports': 'error',
       },

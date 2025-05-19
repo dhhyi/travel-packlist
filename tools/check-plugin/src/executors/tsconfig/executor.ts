@@ -300,14 +300,19 @@ function check(this: Context, tsConfigPath: string) {
   return tsConfig;
 }
 
-function sortObject(obj: Record<string, unknown>) {
+function sortObject(obj: Record<string, unknown>): Record<string, unknown>;
+function sortObject(obj: unknown[]): unknown[];
+function sortObject(obj: Record<string, unknown> | unknown[]) {
+  if (Array.isArray(obj)) {
+    return sortArray(obj);
+  }
   return Object.fromEntries(
     Object.entries(obj)
       .map(([key, value]): [string, unknown] => {
         if (!Array.isArray(value) && typeof value === 'object') {
           return [key, sortObject(value as Record<string, unknown>)];
         } else if (Array.isArray(value)) {
-          return [key, value.toSorted()];
+          return [key, sortArray(value)];
         }
         return [key, value];
       })
@@ -315,13 +320,31 @@ function sortObject(obj: Record<string, unknown>) {
   );
 }
 
-function isSorted(obj: Record<string, unknown>) {
+function sortArray(arr: unknown[]): unknown[] {
+  return arr
+    .map((value) => {
+      if (Array.isArray(value)) {
+        return sortArray(value);
+      } else if (typeof value === 'object' && value !== null) {
+        return sortObject(value as Record<string, unknown>);
+      }
+      return value;
+    })
+    .sort((a, b) => {
+      if (typeof a === 'string' && typeof b === 'string') {
+        return a.localeCompare(b);
+      }
+      return 0;
+    });
+}
+
+function isSorted(obj: Record<string, unknown> | unknown[]): boolean {
   const keys = Object.keys(obj);
   const allKeysSorted = keys.join() === keys.sort().join();
   const allValuesSorted = Object.values(obj).every(
     (value): boolean =>
       typeof value !== 'object' ||
-      (Array.isArray(value) && value.toSorted().join() === value.join()) ||
+      (Array.isArray(value) && isSorted(value)) ||
       (!Array.isArray(value) && isSorted(value as Record<string, unknown>)),
   );
   return allKeysSorted && allValuesSorted;
