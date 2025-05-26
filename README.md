@@ -62,7 +62,7 @@ For packaging the app into an Android bundle, I use [Capacitor](https://capacito
 
 For styling, I use [TailwindCSS](https://tailwindcss.com/).
 The design system is implemented using [Storybook](https://storybook.js.org/).
-It is deployed [here](https://dhhyi.github.io/travel-packlist/index.design.html).
+It is [deployed here](https://dhhyi.github.io/travel-packlist/index.design.html).
 
 ### Multiple Languages
 

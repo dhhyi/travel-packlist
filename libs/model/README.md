@@ -11,7 +11,7 @@ This also means, that the data entered in the UI is repeatedly parsed and serial
 
 After writing everything from scratch in the beginning, I decided to use a parser generator to create a more robust and maintainable solution.
 I chose [Peggy](https://peggyjs.org/) for this task.
-The grammar for the rules can be found [here](./src/schemas/rules.peggy).
+The grammar for the rules can be found here: [`rules.peggy`](./src/schemas/rules.peggy).
 
 ## Development
 
