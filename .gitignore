@@ -8,6 +8,7 @@ out-tsc
 .prettierignore
 /coverage
 /test-results
+RELEASE-NOTES.md
 
 # dependencies
 node_modules
