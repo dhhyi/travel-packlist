@@ -240,7 +240,7 @@ jobs:
           echo "aab=dist/android/travel-packlist-$VERSION.aab" >> $GITHUB_OUTPUT
           pnpm i --frozen-lockfile
           pnpm release-notes RELEASE-NOTES.md
-          echo '<img src="https://raw.githubusercontent.com/dhhyi/travel-packlist/refs/heads/main/android-app-qr.png" alt="Get it on Google Play" style="width: 200px;" />' >> RELEASE-NOTES.md
+          echo '<img src="https://raw.githubusercontent.com/dhhyi/travel-packlist/refs/heads/main/android-app-qr.png" alt="Get it on Google Play" width="200px" />' >> RELEASE-NOTES.md
           gh release create \
             "v$VERSION" \
             dist/android/travel-packlist-$VERSION.apk \
