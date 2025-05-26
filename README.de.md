@@ -28,8 +28,16 @@ Benutzerdefinierte Regeln können entweder in Freitext in einer [spezifischen Gr
 Verwende [diesen Link](https://dhhyi.github.io/travel-packlist/), um die auf GitHub Pages bereitgestellte App zu öffnen.
 Da es sich um eine PWA handelt, kannst du sie auch für einen einfachen Zugriff auf deinem Startbildschirm installieren.
 
-Es gibt auch eine Android-App im Play Store, die sich derzeit im Test befindet.
-Wenn du willst, kannst du [Tester werden](https://play.google.com/store/apps/details?id=dev.dhhyi).
+Es gibt auch eine Android-App im [Play Store](https://play.google.com/store/apps/details?id=dev.dhhyi):
+
+<!-- markdownlint-disable -->
+
+<img
+  src="https://raw.githubusercontent.com/dhhyi/travel-packlist/refs/heads/main/android-app-qr.png"
+  alt="Auf Google Play herunterladen"
+  style="width: 200px;" />
+
+<!-- markdownlint-enable -->
 
 Daten werden im lokalen Speicher deines Browsers gespeichert und nicht mit einem Server geteilt.
 Die App verfügt über eine Export- und Importfunktion, um deine Daten zu sichern und wiederherzustellen.

@@ -26,8 +26,16 @@ Custom rules can be defined either with free text in a [specific grammar](./libs
 Use [this link](https://dhhyi.github.io/travel-packlist/) to access the app deployed on GitHub Pages.
 As it is a PWA, you can also install it on your home screen for easy access.
 
-There is also an Android App available in the Play Store, which is currently in testing.
-If you want, you can [become a tester](https://play.google.com/store/apps/details?id=dev.dhhyi).
+There is also an Android App available in the [Play Store](https://play.google.com/store/apps/details?id=dev.dhhyi):
+
+<!-- markdownlint-disable -->
+
+<img
+  src="https://raw.githubusercontent.com/dhhyi/travel-packlist/refs/heads/main/android-app-qr.png"
+  alt="Get it on Google Play"
+  style="width: 200px;" />
+
+<!-- markdownlint-enable -->
 
 Data is stored in your browser's local storage and not shared with any server.
 The app has an export and import feature to backup and restore your data wherever you like.
