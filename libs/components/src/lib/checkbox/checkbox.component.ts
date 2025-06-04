@@ -15,10 +15,10 @@ import { IconHelpComponent } from '@travel-packlist/icons';
 import { noop } from 'rxjs';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-checkbox',
   imports: [FormsModule, IconHelpComponent],
   templateUrl: './checkbox.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex items-center gap-x-2',
     '(click)': 'toggle()',

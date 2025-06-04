@@ -2,10 +2,10 @@ import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { IconCheckmarkComponent } from '@travel-packlist/icons';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-items-status',
   imports: [IconCheckmarkComponent],
   templateUrl: './items-status.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemsStatusComponent {
   readonly count = input<number>(0);

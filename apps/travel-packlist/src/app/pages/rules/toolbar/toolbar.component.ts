@@ -25,7 +25,6 @@ import { RulesClipboard } from '../rules.clipboard';
 import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-toolbar',
   imports: [
     FormsModule,
@@ -39,6 +38,7 @@ import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.componen
     ToolbarButtonComponent,
   ],
   templateUrl: './toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToolbarComponent {
   private readonly toolbarButtons = viewChildren(ToolbarButtonComponent);

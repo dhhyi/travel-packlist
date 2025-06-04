@@ -10,11 +10,10 @@ import {
 import { ProgressComponent } from '@travel-packlist/components';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [ProgressComponent],
   selector: 'ds-progress',
+  imports: [ProgressComponent],
   templateUrl: './progress.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex flex-col gap-4',
   },

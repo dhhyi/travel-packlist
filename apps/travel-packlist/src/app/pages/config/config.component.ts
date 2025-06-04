@@ -14,7 +14,6 @@ import { ConfigSupportComponent } from './config-support/config-support.componen
 import { ConfigVersionComponent } from './config-version/config-version.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config',
   imports: [
     ConfigChecklistComponent,
@@ -30,6 +29,7 @@ import { ConfigVersionComponent } from './config-version/config-version.componen
     ConfigRulesTemplateComponent,
   ],
   templateUrl: './config.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: '*:mb-2 *:flex *:flex-col *:gap-2 *:border-b *:pb-2',
   },

@@ -22,11 +22,11 @@ import {
 const easeOutQuad = (x: number): number => x * (2 - x);
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-progress',
+  imports: [AsyncPipe],
   templateUrl: './progress.component.html',
   styleUrl: './progress.component.css',
-  imports: [AsyncPipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     role: 'progressbar',
     '[attr.aria-valuemin]': '0',

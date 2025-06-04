@@ -19,7 +19,6 @@ import { EditorTitleComponent } from './editor-title/editor-title.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-rules',
   imports: [
     EditorRuleComponent,
@@ -28,6 +27,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     EditorTitleComponent,
   ],
   templateUrl: './rules.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RulesComponent {
   private refactor = inject(Refactor);

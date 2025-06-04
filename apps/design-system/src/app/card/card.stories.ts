@@ -3,10 +3,9 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   selector: 'ds-card',
   templateUrl: './card.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class Card {}
 

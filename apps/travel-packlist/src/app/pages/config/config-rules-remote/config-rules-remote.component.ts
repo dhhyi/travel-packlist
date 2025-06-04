@@ -24,8 +24,6 @@ import { extractErrorMessage } from '../../../util/extract-error-message';
 
 @Component({
   selector: 'app-config-rules-remote',
-  templateUrl: './config-rules-remote.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ReactiveFormsModule,
     IconHistoryComponent,
@@ -34,6 +32,8 @@ import { extractErrorMessage } from '../../../util/extract-error-message';
     IconDeleteComponent,
     IconHelpComponent,
   ],
+  templateUrl: './config-rules-remote.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesRemoteComponent {
   private state = inject(GLOBAL_STATE);

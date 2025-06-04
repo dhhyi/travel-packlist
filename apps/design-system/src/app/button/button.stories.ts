@@ -5,11 +5,10 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { IconCogComponent } from '@travel-packlist/icons';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [NgTemplateOutlet, IconCogComponent],
   selector: 'ds-button',
+  imports: [NgTemplateOutlet, IconCogComponent],
   templateUrl: './button.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex flex-col gap-8',
   },

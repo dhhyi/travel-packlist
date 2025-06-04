@@ -10,9 +10,9 @@ import { confirm } from '../../../dialog';
 
 @Component({
   selector: 'app-config-rules-template',
+  imports: [SelectOptionsComponent, SelectOptionDirective, FormsModule],
   templateUrl: './config-rules-template.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [SelectOptionsComponent, SelectOptionDirective, FormsModule],
 })
 export class ConfigRulesTemplateComponent {
   private state = inject(GLOBAL_STATE);

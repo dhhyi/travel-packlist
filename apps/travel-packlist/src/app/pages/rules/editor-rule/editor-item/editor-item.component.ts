@@ -26,10 +26,10 @@ import { filter } from 'rxjs';
 import { alert, prompt } from '../../../../dialog';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-item',
   imports: [ReactiveFormsModule],
   templateUrl: './editor-item.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorItemComponent {
   readonly item = input.required<Item>();

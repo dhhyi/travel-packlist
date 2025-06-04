@@ -14,10 +14,9 @@ import {
 import { map } from 'rxjs';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-documentation',
-  standalone: true,
   template: '<div [innerHTML]="safeHtml"></div>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'markdown',
   },

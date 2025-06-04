@@ -3,8 +3,6 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   selector: 'ds-spacing',
   templateUrl: './spacing.html',
   styles: `
@@ -14,6 +12,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       background-color: var(--color-gray-500);
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: '*:mb-4 *:flex *:flex-row',
   },

@@ -9,9 +9,7 @@ import { FlagGermanyComponent, FlagUkComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-appearance',
-  templateUrl: './config-appearance.component.html',
   imports: [
     FormsModule,
     SelectOptionsComponent,
@@ -20,6 +18,8 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
     FlagUkComponent,
     CheckboxComponent,
   ],
+  templateUrl: './config-appearance.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigAppearanceComponent {
   private state = inject(GLOBAL_STATE);

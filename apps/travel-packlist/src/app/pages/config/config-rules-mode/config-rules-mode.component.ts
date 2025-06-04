@@ -7,10 +7,10 @@ import {
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-mode',
-  templateUrl: './config-rules-mode.component.html',
   imports: [FormsModule, SelectOptionsComponent, SelectOptionDirective],
+  templateUrl: './config-rules-mode.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesModeComponent {
   private state = inject(GLOBAL_STATE);

@@ -10,10 +10,10 @@ import { CheckboxComponent } from '@travel-packlist/components';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-viewer',
-  templateUrl: './config-rules-viewer.component.html',
   imports: [CheckboxComponent, FormsModule],
+  templateUrl: './config-rules-viewer.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesViewerComponent {
   private state = inject(GLOBAL_STATE);

@@ -16,14 +16,14 @@ import { confirm } from '../../../dialog';
 
 @Component({
   selector: 'app-config-checklist',
-  templateUrl: './config-checklist.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FormsModule,
     CheckboxComponent,
     SelectOptionsComponent,
     SelectOptionDirective,
   ],
+  templateUrl: './config-checklist.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigChecklistComponent {
   private state = inject(GLOBAL_STATE);

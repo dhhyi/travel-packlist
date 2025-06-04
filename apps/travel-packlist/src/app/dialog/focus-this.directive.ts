@@ -8,7 +8,6 @@ import {
 
 @Directive({
   selector: '[appFocusThis]',
-  standalone: true,
 })
 export class FocusThisDirective {
   readonly appFocusThis = input<boolean>(false);

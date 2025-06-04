@@ -8,7 +8,6 @@ import { ChangeDetectionStrategy, Component, input, computed, ElementRef, afterR
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-<%= icon %>, [<%= camelize(icon) %>]',
-  standalone: true,
   templateUrl: './<%= name %>.svg',
 })
 export class <%= classify(icon) %>Component {

@@ -13,10 +13,10 @@ import { confirm } from '../../../dialog';
 import { RulesShare } from '../../../services/rules-share/rules-share.interface';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-import-export',
-  templateUrl: './config-rules-import-export.component.html',
   imports: [FormsModule, CheckboxComponent, IconDownloadComponent],
+  templateUrl: './config-rules-import-export.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesImportExportComponent {
   private state = inject(GLOBAL_STATE);

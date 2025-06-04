@@ -27,9 +27,9 @@ export const OR = 'OR';
 export const REMOVE = 'REMOVE';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-condition',
   templateUrl: './editor-condition.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex flex-row flex-wrap items-center justify-start gap-2',
   },

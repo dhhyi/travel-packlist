@@ -4,9 +4,9 @@ import { GLOBAL_STATE, RESET_SWITCH } from '@travel-packlist/state';
 import { confirm } from '../../../dialog';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-dangerzone',
   templateUrl: './config-dangerzone.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigDangerzoneComponent {
   private reset = inject(RESET_SWITCH);

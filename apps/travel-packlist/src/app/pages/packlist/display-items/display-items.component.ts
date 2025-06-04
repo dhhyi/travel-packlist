@@ -96,10 +96,10 @@ const animateStrikeThrough = trigger('animateStrikeThrough', [
 ]);
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-items',
   imports: [ItemsStatusComponent, IconKeyRightComponent],
   templateUrl: './display-items.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     animateCategory,
     animateItems,

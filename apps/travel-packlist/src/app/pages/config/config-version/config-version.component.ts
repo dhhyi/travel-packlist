@@ -8,10 +8,10 @@ import {
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-version',
-  templateUrl: './config-version.component.html',
   imports: [DatePipe],
+  templateUrl: './config-version.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigVersionComponent {
   private state = inject(GLOBAL_STATE);

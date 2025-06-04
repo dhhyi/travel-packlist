@@ -13,7 +13,6 @@ import { DisplayTitleComponent } from './display-title/display-title.component';
 import { PacklistStatusComponent } from './packlist-status/packlist-status.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist',
   imports: [
     DisplayItemsComponent,
@@ -23,6 +22,7 @@ import { PacklistStatusComponent } from './packlist-status/packlist-status.compo
     DisplayTitleComponent,
   ],
   templateUrl: './packlist.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PacklistComponent {
   private state = inject(GLOBAL_STATE);

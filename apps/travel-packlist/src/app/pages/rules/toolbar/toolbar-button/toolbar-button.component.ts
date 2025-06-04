@@ -10,9 +10,9 @@ import {
 import { GLOBAL_STATE, RuleModes } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-toolbar-button',
   templateUrl: './toolbar-button.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToolbarButtonComponent {
   private state = inject(GLOBAL_STATE);

@@ -8,9 +8,9 @@ import {
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-title',
   templateUrl: './editor-title.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorTitleComponent {
   private state = inject(GLOBAL_STATE);

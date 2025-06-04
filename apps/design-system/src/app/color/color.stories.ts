@@ -5,6 +5,7 @@ import {
   Component,
   Directive,
   ElementRef,
+  inject,
   signal,
 } from '@angular/core';
 
@@ -15,7 +16,8 @@ const selectedColor = signal<string | undefined>(undefined);
   selector: 'div[role="button"]',
 })
 class ColorDirective {
-  constructor(element: ElementRef<HTMLDivElement>) {
+  constructor() {
+    const element = inject<ElementRef<HTMLDivElement>>(ElementRef);
     const color = Array.from(element.nativeElement.classList).find((c) =>
       c.startsWith('bg-'),
     );
@@ -34,10 +36,8 @@ class ColorDirective {
 }
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [ColorDirective],
   selector: 'ds-color',
+  imports: [ColorDirective],
   templateUrl: './color.html',
   styles: `
     [role='button'] {
@@ -47,6 +47,7 @@ class ColorDirective {
       border-radius: var(--radius-sm);
     }
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class Color {
   selectedColor = selectedColor;

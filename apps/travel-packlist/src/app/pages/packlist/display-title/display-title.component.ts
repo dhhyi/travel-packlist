@@ -7,9 +7,9 @@ import {
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-display-title',
   templateUrl: './display-title.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DisplayTitleComponent {
   private state = inject(GLOBAL_STATE);

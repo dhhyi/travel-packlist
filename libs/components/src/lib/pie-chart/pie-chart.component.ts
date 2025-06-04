@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-pie-chart',
-  templateUrl: './pie-chart.component.html',
   imports: [PercentPipe],
+  templateUrl: './pie-chart.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex flex-col items-center justify-center',
   },

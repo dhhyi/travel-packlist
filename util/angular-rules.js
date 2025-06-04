@@ -152,6 +152,7 @@ const rules = (tsConfigOrFolder, options) => {
       files: ['**/*.html'],
       ignores: ['dist/**', 'android/**'],
       rules: {
+        '@angular-eslint/template/cyclomatic-complexity': 'off',
         '@angular-eslint/template/i18n': [
           'warn',
           {

@@ -3,10 +3,9 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   selector: 'ds-font',
   templateUrl: './font.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: '*:mb-4 *:flex *:flex-row *:items-center *:gap-x-4',
   },

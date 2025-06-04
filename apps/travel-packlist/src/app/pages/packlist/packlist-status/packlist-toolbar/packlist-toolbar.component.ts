@@ -13,15 +13,15 @@ import {
 import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist-toolbar',
-  templateUrl: './packlist-toolbar.component.html',
   imports: [
     IconBarChartComponent,
     IconLockOpenComponent,
     IconLockComponent,
     IconPieChartComponent,
   ],
+  templateUrl: './packlist-toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PacklistToolbarComponent {
   private state = inject(GLOBAL_STATE);

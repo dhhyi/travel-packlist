@@ -37,10 +37,10 @@ import {
 } from '../editor-condition/editor-condition.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-question',
   imports: [ReactiveFormsModule, IconArrowForwardComponent],
   templateUrl: './editor-question.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorQuestionComponent {
   readonly question = input.required<Question>();

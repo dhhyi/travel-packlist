@@ -33,15 +33,15 @@ const animateDiagram = trigger('animateDiagram', [
 ]);
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-packlist-status',
-  templateUrl: './packlist-status.component.html',
   imports: [
     HeaviestItemsComponent,
     PacklistToolbarComponent,
     PacklistProgressComponent,
     WeightDistributionComponent,
   ],
+  templateUrl: './packlist-status.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [animateDiagram],
 })
 export class PacklistStatusComponent {

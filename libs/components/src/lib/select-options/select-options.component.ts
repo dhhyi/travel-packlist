@@ -14,10 +14,10 @@ import { noop } from 'rxjs';
 import { SelectOptionDirective } from './select-option.directive';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'cmp-select-options',
-  templateUrl: './select-options.component.html',
   imports: [NgTemplateOutlet],
+  templateUrl: './select-options.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

@@ -11,9 +11,9 @@ import { FocusThisDirective } from './focus-this.directive';
 
 @Component({
   selector: 'app-dialog',
+  imports: [FocusThisDirective],
   templateUrl: './dialog.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FocusThisDirective],
 })
 export class DialogComponent {
   self = DialogComponent;

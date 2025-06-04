@@ -4,10 +4,10 @@ import { CheckboxComponent } from '@travel-packlist/components';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-config-rules-editor',
-  templateUrl: './config-rules-editor.component.html',
   imports: [CheckboxComponent, FormsModule],
+  templateUrl: './config-rules-editor.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesEditorComponent {
   private state = inject(GLOBAL_STATE);

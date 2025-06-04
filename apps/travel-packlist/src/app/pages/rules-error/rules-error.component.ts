@@ -10,9 +10,9 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 import { extractErrorMessage } from '../../util/extract-error-message';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-error',
   templateUrl: './rules-error.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RulesErrorComponent {
   private state = inject(GLOBAL_STATE);

@@ -43,9 +43,9 @@ const animateQuestions = trigger('animateQuestions', [
 
 @Component({
   selector: 'app-display-questions',
+  imports: [IconCheckmarkComponent],
   templateUrl: './display-questions.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IconCheckmarkComponent],
   animations: [animateQuestions],
 })
 export class DisplayQuestionsComponent {

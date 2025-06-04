@@ -27,10 +27,10 @@ type ParserState =
     };
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-edit-rules-raw',
   imports: [ReactiveFormsModule],
   templateUrl: './rules-raw.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex grow flex-col',
   },

@@ -11,10 +11,7 @@ import {
 import { IconHelpComponent } from '@travel-packlist/icons';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   selector: 'ds-input',
-  templateUrl: './input.html',
   imports: [
     IconHelpComponent,
     CheckboxComponent,
@@ -23,6 +20,8 @@ import { IconHelpComponent } from '@travel-packlist/icons';
     ReactiveFormsModule,
     JsonPipe,
   ],
+  templateUrl: './input.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class Input {
   form = new FormGroup({

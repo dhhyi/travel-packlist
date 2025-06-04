@@ -30,7 +30,6 @@ import { EditorItemComponent } from './editor-item/editor-item.component';
 import { EditorQuestionComponent } from './editor-question/editor-question.component';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-editor-rule',
   imports: [
     EditorConditionComponent,
@@ -44,6 +43,7 @@ import { EditorQuestionComponent } from './editor-question/editor-question.compo
     IconArrowUpwardComponent,
   ],
   templateUrl: './editor-rule.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorRuleComponent {
   readonly index = input.required<number>();

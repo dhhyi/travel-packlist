@@ -94,7 +94,6 @@ const routeTransition = trigger('routeTransition', [
 ]);
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
   imports: [
     RouterOutlet,
@@ -105,6 +104,7 @@ const routeTransition = trigger('routeTransition', [
     IconHelpComponent,
   ],
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [routeTransition],
   host: {
     class: 'flex h-full flex-col',

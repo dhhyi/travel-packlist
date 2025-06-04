@@ -57,14 +57,14 @@ const animatePages = trigger('animatePages', [
 ]);
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-heaviest-items',
-  templateUrl: './heaviest-items.component.html',
   imports: [
     BarChartComponent,
     IconArrowDownwardComponent,
     IconArrowUpwardComponent,
   ],
+  templateUrl: './heaviest-items.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex w-full max-w-[350px] flex-row gap-1',
   },

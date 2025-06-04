@@ -15,9 +15,9 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
   selector: 'app-packlist-progress',
+  imports: [ProgressComponent],
   templateUrl: './packlist-progress.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ProgressComponent],
 })
 export class PacklistProgressComponent {
   private state = inject(GLOBAL_STATE);

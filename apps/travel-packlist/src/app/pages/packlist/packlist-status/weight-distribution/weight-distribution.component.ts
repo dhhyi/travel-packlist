@@ -10,10 +10,10 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 import { colorFromString } from '../../../../util/colors';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-weight-distribution',
-  templateUrl: './weight-distribution.component.html',
   imports: [PieChartComponent],
+  templateUrl: './weight-distribution.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WeightDistributionComponent {
   private state = inject(GLOBAL_STATE);
