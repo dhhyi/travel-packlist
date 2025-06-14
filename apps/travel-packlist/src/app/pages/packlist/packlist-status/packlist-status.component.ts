@@ -6,7 +6,7 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
-  afterRender,
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   inject,
@@ -52,7 +52,7 @@ export class PacklistStatusComponent {
   readonly animationsDisabled = signal(true);
 
   constructor() {
-    afterRender(() => {
+    afterRenderEffect(() => {
       this.animationsDisabled.set(!this.state.config.animations());
     });
   }

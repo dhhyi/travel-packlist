@@ -1,6 +1,6 @@
 import { withThemeByClassName } from '@storybook/addon-themes';
-import { MINIMAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { type Preview, componentWrapperDecorator } from '@storybook/angular';
+import { MINIMAL_VIEWPORTS } from 'storybook/viewport';
 
 // https://storybook.js.org/docs/faq#what-icons-are-available-for-my-toolbar-or-my-addon
 

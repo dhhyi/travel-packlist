@@ -128,25 +128,25 @@ export const rulesSourceState = ({
     inject(CAPACITOR_HTTP_REQUEST_MODE, { optional: true }) ?? 'cors';
 
   const rawResource = resource({
-    request: () => ({
+    params: () => ({
       mode: mode(),
       rawLocal: rawLocalRules(),
       remote: remote(),
       template: template(),
     }),
-    loader: ({ request }) => {
-      switch (request.mode) {
+    loader: ({ params }) => {
+      switch (params.mode) {
         case 'local':
-          return Promise.resolve(request.rawLocal);
+          return Promise.resolve(params.rawLocal);
         case 'template':
-          return Promise.resolve(request.template);
+          return Promise.resolve(params.template);
         case 'remote':
-          if (request.remote) {
-            if (!request.remote.startsWith('http')) {
+          if (params.remote) {
+            if (!params.remote.startsWith('http')) {
               throw new Error('Invalid URL');
             }
             const url = enhanceRemoteRulesURL(
-              request.remote,
+              params.remote,
               requestMode === 'cors',
             );
             return CapacitorHttp.get({
@@ -156,8 +156,8 @@ export const rulesSourceState = ({
               if (response.status >= 200 && response.status < 300) {
                 remoteHistory.update((history) => [
                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  request.remote!,
-                  ...history.filter((u) => u !== request.remote),
+                  params.remote!,
+                  ...history.filter((u) => u !== params.remote),
                 ]);
                 return response.data as string;
               } else {
@@ -203,12 +203,18 @@ export const rulesSourceState = ({
     markAsCurrent();
   };
 
+  const reload = function () {
+    rawResource.reload();
+  };
+
   return {
     rules: {
       /** storage: local or remote */
       mode,
       /** storage: raw rules or default template */
       raw: rawResource.asReadonly(),
+      /** action: reload rules */
+      reload,
       /** derived: timestamp of last rules action */
       lastAction: lastRulesAction.asReadonly(),
       /** derived: hash of current rules */

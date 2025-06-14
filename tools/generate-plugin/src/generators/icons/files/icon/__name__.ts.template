@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, computed, ElementRef, afterRender, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, computed, ElementRef, afterRenderEffect, inject } from '@angular/core';
 
 /**
  * icon for <%= icon %>
@@ -29,7 +29,7 @@ export class <%= classify(icon) %>Component {
   private elementRef = inject(ElementRef);
 
   constructor() {
-    afterRender(() => {
+    afterRenderEffect(() => {
       const svg = this.elementRef.nativeElement.querySelector('svg');
       for (let i = svg.classList.length - 1; i >= 0; i--) {
         svg.classList.remove(svg.classList[i]);

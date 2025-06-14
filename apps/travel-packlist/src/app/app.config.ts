@@ -5,7 +5,8 @@ import {
   Injector,
   isDevMode,
   provideAppInitializer,
-  provideExperimentalZonelessChangeDetection,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
@@ -35,7 +36,8 @@ function initParserConfig(injector: Injector): ParserConfig {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
+    provideBrowserGlobalErrorListeners(),
     provideRouting(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode() && !ANDROID,

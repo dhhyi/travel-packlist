@@ -17,7 +17,6 @@ import { SelectOptionDirective } from './select-option.directive';
   selector: 'cmp-select-options',
   imports: [NgTemplateOutlet],
   templateUrl: './select-options.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -26,6 +25,7 @@ import { SelectOptionDirective } from './select-option.directive';
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectOptionsComponent<T extends string>
   implements ControlValueAccessor

@@ -18,6 +18,14 @@ import { noop } from 'rxjs';
   selector: 'cmp-checkbox',
   imports: [FormsModule, IconHelpComponent],
   templateUrl: './checkbox.component.html',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      // eslint-disable-next-line @angular-eslint/no-forward-ref
+      useExisting: forwardRef(() => CheckboxComponent),
+      multi: true,
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex items-center gap-x-2',
@@ -28,14 +36,6 @@ import { noop } from 'rxjs';
     role: 'checkbox',
     tabindex: '0',
   },
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      // eslint-disable-next-line @angular-eslint/no-forward-ref
-      useExisting: forwardRef(() => CheckboxComponent),
-      multi: true,
-    },
-  ],
 })
 export class CheckboxComponent implements ControlValueAccessor {
   readonly id = input.required<string>();

@@ -8,7 +8,7 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
-  afterRender,
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -83,7 +83,7 @@ export class DisplayQuestionsComponent {
   readonly animationsDisabled = signal(true);
 
   constructor() {
-    afterRender(() => {
+    afterRenderEffect(() => {
       this.animationsDisabled.set(!this.state.config.animations());
     });
   }
