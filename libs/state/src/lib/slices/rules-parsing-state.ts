@@ -15,8 +15,8 @@ type Rules = ReturnType<Parser['parseRules']>;
 
 class RulesParsingResource implements Resource<Rules> {
   readonly value = signal<Rules>([]);
-  readonly error = signal<unknown>(undefined);
-  readonly status = signal<ResourceStatus>(ResourceStatus.Idle);
+  readonly error = signal<Error | undefined>(undefined);
+  readonly status = signal<ResourceStatus>('idle');
 
   constructor(
     private readonly parser: Parser,
@@ -35,10 +35,10 @@ class RulesParsingResource implements Resource<Rules> {
           }
           this.value.set(rules);
           this.error.set(undefined);
-          this.status.set(ResourceStatus.Resolved);
+          this.status.set('resolved');
         } catch (error) {
-          this.error.set(error);
-          this.status.set(ResourceStatus.Error);
+          this.error.set(error as Error);
+          this.status.set('error');
         }
       }
     });
@@ -52,10 +52,6 @@ class RulesParsingResource implements Resource<Rules> {
     return true;
   }
 
-  reload() {
-    return this.raw.reload();
-  }
-
   asReadonly(): Resource<Rules> {
     return {
       value: this.value.asReadonly(),
@@ -63,7 +59,6 @@ class RulesParsingResource implements Resource<Rules> {
       status: this.status.asReadonly(),
       isLoading: this.isLoading,
       hasValue: this.hasValue.bind(this),
-      reload: this.reload.bind(this),
     };
   }
 }
@@ -86,9 +81,7 @@ export const rulesParsingState = ({
       parsed: parsed.asReadonly(),
       /** derived: rules source and parser error */
       hasError: computed(
-        () =>
-          parsed.status() === ResourceStatus.Error ||
-          raw.status() === ResourceStatus.Error,
+        () => parsed.status() === 'error' || raw.status() === 'error',
       ),
       isLoading: computed(() => parsed.isLoading() || raw.isLoading()),
     },

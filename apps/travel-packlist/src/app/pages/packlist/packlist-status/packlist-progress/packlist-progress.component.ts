@@ -1,5 +1,5 @@
 import {
-  afterRender,
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -42,7 +42,7 @@ export class PacklistProgressComponent {
   readonly animationDuration = signal(0);
 
   constructor() {
-    afterRender(() => {
+    afterRenderEffect(() => {
       this.animationDuration.set(this.state.config.animations() ? 500 : 0);
     });
   }

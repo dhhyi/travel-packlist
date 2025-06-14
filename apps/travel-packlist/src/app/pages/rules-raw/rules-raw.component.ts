@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  ResourceStatus,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -51,7 +50,7 @@ export class EditRulesRawComponent {
     if (this.rulesPending()) {
       return { type: 'pending' };
     } else {
-      if (this.state.rules.parsed.status() === ResourceStatus.Error) {
+      if (this.state.rules.parsed.status() === 'error') {
         return {
           type: 'error',
           error: extractErrorMessage(this.state.rules.parsed.error()),

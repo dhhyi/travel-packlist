@@ -9,7 +9,7 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
-  afterRender,
+  afterRenderEffect,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -105,10 +105,10 @@ const routeTransition = trigger('routeTransition', [
   ],
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [routeTransition],
   host: {
     class: 'flex h-full flex-col',
   },
+  animations: [routeTransition],
 })
 export class AppComponent {
   private state = inject(GLOBAL_STATE);
@@ -139,7 +139,7 @@ export class AppComponent {
   );
 
   constructor() {
-    afterRender(() => {
+    afterRenderEffect(() => {
       this.disableAnimations.set(!this.state.config.animations());
     });
   }

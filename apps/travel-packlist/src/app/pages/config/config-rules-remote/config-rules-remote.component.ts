@@ -4,7 +4,6 @@ import {
   computed,
   effect,
   inject,
-  ResourceStatus,
   signal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -49,8 +48,7 @@ export class ConfigRulesRemoteComponent {
   readonly rulesLoaded = computed(() => this.state.rules.raw.hasValue());
 
   readonly stateColor = computed(() =>
-    this.state.rules.raw.status() === ResourceStatus.Idle ||
-    !this.controlValue().value
+    this.state.rules.raw.status() === 'idle' || !this.controlValue().value
       ? 'text-gray-500'
       : this.state.rules.isLoading()
         ? 'text-yellow-normal'
@@ -61,21 +59,21 @@ export class ConfigRulesRemoteComponent {
 
   readonly i18nStatus = computed(() => {
     if (
-      this.state.rules.raw.status() === ResourceStatus.Idle ||
+      this.state.rules.raw.status() === 'idle' ||
       !this.controlValue().value
     ) {
       return $localize`idle`;
     }
     switch (this.state.rules.raw.status()) {
-      case ResourceStatus.Loading:
-      case ResourceStatus.Reloading:
+      case 'loading':
+      case 'reloading':
         return $localize`loading`;
-      case ResourceStatus.Resolved:
-        if (this.state.rules.parsed.status() === ResourceStatus.Error) {
+      case 'resolved':
+        if (this.state.rules.parsed.status() === 'error') {
           return $localize`parser error`;
         }
         return $localize`loaded`;
-      case ResourceStatus.Error:
+      case 'error':
         return extractErrorMessage(this.state.rules.raw.error());
       default:
         return $localize`unknown`;
@@ -115,7 +113,7 @@ export class ConfigRulesRemoteComponent {
   }
 
   reloadRemote() {
-    this.state.rules.raw.reload();
+    this.state.rules.reload();
   }
 
   loadRemote(url: string) {
