@@ -20,7 +20,9 @@ function shout(text: string) {
 }
 
 export async function generator(tree: Tree, options: GeneratorSchema) {
-  const files = globSync(options.pattern);
+  const files = globSync(options.pattern).filter(
+    (file) => !file.endsWith('.spec.ts'),
+  );
 
   const transformers = files.map((file) =>
     path.basename(file, path.extname(file)),

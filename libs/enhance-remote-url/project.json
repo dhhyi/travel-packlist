@@ -17,7 +17,7 @@
       "options": {
         "command": "nx g @travel-packlist/generate-plugin:enhance-remote-url",
         "path": "{projectRoot}/src",
-        "pattern": "{projectRoot}/src/lib/transformers/!\\(*.spec\\).ts"
+        "pattern": "{projectRoot}/src/lib/transformers/*.ts"
       },
       "inputs": [
         "^production",
