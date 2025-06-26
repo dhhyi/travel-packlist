@@ -87,11 +87,13 @@ async function checkLinksInFile(file: string): Promise<void> {
     const cacheLinksPath = path.join(cacheDir, 'checked-external-links.json');
 
     function getLinksCache() {
-      return (
+      const cache = (
         fs.existsSync(cacheLinksPath)
           ? JSON.parse(fs.readFileSync(cacheLinksPath, 'utf-8'))
           : {}
       ) as Record<string, boolean>;
+      cache['https://uxwing.com'] = true;
+      return cache;
     }
 
     function writeNewCache(checkedLinks: Record<string, boolean>) {
