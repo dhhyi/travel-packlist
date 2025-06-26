@@ -115,7 +115,9 @@ export class RulesComponent {
 
   addRuleAndEdit() {
     this.addRule();
-    this.mode.set('edit');
+    setTimeout(() => {
+      this.mode.set('edit');
+    }, 0);
   }
 
   swapRules(index1: number, index2: number) {
