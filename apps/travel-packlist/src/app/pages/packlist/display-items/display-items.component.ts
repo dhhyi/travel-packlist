@@ -11,7 +11,7 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
-  afterRenderEffect,
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   effect,
@@ -122,8 +122,10 @@ export class DisplayItemsComponent {
   readonly animationsDisabled = signal(true);
 
   constructor() {
-    afterRenderEffect(() => {
-      this.animationsDisabled.set(!this.state.config.animations());
+    afterNextRender({
+      write: () => {
+        this.animationsDisabled.set(!this.state.config.animations());
+      },
     });
 
     const highlightedItemId = linkedSignal(() => this.state.router.fragment());

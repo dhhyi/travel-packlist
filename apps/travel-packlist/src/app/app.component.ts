@@ -9,7 +9,7 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
-  afterRenderEffect,
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -139,8 +139,10 @@ export class AppComponent {
   );
 
   constructor() {
-    afterRenderEffect(() => {
-      this.disableAnimations.set(!this.state.config.animations());
+    afterNextRender({
+      write: () => {
+        this.disableAnimations.set(!this.state.config.animations());
+      },
     });
   }
 

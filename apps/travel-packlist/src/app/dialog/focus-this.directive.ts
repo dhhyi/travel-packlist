@@ -1,7 +1,7 @@
 import {
   Directive,
   ElementRef,
-  afterRenderEffect,
+  afterNextRender,
   inject,
   input,
 } from '@angular/core';
@@ -13,12 +13,15 @@ export class FocusThisDirective {
   readonly appFocusThis = input<boolean>(false);
 
   private element = inject(ElementRef);
+
   constructor() {
-    afterRenderEffect(() => {
-      const element = this.element.nativeElement as HTMLElement | undefined;
-      if (this.appFocusThis() && element) {
-        element.focus();
-      }
+    afterNextRender({
+      write: () => {
+        const element = this.element.nativeElement as HTMLElement | undefined;
+        if (this.appFocusThis() && element) {
+          element.focus();
+        }
+      },
     });
   }
 }
