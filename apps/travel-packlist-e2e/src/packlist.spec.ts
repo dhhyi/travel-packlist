@@ -107,7 +107,7 @@ test('skip items', async ({ page }) => {
 
   const config = await packlist.toConfigPage();
 
-  await config.skipItems().check();
+  await config.skipItems().click();
 
   await expect(config.skipItems()).toBeChecked();
 

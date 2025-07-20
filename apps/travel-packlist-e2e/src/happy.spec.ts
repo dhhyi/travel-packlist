@@ -114,12 +114,12 @@ test('happy path editor to packlist', async ({ page }) => {
     - paragraph: No items available.
   `);
 
-  await packlist.question('Will it be sunny?', false).check();
+  await packlist.question('Will it be sunny?', false).click();
   await packlist.lockAnswersButton().click();
 
   await expect(packlist.item('Sunscreen', false)).toBeVisible();
 
-  await packlist.item('Sunscreen', false).check();
+  await packlist.item('Sunscreen', false).click();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "My Rules"

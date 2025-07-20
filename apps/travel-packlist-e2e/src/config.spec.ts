@@ -5,7 +5,7 @@ import { start } from './pages';
 test('config', async ({ page }) => {
   const config = await start(page).then((page) => page.toConfigPage());
 
-  await config.animations().check();
+  await config.animations().click();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation:
@@ -65,8 +65,8 @@ test('config', async ({ page }) => {
 test('config - no accessibility', async ({ page }) => {
   const config = await start(page).then((page) => page.toConfigPage());
 
-  await config.accessibility.compact().check();
-  await config.animations().check();
+  await config.accessibility.compact().click();
+  await config.animations().click();
 
   await expect(page).toHaveScreenshot({ fullPage: true, threshold: 0.01 });
 });
