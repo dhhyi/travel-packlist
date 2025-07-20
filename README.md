@@ -57,7 +57,7 @@ Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
 
 ## Technology
 
-This app is developed using [Angular 19](https://angular.dev/) with the new experimental zoneless change detection strategy.
+This app is developed using [Angular 20](https://angular.dev/) with the new zoneless change detection strategy.
 Wherever possible, I used signals to model data flow.
 
 The project uses [Nx](https://nx.dev/) for managing the monorepo and the build process.
