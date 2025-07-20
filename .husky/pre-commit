@@ -42,7 +42,8 @@ then
 fi
 
 set -x
-pnpm exec nx $cmd -t lint,test,format,markdownlint --nxBail --configuration pre-commit $base --outputStyle stream || cleanup
+pnpm exec nx $cmd -t lint,test --configuration pre-commit $base --outputStyle static || pnpm exec nx $cmd -t lint,test --configuration pre-commit $base --outputStyle static || cleanup
+pnpm exec nx run format --configuration pre-commit $base --outputStyle static || cleanup
 set +x
 
 if is_husky

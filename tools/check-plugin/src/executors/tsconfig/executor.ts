@@ -382,8 +382,8 @@ const run: PromiseExecutor<ExecutorSchema> = async (options, context) => {
       console.error('Found', ctx.unfixableErrors, 'not auto-fixable errors');
     }
 
-    const hasErrors = ctx.unfixableErrors === 0 && ctx.fixableErrors === 0;
-    return { success: hasErrors };
+    const hasNoErrors = ctx.unfixableErrors === 0 && ctx.fixableErrors === 0;
+    return { success: hasNoErrors };
   } catch (error) {
     console.error((error as Error).message);
     return { success: false };

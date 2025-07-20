@@ -59,6 +59,8 @@ const rules = (tsConfigOrFolder, options) => {
             type: 'attribute',
           },
         ],
+        '@angular-eslint/no-developer-preview': 'off',
+        '@angular-eslint/no-experimental': 'off',
         '@angular-eslint/no-host-metadata-property': 'off',
         '@angular-eslint/prefer-standalone': 'off',
         '@angular-eslint/prefer-standalone-component': 'off',
