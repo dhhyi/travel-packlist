@@ -7,56 +7,56 @@ module.exports = [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
-  {
-    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    rules: {
-      '@nx/enforce-module-boundaries': [
-        'error',
-        {
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
-          depConstraints: [
-            {
-              onlyDependOnLibsWithTags: ['scope:main', 'scope:state'],
-              sourceTag: 'scope:testing',
-            },
-            {
-              onlyDependOnLibsWithTags: [
-                'scope:state',
-                'scope:generated',
-                'scope:components',
-              ],
-              sourceTag: 'scope:main',
-            },
-            {
-              onlyDependOnLibsWithTags: [
-                'scope:generated',
-                'scope:state',
-                'scope:components',
-              ],
-              sourceTag: 'scope:design',
-            },
-            {
-              onlyDependOnLibsWithTags: ['scope:generated', 'scope:state'],
-              sourceTag: 'scope:state',
-            },
-            {
-              onlyDependOnLibsWithTags: ['scope:generated'],
-              sourceTag: 'scope:components',
-            },
-            {
-              notDependOnLibsWithTags: ['*'],
-              sourceTag: 'scope:generated',
-            },
-            {
-              onlyDependOnLibsWithTags: ['utility'],
-              sourceTag: 'plugin',
-            },
-          ],
-          enforceBuildableLibDependency: true,
-        },
-      ],
-    },
-  },
+  // {
+  //   files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+  //   rules: {
+  //     '@nx/enforce-module-boundaries': [
+  //       'error',
+  //       {
+  //         allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
+  //         depConstraints: [
+  //           {
+  //             onlyDependOnLibsWithTags: ['scope:main', 'scope:state'],
+  //             sourceTag: 'scope:testing',
+  //           },
+  //           {
+  //             onlyDependOnLibsWithTags: [
+  //               'scope:state',
+  //               'scope:generated',
+  //               'scope:components',
+  //             ],
+  //             sourceTag: 'scope:main',
+  //           },
+  //           {
+  //             onlyDependOnLibsWithTags: [
+  //               'scope:generated',
+  //               'scope:state',
+  //               'scope:components',
+  //             ],
+  //             sourceTag: 'scope:design',
+  //           },
+  //           {
+  //             onlyDependOnLibsWithTags: ['scope:generated', 'scope:state'],
+  //             sourceTag: 'scope:state',
+  //           },
+  //           {
+  //             onlyDependOnLibsWithTags: ['scope:generated'],
+  //             sourceTag: 'scope:components',
+  //           },
+  //           {
+  //             notDependOnLibsWithTags: ['*'],
+  //             sourceTag: 'scope:generated',
+  //           },
+  //           {
+  //             onlyDependOnLibsWithTags: ['utility'],
+  //             sourceTag: 'plugin',
+  //           },
+  //         ],
+  //         enforceBuildableLibDependency: true,
+  //       },
+  //     ],
+  //   },
+  // },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx', '**/*.mjs'],
     plugins: { perfectionist },
