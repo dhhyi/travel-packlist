@@ -25,8 +25,7 @@
       "options": {
         "assemblyTask": "travel-packlist-web:build:android",
         "assetTask": "generate-assets",
-        "outputPath": "dist/android",
-        "targetSdkVersion": 34
+        "outputPath": "dist/android"
       },
       "configurations": {
         "ci": {
