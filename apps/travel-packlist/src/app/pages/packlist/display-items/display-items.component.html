@@ -53,34 +53,36 @@
       @if (!category.collapsed) {
         @for (item of category.items; track item.name) {
           @let bgColor = backgroundColor(item);
-          <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
-          <div
-            role="listitem"
-            class="rounded-sm px-1 transition-colors duration-300"
-            [id]="item.id()"
-            [style.background-color]="bgColor"
-          >
+          @if (item.visible) {
+            <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
             <div
-              role="checkbox"
-              tabindex="0"
-              class="flex items-center justify-between select-none"
-              [attr.aria-checked]="item.checked"
-              [class.text-checked-item]="item.checked && !item.skipped"
-              [class.text-skipped-item]="item.skipped"
-              [@animateStrikeThrough]="item.checked"
-              (click)="toggleCheckedItem(item)"
-              (keypress)="toggleCheckedItem(item)"
-              (dblclick)="dblclick(item)"
-              (touchstart)="tapStart(item)"
-              (touchmove)="tapEnd()"
-              (touchend)="tapEnd()"
+              role="listitem"
+              class="rounded-sm px-1 transition-colors duration-300"
+              [id]="item.id()"
+              [style.background-color]="bgColor"
             >
-              {{ item.name }}
-              @if (item.weight && trackWeight()) {
-                <span class="italic">{{ serializeWeight(item.weight) }}</span>
-              }
+              <div
+                role="checkbox"
+                tabindex="0"
+                class="flex items-center justify-between select-none"
+                [attr.aria-checked]="item.checked"
+                [class.text-checked-item]="item.checked && !item.skipped"
+                [class.text-skipped-item]="item.skipped"
+                [@animateStrikeThrough]="item.checked"
+                (click)="toggleCheckedItem(item)"
+                (keypress)="toggleCheckedItem(item)"
+                (dblclick)="dblclick(item)"
+                (touchstart)="tapStart(item)"
+                (touchmove)="tapEnd()"
+                (touchend)="tapEnd()"
+              >
+                {{ item.name }}
+                @if (item.weight && trackWeight()) {
+                  <span class="italic">{{ serializeWeight(item.weight) }}</span>
+                }
+              </div>
             </div>
-          </div>
+          }
         }
       }
     </div>

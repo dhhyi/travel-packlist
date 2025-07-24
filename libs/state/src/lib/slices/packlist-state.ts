@@ -32,6 +32,7 @@ class PacklistItem extends Item {
     public readonly checked: boolean,
     public readonly skipped: boolean,
     public readonly colored: boolean,
+    public readonly visible: boolean,
   ) {
     super(original.category, original.name, original.weight);
   }
@@ -46,6 +47,7 @@ export const packlistState = ({
   const stringSkippedItems = create<string[]>('skippedItems', []);
   const collapsedCategories = create<string[]>('collapsedCategories', []);
   const answersLocked = create('answersLocked', false);
+  const hideCompleted = create('hideCompleted', false);
   const statsVisible = createSessionStorageSignalState<ItemStats | undefined>(
     'statsVisible',
     undefined,
@@ -135,8 +137,9 @@ export const packlistState = ({
         const colored =
           statsVisible() === 'heaviestItems' &&
           coloredItems().includes(item.id());
+        const visible = hideCompleted() ? !checked && !skipped : true;
         groups[item.category].items.push(
-          new PacklistItem(item, checked, skipped, colored),
+          new PacklistItem(item, checked, skipped, colored, visible),
         );
         if (checked) {
           groups[item.category].checkedItems++;
@@ -182,11 +185,16 @@ export const packlistState = ({
     ),
   );
 
+  const resetViewState = () => {
+    answersLocked.set(false);
+    hideCompleted.set(false);
+    statsVisible.set(undefined);
+  };
+
   effect(() => {
     if (raw.hasValue() && raw.value()) {
       // reset packlist view modifications on rules change
-      answersLocked.set(false);
-      statsVisible.set(undefined);
+      resetViewState();
     }
   });
 
@@ -226,6 +234,8 @@ export const packlistState = ({
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
       answersLocked,
+      /** storage: hide completed items in the packlist */
+      hideCompleted,
       /** session: which stats to show */
       statsVisible,
       /** storage: if already asked for weight tracking */
@@ -236,8 +246,7 @@ export const packlistState = ({
         stringCheckedItems.set([]);
         stringSkippedItems.set([]);
         collapsedCategories.set([]);
-        answersLocked.set(false);
-        statsVisible.set(undefined);
+        resetViewState();
       },
     },
   };

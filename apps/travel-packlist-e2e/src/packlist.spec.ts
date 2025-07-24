@@ -44,6 +44,7 @@ test('click items', async ({ page }) => {
     - checkbox "Will it be sunny?"
     - checkbox "Will it be rainy?" [checked]
     - button "Lock answers"
+    - button "Hide completed items"
     - progressbar "You have packed 1 out of 4 items."
     - list "Clothes":
       - listitem:
@@ -122,5 +123,31 @@ test('skip items', async ({ page }) => {
     - progressbar "You have packed 1 out of 3 items."
   `);
 
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
+});
+
+test('hide completed items', async ({ page }) => {
+  const packlist = await startWithRules(page, rules).then((page) =>
+    page.toConfigPage().then((config) =>
+      config
+        .skipItems()
+        .click()
+        .then(() => config.toPacklistPage()),
+    ),
+  );
+
+  await packlist.question('Will it be rainy?', false).click();
+
+  await packlist.item('Pants', false).click();
+
+  await packlist.hideCompletedButton().click();
+
+  await packlist.item('Rain Jacket').dblclick();
+  await packlist.item('Paper Tissues', false).click();
+
+  await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
+    - progressbar "You have packed 2 out of 3 items."
+  `);
+
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });

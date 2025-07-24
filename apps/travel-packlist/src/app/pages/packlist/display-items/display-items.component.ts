@@ -50,7 +50,14 @@ const animateCategory = trigger('animateCategory', [
 
 const animateItems = trigger('animateItems', [
   transition('* <=> *', [
+    query('@animateStrikeThrough', animateChild(), {
+      optional: true,
+      delay: '0.2s',
+    }),
     group([
+      query('@animateChevron', animateChild(), {
+        optional: true,
+      }),
       query(
         'div[role="listitem"]:enter',
         [
@@ -67,7 +74,6 @@ const animateItems = trigger('animateItems', [
         ],
         { optional: true },
       ),
-      query('@*', [animateChild()], { optional: true }),
     ]),
   ]),
 ]);
@@ -113,7 +119,6 @@ export class DisplayItemsComponent {
   packlist = this.state.packlist.model;
   trackWeight = this.state.config.trackWeight;
   toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
-  toggleCheckedItem = this.state.packlist.toggleCheckedItem;
 
   serializeWeight = serializeWeight;
 
@@ -143,6 +148,17 @@ export class DisplayItemsComponent {
         }
       }
     });
+  }
+
+  toggleCheckedItem(item: Item & { checked: boolean }) {
+    if (this.state.packlist.hideCompleted()) {
+      item.checked = !item.checked;
+      setTimeout(() => {
+        this.state.packlist.toggleCheckedItem(item);
+      }, 0);
+    } else {
+      this.state.packlist.toggleCheckedItem(item);
+    }
   }
 
   dblclick(item: Item) {

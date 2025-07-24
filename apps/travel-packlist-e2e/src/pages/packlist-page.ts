@@ -28,6 +28,10 @@ export class PacklistPage extends Banner {
     return this.page.getByRole('button', { name: 'Lock answers' });
   }
 
+  hideCompletedButton() {
+    return this.page.getByRole('button', { name: 'Hide completed items' });
+  }
+
   displayWeightDistributionButton() {
     return this.page.getByRole('button', {
       name: 'Display weight distribution',

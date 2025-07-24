@@ -6,9 +6,11 @@ import {
 } from '@angular/core';
 import {
   IconBarChartComponent,
+  IconInvisibleComponent,
   IconLockComponent,
   IconLockOpenComponent,
   IconPieChartComponent,
+  IconVisibleComponent,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 
@@ -19,6 +21,8 @@ import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
     IconLockOpenComponent,
     IconLockComponent,
     IconPieChartComponent,
+    IconInvisibleComponent,
+    IconVisibleComponent,
   ],
   templateUrl: './packlist-toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +31,7 @@ export class PacklistToolbarComponent {
   private state = inject(GLOBAL_STATE);
 
   isAnswersLockActive = this.state.packlist.answersLocked;
+  isHideCompleted = this.state.packlist.hideCompleted;
 
   readonly questionsAvailable = computed(
     () => this.state.active.questions().length > 0,
@@ -34,6 +39,10 @@ export class PacklistToolbarComponent {
 
   toggleAnswersLock() {
     this.state.packlist.answersLocked.update((lock) => !lock);
+  }
+
+  toggleHideCompleted() {
+    this.state.packlist.hideCompleted.update((hide) => !hide);
   }
 
   readonly displayWeightStatsButtons = computed(

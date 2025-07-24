@@ -16,6 +16,22 @@
         <app-icon-lock-open class="h-6 w-6" />
       }
     </button>
+    <button
+      type="button"
+      class="link"
+      aria-label="Hide completed items"
+      i18n-aria-label
+      [attr.aria-pressed]="isHideCompleted()"
+      [class.pressed]="isHideCompleted()"
+      (click)="toggleHideCompleted()"
+      (keypress)="toggleHideCompleted()"
+    >
+      @if (isHideCompleted()) {
+        <app-icon-invisible class="h-6 w-6" />
+      } @else {
+        <app-icon-visible class="h-6 w-6" />
+      }
+    </button>
     @if (displayWeightStatsButtons()) {
       <button
         iconPieChart
