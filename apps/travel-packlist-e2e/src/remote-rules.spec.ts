@@ -119,8 +119,6 @@ test('remote rules error', async ({ page }) => {
 test.describe(() => {
   test.describe.configure({ retries: 3 });
 
-  test.slow();
-
   // eslint-disable-next-line playwright/no-skipped-test
   test.skip(!!process.env['CI'], 'Skip on CI');
 
@@ -138,7 +136,9 @@ test.describe(() => {
       );
     await config.remoteRulesURL().blur();
 
-    await expect(config.remoteSourceStatus()).toHaveText('loaded');
+    await expect(config.remoteSourceStatus()).toHaveText('loaded', {
+      timeout: 30_000,
+    });
 
     const packlist = await config.toPacklistPage();
 
@@ -155,7 +155,9 @@ test.describe(() => {
     await config.remoteRulesURL().fill('https://pastebin.com/ebFBBQZh');
     await config.remoteRulesURL().blur();
 
-    await expect(config.remoteSourceStatus()).toHaveText('loaded');
+    await expect(config.remoteSourceStatus()).toHaveText('loaded', {
+      timeout: 30_000,
+    });
 
     const packlist = await config.toPacklistPage();
 
@@ -176,7 +178,9 @@ test.describe(() => {
       );
     await config.remoteRulesURL().blur();
 
-    await expect(config.remoteSourceStatus()).toHaveText('loaded');
+    await expect(config.remoteSourceStatus()).toHaveText('loaded', {
+      timeout: 30_000,
+    });
 
     const packlist = await config.toPacklistPage();
 
@@ -197,7 +201,9 @@ test.describe(() => {
       );
     await config.remoteRulesURL().blur();
 
-    await expect(config.remoteSourceStatus()).toHaveText('loaded');
+    await expect(config.remoteSourceStatus()).toHaveText('loaded', {
+      timeout: 30_000,
+    });
 
     const packlist = await config.toPacklistPage();
 
