@@ -7,6 +7,7 @@ import {
 } from '../persistence/storage-signal';
 import { ConfigState } from './config-state';
 import { RulesParsingState } from './rules-parsing-state';
+import { RulesSourceState } from './rules-source-state';
 
 const create = createLocalStorageSignalState;
 
@@ -37,9 +38,9 @@ class PacklistItem extends Item {
 }
 
 export const packlistState = ({
-  rules: { parsed: parsedRules },
+  rules: { parsed: parsedRules, raw },
   config: { categorySorting, skipItems },
-}: RulesParsingState & ConfigState) => {
+}: RulesParsingState & ConfigState & RulesSourceState) => {
   const answers = create<Record<string, VariableType>>('answers', {});
   const stringCheckedItems = create<string[]>('checkedItems', []);
   const stringSkippedItems = create<string[]>('skippedItems', []);
@@ -182,10 +183,11 @@ export const packlistState = ({
   );
 
   effect(() => {
-    parsedRules.value();
-    // reset packlist view modifications on rules change
-    answersLocked.set(false);
-    statsVisible.set(undefined);
+    if (raw.hasValue() && raw.value()) {
+      // reset packlist view modifications on rules change
+      answersLocked.set(false);
+      statsVisible.set(undefined);
+    }
   });
 
   return {
