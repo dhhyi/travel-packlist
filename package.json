@@ -33,12 +33,8 @@
           "parallel": true
         }
       },
-      "project-graph": "nx report",
       "lint": {
         "executor": "@nx/eslint:lint",
-        "dependsOn": [
-          "project-graph"
-        ],
         "options": {
           "lintFilePatterns": [
             "*.*",

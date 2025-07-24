@@ -53,8 +53,7 @@
       ],
       "dependsOn": [
         "generate",
-        "schema2ts-*",
-        "project-graph"
+        "schema2ts-*"
       ],
       "defaultConfiguration": "pre-commit",
       "configurations": {
@@ -70,7 +69,8 @@
     },
     "lint": {
       "dependsOn": [
-        "generate"
+        "generate",
+        "*lint"
       ]
     },
     "@nx/jest:jest": {
