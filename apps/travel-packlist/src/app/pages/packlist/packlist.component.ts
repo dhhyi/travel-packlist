@@ -11,6 +11,7 @@ import { DisplayItemsComponent } from './display-items/display-items.component';
 import { DisplayQuestionsComponent } from './display-questions/display-questions.component';
 import { DisplayTitleComponent } from './display-title/display-title.component';
 import { PacklistStatusComponent } from './packlist-status/packlist-status.component';
+import { PacklistToolbarComponent } from './packlist-status/packlist-toolbar/packlist-toolbar.component';
 
 @Component({
   selector: 'app-packlist',
@@ -18,6 +19,7 @@ import { PacklistStatusComponent } from './packlist-status/packlist-status.compo
     DisplayItemsComponent,
     DisplayQuestionsComponent,
     PacklistStatusComponent,
+    PacklistToolbarComponent,
     IconProgressActivityComponent,
     DisplayTitleComponent,
   ],

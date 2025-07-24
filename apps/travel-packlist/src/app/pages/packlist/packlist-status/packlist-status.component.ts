@@ -20,7 +20,6 @@ import {
 } from '../../../animations/card.animations';
 import { HeaviestItemsComponent } from './heaviest-items/heaviest-items.component';
 import { PacklistProgressComponent } from './packlist-progress/packlist-progress.component';
-import { PacklistToolbarComponent } from './packlist-toolbar/packlist-toolbar.component';
 import { WeightDistributionComponent } from './weight-distribution/weight-distribution.component';
 
 const animateDiagram = trigger('animateDiagram', [
@@ -36,7 +35,6 @@ const animateDiagram = trigger('animateDiagram', [
   selector: 'app-packlist-status',
   imports: [
     HeaviestItemsComponent,
-    PacklistToolbarComponent,
     PacklistProgressComponent,
     WeightDistributionComponent,
   ],
