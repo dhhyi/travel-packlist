@@ -1,3 +1,13 @@
+## [1.1.0](https://github.com/dhhyi/travel-packlist/compare/v1.0.8...v1.1.0) (2025-07-24)
+
+### Features
+
+- added functionality for hiding completed items ([b266d44](https://github.com/dhhyi/travel-packlist/commit/b266d446241be6c56b54692a87d0a6a644319c5b))
+
+### Bug Fixes
+
+- preserve packlist view lock when navigating ([40aa6f4](https://github.com/dhhyi/travel-packlist/commit/40aa6f4d072c36548e1b77f38dd3c12a4b6d5509)), closes [#13](https://github.com/dhhyi/travel-packlist/issues/13)
+
 ## [1.0.8](https://github.com/dhhyi/travel-packlist/compare/v1.0.7...v1.0.8) (2025-07-21)
 
 ## [1.0.7](https://github.com/dhhyi/travel-packlist/compare/v1.0.6...v1.0.7) (2025-07-21)
