@@ -3,14 +3,15 @@ extends: dcc://javascript-pnpm
 devcontainer:
   build:
     user:
-      - ENV NX_TUI=false NX_NO_CLOUD=true
+      - ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
+      - RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
     files:
       - type: script
         path: /usr/bin/nx
         content: |
           #!/bin/bash
           exec pnpm exec nx "$@"
-  instantiate: pnpm install && pnpm playwright install chromium --with-deps
+  instantiate: pnpm install && pnpm playwright install chromium --with-deps && sudo apt-get install -y exiftool imagemagick xdg-utils bc && cd /tmp/git-diff-image && ./install.sh
   ports:
     - 4200
 extras:

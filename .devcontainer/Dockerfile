@@ -10,6 +10,7 @@ RUN mkdir -p "/" && echo "CiMhL2Jpbi9iYXNoCmlmIFsgLXogIiQqIiBdOyB0aGVuCiAgdG11eC
 
 USER vscode
 
-ENV NX_TUI=false NX_NO_CLOUD=true
+ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
+RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
 
 EXPOSE 4200
