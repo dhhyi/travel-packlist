@@ -14,6 +14,20 @@ export class ConfigPage extends Banner {
     return new PacklistPage(this.page);
   }
 
+  resetPackListButton() {
+    return this.page.getByRole('button', {
+      name: 'Reset Pack List',
+      exact: true,
+    });
+  }
+
+  nameSessionButton() {
+    return this.page.getByRole('button', {
+      name: 'Name Session',
+      exact: true,
+    });
+  }
+
   trackItemWeight() {
     return this.page.getByRole('checkbox', {
       name: 'Track item weight',
@@ -138,13 +152,6 @@ export class ConfigPage extends Banner {
     return this.page
       .getByRole('alert')
       .and(this.page.getByLabel('Export needed', { exact: true }));
-  }
-
-  resetPackListButton() {
-    return this.page.getByRole('button', {
-      name: 'Reset Pack List',
-      exact: true,
-    });
   }
 
   resetApplicationButton() {

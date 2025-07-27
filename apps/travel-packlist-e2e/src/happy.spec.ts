@@ -103,10 +103,22 @@ test('happy path editor to packlist', async ({ page }) => {
 
   await expect(page).toHaveScreenshot();
 
-  const packlist = await editor.toPacklistPage();
+  await editor.toConfigPage();
+
+  await config.nameSessionButton().click();
+
+  await expect(config.dialog()).toBeVisible();
+
+  await config.dialog.prompt().fill('My Session');
+  await config.dialog.confirm().click();
+
+  await expect(config.dialog()).toBeHidden();
+
+  const packlist = await config.toPacklistPage();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "My Rules"
+    - heading "My Session"
     - checkbox "Will it be sunny?"
     - checkbox "Will it be rainy?"
     - button "Lock answers"

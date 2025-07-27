@@ -1,3 +1,8 @@
-@if (title()) {
-  <h2 class="px-2 pb-4 text-center text-lg font-bold">{{ title() }}</h2>
-}
+<div class="flex flex-col gap-1 px-2 text-center font-bold *:last:pb-4">
+  @if (title()) {
+    <h2 class="text-lg">{{ title() }}</h2>
+  }
+  @if (sessionName()) {
+    <h3>{{ sessionName() }}</h3>
+  }
+</div>

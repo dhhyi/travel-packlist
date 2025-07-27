@@ -185,6 +185,11 @@ export const packlistState = ({
     ),
   );
 
+  const sessionName = createLocalStorageSignalState<string | undefined>(
+    'sessionName',
+    undefined,
+  );
+
   const resetViewState = () => {
     answersLocked.set(false);
     hideCompleted.set(false);
@@ -218,6 +223,7 @@ export const packlistState = ({
       ),
     },
     packlist: {
+      sessionName,
       /** storage: the answers from checked questions in the packlist */
       answers,
       /** derived: display model for the packlist */
@@ -242,6 +248,7 @@ export const packlistState = ({
       askedWeightTracking,
       /** reset the packlist sub state */
       reset: () => {
+        sessionName.set(undefined);
         answers.set({});
         stringCheckedItems.set([]);
         stringSkippedItems.set([]);

@@ -12,7 +12,7 @@ import {
 } from '@travel-packlist/components';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
-import { confirm } from '../../../dialog';
+import { confirm, prompt } from '../../../dialog';
 
 @Component({
   selector: 'app-config-packlist',
@@ -28,6 +28,7 @@ import { confirm } from '../../../dialog';
 export class ConfigPackListComponent {
   private state = inject(GLOBAL_STATE);
 
+  sessionName = this.state.packlist.sessionName;
   trackWeight = this.state.config.trackWeight;
   skipItems = this.state.config.skipItems;
   categorySorting = this.state.config.categorySorting;
@@ -44,6 +45,20 @@ export class ConfigPackListComponent {
     ) {
       this.state.packlist.reset();
       this.state.router.go('packlist');
+    }
+  }
+
+  async renameSession() {
+    const name = await prompt(
+      this.sessionName()
+        ? $localize`Rename this session:`
+        : $localize`Give a name to this session:`,
+      this.sessionName() ?? undefined,
+    );
+    if (name) {
+      this.state.packlist.sessionName.set(name);
+    } else if (name === '') {
+      this.state.packlist.sessionName.set(undefined);
     }
   }
 }
