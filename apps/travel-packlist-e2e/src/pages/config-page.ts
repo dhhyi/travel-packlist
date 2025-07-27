@@ -140,9 +140,9 @@ export class ConfigPage extends Banner {
       .and(this.page.getByLabel('Export needed', { exact: true }));
   }
 
-  resetChecklistButton() {
+  resetPackListButton() {
     return this.page.getByRole('button', {
-      name: 'Reset Checklist',
+      name: 'Reset Pack List',
       exact: true,
     });
   }

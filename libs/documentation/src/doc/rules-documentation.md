@@ -72,7 +72,7 @@ washer OR laundromat
 
 ## Conclusion
 
-With all of this you can define a conditional checklist very flexible.
+With all of this you can define a conditional pack list very flexible.
 
 One advice:
 Don't trigger too many effects in one rule.

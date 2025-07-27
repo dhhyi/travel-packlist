@@ -15,17 +15,17 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 import { confirm } from '../../../dialog';
 
 @Component({
-  selector: 'app-config-checklist',
+  selector: 'app-config-packlist',
   imports: [
     FormsModule,
     CheckboxComponent,
     SelectOptionsComponent,
     SelectOptionDirective,
   ],
-  templateUrl: './config-checklist.component.html',
+  templateUrl: './config-packlist.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfigChecklistComponent {
+export class ConfigPackListComponent {
   private state = inject(GLOBAL_STATE);
 
   trackWeight = this.state.config.trackWeight;
@@ -38,9 +38,9 @@ export class ConfigChecklistComponent {
       : $localize`You can skip items in the packlist by double clicking them.`,
   );
 
-  async resetChecklist() {
+  async resetPackList() {
     if (
-      await confirm($localize`Are you sure you want to reset the checklist?`)
+      await confirm($localize`Are you sure you want to reset the pack list?`)
     ) {
       this.state.packlist.reset();
       this.state.router.go('packlist');

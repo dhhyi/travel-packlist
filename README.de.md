@@ -19,7 +19,7 @@
 
 <!-- cSpell:words GitHub Pages, Play Store -->
 
-Diese App ist ein Werkzeug zum Erstellen von bedingten Checklisten.
+Diese App ist ein Werkzeug zum Erstellen von bedingten Packlisten.
 Ich benutze sie, um eine Packliste für meine Reisen - abhängig von der Dauer, den Aktivitäten, dem erwarteten Wetter usw. - zu erstellen.
 Sie sollte flexibel genug sein, um auch für andere Zwecke verwendet zu werden.
 

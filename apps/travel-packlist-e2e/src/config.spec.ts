@@ -11,8 +11,8 @@ test('config', async ({ page }) => {
     - navigation:
       - banner "Go to TravelPacklist":
         - heading "TravelPacklist" [level=1]
-    - heading "Checklist" [level=2]
-    - button "Reset Checklist"
+    - heading "Pack List" [level=2]
+    - button "Reset Pack List"
     - checkbox "Track item weight. (You can enter the item weight appended to the item name in the editor.)"
     - checkbox "Allow skipping items. (You can skip items in the packlist by double clicking them.)"
     - radiogroup "Sort categories":

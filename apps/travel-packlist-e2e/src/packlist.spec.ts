@@ -60,13 +60,13 @@ test('click items', async ({ page }) => {
 
   const config = await packlist.toConfigPage();
 
-  await config.resetChecklistButton().click();
+  await config.resetPackListButton().click();
 
   await expect(config.dialog()).toBeVisible();
 
   await expect(config.dialog()).toMatchAriaSnapshot(`
     - dialog:
-      - text: Are you sure you want to reset the checklist?
+      - text: Are you sure you want to reset the pack list?
       - button "Cancel"
       - button "OK"
   `);

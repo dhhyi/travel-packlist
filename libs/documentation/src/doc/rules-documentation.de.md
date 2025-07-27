@@ -76,7 +76,7 @@ washer OR laundromat
 
 ## Fazit
 
-Mit all dem kannst du eine bedingte Checkliste sehr flexibel definieren.
+Mit all dem kannst du eine bedingte Packliste sehr flexibel definieren.
 
 Ein Ratschlag:
 Löse nicht zu viele Effekte in einer Regel aus.

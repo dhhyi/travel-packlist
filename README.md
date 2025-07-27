@@ -17,7 +17,7 @@
 <!-- spellchecker:enable -->
 <!-- markdownlint-enable -->
 
-This app is a tool for creating conditional checklists.
+This app is a tool for creating conditional pack lists.
 I use it for creating a pack list for my travels, depending on the duration, the activities, the expected weather, etc.
 It should be flexible enough to be used for other purposes as well.
 

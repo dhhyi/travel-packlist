@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { ConfigAppearanceComponent } from './config-appearance/config-appearance.component';
-import { ConfigChecklistComponent } from './config-checklist/config-checklist.component';
 import { ConfigDangerzoneComponent } from './config-dangerzone/config-dangerzone.component';
+import { ConfigPackListComponent } from './config-packlist/config-packlist.component';
 import { ConfigRulesEditorComponent } from './config-rules-editor/config-rules-editor.component';
 import { ConfigRulesImportExportComponent } from './config-rules-import-export/config-rules-import-export.component';
 import { ConfigRulesModeComponent } from './config-rules-mode/config-rules-mode.component';
@@ -16,7 +16,7 @@ import { ConfigVersionComponent } from './config-version/config-version.componen
 @Component({
   selector: 'app-config',
   imports: [
-    ConfigChecklistComponent,
+    ConfigPackListComponent,
     ConfigRulesEditorComponent,
     ConfigRulesImportExportComponent,
     ConfigAppearanceComponent,

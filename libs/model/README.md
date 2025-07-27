@@ -1,6 +1,6 @@
 # Data Model
 
-The app uses a custom data model for representing the rules to create conditional checklists.
+The app uses a custom data model for representing the rules to create conditional pack lists.
 Each rule is bound to a certain condition which activates items for the packlist and questions for activation of other rules.
 More on this can be found in the [rules documentation](./../documentation/src/doc/rules-documentation.md).
 
