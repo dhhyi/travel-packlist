@@ -59,17 +59,20 @@ export class WeightTrackingCheck {
   init() {
     let timeout: number | undefined;
     effect(() => {
-      this.state.rules.parsed.value();
+      if (
+        !this.state.rules.raw.isLoading() &&
+        this.state.rules.parsed.hasValue()
+      ) {
+        if (timeout) {
+          clearTimeout(timeout);
+        }
 
-      if (timeout) {
-        clearTimeout(timeout);
-      }
-
-      if (this.state.router.path().startsWith('/packlist')) {
-        timeout = setTimeout(() => {
-          void this.promptEnableWeightTracking();
-          void this.promptDisableWeightTracking();
-        }, 2000);
+        if (this.state.router.path().startsWith('/packlist')) {
+          timeout = setTimeout(() => {
+            void this.promptEnableWeightTracking();
+            void this.promptDisableWeightTracking();
+          }, 2000);
+        }
       }
     });
   }
