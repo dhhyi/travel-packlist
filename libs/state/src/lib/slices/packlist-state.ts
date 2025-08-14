@@ -196,10 +196,15 @@ export const packlistState = ({
     statsVisible.set(undefined);
   };
 
+  let applicationStart = true;
   effect(() => {
     if (raw.hasValue() && raw.value()) {
-      // reset packlist view modifications on rules change
-      resetViewState();
+      if (applicationStart) {
+        applicationStart = false;
+      } else {
+        // reset packlist view modifications on rules change
+        resetViewState();
+      }
     }
   });
 
