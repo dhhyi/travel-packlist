@@ -1,3 +1,14 @@
+## [1.2.0](https://github.com/dhhyi/travel-packlist/compare/v1.1.0...v1.2.0) (2025-08-14)
+
+### Features
+
+- give a name to sessions ([ec1c4fd](https://github.com/dhhyi/travel-packlist/commit/ec1c4fd3d57525635565f11c03c2f0809d08aa78))
+
+### Bug Fixes
+
+- delay weight tracking check until rules are loaded ([8c327d0](https://github.com/dhhyi/travel-packlist/commit/8c327d0368cf34da697ab86b58b1ec9ee4bbc435))
+- do not reset view state on application start ([f0285c1](https://github.com/dhhyi/travel-packlist/commit/f0285c1d09b10a5a6bb1766a933fd10ebe9e9ca5))
+
 ## [1.1.0](https://github.com/dhhyi/travel-packlist/compare/v1.0.8...v1.1.0) (2025-07-24)
 
 ### Features
