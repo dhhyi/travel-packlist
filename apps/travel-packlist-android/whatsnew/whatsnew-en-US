@@ -1,3 +1,8 @@
+- preview to session management
+- bugfixes
+
+previous improvements:
+
 - It is now possible to hide completed items in the packlist.
 - Conforming to new Android App requirements with SDK Version 35.
 
