@@ -151,7 +151,7 @@ export class DisplayItemsComponent {
   }
 
   toggleCheckedItem(item: Item & { checked: boolean }) {
-    if (this.state.packlist.hideCompleted()) {
+    if (this.state.packlist.isHideCompleted()) {
       item.checked = !item.checked;
       setTimeout(() => {
         this.state.packlist.toggleCheckedItem(item);

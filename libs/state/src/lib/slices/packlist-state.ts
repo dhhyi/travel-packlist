@@ -38,20 +38,70 @@ class PacklistItem extends Item {
   }
 }
 
+interface SessionState {
+  sessionName?: string;
+  answers: Record<string, VariableType>;
+  checkedItems: string[];
+  skippedItems: string[];
+  collapsedCategories: string[];
+  answersLocked: boolean;
+  hideCompleted: boolean;
+  statsVisible: ItemStats | undefined;
+}
+
+function createNewSession(): SessionState {
+  return {
+    answers: {},
+    checkedItems: [],
+    skippedItems: [],
+    collapsedCategories: [],
+    answersLocked: false,
+    hideCompleted: false,
+    statsVisible: undefined,
+  };
+}
+
 export const packlistState = ({
   rules: { parsed: parsedRules, raw },
   config: { categorySorting, skipItems },
 }: RulesParsingState & ConfigState & RulesSourceState) => {
-  const answers = create<Record<string, VariableType>>('answers', {});
-  const stringCheckedItems = create<string[]>('checkedItems', []);
-  const stringSkippedItems = create<string[]>('skippedItems', []);
-  const collapsedCategories = create<string[]>('collapsedCategories', []);
-  const answersLocked = create('answersLocked', false);
-  const hideCompleted = create('hideCompleted', false);
-  const statsVisible = createSessionStorageSignalState<ItemStats | undefined>(
-    'statsVisible',
-    undefined,
-  );
+  const session = create<SessionState>('packlistSession', createNewSession());
+
+  function setSessionName(name: string | undefined) {
+    session.update((old) => ({
+      ...old,
+      sessionName: name,
+    }));
+  }
+
+  function updateAnswer(id: string, value: VariableType) {
+    session.update((old) => ({
+      ...old,
+      answers: { ...old.answers, [id]: value },
+    }));
+  }
+
+  function toggleAnswersLock() {
+    session.update((old) => ({
+      ...old,
+      answersLocked: !old.answersLocked,
+    }));
+  }
+
+  function toggleHideCompleted() {
+    session.update((old) => ({
+      ...old,
+      hideCompleted: !old.hideCompleted,
+    }));
+  }
+
+  function setStatsVisible(value: SessionState['statsVisible']) {
+    session.update((old) => ({
+      ...old,
+      statsVisible: value,
+    }));
+  }
+
   const askedWeightTracking = createSessionStorageSignalState<
     'activation' | 'deactivation' | undefined
   >('askedWeightTracking', undefined);
@@ -60,7 +110,7 @@ export const packlistState = ({
   const active = computed(() =>
     refactor.filterActive({
       rules: parsedRules.value(),
-      model: answers(),
+      model: session().answers,
     }),
   );
   const activeRules = computed(() => active().rules);
@@ -68,39 +118,59 @@ export const packlistState = ({
   const items = computed(() => activeRules().flatMap((rule) => rule.items));
 
   const checkedItems = computed(() =>
-    items().filter((item) => stringCheckedItems().includes(item.id())),
+    items().filter((item) => session().checkedItems.includes(item.id())),
   );
-  const toggleCheckedItem = (item: Item) => {
-    if (stringCheckedItems().includes(item.id())) {
-      stringCheckedItems.update((old) => old.filter((i) => i !== item.id()));
+  function toggleCheckedItem(item: Item) {
+    if (session().checkedItems.includes(item.id())) {
+      session.update((old) => ({
+        ...old,
+        checkedItems: old.checkedItems.filter((i) => i !== item.id()),
+      }));
     } else {
-      stringCheckedItems.update((old) => [...old, item.id()]);
+      session.update((old) => ({
+        ...old,
+        checkedItems: [...old.checkedItems, item.id()],
+      }));
     }
-  };
+  }
   const skippedItems = computed(() =>
-    items().filter((item) => stringSkippedItems().includes(item.id())),
+    items().filter((item) => session().skippedItems.includes(item.id())),
   );
-  const toggleSkippedItem = (item: Item) => {
+  function toggleSkippedItem(item: Item) {
     if (!skipItems()) {
       return;
     }
-    if (stringSkippedItems().includes(item.id())) {
-      stringSkippedItems.update((old) => old.filter((i) => i !== item.id()));
+    if (session().skippedItems.includes(item.id())) {
+      session.update((old) => ({
+        ...old,
+        skippedItems: old.skippedItems.filter((i) => i !== item.id()),
+      }));
     } else {
-      stringSkippedItems.update((old) => [...old, item.id()]);
+      session.update((old) => ({
+        ...old,
+        skippedItems: [...old.skippedItems, item.id()],
+      }));
     }
-  };
+  }
 
-  const toggleCategoryCollapse = (category: string) => {
-    if (collapsedCategories().includes(category)) {
-      collapsedCategories.update((old) => old.filter((c) => c !== category));
+  function toggleCategoryCollapse(category: string) {
+    if (session().collapsedCategories.includes(category)) {
+      session.update((old) => ({
+        ...old,
+        collapsedCategories: old.collapsedCategories.filter(
+          (c) => c !== category,
+        ),
+      }));
     } else {
-      collapsedCategories.update((old) => [...old, category]);
+      session.update((old) => ({
+        ...old,
+        collapsedCategories: [...old.collapsedCategories, category],
+      }));
     }
-  };
+  }
 
   const coloredItems = signal<string[]>([]);
-  const colorItems = (ids: string[]) => {
+  function colorItems(ids: string[]) {
     // equality check to prevent recursive updates
     if (
       coloredItems().length !== ids.length ||
@@ -108,7 +178,7 @@ export const packlistState = ({
     ) {
       coloredItems.set(ids);
     }
-  };
+  }
 
   const model = computed(() => {
     function initialize(item: Pick<Item, 'category'>) {
@@ -121,8 +191,8 @@ export const packlistState = ({
         checkedItems: 0,
         totalWeight: 0,
         checkedWeight: 0,
-        collapsed: collapsedCategories().includes(item.category),
-        colored: statsVisible() === 'distribution',
+        collapsed: session().collapsedCategories.includes(item.category),
+        colored: session().statsVisible === 'distribution',
       };
     }
     type Category = ReturnType<typeof initialize>;
@@ -135,9 +205,9 @@ export const packlistState = ({
         const skipped = skipItems() && skippedItems().includes(item);
         const checked = !skipped && checkedItems().includes(item);
         const colored =
-          statsVisible() === 'heaviestItems' &&
+          session().statsVisible === 'heaviestItems' &&
           coloredItems().includes(item.id());
-        const visible = hideCompleted() ? !checked && !skipped : true;
+        const visible = session().hideCompleted ? !checked && !skipped : true;
         groups[item.category].items.push(
           new PacklistItem(item, checked, skipped, colored, visible),
         );
@@ -185,16 +255,14 @@ export const packlistState = ({
     ),
   );
 
-  const sessionName = createLocalStorageSignalState<string | undefined>(
-    'sessionName',
-    undefined,
-  );
-
-  const resetViewState = () => {
-    answersLocked.set(false);
-    hideCompleted.set(false);
-    statsVisible.set(undefined);
-  };
+  function resetViewState() {
+    session.update((old) => ({
+      ...old,
+      answersLocked: false,
+      hideCompleted: false,
+      statsVisible: undefined,
+    }));
+  }
 
   let applicationStart = true;
   effect(() => {
@@ -228,9 +296,12 @@ export const packlistState = ({
       ),
     },
     packlist: {
-      sessionName,
+      /** storage: the session name of the packlist */
+      sessionName: computed(() => session().sessionName),
+      setSessionName,
       /** storage: the answers from checked questions in the packlist */
-      answers,
+      answers: computed(() => session().answers),
+      updateAnswer,
       /** derived: display model for the packlist */
       model,
       /** derived: stats for the packlist */
@@ -244,21 +315,19 @@ export const packlistState = ({
       /** toggle the collapsed state of a category */
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
-      answersLocked,
+      isAnswersLocked: computed(() => session().answersLocked),
+      toggleAnswersLock,
       /** storage: hide completed items in the packlist */
-      hideCompleted,
+      isHideCompleted: computed(() => session().hideCompleted),
+      toggleHideCompleted,
       /** session: which stats to show */
-      statsVisible,
+      isStatsVisible: computed(() => session().statsVisible),
+      setStatsVisible,
       /** storage: if already asked for weight tracking */
       askedWeightTracking,
       /** reset the packlist sub state */
       reset: () => {
-        sessionName.set(undefined);
-        answers.set({});
-        stringCheckedItems.set([]);
-        stringSkippedItems.set([]);
-        collapsedCategories.set([]);
-        resetViewState();
+        session.set(createNewSession());
       },
     },
   };

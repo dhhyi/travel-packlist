@@ -45,7 +45,7 @@ const animateDiagram = trigger('animateDiagram', [
 export class PacklistStatusComponent {
   private state = inject(GLOBAL_STATE);
 
-  readonly statsVisible = this.state.packlist.statsVisible;
+  readonly statsVisible = this.state.packlist.isStatsVisible;
 
   readonly animationsDisabled = signal(true);
 

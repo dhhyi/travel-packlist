@@ -15,5 +15,5 @@ export class DisplayTitleComponent {
   private state = inject(GLOBAL_STATE);
 
   readonly title = computed(() => this.state.rules.parsed.value().title);
-  readonly sessionName = this.state.packlist.sessionName.asReadonly();
+  readonly sessionName = this.state.packlist.sessionName;
 }

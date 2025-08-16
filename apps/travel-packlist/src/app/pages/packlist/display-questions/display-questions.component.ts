@@ -56,7 +56,7 @@ export class DisplayQuestionsComponent {
   isQuestionActive = (question: Question): boolean =>
     this.state.packlist.answers()[question.variable];
 
-  isAnswersLockActive = this.state.packlist.answersLocked;
+  isAnswersLockActive = this.state.packlist.isAnswersLocked;
 
   readonly displayQuestions = computed(() =>
     this.questions().filter(
@@ -70,10 +70,14 @@ export class DisplayQuestionsComponent {
     if (this.isAnswersLockActive()) {
       return;
     }
-    this.state.packlist.answers.update((model) => ({
-      ...model,
-      [question.variable]: !model[question.variable],
-    }));
+    // this.state.packlist.answers.update((model) => ({
+    //   ...model,
+    //   [question.variable]: !model[question.variable],
+    // }));
+    this.state.packlist.updateAnswer(
+      question.variable,
+      !this.isQuestionActive(question),
+    );
   };
 
   goToRulesEdit() {

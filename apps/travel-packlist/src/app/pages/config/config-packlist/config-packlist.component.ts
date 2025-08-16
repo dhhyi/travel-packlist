@@ -56,9 +56,9 @@ export class ConfigPackListComponent {
       this.sessionName() ?? undefined,
     );
     if (name) {
-      this.state.packlist.sessionName.set(name);
+      this.state.packlist.setSessionName(name);
     } else if (name === '') {
-      this.state.packlist.sessionName.set(undefined);
+      this.state.packlist.setSessionName(undefined);
     }
   }
 }
