@@ -47,6 +47,8 @@ interface SessionState {
   answersLocked: boolean;
   hideCompleted: boolean;
   statsVisible: ItemStats | undefined;
+  createdAt: number;
+  modifiedAt: number;
 }
 
 function createNewSession(): SessionState {
@@ -58,6 +60,8 @@ function createNewSession(): SessionState {
     answersLocked: false,
     hideCompleted: false,
     statsVisible: undefined,
+    createdAt: Date.now(),
+    modifiedAt: Date.now(),
   };
 }
 
@@ -71,6 +75,7 @@ export const packlistState = ({
     session.update((old) => ({
       ...old,
       sessionName: name,
+      modifiedAt: Date.now(),
     }));
   }
 
@@ -78,6 +83,7 @@ export const packlistState = ({
     session.update((old) => ({
       ...old,
       answers: { ...old.answers, [id]: value },
+      modifiedAt: Date.now(),
     }));
   }
 
@@ -85,6 +91,7 @@ export const packlistState = ({
     session.update((old) => ({
       ...old,
       answersLocked: !old.answersLocked,
+      modifiedAt: Date.now(),
     }));
   }
 
@@ -92,6 +99,7 @@ export const packlistState = ({
     session.update((old) => ({
       ...old,
       hideCompleted: !old.hideCompleted,
+      modifiedAt: Date.now(),
     }));
   }
 
@@ -99,6 +107,7 @@ export const packlistState = ({
     session.update((old) => ({
       ...old,
       statsVisible: value,
+      modifiedAt: Date.now(),
     }));
   }
 
@@ -125,11 +134,13 @@ export const packlistState = ({
       session.update((old) => ({
         ...old,
         checkedItems: old.checkedItems.filter((i) => i !== item.id()),
+        modifiedAt: Date.now(),
       }));
     } else {
       session.update((old) => ({
         ...old,
         checkedItems: [...old.checkedItems, item.id()],
+        modifiedAt: Date.now(),
       }));
     }
   }
@@ -144,11 +155,13 @@ export const packlistState = ({
       session.update((old) => ({
         ...old,
         skippedItems: old.skippedItems.filter((i) => i !== item.id()),
+        modifiedAt: Date.now(),
       }));
     } else {
       session.update((old) => ({
         ...old,
         skippedItems: [...old.skippedItems, item.id()],
+        modifiedAt: Date.now(),
       }));
     }
   }
@@ -160,11 +173,13 @@ export const packlistState = ({
         collapsedCategories: old.collapsedCategories.filter(
           (c) => c !== category,
         ),
+        modifiedAt: Date.now(),
       }));
     } else {
       session.update((old) => ({
         ...old,
         collapsedCategories: [...old.collapsedCategories, category],
+        modifiedAt: Date.now(),
       }));
     }
   }
@@ -261,6 +276,7 @@ export const packlistState = ({
       answersLocked: false,
       hideCompleted: false,
       statsVisible: undefined,
+      modifiedAt: Date.now(),
     }));
   }
 
