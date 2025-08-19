@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/dhhyi/devcontainer-creator/dist/language_schema.json
 extends: dcc://javascript-pnpm
 devcontainer:
+  name: travel-packlist
   build:
     user:
       - ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
@@ -19,8 +20,8 @@ extras:
   - tmux
 namedVolumes:
   node_modules: travel-packlist-node-modules
-  /home/pnpm: travel-packlist-pnpm-store
-  /home/vscode/.local/state/lazygit: travel-packlist-lazygit-history
+  $HOME/.cache/pnpm: travel-packlist-pnpm-store
+  $HOME/.cache/ms-playwright: travel-packlist-playwright-cache
 vscode:
   extensions:
     - angular.ng-template
@@ -34,7 +35,6 @@ vscode:
     - yzhang.markdown-all-in-one
     - peggyjs.peggy-language
     - nrwl.angular-console
-    - dbaeumer.vscode-eslint
     - firsttris.vscode-jest-runner
     - ms-playwright.playwright
     - redhat.vscode-yaml
