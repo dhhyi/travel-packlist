@@ -44,6 +44,8 @@ Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
 <!-- markdownlint-disable-next-line no-inline-html -->
 <h2 id="toc">Table of Contents</h2>
 
+- [Features](#features)
+  - [Session Management](#session-management)
 - [Technology](#technology)
   - [Multiple Languages](#multiple-languages)
 - [Resources](#resources)
@@ -54,6 +56,40 @@ Read more on this in the [privacy policy](./PRIVACY_POLICY.md).
   - [Can I customize the display order of the categories?](#can-i-customize-the-display-order-of-the-categories)
   - [Will there be an Undo/Redo feature for editing rules?](#will-there-be-an-undoredo-feature-for-editing-rules)
 - [More Documentation](#more-documentation)
+
+## Features
+
+### Session Management
+
+The app supports starting and saving sessions.
+Whenever you go back to a session, it will restore the state of the pack list and the associated rules.
+This functionality can be useful, when you pack for a multi-week trip in one session, do daily activities while you are there, and then want to do reverse packing for the return trip.
+
+To get started with sessions, start a new session by clicking the "New Session" button on the config page.
+You can then select a slot for this session and give it a name.
+The session will track the current pack list and all of the actions you take in the app.
+To disconnect from this session, you can reset the packlist by clicking the "Reset Packlist" button on the config page.
+To reinstate a session, you can load it from the config page.
+
+Here is a simplified diagram of the session states:
+
+```mermaid
+---
+config:
+  flowchart:
+    curve: basis
+---
+flowchart LR
+    No_Session[No Session]
+    Starting_Session@{ shape: diamond, label: "Starting Session" }
+    Session[Session]
+
+    No_Session --> |New Session| Starting_Session
+    Starting_Session --> |Select Slot<br>Give Name| Session
+    Starting_Session --> |Abort| No_Session
+    No_Session --> |Restore Session| Session
+    Session --> |Disconnect Session| No_Session
+```
 
 ## Technology
 

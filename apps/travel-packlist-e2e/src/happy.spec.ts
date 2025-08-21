@@ -105,16 +105,18 @@ test('happy path editor to packlist', async ({ page }) => {
 
   await editor.toConfigPage();
 
-  await config.nameSessionButton().click();
+  const session = await config.startSession();
 
-  await expect(config.dialog()).toBeVisible();
+  await expect(session.slot(1)()).toBeVisible();
 
-  await config.dialog.prompt().fill('My Session');
-  await config.dialog.confirm().click();
+  await session.slot(1).click();
 
-  await expect(config.dialog()).toBeHidden();
+  await expect(session.dialog()).toBeVisible();
 
-  const packlist = await config.toPacklistPage();
+  await session.dialog.prompt().fill('My Session');
+  const packlist = await session.dialog.confirm().clickToPacklist();
+
+  await expect(packlist.dialog()).toBeHidden();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "My Rules"

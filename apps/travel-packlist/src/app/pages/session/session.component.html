@@ -1,0 +1,65 @@
+@for (session of savedSessions(); track $index) {
+  <div
+    class="card"
+    tabindex="0"
+    role="button"
+    [class.disabled]="!session"
+    [attr.aria-label]="slotLabel(session, $index)"
+    (keyup)="clickSlot(session, $index + 1)"
+    (click)="clickSlot(session, $index + 1)"
+  >
+    <div class="flex justify-between">
+      @if (session) {
+        <h3 class="text-lg font-bold">
+          @if (session.sessionName) {
+            <span>{{ session.sessionName }}</span>
+          } @else {
+            <span i18n>Unnamed Session</span>
+          }
+        </h3>
+        <button
+          iconDelete
+          iconClass="h-6 w-6"
+          type="button"
+          class="link"
+          aria-label="Delete session"
+          i18n-aria-label
+          (click)="clearSlot(session, $index + 1); $event.stopPropagation()"
+        ></button>
+      } @else {
+        <h3 class="text-lg font-bold italic" i18n>Empty Slot</h3>
+      }
+    </div>
+    @if (session) {
+      <div class="flex items-center justify-between">
+        <span i18n>saved {{ session.modifiedAt | date: 'medium' }}</span>
+        <ng-container
+          *ngTemplateOutlet="
+            slotNumberLabel;
+            context: { $implicit: $index + 1 }
+          "
+        />
+      </div>
+    } @else {
+      <div class="flex items-center justify-end">
+        <ng-container
+          *ngTemplateOutlet="
+            slotNumberLabel;
+            context: { $implicit: $index + 1 }
+          "
+        />
+      </div>
+    }
+  </div>
+} @empty {
+  @if (type() === 'restore') {
+    <p i18n class="flex justify-center pt-8">No saved sessions found.</p>
+  }
+}
+
+<ng-template #slotNumberLabel let-index>
+  <span
+    class="mx-2 mb-2 flex h-8 w-8 items-center justify-center rounded-full border-2 font-bold"
+    >{{ index }}</span
+  >
+</ng-template>

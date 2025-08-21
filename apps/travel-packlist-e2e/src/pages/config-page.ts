@@ -4,6 +4,7 @@ import { Banner } from './banner';
 import { EditorPage } from './editor-page';
 import { PacklistPage } from './packlist-page';
 import { RulesRawPage } from './rules-raw-page';
+import { SessionPage } from './session-page';
 
 export class ConfigPage extends Banner {
   private readonly identifier = this.page.locator('app-config');
@@ -21,11 +22,14 @@ export class ConfigPage extends Banner {
     });
   }
 
-  nameSessionButton() {
-    return this.page.getByRole('button', {
-      name: 'Name Session',
-      exact: true,
-    });
+  async startSession() {
+    return this.page
+      .getByRole('button', {
+        name: 'Start Session',
+        exact: true,
+      })
+      .click()
+      .then(() => new SessionPage(this.page));
   }
 
   trackItemWeight() {

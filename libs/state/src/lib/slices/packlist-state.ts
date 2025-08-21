@@ -51,6 +51,10 @@ interface SessionState {
   modifiedAt: number;
 }
 
+export type SavedSession = Pick<SessionState, 'sessionName' | 'modifiedAt'> & {
+  index: number;
+};
+
 function createNewSession(): SessionState {
   return {
     answers: {},
@@ -69,10 +73,28 @@ export const packlistState = ({
   rules: { parsed: parsedRules, raw },
   config: { categorySorting, skipItems },
 }: RulesParsingState & ConfigState & RulesSourceState) => {
-  const session = create<SessionState>('packlistSession', createNewSession());
+  const sessions = create<(SessionState | undefined)[]>('packlistSessions', [
+    createNewSession(),
+    undefined,
+    undefined,
+    undefined,
+  ]);
+  const currentSlot = create<number>('currentPacklistSessionIndex', 0);
+  const session = computed(
+    () => sessions()[currentSlot()] ?? createNewSession(),
+  );
+
+  function updateSession(transform: (old: SessionState) => SessionState) {
+    sessions.update((oldSessions) => {
+      const newSession = transform(
+        oldSessions[currentSlot()] ?? createNewSession(),
+      );
+      return oldSessions.map((s, i) => (i === currentSlot() ? newSession : s));
+    });
+  }
 
   function setSessionName(name: string | undefined) {
-    session.update((old) => ({
+    updateSession((old) => ({
       ...old,
       sessionName: name,
       modifiedAt: Date.now(),
@@ -80,7 +102,7 @@ export const packlistState = ({
   }
 
   function updateAnswer(id: string, value: VariableType) {
-    session.update((old) => ({
+    updateSession((old) => ({
       ...old,
       answers: { ...old.answers, [id]: value },
       modifiedAt: Date.now(),
@@ -88,7 +110,7 @@ export const packlistState = ({
   }
 
   function toggleAnswersLock() {
-    session.update((old) => ({
+    updateSession((old) => ({
       ...old,
       answersLocked: !old.answersLocked,
       modifiedAt: Date.now(),
@@ -96,7 +118,7 @@ export const packlistState = ({
   }
 
   function toggleHideCompleted() {
-    session.update((old) => ({
+    updateSession((old) => ({
       ...old,
       hideCompleted: !old.hideCompleted,
       modifiedAt: Date.now(),
@@ -104,7 +126,7 @@ export const packlistState = ({
   }
 
   function setStatsVisible(value: SessionState['statsVisible']) {
-    session.update((old) => ({
+    updateSession((old) => ({
       ...old,
       statsVisible: value,
       modifiedAt: Date.now(),
@@ -131,13 +153,13 @@ export const packlistState = ({
   );
   function toggleCheckedItem(item: Item) {
     if (session().checkedItems.includes(item.id())) {
-      session.update((old) => ({
+      updateSession((old) => ({
         ...old,
         checkedItems: old.checkedItems.filter((i) => i !== item.id()),
         modifiedAt: Date.now(),
       }));
     } else {
-      session.update((old) => ({
+      updateSession((old) => ({
         ...old,
         checkedItems: [...old.checkedItems, item.id()],
         modifiedAt: Date.now(),
@@ -152,13 +174,13 @@ export const packlistState = ({
       return;
     }
     if (session().skippedItems.includes(item.id())) {
-      session.update((old) => ({
+      updateSession((old) => ({
         ...old,
         skippedItems: old.skippedItems.filter((i) => i !== item.id()),
         modifiedAt: Date.now(),
       }));
     } else {
-      session.update((old) => ({
+      updateSession((old) => ({
         ...old,
         skippedItems: [...old.skippedItems, item.id()],
         modifiedAt: Date.now(),
@@ -168,7 +190,7 @@ export const packlistState = ({
 
   function toggleCategoryCollapse(category: string) {
     if (session().collapsedCategories.includes(category)) {
-      session.update((old) => ({
+      updateSession((old) => ({
         ...old,
         collapsedCategories: old.collapsedCategories.filter(
           (c) => c !== category,
@@ -176,7 +198,7 @@ export const packlistState = ({
         modifiedAt: Date.now(),
       }));
     } else {
-      session.update((old) => ({
+      updateSession((old) => ({
         ...old,
         collapsedCategories: [...old.collapsedCategories, category],
         modifiedAt: Date.now(),
@@ -271,7 +293,7 @@ export const packlistState = ({
   );
 
   function resetViewState() {
-    session.update((old) => ({
+    updateSession((old) => ({
       ...old,
       answersLocked: false,
       hideCompleted: false,
@@ -312,6 +334,35 @@ export const packlistState = ({
       ),
     },
     packlist: {
+      sessions: computed((): (SavedSession | undefined)[] =>
+        sessions()
+          .filter((_, index) => index !== 0)
+          .map((s, index) =>
+            s
+              ? {
+                  index: index + 1,
+                  sessionName: s.sessionName,
+                  modifiedAt: s.modifiedAt,
+                }
+              : undefined,
+          ),
+      ),
+      clearSlot(index: number) {
+        sessions.update((oldSessions) => {
+          const newSessions = [...oldSessions];
+          newSessions[index] = undefined;
+          return newSessions;
+        });
+      },
+      currentSlot,
+      copySessionToSlot(index: number) {
+        sessions.update((oldSessions) => {
+          const newSessions = [...oldSessions];
+          newSessions[index] = { ...session(), modifiedAt: Date.now() };
+          return newSessions;
+        });
+      },
+      /** storage: the current packlist session */
       /** storage: the session name of the packlist */
       sessionName: computed(() => session().sessionName),
       setSessionName,
@@ -341,10 +392,6 @@ export const packlistState = ({
       setStatsVisible,
       /** storage: if already asked for weight tracking */
       askedWeightTracking,
-      /** reset the packlist sub state */
-      reset: () => {
-        session.set(createNewSession());
-      },
     },
   };
 };

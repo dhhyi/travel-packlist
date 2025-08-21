@@ -58,6 +58,14 @@ const navigation = {
   'config#export'(this: NavThis) {
     void this.router.navigate(['/config'], { fragment: 'export-now' });
   },
+  'config#session->restore'(this: NavThis) {
+    void this.router.navigate(['/session'], {
+      queryParams: { type: 'restore' },
+    });
+  },
+  'config#session->new'(this: NavThis) {
+    void this.router.navigate(['/session'], { queryParams: { type: 'new' } });
+  },
 };
 
 export const routerState = () => {

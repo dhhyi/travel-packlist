@@ -31,6 +31,12 @@ const routes: (Route & { data?: RouteData })[] = [
     data: { hierarchy: 1 },
   },
   {
+    path: 'session',
+    loadComponent: () =>
+      import('./session/session.component').then((m) => m.SessionComponent),
+    data: { hierarchy: 2, historyBack: true },
+  },
+  {
     path: 'rules',
     loadComponent: () =>
       import('./rules/rules.component').then((m) => m.RulesComponent),

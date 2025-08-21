@@ -28,6 +28,7 @@ import { confirm, prompt } from '../../../dialog';
 export class ConfigPackListComponent {
   private state = inject(GLOBAL_STATE);
 
+  currentSlot = this.state.packlist.currentSlot;
   sessionName = this.state.packlist.sessionName;
   trackWeight = this.state.config.trackWeight;
   skipItems = this.state.config.skipItems;
@@ -39,11 +40,19 @@ export class ConfigPackListComponent {
       : $localize`You can skip items in the packlist by double clicking them.`,
   );
 
+  readonly sessionLabel = computed(() =>
+    !this.currentSlot()
+      ? $localize`No active session`
+      : this.sessionName()
+        ? $localize`Session "${this.sessionName()}:SESSION_NAME:" active in slot ${this.currentSlot()}:SLOT_NAME:`
+        : $localize`Unnamed session active in slot ${this.currentSlot()}:SLOT_NAME:`,
+  );
+
   async resetPackList() {
     if (
       await confirm($localize`Are you sure you want to reset the pack list?`)
     ) {
-      this.state.packlist.reset();
+      this.state.packlist.clearSlot(0);
       this.state.router.go('packlist');
     }
   }
@@ -60,5 +69,18 @@ export class ConfigPackListComponent {
     } else if (name === '') {
       this.state.packlist.setSessionName(undefined);
     }
+  }
+
+  disconnectSession() {
+    this.state.packlist.clearSlot(0);
+    this.state.packlist.currentSlot.set(0);
+  }
+
+  restoreSession() {
+    this.state.router.go('config#session->restore');
+  }
+
+  startNewSession() {
+    this.state.router.go('config#session->new');
   }
 }

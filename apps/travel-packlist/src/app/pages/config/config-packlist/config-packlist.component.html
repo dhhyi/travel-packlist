@@ -1,12 +1,21 @@
 <h2 class="text-lg font-bold" i18n>Pack List</h2>
 <button i18n type="button" (click)="resetPackList()">Reset Pack List</button>
-<button i18n type="button" (click)="renameSession()">
-  @if (sessionName()) {
-    Rename Session
-  } @else {
-    Name Session
-  }
-</button>
+@if (currentSlot()) {
+  <p class="font-bold">{{ sessionLabel() }}</p>
+  <button i18n type="button" (click)="renameSession()">
+    {sessionName() // i18n(ph="SESSION_NAME"), select,
+      true {Rename Session}
+      other {Name Session}
+    }
+  </button>
+  <button i18n type="button" (click)="disconnectSession()">
+    Disconnect Session
+  </button>
+} @else {
+  <p i18n class="font-bold">No active session</p>
+  <button i18n type="button" (click)="startNewSession()">Start Session</button>
+  <button i18n type="button" (click)="restoreSession()">Restore Session</button>
+}
 <cmp-checkbox
   id="track-weight"
   label="Track item weight"

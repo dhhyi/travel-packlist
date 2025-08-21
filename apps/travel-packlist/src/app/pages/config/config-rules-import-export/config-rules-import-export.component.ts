@@ -71,7 +71,6 @@ export class ConfigRulesImportExportComponent {
         const text = await file.text();
         this.state.localRules.updateRules(text);
         this.state.rules.markAsCurrent();
-        this.state.packlist.reset();
         resolve(true);
       };
       input.click();
