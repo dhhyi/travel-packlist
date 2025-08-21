@@ -1,4 +1,4 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, Locator, type Page } from '@playwright/test';
 
 import { PacklistPage } from './packlist-page';
 
@@ -19,4 +19,13 @@ export async function startWithRules(page: Page, rules: string) {
     );
   }, rules);
   return start(page);
+}
+
+export async function enclosingComponent(locator: Locator) {
+  const tagName = await locator.evaluate((el) => el.tagName.toLowerCase());
+  if (tagName.startsWith('app-')) {
+    return locator;
+  } else {
+    return enclosingComponent(locator.locator('..'));
+  }
 }

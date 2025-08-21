@@ -64,7 +64,7 @@ test('edit rules raw with error', async ({ page }) => {
     'Error parsing rules at line 1 column 1',
   );
 
-  await expect(page).toHaveScreenshot();
+  await expect(rulesRaw.parserState()).toHaveScreenshot();
 });
 
 test('visit rules documentation', async ({ page }) => {

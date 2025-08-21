@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { start } from './pages';
+import { enclosingComponent, start } from './pages';
 
 test('remote rules with copy', async ({ page }) => {
   await page.route('**/mocked-rules.txt', async (route) => {
@@ -18,9 +18,9 @@ test('remote rules with copy', async ({ page }) => {
   await expect(config.remoteRulesURL()).toBeVisible();
   await expect(config.remoteSourceStatus()).toHaveText('idle');
 
-  await config.remoteSourceStatus().scrollIntoViewIfNeeded();
-
-  await expect(page).toHaveScreenshot();
+  await expect(
+    await enclosingComponent(config.remoteSourceStatus()),
+  ).toHaveScreenshot();
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "Rules Mode" [level=2]
     - radiogroup "Rules Mode":
@@ -44,9 +44,9 @@ test('remote rules with copy', async ({ page }) => {
 
   await expect(config.remoteSourceStatus()).toHaveText('loaded');
 
-  await config.remoteSourceStatus().scrollIntoViewIfNeeded();
-
-  await expect(page).toHaveScreenshot();
+  await expect(
+    await enclosingComponent(config.remoteSourceStatus()),
+  ).toHaveScreenshot();
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "Remote Source" [level=2]
     - textbox "remote rules source": "http://localhost:4200/mocked-rules.txt"
@@ -107,7 +107,9 @@ test('remote rules error', async ({ page }) => {
 
   await config.remoteSourceStatus().scrollIntoViewIfNeeded();
 
-  await expect(page).toHaveScreenshot();
+  await expect(
+    await enclosingComponent(config.remoteSourceStatus()),
+  ).toHaveScreenshot();
 
   const packlist = await config.toPacklistPage();
 
@@ -319,7 +321,7 @@ test('remote rules history', async ({ page }) => {
   await expect(config.remoteHistory.item(3)).toContainText('test-rules.txt');
   await expect(config.remoteHistory.item(3)).toContainText('Test Rules');
 
-  await config.remoteHistory().scrollIntoViewIfNeeded();
-
-  await expect(page).toHaveScreenshot();
+  await expect(
+    await enclosingComponent(config.remoteHistory()),
+  ).toHaveScreenshot();
 });

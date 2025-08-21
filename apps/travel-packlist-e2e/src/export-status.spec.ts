@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { start, startWithRules } from './pages';
+import { enclosingComponent, start, startWithRules } from './pages';
 
 test('export status - default rules', async ({ page }) => {
   const config = await start(page).then((page) => page.toConfigPage());
@@ -27,12 +27,12 @@ test('export status - changed rules', async ({ page }) => {
 
   await expect(config.exportNeededAlert()).toBeVisible();
 
-  await config.exportNeededAlert().scrollIntoViewIfNeeded();
-
   await expect(config.exportNeededAlert()).toHaveText(
     'Current rules are not backed up!',
   );
-  await expect(page).toHaveScreenshot();
+  await expect(
+    await enclosingComponent(config.exportNeededAlert()),
+  ).toHaveScreenshot();
 
   await config.resetApplicationButton().click();
 
