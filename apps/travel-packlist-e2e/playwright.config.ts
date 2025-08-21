@@ -58,6 +58,7 @@ export default defineConfig({
     command: 'pnpm exec nx run travel-packlist-web:serve:e2e',
     cwd: workspaceRoot,
     reuseExistingServer: !process.env['CI'],
+    timeout: 120 * 1000,
     url: 'http://localhost:4200',
   },
   workers: '25%',
