@@ -1,3 +1,9 @@
+## [1.3.0](https://github.com/dhhyi/travel-packlist/compare/v1.2.0...v1.3.0) (2025-08-21)
+
+### Features
+
+- manage multiple sessions ([0351b05](https://github.com/dhhyi/travel-packlist/commit/0351b05e541e5c5e1d18ee6659d892157269324e))
+
 ## [1.2.0](https://github.com/dhhyi/travel-packlist/compare/v1.1.0...v1.2.0) (2025-08-14)
 
 ### Features
