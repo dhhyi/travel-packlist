@@ -1,5 +1,4 @@
 <h2 class="text-lg font-bold" i18n>Pack List</h2>
-<button i18n type="button" (click)="resetPackList()">Reset Pack List</button>
 @if (currentSlot()) {
   @let hasSessionName = !!sessionName();
   <p class="font-bold">{{ sessionLabel() }}</p>
@@ -14,6 +13,7 @@
   </button>
 } @else {
   <p i18n class="font-bold">No active session</p>
+  <button i18n type="button" (click)="resetPackList()">Reset Pack List</button>
   <button i18n type="button" (click)="startNewSession()">Start Session</button>
   <button i18n type="button" (click)="restoreSession()">Restore Session</button>
 }
