@@ -17,6 +17,7 @@ import {
 import {
   Item,
   Parser,
+  serializeItem,
   serializeWeight,
   SyntaxError,
 } from '@travel-packlist/model';
@@ -70,7 +71,7 @@ export class EditorItemComponent {
         return;
       }
 
-      const serialized = new Item(value.category, value.name).toString();
+      const serialized = serializeItem(new Item(value.category, value.name));
       this.itemChanged.emit(this.parser.parseItem(serialized));
     });
 

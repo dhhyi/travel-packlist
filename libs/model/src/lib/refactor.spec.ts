@@ -2,7 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { Parser } from './parser';
 import { Refactor } from './refactor';
-import { serializeRules } from './serializer';
+import {
+  serializeCondition,
+  serializeQuestion,
+  serializeRule,
+  serializeRules,
+} from './serializer';
 import { Rule } from './types';
 
 describe('refactor', () => {
@@ -51,21 +56,25 @@ describe('refactor', () => {
       const question = parser.parseQuestion('Is it sunny? $sunny');
       const result = refactor.renameVariable('sunny', 'rainy', question);
 
-      expect(result.toString()).toMatchInlineSnapshot(`"Is it sunny? $rainy"`);
+      expect(serializeQuestion(result)).toMatchInlineSnapshot(
+        `"Is it sunny? $rainy"`,
+      );
     });
 
     it('should rename variable in simple condition', () => {
       const condition = parser.parseCondition('sunny');
       const result = refactor.renameVariable('sunny', 'rainy', condition);
 
-      expect(result.toString()).toMatchInlineSnapshot(`"rainy"`);
+      expect(serializeCondition(result)).toMatchInlineSnapshot(`"rainy"`);
     });
 
     it('should rename variable in complex condition', () => {
       const condition = parser.parseCondition('sunny AND rainy');
       const result = refactor.renameVariable('sunny', 'cloudy', condition);
 
-      expect(result.toString()).toMatchInlineSnapshot(`"cloudy AND rainy"`);
+      expect(serializeCondition(result)).toMatchInlineSnapshot(
+        `"cloudy AND rainy"`,
+      );
     });
 
     it('should rename variable in rule', () => {
@@ -74,7 +83,7 @@ describe('refactor', () => {
       );
       const result = refactor.renameVariable('sunny', 'cloudy', rule);
 
-      expect(result.toString()).toMatchInlineSnapshot(`
+      expect(serializeRule(result)).toMatchInlineSnapshot(`
 "cloudy :-
    Is it rainy? $rainy,
    [weather] umbrella"

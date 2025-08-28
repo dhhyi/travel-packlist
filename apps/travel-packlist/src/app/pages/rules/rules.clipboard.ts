@@ -1,5 +1,11 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { Parser, Item, Question } from '@travel-packlist/model';
+import {
+  Item,
+  Parser,
+  Question,
+  serializeItem,
+  serializeQuestion,
+} from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Injectable({ providedIn: 'root' })
@@ -14,11 +20,14 @@ export class RulesClipboard {
   readonly questionsCount = computed(() => this.questions().length);
 
   cutQuestion(question: Question) {
-    this.questions.update((questions) => [...questions, question.toString()]);
+    this.questions.update((questions) => [
+      ...questions,
+      serializeQuestion(question),
+    ]);
   }
 
   cutItem(item: Item) {
-    this.items.update((items) => [...items, item.toString()]);
+    this.items.update((items) => [...items, serializeItem(item)]);
   }
 
   paste(): { questions: Question[]; items: Item[] } {

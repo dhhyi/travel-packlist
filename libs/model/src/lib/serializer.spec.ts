@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { Parser } from './parser';
-import { serializeRules, serializeWeight } from './serializer';
+import { serializeRule, serializeRules, serializeWeight } from './serializer';
 import { Rules } from './types';
 
 describe('serializer', () => {
@@ -16,7 +16,7 @@ describe('serializer', () => {
       ':- Will it be sunny? $sunny, [Weather] Umbrella',
     );
 
-    expect(rule.toString()).toMatchInlineSnapshot(`
+    expect(serializeRule(rule)).toMatchInlineSnapshot(`
 ":-
    Will it be sunny? $sunny,
    [Weather] Umbrella"
@@ -26,7 +26,7 @@ describe('serializer', () => {
   it('should serialize a rule with a condition', () => {
     const rule = parser.parseRule('sunny :- [Weather] Sunglasses');
 
-    expect(rule.toString()).toMatchInlineSnapshot(`
+    expect(serializeRule(rule)).toMatchInlineSnapshot(`
 "sunny :-
    [Weather] Sunglasses"
 `);
@@ -35,7 +35,9 @@ describe('serializer', () => {
   it('should serialize a rule without condition and single effect', () => {
     const rule = parser.parseRule(':- [Weather] Sunglasses');
 
-    expect(rule.toString()).toMatchInlineSnapshot(`":- [Weather] Sunglasses"`);
+    expect(serializeRule(rule)).toMatchInlineSnapshot(
+      `":- [Weather] Sunglasses"`,
+    );
   });
 
   it('should serialize multiple rules', () => {
