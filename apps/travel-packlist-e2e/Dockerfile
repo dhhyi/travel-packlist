@@ -12,5 +12,7 @@ RUN pnpm install --frozen-lockfile
 RUN pnpm playwright install chromium --with-deps
 
 COPY . .
+COPY apps/travel-packlist-e2e/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "pnpm", "nx", "run" ]
+ENTRYPOINT ["/entrypoint.sh"]
