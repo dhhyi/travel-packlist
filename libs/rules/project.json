@@ -1,0 +1,49 @@
+{
+  "name": "rules",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "{projectRoot}/src",
+  "projectType": "library",
+  "tags": [
+    "scope:state"
+  ],
+  "implicitDependencies": [
+    "check-plugin"
+  ],
+  "targets": {
+    "peggy": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "options": {
+        "command": "peggy -c peggy.config.js",
+        "cwd": "{projectRoot}"
+      },
+      "inputs": [
+        "{projectRoot}/peggy.config.js",
+        "{projectRoot}/src/**/*.peggy"
+      ],
+      "outputs": [
+        "{projectRoot}/src"
+      ]
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "peggy"
+      ],
+      "cache": true,
+      "options": {
+        "commands": [
+          "sed -i \"1iexport * from './types';\" {projectRoot}/src/index.d.ts",
+          "sed -i \"1iimport { Condition, Item, Question, Rule, Rules } from './types';\" {projectRoot}/src/index.d.ts"
+        ],
+        "parallel": false
+      },
+      "inputs": [
+        "{projectRoot}/src/index.d.ts"
+      ],
+      "outputs": [
+        "{projectRoot}/src"
+      ]
+    }
+  }
+}

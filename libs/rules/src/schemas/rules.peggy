@@ -1,5 +1,6 @@
 {{
-  import { Question, Rule, Item, Variable, Always, Not, And, Or } from "../lib/types";
+  export * from "./types";
+  import { Question, Rule, Item, Variable, Always, Not, And, Or } from "./types";
 
   function createRule(condition, effects) {
     const questions = effects.filter(effect => effect instanceof Question);

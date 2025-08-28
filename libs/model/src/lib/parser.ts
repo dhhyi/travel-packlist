@@ -1,12 +1,10 @@
 import { inject, Injectable, InjectionToken } from '@angular/core';
-
 import {
   parse,
   ParseOptions,
   StartRuleNames,
   SyntaxError,
-} from '../generated/rules';
-import { Condition, Item, Question, Rule, Rules } from './types';
+} from '@travel-packlist/rules';
 
 const defaultConfig = {
   isTrackWeight: () => false,
@@ -40,28 +38,28 @@ export class Parser {
   }
 
   parseCondition(input: string) {
-    return parse(input, this.makeOptions('Condition')) as Condition;
+    return parse(input, this.makeOptions('Condition'));
   }
 
   parseQuestion(input: string) {
-    return parse(input, this.makeOptions('Question')) as Question;
+    return parse(input, this.makeOptions('Question'));
   }
 
   parseItem(input: string) {
-    return parse(input, this.makeOptions('Item')) as Item;
+    return parse(input, this.makeOptions('Item'));
   }
 
   parseEffects(input: string) {
-    return parse(input, this.makeOptions('Effects')) as (Question | Item)[];
+    return parse(input, this.makeOptions('Effects'));
   }
 
   parseRule(input: string) {
-    return parse(input, this.makeOptions('Rule')) as Rule;
+    return parse(input, this.makeOptions('Rule'));
   }
 
   parseRules(input: string) {
     try {
-      return parse(input, this.makeOptions('Rules')) as Rules;
+      return parse(input, this.makeOptions('Rules'));
     } catch (error) {
       const message: string[] = [];
       message.push($localize`Error parsing rules`);
@@ -97,7 +95,7 @@ export class Parser {
     const parsed = parse(
       input,
       this.makeOptions('ItemNameAndWeight', { forceWeightTracking: true }),
-    ) as { weight: number | undefined };
+    );
 
     return parsed.weight ?? 0;
   }

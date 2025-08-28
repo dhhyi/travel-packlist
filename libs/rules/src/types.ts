@@ -1,5 +1,3 @@
-/* eslint-disable @angular-eslint/runtime-localize */
-
 export type Rules = Rule[] &
   Partial<{ title: string; rulesContainComments: boolean }>;
 

@@ -1,6 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-
-import { Parser } from './parser';
 import {
   Always,
   And,
@@ -12,7 +10,9 @@ import {
   Rule,
   Variable,
   VariableType,
-} from './types';
+} from '@travel-packlist/rules';
+
+import { Parser } from './parser';
 
 interface FilterFunctionType {
   model: Record<string, VariableType>;

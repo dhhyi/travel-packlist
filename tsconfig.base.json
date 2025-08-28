@@ -57,6 +57,9 @@
       "@travel-packlist/model": [
         "libs/model/src/index.ts"
       ],
+      "@travel-packlist/rules": [
+        "libs/rules"
+      ],
       "@travel-packlist/rules-template": [
         "libs/rules-template/src/index.ts"
       ],

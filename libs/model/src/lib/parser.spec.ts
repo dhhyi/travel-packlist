@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { And, Item, Not, Or, Question, Variable } from '@travel-packlist/rules';
 
 import { Parser, PARSER_CONFIG_PROVIDER, ParserConfig } from './parser';
-import { And, Item, Not, Or, Question, Variable } from './types';
 
 describe('parser', () => {
   let parser: Parser;

@@ -9,11 +9,15 @@
   ],
   "implicitDependencies": [
     "generate-plugin",
-    "check-plugin"
+    "check-plugin",
+    "rules"
   ],
   "targets": {
     "generate": {
       "executor": "nx:run-commands",
+      "dependsOn": [
+        "^generate"
+      ],
       "options": {
         "command": "nx g @travel-packlist/generate-plugin:templates",
         "path": "{projectRoot}/src",

@@ -1,4 +1,4 @@
-# Data Model
+# Rules
 
 The app uses a custom data model for representing the rules to create conditional pack lists.
 Each rule is bound to a certain condition which activates items for the packlist and questions for activation of other rules.
@@ -18,6 +18,6 @@ The grammar for the rules can be found here: [`rules.peggy`](./src/schemas/rules
 For developing on the data model, it is useful to run the following two commands in parallel:
 
 ```bash
-nx run model:generate --watch
+nx run rules:generate --watch
 nx run model:test --watch
 ```

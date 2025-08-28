@@ -9,7 +9,7 @@ import {
   Rule,
   Rules,
   Variable,
-} from './types';
+} from '@travel-packlist/rules';
 
 export function serializeRules(rules: Rules): string {
   const title = rules.title?.trim();

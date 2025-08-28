@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { Rule } from '@travel-packlist/rules';
 
 import { Parser } from './parser';
 import { Refactor } from './refactor';
@@ -8,7 +9,6 @@ import {
   serializeRule,
   serializeRules,
 } from './serializer';
-import { Rule } from './types';
 
 describe('refactor', () => {
   let refactor: Refactor;

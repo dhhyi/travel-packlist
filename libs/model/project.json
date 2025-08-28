@@ -10,23 +10,11 @@
     "check-plugin"
   ],
   "targets": {
-    "generate": {
-      "executor": "nx:run-commands",
-      "cache": true,
-      "options": {
-        "command": "peggy -c peggy.config.js",
-        "cwd": "{projectRoot}"
-      },
-      "inputs": [
-        "{projectRoot}/peggy.config.js",
-        "{projectRoot}/src/**/*.peggy"
-      ],
-      "outputs": [
-        "{projectRoot}/src/generated"
-      ]
-    },
     "test": {
       "executor": "@nx/jest:jest",
+      "dependsOn": [
+        "^generate"
+      ],
       "outputs": [
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
