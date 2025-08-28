@@ -49,10 +49,10 @@ const run: Executor<ExecutorSchema> = async (options) => {
 
     for (const translation of nonDefaultTranslations) {
       translation.translations = Object.fromEntries(
-        Object.entries(translation.translations).filter(([key]) => {
+        Object.entries(translation.translations).filter(([key, value]) => {
           if (!defaultKeys.includes(key)) {
             console.warn(
-              `Key "${key}" not found in default locale -- removing`,
+              `Key "${key}" not found in default locale -- removing\n value: ${value}`,
             );
             errors = true;
             return false;
