@@ -19,6 +19,10 @@
     "tsconfig": {
       "implementation": "./src/executors/tsconfig/executor",
       "schema": "./src/executors/tsconfig/schema.json"
+    },
+    "rules": {
+      "implementation": "./src/executors/rules/executor",
+      "schema": "./src/executors/rules/schema.json"
     }
   }
 }

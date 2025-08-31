@@ -1,50 +1,50 @@
 # Packlist for a Multi-Day Backpacking Adventure
 
 :-
-  Expecting a lot of rain? $rain,
-  Add food and water weight? $food,
-  Add worn clothes weight? $wear,
-  [Container] lightweight backpack 40l 700g,
-  [House] tent 600g,
-  [House] poles and pegs 300g,
-  [House] quilt 600g,
-  [House] sleeping pad 500g,
-  [Electronics] charger 50g,
-  [Electronics] power bank 350g,
-  [Electronics] USB-C cable 20g,
-  [Electronics] head lamp 50g,
-  [Electronics] phone 300g,
-  [Container] Ziplock bag for Electronics 20g,
-  [Body] toothbrush 15g,
-  [Body] toothpaste 30g,
-  [Other] first aid kit 50g,
-  [Body] sun cream 50g,
-  [Body] soap 100g,
-  [Body] towel 80g,
-  [Kitchen] cook pot 90g,
-  [Kitchen] stove and fuel 150g,
-  [Kitchen] spoon 20g,
-  [Container] PET water bottles 60g,
-  [Container] Ziplock bags for food 50g,
-  [Kitchen] water filter 90g,
-  [Clothes] spare underpants 100g,
-  [Clothes] spare socks 40g,
-  [Clothes] long pants 300g,
-  [Clothes] sun cap 80g,
-  [Clothes] sun glasses 30g,
-  [Clothes] fleece jacket 160g;
+   Expecting a lot of rain? $rain,
+   Add food and water weight? $food,
+   Add worn clothes weight? $wear,
+   [Container] lightweight backpack 40l 700g,
+   [House] tent 600g,
+   [House] poles and pegs 300g,
+   [House] quilt 600g,
+   [House] sleeping pad 500g,
+   [Electronics] charger 50g,
+   [Electronics] power bank 350g,
+   [Electronics] USB-C cable 20g,
+   [Electronics] head lamp 50g,
+   [Electronics] phone 300g,
+   [Container] Ziplock bag for Electronics 20g,
+   [Body] toothbrush 15g,
+   [Body] toothpaste 30g,
+   [Other] first aid kit 50g,
+   [Body] sun cream 50g,
+   [Body] soap 100g,
+   [Body] towel 80g,
+   [Kitchen] cook pot 90g,
+   [Kitchen] stove and fuel 150g,
+   [Kitchen] spoon 20g,
+   [Container] PET water bottles 60g,
+   [Container] Ziplock bags for food 50g,
+   [Kitchen] water filter 90g,
+   [Clothes] spare underpants 100g,
+   [Clothes] spare socks 40g,
+   [Clothes] long pants 300g,
+   [Clothes] sun cap 80g,
+   [Clothes] sun glasses 30g,
+   [Clothes] fleece jacket 160g;
 
 wear :-
-  [Clothes] hiking pants 200g,
-  [Clothes] t-shirt 150g,
-  [Clothes] underpants 100g,
-  [Clothes] socks 40g;
+   [Clothes] hiking pants 200g,
+   [Clothes] t-shirt 150g,
+   [Clothes] underpants 100g,
+   [Clothes] socks 40g;
 
 rain :-
-  [Pack] liner 20g,
-  [Clothes] rain jacket 380g;
+   [Pack] liner 20g,
+   [Clothes] rain jacket 380g;
 
 food :-
-  [Food] water 2l 2kg,
-  [Food] snacks 500g,
-  [Food] 2 days worth dried 500g;
+   [Food] water 2l 2kg,
+   [Food] snacks 500g,
+   [Food] 2 days worth dried 500g;

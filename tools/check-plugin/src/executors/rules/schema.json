@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Executor Schema",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "pattern": {
+      "type": "string",
+      "description": "The pattern to match the files to check"
+    },
+    "exclude": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The exclude patterns to ignore the files",
+      "default": []
+    },
+    "errorOnChange": {
+      "type": "boolean",
+      "description": "Whether to treat changes as errors (for CI)",
+      "default": false
+    }
+  },
+  "required": [
+    "pattern"
+  ],
+  "additionalProperties": false
+}

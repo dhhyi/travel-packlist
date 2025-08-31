@@ -10,7 +10,8 @@
   "implicitDependencies": [
     "generate-plugin",
     "check-plugin",
-    "rules"
+    "rules",
+    "rules-cmdl"
   ],
   "targets": {
     "generate": {
@@ -43,7 +44,18 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@travel-packlist/check-plugin:rules",
+      "dependsOn": [
+        "^build"
+      ],
+      "options": {
+        "pattern": "{projectRoot}/src/txt/*.txt"
+      },
+      "configurations": {
+        "ci": {
+          "errorOnChange": true
+        }
+      }
     },
     "dead-code": {
       "executor": "@travel-packlist/check-plugin:dead-code",
