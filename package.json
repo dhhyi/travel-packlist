@@ -130,6 +130,7 @@
     "@nx/angular": "21.4.1",
     "@nx/devkit": "21.4.1",
     "@tailwindcss/postcss": "^4.1.12",
+    "browserslist": "^4.25.4",
     "husky": "^9.1.7",
     "json-schema-to-typescript": "^15.0.4",
     "nx": "21.4.1",
