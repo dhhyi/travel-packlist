@@ -117,6 +117,18 @@ jobs:
             --base=HEAD~$noOfCommits \
             --head=HEAD
 
+      - name: Build rules-cmdl 🔧
+        run: pnpm exec nx run rules-cmdl:build --configuration ci
+
+      - name: Deploy rules-cmdl 🚀
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: rules-cmdl
+          FOLDER: dist/tools/rules-cmdl
+          SQUASH_HISTORY: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check No Changes 🚦
         run: git diff --exit-code
 
