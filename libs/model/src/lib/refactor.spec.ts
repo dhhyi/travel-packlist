@@ -108,7 +108,8 @@ describe('refactor', () => {
 
 rain AND clouds :-
    Is it windy? $wind,
-   [weather] jacket;"
+   [weather] jacket;
+"
 `);
     });
   });

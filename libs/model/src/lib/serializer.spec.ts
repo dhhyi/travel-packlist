@@ -52,7 +52,8 @@ describe('serializer', () => {
    [Weather] Umbrella;
 
 sunny :-
-   [Weather] Sunglasses;"
+   [Weather] Sunglasses;
+"
 `);
   });
 
@@ -63,7 +64,8 @@ sunny :-
     expect(serializeRules(rules)).toMatchInlineSnapshot(`
 "# Test Title
 
-:- [Weather] Sunglasses;"
+:- [Weather] Sunglasses;
+"
 `);
   });
 

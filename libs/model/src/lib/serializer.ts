@@ -19,7 +19,8 @@ export function serializeRules(rules: Rules): string {
     rules
       .map((rule) => serializeRule(rule))
       .map((rule) => rule + ';')
-      .join('\n\n')
+      .join('\n\n') +
+    '\n'
   );
 }
 
