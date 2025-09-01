@@ -50,7 +50,7 @@ const run: PromiseExecutor<ExecutorSchema> = async () => {
     Object.entries(imports).forEach(([mod, names]) => {
       names.forEach((name) => {
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (exports[mod][name] !== undefined) {
+        if (exports[mod]?.[name] !== undefined) {
           // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete exports[mod][name];
         }

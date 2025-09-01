@@ -28,10 +28,7 @@
     "dead-code": {
       "executor": "@travel-packlist/check-plugin:dead-code",
       "options": {
-        "tsConfig": "{projectRoot}/tsconfig.lib.json",
-        "exclude": [
-          "**/generated/**"
-        ]
+        "tsConfig": "{projectRoot}/tsconfig.all.json"
       }
     }
   }

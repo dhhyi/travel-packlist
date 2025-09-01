@@ -1,14 +1,13 @@
 import { TestBed } from '@angular/core/testing';
-import { Rule } from '@travel-packlist/rules';
-
-import { Parser } from './parser';
-import { Refactor } from './refactor';
 import {
+  Parser,
+  Refactor,
   serializeCondition,
   serializeQuestion,
   serializeRule,
   serializeRules,
-} from './serializer';
+} from '@travel-packlist/model';
+import { Rule } from '@travel-packlist/rules';
 
 describe('refactor', () => {
   let refactor: Refactor;
