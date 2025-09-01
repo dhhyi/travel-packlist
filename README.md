@@ -201,5 +201,6 @@ Please backup your rules regularly to be able to revert to a previous state if n
 ## More Documentation
 
 - [Rules](./libs/rules/README.md)
+- [Rules Command Line Tool](./tools/rules-cmdl/README.md)
 - [State Management](./libs/state/README.md)
 - [E2E Testing](./apps/travel-packlist-e2e/README.md)
