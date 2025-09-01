@@ -1,3 +1,15 @@
+## [1.4.0](https://github.com/dhhyi/travel-packlist/compare/v1.3.0...v1.4.0) (2025-09-01)
+
+### Features
+
+- add commandline validator and formatter for rules ([45e9370](https://github.com/dhhyi/travel-packlist/commit/45e9370db59323a86a8a43b6ee571443ce137dfd))
+
+### Bug Fixes
+
+- hide reset button when in session mode ([8919379](https://github.com/dhhyi/travel-packlist/commit/8919379bf1549d1188b785e2647642bb2fe1ee7b))
+- repair button label for naming sessions ([1b18799](https://github.com/dhhyi/travel-packlist/commit/1b1879916e1badfc0539b0e7c648ee225acc1776))
+- serialize rules with newline at end ([46a93f9](https://github.com/dhhyi/travel-packlist/commit/46a93f90287a15b1985bc379c2e9b648bda286f8))
+
 ## [1.3.0](https://github.com/dhhyi/travel-packlist/compare/v1.2.0...v1.3.0) (2025-08-21)
 
 ### Features
