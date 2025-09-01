@@ -54,6 +54,12 @@
           "cap run android"
         ]
       }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cspell lint {projectRoot}/whatsnew/whatsnew-*"
+      }
     }
   }
 }

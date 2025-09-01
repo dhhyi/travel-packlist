@@ -8,6 +8,10 @@ const cspell = {
       filename: '**/*.de.{md,json,ts}',
       language: 'de-de',
     },
+    {
+      filename: '**/whatsnew-de-DE',
+      language: 'de-de',
+    },
   ],
   words: ['TravelPacklist', 'packlist'],
 };
