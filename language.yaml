@@ -20,8 +20,8 @@ extras:
   - tmux
 namedVolumes:
   node_modules: travel-packlist-node-modules
-  $HOME/.cache/pnpm: travel-packlist-pnpm-store
-  $HOME/.cache/ms-playwright: travel-packlist-playwright-cache
+  $HOME/.cache/pnpm: pnpm-store
+  $HOME/.cache/ms-playwright: playwright-cache
 vscode:
   extensions:
     - angular.ng-template

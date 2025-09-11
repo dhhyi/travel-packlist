@@ -7,8 +7,8 @@
   ],
   "mounts": [
     "type=volume,target=${containerWorkspaceFolder}/node_modules,source=travel-packlist-node-modules",
-    "type=volume,target=/home/ubuntu/.cache/pnpm,source=travel-packlist-pnpm-store",
-    "type=volume,target=/home/ubuntu/.cache/ms-playwright,source=travel-packlist-playwright-cache"
+    "type=volume,target=/home/ubuntu/.cache/pnpm,source=pnpm-store",
+    "type=volume,target=/home/ubuntu/.cache/ms-playwright,source=playwright-cache"
   ],
   "postCreateCommand": "sudo chown -Rf ubuntu node_modules /home/ubuntu/.cache/pnpm /home/ubuntu/.cache/ms-playwright && pnpm install && pnpm playwright install chromium --with-deps && sudo apt-get install -y exiftool imagemagick xdg-utils bc && cd /tmp/git-diff-image && ./install.sh",
   "build": {
