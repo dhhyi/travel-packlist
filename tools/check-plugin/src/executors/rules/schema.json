@@ -21,6 +21,11 @@
       "type": "boolean",
       "description": "Whether to treat changes as errors (for CI)",
       "default": false
+    },
+    "errorOnWarnings": {
+      "type": "boolean",
+      "description": "Treat warnings as errors",
+      "default": false
     }
   },
   "required": [

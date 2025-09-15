@@ -33,6 +33,32 @@
           successfully!
         </div>
       }
+      @case ('warnings') {
+        <ul class="text-yellow-normal">
+          @for (warning of state.warnings; track $index) {
+            @switch (warning.type) {
+              @case ('duplicate') {
+                <li i18n>
+                  Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
+                  declared more than once.
+                </li>
+              }
+              @case ('undeclared') {
+                <li i18n>
+                  Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
+                  not declared in any question.
+                </li>
+              }
+              @case ('unused') {
+                <li i18n>
+                  Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
+                  not used in any condition.
+                </li>
+              }
+            }
+          }
+        </ul>
+      }
       @default {
         <div aria-label="error" i18n-aria-label class="text-red">
           {{ state.error }}

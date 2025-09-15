@@ -23,7 +23,7 @@ test('bug #6', async ({ page }) => {
   await editor.error.goToRulesRaw();
 
   await editRaw.rawRules().clear();
-  await editRaw.rawRules().fill(':- Blubb $Blubb;');
+  await editRaw.rawRules().fill('NOT Blubb :- Blubb $Blubb;');
 
   await expect(editRaw.parserState()).toContainText(
     'Parsed 1 rule successfully!',

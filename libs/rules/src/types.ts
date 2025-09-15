@@ -1,5 +1,12 @@
 export type Rules = Rule[] &
-  Partial<{ title: string; rulesContainComments: boolean }>;
+  Partial<{
+    title: string;
+    rulesContainComments: boolean;
+    warnings: {
+      variable: string;
+      type: 'undeclared' | 'unused' | 'duplicate';
+    }[];
+  }>;
 
 export class Rule {
   constructor(

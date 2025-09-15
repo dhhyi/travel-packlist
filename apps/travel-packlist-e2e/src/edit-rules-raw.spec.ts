@@ -13,9 +13,9 @@ test('edit rules raw', async ({ page }) => {
     'Parsed 0 rules successfully!',
   );
 
-  await rulesRaw
-    .rawRules()
-    .fill(':- Will it be sunny? $sunny;\n\n:- Will it be rainy? $rainy;\n\n');
+  await rulesRaw.rawRules().fill(`NOT rainy :- Will it be sunny? $sunny;
+NOT sunny :- Will it be rainy? $rainy;
+`);
 
   await expect(rulesRaw.parserState()).toHaveText(
     'Parsed 2 rules successfully!',
@@ -52,7 +52,7 @@ test('edit rules raw with error', async ({ page }) => {
 
   await expect(rulesRaw.rawRules()).toBeVisible();
 
-  await rulesRaw.rawRules().fill(':- Will it be sunny? $sunny;');
+  await rulesRaw.rawRules().fill('NOT sunny :- Will it be sunny? $sunny;');
 
   await expect(rulesRaw.parserState()).toHaveText(
     'Parsed 1 rule successfully!',
@@ -62,6 +62,26 @@ test('edit rules raw with error', async ({ page }) => {
 
   await expect(rulesRaw.parserState()).toContainText(
     'Error parsing rules at line 1 column 1',
+  );
+
+  await expect(rulesRaw.parserState()).toHaveScreenshot();
+});
+
+test('edit rules raw with warnings', async ({ page }) => {
+  const rulesRaw = await startWithRules(page, 'a :- B? $b; :- B? $b;')
+    .then((p) => p.toConfigPage())
+    .then((p) => p.toRulesRawPage());
+
+  await expect(rulesRaw.rawRules()).toBeVisible();
+
+  await expect(rulesRaw.parserState()).toContainText(
+    'Variable b is declared more than once.',
+  );
+  await expect(rulesRaw.parserState()).toContainText(
+    'Variable a is not declared in any question.',
+  );
+  await expect(rulesRaw.parserState()).toContainText(
+    'Variable b is not used in any condition.',
   );
 
   await expect(rulesRaw.parserState()).toHaveScreenshot();

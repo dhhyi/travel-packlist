@@ -6,6 +6,7 @@ import {
   Item,
   Not,
   Or,
+  PleaseSelect,
   Question,
   Rule,
   Variable,
@@ -23,14 +24,34 @@ interface FilterFunctionType {
 export class Refactor {
   private parser = inject(Parser);
 
-  extractVariables(rules: Rule[]): string[] {
-    return rules.reduce<string[]>(
-      (acc, rule) => [
-        ...acc,
-        ...rule.questions.map((question) => question.variable),
-      ],
-      [],
-    );
+  extractVariablesFromCondition(condition: Condition): Set<string> {
+    if (condition instanceof Always || condition instanceof PleaseSelect) {
+      return new Set<string>();
+    } else if (condition instanceof Variable) {
+      return new Set([condition.variable]);
+    } else if (condition instanceof Not) {
+      return this.extractVariablesFromCondition(condition.not);
+    } else if (condition instanceof And || condition instanceof Or) {
+      return this.extractVariablesFromCondition(condition.left).union(
+        this.extractVariablesFromCondition(condition.right),
+      );
+    } else {
+      throw new Error('unknown condition type');
+    }
+  }
+
+  extractVariables(rules: Rule[], onlyQuestions = false): Set<string> {
+    return rules.reduce<Set<string>>((acc, rule) => {
+      const variables = acc.union(
+        new Set(rule.questions.map((question) => question.variable)),
+      );
+      if (onlyQuestions) {
+        return variables;
+      }
+      return variables.union(
+        this.extractVariablesFromCondition(rule.condition),
+      );
+    }, new Set<string>());
   }
 
   extractCategories(rules: Rule[]): string[] {
@@ -108,7 +129,8 @@ export class Refactor {
     const activeRules = data.rules.filter((rule) =>
       rule.condition.evaluate(data.model),
     );
-    const activeModel = this.extractVariables(activeRules).reduce<
+    const extractedVariables = this.extractVariables(activeRules, true);
+    const activeModel = Array.from(extractedVariables).reduce<
       Record<string, VariableType>
     >((acc, variable) => ({ ...acc, [variable]: data.model[variable] }), {
       [Always.string]: true,

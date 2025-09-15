@@ -9,12 +9,13 @@ function printHelp() {
 Usage: node ${process.argv[0]} ${process.argv[1]} [options] file
 
 Options:
-  --validate       Validate the Rules file (default action)
-  --format         Format the Rules file (in-place)
-                   (implies --validate)
+  --validate            Validate the Rules file (default action)
+  --error-on-warnings   Treat warnings as errors (default false)
+  --format              Format the Rules file (in-place)
+                        (implies --validate)
 
-  --help, -h       Show this help message
-  --version, -v    Show version information
+  --help, -h            Show this help message
+  --version, -v         Show version information
 `);
 }
 
@@ -49,6 +50,7 @@ try {
 const parser = new Parser();
 
 const formatMode = args.includes('--format');
+const errorOnWarnings = args.includes('--error-on-warnings');
 
 let rules: Rules;
 
@@ -57,6 +59,16 @@ try {
 } catch (error) {
   console.error((error as Error).message);
   process.exit(1);
+}
+
+if (rules.warnings?.length) {
+  for (const warning of rules.warnings) {
+    console.warn(`Variable "${warning.variable}" is ${warning.type}!`);
+  }
+  if (errorOnWarnings) {
+    console.error('Found warnings!');
+    process.exit(1);
+  }
 }
 
 if (formatMode) {

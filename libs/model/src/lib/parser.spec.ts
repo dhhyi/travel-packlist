@@ -294,6 +294,56 @@ describe('parser', () => {
       expect(rules).toHaveLength(1);
       expect(rules).toHaveProperty('rulesContainComments', false);
     });
+
+    it('should create warnings for unused variables', () => {
+      const rules = parser.parseRules(`
+        :- Is it sunny? $sunny, [utility] Umbrella;
+      `);
+
+      expect(rules).toHaveLength(1);
+      expect(rules.warnings).toHaveLength(1);
+
+      expect(rules.warnings?.[0]).toMatchInlineSnapshot(`
+        {
+          "type": "unused",
+          "variable": "sunny",
+        }
+      `);
+    });
+
+    it('should create warnings for duplicate variables', () => {
+      const rules = parser.parseRules(`
+        :- Is it sunny? $sunny;
+        :- Is it rainy? $sunny;
+        sunny :- [hygiene] sunscreen;
+      `);
+
+      expect(rules).toHaveLength(3);
+      expect(rules.warnings).toHaveLength(1);
+
+      expect(rules.warnings?.[0]).toMatchInlineSnapshot(`
+        {
+          "type": "duplicate",
+          "variable": "sunny",
+        }
+      `);
+    });
+
+    it('should create warnings for undeclared variables', () => {
+      const rules = parser.parseRules(`
+        sunny :- [hygiene] sunscreen;
+      `);
+
+      expect(rules).toHaveLength(1);
+      expect(rules.warnings).toHaveLength(1);
+
+      expect(rules.warnings?.[0]).toMatchInlineSnapshot(`
+        {
+          "type": "undeclared",
+          "variable": "sunny",
+        }
+      `);
+    });
   });
 
   describe('validateVariableName', () => {

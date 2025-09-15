@@ -19,6 +19,7 @@ import {
   Item,
   PleaseSelect,
   Question,
+  Refactor,
   Rule,
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
@@ -58,11 +59,28 @@ export class EditorRuleComponent {
   readonly selectVariables = computed(() => {
     const ruleVariables = this.rule().questions.map((q) => q.variable);
     const allVariables = this.state.rules.variables();
-    return allVariables.filter((v) => !ruleVariables.includes(v));
+    return Array.from(allVariables).filter((v) => !ruleVariables.includes(v));
   });
   private confirmRuleDeletion = this.state.config.confirmRuleDeletion;
 
   private clipboard = inject(RulesClipboard);
+  private refactor = inject(Refactor);
+
+  readonly conditionWarnings = computed(() => {
+    const warnings = this.state.rules.parsed.hasValue()
+      ? (this.state.rules.parsed.value().warnings ?? [])
+      : [];
+    if (warnings.length) {
+      const conditionVariables = this.refactor.extractVariablesFromCondition(
+        this.rule().condition,
+      );
+      return warnings.filter((warning) =>
+        conditionVariables.has(warning.variable),
+      );
+    } else {
+      return [];
+    }
+  });
 
   resetCondition() {
     this.updateCondition(new PleaseSelect());

@@ -1,33 +1,24 @@
 import {
+  ChangeDetectionStrategy,
   Component,
+  computed,
+  effect,
   inject,
   input,
   output,
-  ChangeDetectionStrategy,
-  computed,
-  effect,
 } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
-  AsyncValidatorFn,
   FormBuilder,
   ReactiveFormsModule,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { IconArrowForwardComponent } from '@travel-packlist/icons';
-import { SyntaxError, Parser, Always, Question } from '@travel-packlist/model';
+import { Always, Parser, Question, SyntaxError } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import {
-  filter,
-  iif,
-  map,
-  Observable,
-  of,
-  switchMap,
-  withLatestFrom,
-} from 'rxjs';
+import { filter } from 'rxjs';
 
 import {
   AND,
@@ -48,7 +39,6 @@ export class EditorQuestionComponent {
   private parser = inject(Parser);
 
   private state = inject(GLOBAL_STATE);
-  private variables = this.state.rules.variables;
   mode = this.state.router.rulesMode;
 
   readonly highlighVariable = computed(
@@ -58,6 +48,13 @@ export class EditorQuestionComponent {
     () => this.state.active.answers()[this.question().variable],
   );
   private refactorVariables = this.state.config.refactorVariables;
+  readonly warnings = computed(() =>
+    this.state.rules.parsed.hasValue()
+      ? (this.state.rules.parsed.value().warnings ?? []).filter(
+          (warning) => warning.variable === this.question().variable,
+        )
+      : [],
+  );
 
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
@@ -75,12 +72,6 @@ export class EditorQuestionComponent {
         this.validateVariablePattern(),
         validateReservedString(),
         Validators.required.bind(this),
-      ],
-      asyncValidators: [
-        validateUnusedVariable(
-          toObservable(this.variables),
-          toObservable(this.question),
-        ),
       ],
     }),
   });
@@ -106,9 +97,13 @@ export class EditorQuestionComponent {
         value?.variable &&
         value.variable.trim() !== this.question().variable
       ) {
+        const duplicateWarning = this.warnings().find(
+          (warning) => warning.type === 'duplicate',
+        );
         if (
           this.question().variable === Question.NEW_VARIABLE_NAME ||
-          !this.refactorVariables()
+          !this.refactorVariables() ||
+          !!duplicateWarning
         ) {
           this.questionChanged.emit(
             new Question(this.question().question, value.variable.trim()),
@@ -190,29 +185,4 @@ function validateReservedString(): ValidatorFn {
     }
     return null;
   };
-}
-
-function validateUnusedVariable(
-  variables: Observable<string[]>,
-  question: Observable<Question>,
-): AsyncValidatorFn {
-  return (control: AbstractControl<string | null>) =>
-    of(control.value).pipe(
-      withLatestFrom(variables.pipe(map((arr) => [...arr])), question),
-      switchMap(([value, variables, question]) =>
-        iif(
-          () => !variables.find((v) => v === question.variable),
-          of(null),
-          of([value, variables, question] as const).pipe(
-            map(([value, variables, question]) => {
-              const used = variables.findIndex((v) => v === question.variable);
-              variables.splice(used, 1);
-              return variables.includes(value?.trim() ?? '')
-                ? { used: true }
-                : null;
-            }),
-          ),
-        ),
-      ),
-    );
 }

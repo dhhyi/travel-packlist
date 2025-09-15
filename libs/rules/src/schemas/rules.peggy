@@ -1,6 +1,6 @@
 {{
   export * from "./types";
-  import { Question, Rule, Item, Variable, Always, Not, And, Or } from "./types";
+  import { Question, Rule, Item, Variable, Always, Not, And, Or, PleaseSelect } from "./types";
 
   function createRule(condition, effects) {
     const questions = effects.filter(effect => effect instanceof Question);
@@ -19,12 +19,16 @@
 
 {
   let rulesContainComments = false;
+  let usedVariables = new Set();
+  let declaredVariables = new Set();
+  let warnings = [];
 }
 
 Rules
-  = _ title:Title? _ rules:Rule|.., RuleDelimiter| RuleDelimiter? _ EOF {
+  = _ title:Title? _ rules:Rule|.., RuleDelimiter| RuleDelimiter? _ warnings:EOF {
     rules.title = title?.trim();
     rules.rulesContainComments = rulesContainComments;
+    rules.warnings = warnings;
     return rules;
   }
 
@@ -73,6 +77,7 @@ NOT "condition"
 
 Variable
   = variable:VariableName {
+    usedVariables.add(variable);
     return new Variable(variable);
   }
 
@@ -81,7 +86,11 @@ Effects
 
 Question "question"
   = question:QuestionString "$" variable:VariableName {
-    return new Question(question.trim(), variable.trim());
+    if (declaredVariables.has(variable)) {
+      warnings.push({ variable, type: 'duplicate' });
+    }
+    declaredVariables.add(variable);
+    return new Question(question.trim(), variable);
   }
 
 QuestionString "question"
@@ -139,4 +148,16 @@ _ "whitespace"
   = [ \t\n\r]*
 
 EOF
-  = !.
+  = !. {
+    for (const v of usedVariables) {
+      if (v !== PleaseSelect.string && v !== Always.string && !declaredVariables.has(v)) {
+        warnings.push({ variable: v, type: 'undeclared' });
+      }
+    }
+    for (const v of declaredVariables) {
+      if (!usedVariables.has(v)) {
+        warnings.push({ variable: v, type: 'unused' });
+      }
+    }
+    return warnings;
+  }

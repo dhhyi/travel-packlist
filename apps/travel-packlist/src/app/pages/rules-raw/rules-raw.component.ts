@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { Rules } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { debounceTime, startWith } from 'rxjs';
 
@@ -19,6 +20,10 @@ type ParserState =
   | {
       type: 'success';
       rules: number;
+    }
+  | {
+      type: 'warnings';
+      warnings: Rules['warnings'];
     }
   | {
       type: 'error';
@@ -56,6 +61,12 @@ export class EditRulesRawComponent {
           error: extractErrorMessage(this.state.rules.parsed.error()),
         };
       } else {
+        if (this.state.rules.parsed.value().warnings?.length) {
+          return {
+            type: 'warnings',
+            warnings: this.state.rules.parsed.value().warnings,
+          };
+        }
         return {
           type: 'success',
           rules: this.state.rules.parsed.value().length,

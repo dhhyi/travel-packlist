@@ -19,10 +19,11 @@
       },
       "inputs": [
         "{projectRoot}/peggy.config.js",
+        "{projectRoot}/src/**/types.ts",
         "{projectRoot}/src/**/*.peggy"
       ],
       "outputs": [
-        "{projectRoot}/src"
+        "{projectRoot}/src/index.*"
       ]
     },
     "generate": {
@@ -39,10 +40,12 @@
         "parallel": false
       },
       "inputs": [
-        "{projectRoot}/src/index.d.ts"
+        "{projectRoot}/src/index.d.ts",
+        "{projectRoot}/src/**/*.peggy",
+        "{projectRoot}/src/**/types.ts"
       ],
       "outputs": [
-        "{projectRoot}/src"
+        "{projectRoot}/src/index.d.ts"
       ]
     }
   }

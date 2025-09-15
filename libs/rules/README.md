@@ -18,6 +18,12 @@ The grammar for the rules can be found here: [`rules.peggy`](./src/schemas/rules
 For developing on the data model, it is useful to run the following two commands in parallel:
 
 ```bash
-nx run rules:generate --watch
+nx run rules:generate
+nx run rules:peggy --watch
+```
+
+and in another terminal window:
+
+```bash
 nx run model:test --watch
 ```

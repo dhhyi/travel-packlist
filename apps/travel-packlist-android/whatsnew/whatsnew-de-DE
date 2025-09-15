@@ -1,10 +1,8 @@
-- Sitzungsverwaltung
-- Kommandozeilen-Tool für Regeln
-- Bugfixes
+- Warnungen für unsachgemäße Verwendung von Variablen
 
 vorherige Verbesserungen:
 
-- Es ist jetzt möglich, eingepackte oder ignorierte Gegenstände in der Packliste auszublenden.
-- Anpassung für neue Android App-Anforderungen mit SDK Version 35
+- Sitzungsverwaltung
+- Kommandozeilen-Tool für Regeln
 
 https://github.com/dhhyi/travel-packlist/releases

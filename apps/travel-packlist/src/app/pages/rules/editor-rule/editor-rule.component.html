@@ -1,24 +1,36 @@
-<div
-  class="mb-1 flex items-center"
-  aria-label="condition"
-  i18n-aria-label
-  role="group"
->
-  <app-editor-condition
-    class="accessible-content grow"
-    [condition]="rule().condition"
-    [selectVariables]="selectVariables()"
-    (conditionChanged)="updateCondition($event)"
-  />
-  @if (mode() === 'edit') {
-    <button
-      iconClear
-      class="link"
-      type="button"
-      aria-label="reset condition"
-      i18n-aria-label
-      (click)="resetCondition()"
-    ></button>
+<div aria-label="condition" i18n-aria-label role="group">
+  <div class="mb-1 flex items-center">
+    <app-editor-condition
+      class="accessible-content grow"
+      [condition]="rule().condition"
+      [selectVariables]="selectVariables()"
+      (conditionChanged)="updateCondition($event)"
+    />
+    @if (mode() === 'edit') {
+      <button
+        iconClear
+        class="link"
+        type="button"
+        aria-label="reset condition"
+        i18n-aria-label
+        (click)="resetCondition()"
+      ></button>
+    }
+  </div>
+
+  @if (mode() === 'edit' && conditionWarnings().length) {
+    <div class="text-yellow-normal m-1 flex flex-col text-sm" role="status">
+      @for (warning of conditionWarnings(); track $index) {
+        @switch (warning.type) {
+          @case ('undeclared') {
+            <span i18n>
+              Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is not
+              declared in any question.
+            </span>
+          }
+        }
+      }
+    </div>
   }
 </div>
 

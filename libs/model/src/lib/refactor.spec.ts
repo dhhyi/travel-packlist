@@ -19,18 +19,36 @@ describe('refactor', () => {
   });
 
   describe('extractVariables', () => {
+    const rules = `
+      :- Is it sunny? $sunny, [utility] Scrubber;
+      NOT washer :- [utility] Clothesline;
+      :- Will it be cold? $cold;
+    `;
+
     it('should extract variables', () => {
-      const rules = [
-        parser.parseRule('a AND b :- Is it sunny? $sunny, [utility] Scrubber'),
-        parser.parseRule('c OR d :- [utility] Clothesline'),
-        parser.parseRule('e :- Will it be cold? $cold'),
-      ];
+      const variables = refactor.extractVariables(parser.parseRules(rules));
 
-      const variables = refactor.extractVariables(rules);
+      expect(variables).toMatchInlineSnapshot(`
+        Set {
+          "sunny",
+          "washer",
+          "cold",
+        }
+      `);
+    });
 
-      expect(variables).toHaveLength(2);
-      expect(variables).toContain('sunny');
-      expect(variables).toContain('cold');
+    it('should extract variables in questions only', () => {
+      const variables = refactor.extractVariables(
+        parser.parseRules(rules),
+        true,
+      );
+
+      expect(variables).toMatchInlineSnapshot(`
+        Set {
+          "sunny",
+          "cold",
+        }
+      `);
     });
   });
 

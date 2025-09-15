@@ -82,7 +82,7 @@ test('rule editor - view with title', async ({ page }) => {
 test('rule editor - edit', async ({ page }) => {
   const packlist = await startWithRules(
     page,
-    'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella; :- Will it be rainy? $rainy;',
+    'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella; NOT sunny :- Will it be rainy? $rainy;',
   );
 
   const editor = await packlist
@@ -155,6 +155,26 @@ test('rule editor - edit with title', async ({ page }) => {
     - textbox "Rules Title": "My New Rules"
   `);
   await expect(page).toHaveScreenshot();
+});
+
+test('rule editor - edit with warnings', async ({ page }) => {
+  const packlist = await startWithRules(page, 'a :- B? $b; :- B? $b;');
+
+  const editor = await packlist
+    .toConfigPage()
+    .then((page) => page.toEditorPage());
+
+  await editor.toolbar.mode('edit').click();
+
+  await expect(editor.rule(1)()).toMatchAriaSnapshot(`
+    - 'group "Rule #1"':
+      - group "condition":
+        - status: Variable a is not declared in any question.
+      - group "question":
+        - status: Variable b is declared more than once. Variable b is not used in any condition.
+  `);
+
+  await expect(editor.rule(1)()).toHaveScreenshot();
 });
 
 test('rule editor - delete', async ({ page }) => {

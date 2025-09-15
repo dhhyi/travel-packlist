@@ -19,11 +19,20 @@ const run: PromiseExecutor<ExecutorSchema> = async (options) => {
       throw new Error(`No files found for pattern: ${options.pattern}`);
     }
 
+    const args = ['--format'];
+    if (options.errorOnWarnings) {
+      console.log('treating warnings as errors');
+      args.push('--error-on-warnings');
+    }
+
     for (const file of files) {
       console.log(`Checking file: ${file}`);
-      execSync(`node dist/tools/rules-cmdl/index.cjs ${file} --format`, {
-        stdio: 'inherit',
-      });
+      execSync(
+        `node dist/tools/rules-cmdl/index.cjs ${file} ${args.join(' ')}`,
+        {
+          stdio: 'inherit',
+        },
+      );
       if (options.errorOnChange) {
         execSync(`git diff --exit-code ${file}`, { stdio: 'inherit' });
       }

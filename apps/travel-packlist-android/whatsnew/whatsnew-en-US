@@ -1,10 +1,8 @@
-- session management
-- command line tool for rules
-- bugfixes
+- print warnings for improper variable handling
 
 previous improvements:
 
-- It is now possible to hide completed items in the packlist.
-- Conforming to new Android App requirements with SDK Version 35.
+- session management
+- command line tool for rules
 
 https://github.com/dhhyi/travel-packlist/releases
