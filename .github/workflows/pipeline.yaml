@@ -208,6 +208,7 @@ jobs:
           docker run \
             -v $(pwd)/apps/travel-packlist-e2e:/ws/apps/travel-packlist-e2e \
             -e CI=true \
+            -e NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN \
             ghcr.io/dhhyi/travel-packlist-e2e:latest \
             travel-packlist-e2e:e2e --configuration ci
 
