@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/dhhyi/travel-packlist/compare/v1.4.0...v1.5.0) (2025-09-16)
+
+### Features
+
+- display warnings for unused and undeclared variables when parsing rules ([ea03979](https://github.com/dhhyi/travel-packlist/commit/ea03979859f614d3a5d864a69c4568d70b285722))
+
 ## [1.4.0](https://github.com/dhhyi/travel-packlist/compare/v1.3.0...v1.4.0) (2025-09-01)
 
 ### Features
