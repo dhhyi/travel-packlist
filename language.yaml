@@ -49,3 +49,5 @@ vscode:
     tailwindCSS.includeLanguages:
       typescript: css
     nxConsole.showProjectDetailsView: false
+    files.associations:
+      '**/whatsnew-*': 'plaintext'

@@ -21,6 +21,9 @@
     "vscode": {
       "settings": {
         "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "files.associations": {
+          "**/whatsnew-*": "plaintext"
+        },
         "files.exclude": {
           ".devcontainer": true,
           ".update_devcontainer.sh": true
