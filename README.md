@@ -100,7 +100,7 @@ The project uses [Nx](https://nx.dev/) for managing the monorepo and the build p
 
 Managing the rules grammar and parsing it is done using [Peggy](https://peggyjs.org/).
 
-[Showdown](https://showdownjs.com/) is used in a build step for converting the syntax documentation for the rule format from markdown to HTML.
+[Showdown](https://github.com/showdownjs/showdown) is used in a build step for converting the syntax documentation for the rule format from markdown to HTML.
 
 For packaging the app into an Android bundle, I use [Capacitor](https://capacitorjs.com/).
 
