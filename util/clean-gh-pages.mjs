@@ -34,7 +34,7 @@ Object.entries(files).forEach(([group, files]) => {
   console.log(`Group: ${group}`);
   files.sort((a, b) => b.lastCommit - a.lastCommit);
   files
-    .slice(2)
+    .slice(group === 'chunk-XXX.js' ? 70 : 2)
     .filter((f) => f.lastCommit < tsTwoWeeksAgo)
     .forEach((f) => {
       console.log(`  ${f.file}`);
