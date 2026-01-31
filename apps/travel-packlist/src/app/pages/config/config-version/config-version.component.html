@@ -15,7 +15,10 @@
   </a></span
 >
 <span i18n class="e2e-hidden italic"
-  >built on {{ buildTime | date: 'long' // i18n(ph="LONG_DATE") }}</span
+  >built on
+  {{
+    buildTime | date: 'long' // i18n(ph="LONG_DATE")
+  }}</span
 >
 <span class="e2e-hidden truncate font-mono text-sm text-slate-500"
   ><a

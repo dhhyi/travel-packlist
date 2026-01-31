@@ -27,9 +27,9 @@ import { SelectOptionDirective } from './select-option.directive';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectOptionsComponent<T extends string>
-  implements ControlValueAccessor
-{
+export class SelectOptionsComponent<
+  T extends string,
+> implements ControlValueAccessor {
   readonly label = input<string>('');
   readonly legendHidden = input<boolean>(false);
   readonly fieldSetClass = input<string>('');

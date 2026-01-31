@@ -24,8 +24,11 @@
         @switch (warning.type) {
           @case ('undeclared') {
             <span i18n>
-              Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is not
-              declared in any question.
+              Variable
+              {{
+                warning.variable // i18n(ph="VARIABLE_NAME")
+              }}
+              is not declared in any question.
             </span>
           }
         }

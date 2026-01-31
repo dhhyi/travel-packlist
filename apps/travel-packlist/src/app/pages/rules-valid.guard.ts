@@ -7,7 +7,7 @@ export const rulesValid: CanActivateFn = () => {
 
   if (state.rules.hasError()) {
     const router = inject(Router);
-    const targetUrl = router.getCurrentNavigation()?.finalUrl;
+    const targetUrl = router.currentNavigation()?.finalUrl;
     return router.navigate(['/rules-error'], {
       browserUrl: targetUrl,
     });

@@ -9,6 +9,7 @@ module.exports = [
   {
     files: ['**/*.ts'],
     rules: {
+      '@typescript-eslint/no-deprecated': 'off',
       'no-console': 'error',
     },
   },

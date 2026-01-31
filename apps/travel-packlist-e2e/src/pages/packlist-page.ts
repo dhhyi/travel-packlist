@@ -42,7 +42,7 @@ export class PacklistPage extends Banner {
     return this.page.getByRole('button', { name: 'Display heaviest items' });
   }
 
-  item(name: string, checked: boolean | undefined = undefined) {
+  item(name: string, checked?: boolean) {
     return this.page.getByRole('checkbox', { name, checked });
   }
 

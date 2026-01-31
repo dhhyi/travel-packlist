@@ -66,14 +66,20 @@
         @switch (warning.type) {
           @case ('duplicate') {
             <span i18n>
-              Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
-              declared more than once.
+              Variable
+              {{
+                warning.variable // i18n(ph="VARIABLE_NAME")
+              }}
+              is declared more than once.
             </span>
           }
           @case ('unused') {
             <span i18n>
-              Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is not
-              used in any condition.
+              Variable
+              {{
+                warning.variable // i18n(ph="VARIABLE_NAME")
+              }}
+              is not used in any condition.
             </span>
           }
         }

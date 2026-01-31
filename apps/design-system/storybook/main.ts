@@ -1,12 +1,17 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { StorybookConfig } from '@storybook/angular';
 
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 const config: StorybookConfig = {
   stories: ['../src/**/*.@(mdx|stories.@(js|jsx|ts|tsx))'],
-  addons: ['@storybook/addon-themes', '@storybook/addon-docs'],
+  addons: [
+    getAbsolutePath('@storybook/addon-themes'),
+    getAbsolutePath('@storybook/addon-docs'),
+  ],
   framework: {
-    name: '@storybook/angular',
+    name: getAbsolutePath('@storybook/angular'),
     options: {},
   },
   webpackFinal: (config) => {
@@ -21,6 +26,7 @@ const config: StorybookConfig = {
         return {
           ...rule,
           test: new RegExp(
+            // eslint-disable-next-line @typescript-eslint/no-base-to-string
             rule.test!.toString().replace('svg|', '').slice(1, -1),
           ),
         };
@@ -34,6 +40,6 @@ const config: StorybookConfig = {
 
 export default config;
 
-// To customize your webpack configuration you can use the webpackFinal field.
-// Check https://storybook.js.org/docs/react/builders/webpack#extending-storybooks-webpack-config
-// and https://nx.dev/recipes/storybook/custom-builder-configs
+function getAbsolutePath(value: string): string {
+  return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)));
+}

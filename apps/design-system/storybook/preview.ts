@@ -7,8 +7,7 @@ import { MINIMAL_VIEWPORTS } from 'storybook/viewport';
 const preview: Preview = {
   parameters: {
     viewport: {
-      viewports: MINIMAL_VIEWPORTS,
-      defaultViewport: 'mobile2',
+      options: MINIMAL_VIEWPORTS,
     },
   },
   globalTypes: {
@@ -18,7 +17,7 @@ const preview: Preview = {
         title: 'Accessible',
         icon: 'accessibility',
         items: [
-          { value: 'true', right: true, title: '✔️' },
+          { value: 'true', title: '✔️' },
           { value: 'false', title: '❌' },
         ],
         dynamicTitle: true,
@@ -30,7 +29,7 @@ const preview: Preview = {
         title: 'Animations',
         icon: 'fastforward',
         items: [
-          { value: 'true', right: true, title: '✔️' },
+          { value: 'true', title: '✔️' },
           { value: 'false', title: '❌' },
         ],
         dynamicTitle: true,
@@ -40,6 +39,11 @@ const preview: Preview = {
   initialGlobals: {
     accessible: 'true',
     animations: 'true',
+
+    viewport: {
+      value: 'mobile2',
+      isRotated: false,
+    },
   },
   decorators: [
     componentWrapperDecorator(

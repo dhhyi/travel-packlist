@@ -39,20 +39,29 @@
             @switch (warning.type) {
               @case ('duplicate') {
                 <li i18n>
-                  Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
-                  declared more than once.
+                  Variable
+                  {{
+                    warning.variable // i18n(ph="VARIABLE_NAME")
+                  }}
+                  is declared more than once.
                 </li>
               }
               @case ('undeclared') {
                 <li i18n>
-                  Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
-                  not declared in any question.
+                  Variable
+                  {{
+                    warning.variable // i18n(ph="VARIABLE_NAME")
+                  }}
+                  is not declared in any question.
                 </li>
               }
               @case ('unused') {
                 <li i18n>
-                  Variable {{ warning.variable // i18n(ph="VARIABLE_NAME") }} is
-                  not used in any condition.
+                  Variable
+                  {{
+                    warning.variable // i18n(ph="VARIABLE_NAME")
+                  }}
+                  is not used in any condition.
                 </li>
               }
             }
