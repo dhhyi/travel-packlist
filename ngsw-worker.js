@@ -18,7 +18,10 @@
     return a;
   };
   var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
-  var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  var __publicField = (obj, key, value) => {
+    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+    return value;
+  };
 
   // packages/service-worker/worker/src/named-cache-storage.js
   var NamedCacheStorage = class {
@@ -851,6 +854,7 @@ ${error.stack}`;
         return table.write("lru", this._lru.state);
       } catch (err) {
         this.debugHandler.log(err, `DataGroup(${this.config.name}@${this.config.version}).syncLru()`);
+        await this.detectStorageFull();
       }
     }
     /**
@@ -964,6 +968,7 @@ ${error.stack}`;
           await this.cacheResponse(req, res, lru, okToCacheOpaque);
         } catch (err) {
           this.debugHandler.log(err, `DataGroup(${this.config.name}@${this.config.version}).safeCacheResponse(${req.url}, status: ${res.status})`);
+          await this.detectStorageFull();
         }
       } catch (e) {
       }
@@ -1054,6 +1059,25 @@ ${error.stack}`;
           status: 504,
           statusText: "Gateway Timeout"
         });
+      }
+    }
+    /**
+     * Detect if storage is full or approaching capacity.
+     * Returns true if storage is at or near capacity.
+     */
+    async detectStorageFull() {
+      try {
+        const estimate = await navigator.storage.estimate();
+        const { quota, usage } = estimate;
+        if (typeof quota !== "number" || typeof usage !== "number") {
+          return;
+        }
+        const usagePercentage = usage / quota * 100;
+        const isStorageFull = usagePercentage >= 95;
+        if (isStorageFull) {
+          this.debugHandler.log("Storage is full or nearly full", `DataGroup(${this.config.name}@${this.config.version}).detectStorageFull()`);
+        }
+      } catch (e) {
       }
     }
   };
@@ -1261,7 +1285,7 @@ ${error.stack}`;
   };
 
   // packages/service-worker/worker/src/debug.js
-  var SW_VERSION = "20.1.8";
+  var SW_VERSION = "21.1.2";
   var DEBUG_LOG_BUFFER_SIZE = 100;
   var DebugHandler = class {
     constructor(driver, adapter2) {
@@ -1544,6 +1568,8 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ "Content-Type": "text/plain" }
         // based on the incorrect assumption that browsers don't support it.
         this.onPushSubscriptionChange(event)
       ));
+      this.scope.addEventListener("messageerror", (event) => this.onMessageError(event));
+      this.scope.addEventListener("unhandledrejection", (event) => this.onUnhandledRejection(event));
       this.debugger = new DebugHandler(this, this.adapter);
       this.idle = new IdleScheduler(this.adapter, IDLE_DELAY, MAX_IDLE_DELAY, this.debugger);
     }
@@ -1617,6 +1643,12 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ "Content-Type": "text/plain" }
     }
     onPushSubscriptionChange(event) {
       event.waitUntil(this.handlePushSubscriptionChange(event));
+    }
+    onMessageError(event) {
+      this.debugger.log(`Message error occurred - data could not be deserialized`, `Driver.onMessageError(origin: ${event.origin})`);
+    }
+    onUnhandledRejection(event) {
+      this.debugger.log(`Unhandled promise rejection occurred`, `Driver.onUnhandledRejection(reason: ${event.reason})`);
     }
     async ensureInitialized(event) {
       if (this.initialized !== null) {
