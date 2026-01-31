@@ -71,5 +71,10 @@ export class AppInit {
 
   private applyAnimationClass(value: boolean) {
     document.documentElement.classList.toggle('animations', value);
+    if (document.documentElement.classList.contains('animations')) {
+      document.documentElement.classList.remove('no-animations');
+    } else {
+      document.documentElement.classList.add('no-animations');
+    }
   }
 }

@@ -15,27 +15,25 @@
     </div>
   }
 } @else {
-  <div
-    [@.disabled]="animationsDisabled()"
-    [@animateQuestions]="displayQuestions()"
-  >
+  <div>
     @for (question of displayQuestions(); track question.question) {
       <div
-        class="card flex flex-row items-center justify-between overflow-hidden"
+        class="card flex flex-row items-center justify-between overflow-hidden not-last:mb-1"
         role="checkbox"
         tabindex="0"
-        [attr.aria-checked]="isQuestionActive(question)"
+        [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
+        [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
+        [attr.aria-checked]="question.isActive"
         [attr.aria-disabled]="isAnswersLockActive()"
         [attr.aria-label]="question.question"
         [class.disabled]="isAnswersLockActive()"
-        [class.mb-1]="!$last"
-        (click)="toggleQuestion(question)"
-        (keypress)="toggleQuestion(question)"
+        (click)="toggleQuestion(question.variable)"
+        (keypress)="toggleQuestion(question.variable)"
       >
         <span aria-hidden="true" class="font-bold select-none">{{
           question.question
         }}</span>
-        @if (isQuestionActive(question)) {
+        @if (question.isActive) {
           <app-icon-checkmark />
         }
       </div>

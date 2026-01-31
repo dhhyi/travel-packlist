@@ -36,7 +36,6 @@ NOT sunny :- Will it be rainy? $rainy;
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - checkbox "Will it be sunny?" [checked]
-    - checkbox "Will it be rainy?"
     - button "Lock answers"
     - progressbar "You have packed 0 out of 1 items."
     - list "tool":

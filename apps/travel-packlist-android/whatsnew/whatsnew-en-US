@@ -1,8 +1,8 @@
-- print warnings for improper variable handling
+- simplified animations
 
 previous improvements:
 
+- print warnings for improper variable handling
 - session management
-- command line tool for rules
 
 https://github.com/dhhyi/travel-packlist/releases

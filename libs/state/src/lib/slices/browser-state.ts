@@ -6,7 +6,9 @@ import {
   supportedLanguages,
 } from './config-state';
 
-export const browserState = ({ config: { language } }: ConfigState) => {
+export const browserState = ({
+  config: { language, animations },
+}: ConfigState) => {
   const scrollY = signal(window.scrollY);
   window.addEventListener('scroll', () => {
     scrollY.set(window.scrollY);
@@ -21,6 +23,14 @@ export const browserState = ({ config: { language } }: ConfigState) => {
           navigator.userAgent,
         ),
       ),
+      /** action: run a callback in view-transition if supported and enabled in config */
+      viewTransition: (callback: () => void) => {
+        if (animations() && 'startViewTransition' in document) {
+          document.startViewTransition(callback);
+        } else {
+          callback();
+        }
+      },
     },
     config: {
       /** derived: preferred language, calculation considers user setting and browser setting */

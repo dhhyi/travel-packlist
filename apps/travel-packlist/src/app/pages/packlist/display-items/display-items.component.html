@@ -4,18 +4,13 @@
   </div>
 }
 
-<div
-  class="contents"
-  [@animateCategory]="packlist()"
-  [@.disabled]="animationsDisabled()"
->
+<div class="contents">
   @for (category of packlist(); track category.name) {
     <div
       class="card mb-1 overflow-hidden"
       role="list"
       [id]="category.id"
       [attr.aria-label]="category.name"
-      [@animateItems]="category"
     >
       <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
       <div
@@ -27,7 +22,7 @@
         <div class="flex items-center gap-1">
           <app-icon-key-right
             class="h-6 w-6"
-            [@animateChevron]="category.collapsed"
+            [class.rotate-90]="!category.collapsed"
           />
           <span class="font-bold italic">{{ category.name }}</span>
           @if (trackWeight() && category.totalWeight) {
@@ -57,18 +52,19 @@
             <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
             <div
               role="listitem"
-              class="rounded-sm px-1 transition-colors duration-300"
+              class="rounded-sm px-1 transition-all"
               [id]="item.id()"
               [style.background-color]="bgColor"
+              [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
+              [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
             >
               <div
                 role="checkbox"
                 tabindex="0"
-                class="flex items-center justify-between select-none"
+                class="flex items-center justify-between transition-all select-none"
                 [attr.aria-checked]="item.checked"
                 [class.text-checked-item]="item.checked && !item.skipped"
                 [class.text-skipped-item]="item.skipped"
-                [@animateStrikeThrough]="item.checked"
                 (click)="toggleCheckedItem(item)"
                 (keypress)="toggleCheckedItem(item)"
                 (dblclick)="dblclick(item)"

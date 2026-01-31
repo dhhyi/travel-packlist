@@ -8,7 +8,6 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideDocumentationTopics } from '@travel-packlist/documentation';
 import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
@@ -43,7 +42,6 @@ export const appConfig: ApplicationConfig = {
       enabled: !isDevMode() && !ANDROID,
       registrationStrategy: 'registerImmediately',
     }),
-    provideAnimationsAsync(),
     provideAppInitializer(() => {
       inject(AppInit).init();
     }),

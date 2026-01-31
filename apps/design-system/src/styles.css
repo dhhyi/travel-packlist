@@ -54,6 +54,10 @@
   --spacing-8: 2rem;
   --spacing-12: 3rem;
   --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fade-in 300ms
+    var(--tw-default-transition-timing-function, ease-in-out);
+  --animate-fade-out: fade-out 300ms
+    var(--tw-default-transition-timing-function, ease-in-out);
 
   @keyframes pulse {
     0%,
@@ -63,6 +67,40 @@
 
     50% {
       opacity: 0.1;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      height: 0;
+      min-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    to {
+      opacity: 1;
+      height: var(--content-height, auto);
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      opacity: 1;
+      height: var(--content-height, auto);
+    }
+
+    to {
+      opacity: 0;
+      height: 0;
+      min-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      margin-top: 0;
+      margin-bottom: 0;
     }
   }
   /* stylelint-enable custom-property-pattern */
@@ -103,6 +141,11 @@
 }
 
 @layer base {
+  :root {
+    transition-behavior: allow-discrete;
+    interpolate-size: allow-keywords;
+  }
+
   html {
     font-size: var(--html-font-size, 18px);
     font-family: sans-serif;
@@ -258,4 +301,18 @@
 
 .animate-pulse:has(:focus) {
   animation: none !important;
+}
+
+html.no-animations::view-transition-group(*),
+html.no-animations::view-transition-old(*),
+html.no-animations::view-transition-new(*) {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

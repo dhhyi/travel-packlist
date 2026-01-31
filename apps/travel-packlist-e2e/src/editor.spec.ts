@@ -20,7 +20,7 @@ test('rule editor - empty', async ({ page }) => {
         - radio "Search"
   `);
 
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - view', async ({ page }) => {
@@ -59,7 +59,7 @@ test('rule editor - view', async ({ page }) => {
         - option "+"
       - textbox "item name" [disabled]: umbrella
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - view with title', async ({ page }) => {
@@ -76,7 +76,7 @@ test('rule editor - view with title', async ({ page }) => {
   await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
     - textbox "Rules Title" [disabled]: "My Rules"
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - edit', async ({ page }) => {
@@ -127,7 +127,7 @@ test('rule editor - edit', async ({ page }) => {
         - option "+"
       - textbox "item name": umbrella
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - edit with title', async ({ page }) => {
@@ -154,7 +154,7 @@ test('rule editor - edit with title', async ({ page }) => {
   await expect(editor.rulesTitle()).toMatchAriaSnapshot(`
     - textbox "Rules Title": "My New Rules"
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - edit with warnings', async ({ page }) => {
@@ -237,7 +237,7 @@ test('rule editor - delete', async ({ page }) => {
       - group "condition": IF NOT rainy
       - button "delete rule"
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 
   await editor.rule(1).deleteButton().click();
 
@@ -246,7 +246,7 @@ test('rule editor - delete', async ({ page }) => {
   await editor.dialog.confirm().click();
 
   await expect(editor.rule(1)()).toBeHidden();
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - cut-paste', async ({ page }) => {
@@ -300,7 +300,7 @@ test('rule editor - cut-paste', async ({ page }) => {
   await expect(editor.toolbar.clipboard()).toHaveText(
     'Clipboard: 1 Item and 1 Question',
   );
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 
   await editor.rule(2).pasteButton().click();
 
@@ -325,7 +325,7 @@ test('rule editor - cut-paste', async ({ page }) => {
   `);
 
   await expect(editor.toolbar.clipboard()).toBeHidden();
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - swap', async ({ page }) => {
@@ -350,7 +350,7 @@ test('rule editor - swap', async ({ page }) => {
         - radio "Swap" [checked]
         - radio "Search"
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 
   await expect(editor.rule(1)()).toMatchAriaSnapshot(`
     - 'group "Rule #1"':
@@ -390,7 +390,7 @@ test('rule editor - swap', async ({ page }) => {
 
   await expect(editor.rule(1).item(1).itemName()).toHaveValue('boots');
   await expect(editor.rule(1).item(2).itemName()).toHaveValue('umbrella');
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
 test('rule editor - search', async ({ page }) => {
@@ -417,12 +417,12 @@ test('rule editor - search', async ({ page }) => {
       - searchbox "search in rules"
       - button "clear search"
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 
   await editor.toolbar.searchBox().fill('sunscreen');
 
   await expect(editor.rule(1)()).toBeHidden();
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 
   await editor.toolbar.clearSearchButton().click();
 
@@ -435,5 +435,5 @@ test('rule editor - search', async ({ page }) => {
   await editor.toolbar.searchBox().fill('umbrella');
 
   await expect(editor.rule(1)()).toBeVisible();
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 });

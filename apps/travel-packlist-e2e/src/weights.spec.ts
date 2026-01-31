@@ -36,7 +36,7 @@ test('weight tracking', async ({ page }) => {
   await expect(packlist.weightPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 150g out of 4.0kg by packing 1 out of 11 items."
   `);
-  await expect(page).toHaveScreenshot();
+  await expect(page).toHaveScreenshot({ fullPage: true });
 
   await expect(packlist.displayWeightDistributionButton()).toBeVisible();
 
