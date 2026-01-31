@@ -15,10 +15,7 @@
     </div>
   }
 } @else {
-  <div
-    [@.disabled]="animationsDisabled()"
-    [@animateQuestions]="displayQuestions()"
-  >
+  <div>
     @for (question of displayQuestions(); track question.question) {
       <div
         class="card flex flex-row items-center justify-between overflow-hidden"

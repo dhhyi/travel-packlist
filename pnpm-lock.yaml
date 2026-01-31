@@ -11,9 +11,6 @@ importers:
       '@angular-devkit/build-angular':
         specifier: ^21.1.2
         version: 21.1.2(27cf2fc8a2a8f45e5cb2f05b4ca245dd)
-      '@angular/animations':
-        specifier: 21.1.2
-        version: 21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))
       '@angular/build':
         specifier: 21.1.2
         version: 21.1.2(@angular/compiler-cli@21.1.2(@angular/compiler@21.1.2)(typescript@5.9.3))(@angular/compiler@21.1.2)(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))(@angular/localize@21.1.2(@angular/compiler-cli@21.1.2(@angular/compiler@21.1.2)(typescript@5.9.3))(@angular/compiler@21.1.2))(@angular/platform-browser@21.1.2(@angular/animations@21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/service-worker@21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@types/node@25.1.0)(chokidar@5.0.0)(jiti@2.6.1)(less@4.5.1)(lightningcss@1.30.2)(postcss@8.5.6)(sass-embedded@1.97.3)(stylus@0.64.0)(tailwindcss@4.1.18)(terser@5.46.0)(tslib@2.8.1)(typescript@5.9.3)(yaml@2.8.2)
@@ -10770,6 +10767,7 @@ snapshots:
     dependencies:
       '@angular/core': 21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0)
       tslib: 2.8.1
+    optional: true
 
   '@angular/build@21.1.2(@angular/compiler-cli@21.1.2(@angular/compiler@21.1.2)(typescript@5.9.3))(@angular/compiler@21.1.2)(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))(@angular/localize@21.1.2(@angular/compiler-cli@21.1.2(@angular/compiler@21.1.2)(typescript@5.9.3))(@angular/compiler@21.1.2))(@angular/platform-browser@21.1.2(@angular/animations@21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/common@21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0)))(@angular/service-worker@21.1.2(@angular/core@21.1.2(@angular/compiler@21.1.2)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2))(@types/node@25.1.0)(chokidar@5.0.0)(jiti@2.6.1)(less@4.4.2)(lightningcss@1.30.2)(postcss@8.5.6)(sass-embedded@1.97.3)(stylus@0.64.0)(tailwindcss@4.1.18)(terser@5.44.1)(tslib@2.8.1)(typescript@5.9.3)(yaml@2.8.2)':
     dependencies:

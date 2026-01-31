@@ -112,7 +112,6 @@
   },
   "dependencies": {
     "@angular-devkit/build-angular": "^21.1.2",
-    "@angular/animations": "21.1.2",
     "@angular/build": "21.1.2",
     "@angular/common": "21.1.2",
     "@angular/compiler": "21.1.2",

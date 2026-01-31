@@ -20,7 +20,7 @@
     (click)="nextPage()"
   ></button>
 </div>
-<div class="flex-grow overflow-hidden" [@animatePages]="currentPage()">
+<div class="flex-grow overflow-hidden">
   @for (page of heaviestItems(); track $index) {
     @if ($index === currentPage()) {
       <cmp-bar-chart [bars]="page" (clicked)="barClicked($event)" />

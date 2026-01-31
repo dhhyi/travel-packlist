@@ -1,13 +1,4 @@
 import {
-  animate,
-  group,
-  query,
-  style,
-  transition,
-  trigger,
-  useAnimation,
-} from '@angular/animations';
-import {
   afterNextRender,
   ChangeDetectionStrategy,
   Component,
@@ -19,34 +10,11 @@ import { IconCheckmarkComponent } from '@travel-packlist/icons';
 import { Question } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
-import {
-  staggerInCard,
-  staggerOutCard,
-} from '../../../animations/card.animations';
-
-const animateQuestions = trigger('animateQuestions', [
-  transition('* <=> *', [
-    group([
-      query('div.card:enter', useAnimation(staggerInCard), { optional: true }),
-      query('div.card:leave', useAnimation(staggerOutCard), { optional: true }),
-      query(
-        'app-icon-checkmark:enter',
-        [
-          style({ transform: 'translateX(200%)' }),
-          animate('0.3s ease-in', style({ transform: 'translateX(0)' })),
-        ],
-        { optional: true },
-      ),
-    ]),
-  ]),
-]);
-
 @Component({
   selector: 'app-display-questions',
   imports: [IconCheckmarkComponent],
   templateUrl: './display-questions.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [animateQuestions],
 })
 export class DisplayQuestionsComponent {
   private state = inject(GLOBAL_STATE);

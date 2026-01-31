@@ -1,14 +1,4 @@
 import {
-  animate,
-  animation,
-  group,
-  query,
-  style,
-  transition,
-  trigger,
-  useAnimation,
-} from '@angular/animations';
-import {
   afterNextRender,
   ChangeDetectionStrategy,
   Component,
@@ -30,69 +20,6 @@ import { filter, map } from 'rxjs';
 import { DialogComponent } from './dialog/dialog.component';
 import { RouteData } from './pages/app.routes';
 
-const slideTransition = animation(
-  [
-    query(
-      ':enter, :leave',
-      style({
-        position: 'fixed',
-        width: `${(Math.min(window.innerWidth, 600) - 18).toFixed(0)}px`,
-      }),
-      {
-        optional: true,
-      },
-    ),
-    query(':enter', style({ opacity: 0, transform: '{{ from }}' }), {
-      optional: true,
-    }),
-    group([
-      query(
-        ':leave',
-        [
-          animate(
-            '{{ duration }}',
-            style({ opacity: 0, transform: '{{ to }}' }),
-          ),
-        ],
-        { optional: true },
-      ),
-      query(
-        ':enter',
-        [
-          animate(
-            '{{ duration }}',
-            style({
-              opacity: 1,
-              transform: 'translateX(0) translateY(0) scale(1)',
-            }),
-          ),
-        ],
-        { optional: true },
-      ),
-    ]),
-  ],
-  { params: { duration: '0.3s ease-in-out' } },
-);
-
-const routeTransition = trigger('routeTransition', [
-  transition(':decrement', [
-    useAnimation(slideTransition, {
-      params: {
-        from: 'translateX(-100%) scale(1)',
-        to: 'translateX(100%) scale(0.9)',
-      },
-    }),
-  ]),
-  transition(':increment', [
-    useAnimation(slideTransition, {
-      params: {
-        from: 'translateX(100%) scale(1)',
-        to: 'translateX(-100%) scale(0.9)',
-      },
-    }),
-  ]),
-]);
-
 @Component({
   selector: 'app-root',
   imports: [
@@ -108,7 +35,6 @@ const routeTransition = trigger('routeTransition', [
   host: {
     class: 'flex h-full flex-col',
   },
-  animations: [routeTransition],
 })
 export class AppComponent {
   private state = inject(GLOBAL_STATE);

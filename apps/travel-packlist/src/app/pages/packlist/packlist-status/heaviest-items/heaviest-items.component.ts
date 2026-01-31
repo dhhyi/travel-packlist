@@ -1,14 +1,4 @@
 import {
-  animate,
-  animation,
-  group,
-  query,
-  style,
-  transition,
-  trigger,
-  useAnimation,
-} from '@angular/animations';
-import {
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -26,36 +16,6 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { colorFromString } from '../../../../util/colors';
 
-const paging = animation([
-  query(':enter', style({ transform: 'translateY({{ from }})', height: '0' })),
-  group([
-    query(
-      ':leave',
-      animate(
-        '300ms',
-        style({ transform: 'translateY({{ to }})', height: '0' }),
-      ),
-    ),
-    query(
-      ':enter',
-      animate('300ms', style({ transform: 'translateY(0)', height: '*' })),
-    ),
-  ]),
-]);
-
-const animatePages = trigger('animatePages', [
-  transition(':increment', [
-    useAnimation(paging, {
-      params: { from: '150%', to: '-150%' },
-    }),
-  ]),
-  transition(':decrement', [
-    useAnimation(paging, {
-      params: { from: '-150%', to: '150%' },
-    }),
-  ]),
-]);
-
 @Component({
   selector: 'app-heaviest-items',
   imports: [
@@ -68,7 +28,6 @@ const animatePages = trigger('animatePages', [
   host: {
     class: 'flex w-full max-w-[350px] flex-row gap-1',
   },
-  animations: [animatePages],
 })
 export class HeaviestItemsComponent {
   private readonly pageSize = 10;
