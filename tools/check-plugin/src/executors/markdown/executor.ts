@@ -111,7 +111,10 @@ async function checkLinksInFile(file: string): Promise<void> {
 
     async function checkExternalLinkError(link: string) {
       console.log('checking', link);
-      return axios.head(link).catch(() => axios.get(link));
+      const headers = { 'User-Agent': 'Nx-Devkit-Link-Checker' };
+      return axios
+        .head(link, { headers })
+        .catch(() => axios.get(link, { headers }));
     }
 
     const checkedLinks = getLinksCache();
