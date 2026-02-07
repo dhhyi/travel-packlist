@@ -3,6 +3,10 @@ extends: dcc://javascript-pnpm
 devcontainer:
   name: travel-packlist
   build:
+    packages:
+      - exiftool
+      - imagemagick
+      - xdg-utils
     user:
       - ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
       - RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
@@ -12,7 +16,7 @@ devcontainer:
         content: |
           #!/bin/bash
           exec pnpm exec nx "$@"
-  instantiate: pnpm install && pnpm playwright install chromium --with-deps && sudo apt-get install -y exiftool imagemagick xdg-utils bc && cd /tmp/git-diff-image && ./install.sh
+  instantiate: fish -c 'pnpm install && pnpm playwright install chromium --with-deps' && cd /tmp/git-diff-image && ./install.sh
   ports:
     - 4200
 extras:

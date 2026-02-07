@@ -2,7 +2,7 @@ FROM ghcr.io/dhhyi/dcc-devcontainer-javascript-pnpm
 
 USER root
 
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends tmux && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends exiftool imagemagick xdg-utils tmux && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p "/usr/bin" && echo "IyEvYmluL2Jhc2gKZXhlYyBwbnBtIGV4ZWMgbnggIiRAIgo=" | base64 -d > "/usr/bin/nx" && chmod +rx "/usr/bin/nx"
 
