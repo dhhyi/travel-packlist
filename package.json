@@ -2,9 +2,12 @@
   "name": "travel-packlist-root",
   "version": "1.5.0",
   "license": "MIT",
+  "engines": {
+    "node": "24"
+  },
   "scripts": {
     "changelog": "conventional-changelog -i CHANGELOG.md -n util/conventionalcommits.mjs",
-    "version": "npm run changelog -- -s && git add CHANGELOG.md",
+    "version": "pnpm run changelog -- -s && git add CHANGELOG.md",
     "postversion": "git push && git push --tags",
     "release-notes": "conventional-changelog -r 2 -n util/conventionalcommits.mjs -o",
     "create-prettierignore": "node util/create-prettierignore.mjs",
