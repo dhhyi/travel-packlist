@@ -1,5 +1,4 @@
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -21,30 +20,32 @@ export class DisplayQuestionsComponent {
 
   questions = this.state.active.questions;
 
-  isQuestionActive = (question: Question): boolean =>
-    this.state.packlist.answers()[question.variable];
+  private isQuestionActive = (variable: Question['variable']): boolean =>
+    this.state.packlist.answers()[variable];
 
   isAnswersLockActive = this.state.packlist.isAnswersLocked;
 
   readonly displayQuestions = computed(() =>
-    this.questions().filter(
-      (q) => !this.isAnswersLockActive() || this.isQuestionActive(q),
-    ),
+    this.questions()
+      .filter(
+        (q) => !this.isAnswersLockActive() || this.isQuestionActive(q.variable),
+      )
+      .map((q) => ({
+        question: q.question,
+        variable: q.variable,
+        isActive: this.isQuestionActive(q.variable),
+      })),
   );
 
   rulesMode = this.state.rules.mode;
 
-  toggleQuestion = (question: Question): void => {
+  toggleQuestion = (variable: Question['variable']): void => {
     if (this.isAnswersLockActive()) {
       return;
     }
-    // this.state.packlist.answers.update((model) => ({
-    //   ...model,
-    //   [question.variable]: !model[question.variable],
-    // }));
     this.state.packlist.updateAnswer(
-      question.variable,
-      !this.isQuestionActive(question),
+      variable,
+      !this.isQuestionActive(variable),
     );
   };
 
@@ -55,10 +56,8 @@ export class DisplayQuestionsComponent {
   readonly animationsDisabled = signal(true);
 
   constructor() {
-    afterNextRender({
-      write: () => {
-        this.animationsDisabled.set(!this.state.config.animations());
-      },
-    });
+    setTimeout(() => {
+      this.animationsDisabled.set(!this.state.config.animations());
+    }, 1000);
   }
 }

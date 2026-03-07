@@ -1,5 +1,4 @@
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   effect,
@@ -38,11 +37,9 @@ export class DisplayItemsComponent {
   readonly animationsDisabled = signal(true);
 
   constructor() {
-    afterNextRender({
-      write: () => {
-        this.animationsDisabled.set(!this.state.config.animations());
-      },
-    });
+    setTimeout(() => {
+      this.animationsDisabled.set(!this.state.config.animations());
+    }, 1000);
 
     const highlightedItemId = linkedSignal(() => this.state.router.fragment());
     effect(() => {

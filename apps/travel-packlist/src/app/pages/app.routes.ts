@@ -3,13 +3,13 @@ import {
   Route,
   withComponentInputBinding,
   withHashLocation,
+  withViewTransitions,
 } from '@angular/router';
 
 import { rulesContainNoComments } from './rules-contain-no-comments.guard';
 import { rulesValid } from './rules-valid.guard';
 
 export interface RouteData {
-  hierarchy: number;
   ruleHelp?: boolean;
   config?: boolean;
   historyBack?: boolean;
@@ -22,26 +22,25 @@ const routes: (Route & { data?: RouteData })[] = [
     loadComponent: () =>
       import('./packlist/packlist.component').then((m) => m.PacklistComponent),
     canActivate: [rulesValid],
-    data: { hierarchy: 0, config: true },
+    data: { config: true },
   },
   {
     path: 'config',
     loadComponent: () =>
       import('./config/config.component').then((m) => m.ConfigComponent),
-    data: { hierarchy: 1 },
   },
   {
     path: 'session',
     loadComponent: () =>
       import('./session/session.component').then((m) => m.SessionComponent),
-    data: { hierarchy: 2, historyBack: true },
+    data: { historyBack: true },
   },
   {
     path: 'rules',
     loadComponent: () =>
       import('./rules/rules.component').then((m) => m.RulesComponent),
     canActivate: [rulesValid, rulesContainNoComments],
-    data: { hierarchy: 2, config: true },
+    data: { config: true },
   },
   {
     path: 'rules-raw',
@@ -49,7 +48,7 @@ const routes: (Route & { data?: RouteData })[] = [
       import('./rules-raw/rules-raw.component').then(
         (m) => m.EditRulesRawComponent,
       ),
-    data: { hierarchy: 2, config: true, ruleHelp: true },
+    data: { config: true, ruleHelp: true },
   },
   {
     path: 'rules-error',
@@ -57,7 +56,7 @@ const routes: (Route & { data?: RouteData })[] = [
       import('./rules-error/rules-error.component').then(
         (m) => m.RulesErrorComponent,
       ),
-    data: { hierarchy: 2, config: true },
+    data: { config: true },
   },
   {
     path: 'documentation/:topic',
@@ -65,10 +64,15 @@ const routes: (Route & { data?: RouteData })[] = [
       import('./documentation/documentation.component').then(
         (m) => m.DocumentationComponent,
       ),
-    data: { hierarchy: 3, historyBack: true },
+    data: { historyBack: true },
   },
   { path: '**', redirectTo: '/packlist' },
 ];
 
 export const provideRouting = () =>
-  provideRouter(routes, withHashLocation(), withComponentInputBinding());
+  provideRouter(
+    routes,
+    withHashLocation(),
+    withComponentInputBinding(),
+    withViewTransitions({ skipInitialTransition: true }),
+  );

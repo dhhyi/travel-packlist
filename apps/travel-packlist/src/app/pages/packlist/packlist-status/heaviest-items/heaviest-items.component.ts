@@ -70,7 +70,13 @@ export class HeaviestItemsComponent {
 
   readonly lastPage = computed(() => this.heaviestItems().length - 1);
 
+  readonly animationsDisabled = signal(true);
+
   constructor() {
+    setTimeout(() => {
+      this.animationsDisabled.set(!this.state.config.animations());
+    }, 1000);
+
     effect(() => {
       const ids = this.heaviestItems()[this.currentPage()].map(
         (item) => item.id,

@@ -32,7 +32,9 @@
         "tailwindCSS.classAttributes": [
           "class",
           "ngClass",
-          "routerLinkActive"
+          "routerLinkActive",
+          "animate.enter",
+          "animate.leave"
         ],
         "tailwindCSS.includeLanguages": {
           "typescript": "css"

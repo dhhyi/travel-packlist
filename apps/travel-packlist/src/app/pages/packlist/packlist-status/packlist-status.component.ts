@@ -1,5 +1,4 @@
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   inject,
@@ -29,10 +28,8 @@ export class PacklistStatusComponent {
   readonly animationsDisabled = signal(true);
 
   constructor() {
-    afterNextRender({
-      write: () => {
-        this.animationsDisabled.set(!this.state.config.animations());
-      },
-    });
+    setTimeout(() => {
+      this.animationsDisabled.set(!this.state.config.animations());
+    }, 1000);
   }
 }

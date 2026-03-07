@@ -1,11 +1,19 @@
 <div class="contents">
   @if (statsVisible() === 'distribution') {
-    <div class="card mb-1">
+    <div
+      class="card mb-1"
+      [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
+      [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
+    >
       <app-weight-distribution />
     </div>
   }
   @if (statsVisible() === 'heaviestItems') {
-    <div class="card mb-1 flex flex-col items-center">
+    <div
+      class="card mb-1 flex flex-col items-center"
+      [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
+      [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
+    >
       <app-heaviest-items />
     </div>
   }

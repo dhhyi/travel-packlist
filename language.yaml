@@ -50,6 +50,8 @@ vscode:
       - class
       - ngClass
       - routerLinkActive
+      - animate.enter
+      - animate.leave
     tailwindCSS.includeLanguages:
       typescript: css
     nxConsole.showProjectDetailsView: false

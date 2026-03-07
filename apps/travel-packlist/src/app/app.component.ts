@@ -1,5 +1,4 @@
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -48,13 +47,9 @@ export class AppComponent {
     ),
   );
 
-  readonly hierarchy = computed(() => this.routeData()?.hierarchy);
-
   readonly scrollTopVisible = computed(
     () => this.state.browser.scrollY() > 100,
   );
-
-  readonly disableAnimations = signal(true);
 
   readonly displayRuleHelpLink = computed(() => this.routeData()?.ruleHelp);
 
@@ -63,14 +58,6 @@ export class AppComponent {
   readonly displayHistoryBackLink = computed(
     () => this.routeData()?.historyBack,
   );
-
-  constructor() {
-    afterNextRender({
-      write: () => {
-        this.disableAnimations.set(!this.state.config.animations());
-      },
-    });
-  }
 
   scrollTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

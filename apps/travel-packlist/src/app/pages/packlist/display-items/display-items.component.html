@@ -52,14 +52,16 @@
             <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
             <div
               role="listitem"
-              class="rounded-sm px-1 transition-colors duration-300"
+              class="rounded-sm px-1 transition-all"
               [id]="item.id()"
               [style.background-color]="bgColor"
+              [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
+              [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
             >
               <div
                 role="checkbox"
                 tabindex="0"
-                class="flex items-center justify-between select-none"
+                class="flex items-center justify-between transition-all select-none"
                 [attr.aria-checked]="item.checked"
                 [class.text-checked-item]="item.checked && !item.skipped"
                 [class.text-skipped-item]="item.skipped"
