@@ -20,22 +20,18 @@ export class DisplayQuestionsComponent {
 
   questions = this.state.active.questions;
 
-  private isQuestionActive = (variable: Question['variable']): boolean =>
-    this.state.packlist.answers()[variable];
-
   isAnswersLockActive = this.state.packlist.isAnswersLocked;
 
-  readonly displayQuestions = computed(() =>
-    this.questions()
-      .filter(
-        (q) => !this.isAnswersLockActive() || this.isQuestionActive(q.variable),
-      )
+  readonly displayQuestions = computed(() => {
+    const answers = this.state.packlist.answers();
+    return this.questions()
+      .filter((q) => !this.isAnswersLockActive() || answers[q.variable])
       .map((q) => ({
         question: q.question,
         variable: q.variable,
-        isActive: this.isQuestionActive(q.variable),
-      })),
-  );
+        isActive: answers[q.variable],
+      }));
+  });
 
   rulesMode = this.state.rules.mode;
 
@@ -43,10 +39,8 @@ export class DisplayQuestionsComponent {
     if (this.isAnswersLockActive()) {
       return;
     }
-    this.state.packlist.updateAnswer(
-      variable,
-      !this.isQuestionActive(variable),
-    );
+    const previous = this.state.packlist.answers()[variable];
+    this.state.packlist.updateAnswer(variable, !previous);
   };
 
   goToRulesEdit() {
