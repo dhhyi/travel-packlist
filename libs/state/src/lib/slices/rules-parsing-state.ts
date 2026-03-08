@@ -3,6 +3,7 @@ import {
   effect,
   inject,
   Resource,
+  ResourceSnapshot,
   ResourceStatus,
   signal,
 } from '@angular/core';
@@ -17,6 +18,14 @@ class RulesParsingResource implements Resource<Rules> {
   readonly value = signal<Rules>([]);
   readonly error = signal<Error | undefined>(undefined);
   readonly status = signal<ResourceStatus>('idle');
+  readonly snapshot = computed(
+    () =>
+      ({
+        value: this.value(),
+        error: this.error(),
+        status: this.status(),
+      }) as ResourceSnapshot<Rules>,
+  );
 
   constructor(
     private readonly parser: Parser,
@@ -62,6 +71,7 @@ class RulesParsingResource implements Resource<Rules> {
       status: this.status.asReadonly(),
       isLoading: this.isLoading,
       hasValue: this.hasValue.bind(this),
+      snapshot: this.snapshot,
     };
   }
 }
