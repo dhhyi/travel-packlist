@@ -8,8 +8,8 @@ const config: CapacitorConfig = {
   appName: 'TravelPacklist',
   plugins: {
     SystemBars: {
-      hidden: true,
-      insetsHandling: 'disable',
+      hidden: false,
+      insetsHandling: 'css',
     },
   },
   webDir: 'dist/web-android',

@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { effect, inject, Injectable, isDevMode } from '@angular/core';
+import { SystemBars, SystemBarsStyle } from '@capacitor/core';
 import {
   FontSizes,
   GLOBAL_STATE,
@@ -34,8 +35,10 @@ export class AppInit {
     const userDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if ((theme === 'system' && userDark) || theme === 'dark') {
       this.document.documentElement.classList.add('dark');
+      void SystemBars.setStyle({ style: SystemBarsStyle.Dark });
     } else {
       this.document.documentElement.classList.remove('dark');
+      void SystemBars.setStyle({ style: SystemBarsStyle.Light });
     }
   }
 
