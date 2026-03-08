@@ -194,7 +194,8 @@ jobs:
         with:
           imageName: ghcr.io/dhhyi/travel-packlist-devcontainer-cache
           cacheFrom: ghcr.io/dhhyi/travel-packlist-devcontainer-cache
-          push: always
+          cacheTo: ghcr.io/dhhyi/travel-packlist-devcontainer-cache
+          push: never
           env: |
             CI=true
             MISE_ENV=ci
