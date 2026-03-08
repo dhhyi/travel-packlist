@@ -45,26 +45,26 @@ importers:
         specifier: ^21.2.1
         version: 21.2.1(@angular/core@21.2.1(@angular/compiler@21.2.1)(rxjs@7.8.2)(zone.js@0.15.0))(rxjs@7.8.2)
       '@capacitor/android':
-        specifier: ^7.6.0
-        version: 7.6.0(@capacitor/core@7.6.0)
+        specifier: ^8.2.0
+        version: 8.2.0(@capacitor/core@8.2.0)
       '@capacitor/app':
-        specifier: ^7.1.2
-        version: 7.1.2(@capacitor/core@7.6.0)
+        specifier: ^8.0.1
+        version: 8.0.1(@capacitor/core@8.2.0)
       '@capacitor/assets':
         specifier: ^3.0.5
         version: 3.0.5(@swc/core@1.15.18(@swc/helpers@0.5.17))(@types/node@25.3.5)(encoding@0.1.13)(typescript@5.9.3)
       '@capacitor/cli':
-        specifier: ^7.6.0
-        version: 7.6.0
+        specifier: ^8.2.0
+        version: 8.2.0
       '@capacitor/core':
-        specifier: ^7.6.0
-        version: 7.6.0
+        specifier: ^8.2.0
+        version: 8.2.0
       '@capacitor/filesystem':
-        specifier: ^7.1.8
-        version: 7.1.8(@capacitor/core@7.6.0)
+        specifier: ^8.1.2
+        version: 8.1.2(@capacitor/core@8.2.0)
       '@capacitor/share':
-        specifier: ^7.0.4
-        version: 7.0.4(@capacitor/core@7.6.0)
+        specifier: ^8.0.1
+        version: 8.0.1(@capacitor/core@8.2.0)
       '@nx/angular':
         specifier: 22.5.4
         version: 22.5.4(1a5c054634f707a7a611bf3bbe7ba0ae)
@@ -1247,15 +1247,15 @@ packages:
   '@cacheable/utils@2.4.0':
     resolution: {integrity: sha512-PeMMsqjVq+bF0WBsxFBxr/WozBJiZKY0rUojuaCoIaKnEl3Ju1wfEwS+SV1DU/cSe8fqHIPiYJFif8T3MVt4cQ==}
 
-  '@capacitor/android@7.6.0':
-    resolution: {integrity: sha512-xpfAOGcgeQnTw8C0E9nLjW15lQ6TL2ccieZks93hNiQYknnQT8FQaH2paMYkLYrQ0JfRImdBXbQ1u6sZ4kVa3w==}
+  '@capacitor/android@8.2.0':
+    resolution: {integrity: sha512-XLm5OsWLPfXQxDxzFS7SOdMEgGvW+2c7TGLXkTR2cSKdkWK5Abns4imlT5qghKYhjM9r74IrDkBWg/9ALUGNKQ==}
     peerDependencies:
-      '@capacitor/core': ^7.6.0
+      '@capacitor/core': ^8.2.0
 
-  '@capacitor/app@7.1.2':
-    resolution: {integrity: sha512-d4I/oF/PRu4megL7/IGKYfe5j7yzSON1FRFgq6kH+m5kH6g7V+wyjHRLauCzGNjdRx4S+nWOumINds0qcRBtKg==}
+  '@capacitor/app@8.0.1':
+    resolution: {integrity: sha512-yeG3yyA0ETKqvgqexwHMBlmVOF13A1hRXzv/km0Ptv5TrNIZvZJK4MTI3uiqvnbHrzoJGP5DwWAjEXEfi90v3Q==}
     peerDependencies:
-      '@capacitor/core': '>=7.0.0'
+      '@capacitor/core': '>=8.0.0'
 
   '@capacitor/assets@3.0.5':
     resolution: {integrity: sha512-ohz/OUq61Y1Fc6aVSt0uDrUdeOA7oTH4pkWDbv/8I3UrPjH7oPkzYhShuDRUjekNp9RBi198VSFdt0CetpEOzw==}
@@ -1267,23 +1267,23 @@ packages:
     engines: {node: '>=16.0.0'}
     hasBin: true
 
-  '@capacitor/cli@7.6.0':
-    resolution: {integrity: sha512-3PL8xIgXLj1037NqmuzoKXNOi80AdY7eSCnX6/A7RfjFqT8TEiCL+PlHsHtg6/BSZGSmmxGGBjH3nXrNCRoFhw==}
-    engines: {node: '>=20.0.0'}
+  '@capacitor/cli@8.2.0':
+    resolution: {integrity: sha512-1cMEk0d/I6tl1U+v/lnJR5Oylpx8ZBIHrvQxD5zK0MkjYOUyQAAGJgh97rkhGJqjAUvrGpa8H4BmyhNQN9a17A==}
+    engines: {node: '>=22.0.0'}
     hasBin: true
 
-  '@capacitor/core@7.6.0':
-    resolution: {integrity: sha512-K6LEvgxW6Nd6uNWHj3U512hUtB4kln71TvVgdvwJRFMLySpUrWwb/A8Q7c3QGogvPvgOjN1U65onkyRTihPGwA==}
+  '@capacitor/core@8.2.0':
+    resolution: {integrity: sha512-oKaoNeNtH2iIZMDFVrb1atoyRECDGHcfLMunJ5KWN8DtvpVBeeA4c41e20NTuhMxw1cSYbpq2PV2hb+/9CJxlQ==}
 
-  '@capacitor/filesystem@7.1.8':
-    resolution: {integrity: sha512-Qpw/2SE4/CzqAUvGgSM9hw/uXQ5qoOaF4wxbToXwpAaKPS+tzletS1h5ti3jjLmGcqizTs2sEXMtcsARW/Ceew==}
+  '@capacitor/filesystem@8.1.2':
+    resolution: {integrity: sha512-doaaMfGoFR2hWU6aV6u83I+5ZsGyJVq+Gz4r9lMpJzUKMm1eMu0hLnFdV1aXZlU9FlK/RndFrVD8oRZfNOqWgQ==}
     peerDependencies:
-      '@capacitor/core': '>=7.0.0'
+      '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/share@7.0.4':
-    resolution: {integrity: sha512-wNXxmXUcChrtbZ5jQv8scFIbIGKo3rk6B7qpWySxfUhYJP5NANgAqQ9Z69m0k/zYsucdh66SBU7XW1ykd9aUug==}
+  '@capacitor/share@8.0.1':
+    resolution: {integrity: sha512-3cSBKBCJVon54rKDROP2rqGyeGks4pBh9TbaEk9S375Kbek/ZHe72N50zIa0Vn9Eac/SuhwgehO/mmA4CsUOiw==}
     peerDependencies:
-      '@capacitor/core': '>=7.0.0'
+      '@capacitor/core': '>=8.0.0'
 
   '@capacitor/synapse@1.0.4':
     resolution: {integrity: sha512-/C1FUo8/OkKuAT4nCIu/34ny9siNHr9qtFezu4kxm6GY1wNFxrCFWjfYx5C1tUhVGz3fxBABegupkpjXvjCHrw==}
@@ -11770,13 +11770,13 @@ snapshots:
       hashery: 1.5.0
       keyv: 5.6.0
 
-  '@capacitor/android@7.6.0(@capacitor/core@7.6.0)':
+  '@capacitor/android@8.2.0(@capacitor/core@8.2.0)':
     dependencies:
-      '@capacitor/core': 7.6.0
+      '@capacitor/core': 8.2.0
 
-  '@capacitor/app@7.1.2(@capacitor/core@7.6.0)':
+  '@capacitor/app@8.0.1(@capacitor/core@8.2.0)':
     dependencies:
-      '@capacitor/core': 7.6.0
+      '@capacitor/core': 8.2.0
 
   '@capacitor/assets@3.0.5(@swc/core@1.15.18(@swc/helpers@0.5.17))(@types/node@25.3.5)(encoding@0.1.13)(typescript@5.9.3)':
     dependencies:
@@ -11825,7 +11825,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@capacitor/cli@7.6.0':
+  '@capacitor/cli@8.2.0':
     dependencies:
       '@ionic/cli-framework-output': 2.2.8
       '@ionic/utils-subprocess': 3.0.1
@@ -11847,18 +11847,18 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@capacitor/core@7.6.0':
+  '@capacitor/core@8.2.0':
     dependencies:
       tslib: 2.8.1
 
-  '@capacitor/filesystem@7.1.8(@capacitor/core@7.6.0)':
+  '@capacitor/filesystem@8.1.2(@capacitor/core@8.2.0)':
     dependencies:
-      '@capacitor/core': 7.6.0
+      '@capacitor/core': 8.2.0
       '@capacitor/synapse': 1.0.4
 
-  '@capacitor/share@7.0.4(@capacitor/core@7.6.0)':
+  '@capacitor/share@8.0.1(@capacitor/core@8.2.0)':
     dependencies:
-      '@capacitor/core': 7.6.0
+      '@capacitor/core': 8.2.0
 
   '@capacitor/synapse@1.0.4': {}
 
@@ -12464,7 +12464,7 @@ snapshots:
     dependencies:
       '@ionic/utils-object': 2.1.6
       '@ionic/utils-terminal': 2.3.4
-      debug: 4.3.4
+      debug: 4.4.3
       signal-exit: 3.0.7
       tree-kill: 1.2.2
       tslib: 2.8.1
@@ -12484,7 +12484,7 @@ snapshots:
 
   '@ionic/utils-stream@3.1.6':
     dependencies:
-      debug: 4.3.4
+      debug: 4.4.3
       tslib: 2.8.1
     transitivePeerDependencies:
       - supports-color
@@ -12504,7 +12504,7 @@ snapshots:
       '@ionic/utils-stream': 3.1.6
       '@ionic/utils-terminal': 2.3.4
       cross-spawn: 7.0.6
-      debug: 4.3.4
+      debug: 4.4.3
       tslib: 2.8.1
     transitivePeerDependencies:
       - supports-color
@@ -12525,7 +12525,7 @@ snapshots:
   '@ionic/utils-terminal@2.3.4':
     dependencies:
       '@types/slice-ansi': 4.0.0
-      debug: 4.3.4
+      debug: 4.4.3
       signal-exit: 3.0.7
       slice-ansi: 4.0.0
       string-width: 4.2.3
