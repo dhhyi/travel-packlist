@@ -1,5 +1,3 @@
 [tools]
 node = "24"
-"npm:depcheck" = "latest"
-"npm:onchange" = "latest"
 pnpm = "latest"

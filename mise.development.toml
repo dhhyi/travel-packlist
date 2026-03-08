@@ -1,0 +1,3 @@
+[tools]
+"npm:depcheck" = "latest"
+"npm:onchange" = "latest"

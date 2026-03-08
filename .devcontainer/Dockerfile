@@ -11,7 +11,7 @@ RUN mkdir -p "/" && echo "CiMhL2Jpbi9iYXNoCmlmIFsgLXogIiQqIiBdOyB0aGVuCiAgdG11eC
 USER ubuntu
 ENV HOME=/home/ubuntu
 
-ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
+ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1 MISE_ENV=development
 ENV PATH="$HOME/.local/share/mise/shims:$PATH"
 RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
 RUN mise use -g 'npm:@playwright/test@1.58.2'

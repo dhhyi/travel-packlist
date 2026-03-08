@@ -197,6 +197,7 @@ jobs:
           push: always
           env: |
             CI=true
+            MISE_ENV=ci
             NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN
           runCmd: nx run travel-packlist-e2e:e2e --configuration ci
 
