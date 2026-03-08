@@ -1,6 +1,6 @@
 {
   "name": "travel-packlist-root",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "license": "MIT",
   "engines": {
     "node": "24"
