@@ -19,6 +19,12 @@
       "options": {
         "command": "playwright test -c {projectRoot}/playwright.config.ts"
       },
+      "dependsOn": [
+        {
+          "projects": "travel-packlist-web",
+          "target": "build"
+        }
+      ],
       "inputs": [
         "default",
         "^production"
