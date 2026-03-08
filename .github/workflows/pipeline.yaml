@@ -188,29 +188,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
 
-      - name: Build E2E Docker Image 🐳
-        if: steps.check_e2e.outputs.e2e_needed == 'true'
-        run: |
-          docker buildx build \
-            -t ghcr.io/dhhyi/travel-packlist-e2e:latest \
-            --label org.opencontainers.image.source=https://github.com/dhhyi/travel-packlist \
-            --label org.opencontainers.image.description="End-to-End Tests for Travel Packlist" \
-            --label org.opencontainers.image.title="Travel Packlist E2E" \
-            --cache-from type=registry,ref=ghcr.io/dhhyi/travel-packlist-e2e-cache \
-            --cache-to type=registry,ref=ghcr.io/dhhyi/travel-packlist-e2e-cache,mode=max \
-            -f apps/travel-packlist-e2e/Dockerfile \
-            -o type=docker \
-            .
-
       - name: E2E Tests 🧪
         if: steps.check_e2e.outputs.e2e_needed == 'true'
-        run: |
-          docker run \
-            -v $(pwd)/apps/travel-packlist-e2e:/ws/apps/travel-packlist-e2e \
-            -e CI=true \
-            -e NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN \
-            ghcr.io/dhhyi/travel-packlist-e2e:latest \
-            travel-packlist-e2e:e2e --configuration ci
+        uses: devcontainers/ci@v0.3
+        with:
+          imageName: ghcr.io/dhhyi/travel-packlist-devcontainer-cache
+          cacheFrom: ghcr.io/dhhyi/travel-packlist-devcontainer-cache
+          push: always
+          env: |
+            CI=true
+            NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN
+          runCmd: nx run travel-packlist-e2e:e2e --configuration ci
 
       - name: Package E2E Results 📦
         uses: actions/upload-artifact@v4

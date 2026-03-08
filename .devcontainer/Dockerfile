@@ -9,8 +9,12 @@ RUN mkdir -p "/usr/bin" && echo "IyEvYmluL2Jhc2gKZXhlYyBwbnBtIGV4ZWMgbnggIiRAIgo
 RUN mkdir -p "/" && echo "CiMhL2Jpbi9iYXNoCmlmIFsgLXogIiQqIiBdOyB0aGVuCiAgdG11eCBuZXctc2Vzc2lvbiAtQSAtcyB0bXV4CmZpCmV4ZWMgc2ggIiRAIgo=" | base64 -d > "/tmux-or-else.sh" && chmod +rx "/tmux-or-else.sh"
 
 USER ubuntu
+ENV HOME=/home/ubuntu
 
 ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
+ENV PATH="$HOME/.local/share/mise/shims:$PATH"
 RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
+RUN mise use -g 'npm:@playwright/test@1.58.2'
+RUN playwright install chromium --with-deps
 
 EXPOSE 4200

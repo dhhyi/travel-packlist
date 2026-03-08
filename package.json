@@ -38,6 +38,9 @@
       },
       "lint": {
         "executor": "@nx/eslint:lint",
+        "dependsOn": [
+          "check-sync-playwright-version"
+        ],
         "options": {
           "lintFilePatterns": [
             "*.*",
@@ -49,6 +52,12 @@
         "executor": "@travel-packlist/check-plugin:markdown",
         "options": {
           "pattern": "*.md"
+        }
+      },
+      "check-sync-playwright-version": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node util/check-sync-playwright-version.mjs"
         }
       },
       "create-prettierignore": {

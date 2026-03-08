@@ -14,12 +14,6 @@
     "lint": {
       "executor": "@nx/eslint:lint"
     },
-    "install": {
-      "commands": [
-        "playwright install-deps chromium",
-        "playwright install chromium"
-      ]
-    },
     "e2e": {
       "executor": "nx:run-commands",
       "options": {

@@ -11,14 +11,19 @@ devcontainer:
       - x11-utils
     user:
       - ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1
+      - ENV PATH="$HOME/.local/share/mise/shims:$PATH"
       - RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
+      - RUN mise use -g 'npm:@playwright/test@1.58.2'
+      - RUN playwright install chromium --with-deps
     files:
       - type: script
         path: /usr/bin/nx
         content: |
           #!/bin/bash
           exec pnpm exec nx "$@"
-  instantiate: fish -c 'pnpm install && pnpm playwright install chromium --with-deps' && cd /tmp/git-diff-image && ./install.sh
+  publish:
+    image: ghcr.io/dhhyi/travel-packlist-devcontainer
+  instantiate: fish -c 'pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
   ports:
     - 4200
 extras:

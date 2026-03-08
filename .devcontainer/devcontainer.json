@@ -10,9 +10,10 @@
     "type=volume,target=/home/ubuntu/.cache/pnpm,source=pnpm-store",
     "type=volume,target=/home/ubuntu/.cache/ms-playwright,source=playwright-cache"
   ],
-  "postCreateCommand": "sudo mkdir -p node_modules /home/ubuntu/.cache/pnpm /home/ubuntu/.cache/ms-playwright && sudo chown -Rf ubuntu node_modules && sudo chown -Rf ubuntu /home/ubuntu && fish -c 'pnpm install && pnpm playwright install chromium --with-deps' && cd /tmp/git-diff-image && ./install.sh",
+  "postCreateCommand": "sudo mkdir -p node_modules /home/ubuntu/.cache/pnpm /home/ubuntu/.cache/ms-playwright && sudo chown -Rf ubuntu node_modules && sudo chown -Rf ubuntu /home/ubuntu && fish -c 'pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
+    "cacheFrom": "type=registry,ref=ghcr.io/dhhyi/travel-packlist-devcontainer-cache"
   },
   "forwardPorts": [
     4200
