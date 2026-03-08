@@ -256,8 +256,8 @@ importers:
         specifier: ^3.8.1
         version: 3.8.1
       prettier-plugin-sh:
-        specifier: 0.17.1
-        version: 0.17.1(prettier@3.8.1)
+        specifier: ^0.18.0
+        version: 0.18.0(prettier@3.8.1)
       prettier-plugin-tailwindcss:
         specifier: ^0.7.2
         version: 0.7.2(prettier@3.8.1)
@@ -3194,8 +3194,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.0
 
-  '@reteps/dockerfmt@0.2.8':
-    resolution: {integrity: sha512-VUdrpLNvUfV9RCBVMusOb8XylR+Wt6MFAMTiZIPcpo0KGCzNW8bjQDTIv9JmOa330C9P7mxHFmc1of7JNujghA==}
+  '@reteps/dockerfmt@0.3.6':
+    resolution: {integrity: sha512-Tb5wIMvBf/nLejTQ61krK644/CEMB/cpiaIFXqGApfGqO3GwcR3qnI0DbmkFVCl2OyEp8LnLX3EkucoL0+tbFg==}
     engines: {node: ^v12.20.0 || ^14.13.0 || >=16.0.0}
 
   '@rolldown/binding-android-arm64@1.0.0-rc.4':
@@ -8547,11 +8547,11 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-sh@0.17.1:
-    resolution: {integrity: sha512-jbrB7MRlmgtSRx2+I3McQGdFb98VUtJTkQ5DiK6oSJSfCy6vSBxSsuyDZ1xIx13TqREUHTsMzlNrZBZScuJJXQ==}
+  prettier-plugin-sh@0.18.0:
+    resolution: {integrity: sha512-cW1XL27FOJQ/qGHOW6IHwdCiNWQsAgK+feA8V6+xUTaH0cD3Mh+tFAtBvEEWvuY6hTDzRV943Fzeii+qMOh7nQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      prettier: ^3.0.3
+      prettier: ^3.6.0
 
   prettier-plugin-tailwindcss@0.7.2:
     resolution: {integrity: sha512-LkphyK3Fw+q2HdMOoiEHWf93fNtYJwfamoKPl7UwtjFQdei/iIBoX11G6j706FzN3ymX9mPVi97qIY8328vdnA==}
@@ -14288,7 +14288,7 @@ snapshots:
       '@xml-tools/parser': 1.0.11
       prettier: 3.8.1
 
-  '@reteps/dockerfmt@0.2.8': {}
+  '@reteps/dockerfmt@0.3.6': {}
 
   '@rolldown/binding-android-arm64@1.0.0-rc.4':
     optional: true
@@ -20326,9 +20326,9 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-sh@0.17.1(prettier@3.8.1):
+  prettier-plugin-sh@0.18.0(prettier@3.8.1):
     dependencies:
-      '@reteps/dockerfmt': 0.2.8
+      '@reteps/dockerfmt': 0.3.6
       prettier: 3.8.1
       sh-syntax: 0.5.8
 

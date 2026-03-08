@@ -2,8 +2,7 @@
 
 set -e
 
-if test -f .git/unstaged.diff
-then
+if test -f .git/unstaged.diff; then
   echo "Found .git/unstaged.diff, please check if this is a result of a previous failed commit and remove it before trying again."
   exit 2
 fi
@@ -13,28 +12,24 @@ is_husky() {
 }
 
 cleanup() {
-  if test -f .git/unstaged.diff
-  then
+  if test -f .git/unstaged.diff; then
     git apply .git/unstaged.diff
     rm -f .git/unstaged.diff
   fi
   exit 1
 }
 
-if is_husky && ! git diff --exit-code >/dev/null
-then
+if is_husky && ! git diff --exit-code > /dev/null; then
   echo "Unstaged changes detected, saving diff to .git/unstaged.diff"
-  git diff >.git/unstaged.diff
+  git diff > .git/unstaged.diff
   git apply -R .git/unstaged.diff
 fi
 
 pnpm install --frozen-lockfile
 
 cmd="affected"
-if git diff --exit-code --quiet --cached
-then
-  if [ -n "$*" ]
-  then
+if git diff --exit-code --quiet --cached; then
+  if [ -n "$*" ]; then
     base="--base=$1"
   else
     cmd="run-many"
@@ -45,7 +40,6 @@ set -x
 pnpm exec nx $cmd -t lint,test,format,markdownlint --nxBail --configuration pre-commit $base --outputStyle stream || cleanup
 set +x
 
-if is_husky
-then
+if is_husky; then
   git update-index --again
 fi
