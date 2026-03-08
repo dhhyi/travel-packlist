@@ -55,8 +55,8 @@
               class="rounded-sm px-1 transition-all"
               [id]="item.id()"
               [style.background-color]="bgColor"
-              [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
-              [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
+              [animate.enter]="enterAnimation()"
+              [animate.leave]="leaveAnimation()"
             >
               <div
                 role="checkbox"

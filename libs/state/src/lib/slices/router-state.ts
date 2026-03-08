@@ -7,8 +7,13 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  NavigationStart,
+  Router,
+} from '@angular/router';
+import { filter, map } from 'rxjs';
 
 import { createRouterSignalState } from '../persistence/router-signal';
 
@@ -68,6 +73,8 @@ const navigation = {
   },
 };
 
+export type RouterState = ReturnType<typeof routerState>;
+
 export const routerState = () => {
   const router = inject(Router);
   const route = inject(ActivatedRoute);
@@ -96,6 +103,16 @@ export const routerState = () => {
         path.set(location.path());
       }
     });
+  const navigationRunning = toSignal(
+    router.events.pipe(
+      filter(
+        (event) =>
+          event instanceof NavigationStart || event instanceof NavigationEnd,
+      ),
+      map((event) => event instanceof NavigationStart),
+    ),
+    { initialValue: true },
+  );
 
   return {
     router: {
@@ -114,6 +131,8 @@ export const routerState = () => {
       go: (page: keyof typeof navigation) => {
         navigation[page].call({ router, rulesMode });
       },
+      /** router: signals if a navigation started */
+      navigationRunning,
     },
   };
 };

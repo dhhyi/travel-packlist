@@ -70,12 +70,12 @@ export class HeaviestItemsComponent {
 
   readonly lastPage = computed(() => this.heaviestItems().length - 1);
 
-  readonly animationsDisabled = signal(true);
+  readonly enterAnimation = signal('');
+  readonly leaveAnimation = signal('');
 
   constructor() {
-    setTimeout(() => {
-      this.animationsDisabled.set(!this.state.config.animations());
-    }, 1000);
+    this.state.browser.animateEffect('animate-fade-in', this.enterAnimation);
+    this.state.browser.animateEffect('animate-fade-out', this.leaveAnimation);
 
     effect(() => {
       const ids = this.heaviestItems()[this.currentPage()].map(

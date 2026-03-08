@@ -25,11 +25,11 @@ export class PacklistStatusComponent {
 
   readonly statsVisible = this.state.packlist.isStatsVisible;
 
-  readonly animationsDisabled = signal(true);
+  readonly enterAnimation = signal('');
+  readonly leaveAnimation = signal('');
 
   constructor() {
-    setTimeout(() => {
-      this.animationsDisabled.set(!this.state.config.animations());
-    }, 1000);
+    this.state.browser.animateEffect('animate-fade-in', this.enterAnimation);
+    this.state.browser.animateEffect('animate-fade-out', this.leaveAnimation);
   }
 }

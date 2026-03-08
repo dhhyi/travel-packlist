@@ -1,18 +1,33 @@
-import { computed, signal } from '@angular/core';
+import {
+  afterRenderEffect,
+  computed,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 
 import {
   ConfigState,
   SupportedLanguage,
   supportedLanguages,
 } from './config-state';
+import { RouterState } from './router-state';
 
 export const browserState = ({
   config: { language, animations },
-}: ConfigState) => {
+  router: { navigationRunning },
+}: ConfigState & RouterState) => {
   const scrollY = signal(window.scrollY);
   window.addEventListener('scroll', () => {
     scrollY.set(window.scrollY);
   });
+  const animateEffect = (clazz: string, field: WritableSignal<string>) =>
+    afterRenderEffect(() => {
+      if (!navigationRunning() && animations()) {
+        field.set(clazz);
+      } else {
+        field.set('');
+      }
+    });
   return {
     browser: {
       /** derived: window.scrollY as signal */
@@ -31,6 +46,8 @@ export const browserState = ({
           callback();
         }
       },
+      /** derived: afterRenderEffect for applying a class to a local WritableSignal to be used for animate.enter or animate.leave  */
+      animateEffect,
     },
     config: {
       /** derived: preferred language, calculation considers user setting and browser setting */

@@ -25,8 +25,8 @@
     @if ($index === currentPage()) {
       <cmp-bar-chart
         [bars]="page"
-        [animate.enter]="!animationsDisabled() && 'animate-fade-in'"
-        [animate.leave]="!animationsDisabled() && 'animate-fade-out'"
+        [animate.enter]="enterAnimation()"
+        [animate.leave]="leaveAnimation()"
         (clicked)="barClicked($event)"
       />
     }
