@@ -1,3 +1,9 @@
+## [1.6.1](https://github.com/dhhyi/travel-packlist/compare/v1.6.0...v1.6.1) (2026-03-08)
+
+### Bug Fixes
+
+- hide system bars in android app ([7e1f9c4](https://github.com/dhhyi/travel-packlist/commit/7e1f9c435a84aa6c3fa7453d2426d2ce01fd4009))
+
 ## [1.5.0](https://github.com/dhhyi/travel-packlist/compare/v1.4.0...v1.5.0) (2025-09-16)
 
 ### Features
