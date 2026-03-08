@@ -71,7 +71,7 @@ export class Parser {
       } else if (error instanceof Error) {
         message.push(error.message);
       }
-      throw new Error(message.join(''));
+      throw new Error(message.join(''), { cause: error });
     }
   }
 
