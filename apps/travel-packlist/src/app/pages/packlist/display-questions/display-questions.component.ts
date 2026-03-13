@@ -1,3 +1,4 @@
+import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,13 +6,18 @@ import {
   inject,
   signal,
 } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { IconCheckmarkComponent } from '@travel-packlist/icons';
 import { Question } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
+import { pairwise, startWith } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
+
+import { stagger } from './stagger';
 
 @Component({
   selector: 'app-display-questions',
-  imports: [IconCheckmarkComponent],
+  imports: [IconCheckmarkComponent, AsyncPipe],
   templateUrl: './display-questions.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -32,6 +38,19 @@ export class DisplayQuestionsComponent {
         isActive: answers[q.variable],
       }));
   });
+  readonly displayQuestions$ = toObservable(this.displayQuestions).pipe(
+    startWith([] as ReturnType<typeof this.displayQuestions>),
+    pairwise(),
+    concatMap(([prev, curr]) =>
+      stagger(
+        prev,
+        curr,
+        (a, b) => a.variable === b.variable && a.question === b.question,
+        100,
+      ),
+    ),
+    startWith(this.displayQuestions()),
+  );
 
   rulesMode = this.state.rules.mode;
 

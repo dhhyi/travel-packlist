@@ -173,6 +173,15 @@
       "options": {
         "tsConfig": "{projectRoot}/tsconfig.app.json"
       }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/travel-packlist/jest.config.ts"
+      }
     }
   }
 }

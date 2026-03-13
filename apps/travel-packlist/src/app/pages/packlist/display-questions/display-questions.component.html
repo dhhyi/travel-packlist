@@ -16,7 +16,7 @@
   }
 } @else {
   <div>
-    @for (question of displayQuestions(); track question.question) {
+    @for (question of displayQuestions$ | async; track question.question) {
       <div
         class="card flex flex-row items-center justify-between overflow-hidden not-last:mb-1"
         role="checkbox"
