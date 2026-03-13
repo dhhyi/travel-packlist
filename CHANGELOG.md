@@ -1,3 +1,10 @@
+## [1.6.3](https://github.com/dhhyi/travel-packlist/compare/v1.6.2...v1.6.3) (2026-03-13)
+
+### Bug Fixes
+
+- disable element animations on page change ([4ef45c4](https://github.com/dhhyi/travel-packlist/commit/4ef45c467983ab8058b90ddaf1a1bb011caf90ba))
+- staggered questions update ([91c7c46](https://github.com/dhhyi/travel-packlist/commit/91c7c46cefb541e540b15df8592fb466d6026d5d))
+
 ## [1.6.2](https://github.com/dhhyi/travel-packlist/compare/v1.6.1...v1.6.2) (2026-03-08)
 
 ### Bug Fixes
