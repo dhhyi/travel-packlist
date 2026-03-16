@@ -1,5 +1,5 @@
 <h2 class="text-lg font-bold" i18n>Appearance</h2>
-<cmp-select-options label="Language" i18n-label [(ngModel)]="language">
+<cmp-select-options label="Language" i18n-label [formField]="language">
   <ng-template value="auto" i18n>auto</ng-template>
   <ng-template value="en">
     <span
@@ -18,12 +18,12 @@
     ></span>
   </ng-template>
 </cmp-select-options>
-<cmp-select-options label="Theme" i18n-label [(ngModel)]="theme">
+<cmp-select-options label="Theme" i18n-label [formField]="theme">
   <ng-template value="dark" i18n>Dark</ng-template>
   <ng-template value="light" i18n>Light</ng-template>
   <ng-template value="system" i18n>System</ng-template>
 </cmp-select-options>
-<cmp-select-options label="Font Size" i18n-label [(ngModel)]="fontSize">
+<cmp-select-options label="Font Size" i18n-label [formField]="fontSize">
   <ng-template value="small"
     ><span class="text-[16px]" i18n>small</span></ng-template
   >
@@ -37,7 +37,7 @@
 <cmp-select-options
   label="Accessibility"
   i18n-label
-  [(ngModel)]="accessibility"
+  [formField]="accessibility"
 >
   <ng-template value="accessible" i18n>accessible</ng-template>
   <ng-template value="compact" i18n>compact</ng-template>
@@ -46,5 +46,5 @@
   id="animations"
   label="Animations"
   i18n-label
-  [(ngModel)]="animations"
+  [formField]="animations"
 />

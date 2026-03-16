@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import {
   CheckboxComponent,
   SelectOptionDirective,
@@ -11,21 +11,21 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 @Component({
   selector: 'app-config-appearance',
   imports: [
-    FormsModule,
     SelectOptionsComponent,
     SelectOptionDirective,
     FlagGermanyComponent,
     FlagUkComponent,
     CheckboxComponent,
+    FormField,
   ],
   templateUrl: './config-appearance.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigAppearanceComponent {
   private state = inject(GLOBAL_STATE);
-  theme = this.state.config.theme;
-  language = this.state.config.language;
-  fontSize = this.state.config.fontSize;
-  accessibility = this.state.config.accessibility;
-  animations = this.state.config.animations;
+  theme = form(this.state.config.theme);
+  language = form(this.state.config.language);
+  fontSize = form(this.state.config.fontSize);
+  accessibility = form(this.state.config.accessibility);
+  animations = form(this.state.config.animations);
 }

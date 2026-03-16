@@ -1,8 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  signal,
+} from '@angular/core';
+import { disabled, form, FormField } from '@angular/forms/signals';
 import {
   CheckboxComponent,
   SelectOptionDirective,
@@ -17,28 +22,28 @@ import { IconHelpComponent } from '@travel-packlist/icons';
     CheckboxComponent,
     SelectOptionsComponent,
     SelectOptionDirective,
-    ReactiveFormsModule,
+    FormField,
     JsonPipe,
   ],
   templateUrl: './input.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class Input {
-  form = new FormGroup({
-    input: new FormControl(''),
-    input_disabled: new FormControl({
-      value: 'disabled input',
-      disabled: true,
-    }),
-    select: new FormControl('1'),
-    checkbox: new FormControl(false),
-    checkbox_help: new FormControl(true),
-    radio: new FormControl('option 1'),
+  private readonly formModel = signal({
+    input: '',
+    input_disabled: 'disabled input',
+    select: 'select',
+    checkbox: false,
+    checkbox_help: true,
+    radio: 'option 1',
+  });
+  form = form(this.formModel, (path) => {
+    disabled(path.input_disabled);
   });
 
   constructor() {
-    this.form.valueChanges.subscribe((value) => {
-      console.log(value);
+    effect(() => {
+      console.log(this.formModel());
     });
   }
 }

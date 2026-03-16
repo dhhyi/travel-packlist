@@ -17,7 +17,9 @@
       type="edit"
       label="Edit"
       i18n-label
-      [disabled]="!editable() || (!noOfVisibleRules() && !!searchTerm())"
+      [disabled]="
+        !editable() || (!noOfVisibleRules() && !!searchTerm().value())
+      "
     >
       <app-icon-edit class="my-auto h-6 w-6" />
     </app-toolbar-button>
@@ -78,7 +80,7 @@
         }
       </div>
     }
-  } @else if (mode() === 'search' || searchTerm()) {
+  } @else if (mode() === 'search' || searchTerm().value()) {
     <div class="mt-2 flex items-center">
       <input
         #searchInput
@@ -87,7 +89,7 @@
         role="searchbox"
         aria-label="search in rules"
         i18n-aria-label
-        [(ngModel)]="searchTerm"
+        [formField]="searchTerm"
       />
       <button
         iconClear

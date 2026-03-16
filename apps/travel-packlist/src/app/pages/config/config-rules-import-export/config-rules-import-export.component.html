@@ -26,7 +26,7 @@
   id="export-reminder"
   label="Remind me to regularly export rules"
   i18n-label
-  [(ngModel)]="exportReminder"
+  [formField]="exportReminder"
 />
 
 @if (loading()) {

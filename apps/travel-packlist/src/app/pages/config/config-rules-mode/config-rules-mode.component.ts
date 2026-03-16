@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import {
   SelectOptionDirective,
   SelectOptionsComponent,
@@ -8,11 +8,11 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Component({
   selector: 'app-config-rules-mode',
-  imports: [FormsModule, SelectOptionsComponent, SelectOptionDirective],
+  imports: [SelectOptionsComponent, SelectOptionDirective, FormField],
   templateUrl: './config-rules-mode.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesModeComponent {
   private state = inject(GLOBAL_STATE);
-  rulesMode = this.state.rules.mode;
+  rulesMode = form(this.state.rules.mode);
 }

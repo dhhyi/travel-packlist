@@ -6,17 +6,13 @@ import {
   input,
   signal,
 } from '@angular/core';
-import {
-  ControlValueAccessor,
-  FormsModule,
-  NG_VALUE_ACCESSOR,
-} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IconHelpComponent } from '@travel-packlist/icons';
 import { noop } from 'rxjs';
 
 @Component({
   selector: 'cmp-checkbox',
-  imports: [FormsModule, IconHelpComponent],
+  imports: [IconHelpComponent],
   templateUrl: './checkbox.component.html',
   providers: [
     {

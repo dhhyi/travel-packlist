@@ -1,19 +1,22 @@
+import { SlicePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   effect,
   inject,
   input,
+  linkedSignal,
   output,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+  debounce,
+  disabled,
+  FieldValidator,
+  form,
+  FormField,
+  required,
+  validate,
+} from '@angular/forms/signals';
 import {
   Item,
   Parser,
@@ -22,13 +25,13 @@ import {
   SyntaxError,
 } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { filter } from 'rxjs';
+import { noop } from 'rxjs';
 
 import { alert, prompt } from '../../../../dialog';
 
 @Component({
   selector: 'app-editor-item',
-  imports: [ReactiveFormsModule],
+  imports: [FormField, SlicePipe],
   templateUrl: './editor-item.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -41,79 +44,46 @@ export class EditorItemComponent {
 
   readonly itemChanged = output<Item>();
 
-  private fb = inject(FormBuilder).nonNullable;
-  form = this.fb.group({
-    category: this.fb.control(''),
-    name: this.fb.control('', {
-      validators: [this.validateNamePattern(), Validators.required.bind(this)],
-    }),
+  private readonly formModel = linkedSignal<Pick<Item, 'category' | 'name'>>(
+    () => {
+      let name = this.item().name;
+      if (this.item().weight) {
+        name += ` ${serializeWeight(this.item().weight)}`;
+      }
+      return { category: this.item().category, name };
+    },
+  );
+  readonly form = form(this.formModel, (path) => {
+    validate(path.name, this.validateNamePattern());
+    required(path.name);
+    disabled(path, () => this.mode() !== 'edit');
+    // TODO: replace with validate on blur once API is available
+    debounce(path.name, () => new Promise<void>(noop));
   });
 
   private parser = inject(Parser);
 
   constructor() {
     effect(() => {
-      this.item();
-      this.reset();
-    });
-
-    const validFormUpdates = toSignal(
-      this.form.valueChanges.pipe(filter(() => this.form.valid)),
-    );
-
-    effect(() => {
-      const value = validFormUpdates();
-      if (!value?.name) {
-        return;
-      }
-      if (!value.category) {
+      const model = this.formModel();
+      const n = model.name.trim();
+      const c = model.category.trim();
+      if (!c) {
         void this.addNewCategory();
-        return;
+      } else if (this.form().valid()) {
+        const serialized = serializeItem(new Item(c, n));
+        const parsed = this.parser.parseItem(serialized);
+        if (!parsed.equals(this.item())) {
+          this.itemChanged.emit(parsed);
+        }
       }
-
-      const serialized = serializeItem(new Item(value.category, value.name));
-      this.itemChanged.emit(this.parser.parseItem(serialized));
-    });
-
-    effect(() => {
-      if (this.mode() === 'edit') {
-        this.form.enable({ emitEvent: false });
-      } else {
-        this.form.disable({ emitEvent: false });
-      }
-      this.reset();
     });
   }
 
-  private blockPatch = false;
-
-  private reset() {
-    if (!this.blockPatch) {
-      let name = this.item().name;
-      if (this.item().weight) {
-        name += ` ${serializeWeight(this.item().weight)}`;
-      }
-
-      this.form.patchValue(
-        {
-          category: this.item().category,
-          name,
-        },
-        { emitEvent: false },
-      );
+  focusName() {
+    if (this.formModel().name === Item.NEW_ITEM_NAME) {
+      this.formModel.update((model) => ({ ...model, name: '' }));
     }
-  }
-
-  focus(event: FocusEvent) {
-    this.blockPatch = document.activeElement === event.target;
-    if (this.form.controls.name.value === Item.NEW_ITEM_NAME) {
-      this.form.controls.name.setValue('', { emitEvent: false });
-    }
-  }
-
-  blur() {
-    this.blockPatch = false;
-    this.reset();
   }
 
   private async addNewCategory(prefill = '') {
@@ -121,7 +91,7 @@ export class EditorItemComponent {
     if (newCategory) {
       try {
         this.parser.validateCategoryName(newCategory);
-        this.form.patchValue({ category: newCategory });
+        this.formModel.update((model) => ({ ...model, category: newCategory }));
       } catch (error) {
         if (error instanceof SyntaxError) {
           const pattern = error.found;
@@ -133,22 +103,20 @@ export class EditorItemComponent {
         }
         void this.addNewCategory(newCategory);
       }
-    } else {
-      this.reset();
     }
   }
 
-  private validateNamePattern(): ValidatorFn {
-    return (control: AbstractControl<string | null>) => {
-      const value = control.value?.trim() ?? '';
+  private validateNamePattern(): FieldValidator<string> {
+    return (ctx) => {
+      const value = ctx.value().trim();
       try {
         this.parser.validateItemNameAndWeight(value);
         return null;
       } catch (error) {
-        if (error instanceof SyntaxError) {
-          return { pattern: error.found };
+        if (error instanceof SyntaxError && typeof error.found === 'string') {
+          return { kind: 'pattern', message: error.found };
         }
-        return { pattern: true };
+        return { kind: 'pattern' };
       }
     };
   }

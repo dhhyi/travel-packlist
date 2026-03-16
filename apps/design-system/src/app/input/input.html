@@ -1,24 +1,24 @@
 <div class="flex flex-col gap-y-4" [formGroup]="form">
-  <input type="text" placeholder="input" formControlName="input" />
+  <input type="text" placeholder="input" [formField]="form.input" />
 
-  <input type="text" formControlName="input_disabled" />
+  <input type="text" [formField]="form.input_disabled" />
 
-  <select formControlName="select">
-    <option value="1">select</option>
-    <option value="2">option 1</option>
-    <option value="3">option 2</option>
+  <select [formField]="form.select">
+    <option value="select">select</option>
+    <option value="option 1">option 1</option>
+    <option value="option 2">option 2</option>
   </select>
 
-  <cmp-checkbox id="checkbox1" label="checkbox" formControlName="checkbox" />
+  <cmp-checkbox id="checkbox1" label="checkbox" [formField]="form.checkbox" />
 
   <cmp-checkbox
     id="checkbox2"
     label="checkbox"
-    formControlName="checkbox_help"
     help="This is a help text for the checkbox"
+    [formField]="form.checkbox_help"
   />
 
-  <cmp-select-options id="select1" label="select" formControlName="radio">
+  <cmp-select-options id="select1" label="select" [formField]="form.radio">
     <ng-template value="option 1">Option 1</ng-template>
     <ng-template value="option 2">Option 2</ng-template>
   </cmp-select-options>

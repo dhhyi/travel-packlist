@@ -1,10 +1,4 @@
-<form
-  class="flex flex-col"
-  role="group"
-  aria-label="question"
-  i18n-aria-label
-  [formGroup]="form"
->
+<form class="flex flex-col" role="group" aria-label="question" i18n-aria-label>
   <input
     class="grow"
     type="text"
@@ -12,7 +6,7 @@
     i18n-placeholder
     aria-label="question"
     i18n-aria-label
-    formControlName="question"
+    [formField]="form.question"
     (focus)="focusQuestion()"
   />
   <div class="flex items-center gap-2">
@@ -24,39 +18,52 @@
       i18n-placeholder
       aria-label="variable"
       i18n-aria-label
-      formControlName="variable"
+      [formField]="form.variable"
       [class.text-green]="highlighVariable() && variableActive()"
       [class.text-red]="highlighVariable() && !variableActive()"
       (focus)="focusVariable()"
     />
   </div>
-  @if (mode() === 'edit' && form.valid === false && form.dirty) {
+  @let state = form();
+  @if (mode() === 'edit' && state.valid() === false && state.dirty()) {
     <div class="text-red m-1 flex flex-col text-sm" role="alert">
-      @if (form.controls.question.errors?.['pattern']; as pattern) {
-        <span i18n
-          >Questions cannot contain this character: '{{ pattern }}'</span
-        >
-      }
-      @if (form.controls.question.errors?.['required']) {
-        <span i18n>Question is required</span>
-      }
-      @if (form.controls.variable.errors?.['pattern']; as pattern) {
-        @if (pattern === ' ') {
-          <span i18n>Variables cannot contain spaces</span>
-        } @else {
-          <span i18n
-            >Variables cannot contain this character: '{{ pattern }}'</span
-          >
+      @for (error of form.question().errors() | slice: -1; track error) {
+        @switch (error.kind) {
+          @case ('pattern') {
+            <span i18n
+              >Questions cannot contain this character: '{{
+                error.message
+              }}'</span
+            >
+          }
+          @case ('required') {
+            <span i18n>Question is required</span>
+          }
         }
       }
-      @if (form.controls.variable.errors?.['required']) {
-        <span i18n>Variable name is required</span>
-      }
-      @if (form.controls.variable.errors?.['reserved']) {
-        <span i18n>This variable name is reserved</span>
-      }
-      @if (form.controls.variable.errors?.['used']) {
-        <span i18n>This variable name is already used</span>
+      @for (error of form.variable().errors() | slice: -1; track error) {
+        @switch (error.kind) {
+          @case ('pattern') {
+            @if (error.message === ' ') {
+              <span i18n>Variables cannot contain spaces</span>
+            } @else {
+              <span i18n
+                >Variables cannot contain this character: '{{
+                  error.message
+                }}'</span
+              >
+            }
+          }
+          @case ('required') {
+            <span i18n>Variable name is required</span>
+          }
+          @case ('reserved') {
+            <span i18n>This variable name is reserved</span>
+          }
+          @case ('used') {
+            <span i18n>This variable name is already used</span>
+          }
+        }
       }
     </div>
   }

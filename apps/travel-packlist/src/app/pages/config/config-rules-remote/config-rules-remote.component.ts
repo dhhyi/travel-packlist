@@ -4,10 +4,10 @@ import {
   computed,
   effect,
   inject,
+  linkedSignal,
   signal,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { debounce, form, FormField } from '@angular/forms/signals';
 import {
   IconCloseComponent,
   IconDeleteComponent,
@@ -16,7 +16,7 @@ import {
   IconRefreshComponent,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { debounceTime, map } from 'rxjs';
+import { noop } from 'rxjs';
 
 import { confirm } from '../../../dialog';
 import { extractErrorMessage } from '../../../util/extract-error-message';
@@ -24,12 +24,12 @@ import { extractErrorMessage } from '../../../util/extract-error-message';
 @Component({
   selector: 'app-config-rules-remote',
   imports: [
-    ReactiveFormsModule,
     IconHistoryComponent,
     IconRefreshComponent,
     IconCloseComponent,
     IconDeleteComponent,
     IconHelpComponent,
+    FormField,
   ],
   templateUrl: './config-rules-remote.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,14 +41,10 @@ export class ConfigRulesRemoteComponent {
     this.state.router.go('remote-rules-documentation');
   }
 
-  private readonly currentURL = computed(
-    () => this.state.remoteRules.history()[0]?.url,
-  );
-
   readonly rulesLoaded = computed(() => this.state.rules.raw.hasValue());
 
   readonly stateColor = computed(() =>
-    this.state.rules.raw.status() === 'idle' || !this.controlValue().value
+    this.state.rules.raw.status() === 'idle' || !this.control().value()
       ? 'text-gray-500'
       : this.state.rules.isLoading()
         ? 'text-yellow-normal'
@@ -58,10 +54,7 @@ export class ConfigRulesRemoteComponent {
   );
 
   readonly i18nStatus = computed(() => {
-    if (
-      this.state.rules.raw.status() === 'idle' ||
-      !this.controlValue().value
-    ) {
+    if (this.state.rules.raw.status() === 'idle' || !this.control().value()) {
       return $localize`idle`;
     }
     switch (this.state.rules.raw.status()) {
@@ -87,29 +80,27 @@ export class ConfigRulesRemoteComponent {
   );
   readonly remoteHistoryVisible = signal(false);
 
-  control = new FormControl(this.currentURL(), {
-    updateOn: 'blur',
-  });
-
-  private readonly controlValue = toSignal(
-    this.control.valueChanges.pipe(
-      debounceTime(0),
-      map((value) => ({ value, initial: false })),
-    ),
-    { initialValue: { value: this.control.value, initial: true } },
+  private readonly formModel = linkedSignal(
+    () => this.state.remoteRules.history()[0]?.url || '',
   );
+
+  control = form(this.formModel, (path) => {
+    // TODO: replace with validate on blur once API is available
+    debounce(path, () => new Promise<void>(noop));
+  });
+  readonly noRemoteValue = computed(() => !this.control().value());
 
   constructor() {
     effect(() => {
-      const newUrl = this.controlValue();
-      if (!newUrl.initial && newUrl.value) {
-        this.state.remoteRules.load(newUrl.value);
+      const newUrl = this.control().value().trim();
+      if (newUrl) {
+        this.state.remoteRules.load(newUrl);
       }
     });
   }
 
   clearRemote() {
-    this.control.setValue('');
+    this.control().value.set('');
   }
 
   reloadRemote() {
@@ -117,7 +108,7 @@ export class ConfigRulesRemoteComponent {
   }
 
   loadRemote(url: string) {
-    this.control.setValue(url);
+    this.control().value.set(url);
     this.remoteHistoryVisible.set(false);
   }
 

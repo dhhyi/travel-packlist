@@ -4,7 +4,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import {
   CheckboxComponent,
   SelectOptionDirective,
@@ -17,10 +17,10 @@ import { confirm, prompt } from '../../../dialog';
 @Component({
   selector: 'app-config-packlist',
   imports: [
-    FormsModule,
     CheckboxComponent,
     SelectOptionsComponent,
     SelectOptionDirective,
+    FormField,
   ],
   templateUrl: './config-packlist.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,9 +30,9 @@ export class ConfigPackListComponent {
 
   currentSlot = this.state.packlist.currentSlot;
   sessionName = this.state.packlist.sessionName;
-  trackWeight = this.state.config.trackWeight;
-  skipItems = this.state.config.skipItems;
-  categorySorting = this.state.config.categorySorting;
+  trackWeight = form(this.state.config.trackWeight);
+  skipItems = form(this.state.config.skipItems);
+  categorySorting = form(this.state.config.categorySorting);
 
   readonly skipItemsHelpText = computed(() =>
     this.state.browser.isMobile()

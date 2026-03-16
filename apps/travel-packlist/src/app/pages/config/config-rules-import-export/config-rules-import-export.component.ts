@@ -4,7 +4,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import { CheckboxComponent } from '@travel-packlist/components';
 import { IconDownloadComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
@@ -14,14 +14,14 @@ import { RulesShare } from '../../../services/rules-share/rules-share.interface'
 
 @Component({
   selector: 'app-config-rules-import-export',
-  imports: [FormsModule, CheckboxComponent, IconDownloadComponent],
+  imports: [CheckboxComponent, IconDownloadComponent, FormField],
   templateUrl: './config-rules-import-export.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesImportExportComponent {
   private state = inject(GLOBAL_STATE);
 
-  exportReminder = this.state.config.exportReminder;
+  exportReminder = form(this.state.config.exportReminder);
   exportNeeded = this.state.rules.exportNeeded;
 
   readonly loading = signal(false);

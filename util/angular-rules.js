@@ -134,6 +134,17 @@ const rules = (tsConfigOrFolder, options) => {
                 message: 'Do not use routerLink, use router state instead.',
                 name: '@angular/router',
               },
+              {
+                importNames: [
+                  'FormsModule',
+                  'ReactiveFormsModule',
+                  'FormBuilder',
+                  'Validators',
+                  'ValidatorFn',
+                ],
+                message: 'Use new signal-based forms instead.',
+                name: '@angular/forms',
+              },
             ],
             patterns: [
               {

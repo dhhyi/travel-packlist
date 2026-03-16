@@ -1,3 +1,4 @@
+import { SlicePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,20 +6,21 @@ import {
   effect,
   inject,
   input,
+  linkedSignal,
   output,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+  debounce,
+  disabled,
+  FieldValidator,
+  form,
+  FormField,
+  required,
+  validate,
+} from '@angular/forms/signals';
 import { IconArrowForwardComponent } from '@travel-packlist/icons';
 import { Always, Parser, Question, SyntaxError } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { filter } from 'rxjs';
 
 import {
   AND,
@@ -29,7 +31,7 @@ import {
 
 @Component({
   selector: 'app-editor-question',
-  imports: [ReactiveFormsModule, IconArrowForwardComponent],
+  imports: [IconArrowForwardComponent, FormField, SlicePipe],
   templateUrl: './editor-question.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -59,129 +61,101 @@ export class EditorQuestionComponent {
   readonly questionChanged = output<Question>();
   readonly variableChanged = output<[string, string]>();
 
-  private fb = inject(FormBuilder).nonNullable;
-  form = this.fb.group({
-    question: this.fb.control('', {
-      validators: [
-        this.validateQuestionPattern(),
-        Validators.required.bind(this),
-      ],
-    }),
-    variable: this.fb.control('', {
-      validators: [
-        this.validateVariablePattern(),
-        validateReservedString(),
-        Validators.required.bind(this),
-      ],
-    }),
+  private readonly formModel = linkedSignal<
+    Pick<Question, 'question' | 'variable'>
+  >(() => ({
+    question: this.question().question,
+    variable: this.question().variable,
+  }));
+  readonly form = form(this.formModel, (path) => {
+    disabled(path, () => this.mode() !== 'edit');
+    validate(path.question, this.validateQuestionPattern());
+    required(path.question);
+    validate(path.variable, this.validateVariablePattern());
+    validate(path.variable, validateReservedString());
+    required(path.variable);
+    debounce(path, 500);
   });
 
   constructor() {
     effect(() => {
-      this.question();
-      this.reset();
-    });
-
-    const validFormUpdates = toSignal(
-      this.form.valueChanges.pipe(filter(() => this.form.valid)),
-    );
-    effect(() => {
-      const value = validFormUpdates();
-      if (
-        value?.question &&
-        value.question !== this.question().question &&
-        value.variable
-      ) {
-        this.questionChanged.emit(new Question(value.question, value.variable));
-      } else if (
-        value?.variable &&
-        value.variable.trim() !== this.question().variable
-      ) {
-        const duplicateWarning = this.warnings().find(
-          (warning) => warning.type === 'duplicate',
-        );
-        if (
-          this.question().variable === Question.NEW_VARIABLE_NAME ||
-          !this.refactorVariables() ||
-          !!duplicateWarning
-        ) {
-          this.questionChanged.emit(
-            new Question(this.question().question, value.variable.trim()),
+      if (this.form().valid()) {
+        const model = this.formModel();
+        const q = model.question.trim();
+        const v = model.variable.trim();
+        if (q && q !== this.question().question && v) {
+          this.questionChanged.emit(new Question(q, v));
+        } else if (v && v !== this.question().variable) {
+          const isDuplicate = this.warnings().some(
+            (warning) => warning.type === 'duplicate',
           );
-        } else {
-          this.variableChanged.emit([
-            this.question().variable,
-            value.variable.trim(),
-          ]);
+          if (
+            this.question().variable === Question.NEW_VARIABLE_NAME ||
+            !this.refactorVariables() ||
+            isDuplicate
+          ) {
+            this.questionChanged.emit(
+              new Question(this.question().question, v),
+            );
+          } else {
+            this.variableChanged.emit([this.question().variable, v]);
+          }
         }
       }
     });
-
-    effect(() => {
-      if (this.mode() === 'edit') {
-        this.form.enable({ emitEvent: false });
-      } else {
-        this.form.disable({ emitEvent: false });
-      }
-      this.reset();
-    });
-  }
-
-  private reset() {
-    this.form.patchValue(this.question(), { emitEvent: false });
   }
 
   focusQuestion() {
-    if (this.form.controls.question.value === Question.NEW_QUESTION_NAME) {
-      this.form.controls.question.setValue('', { emitEvent: false });
+    if (this.formModel().question === Question.NEW_QUESTION_NAME) {
+      this.formModel.update((model) => ({ ...model, question: '' }));
     }
   }
 
   focusVariable() {
-    if (this.form.controls.variable.value === Question.NEW_VARIABLE_NAME) {
-      this.form.controls.variable.setValue('', { emitEvent: false });
+    if (this.formModel().variable === Question.NEW_VARIABLE_NAME) {
+      this.formModel.update((model) => ({ ...model, variable: '' }));
     }
   }
 
-  private validateVariablePattern(): ValidatorFn {
-    return (control: AbstractControl<string | null>) => {
-      const value = control.value?.trim() ?? '';
+  private validateVariablePattern(): FieldValidator<string> {
+    return (ctx) => {
+      const value = ctx.value().trim();
       try {
         this.parser.validateVariableName(value);
         return null;
       } catch (error) {
-        if (error instanceof SyntaxError) {
-          return { pattern: error.found };
+        if (error instanceof SyntaxError && typeof error.found === 'string') {
+          return { kind: 'pattern', message: error.found };
         }
-        return { pattern: true };
+        return { kind: 'pattern' };
       }
     };
   }
 
-  private validateQuestionPattern(): ValidatorFn {
-    return (control: AbstractControl<string | null>) => {
-      const value = control.value?.trim() ?? '';
+  private validateQuestionPattern(): FieldValidator<string> {
+    return (ctx) => {
+      const value = ctx.value().trim();
       try {
         this.parser.validateQuestionString(value);
         return null;
       } catch (error) {
-        if (error instanceof SyntaxError) {
-          return { pattern: error.found };
+        if (error instanceof SyntaxError && typeof error.found === 'string') {
+          return { kind: 'pattern', message: error.found };
         }
-        return { pattern: true };
+        return { kind: 'pattern' };
       }
     };
   }
 }
 
-function validateReservedString(): ValidatorFn {
-  return (control: AbstractControl<string | null>) => {
+function validateReservedString(): FieldValidator<string> {
+  return (ctx) => {
     if (
       [Always.string, NOT, AND, OR, REMOVE].some(
-        (v) => v === control.value?.trim(),
+        (v) => v === ctx.value().trim(),
       )
     ) {
-      return { reserved: true };
+      return { kind: 'reserved' };
     }
     return null;
   };

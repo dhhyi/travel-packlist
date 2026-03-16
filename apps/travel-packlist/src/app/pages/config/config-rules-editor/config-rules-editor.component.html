@@ -4,25 +4,25 @@
   id="rules-debug-mode"
   label="Fade out disabled rules"
   i18n-label
-  [(ngModel)]="fadeOutDisabledRules"
+  [formField]="fadeOutDisabledRules"
 />
 <cmp-checkbox
   id="variables-debug-mode"
   label="Highlight variable status"
   i18n-label
-  [(ngModel)]="highlightVariableStatus"
+  [formField]="highlightVariableStatus"
 />
 <cmp-checkbox
   id="variables-refactor"
   label="Rename all occurrences when renaming variables"
   i18n-label
-  [(ngModel)]="refactorVariables"
+  [formField]="refactorVariables"
 />
 <cmp-checkbox
   id="confirm-rule-deletion"
   label="Confirm before deleting rules"
   i18n-label
-  [(ngModel)]="confirmRuleDeletion"
+  [formField]="confirmRuleDeletion"
 />
 <button i18n type="button" (click)="go('rules-raw')">
   Edit Rules with Code

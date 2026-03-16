@@ -18,12 +18,12 @@
     rows="4"
     placeholder="insert URL here"
     i18n-placeholder
-    [formControl]="control"
+    [formField]="control"
   ></textarea>
   <button
     class="absolute top-1 right-1 bg-white/50 dark:bg-slate-900/50"
     type="button"
-    [class.hidden]="!control.value"
+    [class.hidden]="noRemoteValue()"
     (click)="clearRemote()"
   >
     <app-icon-close class="h-4 w-4" />
@@ -56,7 +56,7 @@
     class="link"
     aria-label="Reload source"
     i18n-aria-label
-    [disabled]="!control.value"
+    [disabled]="noRemoteValue()"
     (click)="reloadRemote()"
   ></button>
 </div>

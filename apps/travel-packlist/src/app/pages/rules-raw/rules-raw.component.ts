@@ -4,12 +4,11 @@ import {
   computed,
   effect,
   inject,
+  signal,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { debounce, disabled, form, FormField } from '@angular/forms/signals';
 import { Rules } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { debounceTime, startWith } from 'rxjs';
 
 import { extractErrorMessage } from '../../util/extract-error-message';
 
@@ -32,7 +31,7 @@ type ParserState =
 
 @Component({
   selector: 'app-edit-rules-raw',
-  imports: [ReactiveFormsModule],
+  imports: [FormField],
   templateUrl: './rules-raw.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
@@ -42,17 +41,15 @@ type ParserState =
 export class EditRulesRawComponent {
   private state = inject(GLOBAL_STATE);
 
-  private fb = inject(FormBuilder).nonNullable;
-  rulesControl = this.fb.control(this.state.rules.raw.value());
-  private readonly rulesText = toSignal(
-    this.rulesControl.valueChanges.pipe(startWith(this.rulesControl.value)),
-  );
-  private readonly rulesPending = computed(
-    () => this.rulesText() !== this.state.rules.raw.value(),
-  );
+  protected readonly pending = signal(false);
+  private readonly rulesModel = signal(this.state.rules.raw.value() ?? '');
+  rulesControl = form(this.rulesModel, (path) => {
+    debounce(path, 500);
+    disabled(path, () => this.state.rules.mode() !== 'local');
+  });
 
   readonly parserState = computed<ParserState>(() => {
-    if (this.rulesPending()) {
+    if (this.pending()) {
       return { type: 'pending' };
     } else {
       if (this.state.rules.parsed.status() === 'error') {
@@ -76,21 +73,11 @@ export class EditRulesRawComponent {
   });
 
   constructor() {
-    const ruleUpdates = toSignal(
-      this.rulesControl.valueChanges.pipe(debounceTime(500)),
-    );
     effect(() => {
-      const value = ruleUpdates();
-      if (typeof value === 'string' && value !== this.state.rules.raw.value()) {
+      const value = this.rulesModel();
+      if (value && value !== this.state.rules.raw.value()) {
         this.state.localRules.updateRules(value);
-      }
-    });
-    effect(() => {
-      const editable = this.state.rules.mode() === 'local';
-      if (!editable) {
-        this.rulesControl.disable();
-      } else {
-        this.rulesControl.enable();
+        this.pending.set(false);
       }
     });
   }

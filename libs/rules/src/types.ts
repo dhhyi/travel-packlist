@@ -49,6 +49,14 @@ export class Item {
   id(): string {
     return `${sanitize(this.category)}-${sanitize(this.name)}`;
   }
+
+  equals(other: Item) {
+    return (
+      this.category === other.category &&
+      this.name === other.name &&
+      this.weight == other.weight
+    );
+  }
 }
 
 export type VariableType = boolean;

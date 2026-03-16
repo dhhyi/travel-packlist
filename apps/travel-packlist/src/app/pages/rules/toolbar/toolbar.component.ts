@@ -9,7 +9,7 @@ import {
   viewChild,
   viewChildren,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import {
   IconClearComponent,
   IconDeleteComponent,
@@ -27,7 +27,6 @@ import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.componen
 @Component({
   selector: 'app-toolbar',
   imports: [
-    FormsModule,
     IconViewComponent,
     IconEditComponent,
     IconDeleteComponent,
@@ -36,6 +35,7 @@ import { ToolbarButtonComponent } from './toolbar-button/toolbar-button.componen
     IconSearchComponent,
     IconClearComponent,
     ToolbarButtonComponent,
+    FormField,
   ],
   templateUrl: './toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,7 +48,7 @@ export class ToolbarComponent {
   private state = inject(GLOBAL_STATE);
   mode = this.state.router.rulesMode;
   readonly editable = computed(() => this.state.rules.mode() === 'local');
-  searchTerm = this.state.router.filterRulesQuery;
+  searchTerm = form(this.state.router.filterRulesQuery);
   private clipboard = inject(RulesClipboard);
   clipboardItems = this.clipboard.itemsCount;
   clipboardQuestions = this.clipboard.questionsCount;
@@ -97,7 +97,7 @@ export class ToolbarComponent {
   }
 
   clearSearch() {
-    this.searchTerm.set('');
+    this.searchTerm().value.set('');
     this.focusSearch();
   }
 }

@@ -42,7 +42,9 @@ test('happy path editor to packlist', async ({ page }) => {
   await expect(rule1.question(1)()).toBeVisible();
 
   await rule1.question(1).question().fill('Will it be sunny?');
+  await rule1.question(1).question().blur();
   await rule1.question(1).variable().fill('sunny');
+  await rule1.question(1).variable().blur();
 
   expect(await rule1.question(1).noErrors()).toBe(true);
 
@@ -51,7 +53,9 @@ test('happy path editor to packlist', async ({ page }) => {
   await expect(rule1.question(2)()).toBeVisible();
 
   await rule1.question(2).question().fill('Will it be rainy?');
+  await rule1.question(2).question().blur();
   await rule1.question(2).variable().fill('rainy');
+  await rule1.question(2).variable().blur();
 
   expect(await rule1.question(2).noErrors()).toBe(true);
 

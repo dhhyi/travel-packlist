@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import {
   SelectOptionDirective,
   SelectOptionsComponent,
@@ -10,14 +10,14 @@ import { confirm } from '../../../dialog';
 
 @Component({
   selector: 'app-config-rules-template',
-  imports: [SelectOptionsComponent, SelectOptionDirective, FormsModule],
+  imports: [SelectOptionsComponent, SelectOptionDirective, FormField],
   templateUrl: './config-rules-template.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigRulesTemplateComponent {
   private state = inject(GLOBAL_STATE);
 
-  rulesTemplate = this.state.config.rulesTemplate;
+  rulesTemplate = form(this.state.config.rulesTemplate);
 
   async copyRulesLocally() {
     if (

@@ -23,23 +23,23 @@
   i18n-label
   help="You can enter the item weight appended to the item name in the editor."
   i18n-help
-  [(ngModel)]="trackWeight"
+  [formField]="trackWeight"
 />
 <cmp-checkbox
   id="skip-items"
   label="Allow skipping items"
   i18n-label
   [help]="skipItemsHelpText()"
-  [(ngModel)]="skipItems"
+  [formField]="skipItems"
 />
 <cmp-select-options
   label="Sort categories"
   i18n-label
-  [(ngModel)]="categorySorting"
+  [formField]="categorySorting"
 >
   <ng-template value="alphabetically" i18n>alphabetically</ng-template>
   <ng-template value="definition" i18n>order of definition</ng-template>
-  @if (trackWeight()) {
+  @if (trackWeight().value()) {
     <ng-template value="weight" i18n>by weight</ng-template>
   }
 </cmp-select-options>
