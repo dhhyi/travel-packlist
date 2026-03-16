@@ -168,6 +168,8 @@ const rules = (tsConfigOrFolder, options) => {
               'iconClass',
               'chartClass',
               'fieldSetClass',
+              'animate.enter',
+              'animate.leave',
             ],
             ignoreTags: ['meta', 'link', 'noscript'],
           },
