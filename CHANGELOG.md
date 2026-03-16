@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/dhhyi/travel-packlist/compare/v1.6.3...v1.6.4) (2026-03-16)
+
+### Bug Fixes
+
+- also add animate to categories ([9a9d349](https://github.com/dhhyi/travel-packlist/commit/9a9d349b89fdf363ccf8da465fe1a56bd9e9f948))
+- disable staggering if animations are off ([b3e9a77](https://github.com/dhhyi/travel-packlist/commit/b3e9a77bc11b85e5bef2035f7b14973a095bd865))
+
 ## [1.6.3](https://github.com/dhhyi/travel-packlist/compare/v1.6.2...v1.6.3) (2026-03-13)
 
 ### Bug Fixes
