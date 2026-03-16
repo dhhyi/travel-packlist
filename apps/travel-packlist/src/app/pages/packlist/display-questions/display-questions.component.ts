@@ -46,7 +46,7 @@ export class DisplayQuestionsComponent {
         prev,
         curr,
         (a, b) => a.variable === b.variable && a.question === b.question,
-        100,
+        this.state.config.animations() ? 100 : 0,
       ),
     ),
     startWith(this.displayQuestions()),
