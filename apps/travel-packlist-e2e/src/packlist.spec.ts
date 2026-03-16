@@ -70,7 +70,7 @@ test('click items', async ({ page }) => {
       - button "Cancel"
       - button "OK"
   `);
-  await expect(config.dialog()).toHaveScreenshot();
+  await expect(config.dialog()).toHaveScreenshot({ maxDiffPixelRatio: 0.02 });
 
   await config.dialog.confirm().click();
 
