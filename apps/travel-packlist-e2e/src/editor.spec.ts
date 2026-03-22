@@ -499,3 +499,86 @@ test('rule editor - items with weight', async ({ page }) => {
 
   await expect(rule()).toHaveScreenshot();
 });
+
+test('rule editor - variable refactoring', async ({ page }) => {
+  const packlist = await startWithRules(
+    page,
+    `
+    :- Will it be sunny? $sunny;
+    sunny :- Will it be hot? $hot;
+    NOT sunny :- Will it be cold? $cold;
+    hot OR cold :- [mental] good mood;
+    `,
+  );
+
+  const editor = await packlist
+    .toConfigPage()
+    .then((page) => page.toEditorPage());
+
+  await editor.toolbar.mode('edit').click();
+
+  await editor.rule(1).question(1).variable().fill('test');
+  await editor.rule(1).question(1).variable().blur();
+
+  expect(await editor.rule(1).question(1).noErrors()).toBe(true);
+
+  await expect(editor.rule(2).condition()).toMatchAriaSnapshot(`
+    - group "condition":
+      - text: IF
+      - combobox:
+        - option "test" [selected]
+  `);
+  expect(await editor.rule(2).condition.noErrors()).toBe(true);
+
+  await expect(editor.rule(3).condition()).toMatchAriaSnapshot(`
+    - group "condition":
+      - text: IF NOT
+      - combobox:
+        - option "test" [selected]
+  `);
+  expect(await editor.rule(3).condition.noErrors()).toBe(true);
+});
+
+test('rule editor - variable refactoring disabled', async ({ page }) => {
+  const packlist = await startWithRules(
+    page,
+    `
+    :- Will it be sunny? $sunny;
+    sunny :- Will it be hot? $hot;
+    NOT sunny :- Will it be cold? $cold;
+    hot OR cold :- [mental] good mood;
+    `,
+  );
+
+  const config = await packlist.toConfigPage();
+  await config.refactorVariables().click();
+
+  const editor = await config.toEditorPage();
+
+  await editor.toolbar.mode('edit').click();
+
+  await editor.rule(1).question(1).variable().fill('test');
+  await editor.rule(1).question(1).variable().blur();
+
+  await expect(editor.rule(1).question(1)()).toMatchAriaSnapshot(`
+    - group "question":
+      - textbox "variable": test
+      - status: Variable test is not used in any condition.
+  `);
+
+  await expect(editor.rule(2).condition()).toMatchAriaSnapshot(`
+    - group "condition":
+      - text: IF
+      - combobox:
+        - option "sunny" [selected]
+      - status: Variable sunny is not declared in any question.
+  `);
+
+  await expect(editor.rule(3).condition()).toMatchAriaSnapshot(`
+    - group "condition":
+      - text: IF NOT
+      - combobox:
+        - option "sunny" [selected]
+      - status: Variable sunny is not declared in any question.
+  `);
+});

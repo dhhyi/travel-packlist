@@ -124,6 +124,12 @@ export class ConfigPage extends Banner {
     });
   }
 
+  refactorVariables() {
+    return this.page.getByRole('checkbox', {
+      name: 'Rename all occurrences',
+    });
+  }
+
   private editRulesWithCodeButton() {
     return this.page.getByRole('button', { name: 'Edit rules with code' });
   }
