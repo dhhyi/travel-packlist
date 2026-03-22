@@ -48,7 +48,9 @@ export class EditorPage extends Banner {
     return this.page.getByRole('textbox', { name: 'rules title' });
   }
 
-  addRuleButton = this.page.getByRole('button', { name: 'add rule' });
+  addRuleButton() {
+    return this.page.getByRole('button', { name: 'add rule' });
+  }
 
   rule(num: number) {
     const rule = this.page.getByRole('group', {

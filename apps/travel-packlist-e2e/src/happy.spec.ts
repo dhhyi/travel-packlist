@@ -21,7 +21,7 @@ test('happy path editor to packlist', async ({ page }) => {
   await editor.rule(1).deleteButton().click();
   await editor.dialog.confirm().click();
 
-  await editor.addRuleButton.click();
+  await editor.addRuleButton().click();
 
   await expect(editor.toolbar.mode('edit')).toBeChecked();
 
@@ -55,7 +55,7 @@ test('happy path editor to packlist', async ({ page }) => {
 
   expect(await rule1.question(2).noErrors()).toBe(true);
 
-  await editor.addRuleButton.click();
+  await editor.addRuleButton().click();
   const rule2 = editor.rule(2);
 
   await expect(rule2()).toBeVisible();
