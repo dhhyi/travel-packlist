@@ -1,3 +1,9 @@
+## [1.6.5](https://github.com/dhhyi/travel-packlist/compare/v1.6.4...v1.6.5) (2026-03-22)
+
+### Bug Fixes
+
+- disallow dollar sign in words ([2811825](https://github.com/dhhyi/travel-packlist/commit/28118256388e21739a34231c816d3444a2307655))
+
 ## [1.6.4](https://github.com/dhhyi/travel-packlist/compare/v1.6.3...v1.6.4) (2026-03-16)
 
 ### Bug Fixes
