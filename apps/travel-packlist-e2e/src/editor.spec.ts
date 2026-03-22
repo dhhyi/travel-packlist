@@ -437,3 +437,65 @@ test('rule editor - search', async ({ page }) => {
   await expect(editor.rule(1)()).toBeVisible();
   await expect(page).toHaveScreenshot({ fullPage: true });
 });
+
+test('rule editor - items with weight', async ({ page }) => {
+  const packlist = await startWithRules(page, '');
+  const config = await packlist.toConfigPage();
+  await config.trackItemWeight().click();
+
+  const editor = await config.toEditorPage();
+
+  await editor.toolbar.mode('edit').click();
+
+  await editor.addRuleButton().click();
+  await editor.rule(1).addItemButton().click();
+  const rule = editor.rule(1);
+
+  await rule.item(1).category().selectOption('+');
+
+  await expect(editor.dialog()).toBeVisible();
+
+  await editor.dialog.prompt().fill('Weights');
+  await editor.dialog.confirm().click();
+
+  await expect(editor.dialog()).toBeHidden();
+  expect(await rule.item(1).noErrors()).toBe(true);
+
+  await expect(rule.item(1).category()).toHaveValue('Weights');
+
+  await rule.item(1).itemName().fill('Small 500');
+  await rule.item(1).itemName().blur();
+
+  await expect(rule.item(1).itemName()).toMatchAriaSnapshot(`
+    - textbox "item name": Small 500g
+  `);
+
+  await rule.addItemButton().click();
+  await rule.item(2).category().selectOption('Weights');
+  await rule.item(2).itemName().fill('Large 1500');
+  await rule.item(2).itemName().blur();
+
+  await expect(rule.item(2).itemName()).toMatchAriaSnapshot(`
+    - textbox "item name": Large 1.5kg
+  `);
+
+  await rule.addItemButton().click();
+  await rule.item(3).category().selectOption('Weights');
+  await rule.item(3).itemName().fill('Feather');
+  await rule.item(3).itemName().blur();
+
+  await expect(rule.item(3).itemName()).toMatchAriaSnapshot(`
+    - textbox "item name": Feather
+  `);
+
+  await rule.addItemButton().click();
+  await rule.item(4).category().selectOption('Weights');
+  await rule.item(4).itemName().fill('Monster 4000 4300');
+  await rule.item(4).itemName().blur();
+
+  await expect(rule.item(4).itemName()).toMatchAriaSnapshot(`
+    - textbox "item name": Monster 4000 4.3kg
+  `);
+
+  await expect(rule()).toHaveScreenshot();
+});
