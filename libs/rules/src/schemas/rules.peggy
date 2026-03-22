@@ -131,7 +131,7 @@ WordNotWeight "word"
   = !(Weight _ (EOF / "," / ";")) @Word
 
 Word
-  = $[^ ,;#]+
+  = $[^\$ ,;#]+
 
 Weight "weight"
   = num:Number "kg" {
