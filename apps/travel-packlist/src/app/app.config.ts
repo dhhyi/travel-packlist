@@ -27,12 +27,6 @@ import { RulesExportReminder } from './services/rules.export-reminder';
 import { ScrollIntoView } from './services/scroll-into-view';
 import { WeightTrackingCheck } from './services/weight-tracking';
 
-function initParserConfig(injector: Injector): ParserConfig {
-  return {
-    isTrackWeight: () => injector.get(GLOBAL_STATE).config.trackWeight(),
-  };
-}
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZonelessChangeDetection(),
@@ -58,9 +52,14 @@ export const appConfig: ApplicationConfig = {
       inject(ScrollIntoView).init();
     }),
     {
-      deps: [Injector],
       provide: PARSER_CONFIG_PROVIDER,
-      useFactory: initParserConfig,
+      useFactory: (): ParserConfig => {
+        const injector = inject(Injector);
+        return {
+          // needs to remain a function to avoid circular dependency
+          isTrackWeight: () => injector.get(GLOBAL_STATE).config.trackWeight(),
+        };
+      },
     },
     {
       provide: RulesShare,
