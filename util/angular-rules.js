@@ -1,6 +1,6 @@
 const angular = require('angular-eslint');
+const { defineConfig } = require('eslint/config');
 const { existsSync, statSync } = require('fs');
-const tseslint = require('typescript-eslint');
 
 const defaultOptions = {
   prefix: 'unset',
@@ -27,7 +27,7 @@ const rules = (tsConfigOrFolder, options) => {
   console.log(__dirname);
   console.log('config', config);
   console.log('tsconfig', tsconfig);
-  return tseslint.config(
+  return defineConfig(
     {
       extends: [...angular.configs.tsAll],
       files: ['**/*.ts', '**/*.tsx'],

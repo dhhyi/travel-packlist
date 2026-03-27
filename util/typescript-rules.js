@@ -1,5 +1,6 @@
 const eslint = require('@eslint/js');
 const jest = require('eslint-plugin-jest');
+const { defineConfig } = require('eslint/config');
 const { existsSync, statSync } = require('fs');
 const tseslint = require('typescript-eslint');
 
@@ -17,7 +18,7 @@ const rules = (tsConfigOrFolder) => {
   } else {
     tsconfig = tsConfigOrFolder;
   }
-  return tseslint.config(
+  return defineConfig(
     {
       extends: [
         eslint.configs.recommended,
