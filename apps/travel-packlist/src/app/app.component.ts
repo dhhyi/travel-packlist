@@ -37,7 +37,7 @@ import { RouteData } from './pages/app.routes';
 })
 export class AppComponent {
   private state = inject(GLOBAL_STATE);
-  readonly overlayVisible = signal<boolean>(false);
+  readonly overlayVisible = signal(false);
 
   private router = inject(Router);
   private readonly routeData = toSignal<Partial<RouteData> | undefined>(

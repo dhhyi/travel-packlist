@@ -74,13 +74,13 @@ export const packlistState = ({
   rules: { parsed: parsedRules, raw },
   config: { categorySorting, skipItems },
 }: RulesParsingState & ConfigState & RulesSourceState) => {
-  const sessions = create<(SessionState | undefined)[]>('packlistSessions', [
+  const sessions = create('packlistSessions', [
     createNewSession(),
     undefined,
     undefined,
     undefined,
   ]);
-  const currentSlot = create<number>('currentPacklistSessionIndex', 0);
+  const currentSlot = create('currentPacklistSessionIndex', 0);
   const session = computed(
     () => sessions()[currentSlot()] ?? createNewSession(),
   );

@@ -88,7 +88,7 @@ function analyzeReferences(node: ReferenceFindableNode & Node) {
   return node
     .findReferencesAsNodes()
     .map((reference) => reference.getSourceFile())
-    .reduce<{ other: number; same: number }>(
+    .reduce(
       (acc, sourceFile) => {
         if (sourceFile.getFilePath() === node.getSourceFile().getFilePath()) {
           acc.same++;

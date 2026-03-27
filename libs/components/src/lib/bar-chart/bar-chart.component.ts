@@ -21,7 +21,7 @@ export class BarChartComponent<
   readonly barPadding = 2;
 
   readonly bars = input.required<Item[]>();
-  readonly chartClass = input<string>('');
+  readonly chartClass = input('');
 
   readonly clicked = output<Item>();
 }

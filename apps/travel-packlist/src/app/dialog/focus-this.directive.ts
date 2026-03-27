@@ -10,7 +10,7 @@ import {
   selector: '[appFocusThis]',
 })
 export class FocusThisDirective {
-  readonly appFocusThis = input<boolean>(false);
+  readonly appFocusThis = input(false);
 
   private element = inject(ElementRef);
 

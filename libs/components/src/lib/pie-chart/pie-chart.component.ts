@@ -22,7 +22,7 @@ export class PieChartComponent<
 > {
   readonly padding = 10;
   readonly segments = input.required<Item[]>();
-  readonly chartClass = input<string>('');
+  readonly chartClass = input('');
 
   readonly clicked = output<Item>();
 

@@ -20,7 +20,7 @@ export class ToolbarButtonComponent {
 
   readonly type = input.required<RuleModes>();
   readonly label = input.required<string>();
-  readonly disabled = input<boolean>(false);
+  readonly disabled = input(false);
 
   readonly button = viewChild<ElementRef<HTMLButtonElement>>('button');
 

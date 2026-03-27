@@ -8,6 +8,6 @@ import { IconCheckmarkComponent } from '@travel-packlist/icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemsStatusComponent {
-  readonly count = input<number>(0);
-  readonly total = input<number>(0);
+  readonly count = input(0);
+  readonly total = input(0);
 }

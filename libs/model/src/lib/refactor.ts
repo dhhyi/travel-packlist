@@ -41,7 +41,7 @@ export class Refactor {
   }
 
   extractVariables(rules: Rule[], onlyQuestions = false): Set<string> {
-    return rules.reduce<Set<string>>((acc, rule) => {
+    return rules.reduce((acc, rule) => {
       const variables = acc.union(
         new Set(rule.questions.map((question) => question.variable)),
       );

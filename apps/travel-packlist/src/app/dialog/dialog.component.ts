@@ -17,11 +17,11 @@ import { FocusThisDirective } from './focus-this.directive';
 })
 export class DialogComponent {
   self = DialogComponent;
-  static readonly dialogVisible = signal<boolean>(false);
-  static readonly dialogPromptVisible = signal<boolean>(false);
-  static readonly dialogPrefill = signal<string>('');
-  static readonly dialogCancelVisible = signal<boolean>(true);
-  static readonly dialogMessage = signal<string>('');
+  static readonly dialogVisible = signal(false);
+  static readonly dialogPromptVisible = signal(false);
+  static readonly dialogPrefill = signal('');
+  static readonly dialogCancelVisible = signal(true);
+  static readonly dialogMessage = signal('');
   static readonly dialogOk = signal<(prompt: string) => void>(noop);
   static readonly dialogCancel = signal<() => void>(noop);
   static readonly focus = signal<'prompt' | 'ok' | undefined>(undefined);

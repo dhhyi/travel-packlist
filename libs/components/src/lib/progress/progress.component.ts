@@ -37,7 +37,7 @@ const easeOutQuad = (x: number): number => x * (2 - x);
 export class ProgressComponent {
   readonly value = input(0);
   readonly max = input.required<number>();
-  readonly animationDuration = input<number>(0);
+  readonly animationDuration = input(0);
 
   readonly currentCount$ = combineLatest([
     toObservable(this.value).pipe(startWith(this.value()), pairwise()),

@@ -119,7 +119,7 @@ export const routerState = () => {
       /** router: mode of the editor */
       rulesMode,
       /** router: filter query for rules in editor */
-      filterRulesQuery: createRouterSignalState<string>('filterRulesQuery', ''),
+      filterRulesQuery: createRouterSignalState('filterRulesQuery', ''),
       /** router read-only: current path */
       path: path.asReadonly(),
       /** router: current fragment */

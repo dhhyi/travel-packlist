@@ -30,9 +30,9 @@ import { SelectOptionDirective } from './select-option.directive';
 export class SelectOptionsComponent<
   T extends string,
 > implements ControlValueAccessor {
-  readonly label = input<string>('');
-  readonly legendHidden = input<boolean>(false);
-  readonly fieldSetClass = input<string>('');
+  readonly label = input('');
+  readonly legendHidden = input(false);
+  readonly fieldSetClass = input('');
   readonly model = signal<T | undefined>(undefined);
   readonly children = contentChildren(SelectOptionDirective<T>);
 
