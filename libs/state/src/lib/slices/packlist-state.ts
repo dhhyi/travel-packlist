@@ -1,5 +1,6 @@
 import { computed, effect, inject, signal, Signal } from '@angular/core';
-import { Item, Refactor, VariableType } from '@travel-packlist/model';
+import { Refactor } from '@travel-packlist/model';
+import { Item, VariableType } from '@travel-packlist/rules';
 
 import {
   createLocalStorageSignalState,

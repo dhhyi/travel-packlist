@@ -8,10 +8,10 @@ import {
 } from '@angular/core';
 import { IconKeyRightComponent } from '@travel-packlist/icons';
 import {
-  Item,
   serializeWeight,
   serializeWeightPartition,
 } from '@travel-packlist/model';
+import { Item } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { colorFromString } from '../../../util/colors';

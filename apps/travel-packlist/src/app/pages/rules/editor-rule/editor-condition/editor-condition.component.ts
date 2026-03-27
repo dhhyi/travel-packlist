@@ -18,7 +18,7 @@ import {
   Or,
   PleaseSelect,
   Variable,
-} from '@travel-packlist/model';
+} from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 export const NOT = 'NOT';

@@ -19,7 +19,8 @@ import {
   validate,
 } from '@angular/forms/signals';
 import { IconArrowForwardComponent } from '@travel-packlist/icons';
-import { Always, Parser, Question, SyntaxError } from '@travel-packlist/model';
+import { Parser, SyntaxError } from '@travel-packlist/model';
+import { Always, Question } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import {

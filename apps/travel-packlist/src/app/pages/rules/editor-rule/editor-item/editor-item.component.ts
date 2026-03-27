@@ -18,12 +18,12 @@ import {
   validate,
 } from '@angular/forms/signals';
 import {
-  Item,
   Parser,
   serializeItem,
   serializeWeight,
   SyntaxError,
 } from '@travel-packlist/model';
+import { Item } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { noop } from 'rxjs';
 

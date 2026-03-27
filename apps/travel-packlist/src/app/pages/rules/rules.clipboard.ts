@@ -1,11 +1,10 @@
 import { computed, inject, Injectable } from '@angular/core';
 import {
-  Item,
   Parser,
-  Question,
   serializeItem,
   serializeQuestion,
 } from '@travel-packlist/model';
+import { Item, Question } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 @Injectable({ providedIn: 'root' })

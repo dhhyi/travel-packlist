@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { debounce, disabled, form, FormField } from '@angular/forms/signals';
-import { Rules } from '@travel-packlist/model';
+import { Rules } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { extractErrorMessage } from '../../util/extract-error-message';

@@ -1,4 +1,5 @@
-import { Parser, Rules, serializeRules } from '@travel-packlist/model';
+import { Parser, serializeRules } from '@travel-packlist/model';
+import { Rules } from '@travel-packlist/rules';
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 

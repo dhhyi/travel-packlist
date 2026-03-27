@@ -1,11 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  Parser,
-  serializeRule,
-  serializeRules,
-  serializeWeight,
-} from '@travel-packlist/model';
 import { Rules } from '@travel-packlist/rules';
+
+import { Parser } from './parser';
+import { serializeRule, serializeRules, serializeWeight } from './serializer';
 
 describe('serializer', () => {
   let parser: Parser;

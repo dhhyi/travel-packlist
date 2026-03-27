@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { IconCheckmarkComponent } from '@travel-packlist/icons';
-import { Question } from '@travel-packlist/model';
+import { Question } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { pairwise, startWith } from 'rxjs';
 import { concatMap } from 'rxjs/operators';

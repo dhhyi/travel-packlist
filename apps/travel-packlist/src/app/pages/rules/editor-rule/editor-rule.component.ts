@@ -14,14 +14,14 @@ import {
   IconDeleteComponent,
   IconPasteComponent,
 } from '@travel-packlist/icons';
+import { Refactor } from '@travel-packlist/model';
 import {
   Condition,
   Item,
   PleaseSelect,
   Question,
-  Refactor,
   Rule,
-} from '@travel-packlist/model';
+} from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { confirm } from '../../../dialog';

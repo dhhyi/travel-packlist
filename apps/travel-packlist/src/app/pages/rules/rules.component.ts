@@ -5,13 +5,8 @@ import {
   inject,
 } from '@angular/core';
 import { IconSwapComponent } from '@travel-packlist/icons';
-import {
-  PleaseSelect,
-  Refactor,
-  Rule,
-  Rules,
-  serializeRules,
-} from '@travel-packlist/model';
+import { Refactor, serializeRules } from '@travel-packlist/model';
+import { PleaseSelect, Rule, Rules } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { EditorRuleComponent } from './editor-rule/editor-rule.component';
