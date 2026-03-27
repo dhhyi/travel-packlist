@@ -4,7 +4,7 @@ const typescriptRules = require('../../util/typescript-rules.js');
 
 module.exports = [
   ...baseConfig,
-  typescriptRules(__dirname),
+  typescriptRules,
   {
     files: ['**/*.json'],
     languageOptions: {

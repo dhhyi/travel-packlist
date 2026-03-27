@@ -6,8 +6,8 @@ const storyBookRules = require('eslint-plugin-storybook');
 
 module.exports = [
   ...baseConfig,
-  ...typescriptRules(require.resolve('./storybook/tsconfig.json')),
-  ...angularRules(require.resolve('./storybook/tsconfig.json'), {
+  ...typescriptRules,
+  ...angularRules({
     prefix: 'ds',
   }),
   ...storyBookRules.configs['flat/recommended'],

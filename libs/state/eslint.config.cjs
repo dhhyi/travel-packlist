@@ -4,8 +4,8 @@ const typescriptRules = require('../../util/typescript-rules');
 
 module.exports = [
   ...baseConfig,
-  ...typescriptRules(__dirname),
-  ...angularRules(__dirname),
+  ...typescriptRules,
+  ...angularRules(),
   {
     files: ['**/*.ts'],
     rules: {

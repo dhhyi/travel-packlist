@@ -7,8 +7,8 @@ const typescriptRules = require('../../util/typescript-rules');
 module.exports = [
   includeIgnoreFile(require.resolve('./.gitignore')),
   ...baseConfig,
-  ...typescriptRules(__dirname),
-  ...angularRules(__dirname, { prefix: 'cmp' }),
+  ...typescriptRules,
+  ...angularRules({ prefix: 'cmp' }),
   {
     files: ['**/*.ts'],
     rules: {

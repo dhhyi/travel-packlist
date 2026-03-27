@@ -9,7 +9,7 @@ module.exports = [
   includeIgnoreFile(require.resolve('./.gitignore')),
   playwright.configs['flat/recommended'],
   ...baseConfig,
-  ...typescriptRules(__dirname),
+  ...typescriptRules,
   {
     files: ['**/*.spec.ts'],
     rules: {

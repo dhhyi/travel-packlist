@@ -1,39 +1,24 @@
 const angular = require('angular-eslint');
 const { defineConfig } = require('eslint/config');
-const { existsSync, statSync } = require('fs');
 
 const defaultOptions = {
   prefix: 'unset',
 };
 
-const rules = (tsConfigOrFolder, options) => {
-  let tsconfig;
-  if (statSync(tsConfigOrFolder).isDirectory()) {
-    tsconfig = ['lib', 'app', 'spec']
-      .map((name) => `${tsConfigOrFolder}/tsconfig.${name}.json`)
-      .filter(existsSync);
-    if (tsconfig.length === 0) {
-      throw new Error(`No tsconfig files found in ${tsConfigOrFolder}`);
-    } else if (tsconfig.length === 1) {
-      tsconfig = tsconfig[0];
-    }
-  } else {
-    tsconfig = tsConfigOrFolder;
-  }
+const rules = (options) => {
   const config = {
     ...defaultOptions,
     ...options,
   };
   console.log(__dirname);
   console.log('config', config);
-  console.log('tsconfig', tsconfig);
   return defineConfig(
     {
       extends: [...angular.configs.tsAll],
       files: ['**/*.ts', '**/*.tsx'],
       languageOptions: {
         parserOptions: {
-          project: tsconfig,
+          projectService: true,
         },
       },
       rules: {

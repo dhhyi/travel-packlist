@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "isolatedModules": true,
-    "module": "commonjs",
     "types": [
       "jest"
     ]

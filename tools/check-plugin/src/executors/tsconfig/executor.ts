@@ -226,16 +226,18 @@ function check(this: Context, tsConfigPath: string) {
       console.error('missing jest.config.ts or playwright.config.ts');
       this.unfixableErrors++;
     } else if (
+      config === 'playwright.config.ts' &&
       tsConfig.include &&
-      (tsConfig.include.length !== 2 ||
-        tsConfig.include[0] !== config ||
-        tsConfig.include[1] !== 'src/**/*.spec.ts')
+      (tsConfig.include.length !== 3 ||
+        !tsConfig.include.some((e) => e === config) ||
+        !tsConfig.include.some((e) => e === 'src/*.spec.ts') ||
+        !tsConfig.include.some((e) => e === 'src/pages/*.ts'))
     ) {
       console.error(
-        `include should be set to ["${config}", "src/**/*.spec.ts"] for tsconfig.spec.json`,
+        `include should be set to ["${config}", "src/pages/*.ts, "src/*.spec.ts"] for tsconfig.spec.json`,
       );
       this.fixableErrors++;
-      tsConfig.include = [config, 'src/**/*.spec.ts'];
+      tsConfig.include = [config, 'src/pages/*.ts', 'src/*.spec.ts'];
     }
   }
 
