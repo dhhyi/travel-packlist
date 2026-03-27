@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { And, Item, Not, Or, Question, Variable } from '@travel-packlist/rules';
 
 import { Parser, PARSER_CONFIG_PROVIDER, ParserConfig } from './parser';
+import { serializeItem, serializeQuestion } from './serializer';
 
 describe('parser', () => {
   let parser: Parser;
@@ -71,18 +72,20 @@ describe('parser', () => {
       expect(condition.evaluate({ a: false, b: false })).toBe(false);
     });
 
-    it('should parse "a OR NOT b AND c" condition', () => {
+    it.each([
+      [{ a: true, b: true, c: true }, true],
+      [{ a: true, b: false, c: true }, true],
+      [{ a: true, b: true, c: false }, true],
+      [{ a: true, b: false, c: false }, true],
+      [{ a: false, b: false, c: true }, true],
+      [{ a: false, b: true, c: true }, false],
+      [{ a: false, b: true, c: false }, false],
+      [{ a: false, b: false, c: false }, false],
+    ])('should parse "a OR NOT b AND c" condition', (input, expected) => {
       const condition = parser.parseCondition('a OR NOT b AND c');
 
       expect(condition).toBeInstanceOf(Or);
-      expect(condition.evaluate({ a: true, b: true, c: true })).toBe(true);
-      expect(condition.evaluate({ a: false, b: true, c: true })).toBe(false);
-      expect(condition.evaluate({ a: true, b: false, c: true })).toBe(true);
-      expect(condition.evaluate({ a: false, b: false, c: true })).toBe(true);
-      expect(condition.evaluate({ a: true, b: true, c: false })).toBe(true);
-      expect(condition.evaluate({ a: false, b: true, c: false })).toBe(false);
-      expect(condition.evaluate({ a: true, b: false, c: false })).toBe(true);
-      expect(condition.evaluate({ a: false, b: false, c: false })).toBe(false);
+      expect(condition.evaluate(input)).toBe(expected);
     });
 
     it('should simplify "NOT NOT NOT a" to " NOT a"', () => {
@@ -103,8 +106,16 @@ describe('parser', () => {
     });
 
     it('should throw an error if the condition is invalid', () => {
-      expect(() => parser.parseCondition('a b c')).toThrow();
-      expect(() => parser.parseCondition('a OR')).toThrow();
+      expect(() =>
+        parser.parseCondition('a b c'),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Expected end of input but " " found."`,
+      );
+      expect(() =>
+        parser.parseCondition('a OR'),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Expected end of input but " " found."`,
+      );
     });
   });
 
@@ -131,7 +142,11 @@ describe('parser', () => {
     });
 
     it('should throw an error if the question is invalid', () => {
-      expect(() => parser.parseQuestion('Is it sunny? $')).toThrow();
+      expect(() =>
+        parser.parseQuestion('Is it sunny? $'),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Expected question but "I" found."`,
+      );
     });
   });
 
@@ -203,40 +218,41 @@ describe('parser', () => {
     });
 
     it('should throw an error if the item is invalid', () => {
-      expect(() => parser.parseItem('[utility]')).toThrow();
-      expect(() => parser.parseItem('[] Scrubber')).toThrow();
-      expect(() => parser.parseItem('Scrubber')).toThrow();
+      expect(() =>
+        parser.parseItem('[utility]'),
+      ).toThrowErrorMatchingInlineSnapshot(
+        `"Expected item name but end of input found."`,
+      );
+      expect(() =>
+        parser.parseItem('[] Scrubber'),
+      ).toThrowErrorMatchingInlineSnapshot(`"Expected item but "[" found."`);
+      expect(() =>
+        parser.parseItem('Scrubber'),
+      ).toThrowErrorMatchingInlineSnapshot(`"Expected item but "S" found."`);
     });
   });
 
   describe('parseEffects', () => {
+    beforeEach(() => {
+      expect.addSnapshotSerializer({
+        test: (val) => val instanceof Question,
+        print: (val) => serializeQuestion(val as Question),
+      });
+      expect.addSnapshotSerializer({
+        test: (val) => val instanceof Item,
+        print: (val) => serializeItem(val as Item),
+      });
+    });
+
     it('should parse effects', () => {
       const effects = parser.parseEffects(
         'Is it sunny? $sunny, [utility] Scrubber, [utility] Clothesline',
       );
 
       expect(effects).toHaveLength(3);
-
-      expect(effects[0]).toBeInstanceOf(Question);
-
-      const question = effects[0] as Question;
-
-      expect(question).toHaveProperty('question', 'Is it sunny?');
-      expect(question).toHaveProperty('variable', 'sunny');
-
-      expect(effects[1]).toBeInstanceOf(Item);
-
-      const item1 = effects[1] as Item;
-
-      expect(item1).toHaveProperty('category', 'utility');
-      expect(item1).toHaveProperty('name', 'Scrubber');
-
-      expect(effects[2]).toBeInstanceOf(Item);
-
-      const item2 = effects[2] as Item;
-
-      expect(item2).toHaveProperty('category', 'utility');
-      expect(item2).toHaveProperty('name', 'Clothesline');
+      expect(effects[0]).toMatchInlineSnapshot(`Is it sunny? $sunny`);
+      expect(effects[1]).toMatchInlineSnapshot(`[utility] Scrubber`);
+      expect(effects[2]).toMatchInlineSnapshot(`[utility] Clothesline`);
     });
   });
 
@@ -249,9 +265,7 @@ describe('parser', () => {
       expect(rule.condition.evaluate({ a: true, b: true })).toBe(true);
       expect(rule.condition).toBeInstanceOf(And);
       expect(rule.questions).toHaveLength(1);
-      expect(rule.questions[0]).toBeInstanceOf(Question);
       expect(rule.items).toHaveLength(2);
-      expect(rule.items[0]).toBeInstanceOf(Item);
     });
   });
 
@@ -358,6 +372,7 @@ describe('parser', () => {
       (name) => {
         expect(() => {
           parser.validateVariableName(name);
+          // eslint-disable-next-line jest/require-to-throw-message
         }).toThrow();
       },
     );
@@ -378,6 +393,7 @@ describe('parser', () => {
       (input) => {
         expect(() => {
           parser.validateQuestionString(input);
+          // eslint-disable-next-line jest/require-to-throw-message
         }).toThrow();
       },
     );
@@ -400,6 +416,7 @@ describe('parser', () => {
       (input) => {
         expect(() => {
           parser.validateItemNameAndWeight(input);
+          // eslint-disable-next-line jest/require-to-throw-message
         }).toThrow();
       },
     );
@@ -420,6 +437,7 @@ describe('parser', () => {
       (name) => {
         expect(() => {
           parser.validateCategoryName(name);
+          // eslint-disable-next-line jest/require-to-throw-message
         }).toThrow();
       },
     );

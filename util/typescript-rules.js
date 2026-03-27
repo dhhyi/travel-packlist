@@ -44,11 +44,9 @@ const rules = defineConfig(
     ...jest.configs['flat/all'],
     rules: {
       ...jest.configs['flat/all'].rules,
-      'jest/max-expects': 'off',
       'jest/no-hooks': 'off',
       'jest/prefer-expect-assertions': 'off',
       'jest/prefer-importing-jest-globals': 'off',
-      'jest/require-to-throw-message': 'off',
     },
   }
 );

@@ -122,6 +122,7 @@ describe('state builder', () => {
 
     state.group.b.set(3);
 
+    /* eslint-disable jest/max-expects */
     expect(state.group.c()).toBe(5);
     expect(state.group.d()).toBe(10);
 
@@ -134,5 +135,6 @@ describe('state builder', () => {
 
     expect(state.group.c()).toBe(30);
     expect(state.group.d()).toBe(300);
+    /* eslint-enable jest/max-expects */
   });
 });
