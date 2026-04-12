@@ -12,6 +12,7 @@ Usage: node ${process.argv[0]} ${process.argv[1]} [options] file
 Options:
   --validate            Validate the Rules file (default action)
   --error-on-warnings   Treat warnings as errors (default false)
+  --track-weight        Enable weight tracking (default false)
   --format              Format the Rules file (in-place)
                         (implies --validate)
 
@@ -52,6 +53,10 @@ const parser = new Parser();
 
 const formatMode = args.includes('--format');
 const errorOnWarnings = args.includes('--error-on-warnings');
+
+if (args.includes('--track-weight')) {
+  parser.isTrackWeight = () => true;
+}
 
 let rules: Rules;
 
