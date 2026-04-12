@@ -74,8 +74,12 @@ if (rules.warnings?.length) {
 
 if (formatMode) {
   const formatted = serializeRules(rules);
-  writeFileSync(filePath, formatted, { encoding: 'utf-8' });
-  console.log(`File '${filePath}' formatted successfully.`);
+  if (formatted === fileContent) {
+    console.log(`File '${filePath}' is already formatted.`);
+  } else {
+    writeFileSync(filePath, formatted, { encoding: 'utf-8' });
+    console.log(`File '${filePath}' formatted successfully.`);
+  }
 } else {
   console.log(`File '${filePath}' is valid.`);
 }
