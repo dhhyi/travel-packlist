@@ -11,7 +11,6 @@ import {
   serializeWeight,
   serializeWeightPartition,
 } from '@travel-packlist/model';
-import { Item } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { colorFromString } from '../../../util/colors';
@@ -73,7 +72,7 @@ export class DisplayItemsComponent {
     }
   }
 
-  dblclick(item: Item) {
+  dblclick(item: PacklistItem) {
     if (!this.state.browser.isMobile()) {
       this.state.packlist.toggleSkippedItem(item);
     }
@@ -81,7 +80,7 @@ export class DisplayItemsComponent {
 
   private touchAction: number | undefined;
 
-  tapStart(item: Item) {
+  tapStart(item: PacklistItem) {
     if (this.state.browser.isMobile()) {
       this.touchAction = setTimeout(() => {
         this.state.packlist.toggleSkippedItem(item);
@@ -95,7 +94,7 @@ export class DisplayItemsComponent {
     }
   }
 
-  backgroundColor(item: { id: (() => string) | string; colored: boolean }) {
+  backgroundColor(item: PacklistItem | Category) {
     if (item.colored) {
       const id = typeof item.id === 'function' ? item.id() : item.id;
       return colorFromString(id);
