@@ -17,6 +17,9 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 import { colorFromString } from '../../../util/colors';
 import { ItemsStatusComponent } from './items-status/items-status.component';
 
+type Category = ReturnType<DisplayItemsComponent['packlist']>[number];
+type PacklistItem = Category['items'][number];
+
 @Component({
   selector: 'app-display-items',
   imports: [ItemsStatusComponent, IconKeyRightComponent],
@@ -58,14 +61,15 @@ export class DisplayItemsComponent {
     });
   }
 
-  toggleCheckedItem(item: Item & { checked: boolean }) {
-    if (this.state.packlist.isHideCompleted()) {
-      item.checked = !item.checked;
-      setTimeout(() => {
+  toggleCheckedItem(item: PacklistItem) {
+    if (!item.skipped) {
+      if (this.state.packlist.isHideCompleted()) {
+        setTimeout(() => {
+          this.state.packlist.toggleCheckedItem(item);
+        }, 0);
+      } else {
         this.state.packlist.toggleCheckedItem(item);
-      }, 0);
-    } else {
-      this.state.packlist.toggleCheckedItem(item);
+      }
     }
   }
 
