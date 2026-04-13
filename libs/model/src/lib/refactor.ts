@@ -62,6 +62,10 @@ export class Refactor {
     return Array.from(categories);
   }
 
+  extractQuestions(rules: Rule[]): Question[] {
+    return rules.flatMap((rule) => rule.questions);
+  }
+
   renameVariable(oldName: string, newName: string, rules: Rule[]): Rule[];
 
   renameVariable(oldName: string, newName: string, rule: Rule): Rule;

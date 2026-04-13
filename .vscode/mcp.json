@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "rules-mcp": {
+      "url": "http://localhost:3100/mcp",
+      "type": "http"
+    }
+  },
+  "inputs": []
+}

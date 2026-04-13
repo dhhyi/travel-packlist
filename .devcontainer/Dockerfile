@@ -4,9 +4,9 @@ USER root
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends exiftool imagemagick xdg-utils bc x11-utils tmux && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p "/usr/bin" && echo "IyEvYmluL2Jhc2gKZXhlYyBwbnBtIGV4ZWMgbnggLS1wYXJhbGxlbD03NSUgIiRAIgo=" | base64 -d > "/usr/bin/nx" && chmod +rx "/usr/bin/nx"
+RUN mkdir -p "/usr/bin" && echo "IyEvYmluL2Jhc2gKZXhlYyBwbnBtIGV4ZWMgbnggLS1wYXJhbGxlbD03NSUgIiRAIgo=" | base64 -d >"/usr/bin/nx" && chmod +rx "/usr/bin/nx"
 
-RUN mkdir -p "/" && echo "CiMhL2Jpbi9iYXNoCmlmIFsgLXogIiQqIiBdOyB0aGVuCiAgdG11eCBuZXctc2Vzc2lvbiAtQSAtcyB0bXV4CmZpCmV4ZWMgc2ggIiRAIgo=" | base64 -d > "/tmux-or-else.sh" && chmod +rx "/tmux-or-else.sh"
+RUN mkdir -p "/" && echo "CiMhL2Jpbi9iYXNoCmlmIFsgLXogIiQqIiBdOyB0aGVuCiAgdG11eCBuZXctc2Vzc2lvbiAtQSAtcyB0bXV4CmZpCmV4ZWMgc2ggIiRAIgo=" | base64 -d >"/tmux-or-else.sh" && chmod +rx "/tmux-or-else.sh"
 
 USER ubuntu
 ENV HOME=/home/ubuntu
@@ -17,4 +17,4 @@ RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-ima
 RUN mise use -g 'npm:@playwright/test@1.58.2'
 RUN playwright install chromium --with-deps
 
-EXPOSE 4200
+EXPOSE 4200 3100

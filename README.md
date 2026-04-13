@@ -202,5 +202,6 @@ Please backup your rules regularly to be able to revert to a previous state if n
 
 - [Rules](./libs/rules/README.md)
 - [Rules Command Line Tool](./apps/rules-cmdl/README.md)
+- [Rules MCP Server](./apps/rules-mcp/README.md)
 - [State Management](./libs/state/README.md)
 - [E2E Testing](./apps/travel-packlist-e2e/README.md)

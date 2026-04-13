@@ -22,6 +22,7 @@ node_modules
 .settings/
 *.sublime-workspace
 .vscode/*
+!.vscode/mcp.json
 
 # System Files
 .DS_Store

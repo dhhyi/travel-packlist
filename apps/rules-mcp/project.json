@@ -1,0 +1,67 @@
+{
+  "name": "rules-mcp",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "{projectRoot}/src",
+  "projectType": "library",
+  "tags": [
+    "standalone"
+  ],
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "dependsOn": [
+        "^build",
+        "^generate"
+      ],
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.app.json",
+        "esbuildConfig": "{projectRoot}/esbuild.config.js",
+        "main": "{projectRoot}/src/index.ts",
+        "outputPath": "dist/{projectRoot}",
+        "format": [
+          "cjs"
+        ]
+      },
+      "configurations": {
+        "development": {
+          "minify": false
+        },
+        "production": {
+          "minify": true
+        }
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "command": "node dist/tools/rules-mcp/index.cjs"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "{projectRoot}/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.app.json",
+        "noExports": true
+      }
+    }
+  }
+}

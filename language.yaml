@@ -26,6 +26,7 @@ devcontainer:
   instantiate: fish -c 'pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
   ports:
     - 4200
+    - 3100
 extras:
   - named-volumes
   - tmux

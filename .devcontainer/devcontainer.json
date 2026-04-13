@@ -16,7 +16,8 @@
     "cacheFrom": "type=registry,ref=ghcr.io/dhhyi/travel-packlist-devcontainer-cache"
   },
   "forwardPorts": [
-    4200
+    4200,
+    3100
   ],
   "customizations": {
     "vscode": {
