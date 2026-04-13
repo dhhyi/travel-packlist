@@ -1,4 +1,3 @@
-import { inject, Injectable, InjectionToken } from '@angular/core';
 import {
   parse,
   ParseOptions,
@@ -12,16 +11,8 @@ const defaultConfig = {
 
 export type ParserConfig = typeof defaultConfig;
 
-export const PARSER_CONFIG_PROVIDER = new InjectionToken<ParserConfig>(
-  'PARSER_CONFIG_PROVIDER',
-);
-
-@Injectable({ providedIn: 'root' })
 export class Parser {
-  private config =
-    inject(PARSER_CONFIG_PROVIDER, {
-      optional: true,
-    }) ?? defaultConfig;
+  constructor(private config: ParserConfig = defaultConfig) {}
 
   isTrackWeight(): boolean {
     return this.config.isTrackWeight();
@@ -62,7 +53,7 @@ export class Parser {
       return parse(input, this.makeOptions('Rules'));
     } catch (error) {
       const message: string[] = [];
-      message.push($localize`Error parsing rules`);
+      message.push(`Error parsing rules`);
       if (error instanceof SyntaxError) {
         const line = error.location.start.line.toString();
         const column = error.location.start.column.toString();

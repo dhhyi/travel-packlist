@@ -1,3 +1,5 @@
+/// <reference types="@angular/localize" />
+
 export { GLOBAL_STATE, RESET_SWITCH } from './lib/global-state';
 
 export {

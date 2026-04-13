@@ -1,28 +1,16 @@
-import { TestBed } from '@angular/core/testing';
 import { And, Item, Not, Or, Question, Variable } from '@travel-packlist/rules';
 
-import { Parser, PARSER_CONFIG_PROVIDER, ParserConfig } from './parser';
+import { Parser } from './parser';
 import { serializeItem, serializeQuestion } from './serializer';
 
 describe('parser', () => {
-  let parser: Parser;
   let trackWeight: boolean;
+  const parser = new Parser({
+    isTrackWeight: () => trackWeight,
+  });
 
   beforeEach(() => {
     trackWeight = false;
-
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: PARSER_CONFIG_PROVIDER,
-          useValue: {
-            isTrackWeight: () => trackWeight,
-          } as ParserConfig,
-        },
-      ],
-    });
-
-    parser = TestBed.inject(Parser);
   });
 
   describe('parseCondition', () => {

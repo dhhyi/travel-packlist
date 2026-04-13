@@ -1,4 +1,3 @@
-import { TestBed } from '@angular/core/testing';
 import { Rule } from '@travel-packlist/rules';
 
 import { Parser } from './parser';
@@ -11,13 +10,8 @@ import {
 } from './serializer';
 
 describe('refactor', () => {
-  let refactor: Refactor;
-  let parser: Parser;
-
-  beforeEach(() => {
-    refactor = TestBed.inject(Refactor);
-    parser = TestBed.inject(Parser);
-  });
+  const parser = new Parser();
+  const refactor = new Refactor(parser);
 
   describe('extractVariables', () => {
     const rules = `

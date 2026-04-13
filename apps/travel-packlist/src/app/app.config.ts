@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideDocumentationTopics } from '@travel-packlist/documentation';
-import { PARSER_CONFIG_PROVIDER, ParserConfig } from '@travel-packlist/model';
+import { provideRulesModel } from '@travel-packlist/model';
 import { provideRulesTemplates } from '@travel-packlist/rules-template';
 import {
   CAPACITOR_HTTP_REQUEST_MODE,
@@ -51,16 +51,13 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => {
       inject(ScrollIntoView).init();
     }),
-    {
-      provide: PARSER_CONFIG_PROVIDER,
-      useFactory: (): ParserConfig => {
-        const injector = inject(Injector);
-        return {
-          // needs to remain a function to avoid circular dependency
-          isTrackWeight: () => injector.get(GLOBAL_STATE).config.trackWeight(),
-        };
-      },
-    },
+    provideRulesModel(() => {
+      const injector = inject(Injector);
+      return {
+        // needs to remain a function to avoid circular dependency
+        isTrackWeight: () => injector.get(GLOBAL_STATE).config.trackWeight(),
+      };
+    }),
     {
       provide: RulesShare,
       useClass: ANDROID ? AndroidRulesShare : WebRulesShare,

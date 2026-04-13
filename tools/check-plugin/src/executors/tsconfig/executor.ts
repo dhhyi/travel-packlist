@@ -208,7 +208,10 @@ function check(this: Context, tsConfigPath: string) {
         this.fixableErrors++;
         tsConfig.exclude.push('jest.config.ts');
       }
-      if (!tsConfig.exclude.includes('src/test-setup.ts')) {
+      if (
+        !tsConfig.exclude.includes('src/test-setup.ts') &&
+        existsSync(this.projectRoot + '/src/test-setup.ts')
+      ) {
         console.error('exclude should include src/test-setup.ts');
         this.fixableErrors++;
         tsConfig.exclude.push('src/test-setup.ts');

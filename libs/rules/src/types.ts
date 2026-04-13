@@ -17,7 +17,7 @@ export class Rule {
 }
 
 export class Question {
-  static NEW_QUESTION_NAME = $localize`New Question`;
+  static NEW_QUESTION_NAME = 'new_question';
   static NEW_VARIABLE_NAME = 'new_variable';
   constructor(
     public readonly question: string,
@@ -38,8 +38,8 @@ function sanitize(input: string): string {
 }
 
 export class Item {
-  static NEW_ITEM_NAME = $localize`New Item`;
-  static NEW_CATEGORY_NAME = $localize`New`;
+  static NEW_ITEM_NAME = 'new_item';
+  static NEW_CATEGORY_NAME = 'new_category';
   constructor(
     public readonly category: string,
     public readonly name: string,

@@ -1,7 +1,5 @@
-/// <reference types="@angular/localize" />
-
 export { SyntaxError } from '@travel-packlist/rules';
-export * from './lib/parser';
+export { Parser, ParserConfig } from './lib/parser';
 export { Refactor } from './lib/refactor';
 export {
   serializeItem,
@@ -10,3 +8,4 @@ export {
   serializeWeight,
   serializeWeightPartition,
 } from './lib/serializer';
+export { provideRulesModel } from './lib/provider';

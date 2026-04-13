@@ -1,15 +1,10 @@
-import { TestBed } from '@angular/core/testing';
 import { Rules } from '@travel-packlist/rules';
 
 import { Parser } from './parser';
 import { serializeRule, serializeRules, serializeWeight } from './serializer';
 
 describe('serializer', () => {
-  let parser: Parser;
-
-  beforeEach(() => {
-    parser = TestBed.inject(Parser);
-  });
+  const parser = new Parser();
 
   it('should serialize a rule with multiple effects', () => {
     const rule = parser.parseRule(

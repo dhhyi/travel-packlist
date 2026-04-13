@@ -1,4 +1,3 @@
-import { inject, Injectable } from '@angular/core';
 import {
   Always,
   And,
@@ -20,9 +19,8 @@ interface FilterFunctionType {
   rules: Rule[];
 }
 
-@Injectable({ providedIn: 'root' })
 export class Refactor {
-  private parser = inject(Parser);
+  constructor(private parser: Parser) {}
 
   extractVariablesFromCondition(condition: Condition): Set<string> {
     if (condition instanceof Always || condition instanceof PleaseSelect) {

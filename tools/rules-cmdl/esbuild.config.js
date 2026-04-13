@@ -16,36 +16,6 @@ function getGitHash() {
   }
 }
 
-/**
- * @returns {import('esbuild').Plugin}
- */
-function removeLocalizePlugin() {
-  return {
-    name: 'remove-localize',
-    setup(build) {
-      build.onLoad({ filter: /.*/ }, (args) => ({
-        contents: readFileSync(args.path, 'utf8').replaceAll('$localize', ''),
-        loader: 'ts',
-      }));
-    },
-  };
-}
-
-/**
- * @returns {import('esbuild').Plugin}
- */
-function replaceAngularImportsPlugin() {
-  return {
-    name: 'replace-angular-imports',
-    setup(build) {
-      build.onResolve({ filter: /@angular\/core/ }, () => ({
-        namespace: 'empty',
-        path: 'tools/rules-cmdl/angular-replacements.ts',
-      }));
-    },
-  };
-}
-
 /** @type {import('esbuild').BuildOptions} */
 module.exports = {
   bundle: true,
@@ -54,7 +24,6 @@ module.exports = {
     VERSION: `"${getPackageJsonVersion()}"`,
   },
   platform: 'node',
-  plugins: [removeLocalizePlugin(), replaceAngularImportsPlugin()],
   sourcemap: false,
   target: 'node',
 };

@@ -1,4 +1,4 @@
-import { Parser, serializeRules } from '@travel-packlist/model';
+import { Parser, serializeRules, ParserConfig } from '@travel-packlist/model';
 import { Rules } from '@travel-packlist/rules';
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
@@ -49,14 +49,15 @@ try {
   process.exit(1);
 }
 
-const parser = new Parser();
-
 const formatMode = args.includes('--format');
 const errorOnWarnings = args.includes('--error-on-warnings');
 
+let config: ParserConfig | undefined;
 if (args.includes('--track-weight')) {
-  parser.isTrackWeight = () => true;
+  config = { isTrackWeight: () => true };
 }
+
+const parser = new Parser(config);
 
 let rules: Rules;
 

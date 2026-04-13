@@ -1,7 +1,6 @@
 {
   "exclude": [
-    "jest.config.ts",
-    "src/test-setup.ts"
+    "jest.config.ts"
   ],
   "extends": "./tsconfig.json",
   "include": [
