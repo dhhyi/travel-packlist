@@ -1,5 +1,4 @@
 import { ExecutorContext, PromiseExecutor, cacheDir } from '@nx/devkit';
-import axios from 'axios';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
 import { Minimatch } from 'minimatch';
@@ -112,9 +111,9 @@ async function checkLinksInFile(file: string): Promise<void> {
     async function checkExternalLinkError(link: string) {
       console.log('checking', link);
       const headers = { 'User-Agent': 'Nx-Devkit-Link-Checker' };
-      return axios
-        .head(link, { headers })
-        .catch(() => axios.get(link, { headers }));
+      return fetch(link, { method: 'HEAD', headers }).catch(() =>
+        fetch(link, { method: 'GET', headers }),
+      );
     }
 
     const checkedLinks = getLinksCache();
