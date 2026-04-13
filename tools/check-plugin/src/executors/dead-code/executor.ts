@@ -488,7 +488,9 @@ const run: PromiseExecutor<ExecutorSchema> = async (options, pluginContext) => {
     const context = new Context(options, pluginContext);
     context.logInfo('Running dead code executor');
 
-    writeExportReport.bind(context)();
+    if (!options.noExports) {
+      writeExportReport.bind(context)();
+    }
     writeImportReport.bind(context)();
     traverseProject.bind(context)();
 

@@ -20,6 +20,11 @@
       "type": "boolean",
       "description": "Print additional information",
       "default": false
+    },
+    "noExports": {
+      "type": "boolean",
+      "description": "Do not try to find exported symbols",
+      "default": false
     }
   },
   "required": [

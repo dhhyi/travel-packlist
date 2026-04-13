@@ -125,7 +125,7 @@ jobs:
         env:
           REPO: self
           BRANCH: rules-cmdl
-          FOLDER: dist/tools/rules-cmdl
+          FOLDER: dist/apps/rules-cmdl
           SQUASH_HISTORY: false
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

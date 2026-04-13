@@ -28,7 +28,7 @@ const run: PromiseExecutor<ExecutorSchema> = async (options) => {
     for (const file of files) {
       console.log(`Checking file: ${file}`);
       execSync(
-        `node dist/tools/rules-cmdl/index.cjs ${file} ${args.join(' ')}`,
+        `node dist/apps/rules-cmdl/index.cjs ${file} ${args.join(' ')}`,
         {
           stdio: 'inherit',
         },
