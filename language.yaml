@@ -20,7 +20,7 @@ devcontainer:
         path: /usr/bin/nx
         content: |
           #!/bin/bash
-          exec pnpm exec nx "$@"
+          exec pnpm exec nx --parallel=75% "$@"
   publish:
     image: ghcr.io/dhhyi/travel-packlist-devcontainer
   instantiate: fish -c 'pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
