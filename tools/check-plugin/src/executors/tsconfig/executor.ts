@@ -159,6 +159,9 @@ function check(this: Context, tsConfigPath: string) {
     if (tsConfig[key]) {
       for (let idx = tsConfig[key].length - 1; idx >= 0; idx--) {
         const pattern = tsConfig[key][idx];
+        if (pattern === 'src/**/*.ts' || pattern === 'src/**/*.test.ts') {
+          continue;
+        }
         const files = globSync(pattern, { cwd: dirname(tsConfigPath) });
         if (files.length === 0) {
           console.error('pattern does not match any files:', pattern);
@@ -193,40 +196,39 @@ function check(this: Context, tsConfigPath: string) {
       tsConfig.include = ['src/**/*.ts'];
     }
     const testFilePatterns = globSync(
-      '{jest.config.ts,src/test-setup.ts,src/**/*.spec.ts}',
+      '{vite.config.ts,src/test-setup.ts,src/**/*.test.ts}',
       { cwd: dirname(tsConfigPath) },
     );
     if (testFilePatterns.length > 0) {
       tsConfig.exclude ??= [];
-      if (!tsConfig.exclude.includes('src/**/*.spec.ts')) {
-        console.error('exclude should include src/**/*.spec.ts');
+      if (!tsConfig.exclude.includes('src/**/*.test.ts')) {
+        console.error('exclude should include src/**/*.test.ts');
         this.fixableErrors++;
-        tsConfig.exclude.push('src/**/*.spec.ts');
+        tsConfig.exclude.push('src/**/*.test.ts');
       }
-      if (!tsConfig.exclude.includes('jest.config.ts')) {
-        console.error('exclude should include jest.config.ts');
-        this.fixableErrors++;
-        tsConfig.exclude.push('jest.config.ts');
-      }
-      if (
-        !tsConfig.exclude.includes('src/test-setup.ts') &&
-        existsSync(this.projectRoot + '/src/test-setup.ts')
-      ) {
-        console.error('exclude should include src/test-setup.ts');
-        this.fixableErrors++;
-        tsConfig.exclude.push('src/test-setup.ts');
+      for (const pattern of ['vite.config.ts', 'src/test-setup.ts']) {
+        if (
+          existsSync(this.projectRoot + '/' + pattern) &&
+          !tsConfig.exclude.includes(pattern)
+        ) {
+          console.error('exclude should include ' + pattern);
+          this.fixableErrors++;
+          tsConfig.exclude.push(pattern);
+        }
       }
     }
   }
 
   if (tsConfigPath.endsWith('/tsconfig.spec.json')) {
-    const config = existsSync(this.projectRoot + '/jest.config.ts')
-      ? 'jest.config.ts'
-      : existsSync(this.projectRoot + '/playwright.config.ts')
-        ? 'playwright.config.ts'
+    const config = existsSync(this.projectRoot + '/playwright.config.ts')
+      ? 'playwright.config.ts'
+      : existsSync(this.projectRoot + '/vite.config.ts')
+        ? 'vite.config.ts'
         : null;
     if (!config) {
-      console.error('missing jest.config.ts or playwright.config.ts');
+      console.error(
+        'missing test config file: expected playwright.config.ts or vite.config.ts',
+      );
       this.unfixableErrors++;
     } else if (
       config === 'playwright.config.ts' &&

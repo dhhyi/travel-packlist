@@ -97,12 +97,12 @@ describe('parser', () => {
       expect(() =>
         parser.parseCondition('a b c'),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"Expected end of input but " " found."`,
+        `[SyntaxError: Expected end of input but " " found.]`,
       );
       expect(() =>
         parser.parseCondition('a OR'),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"Expected end of input but " " found."`,
+        `[SyntaxError: Expected end of input but " " found.]`,
       );
     });
   });
@@ -133,7 +133,7 @@ describe('parser', () => {
       expect(() =>
         parser.parseQuestion('Is it sunny? $'),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"Expected question but "I" found."`,
+        `[SyntaxError: Expected question but "I" found.]`,
       );
     });
   });
@@ -209,14 +209,18 @@ describe('parser', () => {
       expect(() =>
         parser.parseItem('[utility]'),
       ).toThrowErrorMatchingInlineSnapshot(
-        `"Expected item name but end of input found."`,
+        `[SyntaxError: Expected item name but end of input found.]`,
       );
       expect(() =>
         parser.parseItem('[] Scrubber'),
-      ).toThrowErrorMatchingInlineSnapshot(`"Expected item but "[" found."`);
+      ).toThrowErrorMatchingInlineSnapshot(
+        `[SyntaxError: Expected item but "[" found.]`,
+      );
       expect(() =>
         parser.parseItem('Scrubber'),
-      ).toThrowErrorMatchingInlineSnapshot(`"Expected item but "S" found."`);
+      ).toThrowErrorMatchingInlineSnapshot(
+        `[SyntaxError: Expected item but "S" found.]`,
+      );
     });
   });
 
@@ -360,7 +364,7 @@ describe('parser', () => {
       (name) => {
         expect(() => {
           parser.validateVariableName(name);
-          // eslint-disable-next-line jest/require-to-throw-message
+          // eslint-disable-next-line vitest/require-to-throw-message
         }).toThrow();
       },
     );
@@ -381,7 +385,7 @@ describe('parser', () => {
       (input) => {
         expect(() => {
           parser.validateQuestionString(input);
-          // eslint-disable-next-line jest/require-to-throw-message
+          // eslint-disable-next-line vitest/require-to-throw-message
         }).toThrow();
       },
     );
@@ -404,7 +408,7 @@ describe('parser', () => {
       (input) => {
         expect(() => {
           parser.validateItemNameAndWeight(input);
-          // eslint-disable-next-line jest/require-to-throw-message
+          // eslint-disable-next-line vitest/require-to-throw-message
         }).toThrow();
       },
     );
@@ -425,7 +429,7 @@ describe('parser', () => {
       (name) => {
         expect(() => {
           parser.validateCategoryName(name);
-          // eslint-disable-next-line jest/require-to-throw-message
+          // eslint-disable-next-line vitest/require-to-throw-message
         }).toThrow();
       },
     );

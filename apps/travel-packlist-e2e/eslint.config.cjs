@@ -10,10 +10,4 @@ module.exports = [
   playwright.configs['flat/recommended'],
   ...baseConfig,
   ...typescriptRules,
-  {
-    files: ['**/*.spec.ts'],
-    rules: {
-      'jest/require-hook': 'off',
-    },
-  },
 ];

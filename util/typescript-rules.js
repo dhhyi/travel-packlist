@@ -1,5 +1,5 @@
 const eslint = require('@eslint/js');
-const jest = require('eslint-plugin-jest');
+const vitest = require('@vitest/eslint-plugin');
 const { defineConfig } = require('eslint/config');
 const tseslint = require('typescript-eslint');
 
@@ -40,13 +40,14 @@ const rules = defineConfig(
     },
   },
   {
-    files: ['**/*.spec.ts'],
-    ...jest.configs['flat/all'],
+    files: ['**/*.test.ts'],
+    ...vitest.configs['all'],
     rules: {
-      ...jest.configs['flat/all'].rules,
-      'jest/no-hooks': 'off',
-      'jest/prefer-expect-assertions': 'off',
-      'jest/prefer-importing-jest-globals': 'off',
+      ...vitest.configs['all'].rules,
+      'vitest/no-hooks': 'off',
+      'vitest/no-importing-vitest-globals': 'error',
+      'vitest/prefer-expect-assertions': 'off',
+      'vitest/prefer-importing-vitest-globals': 'off',
     },
   }
 );

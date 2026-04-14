@@ -64,7 +64,7 @@ sunny :-
 `);
   });
 
-  describe('serializeWeight', () => {
+  describe('serialize weight', () => {
     it('should serialize a weight', () => {
       expect(serializeWeight(123)).toBe('123g');
     });

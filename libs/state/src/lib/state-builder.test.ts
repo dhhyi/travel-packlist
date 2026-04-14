@@ -23,8 +23,8 @@ describe('state builder', () => {
       StateBuilder.builder(),
     );
 
-    expect(builder).toBeTruthy();
-    expect(builder.build()).toBeTruthy();
+    expect(builder).toBeInstanceOf(StateBuilder);
+    expect(builder.build()).toBeDefined();
   });
 
   it('should extend the state', async () => {
@@ -33,7 +33,6 @@ describe('state builder', () => {
         const a = signal(1);
         const reset = inject(RESET_SIGNAL);
         effect(() => {
-          // eslint-disable-next-line jest/no-conditional-in-test
           if (reset()) {
             a.set(0);
           }
@@ -44,7 +43,7 @@ describe('state builder', () => {
       }),
     ).build();
 
-    expect(state.group.a).toBeTruthy();
+    expect(state.group.a).toBeInstanceOf(Function);
     expect(state.group.a()).toBe(1);
 
     state.group.a.set(2);
@@ -56,7 +55,6 @@ describe('state builder', () => {
         const a = signal(1);
         const reset = inject(RESET_SIGNAL);
         effect(() => {
-          // eslint-disable-next-line jest/no-conditional-in-test
           if (reset()) {
             a.set(0);
           }
@@ -79,7 +77,6 @@ describe('state builder', () => {
           const reset = inject(RESET_SIGNAL);
           effect(
             () => {
-              // eslint-disable-next-line jest/no-conditional-in-test
               if (reset()) {
                 a.set(0);
                 b.set(0);
@@ -111,7 +108,7 @@ describe('state builder', () => {
 
     const state = builder.build();
 
-    expect(state.group.c).toBeTruthy();
+    expect(state.group.c).toBeInstanceOf(Function);
     expect(state.group.c()).toBe(3);
     expect(state.group.d()).toBe(3);
 
@@ -122,7 +119,7 @@ describe('state builder', () => {
 
     state.group.b.set(3);
 
-    /* eslint-disable jest/max-expects */
+    /* eslint-disable vitest/max-expects */
     expect(state.group.c()).toBe(5);
     expect(state.group.d()).toBe(10);
 
@@ -135,6 +132,6 @@ describe('state builder', () => {
 
     expect(state.group.c()).toBe(30);
     expect(state.group.d()).toBe(300);
-    /* eslint-enable jest/max-expects */
+    /* eslint-enable vitest/max-expects */
   });
 });

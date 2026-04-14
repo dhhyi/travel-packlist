@@ -37,45 +37,6 @@ describe('rules-mcp server', () => {
     await client.close();
   });
 
-  beforeEach(() => {
-    expect.addSnapshotSerializer({
-      test: (val) =>
-        typeof val === 'object' &&
-        val !== null &&
-        'content' in val &&
-        !('isError' in val),
-      print: (val: unknown, print) => {
-        const { content } = val as { content: unknown };
-        return print(content);
-      },
-    });
-    expect.addSnapshotSerializer({
-      test: (val) =>
-        typeof val === 'object' &&
-        val !== null &&
-        'type' in val &&
-        'text' in val &&
-        val.type === 'text',
-      print: (val: unknown, print, indent) => {
-        const { text } = val as { text: string };
-        let parsed;
-        try {
-          parsed = JSON.parse(text);
-        } catch {
-          parsed = text.replaceAll(/\n\s*/gm, ' ').trim();
-        }
-        return 'text:\n' + indent(print(parsed));
-      },
-    });
-    expect.addSnapshotSerializer({
-      test: (val) => Array.isArray(val) && val.length === 1,
-      print: (val: unknown, print) => {
-        const array = val as unknown[];
-        return print(array[0]);
-      },
-    });
-  });
-
   describe('load-rules', () => {
     it('returns a summary with correct counts after loading rules', async () => {
       const result = await client.callTool({

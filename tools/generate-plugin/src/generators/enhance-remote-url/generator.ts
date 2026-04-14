@@ -21,7 +21,7 @@ function shout(text: string) {
 
 export async function generator(tree: Tree, options: GeneratorSchema) {
   const files = globSync(options.pattern).filter(
-    (file) => !file.endsWith('.spec.ts'),
+    (file) => !file.endsWith('.test.ts'),
   );
 
   const transformers = files.map((file) =>

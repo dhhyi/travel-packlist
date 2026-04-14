@@ -2,7 +2,7 @@ import { firstValueFrom, toArray } from 'rxjs';
 
 import { stagger } from './stagger';
 
-describe('stagger', () => {
+describe('stagger utility', () => {
   const equals = (a: string, b: string) => a === b;
 
   async function doStagger(previous: string[], current: string[]) {

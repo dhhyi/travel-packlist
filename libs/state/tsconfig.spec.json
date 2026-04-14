@@ -2,15 +2,13 @@
   "compilerOptions": {
     "isolatedModules": true,
     "types": [
-      "jest"
+      "vitest/globals"
     ]
   },
   "extends": "./tsconfig.json",
-  "files": [
-    "src/test-setup.ts"
-  ],
   "include": [
-    "jest.config.ts",
-    "src/**/*.spec.ts"
+    "vite.config.ts",
+    "src/**/*.test.ts",
+    "src/test-setup.ts"
   ]
 }

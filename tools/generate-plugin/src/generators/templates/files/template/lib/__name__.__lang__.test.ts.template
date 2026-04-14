@@ -1,6 +1,5 @@
 import { Parser } from '@travel-packlist/model';
-
-const template = require('<%= importName(name, lang) %>');
+import template from '<%= importName(name, lang) %>?raw';
 
 describe('<%= name %> (<%= lang %>) template', () => {
   it('should parse', () => {
