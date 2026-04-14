@@ -22,6 +22,9 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "chat.tools.terminal.terminalProfile.linux": {
+          "path": "/usr/bin/bash"
+        },
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "files.associations": {
           "**/whatsnew-*": "plaintext"
@@ -41,10 +44,17 @@
         "tailwindCSS.includeLanguages": {
           "typescript": "css"
         },
-        "terminal.integrated.defaultProfile.linux": "tmux",
+        "terminal.integrated.defaultProfile.linux": "tmux-reuse",
         "terminal.integrated.profiles.linux": {
-          "tmux": {
-            "path": "/tmux-or-else.sh"
+          "tmux-reuse": {
+            "args": [
+              "new-session",
+              "-A",
+              "-s",
+              "vscode"
+            ],
+            "icon": "terminal-tmux",
+            "path": "/usr/bin/tmux"
           }
         }
       },
