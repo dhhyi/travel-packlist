@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideDocumentationTopics } from '@travel-packlist/documentation';
-import { provideRulesModel } from '@travel-packlist/model';
+import { provideRulesModel } from '@travel-packlist/model/provider';
 import { provideRulesTemplates } from '@travel-packlist/rules-template';
 import {
   CAPACITOR_HTTP_REQUEST_MODE,

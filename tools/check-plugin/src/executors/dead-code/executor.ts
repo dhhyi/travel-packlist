@@ -395,22 +395,26 @@ function writeExportReport(this: Context) {
     return nodes;
   }
 
-  function jsonExportReport(nodes: Node[], id: string): ExportReport {
-    const projectRoot = nodes[0].getProject().getCompilerOptions().baseUrl!;
-    const report = nodes.reduce<
-      Record<string, ExportReport[string][string] | undefined>
-    >((acc, node) => {
-      const type = node.getKindName();
-      const name = getSimpleName(node);
-      const path = node
-        .getSourceFile()
-        .getFilePath()
-        .substring(projectRoot.length + 1);
-      const line = node.getStartLineNumber();
-      acc[name] = { type, path, line };
+  function jsonExportReport(exp: (readonly [string, Node[]])[]): ExportReport {
+    return exp.reduce<ExportReport>((acc, [id, nodes]) => {
+      const projectRoot = nodes[0].getProject().getCompilerOptions().baseUrl!;
+      const report = nodes.reduce<Record<string, ExportReport[string][string]>>(
+        (acc, node) => {
+          const type = node.getKindName();
+          const name = getSimpleName(node);
+          const path = node
+            .getSourceFile()
+            .getFilePath()
+            .substring(projectRoot.length + 1);
+          const line = node.getStartLineNumber();
+          acc[name] = { type, path, line };
+          return acc;
+        },
+        {},
+      );
+      acc[id] = report;
       return acc;
     }, {});
-    return { [id]: report } as ExportReport;
   }
 
   const projectFiles = this.projectFilePaths();
@@ -420,21 +424,22 @@ function writeExportReport(this: Context) {
   const entryFiles = projectFiles.filter(
     (file) => shortPathLookup[file] && file.startsWith(this.projectRootPath()),
   );
-  if (entryFiles.length === 1) {
-    const mainEntryFile = entryFiles[0];
-    const entryFile = this.project.getSourceFile(mainEntryFile)!;
-    const exportTokens = findExportedTokens(entryFile);
-    this.exportTokens = exportTokens;
-    const report = jsonExportReport(
-      exportTokens,
-      shortPathLookup[mainEntryFile],
-    );
+  if (entryFiles.length) {
+    const exportTokens = entryFiles.map((entryFile) => {
+      const sourceFile = this.project.getSourceFileOrThrow(entryFile);
+      return [
+        shortPathLookup[entryFile],
+        findExportedTokens(sourceFile),
+      ] as const;
+    });
+    const report = jsonExportReport(exportTokens);
     const reportPath = reportFileName(this.projectRootPath(), 'exports');
     this.logInfo('Writing export report to', reportPath);
     mkdirSync(dirname(reportPath), { recursive: true });
     writeFileSync(reportPath, JSON.stringify(report, null, 2), {
       encoding: 'utf-8',
     });
+    this.exportTokens = exportTokens.flatMap(([, tokens]) => tokens);
   }
 }
 

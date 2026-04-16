@@ -9,4 +9,3 @@ export {
   serializeWeight,
   serializeWeightPartition,
 } from './lib/serializer';
-export { provideRulesModel } from './lib/provider';
