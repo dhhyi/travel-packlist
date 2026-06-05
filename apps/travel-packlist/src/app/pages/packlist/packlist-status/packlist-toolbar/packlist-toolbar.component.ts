@@ -11,6 +11,7 @@ import {
   IconLockOpenComponent,
   IconPieChartComponent,
   IconVisibleComponent,
+  IconEditNoteComponent,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 
@@ -23,6 +24,7 @@ import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
     IconPieChartComponent,
     IconInvisibleComponent,
     IconVisibleComponent,
+    IconEditNoteComponent,
   ],
   templateUrl: './packlist-toolbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,5 +61,15 @@ export class PacklistToolbarComponent {
     } else {
       this.state.packlist.setStatsVisible(stat);
     }
+  }
+
+  readonly displayNotesButton = computed(
+    () => this.state.packlist.currentSlot() > 0,
+  );
+
+  readonly notesVisible = this.state.packlist.isNotesVisible;
+
+  toggleNotes() {
+    this.state.packlist.setNotesVisible(!this.notesVisible());
   }
 }

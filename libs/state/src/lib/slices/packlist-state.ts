@@ -50,6 +50,8 @@ interface SessionState {
   statsVisible: ItemStats | undefined;
   createdAt: number;
   modifiedAt: number;
+  notes?: string;
+  notesVisible: boolean;
 }
 
 export type SavedSession = Pick<SessionState, 'sessionName' | 'modifiedAt'> & {
@@ -65,6 +67,7 @@ function createNewSession(): SessionState {
     answersLocked: false,
     hideCompleted: false,
     statsVisible: undefined,
+    notesVisible: false,
     createdAt: Date.now(),
     modifiedAt: Date.now(),
   };
@@ -98,6 +101,22 @@ export const packlistState = ({
     updateSession((old) => ({
       ...old,
       sessionName: name,
+      modifiedAt: Date.now(),
+    }));
+  }
+
+  function setSessionNotes(notes: string | undefined) {
+    updateSession((old) => ({
+      ...old,
+      notes,
+      modifiedAt: Date.now(),
+    }));
+  }
+
+  function setNotesVisible(visible: boolean) {
+    updateSession((old) => ({
+      ...old,
+      notesVisible: visible,
       modifiedAt: Date.now(),
     }));
   }
@@ -367,6 +386,12 @@ export const packlistState = ({
       /** storage: the session name of the packlist */
       sessionName: computed(() => session().sessionName),
       setSessionName,
+      /** storage: the session notes of the packlist */
+      sessionNotes: computed(() => session().notes),
+      setSessionNotes,
+      /** storage: whether the session notes are visible */
+      isNotesVisible: computed(() => session().notesVisible),
+      setNotesVisible,
       /** storage: the answers from checked questions in the packlist */
       answers: computed(() => session().answers),
       updateAnswer,

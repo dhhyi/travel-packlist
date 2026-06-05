@@ -56,5 +56,18 @@
         (click)="toggleStats('heaviestItems')"
       ></button>
     }
+    @if (displayNotesButton()) {
+      <button
+        iconEditNote
+        iconClass="h-6 w-6"
+        type="button"
+        class="link"
+        aria-label="Edit session notes"
+        i18n-aria-label
+        [attr.aria-pressed]="notesVisible()"
+        [class.pressed]="notesVisible()"
+        (click)="toggleNotes()"
+      ></button>
+    }
   </div>
 }

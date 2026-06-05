@@ -8,6 +8,7 @@ import { IconProgressActivityComponent } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { DisplayItemsComponent } from './display-items/display-items.component';
+import { DisplayNotesComponent } from './display-notes/display-notes.component';
 import { DisplayQuestionsComponent } from './display-questions/display-questions.component';
 import { DisplayTitleComponent } from './display-title/display-title.component';
 import { PacklistStatusComponent } from './packlist-status/packlist-status.component';
@@ -22,6 +23,7 @@ import { PacklistToolbarComponent } from './packlist-status/packlist-toolbar/pac
     PacklistToolbarComponent,
     IconProgressActivityComponent,
     DisplayTitleComponent,
+    DisplayNotesComponent,
   ],
   templateUrl: './packlist.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
