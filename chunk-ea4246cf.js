@@ -1,0 +1,2 @@
+import{b as e}from"./chunk-e94aef17.js";import"./chunk-16574126.js";var r=class extends e{async canShare(){return typeof navigator>"u"||!navigator.share?{value:!1}:{value:!0}}async share(a){if(typeof navigator>"u"||!navigator.share)throw this.unavailable("Share API not available in this browser");return await navigator.share({title:a.title,text:a.text,url:a.url}),{}}};export{r as ShareWeb};
+/**i18n:3c733494c05bf9283e4c29bf500547c037b44a892b0e31592bc28a01859422af*/
