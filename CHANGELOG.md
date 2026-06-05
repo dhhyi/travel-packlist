@@ -1,3 +1,14 @@
+## [1.7.0](https://github.com/dhhyi/travel-packlist/compare/v1.6.5...v1.7.0) (2026-06-05)
+
+### Features
+
+- added MCP server ([82369e1](https://github.com/dhhyi/travel-packlist/commit/82369e1170776bfed4f5d2a60f27685143f5e408))
+- notes for sessions ([14d3e97](https://github.com/dhhyi/travel-packlist/commit/14d3e9750a0b863984a1a41d6e309f7f04c3fe85))
+
+### Bug Fixes
+
+- disable toggle of skipped items ([1227472](https://github.com/dhhyi/travel-packlist/commit/122747210909e56e3a176fde7acf06a3cf58bf68))
+
 ## [1.6.5](https://github.com/dhhyi/travel-packlist/compare/v1.6.4...v1.6.5) (2026-03-22)
 
 ### Bug Fixes
