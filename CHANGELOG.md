@@ -1,3 +1,9 @@
+## [1.7.1](https://github.com/dhhyi/travel-packlist/compare/v1.7.0...v1.7.1) (2026-06-05)
+
+### Bug Fixes
+
+- wrap toolbar buttons on slim screens ([c06941a](https://github.com/dhhyi/travel-packlist/commit/c06941a2a52403fac03b2ccc0f6d689593a51543))
+
 ## [1.7.0](https://github.com/dhhyi/travel-packlist/compare/v1.6.5...v1.7.0) (2026-06-05)
 
 ### Features
