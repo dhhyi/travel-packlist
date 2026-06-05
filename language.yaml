@@ -17,10 +17,15 @@ devcontainer:
       - RUN playwright install chromium --with-deps
     files:
       - type: script
-        path: /usr/bin/nx
+        path: $HOME/.config/fish/conf.d/nx.fish
         content: |
-          #!/bin/bash
-          exec pnpm exec nx --parallel=75% "$@"
+          function nx
+              if string match -q "run*" $argv[1]
+                  pnpm nx --parallel=75% $argv
+              else
+                  pnpm nx $argv
+              end
+          end
   publish:
     image: ghcr.io/dhhyi/travel-packlist-devcontainer
   instantiate: fish -c 'pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'

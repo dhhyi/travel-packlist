@@ -200,7 +200,7 @@ jobs:
             CI=true
             MISE_ENV=ci
             NX_CLOUD_ACCESS_TOKEN=$NX_CLOUD_ACCESS_TOKEN
-          runCmd: nx run travel-packlist-e2e:e2e --configuration ci
+          runCmd: pnpm exec nx run travel-packlist-e2e:e2e --configuration ci
 
       - name: Package E2E Results 📦
         uses: actions/upload-artifact@v4
