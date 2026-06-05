@@ -1,4 +1,4 @@
-import { computed, effect, inject, signal, Signal } from '@angular/core';
+import { computed, effect, inject, signal } from '@angular/core';
 import { Refactor } from '@travel-packlist/model';
 import { Item, VariableType } from '@travel-packlist/rules';
 
@@ -262,9 +262,9 @@ export const packlistState = ({
       {},
     );
 
-    const categoriesOrderBy: Signal<
+    const categoriesOrderBy = computed<
       (left: Category, right: Category) => number
-    > = computed(() => {
+    >(() => {
       const sorting = categorySorting();
       return sorting === 'alphabetically'
         ? (left, right) => left.name.localeCompare(right.name)
