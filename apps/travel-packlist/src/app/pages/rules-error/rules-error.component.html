@@ -5,7 +5,7 @@
   @if (error().type === 'fetching') {
     <p i18n>The following error occurred while fetching the rules:</p>
   }
-  <p class="text-red-normal font-mono">{{ error().message }}</p>
+  <p class="text-red-normal font-mono">{{ errorText() }}</p>
   @if (rulesMode() === 'local') {
     <p i18n>
       Unfortunately, this error can only be fixed by changing the rules
