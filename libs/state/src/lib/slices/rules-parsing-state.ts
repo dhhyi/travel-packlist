@@ -2,10 +2,8 @@ import {
   computed,
   effect,
   inject,
-  Resource,
+  resourceFromSnapshots,
   ResourceSnapshot,
-  ResourceStatus,
-  signal,
 } from '@angular/core';
 import { Parser } from '@travel-packlist/model';
 
@@ -14,84 +12,68 @@ import { RulesSourceState } from './rules-source-state';
 
 type Rules = ReturnType<Parser['parseRules']>;
 
-class RulesParsingResource implements Resource<Rules> {
-  readonly value = signal<Rules>([]);
-  readonly error = signal<Error | undefined>(undefined);
-  readonly status = signal<ResourceStatus>('idle');
-  readonly snapshot = computed(
-    () =>
-      ({
-        value: this.value(),
-        error: this.error(),
-        status: this.status(),
-      }) as ResourceSnapshot<Rules>,
-  );
-
-  constructor(
-    private readonly parser: Parser,
-    private readonly raw: Resource<string | undefined>,
-    private readonly trackWeight: () => void,
-    private readonly setCurrentTitle: (title: string) => void,
-  ) {
-    effect(() => {
-      this.trackWeight();
-      if (
-        this.raw.status() === 'resolved' &&
-        this.raw.hasValue() &&
-        typeof this.raw.value() === 'string'
-      ) {
-        try {
-          const rules = this.parser.parseRules(this.raw.value());
-          if (rules.title) {
-            this.setCurrentTitle(rules.title);
-          }
-          this.value.set(rules);
-          this.error.set(undefined);
-          this.status.set('resolved');
-        } catch (error) {
-          this.error.set(error as Error);
-          this.status.set('error');
-        }
-      }
-    });
-  }
-
-  get isLoading() {
-    return this.raw.isLoading;
-  }
-
-  hasValue(): this is Resource<Rules> {
-    return true;
-  }
-
-  asReadonly(): Resource<Rules> {
-    return {
-      value: this.value.asReadonly(),
-      error: this.error.asReadonly(),
-      status: this.status.asReadonly(),
-      isLoading: this.isLoading,
-      hasValue: this.hasValue.bind(this),
-      snapshot: this.snapshot,
-    };
-  }
-}
-
 export const rulesParsingState = ({
   config: { trackWeight },
   rules: { raw },
-  remoteRules: { setCurrentTitle },
+  remoteRules: { setCurrentTitleForHistory },
 }: RulesSourceState & ConfigState) => {
-  const parsed = new RulesParsingResource(
-    inject(Parser),
-    raw,
-    trackWeight,
-    setCurrentTitle,
+  const parser = inject(Parser);
+
+  let previousRules: Rules = [];
+  const parsed = resourceFromSnapshots(
+    computed<ResourceSnapshot<Rules>>(() => {
+      trackWeight();
+      if (
+        raw.status() === 'resolved' &&
+        raw.hasValue() &&
+        typeof raw.value() === 'string'
+      ) {
+        try {
+          const rules = parser.parseRules(raw.value());
+          previousRules = rules;
+          return {
+            value: rules,
+            status: 'resolved' as const,
+            error: undefined,
+          };
+        } catch (error) {
+          return {
+            status: 'error' as const,
+            value: previousRules,
+            error: error as Error,
+          };
+        }
+      } else if (raw.status() === 'error') {
+        return {
+          status: 'error' as const,
+          value: previousRules,
+          error: raw.error() ?? new Error('Unknown error while loading rules'),
+        };
+      } else if (raw.isLoading()) {
+        return {
+          status: 'loading' as const,
+          value: previousRules,
+        };
+      } else {
+        return {
+          status: 'idle' as const,
+          value: previousRules,
+        };
+      }
+    }),
   );
+
+  effect(() => {
+    if (parsed.hasValue()) {
+      const rules = parsed.value();
+      setCurrentTitleForHistory(rules.title);
+    }
+  });
 
   return {
     rules: {
       /** derived: parsed rules */
-      parsed: parsed.asReadonly(),
+      parsed,
       /** derived: rules source and parser error */
       hasError: computed(
         () => parsed.status() === 'error' || raw.status() === 'error',

@@ -177,18 +177,29 @@ export const rulesSourceState = ({
 
   const loadRemote = function (url: string) {
     if (remote() !== url) {
-      mode.set('remote');
+      if (mode() !== 'remote') {
+        mode.set('remote');
+      }
       remote.set(url);
     }
   };
 
-  const setCurrentTitle = function (title: string) {
+  const setCurrentTitleForHistory = function (title: string | undefined) {
     const url = remote();
     if (mode() === 'remote' && url) {
-      historyTitles.update((titles) => ({
-        ...titles,
-        [url]: title,
-      }));
+      historyTitles.update((titles) => {
+        if (title) {
+          return {
+            ...titles,
+            [url]: title,
+          };
+        } else {
+          const newTitles = { ...titles };
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+          delete newTitles[url];
+          return newTitles;
+        }
+      });
     }
   };
 
@@ -242,7 +253,7 @@ export const rulesSourceState = ({
       /** load remote rules */
       load: loadRemote,
       /** set title of current rules for remote history, only use in parser */
-      setCurrentTitle,
+      setCurrentTitleForHistory,
       /** remote rules history */
       history: computed(() =>
         remoteHistory().map((url) => ({ url, title: historyTitles()[url] })),

@@ -80,9 +80,10 @@ export class ConfigRulesRemoteComponent {
   );
   readonly remoteHistoryVisible = signal(false);
 
-  private readonly formModel = linkedSignal(
+  private readonly firstHistoryEntry = computed(
     () => this.state.remoteRules.history()[0]?.url || '',
   );
+  private readonly formModel = linkedSignal(() => this.firstHistoryEntry());
 
   control = form(this.formModel, (path) => {
     // TODO: replace with validate on blur once API is available
