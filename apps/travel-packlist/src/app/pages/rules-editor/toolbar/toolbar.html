@@ -1,0 +1,106 @@
+<div
+  role="toolbar"
+  aria-orientation="horizontal"
+  class="bg-active sticky top-0 left-0 z-30 py-2"
+  [class.shadow-md]="sticky()"
+>
+  <div
+    class="mb-1 grid grid-cols-6 gap-2"
+    role="radiogroup"
+    aria-label="Editor Mode"
+    i18n-aria-label
+  >
+    <app-toolbar-button type="view" label="View" i18n-label>
+      <app-icon-view class="my-auto h-6 w-6" />
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="edit"
+      label="Edit"
+      i18n-label
+      [disabled]="
+        !editable() || (!noOfVisibleRules() && !!searchTerm().value())
+      "
+    >
+      <app-icon-edit class="my-auto h-6 w-6" />
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="delete"
+      label="Delete"
+      i18n-label
+      [disabled]="!editable() || !noOfVisibleRules()"
+    >
+      <app-icon-delete class="my-auto h-6 w-6" />
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="cut-paste"
+      label="Cut/Paste"
+      i18n-label
+      [disabled]="
+        !editable() ||
+        (noOfVisibleRules() < 2 && !clipboardItems() && !clipboardQuestions())
+      "
+    >
+      <app-icon-reorder class="my-auto h-6 w-6" />
+    </app-toolbar-button>
+    <app-toolbar-button
+      type="swap"
+      label="Swap"
+      i18n-label
+      [disabled]="!editable() || !noOfVisibleRules()"
+    >
+      <app-icon-swap class="my-auto h-6 w-6" />
+    </app-toolbar-button>
+    <app-toolbar-button type="search" label="Search" i18n-label>
+      <app-icon-search class="my-auto h-6 w-6" />
+    </app-toolbar-button>
+  </div>
+  @if (mode() === 'cut-paste') {
+    @let itemsCount = clipboardItems();
+    @let questionsCount = clipboardQuestions();
+    @let both = !!itemsCount && !!questionsCount;
+    @if (itemsCount > 0 || questionsCount > 0) {
+      <div
+        class="mt-2 flex justify-center gap-4"
+        role="status"
+        aria-label="clipboard"
+        i18n-aria-label
+        i18n
+      >
+        Clipboard:
+        {itemsCount // i18n(ph="NUMBER_OF_ITEMS"), plural,
+          =0 {}
+          one {1 Item}
+          other {{{itemsCount}} Items}
+        }
+        {both // i18n(ph="BOTH_DEFINED"), select, true {and} other {}}
+        {questionsCount //
+    i18n(ph="NUMBER_OF_QUESTIONS"), plural,
+          =0 {}
+          one {1 Question}
+          other {{{questionsCount}} Questions}
+        }
+      </div>
+    }
+  } @else if (mode() === 'search' || searchTerm().value()) {
+    <div class="mt-2 flex items-center">
+      <input
+        #searchInput
+        type="text"
+        class="grow"
+        role="searchbox"
+        aria-label="search in rules"
+        i18n-aria-label
+        [formField]="searchTerm"
+      />
+      <button
+        iconClear
+        iconClass="h-6 w-6"
+        type="button"
+        class="link"
+        aria-label="clear search"
+        i18n-aria-label
+        (click)="clearSearch()"
+      ></button>
+    </div>
+  }
+</div>

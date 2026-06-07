@@ -1,9 +1,9 @@
 <div class="flex h-12 items-center justify-center gap-2">
   @if (selectedColor(); as color) {
-  <div>You selected: {{color}}</div>
-  <div class="text-sm">(Copied to clipboard)</div>
+    <div>You selected: {{ color }}</div>
+    <div class="text-sm">(Copied to clipboard)</div>
   } @else {
-  <div>Click on a color to select it.</div>
+    <div>Click on a color to select it.</div>
   }
 </div>
 

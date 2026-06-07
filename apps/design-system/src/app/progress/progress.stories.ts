@@ -7,18 +7,18 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ProgressComponent } from '@travel-packlist/components';
+import { ProgressBar } from '@travel-packlist/components';
 
 @Component({
   selector: 'ds-progress',
-  imports: [ProgressComponent],
+  imports: [ProgressBar],
   templateUrl: './progress.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'flex flex-col gap-4',
   },
 })
-class Progress {
+class ProgressDemo {
   readonly animationDuration = signal(0);
   readonly value = signal(0);
   readonly continuousValue = signal(0);
@@ -45,12 +45,12 @@ class Progress {
   }
 }
 
-const meta: Meta<Progress> = {
-  component: Progress,
+const meta: Meta<ProgressDemo> = {
+  component: ProgressDemo,
   title: 'Components/Progress',
 };
 
 export default meta;
-type Story = StoryObj<Progress>;
+type Story = StoryObj<ProgressDemo>;
 
 export const progress: Story = {};

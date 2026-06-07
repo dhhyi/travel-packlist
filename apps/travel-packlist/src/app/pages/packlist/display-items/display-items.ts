@@ -1,0 +1,104 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  linkedSignal,
+  signal,
+} from '@angular/core';
+import { IconKeyRight } from '@travel-packlist/icons';
+import {
+  serializeWeight,
+  serializeWeightPartition,
+} from '@travel-packlist/model';
+import { GLOBAL_STATE } from '@travel-packlist/state';
+
+import { colorFromString } from '../../../util/colors';
+import { ItemsStatus } from './items-status/items-status';
+
+type Category = ReturnType<DisplayItems['packlist']>[number];
+type PacklistItem = Category['items'][number];
+
+@Component({
+  selector: 'app-display-items',
+  imports: [ItemsStatus, IconKeyRight],
+  templateUrl: './display-items.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DisplayItems {
+  private state = inject(GLOBAL_STATE);
+  stats = this.state.packlist.stats;
+  packlist = this.state.packlist.model;
+  trackWeight = this.state.config.trackWeight;
+  toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
+
+  serializeWeight = serializeWeight;
+
+  serializeWeightPartition = serializeWeightPartition;
+
+  readonly enterAnimation = signal('');
+  readonly leaveAnimation = signal('');
+
+  constructor() {
+    this.state.browser.animateEffect('animate-fade-in', this.enterAnimation);
+    this.state.browser.animateEffect('animate-fade-out', this.leaveAnimation);
+
+    const highlightedItemId = linkedSignal(() => this.state.router.fragment());
+    effect(() => {
+      if (highlightedItemId()) {
+        // expand category if items are highlighted
+        const category = this.state.packlist
+          .model()
+          .find((category) =>
+            category.items.some((item) => item.id() === highlightedItemId()),
+          );
+        highlightedItemId.set(undefined);
+        if (category?.collapsed) {
+          this.state.packlist.toggleCategoryCollapse(category.name);
+        }
+      }
+    });
+  }
+
+  toggleCheckedItem(item: PacklistItem) {
+    if (!item.skipped) {
+      if (this.state.packlist.isHideCompleted()) {
+        setTimeout(() => {
+          this.state.packlist.toggleCheckedItem(item);
+        }, 0);
+      } else {
+        this.state.packlist.toggleCheckedItem(item);
+      }
+    }
+  }
+
+  dblclick(item: PacklistItem) {
+    if (!this.state.browser.isMobile()) {
+      this.state.packlist.toggleSkippedItem(item);
+    }
+  }
+
+  private touchAction: number | undefined;
+
+  tapStart(item: PacklistItem) {
+    if (this.state.browser.isMobile()) {
+      this.touchAction = setTimeout(() => {
+        this.state.packlist.toggleSkippedItem(item);
+      }, 800);
+    }
+  }
+
+  tapEnd() {
+    if (this.touchAction) {
+      clearTimeout(this.touchAction);
+    }
+  }
+
+  backgroundColor(item: PacklistItem | Category) {
+    if (item.colored) {
+      const id = typeof item.id === 'function' ? item.id() : item.id;
+      return colorFromString(id);
+    }
+    return undefined;
+  }
+}

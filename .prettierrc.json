@@ -42,6 +42,14 @@
         "parser": "json",
         "printWidth": 5
       }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "options": {
+        "parser": "angular"
+      }
     }
   ]
 }

@@ -22,6 +22,7 @@ const rules = (options) => {
         },
       },
       rules: {
+        '@angular-eslint/component-class-suffix': 'off',
         '@angular-eslint/component-max-inline-declarations': [
           'error',
           {
@@ -36,6 +37,7 @@ const rules = (options) => {
             type: 'element',
           },
         ],
+        '@angular-eslint/directive-class-suffix': 'off',
         '@angular-eslint/directive-selector': [
           'error',
           {
@@ -129,13 +131,6 @@ const rules = (options) => {
                 ],
                 message: 'Use new signal-based forms instead.',
                 name: '@angular/forms',
-              },
-            ],
-            patterns: [
-              {
-                group: ['../**/*.component'],
-                importNamePattern: 'Component$',
-                message: 'Only import deeper nested components.',
               },
             ],
           },

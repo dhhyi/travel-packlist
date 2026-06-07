@@ -15,7 +15,7 @@ const selectedColor = signal<string | undefined>(undefined);
   // eslint-disable-next-line @angular-eslint/directive-selector
   selector: 'div[role="button"]',
 })
-class ColorDirective {
+class ColorCopy {
   constructor() {
     const element = inject<ElementRef<HTMLDivElement>>(ElementRef);
     const color = Array.from(element.nativeElement.classList).find((c) =>
@@ -37,7 +37,7 @@ class ColorDirective {
 
 @Component({
   selector: 'ds-color',
-  imports: [ColorDirective],
+  imports: [ColorCopy],
   templateUrl: './color.html',
   styles: `
     [role='button'] {

@@ -14,7 +14,6 @@ module.exports = [
   {
     files: ['**/*.ts', '**/*.tsx'],
     rules: {
-      '@angular-eslint/component-class-suffix': 'off',
       '@angular-eslint/component-max-inline-declarations': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
       'storybook/prefer-pascal-case': 'off',

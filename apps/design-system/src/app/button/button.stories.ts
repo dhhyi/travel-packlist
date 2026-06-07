@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/angular';
 
 import { NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { IconCogComponent } from '@travel-packlist/icons';
+import { IconCog } from '@travel-packlist/icons';
 
 @Component({
   selector: 'ds-button',
-  imports: [NgTemplateOutlet, IconCogComponent],
+  imports: [NgTemplateOutlet, IconCog],
   templateUrl: './button.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

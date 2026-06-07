@@ -9,19 +9,19 @@ import {
 } from '@angular/core';
 import { disabled, form, FormField } from '@angular/forms/signals';
 import {
-  CheckboxComponent,
-  SelectOptionDirective,
-  SelectOptionsComponent,
+  Checkbox,
+  SelectOption,
+  SelectOptions,
 } from '@travel-packlist/components';
-import { IconHelpComponent } from '@travel-packlist/icons';
+import { IconHelp } from '@travel-packlist/icons';
 
 @Component({
   selector: 'ds-input',
   imports: [
-    IconHelpComponent,
-    CheckboxComponent,
-    SelectOptionsComponent,
-    SelectOptionDirective,
+    IconHelp,
+    Checkbox,
+    SelectOptions,
+    SelectOption,
     FormField,
     JsonPipe,
   ],

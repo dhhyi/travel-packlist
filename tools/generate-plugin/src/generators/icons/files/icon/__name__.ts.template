@@ -10,7 +10,7 @@ import { ChangeDetectionStrategy, Component, input, computed, ElementRef, afterE
   selector: 'app-<%= icon %>, [<%= camelize(icon) %>]',
   templateUrl: './<%= name %>.svg',
 })
-export class <%= classify(icon) %>Component {
+export class <%= classify(icon) %> {
   readonly <%= camelize(icon) %> = input<string | undefined>();
   readonly class = input<string | undefined>();
   readonly iconClass = input<string | undefined>();
