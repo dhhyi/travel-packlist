@@ -79,6 +79,8 @@ class Context {
       .map((source) =>
         source
           .getFilePath()
+          // TODO: remove baseUrl
+          // eslint-disable-next-line @typescript-eslint/no-deprecated
           .substring(this.project.getCompilerOptions().baseUrl!.length + 1),
       ));
   }
@@ -397,6 +399,8 @@ function writeExportReport(this: Context) {
 
   function jsonExportReport(exp: (readonly [string, Node[]])[]): ExportReport {
     return exp.reduce<ExportReport>((acc, [id, nodes]) => {
+      // TODO: remove baseUrl
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       const projectRoot = nodes[0].getProject().getCompilerOptions().baseUrl!;
       const report = nodes.reduce<Record<string, ExportReport[string][string]>>(
         (acc, node) => {

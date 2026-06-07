@@ -47,9 +47,11 @@
       "cache": true,
       "inputs": [
         "default",
+        "^default",
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint*.config.*",
-        "{workspaceRoot}/util/*-rules.js"
+        "{workspaceRoot}/util/*-rules.js",
+        "{workspaceRoot}/tools/eslint-rules/**/*"
       ],
       "dependsOn": [
         "generate",
