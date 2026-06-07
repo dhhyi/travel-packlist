@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/dhhyi/travel-packlist/compare/v1.7.1...v1.7.2) (2026-06-07)
+
+### Bug Fixes
+
+- gap for multi line toolbar buttons ([ebc567f](https://github.com/dhhyi/travel-packlist/commit/ebc567f208ae6559bda91157d550c6723d3fdaec))
+- re-check error status on error page ([77e6537](https://github.com/dhhyi/travel-packlist/commit/77e653734cc4a6cefe39e9289f69f67dfff77699))
+
 ## [1.7.1](https://github.com/dhhyi/travel-packlist/compare/v1.7.0...v1.7.1) (2026-06-05)
 
 ### Bug Fixes
