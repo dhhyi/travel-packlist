@@ -50,7 +50,7 @@
         "^default",
         "{workspaceRoot}/.eslintignore",
         "{workspaceRoot}/eslint*.config.*",
-        "{workspaceRoot}/util/*-rules.js",
+        "{workspaceRoot}/tools/eslint-config/src/**/*.mjs",
         "{workspaceRoot}/tools/eslint-rules/**/*"
       ],
       "dependsOn": [

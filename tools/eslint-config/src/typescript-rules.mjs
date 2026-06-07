@@ -1,9 +1,9 @@
-const eslint = require('@eslint/js');
-const vitest = require('@vitest/eslint-plugin');
-const { defineConfig } = require('eslint/config');
-const tseslint = require('typescript-eslint');
+import eslint from '@eslint/js';
+import vitest from '@vitest/eslint-plugin';
+import { defineConfig } from 'eslint/config';
+import tseslint from 'typescript-eslint';
 
-const rules = defineConfig(
+export const typescriptRules = defineConfig(
   {
     extends: [
       eslint.configs.recommended,
@@ -51,5 +51,3 @@ const rules = defineConfig(
     },
   }
 );
-
-module.exports = rules;

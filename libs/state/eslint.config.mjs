@@ -1,15 +1,23 @@
-import baseConfig from '../../eslint.base.config.mjs';
-import angularRules from '../../util/angular-rules.js';
-import typescriptRules from '../../util/typescript-rules.js';
+import { defineConfig } from 'eslint/config';
 
-export default [
+import baseConfig from '../../eslint.base.config.mjs';
+import {
+  createAngularRules,
+  typescriptRules,
+} from '../../tools/eslint-config/src/index.mjs';
+
+export default defineConfig([
   ...baseConfig,
-  ...typescriptRules,
-  ...angularRules(),
+  {
+    extends: typescriptRules,
+  },
+  {
+    extends: createAngularRules(),
+  },
   {
     files: ['**/*.ts'],
     rules: {
       'no-console': 'error',
     },
   },
-];
+]);

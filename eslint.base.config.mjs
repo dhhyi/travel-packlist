@@ -88,7 +88,7 @@ export default [
           paths: [
             {
               message:
-                'Import from `util/angular-rules` and `util/typescript-rules` instead.',
+                'Import from `tools/eslint-config/src/index.mjs` via a runtime-resolvable relative path instead.',
               name: '@nx/eslint-plugin',
             },
           ],

@@ -1,15 +1,22 @@
 import storyBookRules from 'eslint-plugin-storybook';
+import { defineConfig } from 'eslint/config';
 
 import baseConfig from '../../eslint.base.config.mjs';
-import angularRules from '../../util/angular-rules.js';
-import typescriptRules from '../../util/typescript-rules.js';
+import {
+  createAngularRules,
+  typescriptRules,
+} from '../../tools/eslint-config/src/index.mjs';
 
-export default [
+export default defineConfig([
   ...baseConfig,
-  ...typescriptRules,
-  ...angularRules({
-    prefix: 'ds',
-  }),
+  {
+    extends: typescriptRules,
+  },
+  {
+    extends: createAngularRules({
+      prefix: 'ds',
+    }),
+  },
   ...storyBookRules.configs['flat/recommended'],
   {
     files: ['**/*.ts', '**/*.tsx'],
@@ -25,4 +32,4 @@ export default [
       '@angular-eslint/template/i18n': 'off',
     },
   },
-];
+]);

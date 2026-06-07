@@ -1,11 +1,13 @@
 import baseConfig from '../../eslint.base.config.mjs';
 import jsoncEslintParser from 'jsonc-eslint-parser';
+import { typescriptRules } from '../eslint-config/src/index.mjs';
+import { defineConfig } from 'eslint/config';
 
-import typescriptRules from '../../util/typescript-rules.js';
-
-export default [
+export default defineConfig([
   ...baseConfig,
-  typescriptRules,
+  {
+    extends: typescriptRules,
+  },
   {
     files: ['**/*.json'],
     languageOptions: {
@@ -20,4 +22,4 @@ export default [
       ],
     },
   },
-];
+]);

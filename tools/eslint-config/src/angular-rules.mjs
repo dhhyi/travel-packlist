@@ -1,17 +1,16 @@
-const angular = require('angular-eslint');
-const { defineConfig } = require('eslint/config');
+import angular from 'angular-eslint';
+import { defineConfig } from 'eslint/config';
 
 const defaultOptions = {
   prefix: 'unset',
 };
 
-const rules = (options) => {
+export const createAngularRules = (options = {}) => {
   const config = {
     ...defaultOptions,
     ...options,
   };
-  console.log(__dirname);
-  console.log('config', config);
+
   return defineConfig(
     {
       extends: [...angular.configs.tsAll],
@@ -175,5 +174,3 @@ const rules = (options) => {
     }
   );
 };
-
-module.exports = rules;
