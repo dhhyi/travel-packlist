@@ -1,7 +1,7 @@
 import { ExecutorContext, PromiseExecutor } from '@nx/devkit';
 import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { Minimatch } from 'minimatch';
-import { dirname } from 'path';
+import { dirname, normalize } from 'path';
 import {
   ClassDeclaration,
   Node,
@@ -66,7 +66,7 @@ class Context {
       this.project.getCompilerOptions().paths!,
     ).reduce<Record<string, string>>((acc, [short, entries]) => {
       entries.forEach((entry) => {
-        acc[entry] = short;
+        acc[normalize(entry)] = short;
       });
       return acc;
     }, {}));
@@ -77,11 +77,7 @@ class Context {
     return (this.projectFilePathsCache ??= this.project
       .getSourceFiles()
       .map((source) =>
-        source
-          .getFilePath()
-          // TODO: remove baseUrl
-          // eslint-disable-next-line @typescript-eslint/no-deprecated
-          .substring(this.project.getCompilerOptions().baseUrl!.length + 1),
+        normalize(source.getFilePath().substring(process.cwd().length + 1)),
       ));
   }
 }
@@ -399,9 +395,6 @@ function writeExportReport(this: Context) {
 
   function jsonExportReport(exp: (readonly [string, Node[]])[]): ExportReport {
     return exp.reduce<ExportReport>((acc, [id, nodes]) => {
-      // TODO: remove baseUrl
-      // eslint-disable-next-line @typescript-eslint/no-deprecated
-      const projectRoot = nodes[0].getProject().getCompilerOptions().baseUrl!;
       const report = nodes.reduce<Record<string, ExportReport[string][string]>>(
         (acc, node) => {
           const type = node.getKindName();
@@ -409,7 +402,7 @@ function writeExportReport(this: Context) {
           const path = node
             .getSourceFile()
             .getFilePath()
-            .substring(projectRoot.length + 1);
+            .substring(process.cwd().length + 1);
           const line = node.getStartLineNumber();
           acc[name] = { type, path, line };
           return acc;

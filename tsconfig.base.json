@@ -10,7 +10,6 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
     "declaration": true,
     "declarationMap": true,
     "emitDecoratorMetadata": true,
@@ -31,52 +30,52 @@
     "outDir": "dist/out-tsc",
     "paths": {
       "@travel-packlist/capacitor-assets": [
-        "tools/capacitor-assets/src/index.ts"
+        "./tools/capacitor-assets/src/index.ts"
       ],
       "@travel-packlist/check-plugin": [
-        "tools/check-plugin/src/index.ts"
+        "./tools/check-plugin/src/index.ts"
       ],
       "@travel-packlist/components": [
-        "libs/components/src/index.ts"
+        "./libs/components/src/index.ts"
       ],
       "@travel-packlist/documentation": [
-        "libs/documentation/src/index.ts"
+        "./libs/documentation/src/index.ts"
       ],
       "@travel-packlist/enhance-remote-url": [
-        "libs/enhance-remote-url/src/index.ts"
+        "./libs/enhance-remote-url/src/index.ts"
       ],
       "@travel-packlist/generate-plugin": [
-        "tools/generate-plugin/src/index.ts"
+        "./tools/generate-plugin/src/index.ts"
       ],
       "@travel-packlist/icons": [
-        "libs/icons/src/index.ts"
+        "./libs/icons/src/index.ts"
       ],
       "@travel-packlist/json-schema-to-typescript": [
-        "tools/json-schema-to-typescript/src/index.ts"
+        "./tools/json-schema-to-typescript/src/index.ts"
       ],
       "@travel-packlist/model": [
-        "libs/model/src/index.ts"
+        "./libs/model/src/index.ts"
       ],
       "@travel-packlist/model/provider": [
-        "libs/model/src/index.provider.ts"
+        "./libs/model/src/index.provider.ts"
       ],
       "@travel-packlist/rules": [
-        "libs/rules"
+        "./libs/rules"
       ],
       "@travel-packlist/rules-template": [
-        "libs/rules-template/src/index.ts"
+        "./libs/rules-template/src/index.ts"
       ],
       "@travel-packlist/state": [
-        "libs/state/src/index.ts"
+        "./libs/state/src/index.ts"
       ],
       "@travel-packlist/versioning": [
-        "tools/versioning/src/index.ts"
+        "./tools/versioning/src/index.ts"
       ],
       "@travel-packlist/versioning/build-info": [
-        "tools/versioning/src/lib/build-info.schema.d.ts"
+        "./tools/versioning/src/lib/build-info.schema.d.ts"
       ],
       "@travel-packlist/webapp-plugin": [
-        "tools/webapp-plugin/src/index.ts"
+        "./tools/webapp-plugin/src/index.ts"
       ]
     },
     "rootDir": ".",
