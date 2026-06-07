@@ -1,7 +1,6 @@
-const eslint = require('@eslint/js');
-// eslint-disable-next-line no-restricted-modules
-const nx = require('@nx/eslint-plugin');
-const perfectionist = require('eslint-plugin-perfectionist');
+import eslint from '@eslint/js';
+import nx from '@nx/eslint-plugin';
+import perfectionist from 'eslint-plugin-perfectionist';
 
 /** @type {import('@nx/eslint-plugin/src/rules/enforce-module-boundaries').Options[number]} */
 const moduleBoundaries = {
@@ -51,7 +50,7 @@ const moduleBoundaries = {
 };
 
 /** @type {import('eslint').Linter.Config[]} */
-module.exports = [
+export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],

@@ -1,10 +1,10 @@
-const baseConfig = require('../../eslint.base.config.cjs');
+import storyBookRules from 'eslint-plugin-storybook';
 
-const angularRules = require('../../util/angular-rules');
-const typescriptRules = require('../../util/typescript-rules');
-const storyBookRules = require('eslint-plugin-storybook');
+import baseConfig from '../../eslint.base.config.mjs';
+import angularRules from '../../util/angular-rules.js';
+import typescriptRules from '../../util/typescript-rules.js';
 
-module.exports = [
+export default [
   ...baseConfig,
   ...typescriptRules,
   ...angularRules({

@@ -1,14 +1,15 @@
-const baseConfig = require('../../eslint.base.config.cjs');
+import baseConfig from '../../eslint.base.config.mjs';
+import jsoncEslintParser from 'jsonc-eslint-parser';
 
-const typescriptRules = require('../../util/typescript-rules.js');
+import typescriptRules from '../../util/typescript-rules.js';
 
-module.exports = [
+export default [
   ...baseConfig,
   typescriptRules,
   {
     files: ['**/*.json'],
     languageOptions: {
-      parser: require('jsonc-eslint-parser'),
+      parser: jsoncEslintParser,
     },
     rules: {
       '@nx/dependency-checks': [
