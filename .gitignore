@@ -9,6 +9,12 @@ out-tsc
 /coverage
 /test-results
 RELEASE-NOTES.md
+.claude/worktrees
+.claude/settings.local.json
+.nx/polygraph
+.nx/self-healing
+.nx/migrate-runs
+/migrations.json
 
 # dependencies
 node_modules
@@ -29,11 +35,3 @@ node_modules
 Thumbs.db
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
-
-.claude/worktrees
-
-.claude/settings.local.json
-
-.nx/polygraph
-
-.nx/self-healing

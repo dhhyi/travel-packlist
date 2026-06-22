@@ -75,15 +75,21 @@
         "*lint"
       ]
     },
-    "@nx/vitest:test": {
+    "test": {
       "dependsOn": [
+        "^generate",
         "generate"
       ],
       "cache": true,
       "inputs": [
         "default",
         "^production"
-      ]
+      ],
+      "configurations": {
+        "pre-commit": {
+          "watch": false
+        }
+      }
     },
     "e2e-ci--**/*": {
       "dependsOn": [
@@ -234,7 +240,14 @@
         ]
       }
     },
-    "@travel-packlist/json-schema-to-typescript"
+    "@travel-packlist/json-schema-to-typescript",
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testTargetName": "test",
+        "testMode": "watch"
+      }
+    }
   ],
   "generators": {
     "@nx/angular:application": {

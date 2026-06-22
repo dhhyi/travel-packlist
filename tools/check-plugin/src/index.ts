@@ -1,8 +1,8 @@
-import { createNodesFromFiles, CreateNodesV2 } from '@nx/devkit';
+import { createNodesFromFiles, CreateNodes } from '@nx/devkit';
 import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 
-export const createNodesV2: CreateNodesV2<object> = [
+export const createNodes: CreateNodes<object> = [
   '**/{*.md,tsconfig.json,tsconfig.base.json}',
   async (files, options, context) => {
     const { markdown, tsconfig } = files.reduce(

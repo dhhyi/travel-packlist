@@ -11,9 +11,11 @@
   ],
   "targets": {
     "test": {
-      "executor": "@nx/vitest:test",
+      "dependsOn": [
+        "generate"
+      ],
       "options": {
-        "configFile": "{projectRoot}/vite.config.ts"
+        "config": "../../{projectRoot}/vite.config.ts"
       }
     },
     "lint": {

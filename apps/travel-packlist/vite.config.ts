@@ -1,8 +1,13 @@
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
+import { fileURLToPath } from 'node:url';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
+const tsconfigBase = fileURLToPath(
+  new URL('../../tsconfig.base.json', import.meta.url),
+);
+
 export default defineConfig({
-  plugins: [nxViteTsPaths()],
+  plugins: [tsconfigPaths({ projects: [tsconfigBase] })],
   test: {
     environment: 'jsdom',
     globals: true,

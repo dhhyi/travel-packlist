@@ -1,9 +1,9 @@
-import { createNodesFromFiles, CreateNodesV2 } from '@nx/devkit';
+import { createNodesFromFiles, CreateNodes } from '@nx/devkit';
 import { createHash } from 'crypto';
 import { existsSync } from 'fs';
 import { join } from 'path';
 
-export const createNodesV2: CreateNodesV2<object> = [
+export const createNodes: CreateNodes<object> = [
   '**/*schema.json',
   async (schemaFiles, options, context) =>
     await createNodesFromFiles(

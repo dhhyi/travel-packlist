@@ -14,11 +14,11 @@
       "executor": "nx:run-commands",
       "cache": true,
       "options": {
-        "command": "peggy -c peggy.config.js",
+        "command": "peggy -c peggy.config.cjs",
         "cwd": "{projectRoot}"
       },
       "inputs": [
-        "{projectRoot}/peggy.config.js",
+        "{projectRoot}/peggy.config.cjs",
         "{projectRoot}/src/**/types.ts",
         "{projectRoot}/src/**/*.peggy"
       ],

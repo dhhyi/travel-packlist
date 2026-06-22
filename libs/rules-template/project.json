@@ -35,9 +35,8 @@
       "cache": true
     },
     "test": {
-      "executor": "@nx/vitest:test",
       "options": {
-        "configFile": "{projectRoot}/vite.config.ts"
+        "config": "../../{projectRoot}/vite.config.ts"
       }
     },
     "lint": {
