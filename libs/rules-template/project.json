@@ -43,7 +43,12 @@
     "lint": {
       "executor": "@travel-packlist/check-plugin:rules",
       "dependsOn": [
-        "^build"
+        {
+          "projects": [
+            "rules-cmdl"
+          ],
+          "target": "build"
+        }
       ],
       "options": {
         "pattern": "{projectRoot}/src/txt/*.txt",
