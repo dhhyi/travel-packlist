@@ -28,9 +28,6 @@
         "command": "playwright test -c {projectRoot}/playwright.config.ts"
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "update-snapshots": {
       "executor": "nx:run-commands",
       "options": {

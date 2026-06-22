@@ -36,9 +36,6 @@
         "{projectRoot}/src/index.ts"
       ]
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "test": {
       "options": {
         "config": "../../{projectRoot}/vite.config.ts"

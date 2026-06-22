@@ -40,7 +40,8 @@
         "{projectRoot}/src/index.ts"
       ]
     },
-    "lint": {
+    "lint": {},
+    "ruleslint": {
       "configurations": {
         "ci": {
           "errorOnChange": true

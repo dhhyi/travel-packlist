@@ -146,12 +146,6 @@
         "{projectRoot}/public/icon-*.webp"
       ]
     },
-    "lint": {
-      "dependsOn": [
-        "^generate"
-      ],
-      "executor": "@nx/eslint:lint"
-    },
     "serve": {
       "configurations": {
         "android": {

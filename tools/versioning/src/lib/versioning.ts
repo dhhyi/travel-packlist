@@ -5,9 +5,9 @@ export function getPackageJsonVersion() {
   if (!fs.existsSync('package.json')) {
     return 'unavailable';
   }
-  const packageJson = fs.readFileSync('package.json', 'utf8');
-  const version = JSON.parse(packageJson).version as string;
-  return version || 'unavailable';
+  const packageJsonContent = fs.readFileSync('package.json', 'utf8');
+  const packageJson = JSON.parse(packageJsonContent) as { version?: string };
+  return packageJson.version ?? 'unavailable';
 }
 
 export function getCommitsSinceVersion() {

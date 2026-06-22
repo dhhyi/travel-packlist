@@ -68,12 +68,6 @@
         "pattern": "{projectRoot}/**/*.mdx"
       }
     },
-    "lint": {
-      "dependsOn": [
-        "stylelint"
-      ],
-      "executor": "@nx/eslint:lint"
-    },
     "serve": {
       "configurations": {
         "ci": {

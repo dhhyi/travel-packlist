@@ -69,6 +69,12 @@
         "testTargetName": "test"
       },
       "plugin": "@nx/vitest"
+    },
+    {
+      "options": {
+        "targetName": "eslint"
+      },
+      "plugin": "@nx/eslint/plugin"
     }
   ],
   "targetDefaults": {
@@ -90,32 +96,6 @@
       "inputs": [
         "production",
         "^production"
-      ]
-    },
-    "@nx/eslint:lint": {
-      "cache": true,
-      "configurations": {
-        "ci": {
-          "fix": false,
-          "maxWarnings": 0
-        },
-        "pre-commit": {
-          "fix": true,
-          "maxWarnings": 0
-        }
-      },
-      "defaultConfiguration": "pre-commit",
-      "dependsOn": [
-        "generate",
-        "schema2ts-*"
-      ],
-      "inputs": [
-        "default",
-        "^default",
-        "{workspaceRoot}/.eslintignore",
-        "{workspaceRoot}/eslint*.config.*",
-        "{workspaceRoot}/tools/eslint-config/src/**/*.mjs",
-        "{workspaceRoot}/tools/eslint-rules/**/*"
       ]
     },
     "@nx/js:tsc": {
@@ -225,10 +205,30 @@
         "^build"
       ]
     },
-    "lint": {
+    "eslint": {
+      "cache": true,
+      "configurations": {
+        "ci": {
+          "fix": false,
+          "max-warnings": 0
+        },
+        "pre-commit": {
+          "fix": true,
+          "max-warnings": 0
+        }
+      },
+      "defaultConfiguration": "pre-commit",
       "dependsOn": [
         "generate",
-        "*lint"
+        "schema2ts-*"
+      ],
+      "inputs": [
+        "default",
+        "^default",
+        "{workspaceRoot}/.eslintignore",
+        "{workspaceRoot}/eslint*.config.*",
+        "{workspaceRoot}/tools/eslint-config/src/**/*.mjs",
+        "{workspaceRoot}/tools/eslint-rules/**/*"
       ]
     },
     "nx-stylelint:lint": {

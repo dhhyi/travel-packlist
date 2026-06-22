@@ -4,7 +4,7 @@ import template from '<%= importName(name, lang) %>?raw';
 describe('<%= name %> (<%= lang %>) template', () => {
   it('should parse', () => {
     const parser = new Parser();
-    const result = parser.parseRules(template);
+    const result = parser.parseRules(template as string);
     expect(result).toBeDefined();
   });
 });

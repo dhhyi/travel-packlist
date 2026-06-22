@@ -42,9 +42,6 @@
         "tsConfig": "{projectRoot}/tsconfig.app.json"
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "serve": {
       "dependsOn": [
         "build"

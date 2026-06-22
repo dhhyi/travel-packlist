@@ -3,12 +3,14 @@ import { existsSync } from 'fs';
 import { dirname, join } from 'path';
 
 export const createNodes: CreateNodes<object> = [
-  '**/{*.md,tsconfig.json,tsconfig.base.json}',
+  '**/{*.md,tsconfig.json,tsconfig.base.json,project.json}',
   async (files, options, context) => {
-    const { markdown, tsconfig } = files.reduce(
+    const { markdown, tsconfig, project } = files.reduce(
       (acc, f) => {
         if (f.endsWith('.md')) {
           acc.markdown.push(f);
+        } else if (f.endsWith('project.json')) {
+          acc.project.push(f);
         } else {
           acc.tsconfig.push(f);
         }
@@ -16,10 +18,17 @@ export const createNodes: CreateNodes<object> = [
       },
       {
         markdown: [] as string[],
+        project: [] as string[],
         tsconfig: [] as string[],
       },
     );
     return [
+      ...(await createNodesFromFiles(
+        (projectJsonFile) => createLint(projectJsonFile),
+        project,
+        options,
+        context,
+      )),
       ...(await createNodesFromFiles(
         (markdownFile, options) => createMarkdownLint(markdownFile, options),
         markdown,
@@ -35,6 +44,21 @@ export const createNodes: CreateNodes<object> = [
     ];
   },
 ];
+
+function createLint(projectJsonFilePath: string) {
+  const projectRoot = dirname(projectJsonFilePath).replace(/\\/g, '/');
+  return {
+    projects: {
+      [projectRoot]: {
+        targets: {
+          lint: {
+            dependsOn: ['*lint'],
+          },
+        },
+      },
+    },
+  };
+}
 
 function createMarkdownLint(markdownFilePath: string, options?: object) {
   const projectRoot = dirname(markdownFilePath).replace(/\\/g, '/');

@@ -54,6 +54,7 @@ export class Item {
     return (
       this.category === other.category &&
       this.name === other.name &&
+      // eslint-disable-next-line eqeqeq
       this.weight == other.weight
     );
   }

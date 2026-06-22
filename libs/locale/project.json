@@ -11,7 +11,8 @@
     "localized"
   ],
   "targets": {
-    "lint": {
+    "lint": {},
+    "translationlint": {
       "cache": true,
       "dependsOn": [
         "travel-packlist:extract-i18n"

@@ -6,9 +6,5 @@
   "tags": [
     "utility"
   ],
-  "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    }
-  }
+  "targets": {}
 }

@@ -41,9 +41,6 @@
         "noExports": true,
         "tsConfig": "{projectRoot}/tsconfig.app.json"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
     }
   }
 }

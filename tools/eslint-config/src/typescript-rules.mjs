@@ -43,6 +43,7 @@ export const typescriptRules = defineConfig(
     files: ['**/*.test.ts'],
     ...vitest.configs['all'],
     rules: {
+      '@nx/enforce-module-boundaries': 'off',
       ...vitest.configs['all'].rules,
       'vitest/no-hooks': 'off',
       'vitest/no-importing-vitest-globals': 'error',

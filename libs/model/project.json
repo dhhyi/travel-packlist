@@ -16,9 +16,6 @@
         "tsConfig": "{projectRoot}/tsconfig.all.json"
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "test": {
       "dependsOn": [
         "^generate"
