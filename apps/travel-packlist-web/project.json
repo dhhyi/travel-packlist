@@ -1,58 +1,58 @@
 {
-  "name": "travel-packlist-web",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "tags": [
-    "assembly"
-  ],
   "implicitDependencies": [
     "travel-packlist",
     "webapp-plugin",
     "locale"
   ],
+  "name": "travel-packlist-web",
+  "projectType": "application",
+  "tags": [
+    "assembly"
+  ],
   "targets": {
     "build": {
-      "executor": "@travel-packlist/webapp-plugin:assemble",
-      "dependsOn": [
-        "travel-packlist:build-required",
-        "travel-packlist:extract-i18n"
-      ],
-      "defaultConfiguration": "production",
+      "cache": true,
       "configurations": {
-        "production": {
-          "buildTarget": "travel-packlist:build:production",
-          "outputPath": "dist/apps/travel-packlist-web"
-        },
         "android": {
           "buildTarget": "travel-packlist:build:android",
           "outputPath": "dist/web-android"
         },
         "ci": {
-          "buildTarget": "travel-packlist:build:gh-pages",
           "baseHref": "/travel-packlist/",
+          "buildTarget": "travel-packlist:build:gh-pages",
           "outputPath": "dist/web"
+        },
+        "production": {
+          "buildTarget": "travel-packlist:build:production",
+          "outputPath": "dist/apps/travel-packlist-web"
         }
       },
+      "defaultConfiguration": "production",
+      "dependsOn": [
+        "travel-packlist:build-required",
+        "travel-packlist:extract-i18n"
+      ],
+      "executor": "@travel-packlist/webapp-plugin:assemble",
       "inputs": [
         "^production",
         "version"
       ],
       "outputs": [
         "{options.outputPath}"
-      ],
-      "cache": true
+      ]
     },
     "serve": {
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "build",
-        "port": 8080,
-        "host": "0.0.0.0"
-      },
       "configurations": {
         "e2e": {
           "port": 4200
         }
+      },
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "build",
+        "host": "0.0.0.0",
+        "port": 8080
       }
     }
   }

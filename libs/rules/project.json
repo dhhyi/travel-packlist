@@ -1,37 +1,26 @@
 {
-  "name": "rules",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
-  "projectType": "library",
-  "tags": [
-    "scope:state"
-  ],
   "implicitDependencies": [
     "check-plugin"
   ],
+  "name": "rules",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:state"
+  ],
   "targets": {
-    "peggy": {
-      "executor": "nx:run-commands",
-      "cache": true,
-      "options": {
-        "command": "peggy -c peggy.config.cjs",
-        "cwd": "{projectRoot}"
-      },
-      "inputs": [
-        "{projectRoot}/peggy.config.cjs",
-        "{projectRoot}/src/**/types.ts",
-        "{projectRoot}/src/**/*.peggy"
-      ],
-      "outputs": [
-        "{projectRoot}/src/index.*"
-      ]
-    },
     "generate": {
-      "executor": "nx:run-commands",
+      "cache": true,
       "dependsOn": [
         "peggy"
       ],
-      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{projectRoot}/src/index.d.ts",
+        "{projectRoot}/src/**/*.peggy",
+        "{projectRoot}/src/**/types.ts"
+      ],
       "options": {
         "commands": [
           "sed -i \"1iexport * from './types';\" {projectRoot}/src/index.d.ts",
@@ -39,13 +28,24 @@
         ],
         "parallel": false
       },
-      "inputs": [
-        "{projectRoot}/src/index.d.ts",
-        "{projectRoot}/src/**/*.peggy",
-        "{projectRoot}/src/**/types.ts"
-      ],
       "outputs": [
         "{projectRoot}/src/index.d.ts"
+      ]
+    },
+    "peggy": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{projectRoot}/peggy.config.cjs",
+        "{projectRoot}/src/**/types.ts",
+        "{projectRoot}/src/**/*.peggy"
+      ],
+      "options": {
+        "command": "peggy -c peggy.config.cjs",
+        "cwd": "{projectRoot}"
+      },
+      "outputs": [
+        "{projectRoot}/src/index.*"
       ]
     }
   }

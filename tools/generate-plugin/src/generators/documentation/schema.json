@@ -1,20 +1,20 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "title": "Generator Schema",
-  "type": "object",
+  "additionalProperties": false,
   "properties": {
     "path": {
-      "type": "string",
-      "description": "The source root of the project"
+      "description": "The source root of the project",
+      "type": "string"
     },
     "pattern": {
-      "type": "string",
-      "description": "The pattern matching documentation files"
+      "description": "The pattern matching documentation files",
+      "type": "string"
     }
   },
   "required": [
     "path",
     "pattern"
   ],
-  "additionalProperties": false
+  "title": "Generator Schema",
+  "type": "object"
 }

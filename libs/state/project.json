@@ -1,30 +1,30 @@
 {
-  "name": "state",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
-  "projectType": "library",
-  "tags": [
-    "scope:state"
-  ],
   "implicitDependencies": [
     "check-plugin"
   ],
+  "name": "state",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:state"
+  ],
   "targets": {
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
     "test": {
       "dependsOn": [
         "generate"
       ],
       "options": {
         "config": "../../{projectRoot}/vite.config.ts"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "dead-code": {
-      "executor": "@travel-packlist/check-plugin:dead-code",
-      "options": {
-        "tsConfig": "{projectRoot}/tsconfig.lib.json"
       }
     }
   }

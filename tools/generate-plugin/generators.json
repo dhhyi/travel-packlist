@@ -1,24 +1,24 @@
 {
   "generators": {
-    "icons": {
-      "factory": "./src/generators/icons/generator",
-      "schema": "./src/generators/icons/schema.json",
-      "description": "icons generator"
-    },
-    "templates": {
-      "factory": "./src/generators/templates/generator",
-      "schema": "./src/generators/templates/schema.json",
-      "description": "templates generator"
-    },
     "documentation": {
+      "description": "documentation generator",
       "factory": "./src/generators/documentation/generator",
-      "schema": "./src/generators/documentation/schema.json",
-      "description": "documentation generator"
+      "schema": "./src/generators/documentation/schema.json"
     },
     "enhance-remote-url": {
+      "description": "enhance remote url generator",
       "factory": "./src/generators/enhance-remote-url/generator",
-      "schema": "./src/generators/enhance-remote-url/schema.json",
-      "description": "enhance remote url generator"
+      "schema": "./src/generators/enhance-remote-url/schema.json"
+    },
+    "icons": {
+      "description": "icons generator",
+      "factory": "./src/generators/icons/generator",
+      "schema": "./src/generators/icons/schema.json"
+    },
+    "templates": {
+      "description": "templates generator",
+      "factory": "./src/generators/templates/generator",
+      "schema": "./src/generators/templates/schema.json"
     }
   }
 }

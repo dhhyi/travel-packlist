@@ -77,6 +77,8 @@ const runExecutor: Executor<ExecutorSchema> = async (options) => {
   const newManifest = JSON.stringify(manifest, null, 2) + '\n';
   writeFileSync(manifestPath, newManifest, { encoding: 'utf-8' });
 
+  execSync(`pnpm prettier --write ${manifestPath}`, { stdio: 'inherit' });
+
   if (existsSync('icons') && statSync('icons').isDirectory()) {
     readdirSync('icons').forEach((file) => {
       writeFileSync(`${assetPath}/${file}`, readFileSync(`icons/${file}`));

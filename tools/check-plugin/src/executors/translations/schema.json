@@ -1,27 +1,27 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "version": 2,
-  "title": "Executor Schema",
+  "additionalProperties": false,
   "description": "",
-  "type": "object",
   "properties": {
-    "pattern": {
-      "type": "string",
-      "description": "The pattern to match the files to check"
-    },
     "defaultLocale": {
-      "type": "string",
-      "description": "The default locale to use for the translations"
+      "description": "The default locale to use for the translations",
+      "type": "string"
     },
     "interactive": {
-      "type": "boolean",
+      "default": false,
       "description": "Whether to run the executor in interactive mode",
-      "default": false
+      "type": "boolean"
+    },
+    "pattern": {
+      "description": "The pattern to match the files to check",
+      "type": "string"
     }
   },
   "required": [
     "pattern",
     "defaultLocale"
   ],
-  "additionalProperties": false
+  "title": "Executor Schema",
+  "type": "object",
+  "version": 2
 }

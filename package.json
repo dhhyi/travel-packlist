@@ -1,128 +1,4 @@
 {
-  "name": "travel-packlist-root",
-  "version": "1.7.2",
-  "license": "MIT",
-  "engines": {
-    "node": "24"
-  },
-  "scripts": {
-    "changelog": "conventional-changelog -i CHANGELOG.md -n util/conventionalcommits.mjs",
-    "version": "pnpm run changelog -s && git add CHANGELOG.md",
-    "postversion": "git push && git push --tags",
-    "release-notes": "conventional-changelog -r 2 -n util/conventionalcommits.mjs -o",
-    "create-prettierignore": "node util/create-prettierignore.mjs",
-    "prepare": "husky",
-    "dev": "nx serve travel-packlist",
-    "start": "nx serve travel-packlist-web"
-  },
-  "nx": {
-    "includedScripts": [
-      "dev",
-      "start"
-    ],
-    "implicitDependencies": [
-      "check-plugin",
-      "libs/*",
-      "apps/*"
-    ],
-    "targets": {
-      "design": {
-        "executor": "nx:run-commands",
-        "options": {
-          "commands": [
-            "nx storybook design-system",
-            "nx run design-system:compile-styles:watch"
-          ],
-          "parallel": true
-        }
-      },
-      "lint": {
-        "executor": "@nx/eslint:lint",
-        "dependsOn": [
-          "check-sync-playwright-version"
-        ],
-        "options": {
-          "lintFilePatterns": [
-            "*.*",
-            "util/*.*"
-          ]
-        }
-      },
-      "markdownlint": {
-        "executor": "@travel-packlist/check-plugin:markdown",
-        "options": {
-          "pattern": "*.md",
-          "exclude": [
-            "AGENTS.md",
-            "CHANGELOG.md"
-          ]
-        }
-      },
-      "check-sync-playwright-version": {
-        "executor": "nx:run-commands",
-        "options": {
-          "command": "node util/check-sync-playwright-version.mjs"
-        }
-      },
-      "create-prettierignore": {
-        "executor": "nx:run-script",
-        "options": {
-          "script": "create-prettierignore"
-        },
-        "inputs": [
-          "{workspaceRoot}/util/create-prettierignore.mjs",
-          "{workspaceRoot}/**/.gitignore"
-        ],
-        "outputs": [
-          "{workspaceRoot}/.prettierignore"
-        ],
-        "cache": true
-      },
-      "format": {
-        "executor": "nx:run-commands",
-        "dependsOn": [
-          "create-prettierignore"
-        ],
-        "options": {
-          "command": "nx format:write --all"
-        },
-        "configurations": {
-          "ci": {
-            "command": "nx format:check --all"
-          },
-          "pre-commit": {
-            "command": "nx format:write --uncommitted"
-          }
-        }
-      },
-      "dead-code": {
-        "executor": "@travel-packlist/check-plugin:dead-code-summary",
-        "dependsOn": [
-          "^dead-code"
-        ],
-        "inputs": [
-          "{workspaceRoot}/dist/**/dead-code/imports.json",
-          "{workspaceRoot}/dist/**/dead-code/exports.json"
-        ],
-        "cache": false
-      }
-    }
-  },
-  "private": true,
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@tailwindcss/oxide",
-      "esbuild",
-      "nx",
-      "sharp"
-    ],
-    "ignoredBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "lmdb",
-      "msgpackr-extract"
-    ]
-  },
   "dependencies": {
     "@angular-devkit/build-angular": "^21.2.16",
     "@angular/build": "^21.2.16",
@@ -205,6 +81,7 @@
     "postcss": "^8.5.15",
     "prettier": "^3.8.4",
     "prettier-plugin-sh": "^0.18.1",
+    "prettier-plugin-sort-json": "^4.2.0",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "storybook": "^10.4.6",
     "stylelint": "^17.13.0",
@@ -214,5 +91,129 @@
     "typescript-eslint": "^8.61.1",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.9"
-  }
+  },
+  "engines": {
+    "node": "24"
+  },
+  "license": "MIT",
+  "name": "travel-packlist-root",
+  "nx": {
+    "implicitDependencies": [
+      "check-plugin",
+      "libs/*",
+      "apps/*"
+    ],
+    "includedScripts": [
+      "dev",
+      "start"
+    ],
+    "targets": {
+      "check-sync-playwright-version": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "node util/check-sync-playwright-version.mjs"
+        }
+      },
+      "create-prettierignore": {
+        "cache": true,
+        "executor": "nx:run-script",
+        "inputs": [
+          "{workspaceRoot}/util/create-prettierignore.mjs",
+          "{workspaceRoot}/**/.gitignore"
+        ],
+        "options": {
+          "script": "create-prettierignore"
+        },
+        "outputs": [
+          "{workspaceRoot}/.prettierignore"
+        ]
+      },
+      "dead-code": {
+        "cache": false,
+        "dependsOn": [
+          "^dead-code"
+        ],
+        "executor": "@travel-packlist/check-plugin:dead-code-summary",
+        "inputs": [
+          "{workspaceRoot}/dist/**/dead-code/imports.json",
+          "{workspaceRoot}/dist/**/dead-code/exports.json"
+        ]
+      },
+      "design": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "nx storybook design-system",
+            "nx run design-system:compile-styles:watch"
+          ],
+          "parallel": true
+        }
+      },
+      "format": {
+        "configurations": {
+          "ci": {
+            "command": "nx format:check --all"
+          },
+          "pre-commit": {
+            "command": "nx format:write --uncommitted"
+          }
+        },
+        "dependsOn": [
+          "create-prettierignore"
+        ],
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "nx format:write --all"
+        }
+      },
+      "lint": {
+        "dependsOn": [
+          "check-sync-playwright-version"
+        ],
+        "executor": "@nx/eslint:lint",
+        "options": {
+          "lintFilePatterns": [
+            "*.*",
+            "util/*.*"
+          ]
+        }
+      },
+      "markdownlint": {
+        "executor": "@travel-packlist/check-plugin:markdown",
+        "options": {
+          "exclude": [
+            "AGENTS.md",
+            "CHANGELOG.md"
+          ],
+          "pattern": "*.md"
+        }
+      }
+    }
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "lmdb",
+      "msgpackr-extract"
+    ],
+    "onlyBuiltDependencies": [
+      "@tailwindcss/oxide",
+      "esbuild",
+      "nx",
+      "sharp"
+    ]
+  },
+  "private": true,
+  "scripts": {
+    "changelog": "conventional-changelog -i CHANGELOG.md -n util/conventionalcommits.mjs",
+    "create-prettierignore": "node util/create-prettierignore.mjs",
+    "dev": "nx serve travel-packlist",
+    "postversion": "git push && git push --tags",
+    "prepare": "husky",
+    "release-notes": "conventional-changelog -r 2 -n util/conventionalcommits.mjs -o",
+    "start": "nx serve travel-packlist-web",
+    "version": "pnpm run changelog -s && git add CHANGELOG.md"
+  },
+  "version": "1.7.2"
 }

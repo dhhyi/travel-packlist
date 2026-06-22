@@ -1,35 +1,35 @@
 {
-  "name": "travel-packlist-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": [
+    "travel-packlist",
+    "webapp-plugin"
+  ],
+  "name": "travel-packlist-e2e",
   "projectType": "application",
   "sourceRoot": "{projectRoot}/src",
   "tags": [
     "scope:testing"
   ],
-  "implicitDependencies": [
-    "travel-packlist",
-    "webapp-plugin"
-  ],
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "e2e": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "playwright test -c {projectRoot}/playwright.config.ts"
-      },
+      "cache": true,
       "dependsOn": [
         {
           "projects": "travel-packlist-web",
           "target": "build"
         }
       ],
+      "executor": "nx:run-commands",
       "inputs": [
         "default",
         "^production"
       ],
-      "cache": true
+      "options": {
+        "command": "playwright test -c {projectRoot}/playwright.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
     },
     "update-snapshots": {
       "executor": "nx:run-commands",

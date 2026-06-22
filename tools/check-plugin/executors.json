@@ -1,13 +1,5 @@
 {
   "executors": {
-    "translations": {
-      "implementation": "./src/executors/translations/executor",
-      "schema": "./src/executors/translations/schema.json"
-    },
-    "markdown": {
-      "implementation": "./src/executors/markdown/executor",
-      "schema": "./src/executors/markdown/schema.json"
-    },
     "dead-code": {
       "implementation": "./src/executors/dead-code/executor",
       "schema": "./src/executors/dead-code/schema.json"
@@ -16,13 +8,21 @@
       "implementation": "./src/executors/dead-code-summary/executor",
       "schema": "./src/executors/dead-code-summary/schema.json"
     },
-    "tsconfig": {
-      "implementation": "./src/executors/tsconfig/executor",
-      "schema": "./src/executors/tsconfig/schema.json"
+    "markdown": {
+      "implementation": "./src/executors/markdown/executor",
+      "schema": "./src/executors/markdown/schema.json"
     },
     "rules": {
       "implementation": "./src/executors/rules/executor",
       "schema": "./src/executors/rules/schema.json"
+    },
+    "translations": {
+      "implementation": "./src/executors/translations/executor",
+      "schema": "./src/executors/translations/schema.json"
+    },
+    "tsconfig": {
+      "implementation": "./src/executors/tsconfig/executor",
+      "schema": "./src/executors/tsconfig/schema.json"
     }
   }
 }

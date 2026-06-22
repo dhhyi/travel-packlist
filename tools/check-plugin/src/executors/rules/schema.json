@@ -1,35 +1,35 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "version": 2,
-  "title": "Executor Schema",
+  "additionalProperties": false,
   "description": "",
-  "type": "object",
   "properties": {
-    "pattern": {
-      "type": "string",
-      "description": "The pattern to match the files to check"
+    "errorOnChange": {
+      "default": false,
+      "description": "Whether to treat changes as errors (for CI)",
+      "type": "boolean"
+    },
+    "errorOnWarnings": {
+      "default": false,
+      "description": "Treat warnings as errors",
+      "type": "boolean"
     },
     "exclude": {
-      "type": "array",
+      "default": [],
+      "description": "The exclude patterns to ignore the files",
       "items": {
         "type": "string"
       },
-      "description": "The exclude patterns to ignore the files",
-      "default": []
+      "type": "array"
     },
-    "errorOnChange": {
-      "type": "boolean",
-      "description": "Whether to treat changes as errors (for CI)",
-      "default": false
-    },
-    "errorOnWarnings": {
-      "type": "boolean",
-      "description": "Treat warnings as errors",
-      "default": false
+    "pattern": {
+      "description": "The pattern to match the files to check",
+      "type": "string"
     }
   },
   "required": [
     "pattern"
   ],
-  "additionalProperties": false
+  "title": "Executor Schema",
+  "type": "object",
+  "version": 2
 }

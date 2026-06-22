@@ -1,34 +1,34 @@
 {
-  "name": "locale",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
-  "projectType": "library",
-  "tags": [
-    "localized"
-  ],
   "implicitDependencies": [
     "check-plugin",
     "travel-packlist"
   ],
+  "name": "locale",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "localized"
+  ],
   "targets": {
     "lint": {
-      "executor": "@travel-packlist/check-plugin:translations",
+      "cache": true,
       "dependsOn": [
         "travel-packlist:extract-i18n"
       ],
-      "options": {
-        "pattern": "{projectRoot}/src/messages*.json",
-        "defaultLocale": "en"
-      },
+      "executor": "@travel-packlist/check-plugin:translations",
       "inputs": [
         "^production",
         "{projectRoot}/src/messages*.json",
         "{projectRoot}/check-translations.mjs"
       ],
+      "options": {
+        "defaultLocale": "en",
+        "pattern": "{projectRoot}/src/messages*.json"
+      },
       "outputs": [
         "{options.pattern}"
-      ],
-      "cache": true
+      ]
     }
   }
 }

@@ -1,52 +1,52 @@
 {
-  "name": "documentation",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
-  "projectType": "library",
-  "tags": [
-    "scope:generated",
-    "localized"
-  ],
   "implicitDependencies": [
     "generate-plugin",
     "check-plugin"
   ],
+  "name": "documentation",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:generated",
+    "localized"
+  ],
   "targets": {
-    "lint": {
-      "executor": "@travel-packlist/check-plugin:markdown",
-      "options": {
-        "pattern": "{projectRoot}/src/doc/*.md"
-      },
-      "inputs": [
-        "^production",
-        "{projectRoot}/src/doc/*.md"
-      ],
-      "outputs": [
-        "{options.pattern}"
-      ],
-      "cache": true
-    },
-    "generate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "nx g @travel-packlist/generate-plugin:documentation",
-        "path": "{projectRoot}/src",
-        "pattern": "{projectRoot}/src/doc/*.md"
-      },
-      "inputs": [
-        "{projectRoot}/src/doc/*.md"
-      ],
-      "outputs": [
-        "{projectRoot}/src/lib/*.ts",
-        "{projectRoot}/src/index.ts"
-      ],
-      "cache": true
-    },
     "dead-code": {
       "executor": "@travel-packlist/check-plugin:dead-code",
       "options": {
         "tsConfig": "{projectRoot}/tsconfig.lib.json"
       }
+    },
+    "generate": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [
+        "{projectRoot}/src/doc/*.md"
+      ],
+      "options": {
+        "command": "nx g @travel-packlist/generate-plugin:documentation",
+        "path": "{projectRoot}/src",
+        "pattern": "{projectRoot}/src/doc/*.md"
+      },
+      "outputs": [
+        "{projectRoot}/src/lib/*.ts",
+        "{projectRoot}/src/index.ts"
+      ]
+    },
+    "lint": {
+      "cache": true,
+      "executor": "@travel-packlist/check-plugin:markdown",
+      "inputs": [
+        "^production",
+        "{projectRoot}/src/doc/*.md"
+      ],
+      "options": {
+        "pattern": "{projectRoot}/src/doc/*.md"
+      },
+      "outputs": [
+        "{options.pattern}"
+      ]
     }
   }
 }

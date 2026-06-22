@@ -1,8 +1,8 @@
 {
-  "name": "webapp-plugin",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
+  "name": "webapp-plugin",
   "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
   "tags": [
     "plugin"
   ],

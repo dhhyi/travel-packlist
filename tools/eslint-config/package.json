@@ -1,9 +1,9 @@
 {
-  "name": "@travel-packlist/eslint-config",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
   "exports": {
     ".": "./src/index.mjs"
-  }
+  },
+  "name": "@travel-packlist/eslint-config",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1"
 }

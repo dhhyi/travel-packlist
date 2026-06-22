@@ -1,43 +1,16 @@
 {
-  "name": "design-system",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": [
+    "icons"
+  ],
+  "name": "design-system",
   "projectType": "application",
   "tags": [
     "scope:design"
   ],
-  "implicitDependencies": [
-    "icons"
-  ],
   "targets": {
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "port": 4444,
-        "host": "0.0.0.0",
-        "configDir": "{projectRoot}/storybook",
-        "browserTarget": "design-system:build",
-        "compodoc": false,
-        "styles": [
-          "{projectRoot}/storybook/styles.compiled.css"
-        ]
-      },
-      "dependsOn": [
-        "compile-styles",
-        "^generate",
-        "^build"
-      ]
-    },
     "build": {
-      "executor": "@storybook/angular:build-storybook",
-      "options": {
-        "outputDir": "dist/{projectRoot}",
-        "configDir": "{projectRoot}/storybook",
-        "browserTarget": "design-system:build",
-        "compodoc": false,
-        "styles": [
-          "{projectRoot}/storybook/styles.compiled.css"
-        ]
-      },
+      "cache": true,
       "configurations": {
         "ci": {
           "quiet": true
@@ -48,39 +21,25 @@
         "^generate",
         "^build"
       ],
+      "executor": "@storybook/angular:build-storybook",
       "inputs": [
         "default"
       ],
+      "options": {
+        "browserTarget": "design-system:build",
+        "compodoc": false,
+        "configDir": "{projectRoot}/storybook",
+        "outputDir": "dist/{projectRoot}",
+        "styles": [
+          "{projectRoot}/storybook/styles.compiled.css"
+        ]
+      },
       "outputs": [
         "{options.outputDir}"
-      ],
-      "cache": true
-    },
-    "serve": {
-      "executor": "@nx/web:file-server",
-      "dependsOn": [
-        "build"
-      ],
-      "options": {
-        "buildTarget": "design-system:build",
-        "staticFilePath": "dist/{projectRoot}",
-        "port": 4444,
-        "host": "0.0.0.0",
-        "spa": true
-      },
-      "configurations": {
-        "ci": {
-          "buildTarget": "design-system:build:ci"
-        }
-      }
+      ]
     },
     "compile-styles": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "tailwindcss",
-        "input": "{projectRoot}/src/styles.css",
-        "output": "{projectRoot}/storybook/styles.compiled.css"
-      },
+      "cache": true,
       "configurations": {
         "ci": {
           "minify": true
@@ -89,22 +48,19 @@
           "watch": true
         }
       },
+      "executor": "nx:run-commands",
       "inputs": [
         "default",
         "{projectRoot}/src/styles.css"
       ],
+      "options": {
+        "command": "tailwindcss",
+        "input": "{projectRoot}/src/styles.css",
+        "output": "{projectRoot}/storybook/styles.compiled.css"
+      },
       "outputs": [
         "{options.output}"
-      ],
-      "cache": true
-    },
-    "stylelint": {
-      "executor": "nx-stylelint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "{projectRoot}/src/**/*.css"
-        ]
-      }
+      ]
     },
     "doc-markdownlint": {
       "executor": "@travel-packlist/check-plugin:markdown",
@@ -113,10 +69,54 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "dependsOn": [
         "stylelint"
-      ]
+      ],
+      "executor": "@nx/eslint:lint"
+    },
+    "serve": {
+      "configurations": {
+        "ci": {
+          "buildTarget": "design-system:build:ci"
+        }
+      },
+      "dependsOn": [
+        "build"
+      ],
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "design-system:build",
+        "host": "0.0.0.0",
+        "port": 4444,
+        "spa": true,
+        "staticFilePath": "dist/{projectRoot}"
+      }
+    },
+    "storybook": {
+      "dependsOn": [
+        "compile-styles",
+        "^generate",
+        "^build"
+      ],
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "browserTarget": "design-system:build",
+        "compodoc": false,
+        "configDir": "{projectRoot}/storybook",
+        "host": "0.0.0.0",
+        "port": 4444,
+        "styles": [
+          "{projectRoot}/storybook/styles.compiled.css"
+        ]
+      }
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/src/**/*.css"
+        ]
+      }
     }
   }
 }

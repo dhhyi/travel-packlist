@@ -1,11 +1,9 @@
 {
   "$schema": "../../node_modules/@angular/service-worker/config/schema.json",
-  "index": "/index.html",
   "assetGroups": [
     {
-      "name": "app",
       "installMode": "prefetch",
-      "updateMode": "prefetch",
+      "name": "app",
       "resources": {
         "files": [
           "/index*.html",
@@ -15,7 +13,9 @@
           "/(main|polyfills|chunk)*.js",
           "/**/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
         ]
-      }
+      },
+      "updateMode": "prefetch"
     }
-  ]
+  ],
+  "index": "/index.html"
 }

@@ -1,46 +1,51 @@
 {
-  "name": "rules-template",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
-  "projectType": "library",
-  "tags": [
-    "scope:generated",
-    "localized"
-  ],
   "implicitDependencies": [
     "generate-plugin",
     "check-plugin",
     "rules",
     "rules-cmdl"
   ],
+  "name": "rules-template",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:generated",
+    "localized"
+  ],
   "targets": {
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
+    },
     "generate": {
-      "executor": "nx:run-commands",
+      "cache": true,
       "dependsOn": [
         "^generate"
+      ],
+      "executor": "nx:run-commands",
+      "inputs": [
+        "^production",
+        "{projectRoot}/src/txt/*.txt"
       ],
       "options": {
         "command": "nx g @travel-packlist/generate-plugin:templates",
         "path": "{projectRoot}/src",
         "pattern": "{projectRoot}/src/txt/*.txt"
       },
-      "inputs": [
-        "^production",
-        "{projectRoot}/src/txt/*.txt"
-      ],
       "outputs": [
         "{projectRoot}/src/lib/*.ts",
         "{projectRoot}/src/index.ts"
-      ],
-      "cache": true
-    },
-    "test": {
-      "options": {
-        "config": "../../{projectRoot}/vite.config.ts"
-      }
+      ]
     },
     "lint": {
-      "executor": "@travel-packlist/check-plugin:rules",
+      "configurations": {
+        "ci": {
+          "errorOnChange": true
+        }
+      },
       "dependsOn": [
         {
           "projects": [
@@ -49,20 +54,15 @@
           "target": "build"
         }
       ],
+      "executor": "@travel-packlist/check-plugin:rules",
       "options": {
-        "pattern": "{projectRoot}/src/txt/*.txt",
-        "errorOnWarnings": true
-      },
-      "configurations": {
-        "ci": {
-          "errorOnChange": true
-        }
+        "errorOnWarnings": true,
+        "pattern": "{projectRoot}/src/txt/*.txt"
       }
     },
-    "dead-code": {
-      "executor": "@travel-packlist/check-plugin:dead-code",
+    "test": {
       "options": {
-        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+        "config": "../../{projectRoot}/vite.config.ts"
       }
     }
   }

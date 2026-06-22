@@ -1,37 +1,35 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "version": 2,
-  "title": "Executor Schema",
+  "additionalProperties": false,
   "description": "",
-  "type": "object",
   "properties": {
-    "outputPath": {
-      "type": "string",
-      "description": "The output path for the application being built"
-    },
     "assemblyTask": {
-      "type": "string",
-      "description": "The task to run to assemble the application"
+      "description": "The task to run to assemble the application",
+      "type": "string"
     },
     "assetTask": {
-      "type": "string",
-      "description": "The task to run to generate assets with @capacitor/assets"
+      "description": "The task to run to generate assets with @capacitor/assets",
+      "type": "string"
     },
     "bundles": {
-      "type": "array",
+      "default": [],
       "description": "The list of bundles to build",
       "items": {
-        "type": "string",
         "enum": [
           "AAB",
           "APK"
-        ]
+        ],
+        "type": "string"
       },
-      "default": []
+      "type": "array"
+    },
+    "outputPath": {
+      "description": "The output path for the application being built",
+      "type": "string"
     },
     "targetSdkVersion": {
-      "type": "number",
-      "description": "The target SDK version for the application"
+      "description": "The target SDK version for the application",
+      "type": "number"
     }
   },
   "required": [
@@ -40,5 +38,7 @@
     "outputPath",
     "bundles"
   ],
-  "additionalProperties": false
+  "title": "Executor Schema",
+  "type": "object",
+  "version": 2
 }

@@ -1,38 +1,36 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "version": 2,
-  "title": "Executor Schema",
+  "additionalProperties": false,
   "description": "",
-  "type": "object",
   "properties": {
+    "androidProject": {
+      "description": "Path to the Android project folder",
+      "type": "string"
+    },
+    "assetPath": {
+      "description": "Path to the assets folder",
+      "type": "string"
+    },
+    "darkColor": {
+      "description": "Color of the dark theme",
+      "type": "string"
+    },
+    "lightColor": {
+      "description": "Color of the light theme",
+      "type": "string"
+    },
+    "pwaManifestPath": {
+      "description": "Path to the PWA manifest file",
+      "type": "string"
+    },
     "type": {
-      "type": "string",
+      "description": "Type of the asset to create",
       "enum": [
         "pwa",
         "android",
         "all"
       ],
-      "description": "Type of the asset to create"
-    },
-    "pwaManifestPath": {
-      "type": "string",
-      "description": "Path to the PWA manifest file"
-    },
-    "assetPath": {
-      "type": "string",
-      "description": "Path to the assets folder"
-    },
-    "androidProject": {
-      "type": "string",
-      "description": "Path to the Android project folder"
-    },
-    "lightColor": {
-      "type": "string",
-      "description": "Color of the light theme"
-    },
-    "darkColor": {
-      "type": "string",
-      "description": "Color of the dark theme"
+      "type": "string"
     }
   },
   "required": [
@@ -40,5 +38,7 @@
     "assetPath",
     "androidProject"
   ],
-  "additionalProperties": false
+  "title": "Executor Schema",
+  "type": "object",
+  "version": 2
 }

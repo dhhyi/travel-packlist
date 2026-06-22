@@ -1,11 +1,11 @@
 {
-  "name": "@travel-packlist/versioning",
-  "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "type": "commonjs",
   "main": "./src/index.js",
+  "name": "@travel-packlist/versioning",
+  "private": true,
+  "type": "commonjs",
   "typings": "./src/index.d.ts",
-  "private": true
+  "version": "0.0.1"
 }

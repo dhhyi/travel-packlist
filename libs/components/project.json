@@ -1,30 +1,30 @@
 {
-  "name": "components",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
-  "prefix": "lib",
-  "projectType": "library",
-  "tags": [
-    "scope:components"
-  ],
+  "generators": {
+    "@nx/angular:component": {
+      "prefix": "cmp",
+      "style": "css"
+    }
+  },
   "implicitDependencies": [
     "check-plugin"
   ],
+  "name": "components",
+  "prefix": "lib",
+  "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:components"
+  ],
   "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "dead-code": {
       "executor": "@travel-packlist/check-plugin:dead-code",
       "options": {
         "tsConfig": "{projectRoot}/tsconfig.lib.json"
       }
-    }
-  },
-  "generators": {
-    "@nx/angular:component": {
-      "style": "css",
-      "prefix": "cmp"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
     }
   }
 }

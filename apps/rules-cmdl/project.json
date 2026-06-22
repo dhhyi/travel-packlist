@@ -1,31 +1,13 @@
 {
-  "name": "rules-cmdl",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
+  "name": "rules-cmdl",
   "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
   "tags": [
     "standalone"
   ],
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
-      "dependsOn": [
-        "^build",
-        "^generate"
-      ],
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "defaultConfiguration": "production",
-      "options": {
-        "tsConfig": "{projectRoot}/tsconfig.app.json",
-        "esbuildConfig": "{projectRoot}/esbuild.config.js",
-        "main": "{projectRoot}/src/index.ts",
-        "outputPath": "dist/{projectRoot}",
-        "format": [
-          "cjs"
-        ]
-      },
       "configurations": {
         "development": {
           "minify": false
@@ -33,17 +15,35 @@
         "production": {
           "minify": true
         }
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
+      },
+      "defaultConfiguration": "production",
+      "dependsOn": [
+        "^build",
+        "^generate"
+      ],
+      "executor": "@nx/esbuild:esbuild",
+      "options": {
+        "esbuildConfig": "{projectRoot}/esbuild.config.js",
+        "format": [
+          "cjs"
+        ],
+        "main": "{projectRoot}/src/index.ts",
+        "outputPath": "dist/{projectRoot}",
+        "tsConfig": "{projectRoot}/tsconfig.app.json"
+      },
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
     "dead-code": {
       "executor": "@travel-packlist/check-plugin:dead-code",
       "options": {
-        "tsConfig": "{projectRoot}/tsconfig.app.json",
-        "noExports": true
+        "noExports": true,
+        "tsConfig": "{projectRoot}/tsconfig.app.json"
       }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
     }
   }
 }

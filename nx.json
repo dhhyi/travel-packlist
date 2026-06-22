@@ -1,5 +1,25 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "analytics": false,
+  "generators": {
+    "@nx/angular:application": {
+      "e2eTestRunner": "playwright",
+      "linter": "eslint",
+      "style": "none",
+      "unitTestRunner": "vitest"
+    },
+    "@nx/angular:component": {
+      "changeDetection": "OnPush",
+      "skipTests": true,
+      "style": "none",
+      "type": "component"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "setParserOptionsProject": true,
+      "unitTestRunner": "vitest"
+    }
+  },
   "namedInputs": {
     "default": [
       "{projectRoot}/**/*",
@@ -32,6 +52,25 @@
       }
     ]
   },
+  "nxCloudId": "676534afe3d486b0dc961fdf",
+  "plugins": [
+    {
+      "options": {
+        "exclude": [
+          "CHANGELOG.md"
+        ]
+      },
+      "plugin": "@travel-packlist/check-plugin"
+    },
+    "@travel-packlist/json-schema-to-typescript",
+    {
+      "options": {
+        "testMode": "watch",
+        "testTargetName": "test"
+      },
+      "plugin": "@nx/vitest"
+    }
+  ],
   "targetDefaults": {
     "@nx/angular:application": {
       "cache": true,
@@ -43,8 +82,33 @@
         "^production"
       ]
     },
+    "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
+    },
     "@nx/eslint:lint": {
       "cache": true,
+      "configurations": {
+        "ci": {
+          "fix": false,
+          "maxWarnings": 0
+        },
+        "pre-commit": {
+          "fix": true,
+          "maxWarnings": 0
+        }
+      },
+      "defaultConfiguration": "pre-commit",
+      "dependsOn": [
+        "generate",
+        "schema2ts-*"
+      ],
       "inputs": [
         "default",
         "^default",
@@ -52,48 +116,6 @@
         "{workspaceRoot}/eslint*.config.*",
         "{workspaceRoot}/tools/eslint-config/src/**/*.mjs",
         "{workspaceRoot}/tools/eslint-rules/**/*"
-      ],
-      "dependsOn": [
-        "generate",
-        "schema2ts-*"
-      ],
-      "defaultConfiguration": "pre-commit",
-      "configurations": {
-        "pre-commit": {
-          "fix": true,
-          "maxWarnings": 0
-        },
-        "ci": {
-          "fix": false,
-          "maxWarnings": 0
-        }
-      }
-    },
-    "lint": {
-      "dependsOn": [
-        "generate",
-        "*lint"
-      ]
-    },
-    "test": {
-      "dependsOn": [
-        "^generate",
-        "generate"
-      ],
-      "cache": true,
-      "inputs": [
-        "default",
-        "^production"
-      ],
-      "configurations": {
-        "pre-commit": {
-          "watch": false
-        }
-      }
-    },
-    "e2e-ci--**/*": {
-      "dependsOn": [
-        "^build"
       ]
     },
     "@nx/js:tsc": {
@@ -106,77 +128,49 @@
         "production",
         "^production"
       ],
-      "outputs": [
-        "{options.outputPath}"
-      ],
       "options": {
-        "outputPath": "dist/{projectRoot}",
-        "main": "{projectRoot}/src/index.ts",
-        "tsConfig": "{projectRoot}/tsconfig.lib.json",
         "assets": [
           "{projectRoot}/*.md",
           {
-            "input": "./{projectRoot}/src",
             "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
             "input": "./{projectRoot}/src",
-            "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./{projectRoot}",
+            "glob": "**/*.d.ts",
+            "input": "./{projectRoot}/src",
+            "output": "./src"
+          },
+          {
             "glob": "generators.json",
+            "input": "./{projectRoot}",
             "output": "."
           },
           {
-            "input": "./{projectRoot}",
             "glob": "executors.json",
+            "input": "./{projectRoot}",
             "output": "."
           }
-        ]
-      }
+        ],
+        "main": "{projectRoot}/src/index.ts",
+        "outputPath": "dist/{projectRoot}",
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      },
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
     "@travel-packlist/capacitor-assets:run": {
       "options": {
-        "pwaManifestPath": "apps/travel-packlist/public/manifest.json",
-        "assetPath": "apps/travel-packlist/public",
         "androidProject": "dist/android",
+        "assetPath": "apps/travel-packlist/public",
+        "darkColor": "#0f172a",
         "lightColor": "#f1f5f9",
-        "darkColor": "#0f172a"
-      }
-    },
-    "@travel-packlist/check-plugin:markdown": {
-      "inputs": [
-        "{projectRoot}/*.md",
-        "!{projectRoot}/CHANGELOG.md",
-        "{workspaceRoot}/*.md"
-      ],
-      "cache": true,
-      "defaultConfiguration": "pre-commit",
-      "configurations": {
-        "pre-commit": {
-          "fix": true
-        },
-        "ci": {
-          "fix": false
-        }
-      }
-    },
-    "@travel-packlist/check-plugin:tsconfig": {
-      "cache": true,
-      "defaultConfiguration": "pre-commit",
-      "configurations": {
-        "pre-commit": {
-          "fix": true
-        },
-        "ci": {
-          "fix": false
-        }
+        "pwaManifestPath": "apps/travel-packlist/public/manifest.json"
       }
     },
     "@travel-packlist/check-plugin:dead-code": {
+      "cache": true,
       "dependsOn": [
         "generate"
       ],
@@ -186,30 +180,36 @@
       ],
       "outputs": [
         "{workspaceRoot}/dist/{projectRoot}/dead-code/{imports,exports}.json"
-      ],
-      "cache": true
+      ]
     },
-    "nx-stylelint:lint": {
-      "options": {
-        "lintFilePatterns": [
-          "{projectRoot}/**/*.css"
-        ]
-      },
-      "defaultConfiguration": "pre-commit",
+    "@travel-packlist/check-plugin:markdown": {
+      "cache": true,
       "configurations": {
-        "pre-commit": {
-          "fix": true
-        },
         "ci": {
           "fix": false
+        },
+        "pre-commit": {
+          "fix": true
         }
       },
+      "defaultConfiguration": "pre-commit",
       "inputs": [
-        "{projectRoot}/**/*.{css,scss}",
-        "{projectRoot}/.stylelintrc.json",
-        "{workspaceRoot}/util/.stylelintrc.json"
-      ],
-      "cache": true
+        "{projectRoot}/*.md",
+        "!{projectRoot}/CHANGELOG.md",
+        "{workspaceRoot}/*.md"
+      ]
+    },
+    "@travel-packlist/check-plugin:tsconfig": {
+      "cache": true,
+      "configurations": {
+        "ci": {
+          "fix": false
+        },
+        "pre-commit": {
+          "fix": true
+        }
+      },
+      "defaultConfiguration": "pre-commit"
     },
     "build-storybook": {
       "cache": true,
@@ -220,54 +220,54 @@
         "{projectRoot}/tsconfig.storybook.json"
       ]
     },
-    "@nx/esbuild:esbuild": {
-      "cache": true,
+    "e2e-ci--**/*": {
       "dependsOn": [
         "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
       ]
-    }
-  },
-  "plugins": [
-    {
-      "plugin": "@travel-packlist/check-plugin",
+    },
+    "lint": {
+      "dependsOn": [
+        "generate",
+        "*lint"
+      ]
+    },
+    "nx-stylelint:lint": {
+      "cache": true,
+      "configurations": {
+        "ci": {
+          "fix": false
+        },
+        "pre-commit": {
+          "fix": true
+        }
+      },
+      "defaultConfiguration": "pre-commit",
+      "inputs": [
+        "{projectRoot}/**/*.{css,scss}",
+        "{projectRoot}/.stylelintrc.json",
+        "{workspaceRoot}/util/.stylelintrc.json"
+      ],
       "options": {
-        "exclude": [
-          "CHANGELOG.md"
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.css"
         ]
       }
     },
-    "@travel-packlist/json-schema-to-typescript",
-    {
-      "plugin": "@nx/vitest",
-      "options": {
-        "testTargetName": "test",
-        "testMode": "watch"
-      }
+    "test": {
+      "cache": true,
+      "configurations": {
+        "pre-commit": {
+          "watch": false
+        }
+      },
+      "dependsOn": [
+        "^generate",
+        "generate"
+      ],
+      "inputs": [
+        "default",
+        "^production"
+      ]
     }
-  ],
-  "generators": {
-    "@nx/angular:application": {
-      "e2eTestRunner": "playwright",
-      "linter": "eslint",
-      "style": "none",
-      "unitTestRunner": "vitest"
-    },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "vitest",
-      "setParserOptionsProject": true
-    },
-    "@nx/angular:component": {
-      "style": "none",
-      "skipTests": true,
-      "changeDetection": "OnPush",
-      "type": "component"
-    }
-  },
-  "nxCloudId": "676534afe3d486b0dc961fdf",
-  "analytics": false
+  }
 }

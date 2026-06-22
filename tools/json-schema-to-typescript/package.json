@@ -1,11 +1,11 @@
 {
-  "name": "@travel-packlist/json-schema-to-typescript",
-  "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "type": "module",
   "main": "./src/index.js",
+  "name": "@travel-packlist/json-schema-to-typescript",
+  "private": true,
+  "type": "module",
   "typings": "./src/index.d.ts",
-  "private": true
+  "version": "0.0.1"
 }

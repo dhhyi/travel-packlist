@@ -1,21 +1,21 @@
 {
   "$schema": "https://json-schema.org/schema",
-  "version": 2,
-  "title": "Executor Schema",
+  "additionalProperties": false,
   "description": "",
-  "type": "object",
   "properties": {
-    "pattern": {
-      "type": "string",
-      "description": "Glob pattern to match tsconfig files"
-    },
     "fix": {
-      "type": "boolean",
-      "description": "Automatically fix issues"
+      "description": "Automatically fix issues",
+      "type": "boolean"
+    },
+    "pattern": {
+      "description": "Glob pattern to match tsconfig files",
+      "type": "string"
     }
   },
   "required": [
     "pattern"
   ],
-  "additionalProperties": false
+  "title": "Executor Schema",
+  "type": "object",
+  "version": 2
 }

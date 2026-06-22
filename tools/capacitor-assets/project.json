@@ -1,8 +1,8 @@
 {
-  "name": "capacitor-assets",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
+  "name": "capacitor-assets",
   "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
   "tags": [
     "plugin"
   ],

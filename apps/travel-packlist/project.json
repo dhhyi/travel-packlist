@@ -1,177 +1,177 @@
 {
-  "name": "travel-packlist",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "prefix": "app",
-  "sourceRoot": "{projectRoot}/src",
   "i18n": {
-    "sourceLocale": "en",
     "locales": {
       "de": "libs/locale/src/messages.de.json"
-    }
+    },
+    "sourceLocale": "en"
   },
-  "tags": [
-    "scope:main"
-  ],
   "implicitDependencies": [
     "!design-system",
     "capacitor-assets"
   ],
+  "name": "travel-packlist",
+  "prefix": "app",
+  "projectType": "application",
+  "sourceRoot": "{projectRoot}/src",
+  "tags": [
+    "scope:main"
+  ],
   "targets": {
-    "build-required": {
-      "executor": "nx:noop",
-      "dependsOn": [
-        "^generate",
-        "generate-*"
-      ]
-    },
-    "generate-assets": {
-      "executor": "@travel-packlist/capacitor-assets:run",
-      "options": {
-        "type": "pwa"
-      },
-      "inputs": [
-        "{projectRoot}/public/icon.svg",
-        "{projectRoot}/public/manifest.json"
-      ],
-      "outputs": [
-        "{projectRoot}/public/manifest.json",
-        "{projectRoot}/public/icon-*.webp"
-      ],
-      "cache": true
-    },
     "build": {
-      "executor": "@nx/angular:application",
+      "cache": true,
+      "configurations": {
+        "android": {
+          "define": {
+            "ANDROID": "true"
+          },
+          "localize": true,
+          "outputHashing": "all",
+          "outputPath": "dist/apps/travel-packlist-android"
+        },
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true
+        },
+        "gh-pages": {
+          "baseHref": "/travel-packlist/",
+          "localize": true,
+          "outputHashing": "all",
+          "outputPath": "dist/apps/travel-packlist-gh-pages",
+          "serviceWorker": "{projectRoot}/ngsw-config.json"
+        },
+        "production": {
+          "localize": true,
+          "outputHashing": "all",
+          "outputPath": "dist/apps/travel-packlist-production",
+          "serviceWorker": "{projectRoot}/ngsw-config.json"
+        }
+      },
+      "defaultConfiguration": "production",
       "dependsOn": [
         "build-required"
       ],
+      "executor": "@nx/angular:application",
       "inputs": [
         "default",
         "^production",
         "design"
       ],
-      "outputs": [
-        "{options.outputPath}"
-      ],
-      "cache": true,
       "options": {
-        "outputPath": "dist/apps/travel-packlist",
-        "index": "{projectRoot}/src/index.html",
-        "browser": "{projectRoot}/src/main.ts",
-        "polyfills": [
-          "@angular/localize/init"
-        ],
-        "tsConfig": "{projectRoot}/tsconfig.app.json",
-        "inlineStyleLanguage": "css",
         "assets": [
           {
             "glob": "**/*",
             "input": "{projectRoot}/public"
           }
         ],
-        "styles": [
-          "apps/design-system/src/styles.css"
-        ],
-        "scripts": [],
+        "browser": "{projectRoot}/src/main.ts",
         "budgets": [
           {
-            "type": "initial",
+            "maximumError": "1mb",
             "maximumWarning": "500kb",
-            "maximumError": "1mb"
+            "type": "initial"
           },
           {
-            "type": "anyComponentStyle",
+            "maximumError": "8kb",
             "maximumWarning": "4kb",
-            "maximumError": "8kb"
+            "type": "anyComponentStyle"
           }
         ],
         "define": {
           "ANDROID": "false"
         },
+        "i18nDuplicateTranslation": "error",
         "i18nMissingTranslation": "error",
-        "i18nDuplicateTranslation": "error"
+        "index": "{projectRoot}/src/index.html",
+        "inlineStyleLanguage": "css",
+        "outputPath": "dist/apps/travel-packlist",
+        "polyfills": [
+          "@angular/localize/init"
+        ],
+        "scripts": [],
+        "styles": [
+          "apps/design-system/src/styles.css"
+        ],
+        "tsConfig": "{projectRoot}/tsconfig.app.json"
       },
-      "configurations": {
-        "production": {
-          "outputPath": "dist/apps/travel-packlist-production",
-          "outputHashing": "all",
-          "serviceWorker": "{projectRoot}/ngsw-config.json",
-          "localize": true
-        },
-        "gh-pages": {
-          "outputPath": "dist/apps/travel-packlist-gh-pages",
-          "baseHref": "/travel-packlist/",
-          "outputHashing": "all",
-          "serviceWorker": "{projectRoot}/ngsw-config.json",
-          "localize": true
-        },
-        "android": {
-          "outputPath": "dist/apps/travel-packlist-android",
-          "define": {
-            "ANDROID": "true"
-          },
-          "outputHashing": "all",
-          "localize": true
-        },
-        "development": {
-          "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
-        }
-      },
-      "defaultConfiguration": "production"
+      "outputs": [
+        "{options.outputPath}"
+      ]
     },
-    "serve": {
-      "executor": "@nx/angular:dev-server",
+    "build-required": {
       "dependsOn": [
-        "build-required"
+        "^generate",
+        "generate-*"
       ],
+      "executor": "nx:noop"
+    },
+    "dead-code": {
+      "executor": "@travel-packlist/check-plugin:dead-code",
       "options": {
-        "host": "0.0.0.0"
-      },
-      "configurations": {
-        "production": {
-          "buildTarget": "travel-packlist:build:production"
-        },
-        "development": {
-          "buildTarget": "travel-packlist:build:development"
-        },
-        "android": {
-          "buildTarget": "travel-packlist:build:android"
-        }
-      },
-      "defaultConfiguration": "development",
-      "continuous": true
+        "tsConfig": "{projectRoot}/tsconfig.app.json"
+      }
     },
     "extract-i18n": {
-      "executor": "@nx/angular:extract-i18n",
+      "cache": true,
       "dependsOn": [
         "^generate"
+      ],
+      "executor": "@nx/angular:extract-i18n",
+      "inputs": [
+        "production",
+        "^production"
       ],
       "options": {
         "buildTarget": "travel-packlist:build:production",
         "format": "json",
         "outputPath": "libs/locale/src"
       },
-      "inputs": [
-        "production",
-        "^production"
-      ],
       "outputs": [
         "{workspaceRoot}/libs/locale/src/messages.json"
-      ],
-      "cache": true
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "dependsOn": [
-        "^generate"
       ]
     },
-    "dead-code": {
-      "executor": "@travel-packlist/check-plugin:dead-code",
+    "generate-assets": {
+      "cache": true,
+      "executor": "@travel-packlist/capacitor-assets:run",
+      "inputs": [
+        "{projectRoot}/public/icon.svg",
+        "{projectRoot}/public/manifest.json"
+      ],
       "options": {
-        "tsConfig": "{projectRoot}/tsconfig.app.json"
+        "type": "pwa"
+      },
+      "outputs": [
+        "{projectRoot}/public/manifest.json",
+        "{projectRoot}/public/icon-*.webp"
+      ]
+    },
+    "lint": {
+      "dependsOn": [
+        "^generate"
+      ],
+      "executor": "@nx/eslint:lint"
+    },
+    "serve": {
+      "configurations": {
+        "android": {
+          "buildTarget": "travel-packlist:build:android"
+        },
+        "development": {
+          "buildTarget": "travel-packlist:build:development"
+        },
+        "production": {
+          "buildTarget": "travel-packlist:build:production"
+        }
+      },
+      "continuous": true,
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build-required"
+      ],
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "host": "0.0.0.0"
       }
     },
     "test": {

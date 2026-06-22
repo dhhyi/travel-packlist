@@ -1,8 +1,8 @@
 {
-  "name": "generate-plugin",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "{projectRoot}/src",
+  "name": "generate-plugin",
   "projectType": "library",
+  "sourceRoot": "{projectRoot}/src",
   "tags": [
     "plugin"
   ],

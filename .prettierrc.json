@@ -1,10 +1,4 @@
 {
-  "plugins": [
-    "prettier-plugin-tailwindcss",
-    "prettier-plugin-sh",
-    "@prettier/plugin-xml"
-  ],
-  "singleQuote": true,
   "overrides": [
     {
       "files": [
@@ -13,8 +7,8 @@
         ".*ignore"
       ],
       "options": {
-        "parser": "sh",
-        "indent": 4
+        "indent": 4,
+        "parser": "sh"
       }
     },
     {
@@ -39,6 +33,7 @@
         "*.json"
       ],
       "options": {
+        "jsonRecursiveSort": true,
         "parser": "json",
         "printWidth": 5
       }
@@ -51,5 +46,12 @@
         "parser": "angular"
       }
     }
-  ]
+  ],
+  "plugins": [
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-sh",
+    "@prettier/plugin-xml",
+    "prettier-plugin-sort-json"
+  ],
+  "singleQuote": true
 }
