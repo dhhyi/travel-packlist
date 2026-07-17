@@ -20,6 +20,7 @@ import { RulesShare } from '../../../services/rules-share/rules-share.interface'
 })
 export class ConfigRulesImportExport {
   private state = inject(GLOBAL_STATE);
+  private rulesShare = inject(RulesShare);
 
   exportReminder = form(this.state.config.exportReminder);
   exportNeeded = this.state.rules.exportNeeded;
@@ -33,8 +34,6 @@ export class ConfigRulesImportExport {
     }
     this.loading.set(false);
   }
-
-  private rulesShare = inject(RulesShare);
 
   isExportAvailable(): boolean {
     return this.state.rules.localRulesAvailable();

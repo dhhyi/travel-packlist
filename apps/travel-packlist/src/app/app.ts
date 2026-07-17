@@ -37,8 +37,6 @@ import { RouteData } from './pages/app.routes';
 })
 export class App {
   private state = inject(GLOBAL_STATE);
-  readonly overlayVisible = signal(false);
-
   private router = inject(Router);
   private readonly routeData = toSignal<Partial<RouteData> | undefined>(
     this.router.events.pipe(
@@ -46,17 +44,17 @@ export class App {
       map(() => this.router.routerState.root.snapshot.firstChild?.data),
     ),
   );
-
-  readonly scrollTopVisible = computed(
-    () => this.state.browser.scrollY() > 100,
-  );
-
   readonly displayRuleHelpLink = computed(() => this.routeData()?.ruleHelp);
-
   readonly displayConfigLink = computed(() => this.routeData()?.config);
+
+  readonly overlayVisible = signal(false);
 
   readonly displayHistoryBackLink = computed(
     () => this.routeData()?.historyBack,
+  );
+
+  readonly scrollTopVisible = computed(
+    () => this.state.browser.scrollY() > 100,
   );
 
   scrollTop() {

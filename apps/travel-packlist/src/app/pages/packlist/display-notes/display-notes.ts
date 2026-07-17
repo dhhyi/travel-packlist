@@ -31,7 +31,7 @@ export class DisplayNotes {
     () => this.state.packlist.sessionNotes() ?? '',
   );
   protected readonly control = form(this.notes, (path) => {
-    readonly(path, () => !this.editMode());
+    readonly(path, { when: () => !this.editMode() });
   });
 
   private restoreHeight() {

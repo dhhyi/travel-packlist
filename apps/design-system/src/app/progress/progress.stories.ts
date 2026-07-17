@@ -19,10 +19,10 @@ import { ProgressBar } from '@travel-packlist/components';
   },
 })
 class ProgressDemo {
+  readonly element = inject(ElementRef);
   readonly animationDuration = signal(0);
   readonly value = signal(0);
   readonly continuousValue = signal(0);
-  readonly element = inject(ElementRef);
 
   constructor() {
     setInterval(() => {

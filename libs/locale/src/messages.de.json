@@ -7,6 +7,7 @@
     "1124638211805168339": "{VAR_PLURAL, plural, one {Eine Regel} other {{INTERPOLATION} Regeln}}",
     "1133779056943122275": "Regelansicht",
     "1146494483908048172": "Dieser Variablenname ist reserviert",
+    "1206588613645365903": "Variablen dürfen dieses Zeichen nicht enthalten: '{$INTERPOLATION}'",
     "1222738782186578685": "Frage",
     "125111376198337295": "Titel",
     "1397406215697170196": "nach Definitionsreihenfolge",
@@ -72,7 +73,6 @@
     "29832309535656200": "System",
     "3109977210254614624": "Frage ausschneiden",
     "3146660370901696489": "Gegenstandsname darf das Zeichen '{$INTERPOLATION}' nicht enthalten",
-    "3159061930369854794": "Variablen dürfen dieses Zeichen nicht enthalten: '{$INTERPOLATION}'",
     "3191112445990370745": "Regeln im Code bearbeiten",
     "3238046036878055987": "Internet",
     "3275973624178889616": "Zur Regelformat Hilfe",
@@ -154,6 +154,7 @@
     "6083142201554443299": "Variable {$VARIABLE_NAME} ist in keiner Frage deklariert.",
     "6208897314549470679": "gespeichert {$INTERPOLATION}",
     "6278226792044663744": "Regel hinzufügen",
+    "644552698336626789": "Fragen dürfen dieses Zeichen nicht enthalten: '{$INTERPOLATION}'",
     "6475072161279928784": "Ungültiger Kategoriename",
     "6521056803615212015": "Gegenstand nach unten verschieben",
     "6548607722554872518": "+ Gegenstand",
@@ -220,7 +221,6 @@
     "9010416589435942471": "Service Worker: {$INTERPOLATION}",
     "9010738456635386116": "{VAR_SELECT, select, true {und} other {}}",
     "9107254929079465897": "Der folgende Fehler ist beim Parsen der Regeln aufgetreten:",
-    "9114057462493786632": "Fragen dürfen dieses Zeichen nicht enthalten: '{$INTERPOLATION}'",
     "9161750981023265333": "Aktuelle Regeln sind nicht gesichert!"
   }
 }

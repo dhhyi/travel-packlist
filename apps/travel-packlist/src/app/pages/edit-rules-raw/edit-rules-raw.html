@@ -12,7 +12,8 @@
   aria-live="polite"
 >
   @if (parserState(); as state) {
-    @switch (state.type) {
+    @let type = state.type;
+    @switch (type) {
       @case ('pending') {
         <div
           aria-label="pending"
@@ -65,15 +66,17 @@
                   is not used in any condition.
                 </li>
               }
+              @default never;
             }
           }
         </ul>
       }
-      @default {
+      @case ('error') {
         <div aria-label="error" i18n-aria-label class="text-red">
           {{ state.error }}
         </div>
       }
+      @default never;
     }
   }
 </div>

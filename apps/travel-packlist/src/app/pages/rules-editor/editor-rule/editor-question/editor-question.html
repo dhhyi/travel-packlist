@@ -27,42 +27,34 @@
   @let state = form();
   @if (mode() === 'edit' && state.valid() === false && state.dirty()) {
     <div class="text-red m-1 flex flex-col text-sm" role="alert">
-      @for (error of form.question().errors() | slice: -1; track error) {
-        @switch (error.kind) {
-          @case ('pattern') {
+      @if (form.question().touched() && form.variable().touched()) {
+        @if (form.question().getError('pattern')) {
+          @let character = form.question().getError('pattern')?.message;
+          <span i18n
+            >Questions cannot contain this character '{{ character }}'</span
+          >
+        }
+        @if (form.question().getError('required')) {
+          <span i18n>Question is required</span>
+        }
+        @if (form.variable().getError('pattern')) {
+          @let character = form.variable().getError('pattern')?.message;
+          @if (character === ' ') {
+            <span i18n>Variables cannot contain spaces</span>
+          } @else {
             <span i18n
-              >Questions cannot contain this character: '{{
-                error.message
-              }}'</span
+              >Variables cannot contain this character '{{ character }}'</span
             >
           }
-          @case ('required') {
-            <span i18n>Question is required</span>
-          }
         }
-      }
-      @for (error of form.variable().errors() | slice: -1; track error) {
-        @switch (error.kind) {
-          @case ('pattern') {
-            @if (error.message === ' ') {
-              <span i18n>Variables cannot contain spaces</span>
-            } @else {
-              <span i18n
-                >Variables cannot contain this character: '{{
-                  error.message
-                }}'</span
-              >
-            }
-          }
-          @case ('required') {
-            <span i18n>Variable name is required</span>
-          }
-          @case ('reserved') {
-            <span i18n>This variable name is reserved</span>
-          }
-          @case ('used') {
-            <span i18n>This variable name is already used</span>
-          }
+        @if (form.variable().getError('required')) {
+          <span i18n>Variable name is required</span>
+        }
+        @if (form.variable().getError('reserved')) {
+          <span i18n>This variable name is reserved</span>
+        }
+        @if (form.variable().getError('used')) {
+          <span i18n>This variable name is already used</span>
         }
       }
     </div>
@@ -70,25 +62,22 @@
   @if (mode() === 'edit' && warnings().length) {
     <div class="text-yellow-normal m-1 flex flex-col text-sm" role="status">
       @for (warning of warnings(); track $index) {
-        @switch (warning.type) {
-          @case ('duplicate') {
-            <span i18n>
-              Variable
-              {{
-                warning.variable // i18n(ph="VARIABLE_NAME")
-              }}
-              is declared more than once.
-            </span>
-          }
-          @case ('unused') {
-            <span i18n>
-              Variable
-              {{
-                warning.variable // i18n(ph="VARIABLE_NAME")
-              }}
-              is not used in any condition.
-            </span>
-          }
+        @if (warning.type === 'duplicate') {
+          <span i18n>
+            Variable
+            {{
+              warning.variable // i18n(ph="VARIABLE_NAME")
+            }}
+            is declared more than once.
+          </span>
+        } @else if (warning.type === 'unused') {
+          <span i18n>
+            Variable
+            {{
+              warning.variable // i18n(ph="VARIABLE_NAME")
+            }}
+            is not used in any condition.
+          </span>
         }
       }
     </div>

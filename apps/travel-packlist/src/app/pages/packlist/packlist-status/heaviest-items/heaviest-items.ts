@@ -13,6 +13,8 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { colorFromString } from '../../../../util/colors';
 
+const PAGE_SIZE = 10;
+
 @Component({
   selector: 'app-heaviest-items',
   imports: [BarChart, IconArrowDownward, IconArrowUpward],
@@ -23,8 +25,6 @@ import { colorFromString } from '../../../../util/colors';
   },
 })
 export class HeaviestItems {
-  private readonly pageSize = 10;
-
   private state = inject(GLOBAL_STATE);
 
   readonly heaviestItems = computed(() =>
@@ -53,7 +53,7 @@ export class HeaviestItems {
       .items.reduce<
         { name: string; value: number; color: string; id: string }[][]
       >((acc, item, index) => {
-        const page = Math.floor(index / this.pageSize);
+        const page = Math.floor(index / PAGE_SIZE);
         acc[page] = [...(acc[page] || []), item];
         return acc;
       }, []),

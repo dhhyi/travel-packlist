@@ -41,15 +41,16 @@ import { ToolbarButton } from './toolbar-button/toolbar-button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toolbar {
+  private state = inject(GLOBAL_STATE);
+  private clipboard = inject(RulesClipboard);
+
   private readonly toolbarButtons = viewChildren(ToolbarButton);
 
   readonly noOfVisibleRules = input.required<number>();
 
-  private state = inject(GLOBAL_STATE);
   mode = this.state.router.rulesMode;
   readonly editable = computed(() => this.state.rules.mode() === 'local');
   searchTerm = form(this.state.router.filterRulesQuery);
-  private clipboard = inject(RulesClipboard);
   clipboardItems = this.clipboard.itemsCount;
   clipboardQuestions = this.clipboard.questionsCount;
 

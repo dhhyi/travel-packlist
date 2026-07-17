@@ -22,6 +22,7 @@ import { map } from 'rxjs';
   },
 })
 export class Documentation {
+  private bypass = inject(DomSanitizer);
   private readonly topic = toSignal(
     inject(ActivatedRoute).params.pipe(
       map((params) => params['topic'] as AvailableDocumentationTopic),
@@ -32,6 +33,5 @@ export class Documentation {
     const topic = this.topic();
     return inject(availableDocumentationTopics[topic]);
   });
-  private bypass = inject(DomSanitizer);
   safeHtml = this.bypass.bypassSecurityTrustHtml(this.documentationHtml());
 }

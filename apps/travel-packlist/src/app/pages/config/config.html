@@ -2,7 +2,8 @@
 
 <app-config-rules-mode />
 
-@switch (rulesMode()) {
+@let mode = rulesMode();
+@switch (mode) {
   @case ('local') {
     <app-config-rules-editor />
     <app-config-rules-import-export />
@@ -15,6 +16,7 @@
     <app-config-rules-template />
     <app-config-rules-viewer />
   }
+  @default never;
 }
 
 <app-config-appearance />

@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { effect, inject, Injectable, isDevMode } from '@angular/core';
+import { effect, inject, Service, isDevMode } from '@angular/core';
 import { SystemBars, SystemBarsStyle } from '@capacitor/core';
 import {
   FontSizes,
@@ -8,7 +8,7 @@ import {
   Themes,
 } from '@travel-packlist/state';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AppInit {
   private state = inject(GLOBAL_STATE);
   private document = inject(DOCUMENT);

@@ -13,7 +13,6 @@
   <input
     class="w-0 flex-1"
     type="text"
-    formControlName="name"
     aria-label="item name"
     i18n-aria-label
     [formField]="form.name"
@@ -23,19 +22,14 @@
 @if (mode() === 'edit' && form().valid() === false && form().dirty()) {
   <div class="text-red-light m-1 text-sm" role="alert">
     @if (form.name().touched()) {
-      @for (error of form.name().errors() | slice: -1; track error) {
-        @switch (error.kind) {
-          @case ('pattern') {
-            <span i18n
-              >Item name cannot contain the character '{{
-                error.message
-              }}'</span
-            >
-          }
-          @case ('required') {
-            <span i18n>Item name is required</span>
-          }
-        }
+      @if (form.name().getError('pattern')) {
+        @let character = form.name().getError('pattern')?.message;
+        <span i18n
+          >Item name cannot contain the character '{{ character }}'</span
+        >
+      }
+      @if (form.name().getError('required')) {
+        <span i18n>Item name is required</span>
       }
     }
   </div>

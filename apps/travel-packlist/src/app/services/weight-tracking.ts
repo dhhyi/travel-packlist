@@ -1,10 +1,10 @@
-import { effect, inject, Injectable } from '@angular/core';
+import { effect, inject, Service } from '@angular/core';
 import { Refactor } from '@travel-packlist/model';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
 import { confirm } from '../dialog';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class WeightTrackingCheck {
   private state = inject(GLOBAL_STATE);
   private refactor = inject(Refactor);

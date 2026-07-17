@@ -1,10 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter, identity, interval, map, switchMap, tap } from 'rxjs';
 
 import { confirm } from '../dialog';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class RulesExportReminder {
   private state = inject(GLOBAL_STATE);
   private exportNeeded = this.state.rules.exportNeeded;

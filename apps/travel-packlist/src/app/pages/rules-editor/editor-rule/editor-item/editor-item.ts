@@ -1,4 +1,3 @@
-import { SlicePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -25,20 +24,21 @@ import {
 } from '@travel-packlist/model';
 import { Item } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { noop } from 'rxjs';
 
 import { alert, prompt } from '../../../../dialog';
 
 @Component({
   selector: 'app-editor-item',
-  imports: [FormField, SlicePipe],
+  imports: [FormField],
   templateUrl: './editor-item.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorItem {
+  private state = inject(GLOBAL_STATE);
+  private parser = inject(Parser);
+
   readonly item = input.required<Item>();
 
-  private state = inject(GLOBAL_STATE);
   mode = this.state.router.rulesMode;
   categories = this.state.rules.categories;
 
@@ -56,12 +56,9 @@ export class EditorItem {
   readonly form = form(this.formModel, (path) => {
     validate(path.name, this.validateNamePattern());
     required(path.name);
-    disabled(path, () => this.mode() !== 'edit');
-    // TODO: replace with validate on blur once API is available
-    debounce(path.name, () => new Promise<void>(noop));
+    disabled(path, { when: () => this.mode() !== 'edit' });
+    debounce(path.name, 'blur');
   });
-
-  private parser = inject(Parser);
 
   constructor() {
     effect(() => {

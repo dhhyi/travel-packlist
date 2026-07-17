@@ -45,7 +45,7 @@ export class EditRulesRaw {
   private readonly rulesModel = signal(this.state.rules.raw.value() ?? '');
   rulesControl = form(this.rulesModel, (path) => {
     debounce(path, 500);
-    disabled(path, () => this.state.rules.mode() !== 'local');
+    disabled(path, { when: () => this.state.rules.mode() !== 'local' });
   });
 
   readonly parserState = computed<ParserState>(() => {

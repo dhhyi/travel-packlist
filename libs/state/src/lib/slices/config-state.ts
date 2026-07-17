@@ -20,7 +20,6 @@ export const configState = () => {
   const trackWeight = create('trackWeight', false);
 
   effect(() => {
-    // ngModel shortly switches to null when initializing
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
     if (trackWeight() === false && categorySorting() === 'weight') {
       categorySorting.set('alphabetically');

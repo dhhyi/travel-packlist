@@ -1,4 +1,4 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Service } from '@angular/core';
 import {
   Parser,
   serializeItem,
@@ -7,7 +7,7 @@ import {
 import { Item, Question } from '@travel-packlist/rules';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class RulesClipboard {
   private parser = inject(Parser);
 

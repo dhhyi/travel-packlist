@@ -10,9 +10,9 @@ import {
   selector: '[appFocusThis]',
 })
 export class FocusThis {
-  readonly appFocusThis = input(false);
-
   private element = inject(ElementRef);
+
+  readonly appFocusThis = input(false);
 
   constructor() {
     afterNextRender({

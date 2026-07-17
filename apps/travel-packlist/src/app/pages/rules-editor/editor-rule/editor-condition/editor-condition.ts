@@ -35,6 +35,8 @@ export const REMOVE = 'REMOVE';
   },
 })
 export class EditorCondition {
+  private state = inject(GLOBAL_STATE);
+
   readonly condition = input.required<Condition>();
   readonly selectVariables = input.required<string[]>();
 
@@ -50,7 +52,6 @@ export class EditorCondition {
     read: TemplateRef,
   });
 
-  private state = inject(GLOBAL_STATE);
   private activeAnswers = this.state.active.answers;
   private mode = this.state.router.rulesMode;
 

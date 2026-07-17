@@ -1,9 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { GLOBAL_STATE } from '@travel-packlist/state';
 import { filter } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ScrollIntoView {
   private state = inject(GLOBAL_STATE);
 

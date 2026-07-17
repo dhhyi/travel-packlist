@@ -18,12 +18,7 @@ import { filter, map } from 'rxjs';
 import { createRouterSignalState } from '../persistence/router-signal';
 
 export type RuleModes =
-  | 'view'
-  | 'delete'
-  | 'edit'
-  | 'cut-paste'
-  | 'swap'
-  | 'search';
+  'view' | 'delete' | 'edit' | 'cut-paste' | 'swap' | 'search';
 
 interface NavThis {
   router: Router;

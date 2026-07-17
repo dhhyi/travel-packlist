@@ -5,6 +5,6 @@ import { Directive, inject, input, TemplateRef } from '@angular/core';
   selector: 'ng-template[value]',
 })
 export class SelectOption<V extends string> {
-  readonly value = input.required<V>();
   readonly template = inject(TemplateRef<unknown>);
+  readonly value = input.required<V>();
 }

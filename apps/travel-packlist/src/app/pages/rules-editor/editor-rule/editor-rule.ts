@@ -47,6 +47,10 @@ import { EditorQuestion } from './editor-question/editor-question';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorRule {
+  private state = inject(GLOBAL_STATE);
+  private clipboard = inject(RulesClipboard);
+  private refactor = inject(Refactor);
+
   readonly index = input.required<number>();
   readonly rule = input.required<Rule>();
 
@@ -54,7 +58,6 @@ export class EditorRule {
   readonly deleteRule = output();
   readonly renameVariable = output<[string, string]>();
 
-  private state = inject(GLOBAL_STATE);
   mode = this.state.router.rulesMode;
   readonly selectVariables = computed(() => {
     const ruleVariables = this.rule().questions.map((q) => q.variable);
@@ -62,9 +65,6 @@ export class EditorRule {
     return Array.from(allVariables).filter((v) => !ruleVariables.includes(v));
   });
   private confirmRuleDeletion = this.state.config.confirmRuleDeletion;
-
-  private clipboard = inject(RulesClipboard);
-  private refactor = inject(Refactor);
 
   readonly conditionWarnings = computed(() => {
     const warnings = this.state.rules.parsed.hasValue()

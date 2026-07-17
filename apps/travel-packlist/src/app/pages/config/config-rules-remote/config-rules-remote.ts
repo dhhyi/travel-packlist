@@ -16,7 +16,6 @@ import {
   IconRefresh,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE } from '@travel-packlist/state';
-import { noop } from 'rxjs';
 
 import { confirm } from '../../../dialog';
 import { extractErrorMessage } from '../../../util/extract-error-message';
@@ -86,8 +85,7 @@ export class ConfigRulesRemote {
   private readonly formModel = linkedSignal(() => this.firstHistoryEntry());
 
   control = form(this.formModel, (path) => {
-    // TODO: replace with validate on blur once API is available
-    debounce(path, () => new Promise<void>(noop));
+    debounce(path, 'blur');
   });
   readonly noRemoteValue = computed(() => !this.control().value());
 

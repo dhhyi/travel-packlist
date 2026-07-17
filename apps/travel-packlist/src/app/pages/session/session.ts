@@ -20,9 +20,9 @@ import { confirm, prompt } from '../../dialog';
   },
 })
 export class Session {
-  readonly type = input.required<'new' | 'restore'>();
-
   private state = inject(GLOBAL_STATE);
+
+  readonly type = input.required<'new' | 'restore'>();
 
   readonly savedSessions = this.state.packlist.sessions;
 

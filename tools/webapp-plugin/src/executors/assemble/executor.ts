@@ -105,17 +105,23 @@ function fixFileHashes(folder: string) {
   };
 
   class File {
+    static MAX_RENAMES = 20;
+
     constructor(
       private currentContent: string,
       private currentHash: string | undefined,
       private currentName: string,
     ) {}
 
+    private renameCounter = 0;
+
     private calculateActualHash = memoizedWith(() => this.currentContent, hash);
 
     get isCorrectlyHashed() {
       return (
-        !this.currentHash || this.currentHash === this.calculateActualHash()
+        !this.currentHash ||
+        this.renameCounter > File.MAX_RENAMES ||
+        this.currentHash === this.calculateActualHash()
       );
     }
 
@@ -129,6 +135,12 @@ function fixFileHashes(folder: string) {
 
     rename(files: File[]) {
       if (!this.currentHash) {
+        return;
+      }
+      if (this.renameCounter++ >= File.MAX_RENAMES) {
+        console.warn(
+          `not renaming ${this.currentName} more than ${File.MAX_RENAMES.toString()} times`,
+        );
         return;
       }
       numOfFileRenames++;
@@ -146,7 +158,7 @@ function fixFileHashes(folder: string) {
   }
 
   // move files into memory
-  const hashRegex = /-([A-Za-f0-9]{8})\.(js|css)$/;
+  const hashRegex = /-([A-Za-z0-9_-]{8})\.(js|css)$/;
   const files = readdirSync(folder)
     .map((file) => {
       const match = hashRegex.exec(file);
@@ -160,6 +172,7 @@ function fixFileHashes(folder: string) {
     })
     .filter((x) => !!x);
 
+  // TODO: make a dependency tree
   // sort files by number of least dependencies
   function createSorter() {
     function countDependencies(file: File) {

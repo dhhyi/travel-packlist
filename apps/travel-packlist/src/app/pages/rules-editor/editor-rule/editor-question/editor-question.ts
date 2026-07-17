@@ -1,4 +1,3 @@
-import { SlicePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -27,16 +26,16 @@ import { AND, NOT, OR, REMOVE } from '../editor-condition/editor-condition';
 
 @Component({
   selector: 'app-editor-question',
-  imports: [IconArrowForward, FormField, SlicePipe],
+  imports: [IconArrowForward, FormField],
   templateUrl: './editor-question.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorQuestion {
-  readonly question = input.required<Question>();
-
+  private state = inject(GLOBAL_STATE);
   private parser = inject(Parser);
 
-  private state = inject(GLOBAL_STATE);
+  readonly question = input.required<Question>();
+
   mode = this.state.router.rulesMode;
 
   readonly highlighVariable = computed(
@@ -64,7 +63,7 @@ export class EditorQuestion {
     variable: this.question().variable,
   }));
   readonly form = form(this.formModel, (path) => {
-    disabled(path, () => this.mode() !== 'edit');
+    disabled(path, { when: () => this.mode() !== 'edit' });
     validate(path.question, this.validateQuestionPattern());
     required(path.question);
     validate(path.variable, this.validateVariablePattern());
