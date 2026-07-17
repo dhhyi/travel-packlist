@@ -12,17 +12,32 @@ test('config', async ({ page }) => {
       - banner "Go to TravelPacklist":
         - heading "TravelPacklist" [level=1]
     - heading "Pack List" [level=2]
+    - paragraph: No active session
     - button "Reset Pack List"
+    - button "Start Session"
+    - button "Restore Session"
     - checkbox "Track item weight. (You can enter the item weight appended to the item name in the editor.)"
-    - checkbox "Allow skipping items. (You can skip items in the packlist by double clicking them.)"
+    - checkbox /Allow skipping items. .You can skip items in the packlist by .*/
     - radiogroup "Sort categories":
       - radio "alphabetically" [checked]
       - radio "order of definition"
     - heading "Rules Mode" [level=2]
-    - radiogroup:
+    - radiogroup "Rules Mode":
       - radio "local"
       - radio "remote"
-      - radio "template"
+      - radio "template" [checked]
+    - heading "Rule Templates" [level=2]
+    - radiogroup "Rules Template":
+      - radio "Example template with some existing rules." [checked]
+      - radio "Template showing logical operations."
+      - radio "Example template for a multi-day backpacking trip."
+      - radio "Empty template for starting your own rules."
+    - button "Copy rules locally"
+    - heading "Rules Viewer" [level=2]
+    - button "View Rules"
+    - checkbox "Fade out disabled rules"
+    - checkbox "Highlight variable status"
+    - button "View Rules Code"
     - heading "Appearance" [level=2]
     - radiogroup "Language":
       - radio "auto" [checked]

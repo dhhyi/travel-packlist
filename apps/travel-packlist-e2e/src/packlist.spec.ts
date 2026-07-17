@@ -84,7 +84,7 @@ test('click items', async ({ page }) => {
   `);
 });
 
-test('skip items', async ({ page }) => {
+test('skip items', async ({ page, hasTouch }) => {
   const packlist = await startWithRules(page, rules);
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
@@ -116,8 +116,15 @@ test('skip items', async ({ page }) => {
 
   await expect(packlist.item('Rain Jacket', false)).toBeVisible();
 
-  // double click skips
-  await packlist.item('Rain Jacket').dblclick();
+  const item = packlist.item('Rain Jacket');
+  // eslint-disable-next-line playwright/no-conditional-in-test
+  if (hasTouch) {
+    await item.dispatchEvent('touchstart');
+    // eslint-disable-next-line playwright/no-wait-for-timeout
+    await page.waitForTimeout(1000);
+  } else {
+    await item.dblclick();
+  }
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 1 out of 3 items."
@@ -126,7 +133,7 @@ test('skip items', async ({ page }) => {
   await expect(page).toHaveScreenshot({ fullPage: true });
 });
 
-test('hide completed items', async ({ page }) => {
+test('hide completed items', async ({ page, hasTouch }) => {
   const packlist = await startWithRules(page, rules).then((page) =>
     page.toConfigPage().then((config) =>
       config
@@ -142,7 +149,15 @@ test('hide completed items', async ({ page }) => {
 
   await packlist.hideCompletedButton().click();
 
-  await packlist.item('Rain Jacket').dblclick();
+  const item = packlist.item('Rain Jacket');
+  // eslint-disable-next-line playwright/no-conditional-in-test
+  if (hasTouch) {
+    await item.dispatchEvent('touchstart');
+    // eslint-disable-next-line playwright/no-wait-for-timeout
+    await page.waitForTimeout(1000);
+  } else {
+    await item.dblclick();
+  }
   await packlist.item('Paper Tissues', false).click();
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`

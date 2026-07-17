@@ -12,7 +12,7 @@ RUN mkdir -p "$HOME/.config/fish/conf.d" && echo "ZnVuY3Rpb24gbngKICAgIGlmIHN0cm
 ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1 MISE_ENV=development
 ENV PATH="$HOME/.local/share/mise/shims:$PATH"
 RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
-RUN mise use -g 'npm:@playwright/test@1.60.0'
+RUN mise use -g 'npm:@playwright/test@1.61.1'
 RUN playwright install chromium --with-deps
 
 EXPOSE 4200 3100
