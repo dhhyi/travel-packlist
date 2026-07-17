@@ -28,7 +28,7 @@ devcontainer:
           end
   publish:
     image: ghcr.io/dhhyi/travel-packlist-devcontainer
-  instantiate: fish -c 'pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
+  instantiate: fish -c 'mise activate fish | source && mise install && /home/ubuntu/.local/share/mise/shims/pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
   ports:
     - 4200
     - 3100
