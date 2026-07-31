@@ -1,0 +1,1 @@
+function n(e){return e instanceof Error?e.message:typeof e==`string`?e:`Unknown error`}export{n as t};
