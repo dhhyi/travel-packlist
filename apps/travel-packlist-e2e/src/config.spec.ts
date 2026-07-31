@@ -18,6 +18,7 @@ test('config', async ({ page }) => {
     - button "Restore Session"
     - checkbox "Track item weight. (You can enter the item weight appended to the item name in the editor.)"
     - checkbox /Allow skipping items. .You can skip items in the packlist by .*/
+    - checkbox "Allow collapsing categories. (Allows folding categories in the pack list view. This is disabled in accessible mode.)" [checked]
     - radiogroup "Sort categories":
       - radio "alphabetically" [checked]
       - radio "order of definition"

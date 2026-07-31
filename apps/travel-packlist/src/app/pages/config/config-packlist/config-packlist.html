@@ -32,6 +32,14 @@
   [help]="skipItemsHelpText()"
   [formField]="skipItems"
 />
+<cmp-checkbox
+  id="collapse-categories"
+  label="Allow collapsing categories"
+  i18n-label
+  help="Allows folding categories in the pack list view. This is disabled in accessible mode."
+  i18n-help
+  [formField]="collapsibleCategories"
+/>
 <cmp-select-options
   label="Sort categories"
   i18n-label

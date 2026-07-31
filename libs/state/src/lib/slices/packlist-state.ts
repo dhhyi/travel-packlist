@@ -75,7 +75,7 @@ function createNewSession(): SessionState {
 
 export const packlistState = ({
   rules: { parsed: parsedRules, raw },
-  config: { categorySorting, skipItems, accessibility },
+  config: { categorySorting, skipItems, accessibility, collapsibleCategories },
 }: RulesParsingState & ConfigState & RulesSourceState) => {
   const sessions = create('packlistSessions', [
     createNewSession(),
@@ -253,6 +253,7 @@ export const packlistState = ({
         checkedWeight: 0,
         collapsed:
           accessibility() !== 'accessible' &&
+          collapsibleCategories() &&
           session().collapsedCategories.includes(item.category),
         colored: session().statsVisible === 'distribution',
       };

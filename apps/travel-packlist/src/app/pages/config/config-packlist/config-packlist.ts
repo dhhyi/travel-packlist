@@ -27,6 +27,7 @@ export class ConfigPacklist {
   sessionName = this.state.packlist.sessionName;
   trackWeight = form(this.state.config.trackWeight);
   skipItems = form(this.state.config.skipItems);
+  collapsibleCategories = form(this.state.config.collapsibleCategories);
   categorySorting = form(this.state.config.categorySorting);
 
   readonly skipItemsHelpText = computed(() =>

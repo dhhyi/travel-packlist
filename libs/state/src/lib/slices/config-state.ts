@@ -34,6 +34,8 @@ export const configState = () => {
       trackWeight,
       /** storage: whether to allow skipping items in the packlist */
       skipItems: create('skipItems', false),
+      /** storage: whether to allow collapsing categories in the packlist */
+      collapsibleCategories: create('collapsibleCategories', true),
       /** storage: whether to fade out disabled rules in the editor */
       fadeOutDisabledRules: create('fadeOutDisabledRules', false),
       /** storage: whether to highlight the status of variables in the editor */

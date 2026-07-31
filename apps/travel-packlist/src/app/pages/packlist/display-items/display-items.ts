@@ -31,8 +31,10 @@ export class DisplayItems {
   stats = this.state.packlist.stats;
   packlist = this.state.packlist.model;
   trackWeight = this.state.config.trackWeight;
-  readonly isAccessibleMode = computed(
-    () => this.state.config.accessibility() === 'accessible',
+  readonly isCollapsible = computed(
+    () =>
+      this.state.config.accessibility() !== 'accessible' &&
+      this.state.config.collapsibleCategories(),
   );
   toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
 
