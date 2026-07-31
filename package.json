@@ -211,7 +211,7 @@
     "dev": "nx serve travel-packlist",
     "postversion": "git push && git push --tags",
     "prepare": "husky",
-    "release-notes": "conventional-changelog -r 2 -n util/conventionalcommits.mjs -o",
+    "release-notes": "conventional-changelog -i null -r 2 --config util/conventionalcommits.mjs -o",
     "start": "nx serve travel-packlist-web",
     "version": "pnpm run changelog -s && git add CHANGELOG.md"
   },
