@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   linkedSignal,
@@ -30,6 +31,9 @@ export class DisplayItems {
   stats = this.state.packlist.stats;
   packlist = this.state.packlist.model;
   trackWeight = this.state.config.trackWeight;
+  readonly isAccessibleMode = computed(
+    () => this.state.config.accessibility() === 'accessible',
+  );
   toggleCategoryCollapse = this.state.packlist.toggleCategoryCollapse;
 
   serializeWeight = serializeWeight;

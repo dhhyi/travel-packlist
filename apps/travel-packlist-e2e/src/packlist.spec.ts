@@ -12,7 +12,7 @@ const rules = `:- [Utility] Paper Tissues,[Utility] Backpack;
   NOT sunny :- [Clothes] Long Pants; uv :- [Utility] Sunscreen;`;
 
 test('click items', async ({ page }) => {
-  const packlist = await init(page).withRules(rules).go();
+  const packlist = await init(page).withRules(rules).noAccessibilityMode().go();
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
@@ -85,7 +85,7 @@ test('click items', async ({ page }) => {
 });
 
 test('skip items', async ({ page, hasTouch }) => {
-  const packlist = await init(page).withRules(rules).go();
+  const packlist = await init(page).withRules(rules).noAccessibilityMode().go();
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
@@ -136,6 +136,7 @@ test('skip items', async ({ page, hasTouch }) => {
 test('hide completed items', async ({ page, hasTouch }) => {
   const packlist = await init(page)
     .withRules(rules)
+    .noAccessibilityMode()
     .go()
     .then((page) =>
       page.toConfigPage().then((config) =>

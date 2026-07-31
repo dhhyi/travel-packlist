@@ -75,7 +75,7 @@ function createNewSession(): SessionState {
 
 export const packlistState = ({
   rules: { parsed: parsedRules, raw },
-  config: { categorySorting, skipItems },
+  config: { categorySorting, skipItems, accessibility },
 }: RulesParsingState & ConfigState & RulesSourceState) => {
   const sessions = create('packlistSessions', [
     createNewSession(),
@@ -209,6 +209,9 @@ export const packlistState = ({
   }
 
   function toggleCategoryCollapse(category: string) {
+    if (accessibility() === 'accessible') {
+      return;
+    }
     if (session().collapsedCategories.includes(category)) {
       updateSession((old) => ({
         ...old,
@@ -248,7 +251,9 @@ export const packlistState = ({
         checkedItems: 0,
         totalWeight: 0,
         checkedWeight: 0,
-        collapsed: session().collapsedCategories.includes(item.category),
+        collapsed:
+          accessibility() !== 'accessible' &&
+          session().collapsedCategories.includes(item.category),
         colored: session().statsVisible === 'distribution',
       };
     }
@@ -264,7 +269,12 @@ export const packlistState = ({
         const colored =
           session().statsVisible === 'heaviestItems' &&
           coloredItems().includes(item.id());
-        const visible = session().hideCompleted ? !checked && !skipped : true;
+        const visible =
+          accessibility() === 'accessible'
+            ? true
+            : session().hideCompleted
+              ? !checked && !skipped
+              : true;
         groups[item.category].items.push(
           new PacklistItem(item, checked, skipped, colored, visible),
         );
@@ -408,10 +418,14 @@ export const packlistState = ({
       /** toggle the collapsed state of a category */
       toggleCategoryCollapse,
       /** storage: whether to lock the answers in the packlist */
-      isAnswersLocked: computed(() => session().answersLocked),
+      isAnswersLocked: computed(
+        () => session().answersLocked && accessibility() !== 'accessible',
+      ),
       toggleAnswersLock,
       /** storage: hide completed items in the packlist */
-      isHideCompleted: computed(() => session().hideCompleted),
+      isHideCompleted: computed(
+        () => session().hideCompleted && accessibility() !== 'accessible',
+      ),
       toggleHideCompleted,
       /** session: which stats to show */
       isStatsVisible: computed(() => session().statsVisible),

@@ -14,6 +14,7 @@ test('bug #13', async ({ page }) => {
    Will it be sunny? $sunny;
 `,
     )
+    .noAccessibilityMode()
     .go();
 
   await packlist.lockAnswersButton().click();

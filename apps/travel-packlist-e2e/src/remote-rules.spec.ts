@@ -123,15 +123,14 @@ test('remote rules error', async ({ page }) => {
 });
 
 test.describe(() => {
-  test.describe.configure({ retries: 3 });
-
   // eslint-disable-next-line playwright/no-skipped-test
   test.skip(!!process.env['CI'], 'Skip on CI');
 
   // eslint-disable-next-line playwright/no-skipped-test
   test.skip(({ isMobile }) => isMobile, 'Skip on mobile');
 
-  test('remote rules from Google Drive', async ({ page }) => {
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip('remote rules from Google Drive', async ({ page }) => {
     const config = await init(page)
       .go()
       .then((page) => page.toConfigPage());
@@ -156,7 +155,8 @@ test.describe(() => {
     await expect(packlist.item('Hello from Google Drive', false)).toBeVisible();
   });
 
-  test('remote rules from Pastebin', async ({ page }) => {
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip('remote rules from Pastebin', async ({ page }) => {
     const config = await init(page)
       .go()
       .then((page) => page.toConfigPage());

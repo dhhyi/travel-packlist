@@ -32,6 +32,9 @@ import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 export class PacklistToolbar {
   private state = inject(GLOBAL_STATE);
 
+  readonly isAccessibilityMode = computed(
+    () => this.state.config.accessibility() === 'accessible',
+  );
   isAnswersLockActive = this.state.packlist.isAnswersLocked;
   isHideCompleted = this.state.packlist.isHideCompleted;
 

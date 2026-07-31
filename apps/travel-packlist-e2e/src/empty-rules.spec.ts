@@ -38,7 +38,6 @@ test('rule without items', async ({ page }) => {
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
     - checkbox "Will it be sunny?"
-    - button "Lock answers"
     - progressbar "You have packed 0 out of 0 items."
     - paragraph: No items available.
   `);

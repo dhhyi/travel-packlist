@@ -6,7 +6,7 @@ import { init } from './pages';
  * https://github.com/dhhyi/travel-packlist/issues/5
  */
 test('bug #5', async ({ page }) => {
-  const packlist = await init(page).go();
+  const packlist = await init(page).noAccessibilityMode().go();
 
   await expect(packlist.lockAnswersButton()).toBeVisible();
 

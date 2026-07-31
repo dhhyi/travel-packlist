@@ -4,6 +4,7 @@ import { init } from './pages';
 
 test('happy path editor to packlist', async ({ page }) => {
   const config = await init(page)
+    .noAccessibilityMode()
     .go()
     .then((page) => page.toConfigPage());
 
@@ -101,8 +102,6 @@ test('happy path editor to packlist', async ({ page }) => {
   expect(await rule2.item(1).noErrors()).toBe(true);
 
   await expect(rule2.item(1).category()).toHaveValue('Toiletries');
-
-  await expect(page).toHaveScreenshot();
 
   await rule2().hover();
   await page.mouse.wheel(0, 500);

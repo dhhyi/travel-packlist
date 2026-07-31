@@ -1,37 +1,39 @@
 @if (questionsAvailable()) {
-  <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 py-2">
-    <button
-      type="button"
-      class="link"
-      aria-label="Lock answers"
-      i18n-aria-label
-      [attr.aria-pressed]="isAnswersLockActive()"
-      [class.pressed]="isAnswersLockActive()"
-      (click)="toggleAnswersLock()"
-      (keypress)="toggleAnswersLock()"
-    >
-      @if (isAnswersLockActive()) {
-        <app-icon-lock class="h-6 w-6" />
-      } @else {
-        <app-icon-lock-open class="h-6 w-6" />
-      }
-    </button>
-    <button
-      type="button"
-      class="link"
-      aria-label="Hide completed items"
-      i18n-aria-label
-      [attr.aria-pressed]="isHideCompleted()"
-      [class.pressed]="isHideCompleted()"
-      (click)="toggleHideCompleted()"
-      (keypress)="toggleHideCompleted()"
-    >
-      @if (isHideCompleted()) {
-        <app-icon-invisible class="h-6 w-6" />
-      } @else {
-        <app-icon-visible class="h-6 w-6" />
-      }
-    </button>
+  <div class="mb-1 flex flex-wrap justify-center gap-x-4 gap-y-2 *:mt-1">
+    @if (!isAccessibilityMode()) {
+      <button
+        type="button"
+        class="link"
+        aria-label="Lock answers"
+        i18n-aria-label
+        [attr.aria-pressed]="isAnswersLockActive()"
+        [class.pressed]="isAnswersLockActive()"
+        (click)="toggleAnswersLock()"
+        (keypress)="toggleAnswersLock()"
+      >
+        @if (isAnswersLockActive()) {
+          <app-icon-lock class="h-6 w-6" />
+        } @else {
+          <app-icon-lock-open class="h-6 w-6" />
+        }
+      </button>
+      <button
+        type="button"
+        class="link"
+        aria-label="Hide completed items"
+        i18n-aria-label
+        [attr.aria-pressed]="isHideCompleted()"
+        [class.pressed]="isHideCompleted()"
+        (click)="toggleHideCompleted()"
+        (keypress)="toggleHideCompleted()"
+      >
+        @if (isHideCompleted()) {
+          <app-icon-invisible class="h-6 w-6" />
+        } @else {
+          <app-icon-visible class="h-6 w-6" />
+        }
+      </button>
+    }
     @if (displayWeightStatsButtons()) {
       <button
         iconPieChart

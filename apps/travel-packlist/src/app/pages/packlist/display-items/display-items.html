@@ -22,11 +22,13 @@
         (click)="toggleCategoryCollapse(category.name)"
       >
         <div class="flex items-center gap-1">
-          <app-icon-key-right
-            class="h-6 w-6"
-            [class.rotate-90]="!category.collapsed"
-          />
-          <span class="font-bold italic">{{ category.name }}</span>
+          @if (!isAccessibleMode()) {
+            <app-icon-key-right
+              class="h-6 w-6"
+              [class.rotate-90]="!category.collapsed"
+            />
+          }
+          <span class="font-bold italic first:ml-1">{{ category.name }}</span>
           @if (trackWeight() && category.totalWeight) {
             <span class="text-sm">
               @if (category.checkedWeight === category.totalWeight) {
@@ -64,7 +66,8 @@
                 role="checkbox"
                 tabindex="0"
                 class="flex items-center justify-between transition-all select-none"
-                [attr.aria-checked]="item.checked"
+                [aria-checked]="item.checked && !item.skipped"
+                [aria-disabled]="item.skipped"
                 [class.text-checked-item]="item.checked && !item.skipped"
                 [class.text-skipped-item]="item.skipped"
                 (click)="toggleCheckedItem(item)"
