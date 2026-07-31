@@ -1,0 +1,1 @@
+function n(e){return e instanceof Error?e.message:typeof e=="string"?e:"Unknown error"}/**i18n:677dac1f77f6bbea9aef8de41535a1dc5e5bbfe29eacd45e33fd4ff9a05794cc*/export{n};
