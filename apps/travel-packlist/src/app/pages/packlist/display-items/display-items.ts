@@ -102,6 +102,7 @@ export class DisplayItems {
 
   backgroundColor(item: PacklistItem | Category) {
     if (item.colored) {
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       const id = typeof item.id === 'function' ? item.id() : item.id;
       return colorFromString(id);
     }
