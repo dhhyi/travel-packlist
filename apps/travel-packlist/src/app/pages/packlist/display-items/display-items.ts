@@ -107,4 +107,11 @@ export class DisplayItems {
     }
     return undefined;
   }
+
+  hasDisplayableItems(category: Category) {
+    return (
+      category.totalItems > category.checkedItems ||
+      !this.state.packlist.isHideCompleted()
+    );
+  }
 }
