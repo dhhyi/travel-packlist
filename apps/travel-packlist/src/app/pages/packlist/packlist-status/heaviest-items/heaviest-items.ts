@@ -87,6 +87,9 @@ export class HeaviestItems {
   }
 
   barClicked(item: { id: string }) {
+    if (this.state.packlist.isHideCompleted()) {
+      this.state.packlist.toggleHideCompleted();
+    }
     this.state.router.fragment.set(item.id);
   }
 }
