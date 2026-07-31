@@ -128,6 +128,9 @@ test.describe(() => {
   // eslint-disable-next-line playwright/no-skipped-test
   test.skip(!!process.env['CI'], 'Skip on CI');
 
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip(({ isMobile }) => isMobile, 'Skip on mobile');
+
   test('remote rules from Google Drive', async ({ page }) => {
     const config = await init(page)
       .go()
