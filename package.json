@@ -217,5 +217,5 @@
     "start": "nx serve travel-packlist-web",
     "version": "pnpm run changelog -s && git add CHANGELOG.md"
   },
-  "version": "1.7.2"
+  "version": "1.8.0"
 }

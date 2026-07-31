@@ -1,3 +1,15 @@
+## [1.8.0](https://github.com/dhhyi/travel-packlist/compare/v1.7.2...v1.8.0) (2026-07-31)
+
+### Features
+
+- option for disabling collapsing categories ([0773e93](https://github.com/dhhyi/travel-packlist/commit/0773e937fbbf1e1e88749ff046890f3cfcfd4e8b))
+
+### Bug Fixes
+
+- expand hidden items when clicking on item weight diagram ([d0ac473](https://github.com/dhhyi/travel-packlist/commit/d0ac473c99ef6251adcbdd68a7d15e46a642e950))
+- hide category toggle when there are no displayable items ([03a966c](https://github.com/dhhyi/travel-packlist/commit/03a966caf6bf8710a793aef8dc52246a94fbc58c))
+- prevent hiding items and questions in accessible mode ([80ef65d](https://github.com/dhhyi/travel-packlist/commit/80ef65d0eb19fb7714e656dbe3f5b373df99057f))
+
 ## [1.7.2](https://github.com/dhhyi/travel-packlist/compare/v1.7.1...v1.7.2) (2026-06-07)
 
 ### Bug Fixes
