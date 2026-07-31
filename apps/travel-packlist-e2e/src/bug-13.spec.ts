@@ -1,19 +1,20 @@
 import { expect, test } from '@playwright/test';
 
-import { startWithRules } from './pages';
+import { init } from './pages';
 
 /**
  * https://github.com/dhhyi/travel-packlist/issues/13
  */
 test('bug #13', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `
+  const packlist = await init(page)
+    .withRules(
+      `
 :-
    Will it be raining? $rainy,
    Will it be sunny? $sunny;
 `,
-  );
+    )
+    .go();
 
   await packlist.lockAnswersButton().click();
 

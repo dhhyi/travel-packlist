@@ -49,7 +49,6 @@ export default defineConfig({
   use: {
     baseURL,
     serviceWorkers: 'block',
-    storageState: require.resolve('./src/test-state.json'),
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },

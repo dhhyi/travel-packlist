@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-import { start, startWithRules } from './pages';
+import { init } from './pages';
 
 test('edit rules raw', async ({ page }) => {
-  const rulesRaw = await startWithRules(page, '')
+  const rulesRaw = await init(page)
+    .withRules('')
+    .go()
     .then((p) => p.toConfigPage())
     .then((p) => p.toRulesRawPage());
 
@@ -45,7 +47,9 @@ NOT sunny :- Will it be rainy? $rainy;
 });
 
 test('edit rules raw with error', async ({ page }) => {
-  const rulesRaw = await startWithRules(page, '')
+  const rulesRaw = await init(page)
+    .withRules('')
+    .go()
     .then((p) => p.toConfigPage())
     .then((p) => p.toRulesRawPage());
 
@@ -67,7 +71,9 @@ test('edit rules raw with error', async ({ page }) => {
 });
 
 test('edit rules raw with warnings', async ({ page }) => {
-  const rulesRaw = await startWithRules(page, 'a :- B? $b; :- B? $b;')
+  const rulesRaw = await init(page)
+    .withRules('a :- B? $b; :- B? $b;')
+    .go()
     .then((p) => p.toConfigPage())
     .then((p) => p.toRulesRawPage());
 
@@ -87,7 +93,8 @@ test('edit rules raw with warnings', async ({ page }) => {
 });
 
 test('visit rules documentation', async ({ page }) => {
-  await start(page)
+  await init(page)
+    .go()
     .then((p) => p.toConfigPage())
     .then((p) => p.toRulesRawPage())
     .then((p) => p.toRulesDocumentationPage());

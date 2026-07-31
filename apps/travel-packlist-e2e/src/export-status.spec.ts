@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-import { enclosingComponent, start, startWithRules } from './pages';
+import { enclosingComponent, init } from './pages';
 
 test('export status - default rules', async ({ page }) => {
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.copyRulesLocallyButton().click();
 
@@ -21,9 +23,10 @@ test('export status - default rules', async ({ page }) => {
 });
 
 test('export status - changed rules', async ({ page }) => {
-  const config = await startWithRules(page, ':-').then((page) =>
-    page.toConfigPage(),
-  );
+  const config = await init(page)
+    .withRules(':-')
+    .go()
+    .then((page) => page.toConfigPage());
 
   await expect(config.exportNeededAlert()).toBeVisible();
 

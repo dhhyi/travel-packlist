@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-import { start } from './pages';
+import { init } from './pages';
 
 test('happy path editor to packlist', async ({ page }) => {
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.rulesMode.template().click();
   await config.template('empty').click();

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { enclosingComponent, start } from './pages';
+import { enclosingComponent, init } from './pages';
 
 test('remote rules with copy', async ({ page }) => {
   await page.route('**/mocked-rules.txt', async (route) => {
@@ -11,7 +11,9 @@ test('remote rules with copy', async ({ page }) => {
     });
   });
 
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.rulesMode.remote().click();
 
@@ -92,7 +94,9 @@ test('remote rules error', async ({ page }) => {
     });
   });
 
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.rulesMode.remote().click();
 
@@ -125,7 +129,9 @@ test.describe(() => {
   test.skip(!!process.env['CI'], 'Skip on CI');
 
   test('remote rules from Google Drive', async ({ page }) => {
-    const config = await start(page).then((page) => page.toConfigPage());
+    const config = await init(page)
+      .go()
+      .then((page) => page.toConfigPage());
 
     await config.rulesMode.remote().click();
 
@@ -148,7 +154,9 @@ test.describe(() => {
   });
 
   test('remote rules from Pastebin', async ({ page }) => {
-    const config = await start(page).then((page) => page.toConfigPage());
+    const config = await init(page)
+      .go()
+      .then((page) => page.toConfigPage());
 
     await config.rulesMode.remote().click();
 
@@ -167,7 +175,9 @@ test.describe(() => {
   });
 
   test('remote rules from GitHub Gist', async ({ page }) => {
-    const config = await start(page).then((page) => page.toConfigPage());
+    const config = await init(page)
+      .go()
+      .then((page) => page.toConfigPage());
 
     await config.rulesMode.remote().click();
 
@@ -190,7 +200,9 @@ test.describe(() => {
   });
 
   test('remote rules from GitHub Repository', async ({ page }) => {
-    const config = await start(page).then((page) => page.toConfigPage());
+    const config = await init(page)
+      .go()
+      .then((page) => page.toConfigPage());
 
     await config.rulesMode.remote().click();
 
@@ -264,7 +276,9 @@ test('remote rules history', async ({ page }) => {
     });
   });
 
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.rulesMode.remote().click();
 

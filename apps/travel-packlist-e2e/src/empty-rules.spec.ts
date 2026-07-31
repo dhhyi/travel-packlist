@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-import { startWithRules } from './pages';
+import { init } from './pages';
 
 test('empty rules', async ({ page }) => {
-  await startWithRules(page, '');
+  await init(page).withRules('').go();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
@@ -18,7 +18,7 @@ test('empty rules', async ({ page }) => {
 });
 
 test('empty rule', async ({ page }) => {
-  await startWithRules(page, ':-');
+  await init(page).withRules(':-').go();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation
@@ -33,7 +33,7 @@ test('empty rule', async ({ page }) => {
 });
 
 test('rule without items', async ({ page }) => {
-  await startWithRules(page, ':- Will it be sunny? $sunny');
+  await init(page).withRules(':- Will it be sunny? $sunny').go();
 
   await expect(page.locator('body')).toMatchAriaSnapshot(`
     - navigation

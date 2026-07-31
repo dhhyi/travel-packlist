@@ -2,23 +2,42 @@ import { expect, Locator, type Page } from '@playwright/test';
 
 import { PacklistPage } from './packlist-page';
 
-export async function start(page: Page) {
-  await page.goto('/');
-  expect(await page.getByRole('banner').textContent()).toContain(
-    'TravelPacklist',
-  );
-  return new PacklistPage(page);
-}
+export function init(page: Page) {
+  const state: Record<string, unknown> = {
+    animations: false,
+  };
 
-export async function startWithRules(page: Page, rules: string) {
-  await page.goto('/');
-  await page.evaluate((rules) => {
-    localStorage.setItem(
-      'state',
-      JSON.stringify({ rules, rulesMode: 'local' }),
+  const crossroads = {
+    withRules,
+    noAccessibilityMode,
+    go,
+  };
+
+  async function go() {
+    await page.addInitScript((s) => {
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+      window.localStorage.setItem('state', JSON.stringify(s));
+    }, state);
+    await page.goto('/');
+    expect(await page.getByRole('banner').textContent()).toContain(
+      'TravelPacklist',
     );
-  }, rules);
-  return start(page);
+    return new PacklistPage(page);
+  }
+
+  function withRules(rules: string) {
+    state['rules'] = rules;
+    state['rulesMode'] = 'local';
+    return crossroads;
+  }
+
+  function noAccessibilityMode() {
+    state['accessibility'] = 'compact';
+    return crossroads;
+  }
+
+  return crossroads;
 }
 
 export async function enclosingComponent(locator: Locator) {

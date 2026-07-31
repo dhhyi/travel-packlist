@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { startWithRules } from './pages';
+import { init } from './pages';
 
 const rulesWithWeights = `:- [tool] umbrella 150, [tool] backpack 1kg;
     :- Will it rain? $rainy;
@@ -9,7 +9,7 @@ const rulesWithWeights = `:- [tool] umbrella 150, [tool] backpack 1kg;
     :- [electronics] phone 200g, [electronics] charger 100g, [electronics] power bank 500g;`;
 
 test('weight tracking', async ({ page }) => {
-  const packlist = await startWithRules(page, rulesWithWeights);
+  const packlist = await init(page).withRules(rulesWithWeights).go();
 
   await expect(packlist.weightPackingProgress()).toBeHidden();
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
@@ -54,7 +54,7 @@ test('weight tracking', async ({ page }) => {
 test('weight tracking activation', async ({ page }) => {
   test.slow();
 
-  const packlist = await startWithRules(page, rulesWithWeights);
+  const packlist = await init(page).withRules(rulesWithWeights).go();
 
   await expect(packlist.weightPackingProgress()).toBeHidden();
 

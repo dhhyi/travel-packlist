@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { startWithRules } from './pages';
+import { init } from './pages';
 
 const rules = `:- [Utility] Paper Tissues,[Utility] Backpack;
   :- Are you traveling longer than 3 days? $longer;
@@ -12,7 +12,7 @@ const rules = `:- [Utility] Paper Tissues,[Utility] Backpack;
   NOT sunny :- [Clothes] Long Pants; uv :- [Utility] Sunscreen;`;
 
 test('click items', async ({ page }) => {
-  const packlist = await startWithRules(page, rules);
+  const packlist = await init(page).withRules(rules).go();
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
@@ -85,7 +85,7 @@ test('click items', async ({ page }) => {
 });
 
 test('skip items', async ({ page, hasTouch }) => {
-  const packlist = await startWithRules(page, rules);
+  const packlist = await init(page).withRules(rules).go();
 
   await expect(packlist.itemPackingProgress()).toMatchAriaSnapshot(`
     - progressbar "You have packed 0 out of 4 items."
@@ -134,14 +134,17 @@ test('skip items', async ({ page, hasTouch }) => {
 });
 
 test('hide completed items', async ({ page, hasTouch }) => {
-  const packlist = await startWithRules(page, rules).then((page) =>
-    page.toConfigPage().then((config) =>
-      config
-        .skipItems()
-        .click()
-        .then(() => config.toPacklistPage()),
-    ),
-  );
+  const packlist = await init(page)
+    .withRules(rules)
+    .go()
+    .then((page) =>
+      page.toConfigPage().then((config) =>
+        config
+          .skipItems()
+          .click()
+          .then(() => config.toPacklistPage()),
+      ),
+    );
 
   await packlist.question('Will it be rainy?', false).click();
 

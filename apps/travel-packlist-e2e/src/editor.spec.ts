@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 
-import { startWithRules } from './pages';
+import { init } from './pages';
 
 test('rule editor - empty', async ({ page }) => {
-  const packlist = await startWithRules(page, '');
+  const packlist = await init(page).withRules('').go();
 
   const editor = await packlist
     .toConfigPage()
@@ -24,10 +24,9 @@ test('rule editor - empty', async ({ page }) => {
 });
 
 test('rule editor - view', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella',
-  );
+  const packlist = await init(page)
+    .withRules('NOT rainy :- Will it be sunny? $sunny, [tool] umbrella')
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -63,11 +62,12 @@ test('rule editor - view', async ({ page }) => {
 });
 
 test('rule editor - view with title', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `# My Rules
+  const packlist = await init(page)
+    .withRules(
+      `# My Rules
     :- [utility] sunscreen, [tool] umbrella;`,
-  );
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -80,10 +80,11 @@ test('rule editor - view with title', async ({ page }) => {
 });
 
 test('rule editor - edit', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella; NOT sunny :- Will it be rainy? $rainy;',
-  );
+  const packlist = await init(page)
+    .withRules(
+      'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella; NOT sunny :- Will it be rainy? $rainy;',
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -131,11 +132,12 @@ test('rule editor - edit', async ({ page }) => {
 });
 
 test('rule editor - edit with title', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `# My Rules
+  const packlist = await init(page)
+    .withRules(
+      `# My Rules
     :- [utility] sunscreen, [tool] umbrella;`,
-  );
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -158,7 +160,7 @@ test('rule editor - edit with title', async ({ page }) => {
 });
 
 test('rule editor - edit with warnings', async ({ page }) => {
-  const packlist = await startWithRules(page, 'a :- B? $b; :- B? $b;');
+  const packlist = await init(page).withRules('a :- B? $b; :- B? $b;').go();
 
   const editor = await packlist
     .toConfigPage()
@@ -178,10 +180,9 @@ test('rule editor - edit with warnings', async ({ page }) => {
 });
 
 test('rule editor - delete', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella;',
-  );
+  const packlist = await init(page)
+    .withRules('NOT rainy :- Will it be sunny? $sunny, [tool] umbrella;')
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -250,10 +251,11 @@ test('rule editor - delete', async ({ page }) => {
 });
 
 test('rule editor - cut-paste', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella; NOT sunny :- Will it be rainy? $rainy;',
-  );
+  const packlist = await init(page)
+    .withRules(
+      'NOT rainy :- Will it be sunny? $sunny, [tool] umbrella; NOT sunny :- Will it be rainy? $rainy;',
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -329,10 +331,11 @@ test('rule editor - cut-paste', async ({ page }) => {
 });
 
 test('rule editor - swap', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    ':- Will it be sunny? $sunny, Will it be rainy? $rainy, [tool] umbrella, [tool] boots;',
-  );
+  const packlist = await init(page)
+    .withRules(
+      ':- Will it be sunny? $sunny, Will it be rainy? $rainy, [tool] umbrella, [tool] boots;',
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -394,10 +397,11 @@ test('rule editor - swap', async ({ page }) => {
 });
 
 test('rule editor - search', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    ':- Will it be sunny? $sunny, Will it be rainy? $rainy, [tool] umbrella, [tool] boots;',
-  );
+  const packlist = await init(page)
+    .withRules(
+      ':- Will it be sunny? $sunny, Will it be rainy? $rainy, [tool] umbrella, [tool] boots;',
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -439,7 +443,7 @@ test('rule editor - search', async ({ page }) => {
 });
 
 test('rule editor - items with weight', async ({ page }) => {
-  const packlist = await startWithRules(page, '');
+  const packlist = await init(page).withRules('').go();
   const config = await packlist.toConfigPage();
   await config.trackItemWeight().click();
 
@@ -501,15 +505,16 @@ test('rule editor - items with weight', async ({ page }) => {
 });
 
 test('rule editor - variable refactoring', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `
+  const packlist = await init(page)
+    .withRules(
+      `
     :- Will it be sunny? $sunny;
     sunny :- Will it be hot? $hot;
     NOT sunny :- Will it be cold? $cold;
     hot OR cold :- [mental] good mood;
     `,
-  );
+    )
+    .go();
 
   const editor = await packlist
     .toConfigPage()
@@ -540,15 +545,16 @@ test('rule editor - variable refactoring', async ({ page }) => {
 });
 
 test('rule editor - variable refactoring disabled', async ({ page }) => {
-  const packlist = await startWithRules(
-    page,
-    `
+  const packlist = await init(page)
+    .withRules(
+      `
     :- Will it be sunny? $sunny;
     sunny :- Will it be hot? $hot;
     NOT sunny :- Will it be cold? $cold;
     hot OR cold :- [mental] good mood;
     `,
-  );
+    )
+    .go();
 
   const config = await packlist.toConfigPage();
   await config.refactorVariables().click();

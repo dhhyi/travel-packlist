@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
 
-import { start } from './pages';
+import { init } from './pages';
 
 test('config', async ({ page }) => {
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.animations().click();
 
@@ -78,7 +80,9 @@ test('config', async ({ page }) => {
 });
 
 test('config - no accessibility', async ({ page }) => {
-  const config = await start(page).then((page) => page.toConfigPage());
+  const config = await init(page)
+    .go()
+    .then((page) => page.toConfigPage());
 
   await config.accessibility.compact().click();
   await config.animations().click();
