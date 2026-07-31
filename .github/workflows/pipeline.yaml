@@ -266,4 +266,4 @@ jobs:
           releaseFiles: ${{ steps.release.outputs.aab }}
           mappingFile: ${{ steps.mapping_txt.outputs.file }}
           whatsNewDirectory: apps/travel-packlist-android/whatsnew
-          track: internal
+          tracks: internal
