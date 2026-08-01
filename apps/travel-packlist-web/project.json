@@ -1,7 +1,6 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "implicitDependencies": [
-    "travel-packlist",
     "webapp-plugin",
     "locale"
   ],
