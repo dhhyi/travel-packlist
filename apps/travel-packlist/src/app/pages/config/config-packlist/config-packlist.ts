@@ -4,7 +4,7 @@ import {
   computed,
   inject,
 } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
+import { disabled, form, FormField } from '@angular/forms/signals';
 import {
   Checkbox,
   SelectOption,
@@ -27,8 +27,21 @@ export class ConfigPacklist {
   sessionName = this.state.packlist.sessionName;
   trackWeight = form(this.state.config.trackWeight);
   skipItems = form(this.state.config.skipItems);
-  collapsibleCategories = form(this.state.config.collapsibleCategories);
-  finishAnimation = form(this.state.config.finishAnimation);
+  collapsibleCategories = form(
+    this.state.config.collapsibleCategories,
+    (path) => {
+      disabled(path, {
+        when: () => this.state.config.accessibility() === 'accessible',
+      });
+    },
+  );
+  finishAnimation = form(this.state.config.finishAnimation, (path) => {
+    disabled(path, {
+      when: () =>
+        this.state.config.accessibility() === 'accessible' ||
+        !this.state.config.animations(),
+    });
+  });
   categorySorting = form(this.state.config.categorySorting);
 
   readonly skipItemsHelpText = computed(() =>

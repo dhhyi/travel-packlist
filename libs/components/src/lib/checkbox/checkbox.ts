@@ -29,6 +29,7 @@ import { noop } from 'rxjs';
     '(keypress)': 'toggle()',
     '[attr.aria-checked]': 'model()',
     '[attr.aria-label]': 'label() + (help() ? ". (" + help() + ")" : "")',
+    '[attr.aria-disabled]': 'disabled()',
     role: 'checkbox',
     tabindex: '0',
   },
@@ -38,6 +39,7 @@ export class Checkbox implements ControlValueAccessor {
   readonly label = input.required<string>();
   readonly help = input<string>();
   readonly model = signal<boolean | undefined>(undefined);
+  readonly disabled = signal(false);
 
   private onChange: (newValue: boolean | undefined) => void = noop;
   private onTouched: () => void = noop;
@@ -57,7 +59,9 @@ export class Checkbox implements ControlValueAccessor {
   }
 
   toggle() {
-    this.model.update((value) => !value);
+    if (!this.disabled()) {
+      this.model.update((value) => !value);
+    }
   }
 
   writeValue(obj: boolean): void {
@@ -70,5 +74,9 @@ export class Checkbox implements ControlValueAccessor {
 
   registerOnTouched(fn: Checkbox['onTouched']): void {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
   }
 }

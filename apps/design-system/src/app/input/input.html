@@ -18,6 +18,13 @@
     [formField]="form.checkbox_help"
   />
 
+  <cmp-checkbox
+    id="checkbox3"
+    label="checkbox"
+    help="This checkbox is disabled"
+    [formField]="form.checkbox_disabled"
+  />
+
   <cmp-select-options id="select1" label="select" [formField]="form.radio">
     <ng-template value="option 1">Option 1</ng-template>
     <ng-template value="option 2">Option 2</ng-template>

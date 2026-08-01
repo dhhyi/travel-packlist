@@ -5,9 +5,19 @@
   [class]="{
     'bg-slate-300': model(),
     'dark:bg-slate-700': model(),
+    'cursor-not-allowed': disabled(),
+    'opacity-30': disabled(),
   }"
 ></div>
-<label class="grow" [for]="id()">{{ label() }}</label>
+<label
+  class="grow"
+  [for]="id()"
+  [class]="{
+    'cursor-not-allowed': disabled(),
+    'opacity-30': disabled(),
+  }"
+  >{{ label() }}</label
+>
 @if (help()) {
   <button
     iconHelp
@@ -20,7 +30,7 @@
   ></button>
   @if (helpVisible()) {
     <legend
-      class="absolute m-2 translate-y-[3rem] rounded-lg border border-slate-300 bg-slate-100 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300"
+      class="absolute m-2 translate-y-12 rounded-lg border border-slate-300 bg-slate-100 p-2 text-sm text-gray-500 dark:bg-slate-800 dark:text-slate-300"
       role="contentinfo"
       (click)="toggleHelp($event)"
       (keypress)="toggleHelp($event)"

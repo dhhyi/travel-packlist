@@ -35,10 +35,12 @@ class Input {
     select: 'select',
     checkbox: false,
     checkbox_help: true,
+    checkbox_disabled: false,
     radio: 'option 1',
   });
   form = form(this.formModel, (path) => {
     disabled(path.input_disabled);
+    disabled(path.checkbox_disabled);
   });
 
   constructor() {
