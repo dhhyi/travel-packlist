@@ -1,6 +1,15 @@
-import { computed, effect, inject, signal } from '@angular/core';
+import {
+  afterRenderEffect,
+  computed,
+  effect,
+  inject,
+  linkedSignal,
+  signal,
+  untracked,
+} from '@angular/core';
 import { Refactor } from '@travel-packlist/model';
 import { Item, VariableType } from '@travel-packlist/rules';
+import confetti from 'canvas-confetti';
 
 import {
   createLocalStorageSignalState,
@@ -75,7 +84,14 @@ function createNewSession(): SessionState {
 
 export const packlistState = ({
   rules: { parsed: parsedRules, raw },
-  config: { categorySorting, skipItems, accessibility, collapsibleCategories },
+  config: {
+    categorySorting,
+    skipItems,
+    accessibility,
+    collapsibleCategories,
+    finishAnimation,
+    animations,
+  },
 }: RulesParsingState & ConfigState & RulesSourceState) => {
   const sessions = create('packlistSessions', [
     createNewSession(),
@@ -332,12 +348,49 @@ export const packlistState = ({
       modifiedAt: Date.now(),
     }));
   }
+  const applicationStart = signal(true);
 
-  let applicationStart = true;
+  const packingCompleted = linkedSignal({
+    source: () => ({
+      show:
+        !untracked(applicationStart) &&
+        untracked(accessibility) !== 'accessible' &&
+        finishAnimation() &&
+        untracked(animations),
+      stats: stats(),
+      finished:
+        stats().totalItems > 0 && stats().totalItems === stats().checkedItems,
+    }),
+    computation: (value, previous) => {
+      const checkedOne = previous
+        ? value.stats.totalItems === previous.source.stats.totalItems &&
+          value.stats.checkedItems === previous.source.stats.checkedItems + 1
+        : false;
+      const skippedOne = previous
+        ? value.stats.totalItems === previous.source.stats.totalItems - 1 &&
+          value.stats.checkedItems === previous.source.stats.checkedItems
+        : false;
+      const nowFinished = value.finished && !previous?.source.finished;
+      return value.show && nowFinished && (checkedOne || skippedOne);
+    },
+  });
+  // something strange is happening with having this as a normal effect
+  afterRenderEffect(() => {
+    if (packingCompleted()) {
+      void confetti({
+        particleCount: 200,
+        spread: 40,
+        origin: { y: 0.7 },
+        gravity: 0.7,
+        ticks: 400,
+      });
+    }
+  });
+
   effect(() => {
     if (raw.hasValue() && raw.value()) {
-      if (applicationStart) {
-        applicationStart = false;
+      if (applicationStart()) {
+        applicationStart.set(false);
       } else {
         // reset packlist view modifications on rules change
         resetViewState();

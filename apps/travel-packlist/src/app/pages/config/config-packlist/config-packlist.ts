@@ -28,6 +28,7 @@ export class ConfigPacklist {
   trackWeight = form(this.state.config.trackWeight);
   skipItems = form(this.state.config.skipItems);
   collapsibleCategories = form(this.state.config.collapsibleCategories);
+  finishAnimation = form(this.state.config.finishAnimation);
   categorySorting = form(this.state.config.categorySorting);
 
   readonly skipItemsHelpText = computed(() =>
