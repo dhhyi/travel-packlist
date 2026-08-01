@@ -1,3 +1,13 @@
+## [1.9.0](https://github.com/dhhyi/travel-packlist/compare/v1.8.0...v1.9.0) (2026-08-01)
+
+### Features
+
+- display animation when packing is finished ([986c8cf](https://github.com/dhhyi/travel-packlist/commit/986c8cf724b6a0185fa131df76be3e2299d4e6ad))
+
+### Bug Fixes
+
+- disable unavailable config options depending on mode ([0ec5904](https://github.com/dhhyi/travel-packlist/commit/0ec5904be00c95f32c788aba599b87e8d7066a86))
+
 ## [1.8.0](https://github.com/dhhyi/travel-packlist/compare/v1.7.2...v1.8.0) (2026-07-31)
 
 ### Features
