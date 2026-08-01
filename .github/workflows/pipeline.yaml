@@ -82,6 +82,7 @@ jobs:
             -t build \
             -p travel-packlist-android \
                travel-packlist-web
+          echo > $GITHUB_STEP_SUMMARY
         env:
           RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
           RELEASE_KEYSTORE_PASSWORD: ${{ secrets.RELEASE_KEYSTORE_PASSWORD }}
@@ -116,9 +117,12 @@ jobs:
             -t test,lint,format \
             --base=HEAD~$noOfCommits \
             --head=HEAD
+          echo > $GITHUB_STEP_SUMMARY
 
       - name: Build rules-cmdl 🔧
-        run: pnpm exec nx run rules-cmdl:build --configuration ci
+        run: |
+          pnpm exec nx run rules-cmdl:build --configuration ci
+          echo > $GITHUB_STEP_SUMMARY
 
       - name: Deploy rules-cmdl 🚀
         uses: s0/git-publish-subdir-action@develop
@@ -135,13 +139,16 @@ jobs:
       - name: Build Design System 🎨
         run: |
           pnpm exec nx run design-system:build --configuration ci
+          echo > $GITHUB_STEP_SUMMARY
           echo "::group::Move and Copy Design System Files"
           mv dist/apps/design-system/index.html dist/apps/design-system/index.design.html
           cp -Rfv dist/apps/design-system/* dist/web/
           echo "::endgroup::"
 
       - name: Dead-Code
-        run: pnpm exec nx run-many --configuration ci -t dead-code
+        run: |
+          pnpm exec nx run-many --configuration ci -t dead-code
+          echo > $GITHUB_STEP_SUMMARY
 
       - name: Deploy GitHub Pages 🚀
         id: deploy-gh-pages
