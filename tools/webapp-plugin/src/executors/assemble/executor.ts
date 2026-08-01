@@ -104,24 +104,28 @@ function fixFileHashes(folder: string) {
     };
   };
 
+  /** helper class for tracking files in memory */
   class File {
-    static MAX_RENAMES = 20;
-
     constructor(
       private currentContent: string,
       private currentHash: string | undefined,
       private currentName: string,
     ) {}
 
-    private renameCounter = 0;
+    dependencies: File[] = [];
+
+    removeDependency(file: File) {
+      const index = this.dependencies.indexOf(file);
+      if (index !== -1) {
+        this.dependencies.splice(index, 1);
+      }
+    }
 
     private calculateActualHash = memoizedWith(() => this.currentContent, hash);
 
     get isCorrectlyHashed() {
       return (
-        !this.currentHash ||
-        this.renameCounter > File.MAX_RENAMES ||
-        this.currentHash === this.calculateActualHash()
+        !this.currentHash || this.currentHash === this.calculateActualHash()
       );
     }
 
@@ -133,20 +137,19 @@ function fixFileHashes(folder: string) {
       return this.currentContent;
     }
 
-    rename(files: File[]) {
+    rename(files: File[], printWrongHashWarning = false) {
       if (!this.currentHash) {
-        return;
-      }
-      if (this.renameCounter++ >= File.MAX_RENAMES) {
-        console.warn(
-          `not renaming ${this.currentName} more than ${File.MAX_RENAMES.toString()} times`,
-        );
         return;
       }
       numOfFileRenames++;
       const oldName = this.currentName;
       const newHash = this.calculateActualHash();
       this.currentName = this.currentName.replace(this.currentHash, newHash);
+      if (printWrongHashWarning) {
+        console.warn(
+          `File ${oldName} renamed to ${this.currentName} (hash will not be perfect)`,
+        );
+      }
       this.currentHash = newHash;
       files.forEach((f) => {
         f.currentContent = f.currentContent.replace(
@@ -172,27 +175,59 @@ function fixFileHashes(folder: string) {
     })
     .filter((x) => !!x);
 
-  // TODO: make a dependency tree
-  // sort files by number of least dependencies
-  function createSorter() {
-    function countDependencies(file: File) {
-      return files.filter((dep) => file.content.includes(dep.name)).length;
-    }
-    const cache = Object.fromEntries(
-      files.map((f) => [f.name, countDependencies(f)]),
-    );
-    return (a: File, b: File) => cache[a.name] - cache[b.name];
-  }
-  files.sort(createSorter());
+  console.log(`Read ${files.length.toString()} files`);
 
-  // rename files in file contents until all hashes are correct
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  while (true) {
-    const i = files.findIndex((el) => !el.isCorrectlyHashed);
-    if (i === -1) {
-      break;
+  // make a list of files that need to be renamed
+  const toDoFiles = files.filter((f) => !f.isCorrectlyHashed);
+
+  // build dependency graph
+  toDoFiles.forEach((file) => {
+    file.dependencies = toDoFiles.filter((dep) =>
+      file.content.includes(dep.name),
+    );
+  });
+
+  /** finds a file that has no dependencies and is not correctly hashed */
+  const findPerfectCandidate = () =>
+    toDoFiles.findIndex(
+      (el) => !el.isCorrectlyHashed && el.dependencies.length === 0,
+    );
+
+  /** finds a file that has the highest number of dependencies and is not correctly hashed */
+  const findCandidateWithHighestDependencies = () => {
+    let maxDependencies = -1;
+    let candidate = -1;
+    for (let i = 0; i < toDoFiles.length; i++) {
+      const file = toDoFiles[i];
+      if (
+        !file.isCorrectlyHashed &&
+        file.dependencies.length > maxDependencies
+      ) {
+        maxDependencies = file.dependencies.length;
+        candidate = i;
+      }
     }
-    files[i].rename(files);
+    return candidate;
+  };
+
+  // loop through the files and rename them
+  let candidateFn = findPerfectCandidate;
+  while (toDoFiles.length) {
+    let candidate: number;
+    while ((candidate = candidateFn()) >= 0) {
+      toDoFiles[candidate].rename(files, candidateFn !== findPerfectCandidate);
+      toDoFiles.forEach((f) => {
+        f.removeDependency(toDoFiles[candidate]);
+      });
+      toDoFiles.splice(candidate, 1);
+
+      // switch back to perfect candidate finder
+      candidateFn = findPerfectCandidate;
+    }
+    if (toDoFiles.length && candidateFn === findPerfectCandidate) {
+      console.warn('There is a circular dependency between the build files');
+      candidateFn = findCandidateWithHighestDependencies;
+    }
   }
 
   // write files back to disk
