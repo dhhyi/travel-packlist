@@ -13,6 +13,9 @@ import { GLOBAL_STATE, RuleModes } from '@travel-packlist/state';
   selector: 'app-toolbar-button',
   templateUrl: './toolbar-button.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'contents',
+  },
 })
 export class ToolbarButton {
   private state = inject(GLOBAL_STATE);

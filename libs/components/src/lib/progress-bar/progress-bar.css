@@ -1,9 +1,15 @@
 :host {
   --color-progress: var(--color-slate-300);
+  width: 100%;
 }
 
 :host-context(.dark) {
   --color-progress: var(--color-slate-500);
+}
+
+progress {
+  width: 0;
+  min-width: 100%;
 }
 
 progress::-webkit-progress-bar {

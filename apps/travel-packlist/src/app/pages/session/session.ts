@@ -16,7 +16,7 @@ import { confirm, prompt } from '../../dialog';
   templateUrl: './session.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: 'flex flex-col h-full w-full gap-y-4 *:min-h-[100px]',
+    class: 'flex flex-col gap-y-4 *:min-h-[100px]',
   },
 })
 export class Session {
