@@ -14,6 +14,7 @@
     "e2e": {
       "cache": true,
       "dependsOn": [
+        "install",
         {
           "projects": "travel-packlist-web",
           "target": "build"
@@ -27,6 +28,17 @@
       "options": {
         "command": "playwright test -c {projectRoot}/playwright.config.ts"
       }
+    },
+    "install": {
+      "cache": true,
+      "executor": "nx:run-commands",
+      "inputs": [],
+      "options": {
+        "commands": [
+          "playwright install chromium --with-deps"
+        ]
+      },
+      "outputs": []
     },
     "update-snapshots": {
       "executor": "nx:run-commands",
