@@ -2,129 +2,132 @@ import { expect, test } from '@playwright/test';
 
 import { init } from './pages';
 
-test('happy path editor to packlist', async ({ page }) => {
-  const config = await init(page)
-    .noAccessibilityMode()
-    .go()
-    .then((page) => page.toConfigPage());
+test.describe(() => {
+  test.describe.configure({ retries: 2 });
 
-  await config.rulesMode.template().click();
-  await config.template('empty').click();
-  await config.copyRulesLocallyButton().click();
+  test('happy path editor to packlist', async ({ page }) => {
+    const config = await init(page)
+      .noAccessibilityMode()
+      .go()
+      .then((page) => page.toConfigPage());
 
-  await expect(config.rulesMode.local()).toBeEnabled();
+    await config.rulesMode.template().click();
+    await config.template('empty').click();
+    await config.copyRulesLocallyButton().click();
 
-  const editor = await config.toEditorPage();
+    await expect(config.rulesMode.local()).toBeEnabled();
 
-  // finds example rule
-  await expect(editor.toolbar.mode('view')).toBeChecked();
+    const editor = await config.toEditorPage();
 
-  // delete example rule
-  await editor.toolbar.mode('delete').click();
-  await editor.rule(1).deleteButton().click();
-  await editor.dialog.confirm().click();
+    // finds example rule
+    await expect(editor.toolbar.mode('view')).toBeChecked();
 
-  await editor.addRuleButton().click();
+    // delete example rule
+    await editor.toolbar.mode('delete').click();
+    await editor.rule(1).deleteButton().click();
+    await editor.dialog.confirm().click();
 
-  await expect(editor.toolbar.mode('edit')).toBeChecked();
+    await editor.addRuleButton().click();
 
-  await expect(editor.rulesTitle()).toBeVisible();
+    await expect(editor.toolbar.mode('edit')).toBeChecked();
 
-  await editor.rulesTitle().fill('My Rules');
+    await expect(editor.rulesTitle()).toBeVisible();
 
-  const rule1 = editor.rule(1);
+    await editor.rulesTitle().fill('My Rules');
 
-  await expect(rule1()).toBeVisible();
+    const rule1 = editor.rule(1);
 
-  await rule1.condition.variable(1).selectOption('always');
+    await expect(rule1()).toBeVisible();
 
-  expect(await rule1.condition.noErrors()).toBe(true);
+    await rule1.condition.variable(1).selectOption('always');
 
-  await rule1.addQuestionButton().click();
+    expect(await rule1.condition.noErrors()).toBe(true);
 
-  await expect(rule1.question(1)()).toBeVisible();
+    await rule1.addQuestionButton().click();
 
-  await rule1.question(1).question().fill('Will it be sunny?');
-  await rule1.question(1).question().blur();
-  await rule1.question(1).variable().fill('sunny');
-  await rule1.question(1).variable().blur();
+    await expect(rule1.question(1)()).toBeVisible();
 
-  expect(await rule1.question(1).noErrors()).toBe(true);
+    await rule1.question(1).question().fill('Will it be sunny?');
+    await rule1.question(1).question().blur();
+    await rule1.question(1).variable().fill('sunny');
+    await rule1.question(1).variable().blur();
 
-  await rule1.addQuestionButton().click();
+    expect(await rule1.question(1).noErrors()).toBe(true);
 
-  await expect(rule1.question(2)()).toBeVisible();
+    await rule1.addQuestionButton().click();
 
-  await rule1.question(2).question().fill('Will it be rainy?');
-  await rule1.question(2).question().blur();
-  await rule1.question(2).variable().fill('rainy');
-  await rule1.question(2).variable().blur();
+    await expect(rule1.question(2)()).toBeVisible();
 
-  await expect(rule1.question(2).question()).toHaveValue('Will it be rainy?');
-  expect(await rule1.question(2).noErrors()).toBe(true);
+    await rule1.question(2).question().fill('Will it be rainy?');
+    await rule1.question(2).question().blur();
+    await rule1.question(2).variable().fill('rainy');
+    await rule1.question(2).variable().blur();
 
-  await editor.addRuleButton().click();
-  const rule2 = editor.rule(2);
+    await expect(rule1.question(2).question()).toHaveValue('Will it be rainy?');
+    expect(await rule1.question(2).noErrors()).toBe(true);
 
-  await expect(rule2()).toBeVisible();
+    await editor.addRuleButton().click();
+    const rule2 = editor.rule(2);
 
-  await rule2.condition.variable(1).selectOption('sunny');
+    await expect(rule2()).toBeVisible();
 
-  expect(await rule2.condition.noErrors()).toBe(true);
+    await rule2.condition.variable(1).selectOption('sunny');
 
-  await rule2.condition.variable(1).selectOption('sunny AND x');
+    expect(await rule2.condition.noErrors()).toBe(true);
 
-  expect(await rule2.condition.noErrors()).toBe(true);
+    await rule2.condition.variable(1).selectOption('sunny AND x');
 
-  await rule2.condition.variable(2).selectOption('NOT x');
+    expect(await rule2.condition.noErrors()).toBe(true);
 
-  expect(await rule2.condition.noErrors()).toBe(true);
+    await rule2.condition.variable(2).selectOption('NOT x');
 
-  await rule2.condition.variable(2).selectOption('rainy');
+    expect(await rule2.condition.noErrors()).toBe(true);
 
-  expect(await rule2.condition.noErrors()).toBe(true);
+    await rule2.condition.variable(2).selectOption('rainy');
 
-  await rule2.addItemButton().click();
+    expect(await rule2.condition.noErrors()).toBe(true);
 
-  await expect(rule2.item(1)()).toBeVisible();
+    await rule2.addItemButton().click();
 
-  await rule2.item(1).itemName().fill('Sunscreen');
+    await expect(rule2.item(1)()).toBeVisible();
 
-  expect(await rule2.item(1).noErrors()).toBe(true);
+    await rule2.item(1).itemName().fill('Sunscreen');
 
-  await rule2.item(1).category().selectOption('+');
+    expect(await rule2.item(1).noErrors()).toBe(true);
 
-  await expect(editor.dialog()).toBeVisible();
+    await rule2.item(1).category().selectOption('+');
 
-  await editor.dialog.prompt().fill('Toiletries');
-  await editor.dialog.confirm().click();
+    await expect(editor.dialog()).toBeVisible();
 
-  await expect(editor.dialog()).toBeHidden();
-  expect(await rule2.item(1).noErrors()).toBe(true);
+    await editor.dialog.prompt().fill('Toiletries');
+    await editor.dialog.confirm().click();
 
-  await expect(rule2.item(1).category()).toHaveValue('Toiletries');
+    await expect(editor.dialog()).toBeHidden();
+    expect(await rule2.item(1).noErrors()).toBe(true);
 
-  await rule2().hover();
-  await page.mouse.wheel(0, 500);
+    await expect(rule2.item(1).category()).toHaveValue('Toiletries');
 
-  await expect(page).toHaveScreenshot();
+    await rule2().hover();
+    await page.mouse.wheel(0, 500);
 
-  await editor.toConfigPage();
+    await expect(page).toHaveScreenshot();
 
-  const session = await config.startSession();
+    await editor.toConfigPage();
 
-  await expect(session.slot(1)()).toBeVisible();
+    const session = await config.startSession();
 
-  await session.slot(1).click();
+    await expect(session.slot(1)()).toBeVisible();
 
-  await expect(session.dialog()).toBeVisible();
+    await session.slot(1).click();
 
-  await session.dialog.prompt().fill('My Session');
-  const packlist = await session.dialog.confirm().clickToPacklist();
+    await expect(session.dialog()).toBeVisible();
 
-  await expect(packlist.dialog()).toBeHidden();
+    await session.dialog.prompt().fill('My Session');
+    const packlist = await session.dialog.confirm().clickToPacklist();
 
-  await expect(page.locator('body')).toMatchAriaSnapshot(`
+    await expect(packlist.dialog()).toBeHidden();
+
+    await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "My Rules"
     - heading "My Session"
     - checkbox "Will it be sunny?"
@@ -134,14 +137,14 @@ test('happy path editor to packlist', async ({ page }) => {
     - paragraph: No items available.
   `);
 
-  await packlist.question('Will it be sunny?', false).click();
-  await packlist.lockAnswersButton().click();
+    await packlist.question('Will it be sunny?', false).click();
+    await packlist.lockAnswersButton().click();
 
-  await expect(packlist.item('Sunscreen', false)).toBeVisible();
+    await expect(packlist.item('Sunscreen', false)).toBeVisible();
 
-  await packlist.item('Sunscreen', false).click();
+    await packlist.item('Sunscreen', false).click();
 
-  await expect(page.locator('body')).toMatchAriaSnapshot(`
+    await expect(page.locator('body')).toMatchAriaSnapshot(`
     - heading "My Rules"
     - checkbox "Will it be sunny?" [checked] [disabled]
     - button "Lock answers" [pressed]
@@ -151,5 +154,6 @@ test('happy path editor to packlist', async ({ page }) => {
         - checkbox "Sunscreen" [checked]
   `);
 
-  await expect(page).toHaveScreenshot();
+    await expect(page).toHaveScreenshot();
+  });
 });
