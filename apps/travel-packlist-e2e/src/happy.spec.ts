@@ -60,6 +60,7 @@ test('happy path editor to packlist', async ({ page }) => {
   await rule1.question(2).variable().fill('rainy');
   await rule1.question(2).variable().blur();
 
+  await expect(rule1.question(2).question()).toHaveValue('Will it be rainy?');
   expect(await rule1.question(2).noErrors()).toBe(true);
 
   await editor.addRuleButton().click();

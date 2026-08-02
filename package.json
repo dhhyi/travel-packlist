@@ -58,7 +58,7 @@
     "@nx/vite": "23.1.1",
     "@nx/web": "23.1.1",
     "@nx/workspace": "23.1.1",
-    "@playwright/test": "1.61.1",
+    "@playwright/test": "1.62.1",
     "@storybook/addon-docs": "^10.5.5",
     "@storybook/addon-themes": "^10.5.5",
     "@storybook/angular": "^10.5.5",
