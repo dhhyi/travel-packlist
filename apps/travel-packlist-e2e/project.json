@@ -12,7 +12,7 @@
   ],
   "targets": {
     "e2e": {
-      "cache": true,
+      "cache": false,
       "dependsOn": [
         "install",
         {
