@@ -1,9 +1,9 @@
 <fieldset
   role="radiogroup"
-  class="flex flex-wrap gap-2 gap-y-4 pb-4"
+  class="flex flex-wrap gap-2 gap-y-3 pb-3"
   [class]="fieldSetClass()"
   [class.justify-evenly]="!fieldSetClass().includes('justify-')"
-  [class.pt-4]="!label() || legendHidden()"
+  [class.pt-3]="!label() || legendHidden()"
   [attr.aria-label]="label()"
 >
   @if (label() && !legendHidden()) {
@@ -20,7 +20,7 @@
       (keypress)="model.set(option)"
     >
       <div
-        class="accessible:h-8 accessible:min-h-8 accessible:w-8 accessible:min-w-8 accessible:border-[6px] animations:transition-colors mr-2 h-6 min-h-6 w-6 min-w-6 rounded-full border-3 border-white shadow-[0_0_0_3px_var(--tw-shadow-color)] shadow-slate-300 dark:border-slate-900 dark:shadow-slate-700"
+        class="accessible:h-8 accessible:min-h-8 accessible:w-8 accessible:min-w-8 accessible:border-[6px] animations:transition-colors mr-2 h-5 min-h-5 w-5 min-w-5 rounded-full border-3 border-white shadow-[0_0_0_3px_var(--tw-shadow-color)] shadow-slate-300 dark:border-slate-900 dark:shadow-slate-700"
         [class]="{
           'bg-slate-300': model() === option,
           'dark:bg-slate-700': model() === option,

@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './font.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: '*:mb-4 *:flex *:flex-row *:items-center *:gap-x-4',
+    class: '*:mb-3 *:flex *:flex-row *:items-center *:gap-x-3',
   },
 })
 class Font {}

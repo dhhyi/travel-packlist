@@ -11,7 +11,7 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   templateUrl: './display-title.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: '*:last:pb-4',
+    class: '*:last:pb-3',
   },
 })
 export class DisplayTitle {

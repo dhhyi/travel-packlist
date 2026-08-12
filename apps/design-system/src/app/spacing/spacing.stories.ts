@@ -14,7 +14,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    class: '*:mb-4 *:flex *:flex-row',
+    class: '*:mb-3 *:flex *:flex-row',
   },
 })
 class Spacing {}

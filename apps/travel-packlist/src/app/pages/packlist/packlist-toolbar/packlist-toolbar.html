@@ -1,6 +1,6 @@
 @if (display()) {
   <div
-    class="flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-2"
+    class="flex flex-row flex-wrap items-center justify-center gap-x-3 gap-y-2"
   >
     @if (display()?.hideButtons) {
       <button
@@ -14,9 +14,9 @@
         (keypress)="toggleAnswersLock()"
       >
         @if (isAnswersLockActive()) {
-          <app-icon-lock class="h-6 w-6" />
+          <app-icon-lock class="h-5 w-5" />
         } @else {
-          <app-icon-lock-open class="h-6 w-6" />
+          <app-icon-lock-open class="h-5 w-5" />
         }
       </button>
       <button
@@ -30,16 +30,16 @@
         (keypress)="toggleHideCompleted()"
       >
         @if (isHideCompleted()) {
-          <app-icon-invisible class="h-6 w-6" />
+          <app-icon-invisible class="h-5 w-5" />
         } @else {
-          <app-icon-visible class="h-6 w-6" />
+          <app-icon-visible class="h-5 w-5" />
         }
       </button>
     }
     @if (display()?.weightStatsButtons) {
       <button
         iconPieChart
-        iconClass="h-6 w-6"
+        iconClass="h-5 w-5"
         type="button"
         class="link"
         aria-label="Display weight distribution"
@@ -50,7 +50,7 @@
       ></button>
       <button
         iconBarChart
-        iconClass="h-6 w-6 rotate-90"
+        iconClass="h-5 w-5 rotate-90"
         type="button"
         class="link"
         aria-label="Display heaviest items"
@@ -63,7 +63,7 @@
     @if (display()?.notesButton) {
       <button
         iconEditNote
-        iconClass="h-6 w-6"
+        iconClass="h-5 w-5"
         type="button"
         class="link"
         aria-label="Edit session notes"

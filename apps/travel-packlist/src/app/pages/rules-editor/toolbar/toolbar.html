@@ -11,7 +11,7 @@
     i18n-aria-label
   >
     <app-toolbar-button type="view" label="View" i18n-label>
-      <app-icon-view class="my-auto h-6 w-6" />
+      <app-icon-view class="my-auto h-5 w-5" />
     </app-toolbar-button>
     <app-toolbar-button
       type="edit"
@@ -21,7 +21,7 @@
         !editable() || (!noOfVisibleRules() && !!searchTerm().value())
       "
     >
-      <app-icon-edit class="my-auto h-6 w-6" />
+      <app-icon-edit class="my-auto h-5 w-5" />
     </app-toolbar-button>
     <app-toolbar-button
       type="delete"
@@ -29,7 +29,7 @@
       i18n-label
       [disabled]="!editable() || !noOfVisibleRules()"
     >
-      <app-icon-delete class="my-auto h-6 w-6" />
+      <app-icon-delete class="my-auto h-5 w-5" />
     </app-toolbar-button>
     <app-toolbar-button
       type="cut-paste"
@@ -40,7 +40,7 @@
         (noOfVisibleRules() < 2 && !clipboardItems() && !clipboardQuestions())
       "
     >
-      <app-icon-reorder class="my-auto h-6 w-6" />
+      <app-icon-reorder class="my-auto h-5 w-5" />
     </app-toolbar-button>
     <app-toolbar-button
       type="swap"
@@ -48,10 +48,10 @@
       i18n-label
       [disabled]="!editable() || !noOfVisibleRules()"
     >
-      <app-icon-swap class="my-auto h-6 w-6" />
+      <app-icon-swap class="my-auto h-5 w-5" />
     </app-toolbar-button>
     <app-toolbar-button type="search" label="Search" i18n-label>
-      <app-icon-search class="my-auto h-6 w-6" />
+      <app-icon-search class="my-auto h-5 w-5" />
     </app-toolbar-button>
   </div>
   @if (mode() === 'cut-paste') {
@@ -60,7 +60,7 @@
     @let both = !!itemsCount && !!questionsCount;
     @if (itemsCount > 0 || questionsCount > 0) {
       <div
-        class="mt-2 flex justify-center gap-4"
+        class="mt-2 flex justify-center gap-3"
         role="status"
         aria-label="clipboard"
         i18n-aria-label
@@ -94,7 +94,7 @@
       />
       <button
         iconClear
-        iconClass="h-6 w-6"
+        iconClass="h-5 w-5"
         type="button"
         class="link"
         aria-label="clear search"

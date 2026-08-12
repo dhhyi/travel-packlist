@@ -47,12 +47,12 @@
   --color-transparent: transparent;
   --spacing-*: initial;
   --spacing-0: 0;
-  --spacing-1: 0.25rem;
-  --spacing-2: 0.5rem;
-  --spacing-4: 1rem;
-  --spacing-6: 1.5rem;
-  --spacing-8: 2rem;
-  --spacing-12: 3rem;
+  --spacing-1: 0.382rem;
+  --spacing-2: 0.618rem;
+  --spacing-3: 1rem;
+  --spacing-5: 1.618rem;
+  --spacing-8: 2.618rem;
+  --spacing-13: 4.236rem;
   --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   --animate-fade-in: fade-in 300ms
     var(--tw-default-transition-timing-function, ease-in-out);
@@ -224,7 +224,7 @@
   }
 
   button {
-    @apply animations:transition-colors accessible:min-h-[49px] accessible:min-w-[49px] flex items-center justify-center rounded-sm bg-slate-300 px-4 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
+    @apply animations:transition-colors accessible:min-h-[49px] accessible:min-w-[49px] flex items-center justify-center rounded-sm bg-slate-300 px-3 py-2 font-bold text-black hover:bg-slate-400 dark:bg-slate-700 dark:text-slate-300;
 
     &[disabled] {
       @apply bg-disabled cursor-not-allowed text-gray-500;
@@ -288,7 +288,7 @@
     @apply pl-0;
 
     &[disabled] {
-      @apply appearance-none pr-4 pl-1;
+      @apply appearance-none pr-3 pl-1;
     }
   }
 

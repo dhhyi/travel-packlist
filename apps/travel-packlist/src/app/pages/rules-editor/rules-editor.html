@@ -3,7 +3,7 @@
 
 @if (!visibleRules().length && !filter()) {
   <div class="flex h-[calc(100vh-4rem)] items-center justify-center">
-    <div class="flex flex-col items-center gap-6">
+    <div class="flex flex-col items-center gap-5">
       <p i18n>There are no rules defined.</p>
       @if (editable()) {
         <button
@@ -40,10 +40,10 @@
     [id]="`rule-${item.index}`"
     [class]="{
       disabled: showAsDisabled(item.rule),
-      'mb-[2.25rem]':
+      'mb-[4.2rem]':
         (mode() === 'view' || mode() === 'search') &&
         accessibility() === 'compact',
-      'mb-12':
+      'mb-8':
         (mode() === 'view' || mode() === 'search') &&
         accessibility() === 'accessible',
     }"
@@ -75,6 +75,6 @@
     aria-hidden="true"
     (click)="goToPacklist()"
   >
-    <img alt="application icon" i18n-alt src="icon.svg" class="h-12" />
+    <img alt="application icon" i18n-alt src="icon.svg" class="h-8" />
   </a>
 }
