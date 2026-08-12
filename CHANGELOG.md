@@ -1,3 +1,5 @@
+## [1.9.1](https://github.com/dhhyi/travel-packlist/compare/v1.9.0...v1.9.1) (2026-08-12)
+
 ## [1.9.0](https://github.com/dhhyi/travel-packlist/compare/v1.8.0...v1.9.0) (2026-08-01)
 
 ### Features
