@@ -93,7 +93,7 @@ flowchart LR
 
 ## Technology
 
-This app is developed using [Angular 20](https://angular.dev/) with the new zoneless change detection strategy.
+This app is developed using [Angular 22](https://angular.dev/) with the zoneless change detection strategy.
 Wherever possible, I used signals to model data flow.
 
 The project uses [Nx](https://nx.dev/) for managing the monorepo and the build process.
@@ -128,12 +128,13 @@ The build process merges the different localized Angular apps into the same fold
 
 Checkout the repository and install pnpm (`npm i -g pnpm`).
 
-Then run `pnpm install` and `pnpm dev` to start the development server.
+Then run `pnpm install`.
+
+To start the main app in development mode, run `pnpm dev`.
 The app will be available at `http://localhost:4200`.
 
-To build the app with multiple languages and service worker, run `pnpm build`.
-You can also use `pnpm start` instead to build and start a local server.
-The app will be available at `http://localhost:8080`.
+The web assembly variant is started with `pnpm start` and is available at `http://localhost:8080`.
+For production builds, use the Nx targets directly, for example `pnpm exec nx run travel-packlist:build --configuration=production` or `pnpm exec nx run travel-packlist-web:build --configuration=production`.
 
 The design system can be previewed with `pnpm design` and is available at `http://localhost:4444`.
 

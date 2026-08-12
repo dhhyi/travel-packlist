@@ -48,7 +48,7 @@
       ],
       "executor": "nx:run-commands",
       "options": {
-        "command": "node dist/tools/rules-mcp/index.cjs"
+        "command": "node dist/apps/rules-mcp/index.cjs"
       }
     },
     "test": {
