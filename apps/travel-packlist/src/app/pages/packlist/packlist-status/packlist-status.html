@@ -1,21 +1,19 @@
-<div class="contents">
-  @if (statsVisible() === 'distribution') {
-    <div
-      class="card mb-1"
-      [animate.enter]="enterAnimation()"
-      [animate.leave]="leaveAnimation()"
-    >
-      <app-weight-distribution />
-    </div>
-  }
-  @if (statsVisible() === 'heaviestItems') {
-    <div
-      class="card mb-1 flex flex-col items-center"
-      [animate.enter]="enterAnimation()"
-      [animate.leave]="leaveAnimation()"
-    >
-      <app-heaviest-items />
-    </div>
-  }
-</div>
+@if (statsVisible() === 'distribution') {
+  <div
+    class="card"
+    [animate.enter]="enterAnimation()"
+    [animate.leave]="leaveAnimation()"
+  >
+    <app-weight-distribution />
+  </div>
+}
+@if (statsVisible() === 'heaviestItems') {
+  <div
+    class="card flex flex-col items-center"
+    [animate.enter]="enterAnimation()"
+    [animate.leave]="leaveAnimation()"
+  >
+    <app-heaviest-items />
+  </div>
+}
 <app-packlist-progress />

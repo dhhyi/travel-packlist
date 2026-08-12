@@ -18,6 +18,11 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   imports: [FormField, IconEdit],
   templateUrl: './display-notes.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'relative card',
+    '[class.hidden!]': '!visible()',
+    '[class.block!]': 'visible()',
+  },
 })
 export class DisplayNotes {
   private state = inject(GLOBAL_STATE);

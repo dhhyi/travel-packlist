@@ -6,12 +6,12 @@ import {
 } from '@angular/core';
 import {
   IconBarChart,
+  IconEditNote,
   IconInvisible,
   IconLock,
   IconLockOpen,
   IconPieChart,
   IconVisible,
-  IconEditNote,
 } from '@travel-packlist/icons';
 import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 
@@ -32,15 +32,24 @@ import { GLOBAL_STATE, ItemStats } from '@travel-packlist/state';
 export class PacklistToolbar {
   private state = inject(GLOBAL_STATE);
 
-  readonly isAccessibilityMode = computed(
-    () => this.state.config.accessibility() === 'accessible',
-  );
   isAnswersLockActive = this.state.packlist.isAnswersLocked;
   isHideCompleted = this.state.packlist.isHideCompleted;
 
-  readonly questionsAvailable = computed(
-    () => this.state.active.questions().length > 0,
-  );
+  protected readonly display = computed(() => {
+    const questionsAvailable = this.state.active.questions().length > 0;
+    const weightStatsButtons =
+      this.state.config.trackWeight() &&
+      this.state.packlist.stats().totalWeight > 0;
+    const notesButton = this.state.packlist.currentSlot() > 0;
+    const hideButtons = this.state.config.accessibility() !== 'accessible';
+    if (
+      !questionsAvailable ||
+      (!weightStatsButtons && !notesButton && !hideButtons)
+    ) {
+      return undefined;
+    }
+    return { weightStatsButtons, notesButton, hideButtons };
+  });
 
   toggleAnswersLock() {
     this.state.packlist.toggleAnswersLock();
@@ -49,12 +58,6 @@ export class PacklistToolbar {
   toggleHideCompleted() {
     this.state.packlist.toggleHideCompleted();
   }
-
-  readonly displayWeightStatsButtons = computed(
-    () =>
-      this.state.config.trackWeight() &&
-      this.state.packlist.stats().totalWeight > 0,
-  );
 
   readonly statsVisible = this.state.packlist.isStatsVisible;
 
@@ -65,10 +68,6 @@ export class PacklistToolbar {
       this.state.packlist.setStatsVisible(stat);
     }
   }
-
-  readonly displayNotesButton = computed(
-    () => this.state.packlist.currentSlot() > 0,
-  );
 
   readonly notesVisible = this.state.packlist.isNotesVisible;
 

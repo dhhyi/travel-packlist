@@ -12,7 +12,7 @@ import { DisplayNotes } from './display-notes/display-notes';
 import { DisplayQuestions } from './display-questions/display-questions';
 import { DisplayTitle } from './display-title/display-title';
 import { PacklistStatus } from './packlist-status/packlist-status';
-import { PacklistToolbar } from './packlist-status/packlist-toolbar/packlist-toolbar';
+import { PacklistToolbar } from './packlist-toolbar/packlist-toolbar';
 
 @Component({
   selector: 'app-packlist',
@@ -27,6 +27,10 @@ import { PacklistToolbar } from './packlist-status/packlist-toolbar/packlist-too
   ],
   templateUrl: './packlist.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'flex flex-col gap-1 justify-center *:contents',
+    '[class.gap-2]': 'isAccessibleMode()',
+  },
 })
 export class Packlist {
   private state = inject(GLOBAL_STATE);
@@ -37,6 +41,9 @@ export class Packlist {
 
   rulesMode = this.state.rules.mode;
   isLoading = this.state.rules.isLoading;
+  readonly isAccessibleMode = computed(
+    () => this.state.config.accessibility() === 'accessible',
+  );
 
   goToRulesEdit() {
     this.state.router.go('rules->edit');

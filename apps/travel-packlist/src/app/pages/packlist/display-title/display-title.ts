@@ -10,6 +10,9 @@ import { GLOBAL_STATE } from '@travel-packlist/state';
   selector: 'app-display-title',
   templateUrl: './display-title.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: '*:last:pb-4',
+  },
 })
 export class DisplayTitle {
   private state = inject(GLOBAL_STATE);
