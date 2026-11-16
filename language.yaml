@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/dhhyi/devcontainer-creator/dist/language_schema.json
-extends: dcc://javascript-pnpm
+extends: dcc://debian
 devcontainer:
   name: travel-packlist
   build:
@@ -13,8 +13,8 @@ devcontainer:
       - ENV NX_TUI=false NX_NO_CLOUD=true GIT_DIFF_IMAGE_ENABLED=1 MISE_ENV=development
       - ENV PATH="$HOME/.local/share/mise/shims:$PATH"
       - RUN git clone https://github.com/ewanmellor/git-diff-image.git /tmp/git-diff-image
-      - RUN mise use -g 'npm:@playwright/test@1.62.1'
-      - RUN playwright install chromium --with-deps
+      - RUN mise use -g node@24 'npm:@playwright/test@1.62.1'
+      - RUN mise install && playwright install chromium --with-deps
     files:
       - type: script
         path: $HOME/.config/fish/conf.d/nx.fish
@@ -28,17 +28,19 @@ devcontainer:
           end
   publish:
     image: ghcr.io/dhhyi/travel-packlist-devcontainer
-  instantiate: fish -c 'mise activate fish | source && mise install && /home/ubuntu/.local/share/mise/shims/pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
+  instantiate: fish -c 'mise activate fish | source && mise install && if test -f package.json; pnpm install; end && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'
   ports:
     - 4200
     - 3100
 extras:
+  - lazygit-history
   - named-volumes
   - tmux
 namedVolumes:
   node_modules: travel-packlist-node-modules
-  $HOME/.cache/pnpm: pnpm-store
+  .pnpm-store: pnpm-store
   $HOME/.cache/ms-playwright: playwright-cache
+  $HOME/.cache/mise: mise-cache
 vscode:
   extensions:
     - angular.ng-template

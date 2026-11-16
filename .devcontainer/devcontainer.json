@@ -6,11 +6,13 @@
     "travel-packlist-${devcontainerId}"
   ],
   "mounts": [
+    "type=volume,target=/home/vscode/.local/state/lazygit,source=lazygit-history-travel-packlist",
     "type=volume,target=${containerWorkspaceFolder}/node_modules,source=travel-packlist-node-modules",
-    "type=volume,target=/home/ubuntu/.cache/pnpm,source=pnpm-store",
-    "type=volume,target=/home/ubuntu/.cache/ms-playwright,source=playwright-cache"
+    "type=volume,target=${containerWorkspaceFolder}/.pnpm-store,source=pnpm-store",
+    "type=volume,target=/home/vscode/.cache/ms-playwright,source=playwright-cache",
+    "type=volume,target=/home/vscode/.cache/mise,source=mise-cache"
   ],
-  "postCreateCommand": "sudo mkdir -p node_modules /home/ubuntu/.cache/pnpm /home/ubuntu/.cache/ms-playwright && sudo chown -Rf ubuntu node_modules && sudo chown -Rf ubuntu /home/ubuntu && fish -c 'mise activate fish | source && mise install && /home/ubuntu/.local/share/mise/shims/pnpm install && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'",
+  "postCreateCommand": "sudo install -d -o vscode -g vscode node_modules .pnpm-store /home/vscode /home/vscode/.cache /home/vscode/.cache/ms-playwright /home/vscode /home/vscode/.cache /home/vscode/.cache/mise && fish -c 'mise activate fish | source && mise install && if test -f package.json; pnpm install; end && if ! set -q CI; cd /tmp/git-diff-image && ./install.sh; end'",
   "build": {
     "dockerfile": "Dockerfile",
     "cacheFrom": "type=registry,ref=ghcr.io/dhhyi/travel-packlist-devcontainer-cache"
@@ -43,6 +45,9 @@
         ],
         "tailwindCSS.includeLanguages": {
           "typescript": "css"
+        },
+        "terminal.integrated.automationProfile.linux": {
+          "path": "/usr/bin/bash"
         },
         "terminal.integrated.defaultProfile.linux": "tmux-reuse",
         "terminal.integrated.profiles.linux": {

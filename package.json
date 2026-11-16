@@ -91,6 +91,13 @@
     "ts-node": "^10.9.2",
     "vitest": "^4.1.10"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "onFail": "download",
+      "version": "10.34.5"
+    }
+  },
   "engines": {
     "node": "24"
   },
